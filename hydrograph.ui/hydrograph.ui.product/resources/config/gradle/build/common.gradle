@@ -1,0 +1,218 @@
+/*
+-------------------------------------------------------------------------------------------------
+                                  Hydrograph Execution Details 
+-------------------------------------------------------------------------------------------------
+*/
+ext.hydrographExecution='hydrograph.server.execution.tracking.client.main.HydrographMain'
+
+/*
+-------------------------------------------------------------------------------------------------
+                                   Project Repositories Section 
+-------------------------------------------------------------------------------------------------
+                    Add links of Nexus/Artifactory in order to resolve the dependencies 
+*/
+ext.AWUrl='';
+ext.BWUrl='';
+ext.RedShiftUrl='http://redshift-maven-repository.s3-website-us-east-1.amazonaws.com/release';
+/*
+-------------------------------------------------------------------------------------------------
+                                       Version Section  
+-------------------------------------------------------------------------------------------------
+*/
+ext.cascadingVersion = '3.1.0'
+ext.hadoopVersion = '2.6.0'
+ext.hiveVersion = '1.2.0'
+
+/*
+-------------------------------------------------------------------------------------------------
+                     Function for evaluating arguments for Local, Local Debug job 
+-------------------------------------------------------------------------------------------------
+*/
+
+def getArgsForRunJob(runEvent) {
+   def runParameters = []
+   /*
+   Following are the common & required options and resolved values for Hydrograph
+   	-xmlpath      : Mandatory option for Hydrograph execution script  
+   	jobXML        : Resolved value for Job's XML
+   	-paramfiles   : Mandatory option for Hydrograph execution script
+   	parameterFile : Resolved value for Parameter XML
+   -jobid		  : Mandatory option for Hydrograph execution script
+    jobId		  : Resolved value for Job ID
+   
+   */
+   
+	   if (project.hasProperty("jobXML")) {
+	       	runParameters.add("-xmlpath")
+	       	runParameters.add(jobXML)
+	       	println "Job XML : $jobXML"
+	   	}
+	   if (project.hasProperty("parameterFile")) {
+	   	    runParameters.add("-paramfiles")
+	       	runParameters.add(parameterFile)
+	      	println "Parameter file : $parameterFile"
+	    }
+	   if (project.hasProperty("jobId")){
+	   	    runParameters.add("-jobid")
+	       	runParameters.add(jobId)
+        	println "Job ID : $jobId"
+	    }
+     
+   /*
+   Following additional options and resolved values are required for Local Debug execution  
+   -debugxmlpath : Optional option for Hydrograph execution script
+   debugJobXML	 : Resolved value for Job's Debug XML
+   -basepath	 : Optional  option for Hydrograph execution script
+   basePath		 : Resolved value for Debug Path
+   */
+	   if (runEvent.equals("ExecuteLocalDebugRun")){
+	        if(project.hasProperty("debugJobXML")){
+		   	    runParameters.add("-debugxmlpath")
+		       	runParameters.add(debugJobXML)
+	        	println "View data XML : $debugJobXML"
+	   		 }
+	
+	    	if(project.hasProperty("basePath")){
+		   	    runParameters.add("-basepath")
+		       	runParameters.add(basePath)
+	        	println "View data created at : $basePath"
+	    	}
+	    }
+
+	if (project.hasProperty("udfpath")) {
+		runParameters.add("-udfpath")
+        if(udfpath==null)
+    	   	udfpath=''
+       	runParameters.add(udfpath)
+     }
+    if(project.hasProperty("isExecutionTracking")){
+   	    runParameters.add("-isexecutiontracking")
+       	runParameters.add(isExecutionTracking)
+        println isExecutionTracking
+    }
+    
+    if(project.hasProperty("executionTrackingPort")){
+   	    runParameters.add("-trackingclientsocketport")
+       	runParameters.add(executionTrackingPort)
+        println " executionTrackingPort is: "+executionTrackingPort
+    }
+    
+     if(project.hasProperty("loglevel")){
+   	    runParameters.add("-loglevel")
+       	runParameters.add(loglevel)
+        println " loglevel is: "+loglevel
+    }
+    
+  	  return runParameters+"";
+}
+
+def getFilePath(def path){
+	if(path.length() > 0 )
+		{
+		    def endIndex = path.lastIndexOf("/");
+		    if (endIndex != -1)  
+		    {
+		    	path = path.substring(0, endIndex);
+		    }
+		} 
+		return path  
+}
+
+def scpToRemoteServer(def fileToMove,def toDirectoryPath ,def username,def host,def password,def basePath,def keyfile,def usepassword){
+ 
+	     ant.taskdef(
+    	            	name: 'scp',
+        	        	classname: 'org.apache.tools.ant.taskdefs.optional.ssh.Scp',
+            	    	classpath: configurations.sshAntTask.asPath
+                	)
+     	
+          try {
+          		if(usepassword.equals('true')){
+			 	  	ant.scp(
+		               	 	file: fileToMove,
+		                	todir: ""+username+"@"+host+":"+basePath+ "/" +toDirectoryPath,
+		                	password: password,
+		                	trust: true,
+		        	)
+            	}
+            	else{
+            		ant.scp(
+		               	 	file: fileToMove,
+		                	todir: ""+username+"@"+host+":"+basePath+ "/" +toDirectoryPath,
+		                	keyfile: keyfile,
+		                	trust: true,
+		        	)
+            	}
+          } 
+          catch (Exception gradleException) {
+          	println 'common.scpToRemoteServer: #Gradle failed to execute task#'
+           	println 'Cause : Failed to move file ' + fileToMove + ' on remote server '
+           	gradleException.printStackTrace();
+          }
+}
+
+def sshToRemoteServer(def host, def username, def password,def executeCommand,def keyfile,def usepassword){
+
+   		ant.taskdef(
+               		name: 'sshexec',
+               		classname: 'org.apache.tools.ant.taskdefs.optional.ssh.SSHExec',
+               		classpath: configurations.sshAntTask.asPath)
+
+        try {
+        	if(usepassword.equals('true')){
+	            ant.sshexec(
+	                    host: host,
+	                    username: username,
+	                    password: password,
+	                    trust: true,
+	                    command: executeCommand
+	            )
+            }
+            else{
+				ant.sshexec(
+	                    host: host,
+	                    username: username,
+	                    keyfile: keyfile,
+	                    trust: true,
+	                    command: executeCommand
+	            )
+            }
+        } 
+        catch (Exception gradleException) {
+        	println 'common.sshToRemoteServer: #Gradle failed to execute task#'
+            println 'Cause : Failed to execute below command on remote server \n'+executeCommand
+            gradleException.printStackTrace();
+        }
+
+}
+ext{
+    getArgsForRunJob = this.&getArgsForRunJob
+    getFilePath = this.&getFilePath
+    scpToRemoteServer = this.&scpToRemoteServer
+    sshToRemoteServer = this.&sshToRemoteServer
+	createResourceDirectory = this.&createResourceDirectory
+}
+
+def createResourceDirectory(def resourceDirectoryRelativePath, def remoteDirectory){
+			def directoryPath=""
+			def subDirectoryPath=""
+					
+			FileTree resourcesFiles = fileTree (dir: project.projectDir.path+'/resources')
+			try {
+					resourcesFiles.visit {element ->
+						if(element.file.isDirectory()){
+							subDirectoryPath= resourceDirectoryRelativePath+"/"+element.relativePath
+							directoryPath = directoryPath.isEmpty() ? "" + subDirectoryPath : directoryPath + "," + subDirectoryPath
+						}
+					}
+				
+				def command="mkdir -p " +remoteDirectory+"/{" + directoryPath + "}"
+				println "Executing commoand to create resource folder directory structure on remote server : "+command
+				sshToRemoteServer(host,username,password,command,keyfile,usepassword)
+								
+			} catch (Exception gradleException) {
+					println 'common.createResourceDirectory: #Gradle failed to execute task#'
+					println 'Cause : Failed to create resource folder directory structure on remote server'
+					gradleException.printStackTrace();
+        	}
+}

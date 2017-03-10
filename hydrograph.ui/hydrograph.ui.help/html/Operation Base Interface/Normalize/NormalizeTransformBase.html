@@ -1,0 +1,100 @@
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+ 
+<!doctype html>
+<html>
+<head>
+	<title>NormalizeTransformBase</title>
+	<link rel="stylesheet" type="text/css" href="../../css/style.css">
+</head>
+<body>
+<p>
+	<span class="code">hydrograph.engine.transformation.userfunctions.base</span>
+	<br />
+	<span class="header-1">NormalizeTransformBase</span>
+</p>
+<span class="code">java.lang.Object</span><br />
+<span style="padding-left:20pt" class="code">hydrograph.engine.transformation.userfunctions.base.NormalizeTransformBase</span>
+<p><span>The NormalizeTransformBase interface is the base interface for all the custom classes defined for transformation in <a href="../../components/Normalize.html">normalize</a> component. This interface exposes methods that enable users to perform custom normalize functions.</span></p>
+<p><span>Following are the in-build normalize operation classes. They implement NormalizeTransformBase interface:</span></p>
+<ul>
+	<li><span><a href="MetaPivot.html">MetaPivot</a></span></li>
+	<li><span><a href="RegexSplitNormalize.html">RegexSplitNormalize</a></span></li>
+</ul>
+
+<table width="80%">
+    <tr>
+      <td colspan="2"><span class="header-3">Method Summary</span></td>
+    </tr>
+    <tr>
+		<td width="20%"><span><b>Modifier and Type</b></span></td>
+		<td><span><b>Method and Description</b></span></td>
+    </tr>
+    <tr>
+      <td><span class="code">public void</span></td>
+      <td><span class="code"><a href="#mth_cleanup">cleanup</a>()</span><br />
+	  <span class="code">cleanup()</span><span> method is a lifecycle method and is called at the end of entire operation.</span>
+	</td>
+    </tr>
+    <tr>
+      <td><span class="code">public void</span></td>
+      <td><span class="code">normalize(ReusableRow inputRow, ReusableRow outputRow, OutputDispatcher outputDispatcher)</span><br />
+	  <span>The <i>operation function</i>. This function is called for each input row.</span> 
+	</td>
+    </tr>
+    <tr>
+      <td><span class="code">public void</span></td>
+      <td><span class="code"><a href="#mth_prepare">prepare</a>(Properties props, ArrayList<String> inputFields,
+			ArrayList<String> outputFields, ArrayList<String> keyFields)</span><br />
+	  <span class="code">prepare()</span><span> method is a lifecycle method and is called before any operation is performed.</span>
+	</td>
+    </tr>
+</table>
+
+<p><span class="header-2">Method Detail</span></p>
+
+<a name="mth_cleanup" id="mth_cleanup"></a>
+<p><span class="header-3">cleanup</span></p>
+<p><span class="code">public void cleanup()</span></p>
+<p><span>The method <span class="code">cleanup()</span> is called after processing all the records in the input. This method can be typically used to do cleanup activities as the name suggests.</span></p>
+<p><span>This method is called just once in the entire lifecycle of the normalize component, after processing all the records.</span></p>
+
+<a name="mth_normalize" id="mth_normalize"></a>
+<p><span class="header-3">normalize</span></p>
+<p><span class="code">public void normalize(<a href="../ReusableRow.html">ReusableRow</a> inputRow, <a href="../ReusableRow.html">ReusableRow</a> outputRow, <a href ="../OutputDispatcher.html">OutputDispatcher</a> outputDispatcher)</span></p>
+<p><span>The method <span class="code">normalize()</span> is the operation function and is called for each input row. The custom logic for normalize should be written in this method. The custom logic for normalize involves creating multiple output rows for each input row. The output row is send to out port using sendOutput() method of the outputDispatcher object passed as the parameter. Since this method is called for each record in the input, the values of variables local to this method are not persisted for every call. Use <span class="code"><a href="#mth_prepare">prepare</a>()</span> method to initialize the required variables.</span></p>
+
+<p><span class="code"><b>inputRow</b></span><br />
+<span>The <span class="code">inputRow</span> object holds the current input row. Refer the documentation of <a href="../ReusableRow.html">ReusableRow</a> class to get information on accessing individual field of the current input row.</span></p>
+
+<p><span class="code"><b>outputRow</b></span><br />
+<span>The <span class="code">outputRow</span> object holds the current output row. Refer the documentation of <a href="../ReusableRow.html">ReusableRow</a> class to get information on accessing individual field of the current output row.</span></p>
+
+<p><span class="code"><b>outputDispatcher</b></span><br />
+<span>The <span class="code">outputDispatcher</span> object is a special class which dispatches an output row to the out port of the normalize component.The <a href = "../OutputDispatcher.html#sendOutput">sendOutput</a> method of outputDispatcher is called multiple times per row. </span></p>
+
+<a name="mth_prepare" id="mth_prepare"></a>
+<p><span class="header-3">prepare</span></p>
+<p><span class="code">public void prepare(Properties props, ArrayList<String> inputFields,ArrayList<String> outputFields, ArrayList<String> keyFields)</span></p>
+<p><span>The method <span class="code">prepare()</span> is called before processing the first record in the input. This method can be used for initialization / instansiation of artifacts to be used in the normalize operation.</span></p>
+<p><span>This method is called just once in the entire lifecycle of the normalize component, before processing the first record.</span></p>
+<span><b>Parameters</b></span>
+
+<p><span class="code"><b>props</b></span><br />
+<span>The <span class="code">props</span> object holds the operation properties supplied to the normalize component using <a href="../../Components/Normalize_Operation_Class_Window.html#Operation_Properties_Grid">operation properties grid</a> on <a href="../../Components/Normalize_Operation_Class_Window.html">operation class window</a>. The individual properties are wrapped as key-value pairs in the <span class="code">props</span> object.</span></p>
+
+<p><span class="code"><b>inputFields</b></span><br />
+<span>The <span class="code">inputFields</span> object holds the input field names supplied to the normalize component using using <a href="../../Components/Normalize_Operation_Editor.html#operation_input_fields">operation input fields</a> option on <a href="../../Components/Normalize_Operation_Editor.html">normalize operation editor</a> window.</span></p>
+
+<p><span class="code"><b>outputFields</b></span><br />
+<span>The <span class="code">outputFields</span> object holds the output field names supplied to the normalize component using <a href="../../Components/Normalize_Operation_Editor.html#operation_output_fields">operation output fields</a> option on <a href="../../Components/Normalize_Operation_Editor.html">normalize operation editor</a> window.</span></p>
+
+</body>

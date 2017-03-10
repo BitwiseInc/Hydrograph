@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+ -->
+
+<plugin>
+
+   <extension
+         id="application"
+         point="org.eclipse.core.runtime.applications">
+      <application>
+         <run
+               class="hydrograph.ui.perspective.Application">
+         </run>
+      </application>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="hydrograph.ui.perspective.Perspective"
+            icon="icons/ELT.png"
+            id="hydrograph.ui.perspective.ETLPerspective"
+            name="ELT">
+      </perspective>
+   </extension>
+   <extension
+         id="productId"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="hydrograph.ui.perspective.application"
+            name="Hydrograph">
+         <property
+               name="appName"
+               value="Hydrograph">
+         </property>
+          <property
+      name="applicationXMI"
+      value="org.eclipse.platform/LegacyIDE.e4xmi">
+   </property>
+          <property
+                name="windowImages"
+                value="icons/app_icon.png">
+          </property>
+      </product>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:hydrograph.ui.menus.WindowMenu?after=hydrograph.ui.window.palette">
+         <menu
+               id="hydrograph.ui.menus.WindowMenu.Perspective"
+               label="Perspective"
+               mnemonic="r">
+            <command
+                  commandId="org.eclipse.ui.perspectives.showPerspective"
+                  label="Open Perspective"
+                  mnemonic="O"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.eclipse.ui.window.resetPerspective"
+                  label="Reset Perspective"
+                  mnemonic="R"
+                  style="radio">
+            </command>
+            <separator
+                  name="hydrograph.ui.perspective.separator"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="org.eclipse.ui.window.customizePerspective"
+                  label="Customize Perspective.."
+                  mnemonic="C"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.eclipse.ui.window.savePerspective"
+                  label="Save Perspective As.."
+                  mnemonic="S"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.eclipse.ui.window.closePerspective"
+                  label="Close Perspective"
+                  mnemonic="C"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.eclipse.ui.window.closeAllPerspectives"
+                  label="Close All Perspectives"
+                  mnemonic="L"
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>
+   
+  
+
+</plugin>

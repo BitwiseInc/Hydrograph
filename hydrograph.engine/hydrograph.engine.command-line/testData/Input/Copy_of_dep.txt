@@ -1,0 +1,6 @@
+depno,dname
+2,accounts
+3,HR
+4,Front office
+5,Back office
+6,Back office

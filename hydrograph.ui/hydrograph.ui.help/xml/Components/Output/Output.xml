@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+ -->
+ 
+ 
+<?NLS TYPE="org.eclipse.help.toc"?>
+<toc label="Input" link_to="xml/Components.xml#Output"> 
+  
+    <topic href="html/Components/output/Output_File_Delimited.html" label="Output File Delimited">
+      <anchor id="OutputFileDelimited"/>
+      <link toc="xml/Components/output/outputFileDelimited.xml"/>
+   </topic>
+   <topic href="html/Components/output/Output_File_Fixed_Width.html" label="Output File Fixed Width">
+      <anchor id="OutputFileFixedWidth"/>
+      <link toc="xml/Components/output/outputFileFixedWidth.xml"/>
+   </topic>
+   <topic href="html/Components/output/Output_File_Mixed_Scheme.html" label="Output File Mixed Scheme">
+      <anchor id="OutputFileMixedScheme"/>
+      <link toc="xml/Components/output/outputFileMixedScheme.xml"/>
+   </topic>
+   <topic href="html/Components/output/Output_File_Parquet.html" label="Output File Parquet">
+      <anchor id="OutputFileParquet"/>
+      <link toc="xml/Components/output/output_File_Parquet.xml"/>
+   </topic>
+   <topic href="html/Components/output/Output_Hive_Parquet.html" label="Output Hive Parquet">
+      <anchor id="outputHiveParquet"/>
+      <link toc="xml/Components/output/outputHiveParquet.xml"/>
+   </topic>
+   <topic href="html/Components/output/Output_Hive_Text.html" label="Output Hive Text File">
+      <anchor id="outputHiveTextFile"/>
+      <link toc="xml/Components/output/outputHiveTextFile.xml"/>
+   </topic>
+   <topic href="html/Components/output/Output_Mysql.html" label="Output Mysql">
+      <anchor id="Output_Mysql"/>
+      <link toc="xml/Components/output/outputMysql.xml"/>
+   </topic>
+   <topic href="html/Components/output/Output_Redshift.html" label="Output Redshift">
+      <anchor id="Output_Redshift"/>
+      <link toc="xml/Components/output/outputRedshift.xml"/>
+   </topic>
+   <topic href="html/Components/output/DBUpdate.html" label="Output DB Update">
+      <anchor id="outputDBUpdate"/>
+      <link toc="xml/Components/output/outputDBUpdate.xml"/>
+    </topic>
+    <topic href="html/Components/output/Output_Oracle.html" label="Output Oracle">
+      <anchor id="outputOracle"/>
+      <link toc="xml/Components/output/outputOracle.xml"/>
+   </topic>
+    <topic href="html/Components/output/Output_Teradata.html" label="Output Teradata">
+      <anchor id="outputTeradata"/>
+      <link toc="xml/Components/output/outputTeradata.xml"/>
+   </topic>
+  </toc>

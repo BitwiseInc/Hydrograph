@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+ -->
+ 
+ 
+<tns:Config xmlns:tns="hydrograph/ui/ComponentConfig" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="hydrograph/ui/ComponentConfig xsds/ComponentConfig.xsd">
+	<tns:component paletteIconPath="/icons/rdbms_palette.png" canvasIconPath="/icons/rdbms_canvas.png"
+		name="OSRedShift" nameInPalette="RedShift" defaultNamePrefix="ORedshift" 
+		description="Used to write data from Redshift tables"
+		helpFilePath="/hydrograph.ui.help/html/Components/Output_Redshift.html"
+		acronym="OReds">
+		<tns:category>OUTPUT</tns:category>
+		<tns:port>
+			<tns:portSpecification numberOfPorts="1" portAlignment="left" changePortCountDynamically="false" allowMultipleLinks="false" linkMandatory="true">
+				<tns:port sequenceOfPort="0" typeOfPort="in" labelOfPort="in0" portTerminal="in0" />
+			</tns:portSpecification>
+		</tns:port>
+		
+		<tns:property dataType="string" name="name" renderer="COMPONENT_NAME_WIDGET" type="USER"
+			group="GENERAL" subGroup="DETAILS" showAsTooltip="TRUE" tooltipDataType="TEXT"
+			usage="REQUIRED" propertyHelpText="Displays Name provided by the user"/>
+			
+			<tns:property dataType="string" name="schema" renderer="SCHEMA_WIDGET" type="USER"
+			group="SCHEMA" subGroup="RECORD_STRUCTURE_DETAILS" showAsTooltip="TRUE" tooltipDataType="LIST"
+			usage="REQUIRED">
+			<tns:validator>SCHEMA_GRID_VALIDATOR</tns:validator>
+		</tns:property>
+		
+		<tns:property dataType="string" name="databaseName" value="" renderer="DATABASE_NAME_WIDGET"
+			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"
+			usage="REQUIRED" propertyHelpText="Displays the Hive Database Name provided by the user">
+			<tns:validator>NON_BLANK_STRING_VALIDATOR</tns:validator>
+		</tns:property>
+			
+		<tns:property dataType="string" name="hostName" value="" renderer="HOST_NAME_WIDGET"
+			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"
+			usage="REQUIRED" propertyHelpText="Displays the Database Host Name provided by the user">
+			<tns:validator>NON_BLANK_STRING_VALIDATOR</tns:validator>
+		</tns:property>
+			
+		<tns:property dataType="string" name="port" value="5439" renderer="PORT_WIDGET"
+			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"
+			usage="REQUIRED" propertyHelpText="Displays the Database Port provided by the user">
+			<tns:validator>PORT_VALIDATOR</tns:validator>
+		</tns:property>
+			
+		
+		<tns:property dataType="string" name="userName" value="" renderer="USER_NAME_WIDGET"
+			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"
+			usage="REQUIRED" propertyHelpText="Displays the Database User Name provided by the user">
+			<tns:validator>NON_BLANK_STRING_VALIDATOR</tns:validator>
+		</tns:property>
+		
+		<tns:property dataType="string" name="password" value="" renderer="PASSWORD_WIDGET"
+			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="FALSE" tooltipDataType="TEXT"
+			usage="REQUIRED" propertyHelpText="Password requires for connection with Database">
+			<tns:validator>NON_BLANK_STRING_VALIDATOR</tns:validator>
+		</tns:property>
+		
+		<tns:property dataType="string" name="testConnection" renderer="TEST_CONNECTION_WIDGET"
+			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"
+			usage="OPTIONAL" propertyHelpText="Displays the button for testing out the above given values">
+		</tns:property>
+		
+		<tns:property dataType="string" name="tableName" value="" renderer="TABLE_NAME_WIDGET"
+			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"
+			usage="REQUIRED" propertyHelpText="Displays the Hive Table Name provided by the user">
+			<tns:validator>NON_BLANK_STRING_VALIDATOR</tns:validator>
+		</tns:property>
+		
+		<tns:property dataType="string" name="temporaryDirectory" value="" renderer="TEMPORARY_DIR_NAME_WIDGET"
+			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"
+			usage="REQUIRED" propertyHelpText="Define path of temporary directory on S3">
+			<tns:validator>NON_BLANK_STRING_VALIDATOR</tns:validator>
+		</tns:property>
+		
+		<tns:property dataType="string" name="load_type_configuration" renderer="LOAD_TYPE_CONFIGURATION_WIDGET"
+			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"
+			usage="OPTIONAL" propertyHelpText="Provides user to select the Load Type i.e. records are to be inserted,updated or to create a new table.">
+			<tns:validator>DATABASE_KEY_VALIDATION</tns:validator>
+		</tns:property>
+		
+			<tns:property dataType="string" name="runtime_properties" renderer="RUNTIME_PROPERTIES_WIDGET"
+			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"
+			usage="OPTIONAL" propertyHelpText="Used to override runtime \nHadoop configurations specific to \nthis component at run time.">
+			<tns:validator>RUNTIME_PROPERTY_VALIDATOR</tns:validator>
+		</tns:property>
+		
+		<tns:property dataType="string" name="batch" value="0" renderer="BATCH_WIDGET" type="USER"
+			group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"
+			usage="REQUIRED" propertyHelpText="Specifies the execution sequence of \nthis component in the job flow.">
+			<tns:validator>INTEGER_VALIDATOR</tns:validator>
+		</tns:property>
+	</tns:component>
+</tns:Config>

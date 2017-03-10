@@ -1,0 +1,72 @@
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+ 
+<!doctype html>
+<html>
+<head>
+	<title>Run Program Properties</title>
+	<link rel="stylesheet" type="text/css" href="../../css/style.css">
+</head>
+<body>
+<p><span class="header-1">Run Program Properties</span></p>
+
+<p><span><b>Properties</b>&nbsp;for the Run Program component can be viewed by Double click component on canvas. The properties contain a &#39;General&#39; tab. Common and mandatory properties are present in the General tab. </span></span></p>
+
+	<p>
+		<a name="general_properties"></a><span class="header-2">General Properties</span>
+	</p>
+
+<p><img alt="" src="../../images/Run_Program_Properties_General.png" /></p>
+
+	<p>
+		<a name="details"></a><span class="header-2">Details</span>
+	</p>
+
+<ul>
+	<li><span><b>Name</b> - The Name field will specify the name of the component as desired by the user.</span></li>
+	<li><span><b>ID</b> - ID field will specify unique id for every component. </span></li>
+	<li><span><b>Type </b> - Type further categorizes the component to detailed operation that it intends to perform. Here it is of type Output Run Program.</span></li>
+</ul>
+
+	<p>
+		<a name="configuration"></a><span class="header-2">Configuration</span> 
+	</p>
+<ul>
+	<li><span><b>Executable Command</b> - Executable Command simply accepts the String in text box.</span></li>
+	<li><span><b>Batch</b> - Batch simply accepts a numeric number starting from 0 to 99 and signifies the batch this component will execute in. By default this is 0.</span></li>
+	
+</ul>
+
+	<p>
+		<a name="validations"></a><span class="header-2">Validations</span>
+	</p>
+	<p>
+		<span>The Run Program components applies validations to the mandatory fields. Upon placing the
+			Run Program component on job canvas for the first time (from component palette), the component shows up a warning icon as
+			mandatory properties are not provided.</span>
+	</p>
+	<img alt="" src="../../images/Run_Program_warning.png"  />
+
+	<p>
+		<span>The properties window also displays error icon on mandatory fields if it has an incorrect value. The error icon
+			is displayed on the tab as well, if any of the field within the tab has some error.</span>
+	</p>
+	<img alt="" src="../../images/Run_Program_properties_validation.png" />
+	
+	<p>
+		<span>If the properties window has some error even after user visit's it once, then the error icon on the Run Program 
+			component on the job canvas changes to error icon. This error icon is removed only when all the mandatory fields are supplied
+			with correct values.</span>
+	</p>
+	<img alt="" src="../../images/Run_Program_error.png" />
+
+</body>
+</html>

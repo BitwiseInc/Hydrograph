@@ -1,0 +1,123 @@
+/********************************************************************************
+ * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
+apply from: 'publish.gradle'
+apply from: 'version.gradle'
+apply plugin: 'idea'
+
+group = 'hydrograph'
+buildscript {
+  repositories {
+    jcenter()
+  }
+  dependencies {
+    classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.0.0"
+  }
+}
+//artifactoryPublish.skip = true
+
+subprojects{
+    apply from: '../version.gradle'
+
+    idea {
+        module{
+            downloadSources=true
+            downloadJavadoc=true
+            jdkName='1.8'
+        }
+    }
+}
+
+allprojects {
+    apply plugin: 'idea'
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+    apply plugin: 'maven'
+   
+	
+    sourceSets{
+        main.java.srcDir 'src/main/java'
+        main.resources.srcDir 'src/main/resources'
+        test.java.srcDir 'src/test/java'
+    }
+	dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+	}
+	
+	task testJar(type: Jar, dependsOn: classes) {
+	classifier = 'tests'
+	from sourceSets.test.output
+		manifest {
+        attributes 'Implementation-Title': archivesBaseName
+                //,'Implementation-Version': version
+	    }
+	    //version = null //Version in jar name set to null to keep the name consistent for travis.yml to ftp the jar 
+	
+	}
+	
+	task sourcesJar( type: Jar, dependsOn: classes ) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+     manifest {
+        attributes 'Implementation-Title': archivesBaseName
+                //,'Implementation-Version': version
+	    }
+	    version = null //Version in jar name set to null to keep the name consistent for travis.yml to ftp the jar 
+   
+    }
+   
+}
+
+subprojects{
+
+    artifacts {
+	archives testJar
+	archives sourcesJar
+    }
+}
+
+jar {
+	manifest {
+        attributes 'Implementation-Title': 'hydrograph.engine',
+                'Implementation-Version': version,
+                'Main-Class': 'hydrograph.engine.commandline.utilities.HydrographExecution'
+    }
+     
+    dependsOn { subprojects.jar }
+    subprojects.each { proj ->
+        from { zipTree(proj.jar.archivePath) }
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+      }
+   }
+   
+   task writePom {
+    pom {
+        project {
+           }
+    	}.writeTo("$buildDir/pom.xml")
+	}
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '1.9'
+  distributionUrl = 'http://services.gradle.org/distributions/gradle-1.9-all.zip'
+}
+
+repositories {
+    mavenCentral()
+}

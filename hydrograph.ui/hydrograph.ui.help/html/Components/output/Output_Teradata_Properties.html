@@ -1,0 +1,121 @@
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+ 
+ 
+<!doctype html>
+<html>
+<head>
+
+<title>Output Teredata Properties</title>
+
+<link rel="stylesheet" type="text/css" href="../../css/style.css">
+
+</head>
+<body>
+
+	<p><span class="header-1">Output Teradata Properties</span></p>
+
+	<p><span><span><b>Properties</b>&nbsp;for the Output Teradata component can be viewed by Double click the component on canvas. The properties contain a &#39;General&#39; tab and a &#39;Schema&#39; tab. Common and mandatory properties are present in the General tab. Schema displays option to accept the field schema i.e. field name, Data type, scale etc. </span></span></p>
+
+	<p>
+		<a name="general_properties"></a><span class="header-2">General Properties</span>
+	</p>
+
+	<p><img alt="To be updated" src="../../images/output_teradata_property_window.png" /></p> 
+
+	<p>
+		<a name="details"></a><span class="header-2">Details</span>
+	</p>
+	
+	<ul>
+		<li><span><b>Name</b> - The Name field will specify the name of the component as desired by the user.</span></li>
+		<li><span><b>ID</b> - ID field will specify unique id for every component. </span></li>
+		<li><span><b>Type </b> - Type further categorizes the component to detailed operation that it intends to perform. Here it is of type Teradata.</span></li>
+	</ul>
+
+	<p>
+		<a name="configuration"></a><span class="header-2">Configuration</span> 
+	</p>
+	
+	<ul>
+	<li><span><b>Database Name</b> - Database Name is used to specify the Teradata instance name. This field should be mandatory to user. </span></li>
+	<li><span><b>Host Name</b> - Host Name is used to specify the Host server IP address or localhost name. This field should be mandatory to user.</span></li>
+	<li><span><b>Driver Name</b> - Driver Name is used to specify &#39;TeraJDBC4&#39; driver should be displayed to user by default. This is non-editable field. </span></li>
+	<li><span><b>Port</b> - Port simply accepts a numeric number starting from 0 to maximum 65,535. By default this is 1025.</span></li>
+	<li><span><b>User</b> - User is required to specify the User name to login to Teradata Database.</span></li>
+	<li><span><b>Password</b> - Password used to specify the password.</span></li>
+	<li><span><b>Oracle Schema</b> - Schema is used to specify the schema name used for by Teradata to access data.</span></li>
+	<li><span><b>Test Connection</b> - Test Connection is used to specify a response to engine should be sent to verify/test if using the above parameter values connection to database will be successful or some invalid parameters are specified by user.</span></li>
+	<li><span><b>Table Name</b>  - Table Name used to specify the table name.</span></li>
+</ul>
+
+<ul> 
+	<li><span><b>Loadtype Configuration</b> - Edit button should be provided to user to open new Window to opt Load Type Configuration. In this window, provide options to user to select Load Type i.e. if records need to be inserted, replace or create new table to insert the processed data in job.
+											Below is the sample snapshot of Configuration Window:</span></li>
+											
+			<p><img alt="To be updated" src="../../images/output_db_load_configuration.png" /></p> 
+			
+	<li><span><b>Runtime Properties</b> -&nbsp;Runtime properties are used to override the Hadoop configurations specific to Output Teradata component at run time. User is required to enter the Property Name and Value in the runtime properties grid.</span></li>
+	
+	<p><span>Check <a href="../../How To Steps/How_To_Pass_Hadoop_Properties_To_Component.html"> How to pass Hadoop properties to component</a></span></p></li>
+	
+	<p><img alt="" src="../../images/Runtime_Properties_Grid.png" /></p>
+	
+	<li><span><b>Batch</b> - Batch simply accepts a numeric number starting from 0 to maximum 99 and signifies the batch this component will execute in. By default this is 0.</span></li>
+</ul>
+
+
+	<p>
+		<a name="schema_tab"></a><span class="header-2">Schema tab</span> 
+	</p>
+	
+	<p><span>Schema is <b>mandatory</b> for Output Teradata component. Schema tab defines the record format on the out port of the Output Teradata component. A field in schema has multiple attributes as described below.</span></p>
+	<p><img alt="" src="../../images/output_teradata_schema.png" /></p>
+	
+	<ul>
+	<li><span><b>Internal</b> - User is provided a Grid to enter the internal schema of the Output Teradata.</span></li>
+	<ul><li><span><b>Field Name</b> - User needs to enter all the Field names in this column.</span></li>
+	<li><span><b>Data type</b> - By default "string" Data type has been selected for any field added to the Grid. User can select from different Data type values like "integer", "double", "float" etc.</span></li>
+	<li><span><b>Date Format</b> - User can specify desired date format like "YY-DD-MM", "YYYYMMDD" etc for a date field in this column. Refer to <a href="../../references/Date_Formats.html">java date formats</a> page for acceptable date formats.</span></li>
+	<li><span><b>Precision</b> - Precision for a bigdecimal field can be specified here.</span></li>
+	<li><span><b>Scale</b> - Scale for a bigdecimal field can be specified here.</span></li>
+	<li><span><b>Scale Type</b> - Scale Type accepts values as implicit or explicit for bigdecimal field and none for other data types. Explicit considers the length of ' <b>.</b> ' and implicit ignores length of ' <b>.</b> ' for the bigdecimal field.</span></li>
+	<li><span><b>Field Description</b> - User can specify field description.</span></li></ul>
+	<li><span><b>External</b> - User can provide an external Hydrograph Schema file of XML format. A text box is provided to either manually type or use the Browse button to select the schema file from File system. The External schema file path is resolved during run time and replaced with the contents of the file in the Job XML.</span></li>
+</ul>
+
+
+<p>
+		<a name="validations"></a><span class="header-2">Validations</span>
+	</p>
+	<p>
+		<span>The Output Teradata components applies validations to the mandatory fields. Upon placing the 
+			Output Teradata component on job canvas for the first time (from component palette), the component shows up a warning icon as
+			mandatory properties are not provided.</span>
+	</p>
+	<img alt="To be updated" src="../../images/output_teradata_warn_icon.png"  />
+
+	<p>
+		<span>The properties window also displays error icon on mandatory fields if it has an incorrect value. The error icon
+			is displayed on the tab as well, if any of the field within the tab has some error.</span>
+	</p>
+	<img alt="To be updated" src="../../images/output_teradata_property_validation.png" />
+
+	<p>
+		<span>If the properties window has some error even after user visit's it once, then the warning icon on the Output Teradata 
+			component on the job canvas changes to error icon. This error icon is removed only when all the mandatory fields are supplied
+			with correct values.</span>
+	</p>
+	<img alt="To be updated" src="../../images/output_teradata_error_icon.png" />
+<p>&nbsp;</p>
+
+</body>
+</html>

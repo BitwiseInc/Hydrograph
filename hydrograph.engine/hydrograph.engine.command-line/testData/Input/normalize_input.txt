@@ -1,0 +1,9 @@
+3211001,Smith1,credit,344.0,6
+3211002,Dona and rahul,credit,56.0,2
+3211002,Dona,debit,13.0,2
+3211003,Jack,credit,73.0,1
+3211003,Jack and jill,debit,158.0,2
+3211005,Lina,credit,1.0,1
+3211005,Lina,debit,52.0,1
+3211006,Anna,credit,1000.0,1
+3211006,Anna,debit,72.0,2

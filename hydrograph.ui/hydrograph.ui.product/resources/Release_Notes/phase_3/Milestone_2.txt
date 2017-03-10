@@ -1,0 +1,30 @@
+=====================================================================================================
+Features Added:
+=====================================================================================================
+Sr.No. <date> - [developer names] - description
+
+
+
+=====================================================================================================
+Issues/Defects fixed:
+=====================================================================================================
+
+Sr.No. <GitHub/Bugzilla Issue #> - [fixed by] - description
+1. <537> [Akhiesh Joshi] - Disable cool bar when sub job tracking is open.
+2. <1383> [Sonia Raheja] - Unique Job Id is Not Getting Generated, When User tried Saving the Same job with Different Name.
+3. <538> [Pooja Yadav] -  Default size of Property window should be small.
+4. <531> [Sonia Raheja] - Tool delete .job and .xml file if user delete .properties file.
+5. <532> [Sonia Raheja]	- Tool should show proper message when we delete any file.
+6. <519> [Ashika Holkar] -  Error symbol present on General tab is not getting removed when user change the field property from parameter to true/false/any valid value
+7. <527> [Ashika Holkar] - All created projects are getting displayed under Operation class
+8. <549> [Sonia Raheja] - Tool does not allow rename the property files other than the param folder.
+9. <517> [Nitin Gupta]	-	Subjob connected link is getting removed when input socket for subjob component is connected with Union All component.
+10. <523> [Ashika Holkar] - Error bubble is getting removed even if there is error inside the subjob component
+11. <541> [Ashika Holkar] -  Error bubble is not getting displayed on filter component if Operation field is not specified
+12. <539> [Ashika Holkar] - Multiple Run Configuration Window are getting opened when User click on Run button
+13. <529> [Pooja Yadav] - Default size of below window should be small.
+14. <540> [Ashika Holkar] - Union All component: On tool tip info, 'propagate' is getting displayed as '0' instead of Batch
+15. <550> [Ashika Holkar] - Error popup is getting displayed when user update java class file
+=====================================================================================================
+Notes for QA:
+=====================================================================================================

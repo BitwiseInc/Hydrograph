@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+ -->
+
+
+<tns:Config xmlns:tns="hydrograph/ui/ComponentConfig"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="hydrograph/ui/ComponentConfig xsds/ComponentConfig.xsd">
+	<tns:component paletteIconPath="/icons/DBUpdate_palette.png"
+		canvasIconPath="/icons/DBUpdate_canvas.png" name="ODBUpdate"
+
+		nameInPalette="DB Update" defaultNamePrefix="DBUpdate" description="It is used to connect different database and update the data in existing tables based on the keys specified by the user. "
+		helpFilePath="/hydrograph.ui.help/html/Components/ODBUpdate.html" acronym="DBUpd">
+		<tns:category>OUTPUT</tns:category>
+		<tns:port>
+			<tns:portSpecification numberOfPorts="1"
+				portAlignment="left" changePortCountDynamically="false"
+				allowMultipleLinks="false" linkMandatory="true">
+				<tns:port sequenceOfPort="0" typeOfPort="in" labelOfPort="in0"
+					portTerminal="in0" />
+			</tns:portSpecification>
+		</tns:port>
+
+		<tns:property dataType="string" name="name"
+			renderer="COMPONENT_NAME_WIDGET" type="USER" group="GENERAL"
+			subGroup="DETAILS" showAsTooltip="TRUE" tooltipDataType="TEXT" usage="REQUIRED"
+			propertyHelpText="Displays Name provided by the user" />
+			
+		<tns:property dataType="string" name="schema" renderer="SCHEMA_WIDGET"
+			type="USER" group="SCHEMA" subGroup="RECORD_STRUCTURE_DETAILS"
+			showAsTooltip="TRUE" tooltipDataType="LIST" usage="REQUIRED">
+			<tns:validator>SCHEMA_GRID_VALIDATOR</tns:validator>
+		</tns:property>
+
+		<tns:property dataType="string" name="jdbcDriverClass"
+			 renderer="JDBC_DRIVER_CLASS_WIDGET" type="USER" group="GENERAL"
+			value="oracle.jdbc.OracleDriver" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"
+			usage="REQUIRED" propertyHelpText="Displays the Database Driver class name selected by user">
+			<tns:validator>NON_BLANK_STRING_VALIDATOR</tns:validator>
+		</tns:property>
+
+		<tns:property dataType="string" name="url" value=""
+			renderer="DB_URL_WIDGET" type="USER" group="GENERAL" subGroup="CONFIGURATION"
+			showAsTooltip="TRUE" tooltipDataType="TEXT" usage="REQUIRED"
+			propertyHelpText="Displays the DB url provided by the user">
+			<tns:validator>NON_BLANK_STRING_VALIDATOR</tns:validator>
+		</tns:property>
+
+		<tns:property dataType="string" name="tableName" value=""
+			renderer="TABLE_NAME_WIDGET" type="USER" group="GENERAL" subGroup="CONFIGURATION"
+			showAsTooltip="TRUE" tooltipDataType="TEXT" usage="REQUIRED"
+			propertyHelpText="Displays the Update Table Name provided by the user">
+			<tns:validator>NON_BLANK_STRING_VALIDATOR</tns:validator>
+		</tns:property>
+
+		<tns:property dataType="string" name="batchSize" value=""
+			renderer="CHUNK_SIZE_WIDGET" type="USER" group="GENERAL" subGroup="CONFIGURATION"
+			showAsTooltip="TRUE" tooltipDataType="TEXT" usage="REQUIRED"
+			propertyHelpText="Displays the Update chunk size provided by the user">
+		</tns:property>
+
+		<tns:property dataType="string" name="userName" value=""
+			renderer="DB_UPDATE_USER_NAME_WIDGET" type="USER" group="GENERAL"
+			subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"
+			usage="OPTIONAL" propertyHelpText="Displays the Database User Name provided by the user">
+		</tns:property>
+
+		<tns:property dataType="string" name="password" value="" renderer="DB_UPDATE_PASSWORD_WIDGET"
+			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="FALSE" tooltipDataType="TEXT"
+			usage="REQUIRED" propertyHelpText="Password requires for connection with Update database">
+		</tns:property>
+
+		<tns:property dataType="string" name="update"
+			value="" renderer="SELECT_BY_KEYS_WIDGET" type="USER" group="GENERAL"
+			subGroup="CONFIGURATION" showAsTooltip="FALSE" tooltipDataType="TEXT"
+			usage="REQUIRED" propertyHelpText="Displays the update keys provided by user">
+			<tns:validator>NON_BLANK_STRING_VALIDATOR</tns:validator>
+		</tns:property>
+
+		<tns:property dataType="string" name="runtime_properties"
+			renderer="RUNTIME_PROPERTIES_WIDGET" type="USER" group="GENERAL"
+			subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"
+			usage="OPTIONAL"
+			propertyHelpText="Used to override runtime \nHadoop configurations specific to \nthis component at run time.">
+			<tns:validator>RUNTIME_PROPERTY_VALIDATOR</tns:validator>
+		</tns:property>
+
+		<tns:property dataType="string" name="batch" value="0"
+			renderer="BATCH_WIDGET" type="USER" group="GENERAL" subGroup="CONFIGURATION"
+			showAsTooltip="TRUE" tooltipDataType="TEXT" usage="REQUIRED"
+			propertyHelpText="Specifies the execution sequence of \nthis component in the job flow.">
+			<tns:validator>INTEGER_VALIDATOR</tns:validator>
+		</tns:property>
+	</tns:component>
+</tns:Config>

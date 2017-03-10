@@ -1,0 +1,8 @@
+AAA,1,FFDF,FFDF,FFDF,FFDF
+BBB,2,FFDF,E4R,RG,F
+CCC,3,D,GFGHF,HGH,GJGHJ
+DDD,4,gdfggf,hgfg,fdsf,fddf
+EEE,5,fsdsdf,fdsfd,hgfh,asdas
+FFF,6,sdffgf,gfdf,ghhgh,sdsdds
+GGG,7,ffgfg,ghghgf,sdfsds,dggfg
+HHH,8,jhgjng,sfdfd,jhj,sds

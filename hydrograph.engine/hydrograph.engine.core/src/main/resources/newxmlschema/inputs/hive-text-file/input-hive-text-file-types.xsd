@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc. Licensed 
+	under the Apache License, Version 2.0 (the "License"); you may not use this 
+	file except in compliance with the License. You may obtain a copy of the 
+	License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by 
+	applicable law or agreed to in writing, software distributed under the License 
+	is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY 
+	KIND, either express or implied. See the License for the specific language 
+	governing permissions and limitations under the License. -->
+<xs:schema xmlns="hydrograph/engine/jaxb/ihivetextfile"
+	xmlns:cmn="hydrograph/engine/jaxb/commontypes" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="hydrograph/engine/jaxb/ihivetextfile"
+	elementFormDefault="unqualified">
+	<xs:import schemaLocation="../../common/common-types.xsd"
+		namespace="hydrograph/engine/jaxb/commontypes" />
+
+	<xs:complexType name="hive_path_type">
+		<xs:attribute name="uri" type="xs:string" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="hive_partition_fields_type">
+		<xs:sequence maxOccurs="1" minOccurs="1">
+			<xs:element name="field" type="partition_field_basic_type">
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="partition_field_basic_type">
+		<xs:choice maxOccurs="1" minOccurs="0">
+			<xs:element name="field" type="partition_field_basic_type" />
+		</xs:choice>
+		<xs:attribute name="name" type="xs:string" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="hive_partition_filter_type">
+		<xs:sequence maxOccurs="unbounded" minOccurs="1">
+			<xs:element name="partitionColumn" type="partition_column" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="partition_column">
+		<xs:choice maxOccurs="1" minOccurs="0">
+			<xs:element name="partitionColumn" type="partition_column" />
+		</xs:choice>
+		<xs:attribute name="name" type="xs:string" use="required" />
+		<xs:attribute name="value" type="xs:string" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="field_basic_type">
+		<xs:attribute name="name" type="xs:string" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="hive_type">
+		<xs:attribute name="value" type="xs:string" />
+	</xs:complexType>
+
+	<xs:complexType name="type-input-hive-text-delimited-out-socket">
+		<xs:complexContent>
+			<xs:restriction base="cmn:type-input-outSocket">
+				<xs:sequence>
+					<xs:element name="schema" type="cmn:type-base-record" />
+				</xs:sequence>
+				<xs:attribute name="id" type="xs:string" use="required"
+					fixed="out0" />
+				<xs:attribute name="type" type="xs:string" fixed="out"
+					use="optional" />
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="type-input-hive-text-file-delimited-base">
+		<xs:complexContent>
+			<xs:restriction base="cmn:type-input-component">
+				<xs:sequence>
+					<xs:element name="outSocket"
+						type="type-input-hive-text-delimited-out-socket" minOccurs="1"
+						maxOccurs="1" />
+					<xs:element name="runtimeProperties" type="cmn:type-properties"
+						minOccurs="0" maxOccurs="1" />
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,59 @@
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+ 
+ 
+<!doctype html>
+<html>
+	<head>
+		<title>GIT: How to create new ELT project</title>g
+		<link rel="stylesheet" type="text/css" href="../css/style.css">
+	</head>
+	<body>
+		<p><span class="header-1">How to create a new ELT project in Git Repository using Hydrograph</span></p>
+			<p><span class="header-2">Create a new Git Repository for ELT projects</p></span>
+				<p><span>Follow your organizational process to create Git Repository for ELT projects. However, personal Git repositories can be created using <a href="https://help.github.com/articles/creating-a-new-repository/" target="_blank">Github</a>.</p></span>
+
+			<p><span class="header-2">Create a new ELT project in Git Repository using Hydrograph</p></span>
+				<p><span>Assumption: Git Repository already exists.</p></span>
+
+						<p><span>These steps will create a new ELT project in Git Repository. Steps 1-4 will clone the Git Repository on your local machine.</p></span>
+
+						<p><span>1) In project explorer window of Hydrograph, right click and select Import.</p></span>
+						<p><img alt="" src="../images/project_explorer_import_project.png" /></p>
+
+						<p><span>2) From ELT project Import Wizard, select Git > Projects from Git >Next > Select Clone URI > Next. Enter details for Git source repository-</p></span>
+						<p><img alt="" src="../images/import_projects_from_git.png" /></p>
+						<p><span>The authentication credentials can be stored into Hydrograph Secure Store. Also, protocol can be chosen between git, http, https, ssh etc.</p></span>
+
+						<p><span>3) After entering Git Repository details, click Next. It will display the window for Git branch selection.</p></span>
+
+						<p><span>If the Git repository is non-empty, it will list down available branches on Git. Default branch will be master. Select Git branch to clone and click Next.</p></span>
+						<p><img alt="" src="../images/git_branch_selection.png" /></p>
+
+						<p><span>4) Click Next and configure the local storage for the Git Repository-</p></span>
+						<p><img alt="" src="../images/import_local_destination.png" /></p>
+
+						<p><span>5) Now, click Next and select 'import using New Project Wizard' and click Finish.</p></span>
+						<p><img alt="" src="../images/git_select_wizard.png" /></p>
+
+						<p><span>6) It will take to Hydrograph New Project wizard. Select ELT Project:</p></span>
+						<p><img alt="" src="../images/select_wizard_new_project.png" /></p>
+
+						<p><span>7) Click Next and provide Project name and then click Finish.</p></span>
+						<p><img alt="" src="../images/git_repository_new_ELT_project.png" /></p>
+						
+						<p><span>8) These steps will create a new ELT Project in local Git Repository location.</p></span>
+						<p><img alt="" src="../images/project_explorer_newproj.png" /></p>
+						
+						<p><span>8) In order to share this project in local git repository as well as make it available in Git Source Repository, follow the steps from <a href="GIT-How_to_Check_in_New_Project.html">Git Check-in page.</a> Once the project is shared on Git and pushed to upstream, it will be reflected in project explorer</p></span>
+						<p><img alt="" src="../images/project_explorer_git_repository_new_proj.PNG" /></p>
+	</body>
+</html>

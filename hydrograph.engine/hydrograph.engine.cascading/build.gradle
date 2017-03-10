@@ -1,0 +1,157 @@
+/********************************************************************************
+ * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
+apply from: '../version.gradle'
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
+sourceCompatibility = 1.8
+//version = '0.1'
+
+group = 'hydrograph'
+archivesBaseName = 'hydrograph.engine.cascading'
+ext.cascadingVersion = '3.1.0'
+ext.hadoopVersion = '2.6.0'
+ext.hiveVersion = '1.2.0'
+ext.tezVersion = '0.7.0'
+
+project.ext.setTestingProperties = {
+System.properties[ 'test.data.path' ] = new String( "${projectDir}/../elt-cascading/src/test/resources/data/" )
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifact (testJar) { 
+                classifier = 'tests'
+            }
+             artifact (sourcesJar) { 
+                classifier = 'sources'
+            }
+            
+            pom.withXml {
+                asNode().dependencies.'*'.findAll() {
+                    it.scope.text() == 'runtime' && project.configurations.compile.allDependencies.find { dep ->
+                        dep.name == it.artifactId.text()
+                    }
+                }.each() {
+                    it.scope*.value = 'compile'
+                }
+            }
+        }
+    }
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': archivesBaseName,
+                'Implementation-Version': version
+       }
+       //version = null //Version in jar name set to null to keep the name consistent for travis.yml to ftp the jar
+}
+
+test {
+    exclude '**/CascadingTestCase*'
+    exclude '**/DataGeneratorTest*'
+    exclude '**/InputFileHiveParquetFileTest*'
+    exclude '**/InputMysqlAssemblyTest*'
+    exclude '**/OutputMysqlAssemblyTest*'
+    exclude '**/OutputFileHiveParquetFileTest*'
+    exclude '**/InputFileHiveTextFileTest*'
+    exclude '**/OutputFileHiveTextFileTest*'
+    exclude '**/RunProgramTest*'
+}
+
+uploadArchives {
+    repositories {
+        mavenLocal()
+    }
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+        url 'http://conjars.org/repo/'
+    }
+    maven {
+        url 'http://maven.twttr.com/'
+    }
+}
+
+dependencies {
+	compile group: 'cascading', name: 'cascading-hadoop2-tez', version: cascadingVersion, changing: true
+    testCompile( group: 'org.apache.tez', name: 'tez-tests', version: tezVersion, classifier: 'tests' )
+    testCompile( group: 'org.apache.tez', name: 'tez-api', version: tezVersion )
+    testCompile( group: 'org.apache.tez', name: 'tez-dag', version: tezVersion )
+    
+
+	compile group: 'cascading', name: 'cascading-jdbc-core', version: '3.0.0'
+ 	compile group: 'cascading', name: 'cascading-jdbc-mysql', version: '3.0.0'
+  	compile group: 'cascading', name: 'cascading-jdbc-redshift', version: '3.0.0'
+    compile (group: 'cascading', name: 'cascading-jdbc-oracle', version: '0.1')
+
+
+	compile (group: 'cascading.avro', name: 'avro-scheme', version: '2.5.0'){
+        exclude group: 'cascading', module: 'cascading-hadoop'
+    }
+    compile group: 'cascading', name: 'cascading-core', version: cascadingVersion
+    compile group: 'cascading', name: 'cascading-hadoop2-mr1', version: cascadingVersion //required for plunger
+    compile group: 'cascading', name: 'cascading-local', version: cascadingVersion //required for plunger
+    compile group: 'cascading', name: 'cascading-hadoop2-tez', version: cascadingVersion
+    //compile group: 'cascading', name: 'cascading-hadoop', version: cascadingVersion //using hadoop2-mr1 instead
+ 
+ 	compile group: 'cascading', name: 'cascading-hadoop2-io', version: cascadingVersion //required for plunger
+
+    compile group: 'org.apache.hadoop', name: 'hadoop-common', version: hadoopVersion //required for plunger
+
+    compile group: 'org.apache.hadoop', name: 'hadoop-mapreduce-client-common', version: hadoopVersion
+    //compile group: 'org.apache.hadoop', name: 'hadoop-mapreduce-client-core', version: hadoopVersion //required for plunger
+	compile group: 'riffle', name: 'riffle', version: '1.0.0'
+    compile group: 'cascading', name: 'cascading-hive', version: '2.0.0'
+    compile (group: 'org.apache.hive', name: 'hive-exec', version: hiveVersion) {
+        exclude group: 'com.google.guava'
+        exclude group: 'org.apache.curator'
+    }
+    testCompile( group: 'org.apache.tez', name: 'tez-api', version: tezVersion )
+    testCompile( group: 'org.apache.tez', name: 'tez-dag', version: tezVersion )
+    testCompile( group: 'org.apache.tez', name: 'tez-mapreduce', version: tezVersion )
+    testCompile( group: 'org.apache.tez', name: 'tez-tests', version: tezVersion, classifier: 'tests' )
+    testCompile( group: 'org.apache.tez', name: 'tez-yarn-timeline-history-with-acls', version: tezVersion )
+
+    compile project(':hydrograph.engine.core')
+    compile project(':hydrograph.engine.transformation')
+    compile project(':hydrograph.engine.expression')
+    compile 'com.google.guava:guava:14.0.1'
+    compile 'org.slf4j:slf4j-api:1.7.2'
+    testCompile 'junit:junit:4.11'
+    testCompile 'com.hotels:plunger:2.1.1'
+    compile 'com.twitter:parquet-cascading:1.6.0'
+    compile 'com.twitter:parquet-hadoop:1.6.0'
+    compile 'com.twitter:parquet-column:1.6.0'
+    compile 'org.fluttercode.datafactory:datafactory:0.8'
+    compile 'org.hamcrest:hamcrest-core:1.3' //required by plunger
+    testCompile 'org.mockito:mockito-core:1.9.5' //required by plunger
+    testCompile 'commons-io:commons-io:2.4' //required by plunger
+    compileOnly(group: 'oracle', name: 'ojdbc6', version: '11.2.0.4')
+}
+
+task writePom {
+    pom {
+        project {
+           }
+    	}.writeTo("$buildDir/pom.xml")
+	}

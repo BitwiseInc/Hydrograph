@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?><ns2:graph xmlns:ns2="hydrograph/engine/jaxb/main" name="job_tracker_local1.xml" uniqueJobId="Job_343324684_1485339730795">
+    <inputs xmlns:ns4="hydrograph/engine/jaxb/inputtypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" batch="0" id="IFDelimited_01" name="IFDelimited_01" xsi:type="ns4:textFileDelimited">
+        <outSocket xmlns:ns5="hydrograph/engine/jaxb/itfd" id="out0" type="out" xsi:type="ns5:type-input-delimited-out-socket">
+            <schema name="Internal">
+                <field name="Emp_name" type="java.lang.String"/>
+                <field name="email_id" type="java.lang.String"/>
+                <field name="Company" type="java.lang.String"/>
+                <field name="City" type="java.lang.String"/>
+            </schema>
+        </outSocket>
+        <path uri="C:\Users\ANIKETMO\Desktop\Spark Execution Tracking\01-02-2017\Empdata1.txt"/>
+        <delimiter value="|"/>
+        <hasHeader value="true"/>
+        <safe value="false"/>
+        <strict value="false"/>
+        <charset value="UTF-8"/>
+        <quote value=""/>
+    </inputs>
+
+    <inputs xmlns:ns4="hydrograph/engine/jaxb/inputtypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" batch="0" id="IFDelimited_02" name="IFDelimited_02" xsi:type="ns4:textFileDelimited">
+        <outSocket xmlns:ns5="hydrograph/engine/jaxb/itfd" id="out0" type="out" xsi:type="ns5:type-input-delimited-out-socket">
+            <schema name="Internal">
+                <field name="City" type="java.lang.String"/>
+                <field name="Address" type="java.lang.String"/>
+                <field name="Region" type="java.lang.String"/>
+                <field name="Country" type="java.lang.String"/>
+            </schema>
+        </outSocket>
+        <path uri="C:\Users\ANIKETMO\Desktop\Spark Execution Tracking\01-02-2017\address_data.txt"/>
+        <delimiter value="|"/>
+        <hasHeader value="true"/>
+        <safe value="false"/>
+        <strict value="true"/>
+        <charset value="UTF-8"/>
+        <quote value=""/>
+    </inputs>
+
+    <operations xmlns:ns4="hydrograph/engine/jaxb/operationstypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" batch="0" id="Join_01" name="Join_01" xsi:type="ns4:join">
+        <inSocket fromComponentId="IFDelimited_01" fromSocketId="out0" fromSocketType="out" id="in0" type="in"/>
+        <inSocket fromComponentId="IFDelimited_02" fromSocketId="out0" fromSocketType="out" id="in1" type="in"/>
+        <outSocket id="unused0" type="unused">
+            <copyOfInsocket inSocketId="in0"/>
+        </outSocket>
+        <outSocket id="out0" type="out">
+            <passThroughField inSocketId="in0" name="Emp_name"/>
+            <passThroughField inSocketId="in0" name="email_id"/>
+            <passThroughField inSocketId="in0" name="Company"/>
+            <passThroughField inSocketId="in0" name="City"/>
+            <passThroughField inSocketId="in1" name="Address"/>
+            <passThroughField inSocketId="in1" name="Region"/>
+            <passThroughField inSocketId="in1" name="Country"/>
+        </outSocket>
+        <outSocket id="unused1" type="unused">
+            <copyOfInsocket inSocketId="in1"/>
+        </outSocket>
+        <keys inSocketId="in0" recordRequired="true">
+            <field name="City"/>
+        </keys>
+        <keys inSocketId="in1" recordRequired="true">
+            <field name="City"/>
+        </keys>
+    </operations>
+
+
+    <outputs xmlns:ns4="hydrograph/engine/jaxb/outputtypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" batch="0" id="Discard_01" name="Discard_01" xsi:type="ns4:discard">
+        <inSocket xmlns:ns5="hydrograph/engine/jaxb/otdiscard" fromComponentId="Join_01" fromSocketId="unused0" fromSocketType="unused" id="in0" type="in" xsi:type="ns5:type-output-inSocket-ino"/>
+    </outputs>
+
+    <outputs xmlns:ns4="hydrograph/engine/jaxb/outputtypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" batch="0" id="Discard_02" name="Discard_02" xsi:type="ns4:discard">
+        <inSocket xmlns:ns5="hydrograph/engine/jaxb/otdiscard" fromComponentId="Join_01" fromSocketId="unused1" fromSocketType="unused" id="in0" type="in" xsi:type="ns5:type-output-inSocket-ino"/>
+    </outputs>
+
+    <straightPulls xmlns:ns4="hydrograph/engine/jaxb/straightpulltypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" batch="0" id="Sort_01" name="Sort_01" xsi:type="ns4:sort">
+        <inSocket fromComponentId="Join_01" fromSocketId="out0" fromSocketType="out" id="in0" type="in"/>
+        <outSocket id="out0" type="out">
+            <copyOfInsocket inSocketId="in0"/>
+        </outSocket>
+        <primaryKeys>
+            <field name="Emp_name" order="asc"/>
+        </primaryKeys>
+    </straightPulls>
+
+    <operations xmlns:ns4="hydrograph/engine/jaxb/operationstypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" batch="0" id="Transform_01" name="Transform_01" xsi:type="ns4:transform">
+        <inSocket fromComponentId="Sort_01" fromSocketId="out0" fromSocketType="out" id="in0" type="in"/>
+        <operation id="opt1" class="hydrograph.engine.userfunctions.TransformTest1">
+            <inputFields>
+                <field name="Country" inSocketId="in0" />
+            </inputFields>
+            <outputFields>
+                <field name="emp_name_out" type="java.lang.String" />
+
+            </outputFields>
+
+        </operation>
+        <outSocket id="out0" type="out">
+            <passThroughField inSocketId="in0" name="Emp_name"/>
+            <passThroughField inSocketId="in0" name="email_id"/>
+            <passThroughField inSocketId="in0" name="Company"/>
+            <passThroughField inSocketId="in0" name="City"/>
+            <passThroughField inSocketId="in0" name="Address"/>
+            <passThroughField inSocketId="in0" name="Region"/>
+            <operationField name="emp_name_out" operationId="opt1"/>
+         </outSocket>
+    </operations>
+
+    <operations xmlns:ns4="hydrograph/engine/jaxb/operationstypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" batch="0" id="Aggregate_01" name="Aggregate_01" xsi:type="ns4:aggregate">
+        <inSocket fromComponentId="Transform_01" fromSocketId="out0" fromSocketType="out" id="in0" type="in"/>
+        <outSocket id="out0" type="out">
+            <passThroughField inSocketId="in0" name="Emp_name"/>
+            <passThroughField inSocketId="in0" name="email_id"/>
+            <passThroughField inSocketId="in0" name="Company"/>
+            <passThroughField inSocketId="in0" name="City"/>
+            <passThroughField inSocketId="in0" name="Address"/>
+            <passThroughField inSocketId="in0" name="Region"/>
+            <passThroughField inSocketId="in0" name="emp_name_out"/>
+        </outSocket>
+        <primaryKeys>
+            <field name="Region"/>
+        </primaryKeys>
+        <secondaryKeys>
+            <field name="City" order="asc"/>
+        </secondaryKeys>
+    </operations>
+
+    <straightPulls xmlns:ns4="hydrograph/engine/jaxb/straightpulltypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" batch="0" id="Limit_01" name="Limit_01" xsi:type="ns4:limit">
+        <inSocket fromComponentId="Aggregate_01" fromSocketId="out0" fromSocketType="out" id="in0" type="in"/>
+        <outSocket id="out0" type="out">
+            <copyOfInsocket inSocketId="in0"/>
+        </outSocket>
+        <maxRecords value="32"/>
+    </straightPulls>
+
+    <outputs xmlns:ns4="hydrograph/engine/jaxb/outputtypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" batch="0" id="OFDelimited_01" name="OFDelimited_01" xsi:type="ns4:textFileDelimited">
+        <inSocket xmlns:ns5="hydrograph/engine/jaxb/otfd" fromComponentId="Limit_01" fromSocketId="out0" fromSocketType="out" id="in0" type="in" xsi:type="ns5:type-output-delimited-in-socket">
+            <schema name="Internal">
+                <field name="Emp_name" type="java.lang.String"/>
+                <field name="email_id" type="java.lang.String"/>
+                <field name="Company" type="java.lang.String"/>
+                <field name="City" type="java.lang.String"/>
+                <field name="Address" type="java.lang.String"/>
+                <field name="Region" type="java.lang.String"/>
+                <field name="emp_name_out" type="java.lang.String"/>
+            </schema>
+        </inSocket>
+        <overWrite value="true"/>
+        <path uri="Output_new"/>
+        <delimiter value="|"/>
+        <hasHeader value="false"/>
+        <safe value="false"/>
+        <strict value="false"/>
+        <charset value="UTF-8"/>
+        <quote value=""/>
+    </outputs>
+
+</ns2:graph>

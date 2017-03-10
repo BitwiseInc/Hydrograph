@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+ -->
+
+<plugin>
+   <extension
+         point="org.eclipse.e4.ui.css.swt.theme">         
+    <theme
+         basestylesheeturi="css/e4_default_gtk.css"
+         id="org.eclipse.e4.ui.css.theme.e4_default"
+         label="%theme.aix"
+         os="aix">
+   </theme>
+      <theme
+            basestylesheeturi="css/e4_classic_winxp.css"
+            id="org.eclipse.e4.ui.css.theme.e4_classic"
+            label="%theme.classic">
+      </theme>
+    <theme
+        basestylesheeturi="css/e4-dark.css"
+        id="org.eclipse.e4.ui.css.theme.e4_dark"
+        label="%theme.dark"
+        os="linux">
+    </theme>
+    <theme
+        basestylesheeturi="css/e4-dark_win.css"
+        id="org.eclipse.e4.ui.css.theme.e4_dark"
+        label="%theme.dark"
+        os="win32">
+    </theme>
+    <theme
+        basestylesheeturi="css/e4-dark_mac.css"
+        id="org.eclipse.e4.ui.css.theme.e4_dark"
+        label="%theme.dark"
+        os="macosx">
+    </theme>
+      <theme
+            basestylesheeturi="css/e4_default_gtk.css"
+            id="org.eclipse.e4.ui.css.theme.e4_default"
+            label="%theme.gtk"
+            os="linux">
+      </theme>
+   <theme
+         basestylesheeturi="css/e4_classic_winxp.css"
+         id="org.eclipse.e4.ui.css.theme.e4_default"
+         label="%theme.hpux"
+         os="hpux">
+   </theme>
+      <theme
+            basestylesheeturi="css/e4_default_mac.css"
+            id="org.eclipse.e4.ui.css.theme.e4_default"
+            label="%theme.mac"
+            os="macosx">
+      </theme>
+   <theme
+         basestylesheeturi="css/e4_default_gtk.css"
+         id="org.eclipse.e4.ui.css.theme.e4_default"
+         label="%theme.solaris"
+         os="solaris">
+   </theme>
+      <theme
+            basestylesheeturi="css/e4_default_win.css"
+            id="org.eclipse.e4.ui.css.theme.e4_default"
+            label="%theme.win"
+            os="win32"
+            os_version="6.0,6.1,6.2,6.3,10.0">
+      </theme>
+      <theme
+            basestylesheeturi="css/e4_default_winxp_blu.css"
+            id="org.eclipse.e4.ui.css.theme.e4_default"
+            label="%theme.winxpBlue"
+            os="win32"
+            os_version="5.1">
+      </theme>
+	  <theme
+            basestylesheeturi="css/e4_default_winxp_olv.css"
+            id="org.eclipse.e4.ui.css.theme.e4_default.xpolive"
+            label="%theme.winxpOlive"
+            os="win32"
+            os_version="5.1">
+      </theme>
+   <theme
+         basestylesheeturi="css/e4_classic_win7.css"
+         id="org.eclipse.e4.ui.css.theme.e4_classic"
+         label="%theme.winClassic"
+         os="win32"
+         os_version="6.0,6.1,6.2,6.3">
+   </theme>
+   <theme
+		basestylesheeturi="css/high-contrast.css"
+        id="org.eclipse.e4.ui.css.theme.high-contrast"
+        label="%theme.high-contrast">
+   </theme>
+
+   <themeAssociation
+		themeId="org.eclipse.e4.ui.css.theme.e4_classic"
+		colorAndFontId="org.eclipse.ui.defaultTheme">
+   </themeAssociation>
+   <stylesheet
+         uri="css/dark/e4-dark_preferencestyle.css">
+      <themeid
+            refid="org.eclipse.e4.ui.css.theme.e4_dark"></themeid>
+   </stylesheet>
+   <theme
+         basestylesheeturi="css/hydrodark.css"
+         id="hydrograph.ui.theme.hydrodark"
+         label="Hydrodark">
+   </theme>
+   <theme
+         basestylesheeturi="css/hydroblue.css"
+         id="hydrograph.ui.theme.hydroblue"
+         label="Hydroblue">
+   </theme>
+   </extension>
+
+</plugin>

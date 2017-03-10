@@ -1,0 +1,12 @@
+{
+  "1.0": {
+    "project_path": ":",
+    "project_dir": "project_dir_path",
+    "connection_project_dir": "connection_project_dir_path",
+    "connection_gradle_user_home": null,
+    "connection_gradle_distribution": "connection_gradle_distribution_path",
+    "connection_java_home": null,
+    "connection_jvm_arguments": "",
+    "connection_arguments": ""
+  }
+}

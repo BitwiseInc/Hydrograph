@@ -1,0 +1,609 @@
+/********************************************************************************
+ * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
+
+apply plugin: 'java'
+apply from: "common.gradle"
+sourceCompatibility = 1.8   // Hydrograph Java compatibility
+version = '1.0'				// The version is used to create project jar version number
+
+
+
+/*
+-------------------------------------------------------------------------------------------------
+									 Repository Section 
+-------------------------------------------------------------------------------------------------
+*/
+repositories {  
+		mavenLocal()
+		maven{	url AWUrl }
+   		maven{	url BWUrl }
+		maven{  url RedShiftUrl }
+}
+/*
+-------------------------------------------------------------------------------------------------
+					       			Configuration Section 
+-------------------------------------------------------------------------------------------------
+*/
+configurations {
+    sshAntTask
+    compile
+}
+sourceSets {
+    main {
+        java.srcDir 'src/main/java'
+    }
+}
+configurations.all {
+    // Check for updates every build
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
+
+/*
+-------------------------------------------------------------------------------------------------
+Read project's build.properties file and get the configuration details required for job execution 
+-------------------------------------------------------------------------------------------------
+*/
+	Properties properties = new Properties()
+	def buildProperty = project.projectDir.path + '/build.properties'
+	File propertiesFile = new File(buildProperty)
+	propertiesFile.withInputStream {
+    properties.load(propertiesFile.newDataInputStream())
+}
+/*
+-------------------------------------------------------------------------------------------------
+                                        Dependency Section 
+-------------------------------------------------------------------------------------------------
+*/
+dependencies {
+
+	sshAntTask (group: 'org.apache.ant', name: 'ant-jsch',version:'1.9.4')
+	
+  		compile(group: 'hydrograph', name: 'hydrograph.engine.plugin', version: '0.1.spark-SNAPSHOT')
+  		
+  		compile(group: 'hydrograph', name: 'hydrograph.engine.command-line', version: '0.1.spark-SNAPSHOT')
+
+    	compile(group: 'org.jgrapht', name: 'jgrapht-ext', version: '0.9.1')
+    
+    	compile(group: 'hydrograph', name: 'hydrograph.server.execution.tracking.server', version: '1.0.13')
+    	
+    	compile(group: 'oracle', name: 'ojdbc6', version: '11.2.0.4')
+    	
+    	compile(group: 'mysql', name: 'mysql-connector-java', version: '5.1.34')
+    	
+    	compile(group: 'com.amazon.redshift', name: 'redshift-jdbc42', version: '1.2.1.1001')
+    	
+    	compile(group: 'teraData', name: 'terajdbc4', version: '0.1')
+		
+		compile(group: 'teraData', name: 'tdgssconfig', version: '0.1')
+}
+
+
+test {
+    testLogging.showStandardStreams = true
+}
+
+/*
+-------------------------------------------------------------------------------------------------
+                                      Local Run 
+-------------------------------------------------------------------------------------------------
+*/
+
+task executeLocalJob(dependsOn: ['build', 'classes'], type: JavaExec) {
+	
+	description 'Execute job in local mode'
+   
+    if(project.hasProperty('localjob') && !project.hasProperty('debugJobXML') ){
+        def mainClassName = hydrographExecution
+        def transformFiles = files { file(project.libsDir.path).listFiles() }
+        println "determineExecutionType: Executing Local Job"
+        main = mainClassName
+        standardOutput = System.out
+        errorOutput = System.err
+        classpath += transformFiles + configurations.compile
+        args=getArgsForRunJob("ExecuteLocalRun")
+    }
+}
+executeLocalJob.onlyIf {
+    project.hasProperty('jobXML')
+    project.hasProperty('parameterFile')
+    project.hasProperty('localjob');
+}
+
+
+/*
+-------------------------------------------------------------------------------------------------
+                                 Local Run With View Data 
+-------------------------------------------------------------------------------------------------
+*/
+task executeDebugLocal (dependsOn: ['build', 'classes'], type: JavaExec) {
+	
+	description 'Execute job in Local with view data mode'   
+	 
+    if (project.hasProperty('localjob') && project.hasProperty('debugJobXML')){
+        def mainClassName = hydrographExecution
+        def transformFiles = files { file(project.libsDir.path).listFiles() }
+		println "determineExecutionType: Executing Local Job with View Data Enabled"
+        main = mainClassName
+        standardOutput = System.out
+        errorOutput = System.err
+        classpath += transformFiles + configurations.compile
+        args=getArgsForRunJob("ExecuteLocalDebugRun")
+    }
+}
+executeDebugLocal.onlyIf {
+    project.hasProperty('jobXML')
+    project.hasProperty('parameterFile')
+    project.hasProperty('localjob')
+    project.hasProperty('debugJobXML')
+    project.hasProperty('basePath');
+}
+
+
+
+/*
+-------------------------------------------------------------------------------------------------
+                                Below task are developed for remote run 
+-------------------------------------------------------------------------------------------------
+*/
+
+
+/*
+-------------------------------------------------------------------------------------------------
+                                  Create directories on remote server  
+-------------------------------------------------------------------------------------------------
+*/
+task createDirectories() {
+	 doLast{
+         	println "createDirectories: Creating directories on remote server"
+ 			def  command="mkdir -p " +properties.remoteDirectory+"/{"+jobXML+","+moveJar+","+moveParameterFile+","+moveExternalSchemaFiles+","+moveSubJobFiles+","+moveResourceFile+"}"
+ 			println "Command to create directories on remote server:" + command
+			sshToRemoteServer(host,username,password,command,keyfile,usepassword)
+			
+			createResourceDirectory(moveResourceFile, properties.remoteDirectory)
+		} 
+}
+createDirectories.onlyIf {
+	project.hasProperty('host')
+    project.hasProperty('username')
+    project.hasProperty('password')
+	project.hasProperty('keyfile')
+	project.hasProperty('usepassword')
+    project.hasProperty('jobXML')
+    !project.hasProperty('localjob');
+}
+
+/*
+-------------------------------------------------------------------------------------------------
+                              Securely transfer Jar files to remote server  
+-------------------------------------------------------------------------------------------------
+*/
+task scpJarFiles(dependsOn: ['build']) {
+
+    doLast {
+        println "scpJarFiles: Transferring Jar files to $host"
+        
+        def jarFile
+        def jarName
+        def jarFiles = files {
+            file(project.libsDir.path).listFiles()
+        }
+
+        jarFiles.each {
+            File file ->
+                jarFile = file.absolutePath
+                jarName = file.name
+        	}        
+    try {
+				scpToRemoteServer(jarFile, project.name+"/lib",username,host,password,properties.remoteDirectory,keyfile,usepassword)
+    	    } catch (Exception gradleException) {
+    	     	println 'scpJarFiles: #Gradle failed to execute task#'
+        	    println 'Cause: Failed to transfer lib folder data on remote server'
+        	    gradleException.printStackTrace();
+        	}
+    }
+}
+scpJarFiles.onlyIf {
+	project.hasProperty('host')
+    project.hasProperty('username')
+    project.hasProperty('password') 
+	project.hasProperty('keyfile')
+	project.hasProperty('usepassword')
+    !project.hasProperty('localjob');   
+}
+
+/*
+-------------------------------------------------------------------------------------------------
+                              Securely transfer job XML files to remote server  
+-------------------------------------------------------------------------------------------------
+*/
+task scpJobXML() {
+	  doLast {
+  			println "scpJobXML: Transferring XML to $host"
+
+			scpToRemoteServer(jobXML,project.name+ "/" +getFilePath(jobXML),username,host,password,properties.remoteDirectory,keyfile,usepassword)
+
+	        if(project.hasProperty('debugJobXML')){
+				println "scpJobXML: Transferring view data XML to: $host"
+				scpToRemoteServer(debugJobXML,project.name+ "/" +getFilePath(debugJobXML),username,host,password,properties.remoteDirectory,keyfile,usepassword)
+    		}
+	    }
+}
+scpJobXML.onlyIf {
+    project.hasProperty('host')
+    project.hasProperty('username')
+    project.hasProperty('password') 
+	project.hasProperty('keyfile')
+	project.hasProperty('usepassword')
+    project.hasProperty('jobXML')
+    !project.hasProperty('localjob');
+}
+
+/*
+-------------------------------------------------------------------------------------------------
+                            Securely transfer parameter files to remote server  
+-------------------------------------------------------------------------------------------------
+*/
+task scpParameterFile() {
+		    doLast {
+		    	println "scpParameterFile: Transferring parameter files to $host"
+
+		        try {
+		            def parameterFiles = parameterFile.split(',');
+		            for(int i = 0; i < parameterFiles.length; i++){
+						println "scpParameterFile: copying parameter file: " + parameterFiles[i];             
+		                //println 'copying parameter file: ' + parameterFiles[i];
+		                if(!parameterFiles[i].trim().equals("")){
+		 					scpToRemoteServer( ""+parameterFiles[i]+"",""+project.name+"/param",username,host,password,properties.remoteDirectory,keyfile,usepassword)
+		                  }
+		            }
+		        } catch (Exception gradleException) {
+		        	println 'scpParameterFile: #Gradle failed to execute task#'
+		            println 'Cause: Failed to transfer paramerter files on remote server'
+		            gradleException.printStackTrace();
+		        }
+		    }
+}
+scpParameterFile.onlyIf {
+    project.hasProperty('host')
+    project.hasProperty('username')
+    project.hasProperty('password')
+	project.hasProperty('keyfile')
+	project.hasProperty('usepassword')
+    project.hasProperty('parameterFile')
+    !project.hasProperty('localjob');
+}
+
+/*
+-------------------------------------------------------------------------------------------------
+                        Securely transfer external schema files to remote server  
+-------------------------------------------------------------------------------------------------
+*/
+task scpSchemaFiles() {
+		    doLast {
+			    println "scpSchemaFiles: Transferring external schema files to $host"
+			    
+			    def files=externalSchemaFiles;
+				def schemaFiles = files.split(",");
+				def sampleMap = [:]
+				schemaFiles.each {
+					def fileValue = "${it}"
+					def singleFile = fileValue.split("#");
+					sampleMap.put(singleFile[0],singleFile[1])
+				}
+		
+		    sampleMap.each {
+		       	scpToRemoteServer("${it.value}", getFilePath("${it.key}"),username,host,password,properties.remoteDirectory,keyfile,usepassword)
+		      }//;
+		    } 
+}
+ 
+scpSchemaFiles.onlyIf {
+    project.hasProperty('host')
+    project.hasProperty('username')
+    project.hasProperty('password')
+	project.hasProperty('keyfile')
+	project.hasProperty('usepassword')
+    project.hasProperty('externalSchemaFiles')
+    !project.hasProperty('localjob');
+
+}
+/*
+-------------------------------------------------------------------------------------------------
+                          Securely transfer subjob files to remote server  
+-------------------------------------------------------------------------------------------------
+*/
+task scpSubJobFiles() {
+		    doLast {
+			    println "scpSubJobFiles: Transferring subjob files to $host"
+			    
+			    def files=subJobFiles;
+				def schemaFiles = files.split(",");
+				def sampleMap = [:]
+				schemaFiles.each {
+					def fileValue = "${it}"
+					def singleFile = fileValue.split("#");
+					sampleMap.put(singleFile[0],singleFile[1])
+				 }
+		
+		    sampleMap.each {
+		      	 scpToRemoteServer("${it.value}", getFilePath("${it.key}"),username,host,password,properties.remoteDirectory,keyfile,usepassword)
+		      }
+		    } 
+}
+scpSchemaFiles.onlyIf {
+    project.hasProperty('host')
+    project.hasProperty('username')
+    project.hasProperty('password')
+	project.hasProperty('keyfile')
+	project.hasProperty('usepassword')
+    project.hasProperty('subJobFiles')
+    !project.hasProperty('localjob');
+
+}
+/*
+-------------------------------------------------------------------------------------------------------------
+             Securely transfer user-functions properties file from project resources folder to remote server  
+-------------------------------------------------------------------------------------------------------------
+*/
+task scpUserFunctionsPropertyFile(dependsOn: ['build']) {
+	doLast {
+	println 'scpUserFunctionsPropertyFile: Transferring resources folder to remote server'
+
+		FileTree resourcesFiles = fileTree (dir: project.projectDir.path+'/resources')
+			try {
+					resourcesFiles.visit { element ->
+						if(!element.file.isDirectory()){
+							def targetDirectory=element.file.getParentFile().getPath().replace( project.projectDir.path , project.name )
+							targetDirectory = targetDirectory.replace("\\","/")
+							println "scpUserFunctionsPropertyFile: Transferring "+ element.file +" to "+ targetDirectory +" directory"
+							scpToRemoteServer( element.file, targetDirectory,username,host,password,properties.remoteDirectory,keyfile,usepassword)
+						}
+					}
+															
+				} catch (Exception gradleException) {
+					println 'scpUserFunctionsPropertyFile: #Gradle failed to execute task#'
+					println 'Cause: Failed to transfer resources folder on remote server'
+					gradleException.printStackTrace();
+        	}
+    }
+}
+scpUserFunctionsPropertyFile.onlyIf {
+    project.hasProperty('host')
+    project.hasProperty('username')
+    project.hasProperty('password')
+	project.hasProperty('keyfile')
+	project.hasProperty('usepassword')
+}
+
+/*
+-------------------------------------------------------------------------------------------------------------
+             Securely transfer jar files from project lib folder to remote server  
+-------------------------------------------------------------------------------------------------------------
+*/
+task scpLibFolderJarFiles(dependsOn: ['build'] ){
+
+doLast {	
+	println 'scpLibFolderJarFiles: Transfer jar files from project lib folder to remote server'
+
+        def otherJarFile
+        def otherJarName
+        def otherJarFiles = files {
+			def path1 =project.projectDir.path+'/lib'
+            file(path1).listFiles()
+        }
+		
+	try {
+			otherJarFiles.each {
+            File file ->
+                otherJarFile = file.absolutePath
+				 println 'Copying ' + file.name
+               	scpToRemoteServer(otherJarFile, project.name+"/lib",username,host,password,properties.remoteDirectory,keyfile,usepassword)
+        	}
+      			
+    	    } catch (Exception gradleException) {
+        	    println 'scpUserFunctionsPropertyFile: #Gradle failed to execute task#'
+        	    println 'Cause: Failed to copy lib folder on remote server'
+        	    gradleException.printStackTrace();
+        	}
+}
+}
+scpLibFolderJarFiles.onlyIf {
+    project.hasProperty('host')
+    project.hasProperty('username')
+    project.hasProperty('password')
+	project.hasProperty('keyfile')
+	project.hasProperty('usepassword')
+}
+
+
+/*
+-------------------------------------------------------------------------------------------------
+                                 Remote Run  
+-------------------------------------------------------------------------------------------------
+*/
+task executeRemoteJob() {
+	if (!project.hasProperty('localjob') && !project.hasProperty('debugJobXML')){
+		doLast {
+	    
+	    	println "determineExecutionType: Executing Remote Job"
+	    	
+	        def jarFile
+	        def jarName
+	 
+	        def jarFiles = files {
+	            file(project.libsDir.path).listFiles()
+	        }
+	
+	        jarFiles.each {
+	            File file ->
+	                jarFile = file.absolutePath
+	                jarName = file.name
+	        }
+	    
+	      /*Code to append projects lib folder jar files to jarFileName*/
+        
+        	def otherJarFile
+        	def otherJarFileName
+       	    def otherJarFileNames = ''
+        
+        	def otherJarFileList = files {
+				file(project.projectDir.path+'/lib').listFiles()
+        	}
+        
+        	otherJarFileList.each	{
+        	File file ->
+        	otherJarFile = file.absolutePath
+        	otherJarFileName =  file.name
+        	otherJarFileNames = otherJarFileNames+ "," + "lib/"+ otherJarFileName 
+        	}
+        	if(otherJarFileName != ''){
+        		jarName= jarName + otherJarFileNames 
+        	}
+        
+	       def parameterFiles = parameterFile.split(',');
+	       def unixParameterFileList = "";
+	       
+	       for(int i = 0; i < parameterFiles.length; i++){
+	        	if(!parameterFiles[i].trim().equals("")){
+	        		def unixParameterFileName = parameterFiles[i].substring(parameterFiles[i].replaceAll("\\\\","/").lastIndexOf("/") + 1);
+	            	unixParameterFileList= unixParameterFileList +  "param/" + unixParameterFileName + ",";
+	         	}
+	        }
+	
+			if(!unixParameterFileList.trim().equals("")){
+				unixParameterFileList=unixParameterFileList.substring(0, unixParameterFileList.length() - 1);
+			}
+	
+	        println "executeRemoteJob: Executing command -cd "+properties.remoteDirectory+"/"+project.name+ " && " + properties.runUtility + " -xmlpath " +jobXML + " -libjars lib/" + jarName + " -paramfiles " + unixParameterFileList +" -jobid "+jobId+" -udfpath " + udfpath + " -isexecutiontracking " + isExecutionTracking  +" -trackingclientsocketport " + executionTrackingPort +" -loglevel " + loglevel
+			
+			def command = "cd " +properties.remoteDirectory+"/"+project.name+ " && " + properties.runUtility + " -xmlpath " +jobXML + " -libjars lib/" + jarName + " -paramfiles " + unixParameterFileList +" -jobid "+jobId+" -udfpath " + udfpath + " -isexecutiontracking " + isExecutionTracking  +" -trackingclientsocketport " + executionTrackingPort  +" -loglevel " + loglevel
+
+	   		sshToRemoteServer(host,username,password,command,keyfile,usepassword)
+	    }
+	 }
+}
+executeRemoteJob.onlyIf {
+    project.hasProperty('host')
+    project.hasProperty('username')
+    project.hasProperty('password')
+	project.hasProperty('keyfile')
+	project.hasProperty('usepassword')
+    project.hasProperty('jobXML')
+    project.hasProperty('parameterFile')
+    !project.hasProperty('localjob');
+}
+
+/*
+-------------------------------------------------------------------------------------------------
+                              Remote Run With View Data  
+-------------------------------------------------------------------------------------------------
+*/
+task executeDebugRemoteJob() {
+    if (!project.hasProperty('localjob') && project.hasProperty('debugJobXML')){
+		doLast {
+
+	        println "determineExecutionType: Executing Remote Job with View Data Enabled"
+	
+	        def jarFile
+	        def jarName
+	
+	        def jarFiles = files {
+	            file(project.libsDir.path).listFiles()
+	        }
+	
+	        jarFiles.each {
+	            File file ->
+	                jarFile = file.absolutePath
+	                jarName = file.name
+	        }
+			 /*Code to append projects lib folder jar files to jarFileName*/
+        
+		    def otherJarFile
+		    def otherJarFileName
+		    def otherJarFileNames = ''
+		    
+		    def otherJarFileList = files {
+				file(project.projectDir.path+'/lib').listFiles()
+		    }
+		    
+		    otherJarFileList.each	{
+		    	File file ->
+		    	otherJarFile = file.absolutePath
+		    	otherJarFileName =  file.name
+		    	otherJarFileNames = otherJarFileNames+ "," + "lib/"+ otherJarFileName 
+		    }
+		    if(otherJarFileName != ''){
+		    	jarName= jarName + otherJarFileNames 
+		    }
+	
+	        def parameterFiles = parameterFile.split(',');
+	        def unixParameterFileList = "";
+	
+	        for(int i = 0; i < parameterFiles.length; i++){
+	        	if(!parameterFiles[i].trim().equals("")){
+	        		def unixParameterFileName = parameterFiles[i].substring(parameterFiles[i].replaceAll("\\\\","/").lastIndexOf("/") + 1);
+	            	unixParameterFileList= unixParameterFileList + "param/" + unixParameterFileName + ",";
+	         	}
+	        }
+			
+			if(!unixParameterFileList.trim().equals("")){
+				unixParameterFileList=unixParameterFileList.substring(0, unixParameterFileList.length() - 1);
+			}
+	        
+	        def debugXmlFileName = debugJobXML.substring(debugJobXML.lastIndexOf("/") + 1);
+	        def jobId = jobId;
+	        def basePath = basePath;
+	        
+	        println "executeDebugRemoteJob: Executing command -cd "+properties.remoteDirectory+"/"+project.name+ " && " + properties.runUtility + " -xmlpath " +jobXML + " -libjars lib/" + jarName + " -paramfiles " + unixParameterFileList+ " -debugxmlpath "+ debugJobXML + " -jobid " + jobId + " -basepath " + basePath + " -udfpath" + udfpath  + " -isexecutiontracking " + isExecutionTracking + " -trackingclientsocketport " + executionTrackingPort + " -loglevel " + loglevel
+	        def command="cd " +properties.remoteDirectory+"/"+project.name+ " && " + properties.runUtility + " -xmlpath " +jobXML + " -libjars lib/" + jarName + " -paramfiles " + unixParameterFileList+ " -debugxmlpath "+ debugJobXML + " -jobid " + jobId + " -basepath " + basePath + " -udfpath " + udfpath  + " -isexecutiontracking " + isExecutionTracking + " -trackingclientsocketport " + executionTrackingPort + " -loglevel " + loglevel
+			sshToRemoteServer(host,username,password,command,keyfile,usepassword)
+	    }
+	  }
+}
+executeDebugRemoteJob.onlyIf {
+    project.hasProperty('host')
+    project.hasProperty('username')
+    project.hasProperty('password')
+	project.hasProperty('keyfile')
+	project.hasProperty('usepassword')
+    project.hasProperty('jobXML')
+    project.hasProperty('parameterFile')
+    project.hasProperty('debugJobXML')
+    !project.hasProperty('localjob');
+}
+
+/*
+-------------------------------------------------------------------------------------------------
+                              Kill Remote Job  
+-------------------------------------------------------------------------------------------------
+*/
+task killRemoteJob() {
+	doLast {
+	    if(jobprocessid !=null){
+	    
+			println "scpSubJobFiles: Killing $jobprocessid"
+		
+			def command="sh "+properties.runUtility+" -k " + jobprocessid
+	        sshToRemoteServer(host,username,password,command,keyfile,usepassword)
+	     }
+	}
+}
+killRemoteJob.onlyIf {
+    project.hasProperty('host')
+    project.hasProperty('username')
+    project.hasProperty('password')
+	project.hasProperty('keyfile')
+	project.hasProperty('usepassword')
+    project.hasProperty('jobprocessid');
+}

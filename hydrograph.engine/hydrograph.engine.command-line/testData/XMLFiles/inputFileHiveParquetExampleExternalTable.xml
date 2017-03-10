@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License
+ -->
+
+<p:graph name="InputFileParquetExample" xmlns:p="hydrograph/engine/jaxb/main"
+		 xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../elt-core/src/main/resources/newxmlschema/main/main.xsd ">
+
+	<inputs id="hive_parquet" batch="0" xsi:type="it:parquetHiveFile">
+		<outSocket id="out0">
+			<schema name="schema1">
+				<field name="id" type="java.lang.Integer" />
+				<field name="name" type="java.lang.String" />
+				<field name="city" type="java.lang.String" />
+			</schema>
+		</outSocket>
+		<partitionKeys>
+			<field name="city" />
+		</partitionKeys>
+		<databaseName value="d1External" />
+		<tableName value="t1ExternalTable" />
+		<externalTablePath
+			uri="C:/HiveParquet" />
+	</inputs>
+
+
+	<outputs id="OFDelimited_01" batch="0" xsi:type="ot:textFileDelimited">
+		<inSocket fromComponentId="hive_parquet" fromSocketId="out0"
+			id="in0" type="in">
+			<schema name="schema2">
+				<field name="id" type="java.lang.Integer" />
+				<field name="name" type="java.lang.String" />
+				<field name="city" type="java.lang.String" />
+			</schema>
+		</inSocket>
+		<path uri="testData/Output/HiveParquetOutputExternalTableTarget" />
+		<delimiter value="|" />
+		<hasHeader value="true" />
+		<charset value="UTF-8" />
+	</outputs>
+
+</p:graph>
+	

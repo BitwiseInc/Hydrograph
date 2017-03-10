@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+ 
+ 
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="hydrograph/ui/ComponentConfig"
+	xmlns:tns="hydrograph/ui/ComponentConfig" elementFormDefault="qualified" 
+	xmlns:cnst="hydrograph/ui/constant">
+	
+	<import schemaLocation="Common.xsd"
+		namespace="hydrograph/ui/constant" />
+		
+	<element name="Config">
+		<complexType>
+			<sequence>
+				<element name="component" type="tns:Component" minOccurs="1"
+					maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+	<complexType name="Component">
+		<sequence>
+			<element name="category" type="cnst:category_type" maxOccurs="1" minOccurs="1" />
+			<element name="port" type="tns:IOPort" maxOccurs="1" minOccurs="1" />
+			<element name="property" type="tns:Property" maxOccurs="unbounded" minOccurs="0" />
+			<element name="policy" type="tns:Policy" maxOccurs="unbounded" minOccurs="0" /> 
+			<element name="operations" type="tns:Operations" maxOccurs="1" minOccurs="0" /> 
+		</sequence>
+		<attribute name="name" type="string" use="required"></attribute>
+		<attribute name="acronym" type="string" use="optional" default=""></attribute>
+		<attribute name="nameInPalette" type="string" use="required"></attribute>
+		<attribute name="defaultNamePrefix" type="string" use="required"></attribute>
+		<attribute name="paletteIconPath" type="string" use="required"></attribute>
+		<attribute name="canvasIconPath" type="string" use="required"></attribute>
+		<attribute name="description" type="string" use="required"></attribute>
+		<attribute name="helpFilePath" type="string" use="required"></attribute>
+	</complexType>
+
+
+	<complexType name="Property">
+		<sequence>
+			<element name="validator" type="cnst:validators" maxOccurs="unbounded" minOccurs="0"/>
+		</sequence>
+		<attribute name="type" type="cnst:property_type" use="required" />
+		<attribute name="renderer" type="cnst:property_renderer" use="required" />
+		<attribute name="dataType" type="cnst:data_type" use="required" />
+		<attribute name="name" type="string" use="required" />
+		<attribute name="value" type="string" use="optional" />
+		<attribute name="group" type="cnst:group" use="required" />
+		<attribute name="subGroup" type="cnst:sub_group" use="required" /> 
+		<attribute name="showAsTooltip" type="cnst:showAsTooltip" use="required" />
+		<attribute name="tooltipDataType" type="cnst:tooltipDataType" use="required" />
+		<attribute name="propertyHelpText" type="string" use="optional" />   
+		<attribute name="usage" type="cnst:usage" use="optional" />  
+	</complexType>
+
+	<complexType name="IOPort">
+		<sequence>
+			<element name="portSpecification" type="tns:PortSpecification" maxOccurs="unbounded" minOccurs="1"/>
+		</sequence>
+	</complexType>
+
+ 	<complexType name="PortSpecification">
+ 		<sequence>
+			<element name="port" type="tns:PortInfo" maxOccurs="unbounded" minOccurs="0" />
+		</sequence>
+		
+		<attribute name="numberOfPorts" type="int" use="required" />
+		<attribute name="portAlignment" type="cnst:PortAlignment" use="required" />	
+		<attribute name="changePortCountDynamically" type="boolean" use="optional" default="false"/>	
+		<attribute name="allowMultipleLinks" type="boolean" use="required" />
+		<attribute name="linkMandatory" type="boolean" use="required"/>	
+	</complexType>
+	
+	<complexType name="PortInfo">
+		<attribute name="sequenceOfPort" type="int" use="required" />
+		<attribute name="typeOfPort" type="cnst:PortType" use="required" />
+		<attribute name="portTerminal" type="string" use="required"/>
+		<attribute name="labelOfPort" type="string" use="required"/>	
+	</complexType>	
+
+	 <complexType name="Policy">
+		<sequence>
+			<element name="name" type="string" maxOccurs="1" minOccurs="0" />
+			<element name="value" type="string" maxOccurs="1" minOccurs="0" />
+		</sequence>
+	</complexType>
+	
+	 <complexType name="Operations">
+		 <sequence>
+			<element name="interface" type="tns:TypeInfo" maxOccurs="1" minOccurs="0" />
+			<element name="stdOperation" type="tns:TypeInfo" maxOccurs="unbounded" minOccurs="0" />
+		</sequence>
+	</complexType>
+	
+	<complexType name="TypeInfo">
+			<attribute name="name" type="string"/>
+			<attribute name="class" type="string"/>
+	</complexType>
+	
+</schema>

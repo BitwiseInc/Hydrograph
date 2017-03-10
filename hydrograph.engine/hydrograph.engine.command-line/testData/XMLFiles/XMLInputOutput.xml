@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License
+ -->
+
+<p:graph name="XMLInputOutput" xmlns:p="hydrograph/engine/jaxb/main"
+		 xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
+		 xmlns:op="hydrograph/engine/jaxb/operationstypes"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd  ">
+
+	<inputs id="input1" batch="0" xsi:type="it:xmlFile">
+		<outSocket id="out0">
+			<schema name="xmlSchema">
+				<field name="id" absoluteOrRelativeXPath="id" type="java.lang.Integer" />
+				<field name="first_name" absoluteOrRelativeXPath="first_name" type="java.lang.String" />
+				<field name="last_name" absoluteOrRelativeXPath="last_name" type="java.lang.String" />
+				<field name="gender" absoluteOrRelativeXPath="gender" type="java.lang.String" />
+				<field name="dept_id" absoluteOrRelativeXPath="dept_id" type="java.lang.Integer" />
+				<field name="salary" absoluteOrRelativeXPath="salary" type="java.lang.Double" />
+				<field name="work" absoluteOrRelativeXPath="email/work" type="java.lang.String" />
+				<field name="personal" absoluteOrRelativeXPath="email/personal" type="java.lang.String" />
+				<field name="state" absoluteOrRelativeXPath="address/state" type="java.lang.String" />
+				<field name="city" absoluteOrRelativeXPath="address/city" type="java.lang.String" />
+				<field name="zip" absoluteOrRelativeXPath="address/zip" type="java.lang.String" />
+				<field name="work" absoluteOrRelativeXPath="phone/work" type="java.lang.String" />
+				<field name="home" absoluteOrRelativeXPath="phone/home" type="java.lang.String" />
+			</schema>
+		</outSocket>
+		<path uri="testData\Input\xmlInput.xml" />
+		<absoluteXPath value="dataset/record" />
+		<rootTag value="dataset" />
+		<rowTag value="record" />
+		<charset value="UTF-8" />
+	</inputs>
+
+	<outputs id="output1" batch="0" xsi:type="ot:xmlFile">
+		<inSocket fromComponentId="input1" fromSocketId="out0" id="in0">
+			<schema name="Detail">
+				<field name="id" absoluteOrRelativeXPath="id" type="java.lang.Integer" />
+				<field name="first_name" absoluteOrRelativeXPath="first_name" type="java.lang.String" />
+				<field name="last_name" absoluteOrRelativeXPath="last_name" type="java.lang.String" />
+				<field name="gender" absoluteOrRelativeXPath="gender" type="java.lang.String" />
+				<field name="dept_id" absoluteOrRelativeXPath="dept_id" type="java.lang.Integer" />
+				<field name="salary" absoluteOrRelativeXPath="salary" type="java.lang.Double" />
+				<!--<field name="work" absoluteOrRelativeXPath="work" type="java.lang.String" />-->
+				<!--<field name="personal" absoluteOrRelativeXPath="personal" type="java.lang.String" />-->
+				<field name="email" absoluteOrRelativeXPath="work" type="java.lang.String" />
+				<field name="address" absoluteOrRelativeXPath="address/state" type="java.lang.String" />
+				<field name="phone" absoluteOrRelativeXPath="phone/home" type="java.lang.String" />
+			</schema>
+		</inSocket>
+		<path uri="testData/output/xmlOutput" />
+		<absoluteXPath value="dataset/record" />
+		<rootTag value="dataset" />
+		<rowTag value="record" />
+		<charset value="UTF-8" />
+	</outputs>
+
+	<!--<outputs id="output1" xsi:type="ot:textFileDelimited">
+		<inSocket  fromComponentId="input1" fromSocketId="out0" id="in0">
+			<schema name="xmlSchema">
+				<field name="id"  type="java.lang.Integer" />
+				<field name="first_name"  type="java.lang.String" />
+				<field name="last_name"  type="java.lang.String" />
+				<field name="gender"  type="java.lang.String" />
+				<field name="dept_id"  type="java.lang.Integer" />
+				<field name="salary"  type="java.lang.Double" />
+				<field name="work"  type="java.lang.String" />
+				<field name="personal"  type="java.lang.String" />
+			</schema>
+		</inSocket>
+		<overWrite value="true"/>
+		<path uri="testData\Output\XMLComponentsOp" />
+		<delimiter value="," />
+		<hasHeader value="false" />
+		<charset value="ISO-8859-1" />
+	</outputs>-->
+
+</p:graph>

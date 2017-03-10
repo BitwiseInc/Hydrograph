@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc. Licensed 
+	under the Apache License, Version 2.0 (the "License"); you may not use this 
+	file except in compliance with the License. You may obtain a copy of the 
+	License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by 
+	applicable law or agreed to in writing, software distributed under the License 
+	is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY 
+	KIND, either express or implied. See the License for the specific language 
+	governing permissions and limitations under the License. -->
+<xs:schema xmlns="hydrograph/engine/jaxb/operationstypes"
+	xmlns:cmn="hydrograph/engine/jaxb/commontypes" xmlns:transform="hydrograph/engine/jaxb/transform"
+	xmlns:aggregate="hydrograph/engine/jaxb/aggregate" xmlns:join="hydrograph/engine/jaxb/join"
+	xmlns:filter="hydrograph/engine/jaxb/filter" xmlns:groupcombine="hydrograph/engine/jaxb/groupcombine"
+	xmlns:executiontracking="hydrograph/engine/jaxb/executiontracking" xmlns:gen_seq="hydrograph/engine/jaxb/generatesequence"
+	xmlns:cumulate="hydrograph/engine/jaxb/cumulate" xmlns:lookup="hydrograph/engine/jaxb/lookup"
+	xmlns:normalize="hydrograph/engine/jaxb/normalize" xmlns:pbe="hydrograph/engine/jaxb/partitionByExpression"
+	xmlns:subjob="hydrograph/engine/jaxb/subjob" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="hydrograph/engine/jaxb/operationstypes"
+	elementFormDefault="unqualified">
+	<xs:import schemaLocation="../common/common-types.xsd"
+		namespace="hydrograph/engine/jaxb/commontypes" />
+	<xs:import schemaLocation="./transform/transform-types.xsd"
+		namespace="hydrograph/engine/jaxb/transform" />
+	<xs:import schemaLocation="./aggregate/aggregate-types.xsd"
+		namespace="hydrograph/engine/jaxb/aggregate" />
+	<xs:import schemaLocation="./groupcombine/groupcombine-types.xsd"
+			   namespace="hydrograph/engine/jaxb/groupcombine" />
+	<xs:import schemaLocation="./join/join-types.xsd" namespace="hydrograph/engine/jaxb/join" />
+	<xs:import schemaLocation="./filter/filter-types.xsd"
+		namespace="hydrograph/engine/jaxb/filter" />
+		
+	<xs:import schemaLocation="./executiontracking/executiontracking-types.xsd"
+		namespace="hydrograph/engine/jaxb/executiontracking" />
+		
+	<xs:import schemaLocation="./generate-sequence/generate-sequence-types.xsd"
+		namespace="hydrograph/engine/jaxb/generatesequence" />
+	<xs:import schemaLocation="./cumulate/cumulate-types.xsd"
+		namespace="hydrograph/engine/jaxb/cumulate" />
+	<xs:import schemaLocation="./lookup/lookup-types.xsd"
+		namespace="hydrograph/engine/jaxb/lookup" />
+	<xs:import schemaLocation="./normalize/normalize-types.xsd"
+		namespace="hydrograph/engine/jaxb/normalize" />
+	<xs:import schemaLocation="./subjob/subjob-types.xsd"
+		namespace="hydrograph/engine/jaxb/subjob" />
+	<xs:import
+		schemaLocation="./partition-by-expression/partition-by-expression-types.xsd"
+		namespace="hydrograph/engine/jaxb/partitionByExpression" />
+
+	<xs:complexType name="transform">
+		<xs:complexContent>
+			<xs:restriction base="cmn:type-operations-component">
+				<xs:sequence>
+					<xs:element name="inSocket" type="transform:type-transform-in-socket"
+						minOccurs="1" maxOccurs="1" />
+					<xs:choice maxOccurs="unbounded" minOccurs="0">
+						<xs:element name="operation" type="transform:type-transform-operation"
+							minOccurs="1" maxOccurs="unbounded" />
+						<xs:element name="expression" type="cmn:type-transform-expression"
+							minOccurs="1" maxOccurs="unbounded" />
+					</xs:choice>
+					<xs:element name="outSocket" type="transform:type-transform-out-socket"
+						minOccurs="1" maxOccurs="1" />
+					<xs:element name="runtimeProperties" type="cmn:type-properties"
+						minOccurs="0" maxOccurs="1" />
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="subjob">
+		<xs:complexContent>
+			<xs:extension base="subjob:subjob-base">
+				<xs:sequence>
+					<xs:element name="path">
+						<xs:complexType>
+							<xs:attribute name="uri" type="xs:string" use="required" />
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="subjobParameter" type="cmn:type-properties"
+						minOccurs="0" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="aggregate">
+		<xs:complexContent>
+			<xs:extension base="aggregate:aggregate-base">
+				<xs:sequence>
+					<xs:element name="primaryKeys" type="aggregate:type-primary-key-fields" />
+					<xs:element name="secondaryKeys" type="aggregate:type-secondary-key-fields"
+						minOccurs="0" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="groupcombine">
+		<xs:complexContent>
+			<xs:extension base="groupcombine:groupcombine-base">
+				<xs:sequence>
+					<xs:element name="primaryKeys" type="groupcombine:type-primary-key-fields" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="join">
+		<xs:complexContent>
+			<xs:extension base="join:join-base">
+				<xs:sequence>
+					<xs:element name="keys" type="join:type-key-fields"
+						minOccurs="2" maxOccurs="unbounded" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="executiontracking">
+		<xs:complexContent>
+			<xs:restriction base="cmn:type-operations-component">
+				<xs:sequence>
+					<xs:element name="inSocket" type="executiontracking:type-executiontracking-in-socket"
+						minOccurs="1" maxOccurs="1" />
+					<xs:choice maxOccurs="1" minOccurs="1">
+						<xs:element name="operation" type="executiontracking:type-executiontracking-operation"
+							minOccurs="1" maxOccurs="1" />
+						<xs:element name="expression" type="cmn:type-transform-expression"
+							minOccurs="1" maxOccurs="1" />
+					</xs:choice>
+					<xs:element name="outSocket" type="executiontracking:type-executiontracking-out-socket"
+						minOccurs="1" maxOccurs="2" />
+					<xs:element name="runtimeProperties" type="cmn:type-properties"
+						minOccurs="0" maxOccurs="1" />
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+
+<xs:complexType name="filter">
+		<xs:complexContent>
+			<xs:restriction base="cmn:type-operations-component">
+				<xs:sequence>
+					<xs:element name="inSocket" type="filter:type-filter-in-socket"
+						minOccurs="1" maxOccurs="1" />
+					<xs:choice maxOccurs="1" minOccurs="1">
+						<xs:element name="operation" type="filter:type-filter-operation"
+							minOccurs="1" maxOccurs="1" />
+						<xs:element name="expression" type="cmn:type-transform-expression"
+							minOccurs="1" maxOccurs="1" />
+					</xs:choice>
+					<xs:element name="outSocket" type="filter:type-filter-out-socket"
+						minOccurs="1" maxOccurs="2" />
+					<xs:element name="runtimeProperties" type="cmn:type-properties"
+						minOccurs="0" maxOccurs="1" />
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+	<xs:complexType name="generateSequence">
+		<xs:complexContent>
+			<xs:restriction base="cmn:type-operations-component">
+				<xs:sequence>
+					<xs:element name="inSocket" type="cmn:type-base-inSocket-fixed-in0"
+						minOccurs="1" maxOccurs="1" />
+					<xs:element name="operation" type="gen_seq:type-operation"
+						minOccurs="1" maxOccurs="1" />
+					<xs:element name="outSocket" type="gen_seq:type-out-socket"
+						minOccurs="1" maxOccurs="1" />
+					<xs:element name="runtimeProperties" type="cmn:type-properties"
+						minOccurs="0" maxOccurs="1" />
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+	<xs:complexType name="cumulate">
+		<xs:complexContent>
+			<xs:extension base="cumulate:cumulate-base">
+				<xs:sequence>
+					<xs:element name="primaryKeys" type="cumulate:type-primary-key-fields" />
+					<xs:element name="secondaryKeys" type="cumulate:type-secondary-key-fields"
+						minOccurs="0" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+	<xs:complexType name="lookup">
+		<xs:complexContent>
+			<xs:extension base="lookup:lookup-base">
+				<xs:sequence>
+					<xs:element name="keys" type="lookup:type-key-fields"
+						minOccurs="2" maxOccurs="unbounded" />
+					<xs:element name="match" minOccurs="1" maxOccurs="1">
+						<xs:complexType>
+							<xs:attribute name="value" type="cmn:match_value"
+								default="first" />
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="normalize">
+		<xs:complexContent>
+			<xs:restriction base="cmn:type-operations-component">
+				<xs:sequence>
+					<xs:element name="inSocket" type="normalize:type-in-socket"
+						minOccurs="1" maxOccurs="1" />
+					<xs:choice maxOccurs="1" minOccurs="1">
+						<xs:element name="operation" type="normalize:type-operation"
+							minOccurs="1" maxOccurs="1" />
+						<xs:element name="expression" type="normalize:type-transform-expression"
+							minOccurs="1" maxOccurs="unbounded" />
+					</xs:choice>
+					<xs:element name="outputRecordCount" type="cmn:type-output-record-count"
+						minOccurs="0" maxOccurs="1" />
+					<xs:element name="outSocket" type="normalize:type-out-socket"
+						minOccurs="1" maxOccurs="1" />
+					<xs:element name="runtimeProperties" type="cmn:type-properties"
+						minOccurs="0" maxOccurs="1" />
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="partitionByExpression">
+		<xs:complexContent>
+			<xs:extension base="pbe:partitionByExpression-base">
+				<xs:sequence>
+					<xs:element name="noOfPartitions" minOccurs="1"
+						maxOccurs="1">
+						<xs:complexType>
+							<xs:attribute name="value" type="xs:long" use="required" />
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+</xs:schema>

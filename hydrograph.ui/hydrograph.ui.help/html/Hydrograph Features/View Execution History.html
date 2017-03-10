@@ -1,0 +1,132 @@
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+
+<!doctype html>
+<html> 
+<head>
+<title>View Execution History</title>
+<link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<body>
+	<p>
+		<span class="header-1">View Execution History</span>
+	</p>
+	<p>
+		<span><b>View Execution History</b>&nbsp; is a replay feature for displaying execution status of specified job execution, without re-running the job itself.</span>
+	<p>
+		<span class="header-2">To View/Watch Execution History:</span>
+	</p>
+	<ul>
+		<li><p>
+				<span>To view Execution History the job should be run at least once.</span>
+			</p></li>
+		<li><p>
+				<span>If the job is never executed then you get a message saying <i>No execution history available for this job in current session.</i></span>
+			</p></li>
+		
+		
+		<li><p>
+				<span>View Execution History feature is added on drop down of RUN button as shown below.</span>
+			</p></li>
+		
+		
+			<p><img alt="" src="../images/view_execution_history_feature.png" /></p>
+	<p><span>Fig: Click the View Execution History option to see run history.</span></p>
+	</ul>
+	
+
+	<ul>
+		<li><p>
+				<span>Once you select <i>View Execution History option </i> from run button drop down a window would open ,showing history of previous job executions.</span>
+			</p></li>
+	</ul>
+			<p><img alt="" src="../images/view_execution_history_window.png" /></p>
+			<p><span>Fig: History for previous job executions.</span></p>
+	<ul>
+		<li><p><span>The View Execution History window shows different parameters for previous runs</span>
+			</p>
+				<ul>
+					<li><p><span><b>Job Id:</b>
+Unique Job Id is common for all runs for that particular job.Currently, when you create and save the job, unique job Id is getting generated and is saved into its xml.Unique Job ID is a combination of <i>Job_RandomUniqueNumber_LongTimestamp</i>.  Ex. JobName="job_1.xml" UniqueJobId="Job_1924263499_1487226195589" Throughout, this Job id will remain same, even if you make modifications to same job and take multiple runs. So this same job id will be used in tracking logs. </span></p>
+<p><span>To identify different run for same job we append time stamp to UniqueJobId</span> </p>
+</li>
+					<li><p><span><b>Time stamp: </b> This is time of the job run.</span></p></li>
+					<li><p><span><b>Execution mode: </b>Execution mode can be either Local or Remote</span></p></li>
+					<li><p><span><b>Job status: </b>This is the status of job,it can either be KILLED, FAILED or SUCCESS</span></p></li>					
+				</ul>
+		</li>
+	</ul>
+<ul>
+	<li><p><span>If user wants to view the run history for any past run, user just needs to browse the required tracking log file using browse button.</span></p></li>
+</ul>
+<p><img alt="" src="../images/viewexecutiontrakingbrowsebutton.png" /></p>
+	<p><span>Fig: Browse older execution files to see execution history form past.</span></p>
+	
+<ul>
+	<li><p><span>The execution files have <i>.track.log</i> file extension, so user is able to browse files only with this extension.</span></p></li>
+</ul>
+
+<ul>
+		<li><p>
+				<span>If user selects the job tracking file with incorrect file , error message is displayed saying <i>Incorrect format</i></span>
+			</p></li>
+	</ul>
+<p><img alt="" src="../images/viewexecutiontrakingincorrectfilemessage.png" /></p>
+	<p><span>Fig: Message when incorrect file is selected.</span></p>
+
+
+<ul>
+		<li><p>
+				<span>If some components and ports of existing components were added/removed the record count or status for those component and ports will not be displayed and such components and port details will be listed on a window. </span>
+			</p></li>
+	</ul>
+	<p><img alt="" src="../images/viewexecutiontrackingmessage.png" /></p>
+	<p><span>Fig: Message when some components were added/removed.</span></p>
+	
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

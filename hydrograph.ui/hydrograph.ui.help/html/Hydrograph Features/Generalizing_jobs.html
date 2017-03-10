@@ -1,0 +1,52 @@
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+ 
+ 
+<!doctype html>
+<html>
+<head>
+	<title>How to Parameterize Component Properties</title>
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<body>
+<p><span class="header-1">Generalizing Jobs</span></p>
+
+<p><span>Generalization of jobs can be achieved through parameterization.Most of the properties can be <b>parameterized</b>&nbsp;in Hydrograph.</span></p>
+<p><span>The parameter format that needs to be followed should be as below,<br><br>
+<b>@{</b>Parameter_Name<b>}</b>. <br><br>
+A parameter name can only contain combinations of "_" and alphanumeric values. 
+Also '@', '{','}' are the only special characters allowed in specific sequence for declaring a value as a parameter. 
+For instance, the image below depicts parameterization of some of the properties present in the General tab of the Input file delimited component.</span></p>
+<p><img alt="" src="../images/parameterize_general_properties.png" /></p>
+
+<p><span> Users can also parameterize field names under the schema tab. Naming conventions for parameterization are same as stated above.</span></p>
+<p><img alt="" src="../images/parameterize_schema_properties.png" /></p>
+
+<p><span>Each parameter that is created by the user gets displayed on the Parameter Grid once user saves the job. Users can provide values to the parameters which get saved in a text file as key=value format.</span></p>
+<p><img alt="" src="../images/job_parameters.png" /></p>
+<p><span>Job parameters window above contains three sections</span></p>
+<ol>
+	<li><p><span><b>Parameter Files</b> - This section list the properties file. Optionally, one may also create a properties file and browse it into the grid using below buttons,</span></p>
+	<ul>
+		<li><p><span><b>Add project param file</b> - to add project level parameter files</span></p></li>
+		<li><p><span><b>Add job param file</b> - to add job level parameter files</span></p></li>
+	</ul>
+	<li><p><span><b>Parameter File View</b> - This section shows the contents of the file selected in the Parameter Files section. 
+	User can add/edit/delete the contents of the selected file.</span></li>
+	<li><p><span><b>Search All Parameters</b> - This section lists all the available parameters from files listed in Parameter Files section. 
+	It also allows users to search for a particular parameter. Based on the search results user can validate the file name and value of the parameters.</span></p></li>
+</ol> 
+<p><img alt="" src="../images/properties_file_projectExplorer.png" /></p>
+<p><img alt="" src="../images/properties_file.png" /></p>
+<p><span> Parameters once created can be used across a job at multiple locations wherever needed. 
+e.g. Suppose all the Input/Output component in particular job needs to have the same value for "Is Header" property, then it can be achieved by parameterizing it.</span></p>
+</body>
+</html>

@@ -1,0 +1,58 @@
+=====================================================================================================
+Features Added:
+=====================================================================================================
+Sr.No. <date> - [developer names] - description
+1. .... - [Pooja Yadav] - Removal of Secondary key Widget from Sort Component.
+2. .... - [Rahul Mahajan] - Subjob Tracking feature, the execution tracking will be displayed even for components within subjob.
+3. .... - [Vibhor Tyagi] - View Execution History feature for displaying execution status of specified job execution. 
+4. <07/11/2016> - [Pooja Yadav] - Rearranged widget of schema tab for Input and Output Component.
+5. .... - [Akhilesh Joshi] - Changed error dialogs for view data feature to show detailed error messages.
+6. 		  [Anshul Shivhare] - Code changes to show confirm-message box while importing target XML for updating new unique job id.
+7. <1453> [Nitin Gupta] Preferences window: Add Local and Remote Port no Details in Preference Window Under Execution Tracking and View Data
+=====================================================================================================
+Issues/Defects fixed:
+=====================================================================================================
+
+Sr.No. <GitHub Issue #> - [fixed by] - description
+1. <1328> - [shashank karnik] - Transform Components: 'Pull Schema' Button should not be in enable state unless there is an incoming
+connection(link) on transform component.
+2. <1410> - [Ashika Holkar] - MacBook Pro - Field Name is not Getting Updated When User Renames Field Name from Its Default Name
+3.<1416>-[Sonia Raheja]-Subjob: User is Not able to Create a subjob.
+4.<1267> - [Ankit Sharma] - Subjob : Size of Output Socket for Subjob was getting reduced after renaming it.
+5.<1409>-[Akhilesh Joshi]Join Component: Size of the Join Component is not getting reduced After Changing the Input Count
+6.<1317>-[Shashank Karnik]-Trasform Component: After Importing xml/Copy pasting the Job, Error Bubble is Not Getting Displyed on Trasform Component even if Class file is Not Present in build path of current project.
+7.<1370>-[Ankit Sharma] User was not able to rename the component's name.
+8.<1356>-[Ankit sharma] Added validations for Hive Component partition key values. 
+9.<1413>-[Ankit Sharma] Error bubble was getting displayed on transform component even if there is no error in component. 
+10.<1363> - [Pooja Yadav] - Remove Dups Component: Size of Remove Dups Component is Not Same As All Other Components
+11.<1217> - [Pooja Yadav] - MAC: Alignment Related Issues
+12.<1272> - [Anshul Shivhare] - 'Ok' and 'Cancel' buttons are getting hide on Join(Mapping), Parameter Grid, Hive(Partitian Key) windows
+13.<1336> - [Prateem Tadas] -Hive component: On Partition key Window, that when we Use Different DB, the Available Fields are not Getting Imported.
+14.<1423>-[Pooja Yadav]-Exception Occured While saving the Job
+15.<1435> - [Ankit Sharma] - Error was getting removed when user clicks anywhere in the panel.
+16.<1418> - [Ankit Sharma] - Duplicate records were not getting displayed in data viewer window.
+17.<1419> - [Ankit Sharma] - Output Component: Fixed width component was not showing error for length field.
+18.<1424>-[Pooja Yadav]-Join Component: Size of the Join Component having Input Count more than Two is Getting Reduced After Importing the Job.
+19.<1439> - [Ankit Sharma] - Alert message changed for View data when run without debug mode.
+20.<1434> - [Pooja Yadav] - Schema window : Import xml and Export xml buttons should be disable when you select internal schema.
+21.<1376> - [Anshul Shivhare] - Default Name is Not Getting Displayed When User Revert the Component Name to its Default Name After Renaming.
+22. ..... - [Pooja Yadav] -  Subjob: Job is getting failed when user creates standalone subjob with Discard component.
+23. ..... - [Pooja Yadav] - Stop Job Button : fixed Stop job button image issue.
+24. ..... - [Sonia Raheja] - Refresh icon should occur on subjob component in main job if user changes in disconnected subjob.
+25. ..... - [Pooja Yadav] - MAC: Fixed schema widget Import and Export Button alignment issue for mac.
+26.<1447> - [Ankit Sharma] - MAC: Fixed issue related to log creation at Incorrect path.
+27. ..... - [Kalyan Rajpoot] - Job is saving multiple times when user hit the run button.
+28. <1451> - [Pooja Yadav] - Subjob Component: Job is Getting Failed, When Clone Component is Present Inside Subjob and Watch Point is Added to both the Links coming from Subjob.
+29.<1436> - [Anshul Shivhare] -	Join Component: Validation is Not Present in Join Mapping Window
+30.<1430> - [Anshul Shivhare] - Output Component: Name of the Output Component is Getting Moved Upward After clicking on Pull Schema button.
+31. ..... - [Sonia Raheja] - Subjob editor is not getting refreshed if user replace the subjob file with existing file name that is already open in editor.
+32. ..... - [Sonia Raheja] - Execution tracking logs of 1st job that was run in debug mode are getting appended on second job's execution tracking console if second job is running in normal mode.
+33. ..... - [Pooja Yadav] - Mac : Fixed mac ui related issues.
+34.<511> - [Pooja Yadav] - Fixed issue related to RunJob button while running job in Remote and Debug Mode.
+35. ..... - [Pooja Yadav] - Output Component : fixed issue related to file path and external table path in output components.
+36.<518> - [Pooja Yadav] - Join Component : Field Name validation is not present in Join/lookup Mapping dialog for Output field.
+37.<521> - [Pooja Yadav] - Run Configuration Window : Base Path field on Run configuration window is not shown with asterisk (*) when user selects view data checkbox.
+38. ..... - [Pooja Yadav] - Fixed theme related issues.
+=====================================================================================================
+Notes for QA:
+=====================================================================================================

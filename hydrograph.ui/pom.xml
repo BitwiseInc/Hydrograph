@@ -1,0 +1,321 @@
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+ -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>hydrograph</groupId>
+	<artifactId>hydrograph.ui.parent</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<neon-repo.url>http://download.eclipse.org/releases/neon/</neon-repo.url>
+
+	</properties>
+
+
+	<repositories>
+		<repository>
+			<id>mars</id>
+			<url>${neon-repo.url}</url>
+			<layout>p2</layout>
+		</repository>
+
+		<repository>
+			<id>marsx</id>
+			<url>http://download.eclipse.org/e4/snapshots/org.eclipse.e4.tools/latest/</url>
+			<layout>p2</layout>
+		</repository>
+
+	</repositories>
+
+
+
+	<profiles>
+		<profile>
+			<id>windows</id>
+			<activation>
+				<os>
+					<family>windows</family>
+				</os>
+			</activation>
+			<properties>
+				<tycho.version>0.23.1</tycho.version>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.eclipse.tycho</groupId>
+						<artifactId>tycho-maven-plugin</artifactId>
+						<version>${tycho.version}</version>
+						<extensions>true</extensions>
+					</plugin>
+					<plugin>
+						<groupId>org.eclipse.tycho</groupId>
+						<artifactId>tycho-compiler-plugin</artifactId>
+						<version>${tycho.version}</version>
+						<configuration>
+							<debug>false</debug>
+							<optimize>true</optimize>
+							<source>1.8</source>
+							<target>1.8</target>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.eclipse.tycho</groupId>
+						<artifactId>target-platform-configuration</artifactId>
+						<version>${tycho-version}</version>
+						<configuration>
+							
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.eclipse.tycho</groupId>
+						<artifactId>target-platform-configuration</artifactId>
+						<version>${tycho.version}</version>
+						<configuration>
+							<dependency-resolution>
+								<optionalDependencies>ignore</optionalDependencies>
+								<extraRequirements>
+									<requirement>
+										<type>eclipse-feature</type>
+										<id>hydrograph.ui.platformspecificplugins</id>
+										<versionRange>0.0.0</versionRange>
+									</requirement>
+								</extraRequirements>
+							</dependency-resolution>
+							<environments>
+								<environment>
+									<os>win32</os>
+									<ws>win32</ws>
+									<arch>x86_64</arch>
+								</environment>
+								<environment>
+									<os>win32</os>
+									<ws>win32</ws>
+									<arch>x86</arch>
+								</environment>
+								<environment>
+									<os>linux</os>
+									<ws>gtk</ws>
+									<arch>x86_64</arch>
+								</environment>
+								<environment>
+									<os>macosx</os>
+									<ws>cocoa</ws>
+									<arch>x86_64</arch>
+								</environment>
+							</environments>
+							<filters>
+								<filter>
+									<type>eclipse-plugin</type>
+									<id>org.eclipse.wb.core.lib</id>
+									<removeAll />
+								</filter>
+							</filters>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>unix</id>
+			<activation>
+				<os>
+					<family>unix</family>
+				</os>
+			</activation>
+			<properties>
+				<tycho.version>0.23.1</tycho.version>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.eclipse.tycho</groupId>
+						<artifactId>tycho-maven-plugin</artifactId>
+						<version>${tycho.version}</version>
+						<extensions>true</extensions>
+					</plugin>
+					<plugin>
+						<groupId>org.eclipse.tycho</groupId>
+						<artifactId>tycho-compiler-plugin</artifactId>
+						<version>${tycho.version}</version>
+						<configuration>
+							<debug>false</debug>
+							<optimize>true</optimize>
+							<source>1.8</source>
+							<target>1.8</target>
+						</configuration>
+					</plugin>
+
+					<plugin>
+						<groupId>org.eclipse.tycho</groupId>
+						<artifactId>target-platform-configuration</artifactId>
+						<version>${tycho.version}</version>
+						<configuration>
+							<dependency-resolution>
+								<optionalDependencies>ignore</optionalDependencies>
+								<extraRequirements>
+									<requirement>
+										<type>eclipse-feature</type>
+										<id>hydrograph.ui.platformspecificplugins</id>
+										<versionRange>0.0.0</versionRange>
+									</requirement>
+								</extraRequirements>
+							</dependency-resolution>
+							<environments>
+								<environment>
+									<os>win32</os>
+									<ws>win32</ws>
+									<arch>x86_64</arch>
+								</environment>
+								<environment>
+									<os>win32</os>
+									<ws>win32</ws>
+									<arch>x86</arch>
+								</environment>
+								<environment>
+									<os>linux</os>
+									<ws>gtk</ws>
+									<arch>x86_64</arch>
+								</environment>
+								<environment>
+									<os>macosx</os>
+									<ws>cocoa</ws>
+									<arch>x86_64</arch>
+								</environment>
+							</environments>
+							<filters>
+								<filter>
+									<type>eclipse-plugin</type>
+									<id>org.eclipse.wb.core.lib</id>
+									<removeAll />
+								</filter>
+							</filters>
+							
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>mac</id>
+			<activation>
+				<os>
+					<family>mac</family>
+				</os>
+			</activation>
+			<properties>
+				<tycho.version>0.23.1</tycho.version>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.eclipse.tycho</groupId>
+						<artifactId>tycho-maven-plugin</artifactId>
+						<version>${tycho.version}</version>
+						<extensions>true</extensions>
+					</plugin>
+					<plugin>
+						<groupId>org.eclipse.tycho</groupId>
+						<artifactId>tycho-compiler-plugin</artifactId>
+						<version>${tycho.version}</version>
+						<configuration>
+							<debug>false</debug>
+							<optimize>true</optimize>
+							<source>1.8</source>
+							<target>1.8</target>
+						</configuration>
+					</plugin>
+
+					<plugin>
+						<groupId>org.eclipse.tycho</groupId>
+						<artifactId>target-platform-configuration</artifactId>
+						<version>${tycho.version}</version>
+						<configuration>
+							<dependency-resolution>
+								<optionalDependencies>ignore</optionalDependencies>
+								<extraRequirements>
+									<requirement>
+										<type>eclipse-feature</type>
+										<id>hydrograph.ui.platformspecificplugins</id>
+										<versionRange>0.0.0</versionRange>
+									</requirement>
+								</extraRequirements>
+							</dependency-resolution>
+							<environments>
+								<environment>
+									<os>win32</os>
+									<ws>win32</ws>
+									<arch>x86_64</arch>
+								</environment>
+								<environment>
+									<os>win32</os>
+									<ws>win32</ws>
+									<arch>x86</arch>
+								</environment>
+								<environment>
+									<os>linux</os>
+									<ws>gtk</ws>
+									<arch>x86_64</arch>
+								</environment>
+								<environment>
+									<os>macosx</os>
+									<ws>cocoa</ws>
+									<arch>x86_64</arch>
+								</environment>
+							</environments>
+							
+							<filters>
+								<filter>
+									<type>eclipse-plugin</type>
+									<id>org.eclipse.wb.core.lib</id>
+									<removeAll />
+								</filter>
+							</filters>
+							
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+	<modules>
+		<module>hydrograph.ui.perspective</module>
+		<module>hydrograph.ui.menus</module>
+		<module>hydrograph.ui.project.structure</module>
+		<module>hydrograph.ui.logging</module>
+		<module>hydrograph.ui.common</module>
+		<module>hydrograph.ui.graph</module>
+		<module>hydrograph.ui.product</module>
+		<module>hydrograph.ui.graph.figure</module>
+		<module>hydrograph.ui.propertywindow</module>
+		<module>hydrograph.ui.model</module>
+		<module>hydrograph.ui.engine</module>
+		<module>hydrograph.ui.common.datastructures</module>
+		<module>hydrograph.ui.tooltip</module>
+		<module>hydrograph.ui.common.interfaces</module>
+		<module>hydrograph.ui.parametergrid</module>
+		<module>hydrograph.ui.joblogger</module>
+		<module>hydrograph.ui.help</module>
+		<module>hydrograph.ui.platformspecificplugins</module>
+		<module>hydrograph.ui.validators</module>
+		<module>hydrograph.ui.dataviewer</module>
+		<module>hydrograph.ui.communication</module>
+		<module>hydrograph.ui.expression.editor</module>
+		<module>hydrograph.ui.theme</module>
+	</modules>
+</project>

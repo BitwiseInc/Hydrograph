@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+ -->
+
+<plugin>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="hydrograph.ui.project.structure.category"
+            name="ELT">
+      </category>
+      <wizard
+            category="hydrograph.ui.project.structure.category"
+            class="hydrograph.ui.project.structure.wizard.CustomWizard"
+            hasPages="true"
+            icon="icon/newprj_wiz.gif"
+            id="hydrograph.ui.project.structure.wizard"
+            name="ELT Project"
+            project="true">
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="hydrograph.ui.project.structure.wizard.ProjectExplorerView"
+            icon="icon/filenav_nav.gif"
+            id="hydrograph.ui.project.structure.navigator"
+            name="Project Explorer">
+      </view>
+      <view
+            class="hydrograph.ui.project.structure.console.HydrographConsole"
+            id="hydrograph.ui.project.structure.console.HydrographConsole"
+            name="Console"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.navigator.viewer">
+      <viewerActionBinding
+            viewerId="hydrograph.ui.project.structure.navigator">
+         <includes>
+            <actionExtension
+                  pattern="org.eclipse.ui.navigator.resources.*">
+            </actionExtension>
+         </includes>
+      </viewerActionBinding>
+      <viewerContentBinding
+            viewerId="hydrograph.ui.project.structure.navigator">
+         <includes>
+            <contentExtension
+                  pattern="org.eclipse.ui.navigator.resourceContent">
+            </contentExtension>
+            <contentExtension
+                  pattern="org.eclipse.ui.navigator.resources.filters.*">
+            </contentExtension>
+            <contentExtension
+                  pattern="org.eclipse.ui.navigator.resources.linkHelper">
+            </contentExtension>
+            <contentExtension
+                  pattern="org.eclipse.ui.navigator.resources.workingSets">
+            </contentExtension>
+         </includes>
+      </viewerContentBinding>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="hydrograph.ui.perspective.ETLPerspective">
+         <view
+               closeable="true"
+               id="org.eclipse.gef.ui.palette_view"
+               minimized="false"
+               moveable="true"
+               ratio="0.2"
+               relationship="left"
+               relative="org.eclipse.ui.editorss"
+               showTitle="true"
+               visible="true">
+         </view>
+         <view
+               closeable="true"
+               id="hydrograph.ui.project.structure.navigator"
+               minimized="false"
+               ratio="0.7"
+               relationship="bottom"
+               relative="org.eclipse.gef.ui.palette_view"
+               visible="true">
+         </view>
+         <view
+               closeable="true"
+               id="hydrograph.ui.project.structure.console.HydrographConsole"
+               moveable="true"
+               ratio="0.70"
+               relationship="bottom"
+               relative="org.eclipse.ui.editorss"
+               visible="true">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         id="hydrograph.ui.project.structure.projectNature"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run
+               class="hydrograph.ui.project.structure.natures.ProjectNature">
+         </run>
+      </runtime>
+   </extension>
+   <extension
+         point="org.eclipse.ui.navigator.navigatorContent">
+      <commonWizard
+            type="new"
+            wizardId="hydrograph.ui.graph.job.wizard">
+         <enablement></enablement>
+      </commonWizard>
+      <commonWizard
+            type="new"
+            wizardId="hydrograph.ui.project.structure.wizard">
+         <enablement></enablement>
+      </commonWizard>
+      <commonWizard
+            type="new"
+            wizardId="org.eclipse.jdt.ui.wizards.NewClassCreationWizard">
+         <enablement></enablement>
+      </commonWizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.ide.projectNatureImages">
+      <image
+            icon="icon/prj_obj.gif"
+            id="hydrograph.ui.project.structure.natureImage"
+            natureId="hydrograph.ui.project.structure.projectNature">
+      </image>
+   </extension>
+  
+</plugin>	

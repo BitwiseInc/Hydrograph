@@ -1,0 +1,175 @@
+/*******************************************************************************
+ * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *******************************************************************************/
+
+package hydrograph.ui.engine.converter.impl;
+
+import hydrograph.engine.jaxb.commontypes.TypeBaseInSocket;
+import hydrograph.engine.jaxb.commontypes.TypeFieldName;
+import hydrograph.engine.jaxb.commontypes.TypeOperationsOutSocket;
+import hydrograph.engine.jaxb.commontypes.TypeSortOrder;
+import hydrograph.engine.jaxb.commontypes.TypeTransformOperation;
+import hydrograph.engine.jaxb.cumulate.TypePrimaryKeyFields;
+import hydrograph.engine.jaxb.cumulate.TypeSecondaryKeyFields;
+import hydrograph.engine.jaxb.cumulate.TypeSecondayKeyFieldsAttributes;
+import hydrograph.engine.jaxb.operationstypes.Cumulate;
+import hydrograph.ui.common.util.Constants;
+import hydrograph.ui.common.util.ParameterUtil;
+import hydrograph.ui.datastructure.property.BasicSchemaGridRow;
+import hydrograph.ui.datastructure.property.ComponentsOutputSchema;
+import hydrograph.ui.datastructure.property.GridRow;
+import hydrograph.ui.datastructure.property.mapping.TransformMapping;
+import hydrograph.ui.engine.converter.TransformConverter;
+import hydrograph.ui.engine.xpath.ComponentXpathConstants;
+import hydrograph.ui.graph.model.Component;
+import hydrograph.ui.logging.factory.LogFactory;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import org.slf4j.Logger;
+
+/**
+ * The class CumulateConverter
+ * 
+ * @author Paul Pham
+ * 
+ */
+
+public class CumulateConverter extends TransformConverter {
+	private static final Logger logger = LogFactory.INSTANCE.getLogger(CumulateConverter.class);
+	private TransformMapping transformMapping;
+	private List<BasicSchemaGridRow> schemaGridRows;
+
+	public CumulateConverter(Component component) {
+		super(component);
+		this.baseComponent = new Cumulate();
+		this.component = component;
+		this.properties = component.getProperties();
+		transformMapping = (TransformMapping) properties.get(Constants.PARAM_OPERATION);
+		initSchemaGridRows();
+	}
+
+
+	private void initSchemaGridRows() {
+		schemaGridRows = new LinkedList<>();
+		Map<String, ComponentsOutputSchema> schemaMap = (Map<String, ComponentsOutputSchema>) properties
+				.get(Constants.SCHEMA_TO_PROPAGATE);
+		if (schemaMap != null && schemaMap.get(Constants.FIXED_OUTSOCKET_ID) != null) {
+			ComponentsOutputSchema componentsOutputSchema = schemaMap.get(Constants.FIXED_OUTSOCKET_ID);
+			List<GridRow> gridRows = componentsOutputSchema.getSchemaGridOutputFields(null);
+
+			for (GridRow row : gridRows) {
+				schemaGridRows.add((BasicSchemaGridRow) row.copy());
+			}
+		}
+	}
+
+
+	@Override
+	public void prepareForXML() {
+		logger.debug("Generating XML for :{}", properties.get(Constants.PARAM_NAME));
+		super.prepareForXML();
+
+		Cumulate cumulate = (Cumulate) baseComponent;
+		cumulate.getOperationOrExpression().addAll(getOperations());
+		setPrimaryKeys(cumulate);
+		setSecondaryKeys(cumulate);
+	}
+
+	@Override
+	protected List<Object> getOperations() {
+		return converterHelper.getOperationsOrExpression(transformMapping,schemaGridRows);
+	}
+
+	@Override
+	protected List<TypeOperationsOutSocket> getOutSocket() {
+		return converterHelper.getOutSocket(transformMapping,schemaGridRows);
+	}
+
+	@Override
+	public List<TypeBaseInSocket> getInSocket() {
+		return converterHelper.getInSocket();
+	}
+
+	private void setPrimaryKeys(Cumulate cumulate) {
+		logger.debug("Generating XML for :{}", properties.get(Constants.PROPERTY_COLUMN_NAME));
+		List<String> columnNameProperties = (List<String>) component.getProperties()
+				.get(Constants.PROPERTY_COLUMN_NAME);
+		if (columnNameProperties != null && !columnNameProperties.isEmpty()) {
+			TypePrimaryKeyFields primaryKeyFields = new TypePrimaryKeyFields();
+			cumulate.setPrimaryKeys(primaryKeyFields);
+			List<TypeFieldName> field = primaryKeyFields.getField();
+			if (!converterHelper.hasAllStringsInListAsParams(columnNameProperties)) {
+				for (String columnNameProperty : columnNameProperties) {
+					if (!ParameterUtil.isParameter(columnNameProperty)) {
+						TypeFieldName fieldName = new TypeFieldName();
+						fieldName.setName(columnNameProperty);
+						field.add(fieldName);
+					} else {
+						converterHelper.addParamTag(this.ID, columnNameProperty,
+								ComponentXpathConstants.OPERATIONS_PRIMARY_KEYS.value(), false);
+					}
+				}
+			} else {
+				StringBuffer parameterFieldNames = new StringBuffer();
+				TypeFieldName fieldName = new TypeFieldName();
+				fieldName.setName("");
+				field.add(fieldName);
+				for (String fName : columnNameProperties)
+					parameterFieldNames.append(fName + " ");
+				converterHelper.addParamTag(this.ID, parameterFieldNames.toString(),
+						ComponentXpathConstants.OPERATIONS_PRIMARY_KEYS.value(), true);
+			}
+		}
+	}
+
+
+	private void setSecondaryKeys(Cumulate cumulate) {
+		logger.debug("Generating XML for :{}", properties.get(Constants.PROPERTY_SECONDARY_COLUMN_KEYS));
+		Map<String, String> secondaryKeyRow = (Map<String, String>) component.getProperties().get(
+				Constants.PROPERTY_SECONDARY_COLUMN_KEYS);
+		if (secondaryKeyRow != null && !secondaryKeyRow.isEmpty()) {
+			TypeSecondaryKeyFields secondaryKeyFields = new TypeSecondaryKeyFields();
+			cumulate.setSecondaryKeys(secondaryKeyFields);
+			List<TypeSecondayKeyFieldsAttributes> field = secondaryKeyFields.getField();
+			if (!converterHelper.hasAllKeysAsParams(secondaryKeyRow)) {
+
+				for (Entry<String, String> secondaryKeyRowEntry : secondaryKeyRow.entrySet()) {
+
+					if (!ParameterUtil.isParameter(secondaryKeyRowEntry.getKey())) {
+						TypeSecondayKeyFieldsAttributes fieldsAttributes = new TypeSecondayKeyFieldsAttributes();
+						fieldsAttributes.setName(secondaryKeyRowEntry.getKey());
+						TypeSortOrder order = TypeSortOrder.fromValue(secondaryKeyRowEntry.getValue().toLowerCase());
+						fieldsAttributes.setOrder(order);
+						field.add(fieldsAttributes);
+					} else {
+						converterHelper.addParamTag(this.ID, secondaryKeyRowEntry.getKey(),
+								ComponentXpathConstants.OPERATIONS_SECONDARY_KEYS.value(), false);
+					}
+				}
+			} else {
+				StringBuffer parameterFieldNames = new StringBuffer();
+				TypeSecondayKeyFieldsAttributes fieldsAttributes = new TypeSecondayKeyFieldsAttributes();
+				fieldsAttributes.setName("");
+				field.add(fieldsAttributes);
+				for (Entry<String, String> secondaryKeyRowEntry : secondaryKeyRow.entrySet())
+					parameterFieldNames.append(secondaryKeyRowEntry.getKey() + " ");
+				converterHelper.addParamTag(this.ID, parameterFieldNames.toString(),
+						ComponentXpathConstants.OPERATIONS_SECONDARY_KEYS.value(), true);
+			}
+		}
+	}
+}
+

@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+ 
+
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="hydrograph/ui/constant"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="1.0">
+
+	<simpleType name="category_type">
+		<restriction base="string">
+			<enumeration value="INPUT" />
+			<enumeration value="OUTPUT" />
+			<enumeration value="TRANSFORM" />
+			<enumeration value="STRAIGHTPULL" />
+			<enumeration value="UNKNOWN" />
+			<enumeration value="SUBJOB" />
+			<enumeration value="COMMAND" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="tooltipDataType">
+		<restriction base="string">
+			<enumeration value="TEXT"></enumeration>
+			<enumeration value="MAP"></enumeration>
+			<enumeration value="LIST"></enumeration>
+			<enumeration value="LINK"></enumeration>
+			<enumeration value="NONE"></enumeration>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="showAsTooltip">
+		<restriction base="string">
+			<enumeration value="TRUE"></enumeration>
+			<enumeration value="FALSE"></enumeration>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="property_renderer">
+		<restriction base="string">
+			<enumeration value="GENERATE_RECORDS_SCHEMA_WIDGET" />
+			<enumeration value="TRANSFORM_SCHEMA_WIDGET" />
+			<enumeration value="SCHEMA_WIDGET" />
+			<enumeration value="FIELD_SEQUENCE_WIDGET" />
+			<enumeration value="FIXED_WIDGET" />
+			<enumeration value="RUNTIME_PROPERTIES_WIDGET" />
+			<enumeration value="FILE_PATH_WIDGET" />
+			<enumeration value="BROWSE_WORKSPACE_WIDGET" />
+			<enumeration value="CHARACTER_SET_WIDGET" />
+			<enumeration value="DELIMETER_WIDGET" />
+			<enumeration value="BATCH_WIDGET" />
+			<enumeration value="NO_OF_RECORDS_WIDGET" />
+			<enumeration value="HAS_HEADER_WIDGET" />
+			<enumeration value="SAFE_PROPERTY_WIDGET" />
+			<enumeration value="COMPONENT_NAME_WIDGET" />
+			<enumeration value="FILTER_PROPERTY_WIDGET" />
+			<enumeration value="OPERATIONAL_CLASS_WIDGET" />
+			<enumeration value="PARTITION_BY_EXP_OPERATIONAL_CLASS_WIDGET" />
+			<enumeration value="STRICT_CLASS_WIDGET" />
+			<enumeration value="RETENTION_LOGIC_WIDGET" />
+			<enumeration value="COLUMN_NAME_WIDGET" />
+			<enumeration value="SECONDARY_COLUMN_KEYS_WIDGET" />
+			<enumeration value="SECONDARY_KEYS_WIDGET" />
+			<enumeration value="TRANSFORM_WIDGET" />
+			<enumeration value="NORMALIZE_WIDGET" />
+			<enumeration value="AGGREGATE_WIDGET" />
+			<enumeration value="CUMULATE_WIDGET" />
+			<enumeration value="JOIN_INPUT_COUNT_WIDGET" />
+			<enumeration value="INPUT_COUNT_WIDGET" />
+			<enumeration value="OUTPUT_COUNT_WIDGET" />
+			<enumeration value="JOIN_TYPE_WIDGET" />
+			<enumeration value="JOIN_MAPPING_WIDGET" />
+			<enumeration value="HASH_JOIN_WIDGET" />
+			<enumeration value="HASH_JOIN_MAPPING_WIDGET" />
+			<enumeration value="XML_CONTENT_WIDGET" />
+			<enumeration value="SUBJOB_PROPERTIES_WIDGET" />
+			<enumeration value="MATCH_PROPERTY_WIDGET" />
+			<enumeration value="TEXTBOX_WITH_IS_PARAMETER_CHECKBOX_WIDGET" />
+			<enumeration value="COUNT_WIDGET" />
+			<enumeration value="PRIMARY_COLUMN_KEYS_WIDGET" />
+			<enumeration value="PRIMARY_COLUMN_KEYS_WIDGET" />
+			<enumeration value="SID_NAME_WIDGET" />
+			<enumeration value="TABLE_NAME_WIDGET" />
+			<enumeration value="PARTITION_KEYS_WIDGET" />
+			<enumeration value="QUOTE_WIDGET" />
+			<enumeration value="EXTERNAL_TABLE_PATH_WIDGET" />
+			<enumeration value="MIXED_SCHEME" />
+			<enumeration value="OVERWRITE_WIDGET" />
+			<enumeration value="PARTITION_KEYS_WIDGET_INPUT_HIVE" />
+			<enumeration value="EXTRACT_METASTORE_DATA_WIDGET" />
+			<enumeration value="PROPOGATE_WIDGET" />
+			<enumeration value="STRAIGHT_SCHEMA_WIDGET" />
+			<enumeration value="HOST_NAME_WIDGET" />
+			<enumeration value="PORT_WIDGET" />
+			<enumeration value="JDBC_DRIVER_WIDGET" />
+			<enumeration value="USER_NAME_WIDGET" />
+			<enumeration value="PASSWORD_WIDGET" />
+			<enumeration value="CHUNK_SIZE_WIDGET" />
+			<enumeration value="LOAD_TYPE_CONFIGURATION_WIDGET" />
+			<enumeration value="SELECT_JDBC_VALUES_WIDGET" />
+			<enumeration value="ORACLE_SCHEMA_WIDGET" />
+			<enumeration value="TEST_CONNECTION_WIDGET" />
+			<enumeration value="DATABASE_NAME_WIDGET" />
+			<enumeration value="RUNPROGRAM_TEXT_WIDGET" />
+			<enumeration value="PARTITION_COMPONENT_OUTPUT_COUNT_WIDGET" />
+			<enumeration value="OUTPUT_RECORD_COUNT_WIDGET" />
+			<enumeration value="SELECT_INTERFACE_WITH_LOAD_WIDGET" />
+			<enumeration value="SELECT_INTERFACE_WITH_EXPORT_WIDGET" />
+			<enumeration value="XPATH_SCHEMA_WIDGET" />
+			<enumeration value="XPATH_QUERY_WIDGET" />
+			<enumeration value="ROOT_TAG_WIDGET" />
+			<enumeration value="ROW_TAG_WIDGET" />
+			<enumeration value="XML_FILE_PATH_WIDGET" />
+			<enumeration value="DATABASE_LIST_WIDGET" />
+			<enumeration value="RUN_SQL_QUERY_WIDGET" />
+			<enumeration value="DATABASE_WIDGET" />
+			<enumeration value="JDBC_DRIVER_CLASS_WIDGET" />
+			<enumeration value="DB_URL_WIDGET" />
+			<enumeration value="DB_UPDATE_USER_NAME_WIDGET" />
+			<enumeration value="DB_UPDATE_PASSWORD_WIDGET" />
+			<enumeration value="SELECT_BY_KEYS_WIDGET" />
+			<enumeration value="TEMPORARY_DIR_NAME_WIDGET" />
+			<enumeration value="GROUP_COMBINE_WIDGET" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="usage">
+		<restriction base="string">
+			<enumeration value="REQUIRED" />
+			<enumeration value="OPTIONAL" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="property_type">
+		<restriction base="string">
+			<enumeration value="CONFIG" />
+			<enumeration value="USER" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="group">
+		<restriction base="string">
+			<enumeration value="GENERAL" />
+			<enumeration value="SCHEMA" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="sub_group">
+		<restriction base="string">
+			<enumeration value="DETAILS" />
+			<enumeration value="CONFIGURATION" />
+			<enumeration value="RECORD_STRUCTURE_DETAILS" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="data_type">
+		<restriction base="string">
+			<enumeration value="string" />
+			<enumeration value="boolean" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="PortType">
+		<restriction base="string">
+			<enumeration value="in" />
+			<enumeration value="out" />
+			<enumeration value="unused" />
+			<enumeration value="driver" />
+			<enumeration value="lookup" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="PortAlignment">
+		<restriction base="string">
+			<enumeration value="left" />
+			<enumeration value="right" />
+			<enumeration value="bottom" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="validators">
+		<annotation>
+			<appinfo>
+				<jaxb:typesafeEnumClass />
+			</appinfo>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="CLASS_NAME_VALIDATOR">
+				<annotation>
+					<appinfo>
+						<jaxb:typesafeEnumMember name="ClassNameValidatorRule" />
+					</appinfo>
+				</annotation>
+			</enumeration>
+			<enumeration value="INTEGER_VALIDATOR">
+				<annotation>
+					<appinfo>
+						<jaxb:typesafeEnumMember name="IntegerValidatorRule" />
+					</appinfo>
+				</annotation>
+			</enumeration>
+			<enumeration value="NON_EMPTY_STRING_VALIDATOR">
+				<annotation>
+					<appinfo>
+						<jaxb:typesafeEnumMember name="NonEmptyStringValidatorRule" />
+					</appinfo>
+				</annotation>
+			</enumeration>
+			<enumeration value="NON_BLANK_STRING_VALIDATOR">
+				<annotation>
+					<appinfo>
+						<jaxb:typesafeEnumMember name="NonBlankStringValidatorRule" />
+					</appinfo>
+				</annotation>
+			</enumeration>
+			<enumeration value="SCHEMA_GRID_VALIDATOR">
+				<annotation>
+					<appinfo>
+						<jaxb:typesafeEnumMember name="SchemaGridValidationRule" />
+					</appinfo>
+				</annotation>
+			</enumeration>
+			<enumeration value="MIXED_SCHEME_GRID_VALIDATOR">
+				<annotation>
+					<appinfo>
+						<jaxb:typesafeEnumMember name="MixedSchemeGridValidationRule" />
+					</appinfo>
+				</annotation>
+			</enumeration>
+			<enumeration value="BOOLEAN_OR_PARAMETER_VALIDATOR">
+				<annotation>
+					<appinfo>
+						<jaxb:typesafeEnumMember name="BooleanOrParameterValidationRule" />
+					</appinfo>
+				</annotation>
+			</enumeration>
+			<enumeration value="JOIN_CONFIG_VALIDATOR">
+				<annotation>
+					<appinfo>
+						<jaxb:typesafeEnumMember name="JoinConfigValidationRule" />
+					</appinfo>
+				</annotation>
+			</enumeration>
+			<enumeration value="JOIN_MAPPING_VALIDATOR">
+				<annotation>
+					<appinfo>
+						<jaxb:typesafeEnumMember name="JoinMappingValidationRule" />
+					</appinfo>
+				</annotation>
+			</enumeration>
+			<enumeration value="LOOKUP_CONFIG_VALIDATOR">
+				<annotation>
+					<appinfo>
+						<jaxb:typesafeEnumMember name="LookupConfigValidationRule" />
+					</appinfo>
+				</annotation>
+			</enumeration>
+			<enumeration value="LOOKUP_MAPPING_VALIDATOR">
+				<annotation>
+					<appinfo>
+						<jaxb:typesafeEnumMember name="LookupMappingValidationRule" />
+					</appinfo>
+				</annotation>
+			</enumeration>
+			<enumeration value="INTEGER_OR_PARAMETER_VALIDATOR">
+				<annotation>
+					<appinfo>
+						<jaxb:typesafeEnumMember name="IntegerOrParameterValidationRule" />
+					</appinfo>
+				</annotation>
+			</enumeration>
+			<enumeration value="TRANSFORM_SCHEMA_GRID_VALIDATOR">
+				<annotation>
+					<appinfo>
+						<jaxb:typesafeEnumMember name="TransformSchemaGridValidationRule" />
+					</appinfo>
+				</annotation>
+			</enumeration>
+			<enumeration value="FILE_EXISTS_VALIDATOR">
+				<annotation>
+					<appinfo>
+						<jaxb:typesafeEnumMember name="FileExistsValidatorRule" />
+					</appinfo>
+				</annotation>
+			</enumeration>
+			<enumeration value="KEY_FIELDS_VALIDATOR">
+				<annotation>
+					<appinfo>
+						<jaxb:typesafeEnumMember name="KeyFieldsValidationRule" />
+					</appinfo>
+				</annotation>
+			</enumeration>
+			<enumeration value="SORT_KEY_FIELDS_VALIDATOR">
+				<annotation>
+					<appinfo>
+						<jaxb:typesafeEnumMember name="SortComponentKeysFieldsValidationRule" />
+					</appinfo>
+				</annotation>
+			</enumeration>
+			<enumeration value="TRANSFORM_MAPPING_VALIDATOR">
+				<annotation>
+					<appinfo>
+						<jaxb:typesafeEnumMember name="TransformMappingValidationRule" />
+					</appinfo>
+				</annotation>
+			</enumeration>
+			<enumeration value="RUNTIME_PROPERTY_VALIDATOR">
+				<annotation>
+					<appinfo>
+						<jaxb:typesafeEnumMember name="RuntimePropertyValueValidationRule" />
+					</appinfo>
+				</annotation>
+			</enumeration>
+			<enumeration value="LONG_VALIDATOR">
+				<annotation>
+					<appinfo>
+						<jaxb:typesafeEnumMember name="LongValidatorRule" />
+					</appinfo>
+				</annotation>
+			</enumeration>
+			<enumeration value="NORMALIZE_MAPPING_VALIDATOR">
+				<annotation>
+					<appinfo>
+						<jaxb:typesafeEnumMember name="NormalizeMappingValidator" />
+					</appinfo>
+				</annotation>
+			</enumeration>
+			<enumeration value="TOGGLE_SELECTION_VALIDATOR">
+				<annotation>
+					<appinfo>
+						<jaxb:typesafeEnumMember name="ToggleSelectionValidationRule" />
+					</appinfo>
+				</annotation>
+			</enumeration>
+			<enumeration value="XPATH_SCHEMA_GRID_VALIDATOR">
+				<annotation>
+					<appinfo>
+						<jaxb:typesafeEnumMember name="XPathSchemaGridValidationRule" />
+
+					</appinfo>
+				</annotation>
+			</enumeration>
+			<enumeration value="SECONDARY_KEY_VALIDATION">
+				<annotation>
+					<appinfo>
+						<jaxb:typesafeEnumMember name="SecondaryColumnKeyValidation" />
+					</appinfo>
+				</annotation>
+			</enumeration>
+			<enumeration value="PORT_VALIDATOR">
+				<annotation>
+					<appinfo>
+						<jaxb:typesafeEnumMember name="PortValidationRule" />
+					</appinfo>
+				</annotation>
+			</enumeration>
+			<enumeration value="DATABASE_KEY_VALIDATION">
+				<annotation>
+					<appinfo>
+						<jaxb:typesafeEnumMember name="DatabaseKeyValidation" />
+					</appinfo>
+				</annotation>
+			</enumeration>
+		</restriction>
+	</simpleType>
+</schema>

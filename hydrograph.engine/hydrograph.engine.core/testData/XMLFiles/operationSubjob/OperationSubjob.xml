@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License
+ -->
+
+<p:graph name="OperationSubjob" xmlns:it="hydrograph/engine/jaxb/inputtypes"
+		 xmlns:ot="hydrograph/engine/jaxb/outputtypes" xmlns:spt="hydrograph/engine/jaxb/straightpulltypes"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="hydrograph/engine/jaxb/main"
+		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../../elt-core/src/main/resources/newxmlschema/main/main.xsd  ">
+
+	<inputs id="subjobInput" batch="0" xsi:type="it:subjobInput">
+		<outSocket id="in0">
+			<schema name="@{ret}">
+			</schema>
+		</outSocket>
+	</inputs>
+	
+	<straightPulls id="clone" xsi:type="spt:clone"
+		batch="0">
+		<inSocket id="in0" fromComponentId="subjobInput" fromSocketId="in0" />
+		<outSocket id="out0">
+			<copyOfInsocket inSocketId="in0" />
+		</outSocket>
+		<outSocket id="out1">
+			<copyOfInsocket inSocketId="in0" />
+		</outSocket>
+	</straightPulls>
+
+	<outputs id="output2" batch="0" xsi:type="ot:textFileDelimited">
+		<inSocket fromComponentId="clone" fromSocketId="out0" id="in0">
+			<schema name="outSchema">
+				<field name="id" type="java.lang.String" />
+				<field name="name" type="java.lang.String" />
+				<field name="city" type="java.lang.String" />
+			</schema>
+		</inSocket>
+		<path uri="@{path}" />
+		<delimiter value="," />
+		<hasHeader value="true" />
+	</outputs>
+
+	<outputs id="operationsubjob_output" xsi:type="ot:subjobOutput">
+		<inSocket fromComponentId="clone" fromSocketId="out1" id="out0">
+			<schema name="inSchema">
+			</schema>
+		</inSocket>
+
+	</outputs>
+</p:graph>

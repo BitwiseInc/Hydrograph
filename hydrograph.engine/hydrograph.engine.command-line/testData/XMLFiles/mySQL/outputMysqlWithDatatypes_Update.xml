@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License
+ -->
+
+<p:graph name="MySQL OUTPUT EXAMPLE" xmlns:p="hydrograph/engine/jaxb/main"
+		 xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd  ">
+
+	<inputs id="input1" batch="0" xsi:type="it:textFileDelimited">
+		<outSocket id="out0">
+			<schema name="outSchema">
+				<field name="f_string" type="java.lang.String" />
+				<field name="f_int" type="java.lang.Integer" />
+				<field name="f_long" type="java.lang.Long" />
+				<field name="f_double1" type="java.lang.Double" scaleType="implicit"
+					scale="2" />
+				<field name="f_double2" type="java.lang.Double" scaleType="explicit"
+					scale="2" />
+				<field name="f_float1" type="java.lang.Float" scaleType="implicit"
+					scale="2" />
+				<field name="f_float2" type="java.lang.Float" scaleType="explicit"
+					scale="2" />
+				<field name="f_date1" type="java.util.Date" format="yyyy-MM-dd" />
+				<field name="f_date2" type="java.util.Date" format="yyyy-MM-dd" />
+				<field name="f_date3" type="java.util.Date" format="yyyy-MM-dd" />
+				<field name="f_date4" type="java.util.Date" format="yyyy-MM-dd HH:mm:ss" />
+				<field name="f_date5" type="java.util.Date" format="yyyy-MM-dd hh:mm:ss" />
+				<field name="f_date6" type="java.util.Date" format="yyyy-MM-dd" />
+				<field name="f_bigdecimal" type="java.math.BigDecimal" scale="2"
+					precision="10" scaleType="explicit" />
+			</schema>
+		</outSocket>
+		<path uri="testData/Input/MySQLInputFileWithDataTypes" />
+		<delimiter value="," />
+		<hasHeader value="false" />
+	</inputs>
+
+
+	<outputs id="out mysql" batch="0" xsi:type="ot:mysql">
+		<inSocket fromComponentId="input1" fromSocketId="out0" id="in0">
+			<schema name="schema1">
+					<field name="f_string" type="java.lang.String" />
+				<field name="f_int" type="java.lang.Integer" />
+				<field name="f_long" type="java.lang.Long" />
+				<field name="f_double1" type="java.lang.Double" scaleType="implicit"
+					scale="2" />
+				<field name="f_double2" type="java.lang.Double" scaleType="explicit"
+					scale="2" />
+				<field name="f_float1" type="java.lang.Float" scaleType="implicit"
+					scale="2" />
+				<field name="f_float2" type="java.lang.Float" scaleType="explicit"
+					scale="2" />
+				<field name="f_date1" type="java.util.Date" format="yyyy-MM-dd" />
+				<field name="f_date2" type="java.util.Date" format="yyyy-MM-dd" />
+				<field name="f_date3" type="java.util.Date" format="yyyy-MM-dd" />
+				<field name="f_date4" type="java.util.Date" format="yyyy-MM-dd HH:mm:ss" />
+				<field name="f_date5" type="java.util.Date" format="yyyy-MM-dd hh:mm:ss" />
+				<field name="f_date6" type="java.util.Date" format="yyyy-MM-dd" />
+				<field name="f_bigdecimal" type="java.math.BigDecimal" scale="2"
+					precision="10" scaleType="explicit" />
+			</schema>
+		</inSocket>
+		<databaseName value="test" />
+		<hostName value="10.130.248.53"/>
+		<!-- <port value="3306" /> -->
+		<jdbcDriver value="Connector/J" />
+		<tableName value="targettable1" />
+		<username value="root" />
+		<password value="root" />
+		<loadType>
+			<newTable>
+			</newTable>  
+			<!-- <truncateLoad/> -->
+		  <!-- <Insert/>   -->
+		<!-- 	<update>
+				<updateByKeys>
+					<field name="f_string" />	
+				</updateByKeys>
+ 			</update> --> 
+		</loadType>
+	</outputs>
+</p:graph>
+	

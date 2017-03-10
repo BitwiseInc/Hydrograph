@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+ 
+ 
+<xs:schema xmlns="hydrograph/ui/graph/schema"
+	targetNamespace="hydrograph/ui/graph/schema" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="unqualified">
+
+	<xs:element name="Schema">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="fields" type="Fields" maxOccurs="1" minOccurs="0" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="Fields">
+		<xs:sequence>
+			<xs:element name="field" type="Field" maxOccurs="unbounded" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="Field">
+		<xs:attribute name="name" type="xs:string" use="required" />
+		<xs:attribute name="type" type="field_data_types" use="required"/>
+		<xs:attribute name="absoluteOrRelativeXPath" type="xs:string" use="optional"/>
+		<xs:attribute name="format" type="xs:string" use="optional"/>
+		<xs:attribute name="precision" type="xs:int" use="optional"/>
+		<xs:attribute name="scale" type="xs:int" use="optional"/>	
+		<xs:attribute name="scaleType" type="scale_types" use="optional"/>
+		<xs:attribute name="description" type="xs:string" use="optional"/>
+		<xs:attribute name="length" type="xs:positiveInteger" use="optional"/>
+		<xs:attribute name="delimiter" type="xs:string" use="optional"/>
+		<xs:attribute name="rangeTo" type="xs:string" use="optional"/>
+		<xs:attribute name="rangeFrom" type="xs:string" use="optional"/>
+		<xs:attribute name="default" type="xs:string" use="optional"/>
+	</xs:complexType>	
+	
+	<xs:simpleType name="field_data_types">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="java.lang.String" />
+			<xs:enumeration value="java.lang.Integer" />
+			<xs:enumeration value="java.lang.Object" />
+			<xs:enumeration value="java.lang.Long" />
+			<xs:enumeration value="java.lang.Double" />
+			<xs:enumeration value="java.lang.Float" />
+			<xs:enumeration value="java.lang.Short" />
+			<xs:enumeration value="java.lang.Boolean" />
+			<xs:enumeration value="java.util.Date" />
+			<xs:enumeration value="java.math.BigDecimal" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="scale_types">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="explicit" />
+			<xs:enumeration value="implicit" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	
+</xs:schema>

@@ -1,0 +1,559 @@
+/********************************************************************************
+ * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
+
+/* @import url("platform:/plugin/hydrograph.ui.theme/css/e4-dark.css"); Bug 430052 */
+@import url("platform:/plugin/hydrograph.ui.theme/css/dark/e4-dark_basestyle.css");
+/*@import url("platform:/plugin/hydrograph.ui.theme/css/dark/e4-dark_globalstyle.css"); *//* Remove this to have ONLY the main IDE shell dark */
+/*@import url("platform:/plugin/hydrograph.ui.theme/css/dark/e4-dark_partstyle.css");*/
+
+Tree {
+	/**
+	 * See Bug 434201: Dark theme: tree must respect the foreground color for items arrows
+	 */
+	swt-tree-arrows-color:#000000;
+	swt-tree-arrows-mode: triangle;  /* triangle or square */
+
+	/* See Bug 434309: Customize the tree/table selection to work properly
+	 * with the dark theme.
+	 *
+	 * Note that the selection foreground is a bit lighter than the regular
+	 * foreground because our background is also a bit lighter in this case.
+	 */
+	swt-selection-foreground-color: #fcfcf9;
+	swt-selection-background-color: #4081bd;
+	swt-hot-background-color: #f7eeeb;
+	swt-selection-border-color: #7F7D68;
+	swt-hot-border-color: #545454;
+}
+
+CustomFigureCanvas > Composite {
+  /* actual values */
+  background-color: #4081bd;
+  background-image: none;
+  color: #000000;
+  font-family: "Segoe UI";
+  font-size: 9;
+  font-style: normal;
+  font-weight: normal;
+  swt-background-mode: none;
+  text-transform: none;
+  visibility: visible;
+}
+
+
+.MTrimmedWindow.topLevel {
+    margin-top: 3px;
+    margin-bottom: 3px;
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+.MPartStack, .MPart {
+    font-family: '#org-eclipse-ui-workbench-TAB_TEXT_FONT';
+}
+
+.MPartStack {
+    swt-tab-renderer: url('bundleclass://org.eclipse.e4.ui.workbench.renderers.swt/org.eclipse.e4.ui.workbench.renderers.swt.CTabRendering');
+    swt-selected-tab-fill: '#org-eclipse-ui-workbench-INACTIVE_TAB_BG_START' '#org-eclipse-ui-workbench-INACTIVE_TAB_BG_END' 100%; /* title background for selected tab */
+    swt-unselected-tabs-color: '#org-eclipse-ui-workbench-INACTIVE_UNSELECTED_TABS_COLOR_START' '#org-eclipse-ui-workbench-INACTIVE_UNSELECTED_TABS_COLOR_END' 100% 100%; /* title background for unselected tab */
+    swt-outer-keyline-color: '#org-eclipse-ui-workbench-INACTIVE_TAB_OUTER_KEYLINE_COLOR'; /* border color for whole tabs container */
+    swt-inner-keyline-color: '#org-eclipse-ui-workbench-INACTIVE_TAB_INNER_KEYLINE_COLOR';
+    swt-tab-outline: '#org-eclipse-ui-workbench-INACTIVE_TAB_OUTLINE_COLOR'; /* border color for selected tab */
+    padding: 0px 2px 2px;
+    swt-shadow-visible: false;
+    swt-mru-visible: true;
+    swt-corner-radius: 16px;
+}
+
+.MPartStack.active {
+    swt-selected-tab-fill: '#org-eclipse-ui-workbench-ACTIVE_TAB_BG_START' '#org-eclipse-ui-workbench-ACTIVE_TAB_BG_END' 100%; /* title background for selected tab */
+    swt-unselected-tabs-color: '#org-eclipse-ui-workbench-ACTIVE_UNSELECTED_TABS_COLOR_START' '#org-eclipse-ui-workbench-ACTIVE_UNSELECTED_TABS_COLOR_END' 100% 100%; /* title background for unselected tab */
+    swt-outer-keyline-color: '#org-eclipse-ui-workbench-ACTIVE_TAB_OUTER_KEYLINE_COLOR'; /* border color for whole tabs container */
+    swt-inner-keyline-color: '#org-eclipse-ui-workbench-ACTIVE_TAB_INNER_KEYLINE_COLOR';
+    swt-tab-outline: '#org-eclipse-ui-workbench-ACTIVE_TAB_OUTLINE_COLOR'; /* border color for selected tab */
+}
+
+.MPartStack.active.noFocus {
+    swt-selected-tabs-fill: #000000;
+}
+
+.MPartStack.empty {
+    swt-unselected-tabs-color: '#org-eclipse-ui-workbench-INACTIVE_UNSELECTED_TABS_COLOR_START' #4F5456 #4F5456 99% 100%; /* title background for unselected tab */
+    swt-tab-outline: #000000; /* border color for selected tab */
+    swt-outer-keyline-color: #f4eae0; /* border color for whole tabs container */
+}
+
+.MPart.busy {
+    font-style: italic;
+}
+
+.MPart.highlighted {
+    font-weight: bold;
+}
+
+CTabItem,
+CTabItem CLabel {
+    background-color: '#org-eclipse-ui-workbench-INACTIVE_TAB_BG_END'; /* HACK for background of CTabFolder inner Toolbars */
+    color: #ffffff;
+}
+CTabItem:selected,
+CTabItem:selected CLabel {
+    color: #ffffff;
+}
+
+.MPartStack.active > CTabItem,
+.MPartStack.active > CTabItem CLabel {
+    background-color: '#org-eclipse-ui-workbench-ACTIVE_TAB_BG_END'; /* HACK for background of CTabFolder inner Toolbars */
+    color: '#org-eclipse-ui-workbench-ACTIVE_TAB_UNSELECTED_TEXT_COLOR';
+}
+.MPartStack.active > CTabItem:selected,
+.MPartStack.active > CTabItem:selected CLabel {
+    color: '#org-eclipse-ui-workbench-ACTIVE_TAB_SELECTED_TEXT_COLOR';
+}
+
+.MPartStack.active.noFocus > CTabItem:selected {
+    color: '#org-eclipse-ui-workbench-ACTIVE_NOFOCUS_TAB_SELECTED_TEXT_COLOR';
+}
+
+CTabItem.busy {
+    color: #888888;
+}
+
+
+
+.MToolControl.TrimStack {
+    /*frame-image:  url(./gtkTSFrame.png);*/
+    handle-image:  url(./dragHandle.png);
+    frame-cuts: 5px 1px 5px 16px;
+}
+
+.MToolBar.Draggable {
+    handle-image:  url(./dragHandle.png);
+}
+
+.MToolControl.Draggable {
+    handle-image:  url(./dragHandle.png);
+}
+
+.DragFeedback {
+    background-color: COLOR-WIDGET-NORMAL-SHADOW;
+}
+
+.ModifiedDragFeedback {
+    background-color: #4176AF;
+}
+
+/*main window background*/
+.MTrimmedWindow {
+    /*background-color: #316594;*/
+    /*background-color: #375e81;*/
+    background-color: #42719a;
+}
+
+/*main window background end*/
+.MTrimBar {
+    background-color: #4081bd;
+}
+
+
+CTabFolder.MArea .MPartStack,CTabFolder.MArea .MPartStack.active {
+    swt-shadow-visible: false;
+}
+
+
+CTabFolder Tree, CTabFolder Canvas {
+    background-color: #f7eeeb;
+    color: #000000;
+}
+.MPartStack.active Tree,
+.MPartStack.active CTabFolder Canvas {
+    background-color: #f7eeeb;
+    color: #000000;
+}
+
+
+
+/* ####################### Top Toolbar ########################## */
+
+#org-eclipse-ui-main-toolbar, #PerspectiveSwitcher {
+    eclipse-perspective-keyline-color: #585858;
+    background-color: #315575 #315575 100%; /*draggable line bg color*/
+    handle-image: none;
+    color: #EBE8E4;
+}
+
+/*#org-eclipse-ui-main-toolbar, #PerspectiveSwitcher {			
+    eclipse-perspective-keyline-color: #585858;
+    background-color: #dfeaeb #dfeaeb 100%; 
+    handle-image: none;
+}*/
+
+/* ##################### Bottom Status Bar ####################### */
+
+#org-eclipse-ui-StatusLine,
+#org-eclipse-ui-ProgressBar,
+#org-eclipse-ui-ProgressBar Canvas {
+    color: #CCCCCC;
+}
+#org-eclipse-ui-StatusLine CLabel {
+    color: #BDBAB7;
+}
+
+StatusLine, ImageBasedFrame{
+    color: #BDBAB7;
+}
+
+
+
+/* ####################### CSS for .MParts ####################### */
+
+/* Make the content of the Form brighter because the color of
+   the font of some widgets is hard-coded to be black on Window */
+
+.MPart Form,
+.MPart Form Sash,
+.MPart Form Label,
+.MPart Form Section,
+.MPart Form FormText,
+.MPart Form Link,
+.MPart Form Hyperlink,
+.MPart Form ImageHyperlink,
+.MPart Form Button,
+.MPart Form Group,
+.MPart Form SashForm,
+.MPart Form LayoutComposite,
+.MPart Form ScrolledPageBook,
+.MPart Form DependenciesComposite,
+.MPart Form ListEditorComposite,
+.MPart Form Text[style~='SWT.READ_ONLY'],
+.MPart Form > LayoutComposite > LayoutComposite > ToolBar,
+.MPart Form DependenciesComposite > SashForm > Section > *, /* Section > DependenciesComposite$... */
+.MPart LayoutComposite > * > LayoutComposite > Section > LayoutComposite > *, /*LayoutComposite > MasterDetailBlock$... > LayoutComposite > Section > LayoutComposite > ExtensionsSection$...*/
+.MPartStack.active .MPart Form,
+.MPartStack.active .MPart Form Sash,
+.MPartStack.active .MPart Form Label,
+.MPartStack.active .MPart Form Section,
+.MPartStack.active .MPart Form FormText,
+.MPartStack.active .MPart Form Link,
+.MPartStack.active .MPart Form Hyperlink,
+.MPartStack.active .MPart Form ImageHyperlink,
+.MPartStack.active .MPart Form Button,
+.MPartStack.active .MPart Form Group,
+.MPartStack.active .MPart Form SashForm,
+.MPartStack.active .MPart Form LayoutComposite,
+.MPartStack.active .MPart Form ScrolledPageBook,
+.MPartStack.active .MPart Form DependenciesComposite,
+.MPartStack.active .MPart Form ListEditorComposite,
+.MPartStack.active .MPart Form Text[style~='SWT.READ_ONLY'],
+.MPartStack.active .MPart Form > LayoutComposite > LayoutComposite > ToolBar,
+.MPartStack.active .MPart Form DependenciesComposite > SashForm > Section > *, /* Section > DependenciesComposite$... */
+.MPartStack.active .MPart LayoutComposite > * > LayoutComposite > Section > LayoutComposite > * /*LayoutComposite > MasterDetailBlock$... > LayoutComposite > Section > LayoutComposite > ExtensionsSection$...*/ {
+    background-color: #4f5355;
+    color: #f4f7f7;
+}
+#org-eclipse-help-ui-HelpView Form,
+#org-eclipse-help-ui-HelpView Form Sash,
+#org-eclipse-help-ui-HelpView Form Label,
+#org-eclipse-help-ui-HelpView Form Section,
+#org-eclipse-help-ui-HelpView Form FormText,
+#org-eclipse-help-ui-HelpView Form Hyperlink,
+#org-eclipse-help-ui-HelpView Form Button,
+#org-eclipse-help-ui-HelpView Form Group,
+#org-eclipse-help-ui-HelpView Form LayoutComposite,
+#org-eclipse-help-ui-HelpView Form ScrolledPageBook,
+#org-eclipse-help-ui-HelpView Form Text[style~='SWT.READ_ONLY'] {
+    background-color: #2F2F2F;
+    color: #CCCCCC;
+}
+.MPartStack.active #org-eclipse-help-ui-HelpView Form,
+.MPartStack.active #org-eclipse-help-ui-HelpView Form Sash,
+.MPartStack.active #org-eclipse-help-ui-HelpView Form Label,
+.MPartStack.active #org-eclipse-help-ui-HelpView Form Section,
+.MPartStack.active #org-eclipse-help-ui-HelpView Form FormText,
+.MPartStack.active #org-eclipse-help-ui-HelpView Form Hyperlink,
+.MPartStack.active #org-eclipse-help-ui-HelpView Form Button,
+.MPartStack.active #org-eclipse-help-ui-HelpView Form Group,
+.MPartStack.active #org-eclipse-help-ui-HelpView Form LayoutComposite,
+.MPartStack.active #org-eclipse-help-ui-HelpView Form ScrolledPageBook,
+.MPartStack.active #org-eclipse-help-ui-HelpView Form Text[style~='SWT.READ_ONLY'] {
+    background-color: #262626;
+    color: #BBBBBB;
+}
+.MPart Form Section Tree,
+.MPart LayoutComposite > * > LayoutComposite > Section > LayoutComposite > Tree,
+.MPartStack.active .MPart Form Section Tree,
+.MPartStack.active .MPart LayoutComposite > * > LayoutComposite > Section > LayoutComposite > Tree {
+    background-color: #ffffff;
+    color: #DDDDDD;
+}
+.MPart Form DatePicker > ImageHyperlink,
+.MPart Form ScheduleDatePicker > ImageHyperlink {
+    background-color: #3f4447;
+    color: #BBBBBB;
+}
+.MPartStack.active .MPart Form DatePicker > ImageHyperlink,
+.MPartStack.active .MPart Form ScheduleDatePicker > ImageHyperlink {
+    background-color: #313538;
+    color: #AAAAAA;
+}
+.MPart PageBook > Form > LayoutComposite {
+    background-color: #2F2F2F;
+    color: #CCC;
+}
+.MPartStack.active .MPart PageBook > Form > LayoutComposite {
+    background-color: #262626;
+    color: #BBBBBB;
+}
+.MPart Form FormHeading LayoutComposite,
+.MPart Form FormHeading ImageHyperlink {
+    background-color: #505f70;
+    color: #9ac9d8;
+}
+.MPartStack.active .MPart Form FormHeading LayoutComposite,
+.MPartStack.active .MPart Form FormHeading ImageHyperlink {
+    background-color: #415062;
+    color: #9ac9d8;
+}
+
+/* On the windows dark theme, the default is having the scrollbar themed
+ * Note that the user may also set -Dswt.enable.themedScrollBar=false to force
+ * it to false regardless of the CSS value.
+ */
+StyledText {
+	swt-scrollbar-themed: true;
+
+	swt-scrollbar-background-color: #383838;
+	swt-scrollbar-foreground-color: #494949;
+	swt-scrollbar-width: 4px;
+	swt-scrollbar-border-radius: 4px;
+	swt-scrollbar-mouse-near-scroll-width: 15px;
+}
+
+Composite StyledText{
+	background-color: #f7eeeb;
+    color: '#org-eclipse-ui-workbench-ACTIVE_NOFOCUS_TAB_BG_START';
+	
+}
+
+
+/*Added class*/
+.MPart FigureCanvas,
+.MPartStack.active .MPart FigureCanvas{
+    background-color: #f0f0f0;
+    color: #999999;
+}
+
+
+#org-eclipse-ui-console-ConsoleView .MPart StyledText
+{
+    background-color: #f0efef;
+    color: #CCCCCC;
+}
+
+Composite#org-eclipse-ui-main-toolbar {
+  /* actual values */
+  background-color: #315575;
+  }
+ToolBar#hydrograph-ui-graph-toolbar1 {
+  /* actual values */
+  background-color: #315575;	/* declared in CSS: rgb(81, 86, 88) */
+ }
+Composite#SearchField {
+  /* actual values */
+  background-color: #315575;	/* declared in CSS: rgb(81, 86, 88) */
+ }
+Composite#PerspectiveSwitcher {
+  /* actual values */
+  background-color: #315575;	/* declared in CSS: rgb(81, 86, 88) rgb(81, 86, 88) 100.0% */
+  color: #ebe8e4;	/* declared in CSS: rgb(235, 232, 228) */
+  /* declared in CSS rules */
+  eclipse-perspective-keyline-color: rgb(88, 88, 88);
+} 
+ToolBar#hydrograph-ui-graph-toolbar2 {
+  /* actual values */
+   background-color: #315575;	
+}
+
+ToolBar#hydrograph-ui-project-structure-console-HydrographConsole {
+  /* actual values */
+  background-color: #4081bd;	/* declared in CSS: rgb(223, 234, 235) */
+  
+}
+
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_UNSELECTED_TABS_COLOR_START {	/*CHECKED*/
+	color: #4081bd;
+}
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_UNSELECTED_TABS_COLOR_END {	/*CHECKED*/
+	color: #4081bd;  /*	Rust*/
+}
+CTabFolder#org-eclipse-gef-ui-palette_viewMStack{color:#ffffff;}
+CTabFolder#PartStack {color:#ffffff;}
+
+/*Tabs on Canvas*/
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_TAB_BG_START {  /*CHECKED*/
+    color: #4081bd;
+    category: '#org-eclipse-ui-presentation-default';
+    label: 'Active, selected part background begin';
+}
+
+ColorDefinition#org-eclipse-ui-workbench-INACTIVE_TAB_BG_END {	/*CHECKED*/
+    color: #0e4c7d;
+    category: '#org-eclipse-ui-presentation-default';
+    label: 'Active, selected part background end';
+}
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_TAB_BG_START {  /*CHECKED*/
+    color: #4081bd;
+    category: '#org-eclipse-ui-presentation-default';
+    label: 'Active, selected part background begin';
+}
+	
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_TAB_BG_END {	/*CHECKED*/
+    color: #0e4c7d;
+    category: '#org-eclipse-ui-presentation-default';
+    label: 'Active, selected part background end';
+}
+/* CTabFolder */
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_UNSELECTED_TABS_COLOR_START {	/*CHECKED*/
+	color: #4081bd;	/*RED*/
+}
+
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_UNSELECTED_TABS_COLOR_END {		/*CHECKED*/
+	color: #4081bd; /*Taupe*/
+}
+#org-eclipse-ui-ProgressBar > Canvas {color:#000000;}
+
+
+.MToolControl.TrimStack {
+	frame-image:  url(./win7TSFrame.png);
+	handle-image:  url(./win7Handle.png);
+}
+
+
+#org-eclipse-ui-editorss {
+	swt-tab-height: 8px;
+	padding: 0px 5px 7px;
+}
+
+Composite#org-eclipse-ui-workbench-ACTIVE_NOFOCUS_TAB_BG_START{
+background-color: #f7eeeb;
+}
+/*CANVAS*/
+Composite FigureCanvas{						/*CHECKED*/
+	background-color: #f7eeeb;
+    color: white;
+}
+/*CONSOLE*/									/*CHECKED*/
+Composite StyledText{
+	background-color:#	;
+    color: #333333;
+	
+}
+/*Composite{
+	background-color: #f7eeeb;
+    color: white;
+}
+
+
+/* ###################### Top Toolbar ########################## */
+
+
+ColorDefinition#org-eclipse-ui-workbench-ACTIVE_NOFOCUS_TAB_BG_START {background-color: #f7eeeb;}
+Tree {
+  /* actual values */
+  background-color: #f7eeeb;	/* declared in CSS: rgb(47, 47, 47) */
+  background-image: none;
+  color: #000000;	/* declared in CSS: rgb(204, 204, 204) */
+}
+ColorDefinition#hydrograph-ui-project-structure-console-HydrographConsole {
+    background-color: #4081bd;	/* declared in CSS: rgb(223, 234, 235) */
+  }
+
+
+/*Console window toolbar*/ 
+.MPartStack.active ToolBar#hydrograph-ui-project-structure-console-HydrographConsole{background-color: #4081bd;}
+.MPartStack ToolBar#hydrograph-ui-project-structure-console-HydrographConsole{background-color: #4081bd; }
+.MPartStack Composite > ToolBar [style~='SWT.DROP_DOWN'] {background-color: #ffffff;}
+
+/*Project Navigator tab*/
+ToolBar#hydrograph-ui-project-structure-navigator {
+  background-color: #4081bd;	/* declared in CSS: rgb(223, 234, 235) */
+}
+.MPartStack.active ToolBar#hydrograph-ui-project-structure-navigator {background-color: #4081bd;}
+
+
+
+/*Console text background*/
+.View {
+    background-color: #f0efef;
+    color: #F5F5F5;
+}
+
+/*Tab Hover color*/
+CTabFolder {
+    swt-unselected-hot-tab-color-background: #4081bd; /* Bug 465711 */
+}
+StatusLine > CLable{color:#000000;}
+
+
+/*Tabs under popup*/
+ScrolledComposite  {background-color:#90a4ae;}
+Composite > CTabFolder CTabItem{background-color:#4081bd;}
+Composite > CTabFolder CTabItem:selected{background-color:#0e4c7d;}
+Composite > CTabFolder CTabItem.active{background-color:#4081bd;}
+Composite > CTabFolder{ 
+  swt-tab-height: 23;
+  font-size: 9;
+  font-style: normal;
+  font-weight: normal;
+  swt-background-mode: none;
+ /* swt-maximize-visible: true;
+  swt-maximized: false;
+  swt-minimize-visible: true;
+  swt-minimized: false; */
+  swt-mru-visible: true;	/* declared in CSS: true */
+  swt-simple: true;
+  swt-single: false;
+  swt-tab-height: 23;	/* declared in CSS: 23 */
+  swt-tab-position: top;
+  swt-unselected-close-visible: true;
+  swt-unselected-image-visible: true;
+  text-transform: none;
+  visibility: visible;
+padding: 0.0px 2.0px 3.0px;
+  swt-corner-radius: 16.0px;
+  swt-unselected-hot-tab-color-background: rgb(84, 110, 122);
+  swt-unselected-tabs-color: #org-eclipse-ui-workbench-INACTIVE_UNSELECTED_TABS_COLOR_START #org-eclipse-ui-workbench-INACTIVE_UNSELECTED_TABS_COLOR_END 100.0% 100.0%;
+}
+Composite#HydroGroupBorder {
+  /* actual values */
+  background-color: #cccccc;
+  background-image: none;
+  color: #000000;
+  font-family: "Segoe UI";
+  font-size: 9;
+  font-style: normal;
+  font-weight: normal;
+  swt-background-mode: none;
+  text-transform: none;
+  visibility: visible;
+width:1px;
+}
+
+/*Table*/
+Table, #HydroGroupClientArea > Composite Table {
+    background-color: #cfd8dc;
+	swt-selection-background-color: #4081bd;
+	swt-selection-foreground-color: #ffffff;
+    color: #333333;
+	swt-hot-border-color: #545454;
+}

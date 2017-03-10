@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+ -->
+<xs:schema xmlns="hydrograph/engine/jaxb/ofparquet" xmlns:cmn="hydrograph/engine/jaxb/commontypes"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="hydrograph/engine/jaxb/ofparquet"
+  elementFormDefault="unqualified"
+>
+  <xs:import schemaLocation="../../common/common-types.xsd"
+    namespace="hydrograph/engine/jaxb/commontypes" />
+
+  <xs:complexType name="type-output-delimited-in-socket">
+    <xs:complexContent>
+      <xs:restriction base="cmn:type-output-inSocket">
+        <xs:sequence>
+          <xs:element name="schema" type="cmn:type-base-record" />
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string" use="required"
+          fixed="in0" />
+        <xs:attribute name="type" type="xs:string" use="optional"
+          fixed="in" />
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="type-output-file-delimited-base">
+    <xs:complexContent>
+      <xs:restriction base="cmn:type-output-component">
+        <xs:sequence>
+          <xs:element name="inSocket" type="type-output-delimited-in-socket"
+            minOccurs="1" maxOccurs="1" />
+            <xs:element name="overWrite" type="cmn:type-true-false"
+				minOccurs="0" maxOccurs="1" />
+            <xs:element name="runtimeProperties" type="cmn:type-properties"
+						minOccurs="0" maxOccurs="1" />
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+
+</xs:schema>

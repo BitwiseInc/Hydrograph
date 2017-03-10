@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+ -->
+ 
+ 
+<tns:Config xmlns:tns="hydrograph/ui/ComponentConfig" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="hydrograph/ui/ComponentConfig xsds/ComponentConfig.xsd ">
+	<tns:component paletteIconPath="/icons/generate_records_palette.png" canvasIconPath="/icons/generate_records_canvas.png"
+		name="GenerateRecords" nameInPalette="Generate Records" defaultNamePrefix="GRecords" 
+		description="Generates dummy records as per the schema specified by the user."
+		helpFilePath="/hydrograph.ui.help/html/Components/Generate_Records.html"
+		acronym="Genrec">
+		<tns:category>INPUT</tns:category>
+		<tns:port>
+			<tns:portSpecification  numberOfPorts="1" portAlignment="right" changePortCountDynamically="false" allowMultipleLinks="false" linkMandatory="true">
+				<tns:port sequenceOfPort="0" typeOfPort="out" labelOfPort="out0" portTerminal="out0" />
+			</tns:portSpecification>
+		</tns:port>
+		
+		<tns:property dataType="string" name="name" renderer="COMPONENT_NAME_WIDGET" type="USER"
+			group="GENERAL" subGroup="DETAILS" showAsTooltip="TRUE" tooltipDataType="TEXT"
+			usage="REQUIRED" propertyHelpText="Displays Name provided by the user"/>
+		
+		<tns:property dataType="string" name="schema" renderer="GENERATE_RECORDS_SCHEMA_WIDGET" type="USER"
+			group="SCHEMA" subGroup="RECORD_STRUCTURE_DETAILS" showAsTooltip="TRUE" tooltipDataType="LIST"
+			usage="REQUIRED">
+			<tns:validator>SCHEMA_GRID_VALIDATOR</tns:validator>
+		</tns:property>
+		
+		
+			
+		<tns:property dataType="string" name="recordCount" value="0" renderer="NO_OF_RECORDS_WIDGET" type="USER"
+			group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"
+			usage="REQUIRED" propertyHelpText="Specify number of records to be generated">
+			<tns:validator>INTEGER_OR_PARAMETER_VALIDATOR</tns:validator>
+		</tns:property>	
+		
+		<tns:property dataType="string" name="runtime_properties" renderer="RUNTIME_PROPERTIES_WIDGET"
+			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="FALSE" tooltipDataType="NONE"
+			usage="OPTIONAL" propertyHelpText="Used to override runtime Hadoop configurations\n specific to this component at run time." >
+		   <tns:validator>RUNTIME_PROPERTY_VALIDATOR</tns:validator>
+		</tns:property>
+		
+		<tns:property dataType="string" name="batch" value="0" renderer="BATCH_WIDGET" type="USER"
+			group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"
+			usage="REQUIRED" propertyHelpText="Specifies the execution sequence of this component in the job flow">
+			<tns:validator>INTEGER_VALIDATOR</tns:validator>
+		</tns:property>
+	</tns:component>
+</tns:Config>

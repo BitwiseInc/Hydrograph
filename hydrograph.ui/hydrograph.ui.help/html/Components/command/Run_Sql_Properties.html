@@ -1,0 +1,78 @@
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+ 
+<!doctype html>
+<html>
+<head>
+	<title>Run Sql Properties</title>
+	<link rel="stylesheet" type="text/css" href="../../css/style.css">
+</head>
+<body>
+<p><span class="header-1">Run Sql Properties</span></p>
+<p><span><b>Properties</b>&nbsp;for the Run Sql component can be viewed by Double click component on canvas. The properties contain a &#39;General&#39; tab. Common and mandatory properties are present in the General tab. </span></span></p>
+
+	<p>
+		<a name="general_properties"></a><span class="header-2">General Properties</span>
+	</p>
+
+	<p><img alt="" src="../../images/run_sql_general_tab_value.png" /></p>
+
+	<p>
+		<a name="details"></a><span class="header-2">Details</span>
+	</p>
+	
+<ul>
+	<li><span><b>Name</b> - The Name field will specify the name of the component as desired by the user.</span></li>
+	<li><span><b>ID</b> - ID field will specify unique id for every component. </span></li>
+	<li><span><b>Type </b> - Type further categorizes the component to detailed operation that it intends to perform. Here it is of type command Run Sql.</span></li>
+</ul>
+	<p>
+		<a name="configuration"></a><span class="header-2">Configuration</span> 
+	</p>
+<ul>
+	<li><span><b>Database</b>  - Database Name used to specify to select database from combo box. By default this is Oracle.</span></li>
+	<p><span>if user selects "Parameter", provide a textbox where user can input the Database Name. </span></p>
+	<p><img alt="" src="../../images/run_sql_database_widget.png" /></p>
+	<li><span><b>Database Name</b> - Database Name used to specify the database. This field should be mandatory to user. </span></li>
+	<li><span><b>Host Name</b> - Host Name used to specify the Host server IP address or localhost name. This field should be mandatory to user.</span></li>
+	<li><span><b>Port</b> - Port simply accepts a numeric number starting from 0 to maximum 65535. By default this is 1521.</span></li>
+	<li><span><b>User</b> - User used to specify the User name Logon to specify Database.</span></li>
+	<li><span><b>Password</b> - Password used to specify the password.</span></li>
+	<li><span><b>Sql Query</b>  - Sql Query used to specify a multiline text box where user can type the query to be executed</span></li>
+	<li><span><b>Batch</b> - Batch simply accepts a numeric number starting from 0 to maximum 99 and signifies the batch this component will execute in. By default this is 0.</span></li>
+</ul>
+	<p>
+		<a name="validations"></a><span class="header-2">Validations</span>
+	</p>
+	
+	<p>
+		<span>The Run Sql components applies validations to the mandatory fields. Upon placing the
+			Run Sql component on job canvas for the first time (from component palette), the component shows up a warning icon as
+			mandatory properties are not provided.</span>
+	</p>
+	<img alt="" src="../../images/run_sql_warning_icon.png"  />
+	
+	<p>
+		<span>The properties window also displays error icon on mandatory fields if it has an incorrect value. The error icon
+			is displayed on the tab as well, if any of the field within the tab has some error.</span>
+	</p>
+	<img alt="" src="../../images/run_sql_general_tab_validation.png"  />
+
+	<p>
+		<span>If the properties window has some error even after user visit's it once, then the warning icon on the Run Sql 
+			component on the job canvas changes to error icon. This error icon is removed only when all the mandatory fields are supplied
+			with correct values.</span>
+	</p>
+	<img alt="" src="../../images/run_sql_error_icon.png"  />
+<p>&nbsp;</p>
+
+</body>
+</html>

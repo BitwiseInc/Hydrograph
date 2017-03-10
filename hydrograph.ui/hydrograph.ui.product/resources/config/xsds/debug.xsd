@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+ -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="hydrograph/engine/jaxb/debug"
+	targetNamespace="hydrograph/engine/jaxb/debug"
+	elementFormDefault="qualified">
+
+	<xs:element name="debug">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="debugPlugin" type="debugPlugin" maxOccurs="1" minOccurs="0" />
+				<xs:element name="viewData" type="viewData" maxOccurs="unbounded" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:complexType name="debugPlugin">
+			<xs:attribute name="value" type="xs:string" use="required"/>
+	</xs:complexType>
+		
+	<xs:complexType name="viewData">
+			<xs:sequence>
+				<xs:element name="limit" type="limit" maxOccurs="1" minOccurs="0" />
+			</xs:sequence>
+			<xs:attribute name="fromComponentId" type="xs:string" use="required"></xs:attribute>
+			<xs:attribute name="outSocketId" type="xs:string" use="required"></xs:attribute>
+			<xs:attribute name="outSocketType" type="xs:string" use="optional" default="out"></xs:attribute>
+	</xs:complexType>
+	
+	<xs:complexType name="limit">
+		<xs:attribute name="value" type="xs:long" use="optional" default="100"/>
+	</xs:complexType>
+	
+</xs:schema>

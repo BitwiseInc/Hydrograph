@@ -1,0 +1,74 @@
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+ 
+ 
+<!doctype html>
+<html>
+<head>
+	<title>Input File Delimited Properties</title>
+	<link rel="stylesheet" type="text/css" href="../../css/style.css">
+</head>
+<body>
+
+<p><span class="header-1">Input File Delimited Properties</span></p>
+
+<p><span><span><b>Properties</b>&nbsp;for the Input File Delimited component can be viewed by Double click-&gt;component on canvas. The properties contain a &#39;General&#39; tab and a &#39;Schema&#39; tab. Common and mandatory properties are present in the General tab. Schema displays option to accept the field schema i.e. field name, Data type, scale etc. </span></span></p>
+
+<p><span><b>General Properties:</b> </span></p>
+
+<p><img alt="" src="../../images/Input_File_Delimited_Properties_General.png" /></p>
+
+<p><span><b>Display</b></span></p>
+
+<ul>
+	<li><span><b>Name</b> - The Name field will specify the name of the component as desired by the user.</span></li>
+	<li><span><b>Base Type</b> - Base Type signifies the basic operation area of the component. In this case it is of Base Type Input.</span></li>
+	<li><span><b>Type </b> - Type further categorizes the component to detailed operation that it intends to perform. Here it is of type File Delimited.</span></li>
+</ul>
+
+<p><span><span><b>Configuration</b></span></span></p>
+
+<ul>
+	<li><span><b>File Path</b> - File path is used to specify the path of the input delimited file present either in the File system or on the cluster. User can either manually type the path in the text box provided or use the Browse button to search for the file and select it. Alternatively, the user can parameterize the File path where the parameter value will be resolved at run-time.</span></li>
+	<li><span><b>Delimiter</b> - The Delimiter field accepts the delimiter that is present in the input file selected. By default the delimiter passed to this component is &#39;|&#39;</span></li>
+	<li><span><b>Quote</b> - Quote field accepts the masked character used to mask the delimiter in the input file. When the quote is given, all the delimiters which are followed by this quote, will not be considered as delimiters rather considered as text.</span></li>
+	<li><span><b>Safe Property</b> - This property accepts Boolean values True and False. It can also be parameterized and later on resolved during run-time. The Safe property when True, allows the input fields to pass evaluation despite of Data type mismatch. When False, fields with Data type mismatch will be rejected and the component will abort processing returning an error.</span></li>
+	<li><span><b>Has Header</b> - This property accepts Boolean values True and False. It can also be parameterized and later on resolved during run-time. Has Header is simply used to signify whether an input file contains a header or not. When True, component assumes the first row of the file to be the header. Reverse in case of False.</span></li>
+	<li><span><b>Character Set</b> - Contains a drop-down of character encoding values. Used simply to denote the encoding system followed by the input file to denote characters of data. Drop down lists contains values like : UTF8, US-ASCII, ISO-8859-1 etc.</span></li>
+	<li><span><b>Strict</b> - Strict accepts&nbsp;Boolean values True and False. It can also be parameterized and later on resolved during run-time. Strict property is used to check if the record structure i.e. number of fields, length of records, scale etc are exactly listed by the user as in the input file. When set to True, the component fails if the record structure doesn&#39;t match with the one specified by the user. Reverse in case of False.</span></li>
+	<li><span><b>Runtime Properties</b> -&nbsp;Runtime properties are used to override the Hadoop configurations specific to Input File Delimited component at run time. User is required to enter the Property Name and Value in the runtime properties grid.</span></li>
+	<p><span>Check <a href="../../How To Steps/How_To_Pass_Hadoop_Properties_To_Component.html"> How to pass Hadoop properties to component</a></span></p></li>
+	<p><img alt="" src="../../images/Runtime_Properties_Grid.png" /></p>
+	<li><span><b>Batch</b> - Batch simply accepts a numeric number starting from 0 to maximum 99 and signifies the batch this component will execute in. By default this is 0.</span></li>
+</ul>
+
+<p><b>Schema tab: </b></font></p>
+
+<p><img alt="" src="../../images/Input_File_Delimited_Properties_Schema.png" /></p>
+<p><span><b>Schema Types</b></span></p>
+<ul>
+	<li><span><b>Internal</b> - User is provided a Grid to enter the internal schema of the Input Delimited file.</span></li>
+	<ul><li><span><b>Field Name</b> - User needs to enter all the Field names in this column.</span></li>
+	<li><span><b>Data type</b> - By default "string" Data type has been selected for any field added to the Grid. User can select from different Data type values like "integer", "double", "float" etc.</span></li>
+	<li><span><b>Date Format</b> - User can specify desired date format like "YY-DD-MM", "YYYYMMDD" etc for a date field in this column. Refer to <a href="../../references/Date_formats.html">Date formats</a> page for acceptable date formats.</span></li>
+	<li><span><b>Precision</b> - Precision for a bigdecimal field can be specified here.</span></li>
+	<li><span><b>Scale</b> - Scale for a bigdecimal field can be specified here.</span></li>
+	<li><span><b>Scale Type</b> - Scale Type accepts values as implicit or explicit for bigdecimal field and none for other data types. Explicit considers the length of ' <b>.</b> ' and implicit ignores length of ' <b>.</b> ' for the bigdecimal field.</span></li>
+	<li><span><b>Field Description</b> - User can specify field description.</span></li></ul>
+	<li><span><b>External</b> - User can provide an external Hydrograph Schema file of XML format. A text box is provided to either manually type or use the Browse button to select the schema file from File system. The External schema file path is resolved during run time and replaced with the contents of the file in the Job XML.</span></li>
+</ul>	
+
+<p>&nbsp;</p>
+
+<ul>
+</ul>
+</body>
+</html>

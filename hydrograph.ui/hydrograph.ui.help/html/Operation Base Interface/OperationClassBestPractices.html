@@ -1,0 +1,39 @@
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+ 
+<!doctype html>
+<html>
+<head>
+	<title>Operation Class Best Practices</title>
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<body>
+
+<p>
+	<span class="header-1">Operation Class Best Practices</span>
+</p>
+
+<p><span> When writing operation classes, it is recommended to adhere to the best coding practices for Java. </span></p>
+
+<ul>
+		<li><span>It is recommended to avoid using multiple System.out.println commands while writing operation classes as this will increase total run time. 
+				Users can use Hydrograph’s watchpoint feature for any debugging.</span></li>
+			<p> </p>
+		<li><span>If users for some reason need to use System.out.println in operation classes, it is recommended to follow below approaches:</span></li>
+			<ul>
+				<li><span>Should be used during development only. Having System.out.println in production is not recommended at all.</span></li>
+				<li><span>It’s usage should be restricted to fields. Printing entire inputRow is not recommended.</span></li>
+				<li><span>It’s usage should be restricted to once or twice and that too only for specific fields.</span></li>
+			</ul>
+			<p> </p>
+		<li><span>For every output field, a separate Java class should be written. This helps is tracing the output field all the way to the fields in source. </span></li>
+</ul>
+</body>

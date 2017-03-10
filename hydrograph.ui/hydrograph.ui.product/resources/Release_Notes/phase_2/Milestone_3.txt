@@ -1,0 +1,94 @@
+﻿=====================================================================================================
+Features Added:
+=====================================================================================================
+Sr.No. <date> - [developer names] - description
+1.   <22-jul-16> [Sonia Raheja]   - Added Between operator support on fields of data viewer.
+2.   <25-jul-16> [Vibhor Tyagi]   - Find: If user search for any text or string then find window should display count of the text/string matches in the current filter window.
+3.   <26-jul-16> [Akhilesh Joshi] - Display filter option for filter window and removed apply button.
+4.   <4-Aug-16>  [Prateem Tadas]  - Redesign of Partition key dialog.
+
+=====================================================================================================
+Issues/Defects fixed:
+=====================================================================================================
+Sr.No. <date> <GitHub Issue #> - [fixed by] - description
+1.#..   [Ashika Holkar] One should be able to copy the Content displayed on dataset information window
+2.#..   [Rahul Mahajan] Alignment fix on Run Configurations Settings window
+3.#863  [Shrirang Kumbhar] Debug service not responding when user tries to fetch data multiple times 
+4.#..   [Sonia Raheja] The Records information shown at the bottom of the data viewer window should be updated to display actual page size when its less than
+		the one defined in preferences. This will probably happen on the last page of the result or when filter result returns records less than page size
+5.#...  [Vibhor Tyagi] MAC & Windows :Find Window Default Focus is not Set Properly
+6.#..   [Vibhor Tagi] MAC: Debug Service Need to Kill Implicitly When Tool is Closed/ Job Closed
+7.#797  [Nitin Gupta] Select Column: Sort Icon on Select Column Window is Not Properly Visible
+8.#873  [Prateem Tadas] Filter Window: OK Button is not getting enabled as validation call is not getting genrated if user add few rows in the downloaded Dataset and then delete them and add valid data filter window
+9.#875  [Shrirang Kumbhar]	Data Viewer Window: "Unable to fetch debug files" error window is getting displayed when user tries to run job in debug mode and click on cancel button located on Parameter file dialog window
+10.#807 [Shrirang Kumbhar] Data Viewer: Data Viewer Window is Getting Closed on Job Re-run Event of Different Job  
+11.#..  [Vibhor Tyagi] MAC: Debug Service Need to Kill Implicitly When Tool is Closed/ Job Closed
+12.#864 [Vibhor Tyagi] Find: Find action is getting called when user keep clicking TAB from keyboard on data viewer window
+13.#826 [Akhilesh Joshi/Shrirang Kumbhar] View Data :Issue Reading Data from CSV and Display on Data Viewer 
+14.#878 [Vibhor Tyagi] Find Window(View Data): Expected Functionality of the Button Not Met When Focus has Been Shifted to Other Button And Hitting 'Enter' key 
+15.#862 [Vibhor Tyagi] Find : User needs to click Previous button two times after clicking next button
+16.#732 [Vibhor Tyagi] View Data Filter: Search Values are Getting Skipped When User Switch to Other Page
+17.#898 [Rakesh Kanchalwar] Data Viewer : Filter : Getting "Argument can not be null" error message when user enter garbage value in field name, conditional operator and then try to delete same row
+18.#890 [Rushikesh Pawale] Import Engine XML feature not working
+19.#891 [Rushikesh Pawale] Hive partitionFilter feature getting considered as mandatory
+20.#826 [Akhilesh Joshi/Shrirang Kumbhar] View Data :Issue Reading Data from CSV and Display on Data Viewer
+21.#..  [Akhilesh Joshi] •	When we apply filter on Downloaded Dataset after applying filter on Original Dataset, and if we open dataset info window, under filter 
+		section it shows only recent filter i.e. Downloaded Dataset filter. Expected behavior is- dataset info window should display all the
+		 filters that are currently active on data viewer window
+22.#885 [Kalyan Rajpoot] Vertical scroll bar not present in schema structure details for Input file components
+23.#..  [Akhilesh Joshi] Sort issue with selected columns		 
+24.#901 [Prateem Tadas] Downloaded Dataset Filter: Records not Shown in View Data on Filtering Data 
+25.#925 [Vibhor Tyagi]  Find Functionality: Focus is not shifting to the respective cell when user clicks on previous button
+26.#880 [Sonia Raheja]Data viewer window: Invalid messgae for the page count is getting displayed if fiter data set is not matched with data viewer window data
+27.#897 [Sonia Raheja]Filter: Record Count Range is Not Showed Properly On Filtering the Records
+28.#930 [Vibhor Tyagi]  Select Columns: Sorting Icon is Getting Changed When There is No Field Present in All Columns/Selected Columns
+29.#953 [Sonia Raheja]  Need to change properties/parameters window names
+30.#876 [Shrirang Kumbhar] Data Viewer: Every column should sort data in assending order for the 1st time 
+31.#926 [Shrirang Kumbhar] Join Component: Data viewer window : Data is not getting displayed properly in data viewer window 
+32.#911 [Shrirang Kumbhar] Join Component: Mappings Are Getting Blank on "Pull Schema" and NullPointer Exception Thrown On Re-pulling the Schema in Join Mapping Dialog
+33.#895 [Shrirang Kumbhar] Join Schema: Schema Sequence is Getting Changed on Pull Schema/Auto Sync If There is Any Change in Schema or Mapping
+34..... [Shrirang Kumbhar] Fixed multiple internal schema sync issues with Lookup and join
+35.#949 [Vibhor Tyagi] Import XML: Job is Getting Failed Due to cvc-enumeration Issue in Lookup Component 
+36.#941 [Vibhor Tyagi] Find Window: Search String is not Getting Highlighted On View Switching 
+37.#936 [Ashika Holkar] Hive Parquet Ouput: External Path Is Populated with 'null' Value On XML Import Which Leads to Job Failure
+38.#656 [Harsha Manwani] Run button should be disabled for input and ou0tput subgraph
+39.#802 [Nikhil Deokar] Fix issue - Even if the UI throws error message while saving the state of the job, somehow it still saves the job
+40.#757 [Vibhor Tyagi]  Find Functionality: When user clicks on 'All' button located in find window then focus is shifting to last instance in grid view whereas it remains same in other two views.
+41.#519 [Akhilesh Joshi]In Engine xml generated from UI, ‘Description’ given in schema grid is not getting saved. Also fromSocketType attribute for outSocket is not getting generated.
+42.#... [Shrirang Kumbhar] implemeneted AutoSync in Transform component.
+43.#508 [Akhilesh Joshi]Error decorator is not properly visible in the application property window.
+44.#482 [Prateem Tadas] Transform Component: 'CopyFields' Function Need to be Removed from Operation Class List
+45.#369 [Akhilesh Joshi]Parameter Dialog Window : Content Save Warning Does not Prompt While switching from Parameter File view To parameter files 
+46.#368	[Akhilesh Joshi]Parameter Dialog: Accepting Null Parameter Name  
+47.#521 [Nikhil Deokar] Updated File menu icons to be in sync with coolbar
+48.#522 [Nikhil Deokar] Updated Edit menu icons to be in sync with coolbar 
+49.#1010 [Sonia Raheja] Filter window: Tooltip indicating the allowed data format is required
+50.#680 [Rushikesh Pawale] Resized schema tab's information and error windows which are generated on import XML and export XML buttons.
+51.#537 [Rushikesh Pawale] Added validation to restrict input count upto 10 digits and changed datatype from integer to long.
+52.#660 [Rushikesh Pawale] Input Ports are now Increased/Decreased in Join Configuration and Join Mapping Window on Apply button.
+53.#982 [Akhilesh Joshi] MacBook Pro - Browse Button is not Appeared Correctly on Operation Window
+54.#1007[Akhilesh Joshi]Hive Output : Compoent Size Goes on Increasing On Copy Paste
+55.#1012[Ashika Holkar] External Schema: Project Window while export/importing Schema Only Displays ' Select Schema File(.schema)'
+56.#164 [Vibhor Tyagi] Transform Editor: User should be able to delete multiple rows by selecting rows with control keys in schema grid
+57.#1002 [Prateem Tadas] Property Window : 'Partition keys' field is mendatory. 
+58.#494 [Rushikesh Pawale] Graph properties window appears before Run Configuration Settings window.
+59.#420 [Akhilesh Joshi] Aggregate Component: Error bubble is not getting displayed if user delete/ modify schema in the input component and then directly clicks on "pull from transform" button located on the schema tab of aggregate component
+60.#998 [Sonia Raheja]Date should be displayed as per format defined by user in schema.
+61.#1016 [Prateem Tadas] Partition Keys Window: Fields are not Getting Highlighted When They Are Not in Sequence
+62.#943 [Shrirang Kumbhar] Import XML : Copy of Port in1 is getting Mapped in Join Mapping Dialog Window Though Original Job Has Fields from Both the Ports in Mapping
+63.#996 [Nikhil Deokar] Subjob : Updated option Text and removed extra Icons
+64.#358 [Rakesh Kanchalwar] - Workspace selection window on startup
+65.#1021[Akhilesh Joshi] Schema Tab: Pop-up Windows name should be in sync. Proper window name is required if schema is already up to date and user tries to pull schema
+66.#1033[Nikhil Deokar] Subjob : Fixed issue of Dummy Port is Getting added
+67.#669 [Shrirang Kumbhar] Validation Need To be Added When Schema from Mapping Fields are Not in Sync With Schema Tab 
+68.#330 [Shrirang Kumbhar] Parameter Grid: Search functionality - User should be able to search by parameter name or by parameter value only, not by Paramter Files
+69.#973 [Shrirang Kumbhar] Sync schema: When user add mapping in mapping table and press autosync. It enables apply and when we press cancel it still saves the mapping changes. The same happens in case of pull button  
+70.#1064[Nikhil Deokar] Subjob: Fixed issue of Input Subjob Links From Input Subjob to Subsequent Component
+71.#1059[Nikhil Deokar] Subjob: Disabled 'Refresh' Icon was not present
+72.#973 [Shrirang Kumbhar] Sync schema: When user add mapping in mapping table and press autosync. It enables apply and when we press cancel it still saves the mapping changes. The same happens in case of pull button
+73.#661 [Kalyan Rajpoot] Standardising the Minimum size of Re-sizeable Windows/Grids 
+74.#301 [Kalyan Rajpot] Consistency in popup windows.
+75.#319 [Kalyan Rajpot] Parameters should be resolved during development phase.
+=====================================================================================================
+Notes for QA:
+=====================================================================================================

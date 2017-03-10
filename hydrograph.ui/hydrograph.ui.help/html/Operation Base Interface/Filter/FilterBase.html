@@ -1,0 +1,83 @@
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+ 
+<!doctype html>
+<html>
+<head>
+	<title>FilteBase</title>
+	<link rel="stylesheet" type="text/css" href="../../css/style.css">
+</head>
+<body>
+<p>
+	<span class="code">hydrograph.engine.transformation.userfunctions.base</span>
+	<br />
+	<span class="header-1">FilterBase</span>
+</p>
+<span class="code">java.lang.Object</span><br />
+<span style="padding-left:20pt" class="code">hydrograph.engine.transformation.userfunctions.base.filterBase</span>
+<p><span>The FilterBase interface is the base interface for all the custom classes defined for filter in <a href="../../components/Filter.html">Filter</a> component. This interface exposes methods that enable users to define custom filter expressions.</span></p>
+<table width="80%">
+    <tr>
+      <td colspan="2"><span class="header-3">Method Summary</span></td>
+    </tr>
+    <tr>
+		<td width="20%"><span><b>Modifier and Type</b></span></td>
+		<td><span><b>Method and Description</b></span></td>
+    </tr>
+    <tr>
+      <td><span class="code">public void</span></td>
+      <td><span class="code"><a href="#mth_aggregate">isRemove</a>(<a href="../ReusableRow.html">ReusableRow</a> inputRow)</span><br />
+	  <span>This method is the operation function and is called for each input row</span> 
+	</td>
+    </tr>
+    <tr>
+      <td><span class="code">public void</span></td>
+      <td><span class="code"><a href="#mth_cleanup">cleanup</a>()</span><br />
+	  <span class="code">cleanup()</span><span>This method is called after processing all the records in the input.</span>
+	</td>
+    </tr>
+    <tr>
+      <td><span class="code">public void</span></td>
+      <td><span class="code"><a href="#mth_prepare">prepare</a>(Properties props, ArrayList<String> inputFields)</span><br />
+	  <span class="code">prepare()</span><span> This method is the operation function and is called for each input row.</span>
+	</td>
+    </tr>
+</table>
+<p><span class="header-2">Method Detail</span></p>
+<a name="mth_aggregate" id="mth_aggregate"></a>
+<a name="mth_aggregate" id="mth_aggregate"></a>
+<p><span class="header-3">isRemove</span></p>
+<p><span class="code">public void isRemove</a>(<a href="../ReusableRow.html">ReusableRow</a> inputRow)</span></p>
+<p><span>This method <span class="code">isRemove()</span>is the operation function and is called for each input row.The custom filtering logic should be performed in this function. This function returns a boolean value which determines if the record is to be excluded from the output.</span></p><p><span>If the function returns true the record is rejected from the output, i.e.transmitted to the unused port of the filter component.</span></p><p><span>If the function returns false the record is retained in the output, i.e.transmitted to the out port of the filter component.</span></p>
+<p><span>The parameter <span class="code">input</span> holds the current input row. Refer the documentation of <a href="../ReusableRow.html">ReusableRow</a> class to get information on accessing individual field of the current input row.</span></p>
+
+
+
+<a name="mth_cleanup" id="mth_cleanup"></a>
+<p><span class="header-3">cleanup</span></p>
+<p><span class="code">public void cleanup()</span></p>
+<p><span>The method <span class="code">cleanup()</span> is called after processing all the records in the input. This method can be typically used to do cleanup activities as the name suggests.</span></p>
+
+
+<a name="mth_prepare" id="mth_prepare"></a>
+<p><span class="header-3">prepare</span></p>
+<p><span class="code">public void prepare(Properties props, ArrayList<String> inputFields)</span></p>
+<p><span>The method <span class="code">prepare()</span> is called before processing the first record in the input. This method can be used for initialization / instansiation of artifacts to be used in the filter expressions.</span></p>
+<span><b>Parameters</b></span>
+
+<p><span class="code"><b>props</b></span><br />
+<span>The <span class="code">props</span> object holds the operation properties supplied to the filter component using <a href="../../Components/Filter_Operation_Window.html#Operation_Properties_Grid">operation properties grid</a> on <a href="../../Components/Filter_Operation_Window.html">operation class window</a>. The individual properties are wrapped as key-value pairs in the <span class="code">props</span> object.</span></p>
+
+<p><span class="code"><b>inputFields</b></span><br />
+<span>The <span class="code">inputFields</span> holds the list of input fields to the filter operation.</span></p>
+
+</body>
+</html>

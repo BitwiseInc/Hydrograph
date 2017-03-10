@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License
+ -->
+
+<p:graph name="MYSQL INPUT EXAMPLE" xmlns:p="hydrograph/engine/jaxb/main"
+		 xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
+		 xmlns:spt="hydrograph/engine/jaxb/straightpulltypes"
+		 xmlns:op="hydrograph/engine/jaxb/operationstypes"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd  ">
+
+
+	<inputs id="mysqlInput" phase="0" xsi:type="it:rdbms">
+		<outSocket id="out0">
+			<schema name="schema1">
+				<field name="num" type="java.lang.Integer" />
+				<field name="lwr" type="java.lang.String" />
+				<field name="upr" type="java.lang.String" />
+			</schema>
+		</outSocket>
+		<databaseType value="MySQL" />
+		<databaseName value="dev" />
+		<tableName value="sourcetable" />
+<!-- 		<query value="select testingtable1.num as num,testingtable1.lwr as lwr,testingtable1.upr as upr from testingtable2 inner join testingtable1 on testingtable2.num!=testingtable1.num  " />   -->
+		<username value="kishorb" />
+		<password value="1qaz2wsxK#" />
+		<jdbcurl value="jdbc:mysql://52.200.167.25:3306" /> 
+		<batchSize value="1" />
+	</inputs>
+
+
+
+<inputs id="input2" phase="0" xsi:type="it:textFileDelimited">
+		<outSocket id="out0">
+			<schema name="outSchema">
+				<field name="num" type="java.lang.Integer" />
+				<field name="lwr" type="java.lang.String" />
+				<field name="upr" type="java.lang.String" />
+			</schema>
+		</outSocket>
+		<path uri="user/hduser/rdbmsData/mysqlInput" />
+		<delimiter value="," />
+		<hasHeader value="false" />
+	</inputs>
+
+
+
+<operations id="join" xsi:type="op:join">
+		<inSocket fromComponentId="mysqlInput" fromSocketId="out0" id="in0" />
+		<inSocket fromComponentId="input2" fromSocketId="out0" id="in1" />
+		<outSocket id="out0" type="out">
+			<passThroughField name="*" inSocketId="in0" /> 
+		</outSocket>
+		
+		<keys inSocketId="in0" recordRequired="false">
+			<field name="num" />
+		</keys>
+		<keys inSocketId="in1" recordRequired="false">
+			<field name="num" />
+		</keys>
+	</operations>
+	
+
+	<straightPulls id="clone" xsi:type="spt:clone">
+		<inSocket id="in0" fromComponentId="join" fromSocketId="out0" />
+		<outSocket id="aurora">
+			<copyOfInsocket inSocketId="in0" />
+		</outSocket>
+		<outSocket id="redshift">
+			<copyOfInsocket inSocketId="in0" />
+		</outSocket>
+			<outSocket id="text">
+			<copyOfInsocket inSocketId="in0" />
+		</outSocket>
+	</straightPulls>
+	
+
+	<outputs id="out Redshift" phase="0" xsi:type="ot:redshift">
+		<inSocket fromComponentId="clone" fromSocketId="redshift" id="in0">
+			<schema name="schema1">
+				<field name="num" type="java.lang.Integer"  colDef="INT NOT NULL"/>
+				<field name="lwr" type="java.lang.String"   colDef="VARCHAR(50) NOT NULL"/>
+				<field name="upr" type="java.lang.String"   colDef="VARCHAR(50) NOT NULL"/>
+<!-- 				<field name="num" type="java.lang.Integer" /> -->
+<!-- 				<field name="lwr" type="java.lang.String"  /> -->
+<!-- 				<field name="upr" type="java.lang.String"   /> -->
+			</schema>
+		</inSocket>
+		<databaseName value="dev" />
+		<tableName value="targettable" />
+		<username value="kishorb" />
+		<password value="1qaz2wsxK#" />
+		<jdbcurl value="jdbc:redshift://23.20.35.4:5439" />
+		<loadType>
+			<newTable>
+			</newTable>  
+<!-- 			<truncateLoad/> -->
+<!-- 		  <Insert/>   -->
+<!-- 			<update> -->
+<!-- 				<updateByKeys> -->
+<!-- 					<field name="num" />	 -->
+<!-- 				</updateByKeys> -->
+<!--  			</update>  -->
+		</loadType>
+		<batchSize value="1"/>
+	</outputs>
+
+
+
+<outputs id="out aurora" phase="0" xsi:type="ot:rdbms">
+		<inSocket fromComponentId="clone" fromSocketId="aurora" id="in0">
+			<schema name="schema1">
+				<field name="num" type="java.lang.Integer" />
+				<field name="lwr" type="java.lang.String" />
+				<field name="upr" type="java.lang.String" />
+			</schema>
+		</inSocket>
+		<databaseType value="MySQL" />
+		<databaseName value="dev" />
+		<tableName value="targettable" />
+		<username value="kishorb" />
+		<password value="1qaz2wsxK#" />
+		<jdbcurl value="jdbc:mysql://52.200.167.25:3306" />
+		<loadType>
+			<newTable>
+				<primaryKeys>
+					<field name="num" />
+				</primaryKeys> 
+			</newTable>  
+			<!--<truncateLoad/> -->
+		<!--   <Insert/>  
+			<update>
+				<updateByKeys>
+					<field name="num" />
+				</updateByKeys>
+			</update> -->
+		</loadType>
+		<batchSize value="1"/>
+	</outputs>
+
+
+
+<outputs id="OFDelimited_01"  xsi:type="ot:textFileDelimited">
+		<inSocket fromComponentId="clone" fromSocketId="text" id="in0" type="in">
+			<schema name="schema2">
+				<field name="num" type="java.lang.Integer" />
+				<field name="lwr" type="java.lang.String" />
+				<field name="upr" type="java.lang.String" />
+			</schema>
+		</inSocket>
+		<overWrite value="true"/>
+		<path uri="user/hduser/rdbmsData/rdbmsOutput" />
+		<delimiter value="," />
+		<hasHeader value="false" />
+		<safe value="false" />
+		<strict value="true" />
+		<charset value="UTF-8" />
+	</outputs>
+	
+	
+</p:graph>
+	

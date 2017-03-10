@@ -1,0 +1,116 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+
+sourceCompatibility = 1.8
+version = '0.1'
+ext.hadoopVersion = '2.6.0'
+ext.hiveVersion = '1.2.0'
+
+repositories {
+    mavenLocal()
+    mavenCentral() 
+    maven {
+        url 'http://conjars.org/repo/'
+    }
+    maven {
+        url 'http://maven.twttr.com/'
+    }
+    
+	maven {
+        name 'redshift'
+        url 'http://redshift-maven-repository.s3-website-us-east-1.amazonaws.com/release'
+    }
+	 /* Add links of Nexus/Artifactory in order to resolve the dependencies */
+     maven {
+        url ''
+    }
+}
+   
+configurations {
+	hgGraph
+    hgPropertywindow	
+	hgDataviewer
+	hgModel
+	hgService
+}
+dependencies {
+	hgGraph group: 'org.glassfish.tyrus.bundles', name: 'tyrus-standalone-client', version: '1.13'
+	hgGraph group: 'com.google.code.gson', name: 'gson', version: '2.6.2'
+    
+	hgPropertywindow group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.2.2'
+	hgPropertywindow group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.2.2'
+	hgPropertywindow group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.2.2'
+	
+	hgDataviewer group: 'net.sourceforge.csvjdbc', name: 'csvjdbc', version: '1.0.29'
+	hgDataviewer group: 'com.google.code.gson', name: 'gson', version: '2.7'
+	hgDataviewer group: 'com.opencsv', name: 'opencsv', version: '3.7'
+	
+	hgModel group: 'xmlpull', name: 'xmlpull', version: '1.1.3.1'
+	hgModel group: 'xpp3', name: 'xpp3_min', version: '1.1.4c'
+	hgModel group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.4.9'
+	
+	hgService group: 'commons-collections', name: 'commons-collections', version: '3.2.2'
+	hgService group: 'org.antlr', name: 'antlr4-runtime', version: '4.5.1'
+	hgService group: 'cascading', name: 'lingual-hadoop2-mr1', version: '1.2.1', classifier:'jdbc'
+  	hgService group: 'com.sparkjava', name: 'spark-core', version: '2.5.1'
+	hgService group: 'javax.websocket', name: 'javax.websocket-api', version: '1.1' 
+	hgService( group: 'org.apache.hadoop', name: 'hadoop-minicluster', version: hadoopVersion){
+		exclude group: 'commons-beanutils'
+		exclude group: 'commons-collections'
+	}
+	hgService (group: 'org.apache.hive', name: 'hive-exec', version: hiveVersion) {
+        exclude group: 'com.google.guava'
+        exclude group: 'org.apache.curator'
+		exclude group: 'commons-beanutils'
+        exclude group: 'commons-collections'
+    }
+
+    hgService group: 'mysql', name: 'mysql-connector-java', version: '5.1.34'
+    hgService group: 'com.amazon.redshift', name: 'redshift-jdbc42', version: '1.2.1.1001'
+
+    hgService 'junit:junit:4.11'
+}
+task pullServiceDependencies(type: Copy) {
+    dependsOn configurations.hgService
+
+    from { // use of closure defers evaluation until execution time
+        configurations.hgService.collect {it}
+    }
+    into "hydrograph.ui/hydrograph.ui.product/resources/config/service"
+}
+task pullModelDependencies(type: Copy) {
+    dependsOn configurations.hgModel
+
+    from { // use of closure defers evaluation until execution time
+        configurations.hgModel.collect {it}
+    }
+    into "hydrograph.ui/hydrograph.ui.model/lib/"
+}
+task pullGraphDependencies(type: Copy) {
+    dependsOn configurations.hgGraph
+
+    from { // use of closure defers evaluation until execution time
+        configurations.hgGraph.collect {it}
+    }
+    into "hydrograph.ui/hydrograph.ui.graph/libs/"
+}
+task pullPropertyWindowDependencies(type: Copy) {
+    dependsOn configurations.hgPropertywindow
+
+    from { // use of closure defers evaluation until execution time
+        configurations.hgPropertywindow.collect {it}
+    }
+    into "hydrograph.ui/hydrograph.ui.propertywindow/resources/lib/"
+}
+task pullDataViewerDependencies(type: Copy) {
+    dependsOn configurations.hgDataviewer
+
+    from { // use of closure defers evaluation until execution time
+        configurations.hgDataviewer.collect {it}
+    }
+    into "hydrograph.ui/hydrograph.ui.dataviewer/lib/"
+}
+task copyLibs(type: Copy) {
+	dependsOn pullServiceDependencies, pullModelDependencies, pullGraphDependencies, pullPropertyWindowDependencies, pullDataViewerDependencies
+}

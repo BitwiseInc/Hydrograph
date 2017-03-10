@@ -1,0 +1,55 @@
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+ 
+ 
+<!doctype html>
+<html>
+<head>
+	<title>How to Run a Job on Cluster</title>
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<body>
+<p><span class="header-1">How to Run a Job on Cluster</span></p>
+
+<p><span>To<b> Run</b>&nbsp;a job on cluster, make sure of below things,</span></p>
+	<ul>
+		<li><p><span>None of the components in the job should have error/warning icon on it</span></p></li>
+		
+		<li><p><span>Execution utility script along with its dependent jars are present at the location you wish to run the job on cluster. 
+		The Execution utility script is used to run the job submitted by Hydrograph UI.</span></p>
+		<p><span><img alt="" src="../images/Utility_on_Cluster.png" /></span></p></li>
+		
+		<li><p><span>Make sure the input file paths from the cluster are correctly configured in the Job.</span></p>
+		<p><span><img alt="" src="../images/Files_on_Hadoop.png" /></span></p></li>
+</ul>
+<p><span>Click on Run button or press CTRL + R</span></p>
+<p><img alt="" src="../images/Run_Button.png" /></p>
+<p><span>Select Remote. This will expand Run Configuration Settings window requesting location and authentication details of the edge node,</span></p>
+	<ul>
+		<li><p><span><b>Edge Node</b> - name of the server where the job will execute</span></p></li>
+		<li><p><span><b>User</b> - username to login on edge node</span></p></li>
+		<li><p><span><b>Password</b> - password to login on edge node</span></p></li>
+		<li><p><span><b>Key File</b> - Key file is the authentication file, used to authenticate to user. </span></p></li>
+		<li><p><span><b>Run Utility</b> - location of the script on edge node</span></p></li>
+		<li><p><span><b>Project path</b> - location where the project related files will be copied</span></p></li>
+	</ul>.
+<p><img alt="" src="../images/Remote_option1.png" /></p>
+
+
+<p><span>Click on OK. Provide parameter values, if any, in the parameter grid and click OK.</span></p>
+<p><img alt="" src="../images/Remote_option2.png" /></p>
+
+
+<p><span style="font-size: 14px;"> Watch Job Run log in the console and wait for the job run to complete.</span></p>
+<p><img alt="" src="../images/Remote_Job_Console_Build_Successful.png" /></p>
+
+</body>
+</html>

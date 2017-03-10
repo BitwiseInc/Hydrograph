@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc. Licensed 
+	under the Apache License, Version 2.0 (the "License"); you may not use this 
+	file except in compliance with the License. You may obtain a copy of the 
+	License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by 
+	applicable law or agreed to in writing, software distributed under the License 
+	is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY 
+	KIND, either express or implied. See the License for the specific language 
+	governing permissions and limitations under the License. -->
+<xs:schema xmlns="hydrograph/engine/jaxb/omysql" xmlns:cmn="hydrograph/engine/jaxb/commontypes"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="hydrograph/engine/jaxb/omysql"
+	elementFormDefault="unqualified">
+	<xs:import schemaLocation="../../common/common-types.xsd"
+		namespace="hydrograph/engine/jaxb/commontypes" />
+
+	<xs:complexType name="type-load-choice">
+		<xs:choice>
+			<xs:element name="newTable" type="type-primary-keys"
+				minOccurs="1" maxOccurs="1" />
+			<xs:element name="truncateLoad" minOccurs="1" maxOccurs="1" />
+			<xs:element name="Insert" minOccurs="1" maxOccurs="1" />
+			<xs:element name="update" type="type-update-keys"
+				minOccurs="1" maxOccurs="1" />
+
+		</xs:choice>
+	</xs:complexType>
+
+
+	<xs:complexType name="type-primary-keys">
+		<xs:sequence>
+			<xs:element name="primaryKeys" type="cmn:type-key-fields"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="type-update-keys">
+		<xs:sequence minOccurs="1">
+			<xs:element name="updateByKeys" type="cmn:type-key-fields" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="database-type">
+		<xs:attribute name="value" type="database-type-value"
+			use="required" />
+	</xs:complexType>
+
+	<xs:simpleType name="database-type-value">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="MySQL" />
+			<xs:enumeration value="Teradata" />
+			<xs:enumeration value="Oracle" />
+			<xs:enumeration value="H2" />
+			<xs:enumeration value="Derby" />
+			<xs:enumeration value="PostgreSQL" />
+			<xs:enumeration value="Redshift " />
+		</xs:restriction>
+	</xs:simpleType>
+
+
+	<xs:complexType name="type-mysql-field">
+		<xs:complexContent>
+			<xs:restriction base="cmn:type-base-field">
+				<xs:attributeGroup ref="cmn:grp-attr-base-field" />
+				<xs:attribute name="colDef" type="xs:string" use="optional" />
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+	<xs:complexType name="type-mysql-record">
+		<xs:complexContent>
+			<xs:restriction base="cmn:type-base-record">
+				<xs:choice maxOccurs="unbounded" minOccurs="1">
+					<xs:element name="field" type="type-mysql-field" />
+					<xs:element name="record" type="type-mysql-record" />
+					<xs:element name="includeExternalSchema" type="cmn:type-external-schema"
+						minOccurs="0" />
+				</xs:choice>
+				<xs:attribute name="name" type="xs:string" use="required" />
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+
+	<xs:complexType name="type-output-mysql-out-socket">
+		<xs:complexContent>
+			<xs:restriction base="cmn:type-output-inSocket">
+				<xs:sequence>
+					<xs:element name="schema" type="type-mysql-record" />
+				</xs:sequence>
+				<xs:attribute name="id" type="xs:string" use="required"
+					fixed="in0" />
+				<xs:attribute name="type" type="xs:string" use="optional"
+					fixed="in" />
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="type-output-mysql-base">
+		<xs:complexContent>
+			<xs:restriction base="cmn:type-output-component">
+				<xs:sequence>
+					<xs:element name="inSocket" type="type-output-mysql-out-socket"
+						minOccurs="1" maxOccurs="1" />
+					<xs:element name="runtimeProperties" type="cmn:type-properties"
+						minOccurs="0" maxOccurs="1" />
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+</xs:schema>

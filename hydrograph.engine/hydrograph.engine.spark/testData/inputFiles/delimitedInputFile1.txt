@@ -1,0 +1,3 @@
+20,Low,hhfh
+30,High,xjfhgk
+40,Med,kityi

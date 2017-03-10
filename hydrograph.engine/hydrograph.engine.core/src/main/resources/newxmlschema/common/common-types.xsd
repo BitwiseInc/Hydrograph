@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc. Licensed 
+	under the Apache License, Version 2.0 (the "License"); you may not use this 
+	file except in compliance with the License. You may obtain a copy of the 
+	License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by 
+	applicable law or agreed to in writing, software distributed under the License 
+	is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY 
+	KIND, either express or implied. See the License for the specific language 
+	governing permissions and limitations under the License. -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="hydrograph/engine/jaxb/commontypes" xmlns="hydrograph/engine/jaxb/commontypes"
+	elementFormDefault="unqualified">
+
+	<!--*******************Fields and data types start********************** -->
+	<xs:simpleType name="field-data-types">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="java.lang.String" />
+			<xs:enumeration value="java.lang.Integer" />
+			<xs:enumeration value="java.lang.Object" />
+			<xs:enumeration value="java.lang.Long" />
+			<xs:enumeration value="java.lang.Double" />
+			<xs:enumeration value="java.lang.Float" />
+			<xs:enumeration value="java.lang.Short" />
+			<xs:enumeration value="java.lang.Boolean" />
+			<xs:enumeration value="java.util.Date" />
+			<xs:enumeration value="java.math.BigDecimal" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="scale-type-list">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="explicit" />
+			<xs:enumeration value="implicit" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="type-lookup-insocket">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="driver" />
+			<xs:enumeration value="lookup" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="type-base-field">
+		<xs:attributeGroup ref="grp-attr-base-field" />
+		<xs:anyAttribute />
+	</xs:complexType>
+
+	<xs:attributeGroup name="grp-attr-base-field">
+		<xs:attribute name="name" type="xs:string" use="required" />
+		<xs:attribute name="type" type="field-data-types" use="required" />
+		<xs:attribute name="format" type="xs:string" use="optional" />
+		<xs:attribute name="precision" type="xs:int" use="optional" />
+		<xs:attribute name="scale" type="xs:int" use="optional" />
+		<xs:attribute name="scaleType" type="scale-type-list"
+			use="optional" />
+		<xs:attribute name="description" type="xs:string" use="optional" />
+	</xs:attributeGroup>
+
+
+	<xs:complexType name="type-base-record">
+		<xs:choice maxOccurs="unbounded" minOccurs="1">
+			<xs:element name="field" type="type-base-field" />
+			<xs:element name="record" type="type-base-record" />
+			<xs:element name="includeExternalSchema" type="type-external-schema"
+				minOccurs="0" />
+		</xs:choice>
+		<xs:attribute name="name" type="xs:string" use="required" />
+	</xs:complexType>
+
+
+	<xs:complexType name="type-external-schema">
+		<xs:attribute name="uri" type="xs:string" use="required" />
+	</xs:complexType>
+
+	<!--*******************Fields and data types ends********************** -->
+
+	<!--*******************Sockets start********************** -->
+	<xs:attributeGroup name="grp-attr-base-inSocket">
+		<xs:attribute name="id" type="xs:string" use="required" />
+		<xs:attribute name="type" type="xs:string" use="optional" />
+		<xs:attribute name="fromComponentId" type="xs:string"
+			use="required" />
+		<xs:attribute name="fromSocketId" type="xs:string" use="required" />
+		<xs:attribute name="fromSocketType" type="xs:string" use="optional" />
+	</xs:attributeGroup>
+
+	<xs:complexType name="type-base-inSocket">
+		<xs:attributeGroup ref="grp-attr-base-inSocket" />
+		<xs:anyAttribute />
+	</xs:complexType>
+
+	<xs:complexType name="type-base-outSocket">
+		<xs:attribute name="id" type="xs:string" use="required" />
+		<xs:attribute name="type" type="xs:string" use="optional" />
+		<xs:attribute name="viewData" type="true_false" use="optional"
+			default="false" />
+		<xs:anyAttribute />
+	</xs:complexType>
+
+	<xs:complexType name="type-outSocket-as-inSocket">
+		<xs:attribute name="inSocketId" type="xs:string" use="required" />
+		<xs:anyAttribute />
+	</xs:complexType>
+
+
+	<!--*******************Sockets ends********************** -->
+
+
+
+	<!--*******************base component starts********************** -->
+	<xs:complexType name="type-base-component">
+		<xs:attribute name="id" type="xs:string" use="required" />
+		<xs:attribute name="name" type="xs:string" use="optional" />
+		<xs:attribute name="batch" type="xs:string" use="optional"
+			default="0" />
+	</xs:complexType>
+
+	<xs:complexType name="type-input-component" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="type-base-component">
+				<xs:sequence>
+					<xs:element name="outSocket" type="type-input-outSocket"
+						minOccurs="1" maxOccurs="unbounded" />
+					<xs:element name="runtimeProperties" type="type-properties"
+						minOccurs="0" maxOccurs="1" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="type-output-component" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="type-base-component">
+				<xs:sequence>
+					<xs:element name="inSocket" type="type-output-inSocket"
+						minOccurs="1" maxOccurs="unbounded" />
+					<xs:element name="overWrite" type="type-true-false"
+						minOccurs="0" maxOccurs="1" />
+					<xs:element name="runtimeProperties" type="type-properties"
+						minOccurs="0" maxOccurs="1" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="type-straight-pull-component"
+		abstract="true">
+		<xs:complexContent>
+			<xs:extension base="type-base-component">
+				<xs:sequence>
+					<xs:element name="inSocket" type="type-base-inSocket"
+						minOccurs="1" maxOccurs="unbounded" />
+					<xs:element name="outSocket" type="type-straight-pull-out-socket"
+						minOccurs="1" maxOccurs="unbounded" />
+					<xs:element name="runtimeProperties" type="type-properties"
+						minOccurs="0" maxOccurs="1" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="type-operations-component"
+		abstract="true">
+		<xs:complexContent>
+			<xs:extension base="type-base-component">
+				<xs:sequence>
+					<xs:element name="inSocket" type="type-base-inSocket"
+						minOccurs="1" maxOccurs="unbounded" />
+					<xs:choice maxOccurs="unbounded" minOccurs="0">
+						<xs:element name="operation" type="type-transform-operation"
+							minOccurs="0" maxOccurs="unbounded" />
+						<xs:element name="expression" type="type-transform-expression"
+							minOccurs="0" maxOccurs="unbounded" />
+					</xs:choice>
+					<xs:element name="outputRecordCount" type="type-output-record-count"
+						minOccurs="0" maxOccurs="1" />
+					<xs:element name="outSocket" type="type-operations-out-socket"
+						minOccurs="1" maxOccurs="unbounded" />
+					<xs:element name="runtimeProperties" type="type-properties"
+						minOccurs="0" maxOccurs="1" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="type-command-component" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="type-base-component">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="type-unknown-component">
+		<xs:complexContent>
+			<xs:extension base="type-base-component">
+				<xs:sequence>
+					<xs:element name="inSocket" type="type-base-inSocket"
+						minOccurs="0" maxOccurs="unbounded" />
+					<xs:element name="outSocket" type="type-base-outSocket"
+						minOccurs="0" maxOccurs="unbounded" />
+					<xs:element name="properties" minOccurs="0" maxOccurs="1">
+						<xs:complexType>
+							<xs:attribute name="value" use="optional" type="xs:string" />
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<!--*******************base component ends********************** -->
+
+	<!--**************input types starts************ -->
+	<xs:complexType name="type-input-outSocket">
+		<xs:complexContent>
+			<xs:extension base="type-base-outSocket">
+				<xs:sequence>
+					<xs:element name="schema" type="type-base-record" />
+				</xs:sequence>
+				<xs:anyAttribute />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!--**************input types ends************ -->
+
+	<!--**************output types starts************ -->
+	<xs:complexType name="type-output-inSocket">
+		<xs:complexContent>
+			<xs:extension base="type-base-inSocket">
+				<xs:sequence>
+					<xs:element name="schema" type="type-base-record"
+						minOccurs="0" />
+				</xs:sequence>
+				<xs:anyAttribute />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!--**************output types ends************ -->
+
+	<!--**************straight-pull types starts************ -->
+	<xs:complexType name="type-straight-pull-out-socket">
+		<xs:complexContent>
+			<xs:extension base="type-base-outSocket">
+				<xs:sequence maxOccurs="1" minOccurs="1">
+					<xs:element name="copyOfInsocket" type="type-outSocket-as-inSocket" />
+				</xs:sequence>
+				<xs:anyAttribute />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!--**************straight-pull types ends************ -->
+
+	<!--**************transform types starts************ -->
+
+	<xs:complexType name="type-operation-input-fields">
+		<xs:sequence>
+			<xs:element name="field" type="type-input-field"
+				maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="type-operation-output-fields">
+		<xs:sequence>
+			<xs:element name="field" type="type-base-field" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="type-expression-output-fields">
+		<xs:sequence>
+			<xs:element name="field" type="type-base-field" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:complexType name="type-transform-operation">
+		<xs:sequence>
+			<xs:element name="inputFields" type="type-operation-input-fields"
+				minOccurs="0" />
+			<xs:element name="outputFields" type="type-operation-output-fields"
+				minOccurs="0" />
+			<xs:element name="properties" type="type-properties"
+				minOccurs="0" />
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:string" use="required" />
+		<xs:attribute name="class" type="xs:string" use="optional" />
+		<xs:anyAttribute />
+	</xs:complexType>
+
+	<xs:complexType name="type-transform-expression">
+		<xs:sequence>
+			<xs:element name="inputFields" type="type-operation-input-fields"
+				minOccurs="0" />
+			<xs:element name="outputFields" type="type-expression-output-fields"
+				minOccurs="0" />
+			<xs:element name="properties" type="type-properties"
+				minOccurs="0" />
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:string" use="required" />
+		<xs:attribute name="expr" type="xs:string" use="required" />
+		<xs:attribute name="mergeExpr" type="xs:string" use="optional" />
+		<xs:attribute name="accumulatorInitalValue" type="xs:string"
+			use="optional" />
+		<xs:anyAttribute />
+	</xs:complexType>
+
+	<xs:complexType name="type-output-record-count">
+		<xs:attribute name="value" type="xs:string" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="type-operations-out-socket">
+		<xs:complexContent>
+			<xs:extension base="type-base-outSocket">
+				<xs:choice maxOccurs="1" minOccurs="0">
+					<xs:element name="copyOfInsocket" type="type-outSocket-as-inSocket" />
+					<xs:choice maxOccurs="unbounded" minOccurs="1">
+						<xs:element name="passThroughField" type="type-input-field" />
+						<xs:element name="operationField" type="type-operation-field" />
+						<xs:element name="expressionField" type="type-expression-field" />
+						<xs:element name="mapField" type="type-map-field" />
+					</xs:choice>
+				</xs:choice>
+				<xs:anyAttribute />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<!--**************transform types ends************ -->
+
+	<!--**************other standard types starts************ -->
+	<xs:complexType name="boolean-value-type">
+		<xs:attribute name="value" type="xs:boolean" />
+	</xs:complexType>
+
+	<xs:simpleType name="standard-charsets">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="UTF-8" />
+			<xs:enumeration value="US-ASCII" />
+			<xs:enumeration value="ISO-8859-1" />
+			<xs:enumeration value="UTF-16BE" />
+			<xs:enumeration value="UTF-16LE" />
+			<xs:enumeration value="UTF-16" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="type-properties">
+		<xs:sequence maxOccurs="unbounded" minOccurs="1">
+			<xs:element name="property">
+				<xs:complexType>
+					<xs:attribute name="name" type="xs:string" use="required" />
+					<xs:attribute name="value" type="xs:string" use="required" />
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="type-sort-order">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="asc" />
+			<xs:enumeration value="desc" />
+		</xs:restriction>
+	</xs:simpleType>
+
+
+	<xs:complexType name="type-field-name">
+		<xs:attribute name="name" type="xs:string" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="type-input-field">
+		<xs:attribute name="name" type="xs:string" use="required" />
+		<xs:attribute name="inSocketId" type="xs:string" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="type-map-field">
+		<xs:attribute name="name" type="xs:string" use="required" />
+		<xs:attribute name="inSocketId" type="xs:string" use="required" />
+		<xs:attribute name="sourceName" type="xs:string" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="type-operation-field">
+		<xs:attribute name="name" type="xs:string" use="required" />
+		<xs:attribute name="operationId" type="xs:string" use="required" />
+	</xs:complexType>
+	<xs:complexType name="type-expression-field">
+		<xs:attribute name="name" type="xs:string" use="required" />
+		<xs:attribute name="expressionId" type="xs:string" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="element-value-string-type">
+		<xs:attribute name="value" type="xs:string" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="element-value-integer-type">
+		<xs:attribute name="value" type="xs:integer" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="type-key-fields">
+		<xs:choice>
+			<xs:element name="field" maxOccurs="unbounded" type="type-field-name" />
+		</xs:choice>
+	</xs:complexType>
+
+	<!--**************other standard types ends************ -->
+
+
+
+
+	<!--**************New changes- will be added in specific category later************ -->
+
+	<xs:simpleType name="keep_value">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="first" />
+			<xs:enumeration value="last" />
+			<xs:enumeration value="unique" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="match_value">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="first" />
+			<xs:enumeration value="last" />
+			<xs:enumeration value="all" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="keyfield_description_type">
+		<xs:sequence>
+			<xs:element name="keyFields">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="field" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:attribute name="name" type="xs:string" use="required" />
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+
+
+	<!--**************This type is added as it used in many places************ -->
+	<xs:complexType name="type-base-inSocket-fixed-in0">
+		<xs:complexContent>
+			<xs:restriction base="type-base-inSocket">
+				<xs:attribute name="id" type="xs:string" fixed="in0"
+					use="required" />
+				<xs:attribute name="type" type="xs:string" use="optional"
+					fixed="in" />
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:simpleType name="true_false">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="true" />
+			<xs:enumeration value="false" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="type-true-false">
+		<xs:attribute name="value" type="true_false" default="true" />
+	</xs:complexType>
+
+
+
+	<!--**************New changes- end************ -->
+
+</xs:schema>

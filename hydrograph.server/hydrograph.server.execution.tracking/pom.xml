@@ -1,0 +1,117 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>hydrograph</groupId>
+	<artifactId>hydrograph.server.execution.tracking.server</artifactId>
+	<version>1.0.13</version>
+	<packaging>jar</packaging>
+	<properties>
+		<tyrus.version>1.13.1</tyrus.version>
+		<slf4j.version>1.7.12</slf4j.version>
+		<logback.version>1.0.7</logback.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+	<repositories>
+		<!-- Add urls of Nexus/Artifactory in <url></url> tag -->
+		<!-- <repository> <id>mavenRepo</id> <url>/</url> </repository> -->
+		<repository>
+			<id>central</id>
+			<name>Central Repository</name>
+			<url>http://repo.maven.apache.org/maven2</url>
+		</repository>
+		<repository>
+			<id>Redshift</id>
+			<url>http://redshift-maven-repository.s3-website-us-east-1.amazonaws.com/release</url>
+		</repository>
+	</repositories>
+	<build>
+		<plugins>
+			<!-- Maven Assembly Plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.4.1</version>
+				<configuration>
+					<!-- get all project dependencies -->
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<!-- MainClass in mainfest make a executable jar -->
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<mainClass>hydrograph.server.execution.tracking.client.main.HydrographMain</mainClass>
+						</manifest>
+					</archive>
+
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<!-- bind to the packaging phase -->
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+
+
+	</build>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+
+		<!--Jetty dependencies start here -->
+		<dependency>
+			<groupId>hydrograph</groupId>
+			<artifactId>hydrograph.engine.command-line</artifactId>
+			<version>0.1.spark-SNAPSHOT</version>
+			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-beanutils</groupId>
+					<artifactId>commons-beanutils</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.6.2</version>
+		</dependency>
+
+		<!-- Tyrus API START -->
+		<dependency>
+			<groupId>org.glassfish.tyrus</groupId>
+			<artifactId>tyrus-server</artifactId>
+			<version>${tyrus.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.tyrus</groupId>
+			<artifactId>tyrus-container-grizzly-server</artifactId>
+			<version>${tyrus.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.tyrus</groupId>
+			<artifactId>tyrus-container-servlet</artifactId>
+			<version>${tyrus.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.glassfish.tyrus</groupId>
+			<artifactId>tyrus-client</artifactId>
+			<version>${tyrus.version}</version>
+		</dependency>
+		<!-- Tyrus API END -->
+
+	</dependencies>
+</project>

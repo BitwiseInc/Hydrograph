@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Theme
+Bundle-SymbolicName: hydrograph.ui.theme;singleton:=true
+Bundle-Version: 0.0.1.qualifier
+Bundle-Activator: hydrograph.ui.theme.Activator
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.e4.ui.css.swt.theme;bundle-version="0.10.100"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Bundle-Vendor: Bitwise

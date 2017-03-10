@@ -1,0 +1,3 @@
+A|aa,aaa,aaaa|ddd,ddd,ddd,zzz
+B|bb,bbb,bbbb|ddd,ddd,ddd,zzz
+C|cc,ccc|ddd,ddd

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+ -->
+ 
+ 
+<tns:Config xmlns:tns="hydrograph/ui/ComponentConfig"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="hydrograph/ui/ComponentConfig xsds/ComponentConfig.xsd ">
+	<tns:component paletteIconPath="/icons/gather_palette.png"
+		canvasIconPath="/icons/dummy-canvas.png" name="UnknownComponent"
+		nameInPalette="Unknown" defaultNamePrefix="Unknown"
+		description="This is unknown component."
+		helpFilePath="/hydrograph.ui.help/html/Components/Unknown.html"
+		acronym="UNKWN                              ">
+		<tns:category>UNKNOWN</tns:category>
+		<tns:port>
+			<tns:portSpecification  numberOfPorts="1" portAlignment="right" changePortCountDynamically="false" allowMultipleLinks="true" linkMandatory="true">
+				<tns:port sequenceOfPort="0" typeOfPort="out"  labelOfPort="out0" portTerminal="out0" />
+			</tns:portSpecification>
+			<tns:portSpecification  numberOfPorts="1" portAlignment="bottom" changePortCountDynamically="false" allowMultipleLinks="true" linkMandatory="true">
+				<tns:port sequenceOfPort="0" typeOfPort="unused" labelOfPort="un0" portTerminal="unused0" />
+			</tns:portSpecification>
+			<tns:portSpecification numberOfPorts="1" portAlignment="left" changePortCountDynamically="false" allowMultipleLinks="true" linkMandatory="true">
+				<tns:port sequenceOfPort="0" typeOfPort="in"  labelOfPort="in0" portTerminal="in0" />
+			</tns:portSpecification>
+		</tns:port>
+		
+		<tns:property dataType="string" name="name"
+			renderer="COMPONENT_NAME_WIDGET" type="USER" group="GENERAL"
+			subGroup="DETAILS" showAsTooltip="TRUE" tooltipDataType="TEXT" usage="REQUIRED" />
+
+		<tns:property dataType="string" name="xml_properties_content"
+			renderer="XML_CONTENT_WIDGET" type="USER" group="GENERAL" subGroup="CONFIGURATION"
+			showAsTooltip="TRUE" tooltipDataType="TEXT" usage="REQUIRED" />
+		
+		<tns:property dataType="string" name="batch" value="0"
+			renderer="BATCH_WIDGET" type="USER" group="GENERAL" subGroup="CONFIGURATION"
+			showAsTooltip="TRUE" tooltipDataType="TEXT" usage="REQUIRED" />
+
+	</tns:component>
+</tns:Config>

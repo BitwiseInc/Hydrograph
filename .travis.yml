@@ -1,0 +1,32 @@
+language: java
+jdk:
+  - oraclejdk8
+  
+sudo: required
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+cache:
+  directories:
+  - $HOME/.m2
+  - $HOME/.gradle/caches/
+  - $HOME/.gradle/wrapper/
+
+# Display Gradle version instead of letting Travis execute './gradlew assemble' by default
+install: ./gradlew -version  
+  
+script: 
+  - chmod 777 build.sh
+  - java -version
+  - ./gradlew -version
+  - ./gradlew copyLibs
+  - ./build.sh
+  
+notifications: 
+    email:
+      recipients:
+      - hydrograph_support@bitwiseglobal.com  
+    on_success: always
+    on_failure: always

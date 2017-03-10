@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+ -->
+<xs:schema xmlns="hydrograph/engine/jaxb/commandtypes"
+	xmlns:cmn="hydrograph/engine/jaxb/commontypes" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="hydrograph/engine/jaxb/commandtypes"
+	elementFormDefault="unqualified">
+	<xs:import schemaLocation="../common/common-types.xsd"
+		namespace="hydrograph/engine/jaxb/commontypes" />
+
+	<xs:complexType name="ftpIn">
+		<xs:complexContent>
+			<xs:extension base="cmn:type-command-component">
+				<xs:sequence>
+					<xs:element name="host">
+						<xs:complexType>
+							<xs:attribute name="name" use="required" type="xs:string" />
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="subjob">
+		<xs:complexContent>
+			<xs:extension base="cmn:type-command-component">
+				<xs:sequence>
+					<xs:element name="path">
+						<xs:complexType>
+							<xs:attribute name="uri" type="xs:string" use="required" />
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="runtimeProperties" type="cmn:type-properties"
+						minOccurs="0" />
+					<xs:element name="subjobParameter" type="cmn:type-properties"
+						minOccurs="0" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="runProgram">
+		<xs:complexContent>
+			<xs:extension base="cmn:type-command-component">
+				<xs:sequence>
+					<xs:element name="command">
+						<xs:complexType>
+							<xs:attribute name="value" use="required" type="xs:string" />
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="runSQL">
+		<xs:complexContent>
+			<xs:extension base="cmn:type-command-component">
+				<xs:sequence>
+					<xs:element name="database_Connection_Name">
+						<xs:complexType>
+							<xs:attribute name="databaseConnectionName" use="required" type="xs:string"/>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="server_Name">
+						<xs:complexType>
+							<xs:attribute name="ip_address" use="required" type="xs:string"/>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="port_Number">
+						<xs:complexType>
+							<xs:attribute name="portNumber" use="optional" type="xs:string"/>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="database_Name">
+						<xs:complexType>
+							<xs:attribute name="databaseName" use="required" type="xs:string"/>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="db_User_Name">
+						<xs:complexType>
+							<xs:attribute name="userName" use="required" type="xs:string"/>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="db_Password">
+						<xs:complexType>
+							<xs:attribute name="password" use="required" type="xs:string"/>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="queryCommand">
+						<xs:complexType>
+							<xs:attribute name="query" use="required" type="xs:string"/>
+						</xs:complexType>
+					</xs:element>
+
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+	<xs:complexType name="hplsql">
+		<xs:complexContent>
+			<xs:extension base="cmn:type-command-component">
+				<xs:sequence>
+					<xs:element name="command" minOccurs="1" maxOccurs="1">
+						<xs:complexType>
+							<xs:attribute name="cmd" type="xs:string" use="required" />
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="execute" maxOccurs="1" minOccurs="1">
+						<xs:complexType>
+							<xs:choice>
+								<xs:element name="query">
+									<xs:complexType>
+										<xs:attribute name="value" type="xs:string" use="required" />
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="uri">
+									<xs:complexType>
+										<xs:attribute name="value" type="xs:string" use="required" />
+									</xs:complexType>
+								</xs:element>
+							</xs:choice>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+</xs:schema>

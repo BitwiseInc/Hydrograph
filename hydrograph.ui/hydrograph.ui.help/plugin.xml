@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+ -->
+
+<plugin>
+
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="xml/Introduction/introduction.xml"
+            primary="true">
+      </toc>
+      <toc
+            file="xml/Introduction/overview.xml">
+      </toc>
+      <toc
+            file="xml/Introduction/WhatIsHydrograph.xml">
+      </toc>
+      <toc
+            file="xml/Introduction/howItWorks.xml">
+      </toc>
+      <toc
+            file="xml/Introduction/gettingStarted.xml">
+      </toc>
+      <toc
+            file="xml/Introduction/GlossaryTerminology.xml">
+      </toc>
+      <toc
+            file="xml/Hydrograph Features/hydrographfeatures.xml"
+            primary="true">
+      </toc>
+      <toc
+            file="xml/Installation and Configuration/installation.xml"
+            primary="true">
+      </toc>
+      <toc
+            file="xml/Installation and Configuration/prerequisitesForWindows.xml">
+      </toc>
+      <toc
+            file="xml/Installation and Configuration/stepsToInstall.xml">
+      </toc>
+      <toc
+            file="xml/User Interface/userInterface.xml"
+            primary="true">
+      </toc>
+      <toc
+            file="xml/User Interface/componentPalette.xml">
+      </toc>
+      <toc
+            file="xml/User Interface/console.xml">
+      </toc>
+      <toc
+            file="xml/User Interface/jobCanvas.xml">
+      </toc>
+      <toc
+            file="xml/User Interface/menuBarToolBar.xml">
+      </toc>
+      <toc
+            file="xml/User Interface/projectExplorer.xml">
+      </toc>
+      <toc
+            file="xml/User Interface/runConfiguration.xml">
+      </toc>
+      <toc
+            file="xml/Components/components.xml"
+            primary="true">
+      </toc>
+       <toc
+            file="xml/Components/input/Input.xml">
+      </toc>
+      <toc
+            file="xml/Components/output/Output.xml">
+      </toc>
+      <toc
+            file="xml/Components/command/Command.xml">
+      </toc>
+      <toc
+            file="xml/Components/transform.xml">
+      </toc>
+      <toc
+            file="xml/Components/components.xml"
+            primary="true">
+      </toc>
+      <toc
+            file="xml/Components/commentBox.xml">
+      </toc>
+      <toc
+            file="xml/Components/aggregate.xml">
+      </toc>
+      <toc
+            file="xml/Components/clone.xml">
+      </toc>
+      <toc
+            file="xml/Components/filter.xml">
+      </toc>
+      <toc
+            file="xml/Components/input/inputFileDelimited.xml">
+      </toc>
+      <toc
+            file="xml/Components/input/inputFileFixedWidth.xml">
+      </toc>
+      <toc
+            file="xml/Components/input/inputFileFixedWidth.xml">
+      </toc>
+      <toc
+            file="xml/Components/input/inputHiveParquet.xml">
+      </toc>
+      <toc
+            file="xml/Components/input/inputHiveTextFile.xml">
+      </toc>
+      <toc
+            file="xml/Components/input/inputOracle.xml">
+      </toc>
+      <toc
+            file="xml/Components/input/inputTeradata.xml">
+      </toc>
+      <toc
+            file="xml/Components/input/inputFileParquet.xml">
+      </toc>
+      <toc
+            file="xml/Components/input/inputFileMixedScheme.xml">
+      </toc>
+      <toc
+            file="xml/Components/input/InputXml.xml">
+      </toc>
+      <toc
+            file="xml/Components/input/inpuMysql.xml">
+      </toc>
+      <toc
+            file="xml/Components/input/inputRedshift.xml">
+      </toc>
+      <toc
+            file="xml/Components/join.xml">
+      </toc>
+      <toc
+            file="xml/Components/lookup.xml">
+      </toc>
+      <toc
+            file="xml/Components/normalize.xml">
+      </toc>
+      <toc
+            file="xml/Components/Output/outputFileDelimited.xml">
+      </toc>
+      <toc
+            file="xml/Components/Output/outputFileFixedWidth.xml">
+      </toc>
+      <toc
+            file="xml/Components/Output/outputHiveParquet.xml">
+      </toc>
+      <toc
+            file="xml/Components/Output/outputHiveTextFile.xml">
+      </toc>
+       <toc
+            file="xml/Components/Output/outputOracle.xml">
+      </toc>
+      <toc
+            file="xml/Components/Output/outputTeradata.xml">
+      </toc>
+       <toc
+            file="xml/Components/Output/outputFileMixedScheme.xml">
+      </toc>
+      <toc
+            file="xml/Components/Output/output_File_Parquet.xml">
+      </toc>
+      <toc
+            file="xml/Components/Output/outputMysql.xml">
+      </toc>
+      <toc
+            file="xml/Components/Output/outputRedshift.xml">
+      </toc>
+      <toc
+         	file="xml/Components/Output/outputDBUpdate.xml">
+	  </toc>
+	        <toc
+            file="xml/Components/input/generateRecords.xml">
+      </toc>
+      <toc
+            file="xml/Components/removeDups.xml">
+      </toc>
+      <toc
+            file="xml/Components/transform.xml">
+      </toc>
+      <toc
+            file="xml/Components/unionAll.xml">
+      </toc>
+      <toc
+            file="xml/Operation Base Interface/operationBaseInterface.xml"
+            primary="true">
+      </toc>
+      <toc
+            file="xml/Operation Base Interface/filterBase.xml">
+      </toc>
+      <toc
+            file="xml/Operation Base Interface/aggregateTransformBase.xml">
+      </toc>
+      <toc
+            file="xml/Operation Base Interface/transformBase.xml">
+      </toc>
+      <toc
+            file="xml/Operation Base Interface/normalizeTransformBase.xml">
+      </toc>
+      <toc
+            file="xml/How To Steps/howToSteps.xml"
+            primary="true">
+      </toc>
+	  <toc
+            file="xml/How To Steps/git_working_with_git_in_hydrograph.xml">
+      </toc>
+      <toc
+            file="xml/How To Steps/howToCreateAJob.xml">
+      </toc>
+      <toc
+            file="xml/How To Steps/howToCreateAnELTProject.xml">
+      </toc>
+      <toc
+            file="xml/How To Steps/howToImportProjectFilesFromFileSystem.xml">
+      </toc>
+      <toc
+            file="xml/How To Steps/howToImportEngineXMLToUI.xml">
+      </toc>
+      <toc
+            file="xml/How To Steps/howToParameterizeComponentProperties.xml">
+      </toc>
+      <toc
+            file="xml/How To Steps/howToPassHadoopPropertiesToComponent.xml">
+      </toc>
+      <toc
+            file="xml/How To Steps/howToRunAJobLocally.xml">
+      </toc>
+      <toc
+            file="xml/How To Steps/howToRunAJobOnCluster.xml">
+      </toc>
+      <toc
+            file="xml/References/references.xml"
+            primary="true">
+      </toc>
+      <toc
+            file="xml/References/FAQs.xml">
+      </toc>
+      <toc
+            file="xml/References/dosandDonts.xml">
+      </toc>
+      <toc
+            file="xml/References/jobExamples.xml">
+      </toc>
+      <toc
+            file="xml/References/referenceURLs.xml">
+      </toc>
+      <toc
+            file="xml/References/releaseNotes.xml">
+      </toc>
+      <toc
+            file="xml/References/whenShouldIUseHashJoinVsCoJoin.xml">
+      </toc>
+      <toc
+            file="xml/User Interface/parameterGrid.xml">
+      </toc>
+      <toc
+            file="xml/Components/limit.xml">
+      </toc>
+      <toc
+            file="xml/Components/sort.xml">
+      </toc>
+      <toc
+            file="xml/Components/uniqueSequence.xml">
+      </toc>
+      <toc
+            file="xml/Installation and Configuration/launchingHydrographOnWindows.xml">
+      </toc>
+      <toc
+            file="xml/Installation and Configuration/prerequisitesForMacintosh.xml">
+      </toc>
+      <toc
+            file="xml/Installation and Configuration/launchingHydrographOnMacintosh.xml">
+      </toc>
+      <toc
+            file="html/How To Steps/How_To_Parameterize_Component_Properties.html">
+      </toc>
+      <toc
+            file="html/How To Steps/How_To_Import_Engine_XML_to_UI.html">
+      </toc>
+      <toc
+            file="html/How To Steps/How_To_Pass_Hadoop_Properties_To_Component.html">
+      </toc>
+      <toc
+            file="html/Components/Join_Mapping_View.html">
+      </toc>
+      <toc
+            file="html/Components/Lookup_Mapping_View.html">
+      </toc>
+      <toc
+            file="html/Components/Transform_Properties.html">
+      </toc>
+      <toc
+            file="html/Components/Transform_Mapping_View.html">
+      </toc>
+      <toc
+            file="html/Components/Aggregate_Operation_Editor.html">
+      </toc>
+      <toc
+            file="html/references/Job_Examples.html">
+      </toc>
+      <toc
+            file="xml/Components/discard.xml">
+      </toc>
+      
+       <toc
+            file="xml/Components/cumulate.xml"
+            primary="false">
+      </toc>
+      <toc
+            file="hydrograph.ui.help.toc2"
+            primary="false">
+      </toc>
+      <toc
+            file="xml/Components/cumulate.xml">
+      </toc>
+      <toc
+            file="xml/Components/Command/runProgram.xml">
+      </toc>
+      <toc
+            file="xml/Components/Command/runSql.xml">
+      </toc>
+      <toc
+            file="xml/Components/partitionByExpression.xml">
+      </toc>
+   </extension>
+   <extension
+         point="org.eclipse.help.index">
+      <index
+            file="xml/index.xml">
+      </index>
+   </extension>
+
+</plugin>

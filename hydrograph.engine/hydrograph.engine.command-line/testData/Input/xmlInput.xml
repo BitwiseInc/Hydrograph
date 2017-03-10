@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+    <record>
+        <id>1</id>
+        <first_name>Earl</first_name>
+        <last_name>Gardner</last_name>
+        <gender>Male</gender>
+        <dept_id>6</dept_id>
+        <salary>29004.53</salary>
+        <email>
+            <work>egardner0@amazon.co.jp</work>
+            <personal>egardner0@google.ca</personal>
+        </email>
+        <address>
+            <state>Arkansas</state>
+            <city>Fort Smith</city>
+            <zip>72916</zip>
+        </address>
+        <phone>
+            <work>1-(479)206-5272</work>
+            <home>1-(786)537-2828</home>
+        </phone>
+    </record>
+    <record><id>2</id><first_name>Joan</first_name><last_name>Lee</last_name><gender>Female</gender><dept_id>6</dept_id><salary>35519.85</salary><email><work>jlee1@domainmarket.com</work><personal>jlee1@timesonline.co.uk</personal></email><address><state>Virginia</state><city>Roanoke</city><zip>24040</zip></address><phone><work>1-(540)500-0108</work><home>1-(510)948-8132</home></phone></record></dataset>

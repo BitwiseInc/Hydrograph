@@ -1,0 +1,115 @@
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+ 
+ 
+<!doctype html>
+<html>
+<head>
+	<title>DB Update Properties</title>
+	<link rel="stylesheet" type="text/css" href="../../css/style.css">
+</head>
+<body>
+
+<p><span class="header-1">DB Update Properties</span></p>
+
+<p><span><b>Properties</b>&nbsp;for the DB Update component can be viewed by double clicking the component on canvas. The properties window can also be opened by right-clicking the component icon on the job canvas and clicking on the 'Properties' option.</span></p>
+<p><span>The properties contain a &#39;General&#39; tab and a &#39;Schema&#39; tab. Common properties are present in the General tab. Schema tab displays the option to accept the field schema i.e. field name, data type, scale etc. </span></p>
+
+<p><a name="general_properties"></a><span class="header-2">General Properties</span></p>
+
+<p><img alt="" src="../../images/output_dbupdate_properties_general.png" /></p>
+
+<p><a name="details"></a><span class="header-2">Details</span></p>
+
+<ul>
+	<li><span><b>Name</b> - The identifier for the component. This is a <b>mandatory</b> property. This property is pre-populated with the component name, i.e. 'DBUpdate' followed by an incremental number. It can be changed to any custom name. The name property has following restrictions:</span></li>
+	<ul>
+		<li><span>Must be specified and should not be blank.</span></li>
+		<li><span>Must be unique across the job.</span></li>
+		<li><span>Accepts only alphabets (a-z), numerals (0-9) and 4 special characters: "_", "-", ",", " " (space)<./span></li>
+	</ul>
+	<li><span><b>ID</b> - ID signifies unique Id of component. This Id is generated at the time of component creation. This is a non editable field.</span></li>
+	<li><span><b>Type</b> - Type defines the type of component within the category. This typically is the name of the component. This is a non editable field.</span></li>
+</ul>
+
+<p><a name="configuration"></a><span class="header-2">Configuration</span></p>
+
+<ul>
+	<li><a name="database_name"></a><span><b>Database Name</b> - Database Name is used to specify the name of database to be updated. User has to select database name from dropdown list provided. On selection of database name appropriate driver class name is displayed. If user selects database name as others then user have to manually specify JDBC Driver Class name. Database name is a mandatory property.</span></li>
+</ul>
+<ul>
+	<li><a name="JDBC_Driver_Class_name"></a><span><b>JDBC Driver Class</b> - JDBC Driver Class Name is used to specify the JDBC Driver Class Name. JDBC driver name is automatically generated on selection of Database name . User has to manually type the JDBC Driver Class name in the text box only if other database name is selected.JDBC Driver Class is a mandatory property.</span></li>
+</ul>
+<ul>
+	<li><a name="DB_URL"></a><span><b>DB Url</b> - DB Url is used to specify the Database Url. User has to manually type the Database Url in the text box provided. Database Url is a mandatory property.</span></li>
+</ul>
+<ul>
+	<li><a name="table_name"></a><span><b>Table Name</b> - Table Name is used to specify the Update table Name. User has to manually type the table name in the text box provided. Table name is a mandatory property.</span></li>
+</ul>
+<ul>
+	<li><a name="Chunk_size"></a><span><b>Chunk size</b> - Chunk size is used to specify chunk size to define the chunks for DB update. User has to manually type the chunk size in the text box provided. Chunk size is optional property.</span></li>
+</ul>
+<ul>
+	<li><a name="User"></a><span><b>User</b> - User is used to specify the User name to Login to Update Database.</span></li>
+</ul>
+<ul>
+	<li><a name="Password"></a><span><b>Password</b> - Password is used to specify the password.</span></li>
+</ul>
+<ul>
+	<li><a name="Update_By_key"></a><span><b>Update By Keys</b> - Update By Key is used to specify the keys that would be used in "WHERE" clause while running the update. User is provided with read-only text box and a button to select the update Keys. User can not manually type update keys in text box provided. 
+On clicking the Select Key button, user is provided with Update Keys window to select the Keys on which Update has to be performed. Selecting Update Keys is Mandatory.
+Keys selected by user are displayed in the read-only textbox on the property window.
+	</span></li>
+	</ul>
+	<p><img alt="" src="../../images/dbupdate_update_keys.png" /></p>
+<ul>
+</ul>
+
+<ul>
+	<li><a name="runtime_properties"></a><span><b>Runtime Properties</b> -&nbsp;Runtime properties are used to override the Hadoop configurations specific to Output Hive TextFile component at run time. User is required to enter the Property Name and Value in the runtime properties grid.</span>
+	<p><span>Check <a href="../../How To Steps/How_To_Pass_Hadoop_Properties_To_Component.html"> How to pass Hadoop properties to component</a></span></p></li>
+</ul>
+	<p><img alt="" src="../../images/Runtime_Properties_Grid.png" /></p>
+<ul>
+	<li><a name="Batch"></a><span><b>Batch</b>- Batch simply accepts a numeric number starting from 0 to maximum 99 and signifies the batch this component will execute in. By default this is 0.</span></li>
+</ul>
+
+<p><a name="schema_tab"></a><span class="header-2">Schema Tab</span></p>
+
+<p><img alt="" src="../../images/dbupdate_schema_tab.png" /></p>
+<p><span>Schema is <b>mandatory</b> for DB Update component. Schema tab defines the record format on the in port of the DB Update component. A field in schema has multiple attributes as described below.</span></p>
+<ul>
+	<li><span><b>Internal</b> - User is provided a Grid to enter the internal schema of the Input Delimited file.</span></li>
+	<ul>
+		<li><span><b>Field Name</b> - User needs to enter all the Field names in this column.</span></li>
+		<li><span><b>Data type</b> - The data type for the field. This is a mandatory attribute. The default data type is "String". Check <a href="../../references/SupportedDataTypes.html">supported data types</a> page for list of supported data types.</span></li>
+		<li><span><b>Date Format</b> - The format for date data type. Refer to <a href="../../references/Date_Formats.html">java date formats</a> page for acceptable date formats.</span></li>
+		<li><span><b>Precision</b> - Precision for a bigdecimal field can be specified here.</span></li>
+		<li><span><b>Scale</b> - Scale for a bigdecimal field can be specified here.</span></li>
+		<li><span><b>Scale Type</b> - Scale Type accepts values as implicit or explicit for bigdecimal field and none for other data types. Explicit considers the length of ' <b>.</b> ' and implicit ignores length of ' <b>.</b> ' for the bigdecimal field.</span></li>
+		<li><span><b>Field Description</b> - User can specify field description.</span></li></ul>
+	</ul>	
+	<li><span><b>External</b> - User can provide an external Hydrograph Schema file of XML format. A text box is provided to either manually type or use the Browse button to select the schema file from File system. The External schema file path is resolved during run time and replaced with the contents of the file in the Job XML.</span></li>
+</ul>
+
+
+<p><a name="validations"></a><span class="header-2">Validations</span></p>
+<p><span>The DB Update component applies validations to the mandatory fields as described above. Upon placing the  DB Update component on job canvas for the first time (from component palette), the component shows up a warning icon as mandatory properties are not provided.</span></p>
+<img src="../../images/dbupdate_icon_warning.png" alt="" />
+
+<p><span>The properties window also displays error icon on mandatory fields if it has an incorrect value. The error icon is displayed on the tab as well, if any of the field within the tab has some error.</span></p>
+<img src="../../images/dbupdate_properties_validations.png" alt="" />
+
+<p><span>If the properties window has some error even after user visit's it once, then the warning icon on the DB Update component on the job canvas changes to error icon. This error icon is removed only when all the mandatory fields are supplied with correct values.</span></p>
+<img src="../../images/dbupdate_icon_error.png" alt="" />
+
+</body>
+</html>

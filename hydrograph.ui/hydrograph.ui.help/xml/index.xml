@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+ -->
+<index>
+    <entry keyword="Aggregate">
+        <topic href="/hydrograph.ui.help/html/Components/Aggregate.html"/>
+    </entry>
+    
+    <entry keyword="Sort">
+    	<topic href="/hydrograph.ui.help/html/Components/Sort.html"/>
+    	<topic href="/hydrograph.ui.help/html/Components/Sort_Properties.html"/>
+    </entry>
+    
+    <entry keyword="Discard">
+    	<topic href="/hydrograph.ui.help/html/Components/Discard.html"/>
+    	<topic href="/hydrograph.ui.help/html/Components/Discard_Properties.html"/>
+    </entry>
+    
+     <entry keyword="Normalize">
+		<topic href="/hydrograph.ui.help/html/Components/Normalize_Operation_Class_Window.html" />
+		<topic href="/hydrograph.ui.help/html/Components/Normalize_Operation_Editor.html" />
+		<topic href="/hydrograph.ui.help/html/Components/Normalize_Properties.html" />
+		<topic href="/hydrograph.ui.help/html/Components/Normalize.html" />
+	</entry>
+	
+     <entry keyword="Clone">
+        <topic href="/hydrograph.ui.help/html/Components/Clone.html"/>
+    </entry>
+    	
+     <entry keyword="Filter">
+        <topic href="/hydrograph.ui.help/html/Components/Filter.html"/>
+        <topic href="/hydrograph.ui.help/html/Components/Filter_Operation_Window.html"/>
+        <topic href="/hydrograph.ui.help/html/Components/Filter_Properties.html"/>
+    </entry>
+    
+     <entry keyword="Operation Class Window">
+        <topic href="/hydrograph.ui.help/html/Components/Filter_Operation_Window.html"/>
+        <entry keyword="In-built Operation Classes">
+       	 	<topic href="/hydrograph.ui.help/html/Components/Filter_Operation_Window.html#using-existing-java-class"/>
+        </entry>
+        <entry keyword="Create Custom Classes">
+        	<topic href="/hydrograph.ui.help/html/Components/Filter_Operation_Window.html#custom-operation-class"/>
+        </entry>
+    </entry>
+    
+     <entry keyword="Operation Property Grid">
+        <topic href="/hydrograph.ui.help/html/Components/Filter_Operation_Window.html#Operation_Properties_Grid"/>
+    </entry>
+    
+    <entry keyword="Unique Sequence">
+        <topic href="/hydrograph.ui.help/html/Components/Unique_Sequence.html"/>
+		<topic href="/hydrograph.ui.help/html/Components/Unique_Sequence_Properties.html"/>
+    </entry>
+    
+      <entry keyword="Lookup">
+        <topic href="/hydrograph.ui.help/html/Components/Lookup.html"/>
+		<topic href="/hydrograph.ui.help/html/Components/Lookup_Properties.html"/>
+		<topic href="/hydrograph.ui.help/html/Components/Lookup_Mapping_View.html"/>
+    </entry>
+    
+      <entry keyword="Join">
+        <topic href="/hydrograph.ui.help/html/Components/Join.html"/>
+		<topic href="/hydrograph.ui.help/html/Components/Join_Properties.html"/>
+		<topic href="/hydrograph.ui.help/html/Components/Join_Mapping_View.html"/>
+    </entry>
+    
+    <entry keyword="Database Components">
+    	<entry keyword="Input Database Components">
+    		<topic href="/hydrograph.ui.help/html/Components/Input_Oracle.html"/>
+        	<topic href="/hydrograph.ui.help/html/Components/Input_Mysql.html"/>
+        	<topic href="/hydrograph.ui.help/html/Components/Input_Redshift.html"/>
+        	<topic href="/hydrograph.ui.help/html/Components/Input_Teradata.html"/>
+    	</entry>
+        <entry keyword="Output Database Components">
+    		<topic href="/hydrograph.ui.help/html/Components/Output_Oracle.html"/>
+        	<topic href="/hydrograph.ui.help/html/Components/Output_Mysql.html"/>
+        	<topic href="/hydrograph.ui.help/html/Components/Output_Redshift.html"/>
+        	<topic href="/hydrograph.ui.help/html/Components/Output_Teradata.html"/>
+    	</entry>
+    </entry>
+    
+    <entry keyword="Hydrograph Features">
+        <topic href="/hydrograph.ui.help/html/Hydrograph Features/View_Data.html"/>
+        <topic href="/hydrograph.ui.help/html/Hydrograph Features/View Data History.html"/>
+        <topic href="/hydrograph.ui.help/html/Hydrograph Features/View Execution History.html"/>
+	 	<topic href="/hydrograph.ui.help\html\Components\Comment_Box.html"/>
+	 	 <topic href="/hydrograph.ui.help/html/Hydrograph Features/Schema_Propagation.html"/>
+    </entry>
+ </index>
+

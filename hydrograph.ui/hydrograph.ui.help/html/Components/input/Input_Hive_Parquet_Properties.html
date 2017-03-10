@@ -1,0 +1,92 @@
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+ 
+ 
+<!doctype html>
+<html>
+<head>
+	<title>Input Hive Parquet Properties</title>
+	<link rel="stylesheet" type="text/css" href="../../css/style.css">
+</head>
+<body>
+
+<p><span class="header-1">Input Hive Parquet Properties</span></p>
+
+
+<p><span><b>Properties</b>&nbsp;for the Input Hive Parquet component can be viewed by Double click-&gt;component on canvas. The properties contain a &#39;General&#39; tab and a &#39;Schema&#39; tab. Common and mandatory properties are present in the General tab. Schema displays option to accept the field schema i.e. field name, Data type, scale etc.</span></p>
+
+<p><a name="general_properties"></a><span class="header-2">General Properties</span></p>
+
+<p><img alt="" src="../../images/Input_Hive_Parquet_Properties_General.png" /></p>
+
+<p><span class="header-2">Display</span></p>
+
+<ul>
+	<li><span><b>Name</b> - The Name field will specify the name of the component as desired by the user.</span></li>
+	<li><span><b>Base Type</b> - Base Type signifies the basic operation area of the component. In this case it is of Base Type Input.</span></li>
+	<li><span><b>Type </b> - Type further categorizes the component to detailed operation that it intends to perform. Here it is of type Input Hive Parquet.</span></li>
+</ul>
+
+<p><span class="header-2">Configuration</span></p>
+<ul>
+	<li><a name="database_name"></a><span><b>Database Name</b> - Database Name is used to specify the Hive Database Name. User has to manually type the database name in the text box provided. Database name is a mandatory property.</span></li>
+</ul>
+<ul>
+	<li><a name="table_name"></a><span><b>Table Name</b> - Table Name is used to specify the Hive table Name. User has to manually type the table name in the text box provided. Table name is a mandatory property.</span></li>
+</ul>
+<ul>
+	<li><a name="external_table_path"></a><span><b>External Table Path</b> - External Table Path is used to specify the file path in case the table has been created as an external table. User has to manually type the path in the text box provided. External Table Path is an optional field.</span></li>
+</ul>
+<ul>
+	<li><a name="partiton_keys"></a><span><b>Partition Keys</b> - Partition keys accepts the partition field names. The window also allows users to specify the partition field values to read filtered data. As per Hive requirement, the partition keys should always be at the end of the schema. The partition keys window validates whether the partition fields are at the end of the schema.</span></li>
+</ul>
+	<p><img alt="" src="../../images/Input_Hive_Parquet_Parttion_Key_ Value.png" /></p>
+<ul>
+	<li><a name="runtime_properties"></a><span><b>Runtime Properties</b> -&nbsp;Runtime properties are used to override the Hadoop configurations specific to Input Hive TextFile component at run time. User is required to enter the Property Name and Value in the runtime properties grid.</span>
+	<p><span>Check <a href="../../How To Steps/How_To_Pass_Hadoop_Properties_To_Component.html"> How to pass Hadoop properties to component</a></span></p></li>
+</ul>
+	<p><img alt="" src="../../images/Runtime_Properties_Grid.png" /></p>
+<ul>
+	<li><a name="phase"></a><span><b>Batch</b> - Batch simply accepts a numeric value starting from 0 to maximum 99 and signifies the phase this component will execute in. By default this is 0.</span></li>
+</ul>
+
+<p><a name="schema"></a><span class="header-2">Schema Tab</span></p>
+
+<p><img alt="" src="../../images/Input_Hive_Parquet_Properties_Schema.png" /></p>
+<p><span><b>Schema Types</b></span></span></p>
+<ul>
+	<li><span><b>Internal</b> - User is provided a Grid to enter the internal schema of the Input Delimited file.</span></li>
+	<ul>
+		<li><span><b>Field Name</b> - User needs to enter all the Field names in this column.</span></li>
+		<li><span><b>Data type</b> - The data type for the field. This is a mandatory attribute. The default data type is "String". Check <a href="../../references/SupportedDataTypes.html">supported data types</a> page for list of supported data types.</span></li>
+		<li><span><b>Date Format</b> - The format for date data type. Refer to <a href="../../references/Date_formats.html">Date formats</a> page for acceptable date formats.</span></li>
+		<li><span><b>Precision</b> - Precision for a bigdecimal field can be specified here.</span></li>
+		<li><span><b>Scale</b> - Scale for a bigdecimal field can be specified here.</span></li>
+		<li><span><b>Scale Type</b> - Scale Type accepts values as implicit or explicit for bigdecimal field and none for other data types. Explicit considers the length of ' <b>.</b> ' and implicit ignores length of ' <b>.</b> ' for the bigdecimal field.</span></li>
+		<li><span><b>Field Description</b> - User can specify field description.</span></li>
+	</ul>
+	<li><span><b>External</b> - User can provide an external Hydrograph Schema file of XML format. A text box is provided to either manually type or use the Browse button to select the schema file from File system. The External schema file path is resolved during run time and replaced with the contents of the file in the Job XML.</span></li>
+</ul>	
+
+<p><a name="validations"></a><span class="header-2">Validations</span></p>
+<p><span>The Input Hive Parquet components applies validations to the mandatory fields as described above. Upon placing the Input Hive Parquet component on job canvas for the first time (from component palette), the component shows up a warning icon as mandatory properties are not provided.</span></p>
+<img src="../../images/Input_Hive_Parquest_Component_Validation_Warning.png" alt="Warning icon displayed on component" />
+
+<p><span>The properties window also displays error icon on mandatory fields if it has an incorrect value. The error icon is displayed on the tab as well, if any of the field within the tab has some error.</span></p>
+<img src="../../images/Input_Hive_Parquest_Component_Property_Window_Error.png" alt="Error icon displayed on tabs" />
+
+<p><span>If the properties window has some error even after user visit's it once, then the warning icon on the Input Hive Parquet component on the job canvas changes to error icon. This error icon is removed only when all the mandatory fields are supplied with correct values.</span></p>
+<img src="../../images/Input_Hive_Parquest_Component_Validation_Canvas_Error.png" alt="Error icon on component" />
+
+<ul>
+</ul>
+</body>
+</html>

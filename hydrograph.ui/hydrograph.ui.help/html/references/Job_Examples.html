@@ -1,0 +1,129 @@
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+ 
+ 
+<!doctype html>
+<html>
+<head>
+	<title>Job Examples</title>
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+
+</head>
+<body>
+
+<p class="header-1">Job Examples</p>
+
+<p><span><b>Example 1:</b></span></p>
+
+<p><span >Let&#39;s create a simple job where we have a input file delimited component that transfers output to an output file delimited changing just the delimiter.</span></p>
+
+<p><span >We will be using the below input files which are ',' delimited. </span></p><br>
+<p><img alt="" src="../images/Input_file.png" /></p><br>
+<p><span >Drag an input file delimited component -> In the properties tab add the path of the input file -> specify the delimiter, provide values for parameters has header, phase, strict, safe and character set</span></p><br>
+<p><img alt="" src="../images/Input_file1.png" /></p><br>
+<p><span >Add the schema as in the file</span></p><br>
+<p><img alt="" src="../images/Input_file2.png" /></p><br>
+<p><span >Drag another input file delimited component -> connect it to the previous component -> specify the output location -> provide values for delim, safe, strict, has header, charset and phase properties</span></p><br>
+<p><img alt="" src="../images/Output_file1.png" /></p><br>
+<p><span >Schema propagates from input to output automatically.</span></p><br>
+<p><img alt="" src="../images/Output_file2.png" /></p><br>
+<p><span >Save & Run the job and view progress on the console. Once complete, check the output in the output folder.</span></p><br>
+<p><img alt="" src="../images/Job_run_progress.png" /></p><br>
+<p><img alt="" src="../images/Job_successful.png" /></p><br>
+<p><img alt="" src="../images/output.png" /></p><br>
+<p><img alt="" src="../images/output1.png" /></p><br>
+
+
+
+
+<p><span ><b>Example 2:</b></span></p>
+
+<p><span>Let&#39;s create another job where we have two input file delimited components that involves use of multiple components like Join, Aggregate, Clone etc.</span></p>
+
+<p><span >We will be using the below input files which are ',' delimited. </span></p><br>
+<p><img alt="" src="../images/Input_file.png" /></p><br>
+<p><img alt="" src="../images/Input_file3.png" /></p><br>
+<p><span >Drag an input file delimited component -> In the properties tab add the path of the input file -> specify the delimiter, provide values for parameters has header, phase, strict, safe and character set</span></p>
+<p><img alt="" src="../images/13_Drag_Input_File1.png" /></p><br>
+<p><img alt="" src="../images/14_Input_File1_Properties.png" /></p><p><img alt="" src="../images/15_Input_File1_Properties_Filled.png" /></p><br>
+<p><span >Add the schema as in the file</span></p><br>
+<p><img alt="" src="../images/16_Input_File1_Schema_Filled.png" /></p><br>
+<p><span >Drag another input file delimited component ->  provide values for delim, safe, strict, has header, charset and phase properties and provide schema as in the above component</span></p><br>
+<p><img alt="" src="../images/17_Drag_Input_File2.png" /></p><br>
+<p><img alt="" src="../images/18_Input_File2_Properties.png" /></p><p><img alt="" src="../images/19_Input_File2_Properties_Filled.png" /></p><br>
+<p><img alt="" src="../images/20_Input_File2_Schema_Filled.png" /></p><br>
+<p><span >Drag the Join component</span></p><br>
+<p><img alt="" src="../images/21_Drag_Join.png" /></p><br>
+<p><span >Connect input files to Join component - > fill the Join properties as in the below screenshots:</span></p><br>
+<p><img alt="" src="../images/22_Connect_Input_Files_to_Join.png" /></p><br>
+<p><img alt="" src="../images/23_Join_Properties.png" /></p><br>
+<p><img alt="" src="../images/24_Join_Properties_Parent_Window_Filled.png" /></p><br>
+<p><img alt="" src="../images/25_Join_Configuration.png" /></p><br>
+<p><img alt="" src="../images/26_Join_Configuration_Select_Keys.png" /></p><br>
+<p><img alt="" src="../images/27_Join_Configuration_Select_Join_Type.png" /></p><br>
+<p><span >Open the Join mapping view -> Drag fields into the center grid -> rename fields in case of Map fields and leave as is for Passthrough fields.</span></p><br>
+
+<p><img alt="" src="../images/28_Join_Mapping_View.png" /></p><br>
+<p><img alt="" src="../images/29_Join_Mapping_View_Drag_Fields.png" /></p><br>
+
+<p><span >The output fields can be viewed in the schema tab along with specified datatypes.</span></p><br>
+<p><img alt="" src="../images/30_Join_Schema_Tab.png" /></p><br>
+
+
+<p><span >Drag the Aggregate component -> connect it to the Join output</span></p><br>
+<p><img alt="" src="../images/31_Drag_Aggregate.png" /></p><br>
+<p><img alt="" src="../images/32_Connect_Aggregate.png" /></p><br>
+
+
+<p><span >Fill properties for the Aggregate component present on the General tab</span></p><br>
+<p><img alt="" src="../images/33_Aggregate_Properties.png" /></p><br>
+<p><img alt="" src="../images/34_Aggregate_Key_Fields.png" /></p><br>
+<p><img alt="" src="../images/35_Aggregate_Sec_Key_Fields.png" /></p><br>
+<p><span >Open the Aggregate mapping view->drag fields on which the operation needs to be performed ->  Select a standard operation class -> specify the output fields</span></p><br>
+<p><img alt="" src="../images/36_Aggregate_Mapping_View.png" /></p><br>
+<p><img alt="" src="../images/37_Aggregate_Select_Std_Op_Class.png" /></p><br>
+<p><img alt="" src="../images/38_Aggregate_Specify_Mappings.png" /></p>
+<br>
+<p><span >The output fields can be viewed in the schema tab along with specified datatypes for Passthrough or Map fields. The operation output fields are assigned default 'string' datatype and need to be changed accordingly by the user.</span></p><br>
+<p><img alt="" src="../images/39_Aggregate_Schema.png" /></p><br>
+<p><span >Drag the Clone component -> Drag Multiple output components and connect them to clone -> Provide properties like output folder path, delim, safe, strict, phase etc.</span></p><br>
+
+
+<p><img alt="" src="../images/40_Drag_Clone.png" /></p><br>
+<p><img alt="" src="../images/42_Drag_Multiple_Output.png" /></p><br>
+<p><img alt="" src="../images/43_Connect_Multiple_Output.png" /></p><br>
+<p><img alt="" src="../images/45_Output_File1_Properties_Filled.png" /></p><br>
+<p><img alt="" src="../images/46_Output_File1_Schema.png" /></p><br>
+<p><img alt="" src="../images/47_Output_File2_Properties_Filled.png" /></p><br>
+<p><img alt="" src="../images/48_Output_File3_Properties_Filled.png" /></p><br>
+
+<p><span >Complete job flow will look something like below:</span></p>
+<p><img alt="" src="../images/49_Complete_Job_Flow.png" /></p><br>
+
+<p><span >Save and Run the job -> check progress of the job on the console -> Wait for the job to complete successfully.</span></p><br>
+<p><img alt="" src="../images/50_Save_Job.png" /></p><br>
+<p><img alt="" src="../images/51_Run_Job.png" /></p><br>
+<p><img alt="" src="../images/52_Run_Job_in_Progress.png" /></p><br>
+<p><img alt="" src="../images/53_Job_Console_Build_Successful.png" /></p><br>
+
+<p><span > View the output folders in the project explorer since we did not provide any external file system path -> open and check output for each output folder</b></span></p><br>
+
+<p><img alt="" src="../images/56_Output_Files_in_Project_Explorer.png" /></p><br>
+<p><img alt="" src="../images/57_Output1.png" /></p><br>
+<p><img alt="" src="../images/58_Output2.png" /></p><br>
+<p><img alt="" src="../images/59_Output3.png" /></p><br>
+
+
+
+<ul>
+</ul>
+</body>
+</html>

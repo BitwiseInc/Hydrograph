@@ -1,0 +1,134 @@
+=====================================================================================================
+Features Added:
+=====================================================================================================
+Sr.No. <date> - [developer names] - description
+1. <14-Jun-16> - [Rahul Mahajan] - 	Create project directory structure dynamically on remote server to run subjob,
+									nested subjob and job having external schema. 
+2. <21-Jun-16> - [Kanchan Kauthale] Make lookup mapping window stretchable, auto adjust contents of the window accordingly
+3. <21-Jun-16> - [Shrirang Kumbhar] - Added sort functionality to data viewer
+4. <22-Jun-16> - [Shrirang Kumbhar] - Debug Data viewer window does not appear in task bar #628
+5  <22-Jun-16> - [Shrirang Kumbhar] - Data View window: Upon hitting Alt button from keyboard menu shortcut are not getting highlighted #589
+6. <22-Jun-16> - [Shrirang Kumbhar] - Data View Window: Short-Cut is missing for Next and Previous button #585
+7. <30-Jun-16> - [Shrirang Kumbhar] - Added data viewer cell navigator and selector
+8. <05-Jul-16> - [Shrirang Kumbhar] - Data view window : Column cells should be auto expanded to the length of column names #701
+9. <07-Jul-16> - [Prateem Tadas, Sonia Raheja, Akhilesh Joshi, Rakesh Kanchalwar] - Filter Window
+10.<07-Jul-16> - [Akhilesh Joshi] - Select columns window
+11.<07-Jul-16> - [Vibhor Tyagi] - View Data Find Feature
+12.<15-Jul-16> - [Rushikesh Pawale,Prateem Tadas] - Hive Partition Key Changes.
+=====================================================================================================
+Issues/Defects fixed:
+=====================================================================================================
+Sr.No. <GitHub Issue #> - [fixed by] - description
+1. #573  [ Shrirang S Kumbhar] Load button located on the View Data window should be disabled till loading the fresh data 
+							   in the data grid window and proper loading icon should display on the screen.
+2. #574  [ Shrirang S Kumbhar] Data viewer window is taking too much time to load data, so show data viewer window first 
+							   and then load data into it.
+3. #569  [Nitin Gupta] Job is getting locked if user close console and job window while job is running (Current production)   
+4. #618  [Nitin Gupta] STOP button remains enabled even after complete job execution   
+5. #569  [Nitin Gupta] Job is getting locked if user close console and job window while job is running (Current production)
+6. #554  [Nitin Gupta] When user clicks on canvas while job run, Run, Debug and Remove watcher buttons are getting enabled].
+7. #583  [Nitin Gupta] Import 			Job: Schema and File Path of Input Component is Not Imported On Job Import  
+8. #494  [Prateem Tadas] Graph property window and runtime window bugs   
+9. #419  [Shashank Karnik] Output Component: Error bubble is getting removed if user pulls schema from the previous component and the click on cancel button 
+10.#610  [Vibhor Tyagi] Temp Path(Global Preferences Window) : When Temp Path Do Not End with '/' Then Schema XML is Getting Generated Into Previous Folder Of Given Path
+11.#576  [Sonia Raheja][vibhor Tyagi] Preferances : Validation is not present if user enter page size as 0 in the global and local preferances
+12.#581  [Sonia Raheja][vibhor Tyagi] Global and Local Preferences window:Validation Needs to be Applied for Preferences Windows When User Enters Invalid Value (e.g. 0) in File Size Text Window
+13.#437  [Nikhil Deokar] Schema Tab: Added Range From and Range To validation
+14.#441  [Nikhil Deokar] Creating Parameter file on Save As event
+15.#497  [Nikhil Deokar] Updated Component tooltip in Component Palette.
+16.#273  [Kanchan Kauthale] Two red stars are getting displayed on the window when user specify blank value in the phase text box.
+17.#546  [Kanchan Kauthale] Join Component : Join component heading text is shifing to the extreme left side when user increse port count.
+18.#544  [Kanchan Kauthale] Aggregate/Transform : In Schema tab,'Pull From Operation Editor' Text is not Appearing Properly on Pull from Operation Editor Button
+19.#520  [Kanchan Kauthale] Make lookup mapping window stretchable, auto adjust contents of the window accordingly
+20.#613  [Shrirang Kumbhar] View Data Windows are not Getting Closed on Tool Close Event
+21.#612  [Shrirang Kumbhar] Multiple View Data Windows are Not Getting Closed on Job Re-run Event 
+22.#605  [Shrirang Kumbhar] Data View: User is not able to sort data on data viewer window
+23.#520  [Kanchan Kauthale] Make lookup mapping window stretchable, auto adjust contents of the window accordingly
+24.#613  [Shrirang Kumbhar] View Data Windows are not Getting Closed on Tool Close Event
+25.#612  [Shrirang Kumbhar] Multiple View Data Windows are Not Getting Closed on Job Re-run Event 
+26.#605  [Shrirang Kumbhar] Data View: User is not able to sort data on data viewer window
+27.#577  [Sonia Raheja][vibhor Tyagi]Global and Local Preferences: OK button functionality is not working if user enters hex value in the delimiter and in quote character text box window.
+28.#558  [Prateem Tadas] Dummy Component :Rename to Unknown
+29.#563  [vibhor Tyagi] Global Preference Window: Scroll Bar Appears on View Data Option 
+30.#576  [vibhor Tyagi] Preferances : Validation is not present if user enter page size as 0 in the global and local preferances
+31.#581  [vibhor Tyagi] Global and Local Preferences window:Validation Needs to be Applied for Preferences Windows When User Enters Invalid Value (e.g. 0) in File Size Text Window
+32.#437  [Nikhil Deokar] Schema Tab: Added Range From and Range To validation
+33.#441  [Nikhil Deokar] Creating Parameter file on Save As event
+34.#501  [Ashika Holkar] Multiple date and time in console log   
+35.#106  [Akhilesh Joshi]Keyboard shortcuts for cut / copy / paste / delete and refresh are not working in project explorer
+36.#440  [Vibhor Tyagi] Multiple Components: Schema Coulmns Need to be Re-Arranged
+37.#628  [Shrirang kumbhar] Debug Data viewer window does not appear in task bar 
+38.#636  [Shrirang kumbhar] Debug Service: Exception handling and error reporting if unable to create debug files
+39.#481  [Ashika Holkar] Parameter Grid Window: Add/Delete/Up/Down/Save buttons are not in sync with the other button of application
+40.#172  [Nitin Gupta] Join Component icon and lookup icon size is getting enlarged if user import any xml file
+41.#164  [Nitin Gupta]  User should be able to delete multiple rows by selecting rows with control keys in schema grid
+42.#557  [Kalyan Rajpoot] Job Canvas: Components should move in job canvas using arrow keys
+43.#675  [Ashika Holkar] Vertical/Horizontal Scroll Bar Need To be Added on DataSet Information Window
+44.#556  [Vibhor Tyagi] Global: When Delimiter /Quote Field is Left Blank Then It Does Not Shows Any Error Message on Window and User is Able to Proceed With the Blank Field.
+45.#727  [Shrirang Kumbhar] Select All and Copy short cut text should as per the generic standard 
+46.#676  [Shrirang Kumbhar] Copy icon is missing in edit menu on data viewer window
+47.#740  [Nitin Gupta] Subjob component cannot be copied. 
+48.#727  [Shrirang Kumbhar] Select All and Copy short cut text should as per the generic standard 
+49.#676  [Shrirang Kumbhar] Copy icon is missing in edit menu on data viewer window 
+50.#725  [Vibhor Tyagi] View Data Filter: Cell with Current Cursor Position Moves Down and Changes the Cell Value When User Searches For String in Current Page
+51.#732  [Vibhor Tyagi] View Data Filter: Search Values are Getting Skipped When User Switch to Other Page
+52.#734  [Vibhor Tyagi] View Data Find: Prev/Next String Search is not Going Recursively When User Reaches Start/End of the page
+53.#727  [Shrirang Kumbhar] Select All and Copy short cut text should as per the generic standard 
+54.#676  [Shrirang Kumbhar] Copy icon is missing in edit menu on data viewer window 
+55.#714  [Ashika Holkar] Add/ Delete/ up and Down buttons are not in sync with other window on Lookup Mapping and Join Mapping window
+56.#729  [Ashika Holkar] Parameter File Dialog: Focus should be on the OK button
+57.#730  [Ashika Holkar] Mixed/Fixed Scheme input/output File : Validation is not Displayed When Field Length is '0'
+58.#677  [Sonia Raheja] MacBook Pro - Unable to Export Data
+59.#647  [Nikhil Deokar] Schema Tab: Data type Name should start with capital letter enhancement.
+60.#764  [Shrirang Kumbhar] View Data : Watcher is Not Getting Closed When Job is Getting Closed on Save as Event.
+61.#649  [Nikhil Deokar] Create new job option in file menu
+62.#..   [Ashika Holkar] Clear Groups button is not visible on reopening filter window 
+63.#..   [Akhilesh Joshi] Retain checkbox is not enabling ok apply button 
+64.#780  [Nitin Gupta]Join component allows only 2 unused ports to be connected
+65.#782  [Rakesh Kanchalwar] Filter Window: Conditional operator is not getting refreshed upon selecting different data type fields 
+66.#786  [Ashika Holkar] View Data Filter : For Downloaded Dataset,Incorrect No. of records are Displayed in Bottom of View Data Window
+67.#799  [Nitin Gupta]Copy Paste Functionality is not working on job canvas. 
+68.#758  [Rakesh Kanchalwar] Filter Window: Window name to the Filter window is not proper
+69.#757  [Vibhor Tyagi] Find Functionality: When user clicks on 'All' button located in find window then focus is shifting to last instance in grid view whereas it remains same in other two views.
+70.#..   [Vibhor Tyagi] MAC: Delete row button is not working properly 
+71.#805  [Vibhor Tyagi] MAC & Windows :Find Window Default Focus is not Set Properly
+72.#788  [Sonia Raheja] Filter(Downloaded Dataset) : Unnecessary Page Numbers are Displayed Which Does not Hold Any Data
+73.#..   [Prateem Tadas]Hydrograph help window resize disabled. 
+74.#352  [Prateem Tadas] Available fields missing in Hive components.
+75.#717  [Kalyan Rajpoot] Lookup / Join Issues: Duplicate schema fields are getting displayed in the Join/Lookup schema tab.
+76.#763  [Kalyan Rajpoot] Join Component: Scroll bar does not appear on the Join Mapping Window if user more than 3 input ports
+77.#715  [Kalyan Rajpoot] Previously saved data is not getting loaded on clicking cancel button on Join/ Lookup mapping window. 
+78.#821  [Shrirang Kumbhar] Data Viewer: Field Name and Data Type is not matching with the actual column present on the data viewer window 
+79.#492  [Ashika Holkar] Display appropriate error messages on job failure
+80.#786  [Ashika Holkar] View Data Filter : For Downloaded Dataset,Incorrect No. of records are Displayed in Bottom of View Data Window
+81.#739  [Ashika Holkar] Error while exporting schema to a project outside workspace 
+82.#785  [Ashika Holkar] View Data Filter : Only One Page of Records Are Displayed On Clear Filte
+83.#674	 [Akhilesh Joshi] Unable to Reset the Selected Columns in View Data Window
+84.#786  [Ashika Holkar] View Data Filter : For Downloaded Dataset,Incorrect No. of records are Displayed in Bottom of View Data Window
+85.#739  [Ashika Holkar] Error while exporting schema to a project outside workspace 
+86.#785  [Ashika Holkar] View Data Filter : Only One Page of Records Are Displayed On Clear Filte
+87.#674	 [Akhilesh Joshi] Unable to Reset the Selected Columns in View Data Window
+88.#654  [Ashika Holkar] Getting null pointer exception when user tries to provide external schema
+89.#821  [Shrirang Kumbhar] Data Viewer: Field Name and Data Type is not matching with the actual column present on the data viewer window
+90.#809  [Shrirang Kumbhar] Data Viewer : Focus is not shifting to the Data viewer window if user minimize it and again tries to open by clicking watch records option 
+91.#715  [Kalyan Rajpoot] Previously saved data is not getting loaded on clicking cancel button on Join/ Lookup mapping window. 
+92.#821  [Shrirang Kumbhar] Data Viewer: Field Name and Data Type is not matching with the actual column present on the data viewer window
+93.#809  [Shrirang Kumbhar] Data Viewer : Focus is not shifting to the Data viewer window if user minimize it and again tries to open by clicking watch records option 
+94.#689  [Vibhor Tyagi] Mixed Schema: Validation is not Displayed When Date Format is Left Blank
+95.#817  [Akhilesh Joshi]Clear Button on Filter Window: Record Count is not getting refreshed on Clearing the filter bug medium
+96.#...  [Vibhor Tyagi] MAC & Windows :Find Window Default Focus is not Set Properly
+97.#..   [Ashika Holkar] One should be able to copy the Content displayed on dataset information window
+98.#..   [Rahul Mahajan] Alignment fix on Run Configurations Settings window
+99.#..	 [Nitin Gupta] Fields in filter editor window like operators, field name shouldn’t be case sensitive. If I type ‘like’ in operator text box and move to other text box, it seems it doesn’t recognize the operator value. After I switch to any other field, the input fields like operators, field name should check the text value without considering their case and if they are correct they should be automatically converted to required case. i.e. if I type ‘like’ and switch to other field, the operator field should convert the value to ‘LIKE’
+100.#..  [Sonia Raheja] The Records information shown at the bottom of the data viewer window should be updated to display actual page size when its less than the one defined in preferences. This will probably happen on the last page of the result or when filter result returns records less than page size
+101.#..  [Sonia Raheja,Shashank Karnik]Focus is not Set to 'OK' Button on Hitting 'Enter' Key	
+102.#845  [Ashika Holkar] Dataset information displays requested file size. It should also display actual file size
+103.#850  [Prateem Tadas] Hive Component :‘Apply ‘ button is disabled when user does changes in partition key ‘Add Keys’ field
+104.#851  [Prateem Tadas] Hive Component: Partition key is not getting refreshed when there is change in field name
+105.#852  [Prateem Tadas] Hive Component: ArrayIndexOutofBound Exception Thrown When user adds more than one partition key and tries to add partition values
+106.#854  [Prateem Tadas] Hive Parquet input file - Window name is not present when user clicks on add values button located under partition key
+107.#849  [Nikhil Deokar] Filter Window: Button sizes of the filter editor should be same for OK, Apply, Cancel, Clear	
+108.#866  [Kalyan Rajpoot] Parquet Schema : Validation is not Set on for Bigdecimal Type, When Scale is zero.
+=====================================================================================================
+Notes for QA:
+=====================================================================================================

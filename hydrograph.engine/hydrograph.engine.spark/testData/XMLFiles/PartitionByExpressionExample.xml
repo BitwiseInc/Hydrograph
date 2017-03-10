@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License
+ -->
+
+<p:graph name="PartitionByExpressionExample" xmlns:p="hydrograph/engine/jaxb/main"
+         xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
+         xmlns:op="hydrograph/engine/jaxb/operationstypes"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd  ">
+
+    <inputs id="input1" batch="0" xsi:type="it:textFileDelimited">
+        <outSocket id="out0">
+            <schema name="outSchema">
+                <field name="account_no" type="java.lang.String"/>
+                <field name="names" type="java.lang.String"/>
+                <field name="transaction_type" type="java.lang.String"/>
+                <field name="total_amount" type="java.lang.Double"/>
+                <field name="total_count" type="java.lang.Long"/>
+            </schema>
+        </outSocket>
+
+        <path uri="hydrograph.engine.spark\testData\inputFiles\partitionByExpressionInput.txt"/>
+        <delimiter value=","/>
+        <hasHeader value="false"/>
+        <safe value="true"/>
+        <charset value="ISO-8859-1"/>
+    </inputs>
+
+    <operations id="partitionByExpression" batch="0"
+                xsi:type="op:partitionByExpression">
+        <inSocket fromComponentId="input1" fromSocketId="out0" id="in0"/>
+       <!--  <operation id="opt"
+                    class="userfunctions.PartitionByExpressionTest">
+             <inputFields>
+                 <field name="transaction_type" inSocketId="in0" />
+             </inputFields>
+         </operation>-->
+        <expression id="sadf" expr=" total_count > 4 ? &quot;out_mix1&quot; : total_count == 2 ? &quot;out_mix2&quot; : &quot;unused1&quot; ">
+            <inputFields>
+                <field name="total_count" inSocketId="in0"/>
+            </inputFields>
+
+        </expression>
+        <outSocket id="out_mix1" type="unused">
+            <copyOfInsocket inSocketId="in0"/>
+        </outSocket>
+        <outSocket id="out_mix2" type="unused">
+            <copyOfInsocket inSocketId="in0"/>
+        </outSocket>
+        <outSocket id="unused1" type="unused">
+        <copyOfInsocket inSocketId="in0"/>
+    </outSocket>
+
+        <noOfPartitions value="3"/>
+    </operations>
+
+
+    <outputs id="output1" xsi:type="ot:textFileDelimited">
+        <inSocket fromComponentId="partitionByExpression"
+                  fromSocketId="out_mix1" id="in0">
+            <schema name="outSchema">
+                <field name="account_no" type="java.lang.String"/>
+                <field name="names" type="java.lang.String"/>
+                <field name="transaction_type" type="java.lang.String"/>
+                <field name="total_amount" type="java.lang.Double"/>
+                <field name="total_count" type="java.lang.Long"/>
+            </schema>
+        </inSocket>
+        <path uri="hydrograph.engine.spark/testData/output/out_mix1"/>
+        <delimiter value=","/>
+        <hasHeader value="true"/>
+        <charset value="ISO-8859-1"/>
+    </outputs>
+
+    <outputs id="output2" xsi:type="ot:textFileDelimited">
+        <inSocket fromComponentId="partitionByExpression"
+                  fromSocketId="out_mix2" id="in0">
+            <schema name="outSchema">
+                <field name="account_no" type="java.lang.String"/>
+                <field name="names" type="java.lang.String"/>
+                <field name="transaction_type" type="java.lang.String"/>
+                <field name="total_amount" type="java.lang.Double"/>
+                <field name="total_count" type="java.lang.Long"/>
+            </schema>
+        </inSocket>
+        <path uri="hydrograph.engine.spark/testData/output/out_mix2"/>
+        <delimiter value=","/>
+        <hasHeader value="true"/>
+        <charset value="ISO-8859-1"/>
+    </outputs>
+     <outputs id="output3" xsi:type="ot:textFileDelimited">
+         <inSocket fromComponentId="partitionByExpression"
+                   fromSocketId="unused1" id="in0">
+             <schema name="outSchema">
+                 <field name="account_no" type="java.lang.String" />
+                 <field name="names" type="java.lang.String" />
+                 <field name="transaction_type" type="java.lang.String" />
+                 <field name="total_amount" type="java.lang.Double" />
+                 <field name="total_count" type="java.lang.Long" />
+             </schema>
+         </inSocket>
+         <path uri="hydrograph.engine.spark/testData/output/out_mixunused1" />
+         <delimiter value="," />
+         <hasHeader value="true" />
+         <charset value="ISO-8859-1" />
+     </outputs>
+</p:graph>

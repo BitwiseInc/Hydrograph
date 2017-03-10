@@ -1,0 +1,97 @@
+=====================================================================================================
+Features Added:
+=====================================================================================================
+Sr.No. <date> - [developer names] - description
+1.#1025[Sonia Raheja] Import xml : Subjob Component has been Displayed as Unknown Component Upon XML Import
+2...... [Shrirang Kumbhar] Replaced buffered writers from execution tracking with sl4j loggers.
+3...... [Shrirang Kumbhar] Updated execution tracking log format.
+4...... [Prateem Tadas] Added extract hive db details feature in input hive component.
+====================================================================================================
+Issues/Defects fixed:
+=====================================================================================================
+Sr.No. <date> <GitHub Issue #> - [fixed by] - description
+1.#1033[Nikhil Deokar] Subjob : Fixed issue of Dummy Port is Getting added
+2.#669 [Shrirang Kumbhar] Validation Need To be Added When Schema from Mapping Fields are Not in Sync With Schema Tab 
+3.#330 [Shrirang Kumbhar] Parameter Grid: Search functionality - User should be able to search by parameter name or by parameter value only, not by Paramter Files
+4.#973 [Shrirang Kumbhar] Sync schema: When user add mapping in mapping table and press autosync. It enables apply and when we press cancel it still saves the mapping changes. The same happens in case of pull button  
+5.#1064[Nikhil Deokar] Subjob: Fixed issue of Input Subjob Links From Input Subjob to Subsequent Component
+6.#1059[Nikhil Deokar] Subjob: Disabled 'Refresh' Icon was not present
+7.#1062[Akhliesh Joshi]View Data: 'Prev' Button on Filter window is not working for Unformatted and Formatted Text View
+8.#1073[Vibhor Tyagi] Watcher Icon on Coolbar is Getting Enabled Though Job Does not Have Watcher
+9.#1037 [Rushikesh Pawale] Increased/decreased the ports of join component on apply button on double click as well as if opened from Properties option on right click of component
+         and added fix to remove records of Join Configuration window as per input count given on apply button which results in displaying correct tooltip information and validation.
+10.#1054 [Rushikesh Pawale] Added Output Hive Text File component under Output category as it was under Input Category which results to get correct Schema tab 
+          and added fix to enable Delete button of 'Add Partition Key Value' grid when user adds any value and save the changes and re-open the window.
+11.#1028 [Rushikesh Pawale] Rearranged add/delete/up/down buttons for Schema Tab of all Output Components as a result Import and Export XML Buttons are now properly visible. 
+12.#1014 [Rushikesh Pawale] Rearranged pull schema button for Schema Tab for all Transform Components to match with location of schema tab of input and output components.
+13.#1057[Ashika Holkar]Subjob : Job Failed with SAXParseException
+14.#523 [Ashika Holkar] UI Issue: Class option is not present in the project explorer right click menu
+15.#1057[Ashika Holkar]Subjob : Job Failed with SAXParseException 
+16.#536 [Rushikesh Pawale] Matched Text box size for the Delimiter, Quote with the phase text box size.
+17.#329 [Rushikesh Pawale] Added Tool tips on buttons in parameter Grid Window.        
+18.#541 [Ashika Holkar] Schema header getting scrolled away 
+19.#1052 [Akhilesh Joshi] Operation class window updates 
+20.#509  [Akhilesh Joshi] Look and Feel of Operation Class window
+21.#1083 [Ashika Holkar] Hive components fail if partition key is not specified 
+22.#1129 [Ashika Holkar] Cumulate Component: Job is Getting Failed When User Selects Max/Min Operations in Operation Class
+23.#1124 [Rushikesh Pawale] Fixed issue to Close Input/Output Subjob component properties window
+24.#1121 [Rushikesh Pawale] Fixed issue of Input Hive Component while saving imported job.
+25.#673 [Kalyan Rajpoot] Select Column option in Menu Bar and Cool Bar Can be Disabled for Unformatted View
+26.#1128 [Kanchan Kauthale] Execution Status is not Being Tracked When Job Ran in Local Debug Mode
+27.#1125 [Kanchan Kauthale] Execution Tracking (Subjob) : Record Count is Not Displayed On Subjob Out Port
+28.#1115 [Kanchan Kauthale] Execution Tracking: Execution Status is not Being Tracked When Job Window is Re-opened While Job Execution is Going On
+29.#1114 [Kanchan Kauthale] Execution Tracking: Job is not Getting Killed if Execution Tracking Preference is Unchecked 
+30.#1106 [Rahul Mahajan]    Console Log: "Job Run Successfully" Displayed on Console Though Job is Failed
+31.#1100 [Kanchan Kauthale] XML Import: Execution Status is Not Being Displayed on Sub Job and Input components Upon Importing the Job
+32.#1087 [Kanchan Kauthale] Execution Tracking: Execution Status is not Getting Tracked When Jobs Ran on Multiple Server
+33.#1089 [Vibhor Tyagi]     Execution Tracking: Kill Job Issues
+34.#1091 [Vibhor Tyagi] 	Execution Tracking: Tracking Logs are not Getting Stored Anywhere Else Other than Default Installation Path
+35.#1109 [Vibhor Tyagi] 	Reduce The Size of the 'Execution Tracker Console' Window 
+36.#686 [Akhilesh Joshi] XML Import: Error Bubble Appears on Join/Transform Component Though All the Attributes Are Getting Imported
+37.#1159[Shashank Karnik] Watcher Icon on Coolbar is Getting Enabled, that when Job Does not Have a Watcher
+38.#560 [Rushikesh Pawale] Added key shortcuts for add, delete, row up, row down buttons for all components.
+39.#1110 [Rushikesh Pawale] Fixed issue for shifting focus to previous row on delete button.
+40.#241 [Akhilesh Joshi] Join component height increases fractionally
+41.#1102 [Kalyan Rajpoot] Join Component: 'Delete', 'Move Field Up','Move Field Down' Buttons are Getting Enabled, When There is No Mapping Present in Mapping Grid.
+42.#1171 [Shashank karnik] Import Xml : Issues Related to Trasform category Component.
+43.#1186 [Akhilesh Joshi] Trasform Component: Error Fields are Not Getting Highlighted Correctly.
+44.#1137 [Shrirang Kumbhar] View Data Sort : Sorting is not Working on String Type Column When Original Dataset Filter is Applied.
+45.#1182 [Shrirang Kumbhar] Join Component: Input Count Becomes Zero After Importing the Job.
+46.#1203 [Shashank Karnik] Output field is getting cleared in transform Mapping window on importing target xml.
+47.#1197 [Shrirang Kumbhar] Aggregate Component: Output Fields are Getting Removed After Importing the Job.
+48.#1185 [Ashika Holkar] Ok/Apply Buttons on Properties Window are Not Working Properly
+49.#1205 [Shrirang Kumbhar] Faced Duplicate key value issue ,if existing job updated to add the new flow to clone component. 
+50.#175 [Rushikesh Pawale] Fixed alignment issue of Schema tab window.
+51.#1216[Nitin Gupta] Filter Component: Operation Fields are Not Getting Populated Correctly After Copy Pasting the Component.  
+52.#1212 [Rushikesh Pawale] Schema in Output component is now Getting Updated After Re-arranging the Schema Of all Components.
+53.#1227 [Vibhor Tyagi] View Data: On 'Execution History Window', on By default Radio Button is not getting Selected to the Prior job
+54.#1226 [Shrirang Kumbhar] Execution Tracking : On Re-run of the job, Previous logs Are not Getting Removed from Execution Tracking Console Log Window 
+55.#529 [Ankit Sharma] Phase Renamed: Attribute Phase is renamed to batch at all of its occurences. 
+56.#509 [Ankit Sharma] Look and Feel of Operation Class window : Added a new row feature on double clicking at all the existing tables.
+57.#1217 [Rushikesh Pawale] Fixed MAC Alignment Related Issues.
+58.#1266 [Shashank Karnik] Trasform Component: Auto sync Popup is Getting Displayed If new Error appears in Error Log.
+59.#1255 [Prateem Tadas] Hive Component: Error bubble is displaying on properties window, General tab
+60.#1259 [Prateem Tadas]Hive component: On Partition key Window, Available Fields are Blank when Extract from Hive Metastore
+61.#1282 [Nitin Gupta] Expression Editor: Function Section’s Search is enabled Even If Nothing is Loaded in Categories section
+63.#1175 [Rahul Mahajan] Execution Tracking status is not displayed on job canvas after receiving an Exception
+64.#1258 [Kanchan Kauthale] Execution Tracking: For failed component, record count is displayed as -1.
+65.#1301 [Shashank Karnik] Trasform Component:Property window is not getting closed on opening custom class.
+66.#1272 [Akhilesh Joshi]'Ok' and 'Cancel' buttons are getting hide on Join(Mapping), Parameter Grid, Hive(Partitian Key) windows
+67.#1304 [Prateem Tadas] Hive Component: On Hive job Import, Error Message is Getting Displayed While Extracting the Table from Metastore.
+68.#1302 [Shashank Karnik] Trasform Component: Unnecessary WARNING pop-up is Getting Displayed.
+69.#1189 [Shashank Karnik] Trasform Component: Apply Button is Getting Enabled When User Performs Any Action and Clicks On Cancel Button. 
+70.#1289 [Shashank Karnik] Transform Component: Confirmation Pop-up is Not Getting Displayed When User Click on Close button.
+71.#1330 [Kanchan Kauthale] Input and Output Components : Warning and Error Bubble Symbol is Getting Displayed Even when Job Run Sucessfully.
+72.#1331 [Kanchan Kauthale] Watch Point: Unable to Select Connection Link.
+73.#1162 [Sonia Raheja] Subjob Component: Error Bubble is Not Getting Displayed on Subjob Component in Main job if Error Bubble present on components within the subjob.
+74.#1268 [Rushikesh Pawale] Name of the 'Input Socket for Subjob' Component is Not Getting Displayed Correctly, After Renaming.
+75.#1349 [Sonia Raheja] Subjob Component: User is Not able to Create Nested Subjob.
+76.#286  [shashank karnik] Show warning/error message if schema has errors and user tries to export it.
+77.#1374 [Nitin Gupta] Confirmation Message is Not Getting Displayed Before Starting Job Execution.
+78.#1352 [Akhilesh Joshi]User is NOT able to Copy/Paste the Multiple Component from One Job Canvas to Another
+79.#738  [Akhilesh Joshi]Component Copy & Paste Issue
+80.#1172 [Akhilesh Joshi] Component copied from one job canvas to other is pasted to right most bottom corner of the job canvas 
+81.#1371 [Ankit Sharma] Error bubble was not getting removed after changing data type in Schema grid.
+=====================================================================================================
+Notes for QA:
+=====================================================================================================

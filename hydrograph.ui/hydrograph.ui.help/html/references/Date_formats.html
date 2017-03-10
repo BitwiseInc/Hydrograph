@@ -1,0 +1,211 @@
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+ 
+ 
+<!doctype html>
+<html>
+<head>
+	<title>Date formats supported in Hydrograph</title>
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<body>
+
+<p><font><span class="header-1">Date formats supported in Hydrograph</span></font></p>
+
+<p><font><span>Hydrograph supports java date formats.Following table represents the list of symbols with their meaning for using in date and time patterns.</span></font></p>
+
+<table style="height: 394px;" border="1" width="600">
+<tbody>
+<tr>
+<td>&nbsp;<span><strong>Symbol</strong></span></td>
+<td>&nbsp;<span><strong>Meaning</strong></span></td>
+<td>&nbsp;<span><strong>Type</strong></span></td>
+<td>&nbsp;<span><strong>Example</strong></span></td>
+</tr>
+<tr>
+<td>&nbsp;G</td>
+<td>&nbsp;Era</td>
+<td>&nbsp;Text</td>
+<td>&nbsp;&ldquo;GG&rdquo; -&gt; &ldquo;AD&rdquo;</td>
+</tr>
+<tr>
+<td>&nbsp;y</td>
+<td>&nbsp;Year</td>
+<td>&nbsp;Number</td>
+<td>&nbsp;&ldquo;yy&rdquo; -&gt; &ldquo;03&Prime;<br />&ldquo;yyyy&rdquo; -&gt; &ldquo;2003&Prime;</td>
+</tr>
+<tr>
+<td>&nbsp;M</td>
+<td>&nbsp;Month</td>
+<td>&nbsp;Text or Number</td>
+<td>&nbsp;&ldquo;M&rdquo; -&gt; &ldquo;7&Prime;<br />&ldquo;M&rdquo; -&gt; &ldquo;12&Prime;<br />&ldquo;MM&rdquo; -&gt; &ldquo;07&Prime;<br />&ldquo;MMM&rdquo; -&gt; &ldquo;Jul&rdquo;<br />&ldquo;MMMM&rdquo; -&gt; &ldquo;December&rdquo;</td>
+</tr>
+<tr>
+<td>&nbsp;d</td>
+<td>&nbsp;Day in month</td>
+<td>&nbsp;Number</td>
+<td>&nbsp;&ldquo;d&rdquo; -&gt; &ldquo;3&Prime;<br />&ldquo;dd&rdquo; -&gt; &ldquo;03&Prime;</td>
+</tr>
+<tr>
+<td>&nbsp;h</td>
+<td>&nbsp;Hour (1-12, AM/PM)</td>
+<td>&nbsp;Number</td>
+<td>&nbsp;&ldquo;h&rdquo; -&gt; &ldquo;3&Prime;<br />&ldquo;hh&rdquo; -&gt; &ldquo;03&Prime;</td>
+</tr>
+<tr>
+<td>&nbsp;H</td>
+<td>&nbsp;Hour (0-23)</td>
+<td>&nbsp;Number</td>
+<td>&nbsp;&ldquo;H&rdquo; -&gt; &ldquo;15&Prime;<br />&ldquo;HH&rdquo; -&gt; &ldquo;15&Prime;</td>
+</tr>
+<tr>
+<td>&nbsp;k</td>
+<td>&nbsp;Hour (1-24)</td>
+<td>&nbsp;Number</td>
+<td>&nbsp;&ldquo;k&rdquo; -&gt; &ldquo;3&Prime;<br />&ldquo;kk&rdquo; -&gt; &ldquo;03&Prime;</td>
+</tr>
+<tr>
+<td>&nbsp;K</td>
+<td>&nbsp;Hour (0-11 AM/PM)</td>
+<td>&nbsp;Number</td>
+<td>&nbsp;&ldquo;K&rdquo; -&gt; &ldquo;15&Prime;<br />&ldquo;KK&rdquo; -&gt; &ldquo;15&Prime;</td>
+</tr>
+<tr>
+<td>&nbsp;m</td>
+<td>&nbsp;Minute</td>
+<td>&nbsp;Number</td>
+<td>&nbsp;&ldquo;m&rdquo; -&gt; &ldquo;7&Prime;<br />&ldquo;m&rdquo; -&gt; &ldquo;15&Prime;<br />&ldquo;mm&rdquo; -&gt; &ldquo;15&Prime;</td>
+</tr>
+<tr>
+<td>s</td>
+<td>Second</td>
+<td>Number</td>
+<td>&ldquo;s&rdquo; -&gt; &ldquo;15&Prime;<br />&ldquo;ss&rdquo; -&gt; &ldquo;15&Prime;</td>
+</tr>
+<tr>
+<td>S</td>
+<td>Millisecond (0-999)</td>
+<td>Number</td>
+<td>&ldquo;SSS&rdquo; -&gt; &ldquo;007&Prime;</td>
+</tr>
+<tr>
+<td>E</td>
+<td>Day in week</td>
+<td>Text</td>
+<td>&ldquo;EEE&rdquo; -&gt; &ldquo;Tue&rdquo;<br />&ldquo;EEEE&rdquo; -&gt; &ldquo;Tuesday&rdquo;</td>
+</tr>
+<tr>
+<td>D</td>
+<td>Day in year (1-365 or 1-364)</td>
+<td>Number</td>
+<td>&ldquo;D&rdquo; -&gt; &ldquo;65&Prime;<br />&ldquo;DDD&rdquo; -&gt; &ldquo;065&Prime;</td>
+</tr>
+<tr>
+<td>F</td>
+<td>Day of week in month (1-5)</td>
+<td>Number</td>
+<td>&ldquo;F&rdquo; -&gt; &ldquo;1&Prime;</td>
+</tr>
+<tr>
+<td>w</td>
+<td>Week in year (1-53)</td>
+<td>Number</td>
+<td>&ldquo;w&rdquo; -&gt; &ldquo;7&Prime;</td>
+</tr>
+<tr>
+<td>W</td>
+<td>Week in month (1-5)</td>
+<td>Number</td>
+<td>&ldquo;W&rdquo; -&gt; &ldquo;3&Prime;</td>
+</tr>
+<tr>
+<td>a</td>
+<td>AM/PM</td>
+<td>Text</td>
+<td>&ldquo;a&rdquo; -&gt; &ldquo;AM&rdquo;<br />&ldquo;aa&rdquo; -&gt; &ldquo;AM&rdquo;</td>
+</tr>
+<tr>
+<td>z</td>
+<td>Time zone</td>
+<td>Text</td>
+<td>&ldquo;z&rdquo; -&gt; &ldquo;EST&rdquo;<br />&ldquo;zzz&rdquo; -&gt; &ldquo;EST&rdquo;<br />&ldquo;zzzz&rdquo; -&gt; &ldquo;Eastern Standard Time&rdquo;</td>
+</tr>
+<tr>
+<td>`</td>
+<td>Excape for text</td>
+<td>Delimiter</td>
+<td>&ldquo;&lsquo;hour&rsquo; h&rdquo; -&gt; &ldquo;hour 9&Prime;</td>
+</tr>
+<tr>
+<td>"</td>
+<td>Single quote</td>
+<td>Literal</td>
+<td>&ldquo;ss&rdquo;SSS&rdquo; -&gt; &ldquo;45&rsquo;876&Prime;</td>
+</tr>
+</tbody>
+</table>
+<p><font><span class="header-1">Pattern Examples:-</span></p>
+<p><font><span>Here are few Pattern Examples:-</span></font></p>
+<table style="height: 150px;" border="1" width="600">
+<tbody>
+<tr>
+<td><span><strong>Pattern</strong></span></td>
+<td><span><strong>Example</strong></span></td>
+</tr>
+<tr>
+<td>dd-MM-yy</td>
+<td>31-01-12</td>
+</tr>
+<tr>
+<td>dd-MM-yyyy</td>
+<td>31-01-2012</td>
+</tr>
+<tr>
+<td>MM-dd-yyyy</td>
+<td>01-31-2012</td>
+</tr>
+<tr>
+<td>yyyy-MM-dd</td>
+<td>2012-01-31</td>
+</tr>
+<tr>
+<td>h:mm a</td>
+<td>8:29 PM</td>
+</tr>
+<tr>
+<td>yyyy-MM-dd HH:mm:ss</td>
+<td>2012-01-31 23:59:59</td>
+</tr>
+<tr>
+<td>yyyy-MM-dd HH:mm:ss.SSS</td>
+<td>2012-01-31 23:59:59.999</td>
+</tr>
+<tr>
+<td>yyyy-MM-dd HH:mm:ss.SSSZ</td>
+<td>2012-01-31 23:59:59.999+0100</td>
+</tr>
+<tr>
+<td>EEEEE MMMMM yyyy HH:mm:ss.SSSZ</td>
+<td>Saturday November 2012 10:45:42.720+0100</td>
+</tr>
+<tr>
+<td>"hh 'o''clock' a, zzzz"</td>
+<td>12 o'clock PM, Pacific Daylight Time</td>
+</tr>
+<tr>
+<td>"K:mm a, z"</td>
+<td>0:08 PM, PDT</td>
+</tr>
+</tbody>
+</table>
+<p><font face="verdana, geneva, sans-serif"><span style="font-size: 14px;">For more information click here <a href="https://docs.oracle.com/javase/tutorial/i18n/format/simpleDateFormat.html">Java date formats</a> </span></font></p>
+</body>
+</html>

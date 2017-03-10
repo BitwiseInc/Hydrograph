@@ -1,0 +1,92 @@
+====================================================================================================
+Features Added:
+=====================================================================================================
+Sr.No. <date> - [developer names] - description
+1.<24-Jan-17> - [Rakesh Kanchalwar] - KeyFile support to launch job using passphrase.
+2.<24-Jan-17> - [Shrirang Kumbhar] - Added RunSQL component support
+3.<24-Jan-17> - [Pooja Yadav] - Added DB Update component.
+4.<07-Feb-17> - [Shrirang Kumbhar] - Added gradle nature to Hydrograph project.
+5.<07-Feb-17> - [Shrirang Kumbhar] - Updated Hydrograph Icons and splash screen.
+6.<07-Feb-17> - [Shrirang Kumbhar] - Changed ports in yml file to 990
+7.<07-Feb-17> - [Prateem Tadas] - Logging level added for console log.
+8.<07-Feb-17> - [Ashika Holkar] - Added Component Search and Place on Canvas functionality
+9.<16-Feb-17> - [Sonia Raheja] -User is unable to view data within subjob.
+10.<01-Mar-17> - [Shrirang Kumbhar] - Added preference page to limit console logs
+11.<08-Mar-17> - [Ashika Holkar] - Added Group Combine component
+=====================================================================================================
+Issues/Defects fixed:
+=====================================================================================================
+Sr.No. <GitHub/Bugzilla Issue #>  - [fixed by] - description
+1.#1208 [Pooja Yadav] - Preferences window: Validation error Message is Not Getting Displayed When 'Tracking Log path' is Blank.
+2.#627  [Shrirang Kumbhar] - All Data base components: On job import configured details from the properties window become empty
+3.#641  [Shrirang Kumbhar] - Save Password: On unchecking save Password checkbox tool unsave password
+4.#645  [Shashank karnik]- Xml input component: Fields under schema tab is not getting highlighted in red when error is present.
+5.#652  [Pooja Yadav} - xml input component: Alignment Issue.
+6.#642  [Pooja Yadav] - Xml Input Component : Character Set property is not present
+7.#596  [Vibhor Tyagi] -   Issues with Sort and Remove Dups components
+8.#601  [Prateem Tadas] - Kill Job :- Tool shows improper log when user Kill the remote run job.
+9.#638  [Prateem Tadas]- Job execution is still continue after killing job when SCP logs are getting displayed.
+10.#464  [Pooja Yadav] - Quote characters to dataset components.
+11.#640  [Pooja Yadav] - Xml Input component : Validation while browsing file is not present.
+12.#636  [Ashika Holkar] - All Data base components: Port field accepts string values
+13.#668 [Rakesh Kanchalwar] - Safe property should be present on xml input component 
+14.#644 [Rakesh Kanchalwar] -  Run Config setting window: Run Utility and Project should be mandatory
+15.#664  [Vibhor Tyagi] - View data: User is unable to see view data on a subjob connection links
+16.		[Nitin Gupta]	-	Fixed Job - ID issue form importing converted jobs.
+17.#667 [Vibhor Tyagi] - Job import: Size of a lookup component become small.
+18.#619 [Vibhor Tyagi] - Schema Window: User should be able to expand schema window vertically as well.
+19.		[Nitin Gupta]	-	XML Input Component : Error while view data from Xml : Invalid column type null 
+20. 	[Nitin Gupta]	-	DBUpdtae Component : component do not shows error bubble if we not fill any mandatory field 
+21.#665 [Pooja Yadav] - xml input component: Error bubble is displayed for File path field even if no error
+22.#607 [Akhilesh Joshi]-   Parameter Grid Window: Minimize button is not functional
+23.#657 [Ashika Holkar] - Need to remove quote tag from job XML file 
+24.#648 [Shashank karnik]-Transform component:Schema is not in sync popup displays but on clicking auto sync,Schema is not getting synced as per the order of mapping output field.
+25.#639 [Shashank karnik]- Renaming is not working.
+26.#660 [shashank karnik]-Error is not getting displayed on component after importing job when xml contains special character in field name. 
+27.#670 [shashank karnik]-xml Input component: Datatype is not propagating correctly. 
+28.#678 [shashank karnik]-Parameter appended with a value does not get resolved on UI. 
+29.#676 [shashank karnik]-Schema of Unused ports of Join Component:Schema of out port of join is used for populating schema of unused ports.
+30.#669 [shashank karnik]-Parameter Grid: Need to remove Save icon from the and enable apply button on editing parameter name or value.
+31.#682 [shashank karnik]-Renaming job does not change the job specific file name in job parameter list.
+32.#683 [Vibhor Tyagi] - Issues with Run SQL component
+33.#675 [Vibhor Tyagi] - Evaluate Expression window:- Need to remove space after Output word
+34.#697 [shashank karnik]-Generate Records: "No of records” should allow parameterized values. 
+35.     [Rakesh Kanchalwar]- Redshift jar version updated in gradle
+36.#692 [Nitin Gupta] - Jar issue :- Please follow steps from attached doc
+37.#661 [Ashika Holkar] -  All database components: Need to change error message validation on primary key window
+38.#676 [Nitin Gupta] - Schema of Unused ports of Join Component:Schema of out port of join is used for populating schema of unused ports
+39.#694 [Vibhor Tyagi] - Preference window : Checkbox location is not properly aligned
+40.#672 [Pooja Yadav] - xml Input component: Validation is not present for Loop Xpath Query field.
+41.#707 [Nitin Gupta] -  Issue while creating subjob - component links are getting deleted automatically in created subjob
+42.#712 [Ashika Holkar] - All Database components: On job import, port number from properties window become empty
+43.#702 [Ashika Holkar] - Component Search and Place functionality related issues
+44.#703 [Ashika Holkar] - MAC : Component search and place functionality related issues
+45.#690 [Vibhor Tyagi] - Parameter file should accept spacial characters
+46.#678 [Vibhor Tyagi] - Parameter appended with a value does not get resolved on UI
+47.#709 [Vibhor Tyagi] - Transform Component: Field level validation is not present under Operation Editor -> Output Field
+48.#699 [Vibhor Tyagi] - job rename issues
+49.#696 - XML file is not getting created on job rename
+50.#717 -[Akhilesh Joshi] Tool shouldn't ask extensions to user 
+51.#719	-[Nitin Gupta] Getting error popup on create job window 
+52.#689 -[Sonia Raheja] View data port #:- Port number should accept 5 digits.
+53.#688 -[Sonia Raheja] Mac: Key file : User should able to browse .ppk and .pem files.
+54.#542 - [Vibhor Tyagi] By Default scroll is getting locked on console log
+55.#720 - [Pooja Yadav] - Alignment of Console Log Level drop down field is not proper on Mac.
+56.#721 - [Pooja Yadav] - Rename Track Subjob option as View Tracking / Watch Point Data.
+57.#673 - [Pooja Yadav] Tool show question mark if user move pointer on Expression or Operation radio button.
+59.#737 - [Nitin Gupta] - xml Input component : External schema is getting removed after importing job
+60.#715 - [Nitin Gupta] - xml Input component : Loop Xpath Query field value is not getting saved
+61.#732 - [Nitin Gupta] - xml input component: Job is geeting failed when External schema is provided in xml input component
+62.#698 - [shashank karnik]- Tool logs folder is missing from config/logger/tool_logs folder if tool gets launched through toolbar on windows.
+63.#739 - [shashank karnik]- Import job: Unique sequence component: Schema propagation issue.
+64.#714 - [Sonia Raheja] - On import of job tool show error symbol.
+65.#700 - [Sonia Raheja] - Error Message is getting displayed while deleting the job.
+66.#744 - [Vibhor Tyagi] - Need to add logger if user kill job successfully on MAC
+67.#743 - [shashank karnik]-When launch the tool from new toolbar, Execution tracking is not getting dispalyed due to Connection refused on host.
+68.#748 - [Vibhor Tyagi] - Post delivery: Save-as option does not generate required properties file
+69.#650 - [Pooja Yadav] - Copy/paste is not working for renamed jobs.
+70.#695 - [Pooja Yadav] - User is getting error pop up while creating job file through file resource.
+71.#724 - [Pooja Yadav] - On view changes, Need to handle Hydrograph icon on .exe files for windows.
+72.#755 - [Ashika Holkar] - Aggregate Component: User is unable to open component after importing job
+73.#757 - [Ashika Holkar] - Group Combine: Invalid expression error is displayed under error log after importing job 
+74.#760 - [Ashika Holkar] - Group Combine: UI issues on Mac

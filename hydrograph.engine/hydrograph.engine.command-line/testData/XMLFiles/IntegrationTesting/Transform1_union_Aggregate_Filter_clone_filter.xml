@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License
+ -->
+
+<p:graph name="JoinExample" xmlns:p="hydrograph/engine/jaxb/main"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../../elt-core/src/main/resources/newxmlschema/main/main.xsd ">
+
+
+ <inputs xmlns:ns4="hydrograph/engine/jaxb/inputtypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="IFDelimited_01" batch="1" xsi:type="ns4:textFileDelimited">
+        <outSocket xmlns:ns5="hydrograph/engine/jaxb/itfd" id="out0" type="out" xsi:type="ns5:type-input-delimited-out-socket">
+            <schema name="">
+                <field name="id" type="java.lang.Integer"/>
+                <field name="fname" type="java.lang.String"/>
+                <field name="lname" type="java.lang.String"/>
+                <field name="salary" scaleType="explicit" type="java.math.BigDecimal" scale="2"/>
+            </schema>
+        </outSocket>
+        <path uri="testData/Input/Source1-delimited.txt"/>
+        <delimiter value=","/>
+        <hasHeader value="false"/>
+        <safe value="false"/>
+        <strict value="false"/>
+        <charset value="UTF-8"/>
+    </inputs>
+  
+    <inputs xmlns:ns4="hydrograph/engine/jaxb/inputtypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="IFixedWidth_01" batch="1" xsi:type="ns4:textFileFixedWidth">
+        <outSocket xmlns:ns5="hydrograph/engine/jaxb/itffw" id="out0" type="out" xsi:type="ns5:type-input-fixedwidth-out-socket">
+            <schema name="">
+                <field length="2" name="id" type="java.lang.Integer"/>
+                <field length="3" name="fname" type="java.lang.String"/>
+                <field length="5" name="lname" type="java.lang.String"/>
+                <field length="6" name="salary" scale="2" scaleType="explicit" type="java.math.BigDecimal"/>
+            </schema>
+        </outSocket>
+        <path uri="testData/Input/Source2-Fixed.txt"/>
+        <safe value="false"/>
+        <strict value="false"/>
+        <charset value="UTF-8"/>
+    </inputs>
+    <outputs xmlns:ns4="hydrograph/engine/jaxb/outputtypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="OFixedWidth_01" batch="8" xsi:type="ns4:textFileFixedWidth">
+        <inSocket xmlns:ns5="hydrograph/engine/jaxb/otffw" fromComponentId="Clone_03" fromSocketId="out0" id="in0" type="in" xsi:type="ns5:type-output-fixedwidth-in-socket">
+            <schema name="">
+                <field length="2" name="id" type="java.lang.Integer"/>
+                <field length="3" name="fname" type="java.lang.String"/>
+                <field length="5" name="lname" type="java.lang.String"/>
+                <field length="6" name="salary" scale="2" scaleType="explicit" type="java.math.BigDecimal"/>
+            </schema>
+        </inSocket>
+        <path uri="testData/Output/output8"/>
+        <safe value="false"/>
+        <charset value="UTF-8"/>
+    </outputs>
+    <straightPulls xmlns:ns4="hydrograph/engine/jaxb/straightpulltypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Unionall_01" batch="1" xsi:type="ns4:unionAll">
+        <inSocket fromComponentId="IFDelimited_01" fromSocketId="out0" id="in0" type="in"/>
+        <inSocket fromComponentId="IFixedWidth_01" fromSocketId="out0" id="in1" type="in"/>
+        <outSocket id="out0" type="out">
+            <copyOfInsocket inSocketId="in0"/>
+        </outSocket>
+    </straightPulls>
+    <straightPulls xmlns:ns4="hydrograph/engine/jaxb/straightpulltypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Clone_03" batch="1" xsi:type="ns4:clone">
+        <inSocket fromComponentId="Unionall_01" fromSocketId="out0" id="in0" type="in"/>
+        <outSocket id="out0" type="out">
+            <copyOfInsocket inSocketId="in0"/>
+        </outSocket>
+        <outSocket id="out1" type="out">
+            <copyOfInsocket inSocketId="in0"/>
+        </outSocket>
+    </straightPulls>
+    <operations xmlns:ns4="hydrograph/engine/jaxb/operationstypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Filter_02" batch="1" xsi:type="ns4:filter">
+        <inSocket fromComponentId="Clone_03" fromSocketId="out1" id="in0" type="in"/>
+        <operation class="hydrograph.engine.core.userfuntions.Filter" id="opt">
+            <inputFields>
+                <field inSocketId="in0" name="fname"/>
+            </inputFields>
+        </operation>
+        <outSocket id="out0" type="out">
+            <copyOfInsocket inSocketId="in0"/>
+        </outSocket>
+    </operations>
+    <operations xmlns:ns4="hydrograph/engine/jaxb/operationstypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Aggregate_01" batch="1" xsi:type="ns4:aggregate">
+        <inSocket fromComponentId="Filter_02" fromSocketId="out0" id="in0" type="in"/>
+        <operation class="hydrograph.engine.transformation.userfunctions.aggregate.Count" id="1">
+            <inputFields>
+                <field inSocketId="in0" name="salary"/>
+            </inputFields>
+            <outputFields>
+                <field format="" name="totalsalary" scale="2" scaleType="explicit" type="java.math.BigDecimal"/>
+            </outputFields>
+        </operation>
+        <outSocket type="out" id="out0">
+            <passThroughField name="id" inSocketId="in0" />
+            <passThroughField name="fname" inSocketId="in0" />
+            <passThroughField name="lname" inSocketId="in0" />
+            <passThroughField name="salary" inSocketId="in0" />
+            <operationField name="totalsalary" operationId="1"/>
+        </outSocket>
+        <primaryKeys>
+            <field name="id"/>
+        </primaryKeys>
+      
+    </operations>
+    <operations xmlns:ns4="hydrograph/engine/jaxb/operationstypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Transform_01" batch="1" xsi:type="ns4:transform">
+        <inSocket fromComponentId="Aggregate_01" fromSocketId="out0" id="in0" type="in"/>
+        
+        <outSocket type="out" id="out0">
+             <passThroughField name="id" inSocketId="in0" />
+            <passThroughField name="fname" inSocketId="in0" />
+            <passThroughField name="lname" inSocketId="in0" />
+            <passThroughField name="salary" inSocketId="in0" />
+            <passThroughField name="totalsalary" inSocketId="in0" />
+            <mapField inSocketId="in0" name="name" sourceName="fname"/>
+        </outSocket>
+    </operations>
+    
+    
+      <operations xmlns:ns4="hydrograph/engine/jaxb/operationstypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Transform_02" batch="1" xsi:type="ns4:transform">
+        <inSocket fromComponentId="Transform_01" fromSocketId="out0" id="in0" type="in"/>
+        
+        <operation id="op1" class="hydrograph.engine.test.TransformTest">
+			<inputFields>
+				<field name="name" inSocketId="in0" />
+			</inputFields>
+			<outputFields>
+				<field name="new_name" type="java.lang.String" />
+			</outputFields>
+		</operation>
+		
+		<outSocket type="out" id="out0">
+            <passThroughField name="id" inSocketId="in0" />
+            <passThroughField name="fname" inSocketId="in0" />
+            <passThroughField name="lname" inSocketId="in0" />
+            <passThroughField name="salary" inSocketId="in0" />
+            <passThroughField name="totalsalary" inSocketId="in0" />
+             <passThroughField name="name" inSocketId="in0" />
+             <operationField name="new_name" operationId="op1" />
+        </outSocket>
+    </operations>
+    
+      <outputs xmlns:ns4="hydrograph/engine/jaxb/outputtypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="OFDelimited_01" batch="8" xsi:type="ns4:textFileDelimited">
+        <inSocket xmlns:ns5="hydrograph/engine/jaxb/otfd" fromComponentId="Transform_02" fromSocketId="out0" id="in0" type="in" xsi:type="ns5:type-output-delimited-in-socket">
+            <schema name="">
+                <field name="id" type="java.lang.String"/>
+                <field name="fname" type="java.lang.String"/>
+                <field name="lname" type="java.lang.String"/>
+                <field name="salary" scaleType="explicit" type="java.math.BigDecimal" scale="2"/>
+                <field name="totalsalary" scaleType="explicit" type="java.lang.String"/>
+                <field name="name" type="java.lang.String"/>
+                <field name="new_name" type="java.lang.String"/>
+            </schema>
+        </inSocket>
+        <path uri="testData/Output/output9"/>
+        <delimiter value="|"/>
+        <hasHeader value="true"/>
+        <safe value="false"/>
+        <strict value="false"/>
+        <charset value="UTF-8"/>
+    </outputs>
+
+</p:graph>

@@ -1,0 +1,13 @@
+3211001,Smith,credit,344.0,6
+3211002,Dona,credit,56.0,2
+3211002,Dona,debit,13.0,2
+3211003,Jack,credit,73.0,1
+3211003,Jack,debit,158.0,2
+3211005,Lina,credit,1.0,1
+3211005,Lina,debit,52.0,1
+3211006,Anna,credit,1000.0,1
+3211006,Anna,debit,72.0,2
+1111111,BBBB,credit,36.36,2
+222222,CCC,debit,25.25,3
+222222,CCC,mix,25.25,3
+22332,EEE,mix,25.25,4

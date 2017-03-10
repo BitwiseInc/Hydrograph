@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License
+ -->
+
+<p:graph name="GenerateRecordExample" xmlns:p="hydrograph/engine/jaxb/main"
+		 xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../elt-core/src/main/resources/newxmlschema/main/main.xsd  ">
+
+	<inputs id="input1" batch="0" xsi:type="it:generateRecord">
+		<outSocket id="out0">
+			<schema name="timepass">
+				<field name="f1" type="java.lang.String" length="5" />
+				<field name="f2" type="java.math.BigDecimal" scale="3" />
+				<field name="f3" type="java.util.Date" format="yyyy-MM-dd"
+					rangeFrom="2015-10-31" rangeTo="2015-12-31" />
+				<field name="f4" type="java.lang.Integer" rangeFrom="100"
+					rangeTo="111" />
+				<field name="f5" type="java.lang.Double" rangeFrom="-1234" rangeTo="20000"/>
+				<field name="f6" type="java.lang.Float" />
+				<field name="f7" type="java.lang.Short" />
+				<field name="f8" type="java.lang.Boolean" />
+				<field name="f9" type="java.lang.Long"/>
+				<field name="f10" type="java.util.Date" format="yyyy-MM-dd HH:mm:ss.SSS"
+					rangeFrom="2015-02-02 02:02:02.222" rangeTo="2015-05-05 02:02:02.222" />
+			</schema>
+		</outSocket>
+		<runtimeProperties>
+			<property name="noOfPartitions" value="1" />
+		</runtimeProperties>
+		<recordCount value="5" />
+	</inputs>
+
+
+
+	<outputs id="output1" xsi:type="ot:textFileDelimited">
+		<inSocket fromComponentId="input1" fromSocketId="out0" id="in0"
+			type="in">
+			<schema name="kj">
+				<field name="f1" type="java.lang.String" />
+				<field name="f2" type="java.math.BigDecimal"/>
+				<field name="f3" type="java.util.Date" format="yyyy-MM-dd" />
+				<field name="f4" type="java.lang.Integer" />
+				<field name="f5" type="java.lang.Double" />
+				<field name="f6" type="java.lang.Float" />
+				<field name="f7" type="java.lang.Short" />
+				<field name="f8" type="java.lang.Boolean"  />
+				<field name="f9" type="java.lang.Long" />
+				<field name="f10" type="java.util.Date" format="dd/MM/yyyy HH:mm:ss.SSS" />
+			</schema>
+		</inSocket>
+		<path uri="testData/Output/generateRecordOp" />
+		<delimiter value="," />
+		<charset value="ISO-8859-1" />
+	</outputs>
+</p:graph>
+	
+	

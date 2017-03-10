@@ -1,0 +1,125 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+
+sourceCompatibility = 1.8
+version = '0.1'
+ext.hadoopVersion = '2.6.0'
+ext.hiveVersion = '1.2.0'
+group = 'hydrograph'
+archivesBaseName = 'hydrograph-services'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.0.0"
+    }
+}
+
+task writePom {
+    pom {
+        project {
+			groupId 'hydrograph'
+            artifactId 'services'
+            version '0.0.1'
+        }
+	}.writeTo("$buildDir/pom.xml")
+}
+
+version = new Version(major: 0, minor: 1, revision: 1)
+gradle.taskGraph.whenReady { taskGraph -> version.release = taskGraph.hasTask(release)
+}
+
+task release {
+doFirst {
+println "Releasing application $version"
+		}
+}
+	
+class Version {
+	int major, minor, revision
+	boolean release
+	String toString() {
+	release=true
+	"$major.$minor.$revision${release ? '' : '-SNAPSHOT'}"
+		}
+}
+//ToDo: kept this for copying dependency into lib folder
+
+//task copyRuntimeLibs(type: Copy) {
+//into "lib"
+//from configurations.testRuntime
+//}
+
+repositories {
+	flatDir {
+       dirs '../../hydrograph.engine/libs'
+    }
+    mavenLocal()
+    mavenCentral() 
+    maven {
+        url 'http://conjars.org/repo/'
+    }
+    maven {
+        url 'http://maven.twttr.com/'
+    }
+
+    maven {
+        name 'redshift'
+        url 'http://redshift-maven-repository.s3-website-us-east-1.amazonaws.com/release'
+    }
+	 /* Add links of Nexus/Artifactory in order to resolve the dependencies */
+     maven {
+        url ''
+    }
+}
+   
+dependencies {   
+
+	compile group: 'commons-collections', name: 'commons-collections', version: '3.2.2'
+	compile group: 'org.antlr', name: 'antlr4-runtime', version: '4.5.1'
+	compile group: 'cascading', name: 'lingual-hadoop2-mr1', version: '1.2.1', classifier:'jdbc'
+  	compile group: 'com.sparkjava', name: 'spark-core', version: '2.5.1'
+	compile group: 'javax.websocket', name: 'javax.websocket-api', version: '1.1' 
+	compile( group: 'org.apache.hadoop', name: 'hadoop-minicluster', version: hadoopVersion){
+		exclude group: 'commons-beanutils'
+		exclude group: 'commons-collections'
+	}
+	compile (group: 'org.apache.hive', name: 'hive-exec', version: hiveVersion) {
+        exclude group: 'com.google.guava'
+        exclude group: 'org.apache.curator'
+        exclude group: 'commons-beanutils'
+        exclude group: 'commons-collections'
+    }
+
+    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.34'
+    //The group Id and Artifact Id(Name) are Hydrograph Defined. Use the same Group Id/ Artifact Id while uploading the JARs to Artifact respository..
+
+    //Following are the URL’s to download the jars for Oracle:
+    //Oracle: http://www.oracle.com/technetwork/apps-tech/jdbc-112010-090769.html
+    compileOnly name: 'oracle-ojdbc6-11.2.0.4'
+
+    //Following are the URL’s to download the jars for RedShift:
+    //Redshift: https://s3.amazonaws.com/redshift-downloads/drivers/RedshiftJDBC42-1.2.1.1001.jar
+    compileOnly group: 'com.amazon.redshift', name: 'redshift-jdbc42', version: '1.2.1.1001'
+
+    //Following are the URL’s to download the jars for Teradata:
+    //Teradata: http://downloads.teradata.com/download/connectivity/jdbc-driver
+    compileOnly name: 'teradata-tdgssconfig-0.1'
+    compileOnly name: 'teradata-terajdbc4-0.1'
+
+    testCompile 'junit:junit:4.11'
+}	
+jar {
+  manifest {
+  	attributes(
+  		'Main-Class': 'hydrograph.server.service.DebugService'
+  	)
+    attributes(
+      "Class-Path": configurations.compile.collect { it.getName() }.join(' ')
+    )
+    exclude '**/*.properties'
+  }
+}

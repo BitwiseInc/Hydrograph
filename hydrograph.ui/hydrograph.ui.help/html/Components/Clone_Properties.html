@@ -1,0 +1,102 @@
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+
+
+<!doctype html>
+<html>
+<head>
+<title>Clone Properties</title>
+<link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<body>
+
+	<p>
+		<span class="header-1">Clone Properties</span>
+	</p>
+
+	<p>
+		<span><b>Properties</b>&nbsp;for the Clone component can be
+			viewed by Double click-&gt;component on canvas. The properties
+			contain only the &#39;General&#39; tab since Clone falls under the
+			Straight Pull category in the component palette</span>
+	</p>
+
+	<p>
+		<span><b><a name="general_properties"></a>General
+				Properties:</b></span>
+	</p>
+
+	<p>
+		<img alt="" src="../images/Clone_Properties_General.png" />
+	</p>
+
+	<p>
+		<span><b>Display</b></span>
+	</p>
+
+	<ul>
+		<li><span><b>Name</b> - The Name field will specify the
+				name of the component as desired by the user.</span></li>
+		<li><span><b>Base Type</b> - Base Type signifies the basic
+				operation area of the component. In this case it is of Base Type
+				Straight Pull.</span></li>
+		<li><span><b>Type </b> - Type further categorizes the
+				component to detailed operation that it intends to perform. Here it
+				is of type Clone.</span></li>
+	</ul>
+
+	<p>
+		<span><b>Configuration</b></span>
+	</p>
+
+	<ul>
+		<li><p>
+				<span><b>Runtime Properties</b> -&nbsp;Runtime properties are
+					used to override the Hadoop configurations specific to Clone
+					component at run time. User is required to enter the Property Name
+					and Value in the runtime properties grid.</span>
+			</p>
+			<li><p>
+				<span>Check <a
+					href="../How To Steps/How_To_Pass_Hadoop_Properties_To_Component.html">
+						How to pass Hadoop properties to component</a></span>
+			</p></li>
+			<p>
+				<img alt="" src="../images/Runtime_Properties_Grid.png" />
+			</p></li>
+		<li><span><b>Batch</b> - Batch simply accepts a numeric
+				number starting from 0 to 99 and signifies the phase this component
+				will execute in. By default this is 0.</span></li>
+
+	</ul>
+
+	<p>
+		<a name="validations"></a><span class="header-2">Validations</span>
+	</p>
+	<ul>
+		<li><p>
+				<span>The properties window also displays error icon on
+					mandatory fields if it has an incorrect value.</span>
+			</p>
+			<p>
+				<img src="../images/Clone_properties_Name_Validation.png" alt="" /></li>
+
+		<li><p>
+				<span><b>Batch </b> -Batch has a default value of 0. However,
+					blank text box results in error validation and is not allowed.</span>
+			</p>
+			<p>
+				<img alt="" src="../images/Clone_properties_Batch_Validation.png" />
+			</p></li>
+	</ul>
+
+</body>
+</html>

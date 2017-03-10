@@ -1,0 +1,18 @@
+=====================================================================================================
+Features Added:
+=====================================================================================================
+Sr.No. <date> - [developer names] - description
+1. <> - [Rahul Mahajan] - Added default operation for normalize component.
+2. <09-Jun-16> - [Shrirang Kumbhar] - Added advanced data viewer to watch debug records. 
+
+=====================================================================================================
+Issues/Defects fixed:
+=====================================================================================================
+
+Sr.No. <GitHub Issue #> - [fixed by] - description
+1. <> - [rakesh kanchalwar] - Deleting a row in schema table does not highlight consecutive row
+2. <393> - [Prateem Tadas] - Provision to create Hydrograph specific classes.
+3. <#507>-[Shashank Karnik]- Precision field is only mandatory for Hive Parquet Component. 
+=====================================================================================================
+Notes for QA:
+=====================================================================================================

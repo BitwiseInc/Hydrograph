@@ -1,0 +1,26 @@
+/* Code for moving jar files from project lib folder to remote */
+	
+	println 'Copying Other library files...'
+
+        def otherJarFile
+        def otherJarName
+		println project.projectDir.path
+        def otherJarFiles = files {
+			def path1 =project.projectDir.path+'/lib'
+            file(path1).listFiles()
+        }
+		
+	try {
+			otherJarFiles.each {
+            File file ->
+                otherJarFile = file.absolutePath
+				 println 'Copying ' + file.name
+               	scpToRemoteServer(otherJarFile, project.name+"/lib",username,host,password,properties.remoteDirectory)
+        	}
+      			
+    	    } catch (Exception gradleException) {
+        	    println '#Gradle failed to execute task#'
+        	    gradleException.printStackTrace();
+        	}
+
+    }

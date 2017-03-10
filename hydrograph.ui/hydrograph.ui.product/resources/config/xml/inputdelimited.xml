@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+ -->
+ 
+ 
+<tns:Config xmlns:tns="hydrograph/ui/ComponentConfig" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="hydrograph/ui/ComponentConfig xsds/ComponentConfig.xsd ">
+	<tns:component paletteIconPath="/icons/input_file_palette.png" canvasIconPath="/icons/input_file_canvas.png"
+		name="IFDelimited" nameInPalette="File Delimited" defaultNamePrefix="IFDelimited" 
+		description="Used to read any delimited text file."
+		helpFilePath="/hydrograph.ui.help/html/Components/Input_File_Delimited.html"
+		acronym="IDelim">
+		<tns:category>INPUT</tns:category>
+		<tns:port>
+			<tns:portSpecification  numberOfPorts="1" portAlignment="right" changePortCountDynamically="false" allowMultipleLinks="false" linkMandatory="true">
+				<tns:port sequenceOfPort="0" typeOfPort="out" labelOfPort="out0" portTerminal="out0" />
+			</tns:portSpecification>
+		</tns:port>
+		
+		<tns:property dataType="string" name="name" renderer="COMPONENT_NAME_WIDGET" type="USER"
+			group="GENERAL" subGroup="DETAILS" showAsTooltip="TRUE" tooltipDataType="TEXT"
+			usage="REQUIRED" propertyHelpText="Displays Name provided by the user"/>
+		
+		<tns:property dataType="string" name="schema" renderer="SCHEMA_WIDGET" type="USER"
+			group="SCHEMA" subGroup="RECORD_STRUCTURE_DETAILS" showAsTooltip="TRUE" tooltipDataType="LIST"
+			usage="REQUIRED">
+			<tns:validator>SCHEMA_GRID_VALIDATOR</tns:validator>
+		</tns:property>
+		
+		<tns:property dataType="string" name="Path" renderer="FILE_PATH_WIDGET" type="USER"
+			group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="LINK"
+			usage="REQUIRED" propertyHelpText="Displays the location of the file either Remote/Local. \nAllows only underscore ‘_’ and alphanumeric characters.">
+			<tns:validator>NON_BLANK_STRING_VALIDATOR</tns:validator>
+		</tns:property>
+		
+		<tns:property dataType="string" name="delimiter" value="|" renderer="DELIMETER_WIDGET"
+			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"
+			usage="REQUIRED" propertyHelpText="Specifies Delimiter present in the input file.">
+			<tns:validator>NON_EMPTY_STRING_VALIDATOR</tns:validator>
+		</tns:property>
+		
+		<tns:property dataType="string" name="quote" value="" renderer="QUOTE_WIDGET"
+ 			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"
+ 			usage="OPTIONAL" propertyHelpText="Specifies Quote present in the input file.">
+ 		</tns:property>
+		
+		<tns:property dataType="boolean" name="safe" value="False" renderer="SAFE_PROPERTY_WIDGET" type="USER"
+			group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="FALSE" tooltipDataType="NONE"
+			usage="OPTIONAL" propertyHelpText="When True, allows the input fields to pass \nevaluation despite of Data type mismatch.">
+			<tns:validator>BOOLEAN_OR_PARAMETER_VALIDATOR</tns:validator>
+		</tns:property>
+		
+		<tns:property dataType="boolean" name="hasHeader" value="False" renderer="HAS_HEADER_WIDGET" type="USER"
+			group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="FALSE" tooltipDataType="NONE"
+			usage="OPTIONAL" propertyHelpText="When True, component assumes \nthe first row of the file to be the header.">
+			<tns:validator>BOOLEAN_OR_PARAMETER_VALIDATOR</tns:validator>
+		</tns:property>
+		
+		<tns:property dataType="string" name="charset" value="UTF-8" renderer="CHARACTER_SET_WIDGET"
+			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="FALSE" tooltipDataType="NONE"
+			usage="REQUIRED" propertyHelpText="Denotes the encoding system followed by the input file.">
+			<tns:validator>NON_BLANK_STRING_VALIDATOR</tns:validator>
+		</tns:property>
+			
+		<tns:property dataType="string" group="GENERAL" subGroup="CONFIGURATION" name="strict" value="True"
+		renderer="STRICT_CLASS_WIDGET" type="USER" showAsTooltip="FALSE" tooltipDataType="NONE"
+		usage="OPTIONAL" propertyHelpText="When True, validates the Record Structure \nlike no. of fields, length of record, scale \nas specified by the user.">
+			<tns:validator>BOOLEAN_OR_PARAMETER_VALIDATOR</tns:validator>
+		</tns:property>
+		
+		<tns:property dataType="string" name="runtime_properties" renderer="RUNTIME_PROPERTIES_WIDGET"
+			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="FALSE" tooltipDataType="NONE"
+			usage="OPTIONAL" propertyHelpText="Used to override runtime \nHadoop configurations specific to \nthis component at run time.">
+		<tns:validator>RUNTIME_PROPERTY_VALIDATOR</tns:validator>
+		</tns:property>
+		
+		<tns:property dataType="string" name="batch" value="0" renderer="BATCH_WIDGET" type="USER"
+			group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"
+			usage="REQUIRED" propertyHelpText="Specifies the execution sequence of \nthis component in the job flow.">
+			<tns:validator>INTEGER_VALIDATOR</tns:validator>
+		</tns:property>
+	</tns:component>
+</tns:Config>

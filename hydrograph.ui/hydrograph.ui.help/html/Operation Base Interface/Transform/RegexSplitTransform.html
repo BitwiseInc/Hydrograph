@@ -1,0 +1,106 @@
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+ 
+<!doctype html>
+<html>
+<head>
+	<title>RegexSplitTransform</title>
+	<link rel="stylesheet" type="text/css" href="../../css/style.css">
+</head>
+<body>
+<p><span class="header-1">RegexSplitTransform</span></p>
+<p><span>The RegexSplitTransform function splits the input records based on the regex to create multiple records on the out port. This function accepts one input and one output field. The input field is split based on the regex provided to the RegexSplitTransform function. The output field holds the values split based on the regex.</span></p>
+<p><span>This function requires following inputs:</span></p>
+<ul>
+	<li><span><b>Input fields</b>: The field to split the input on. RegexSplitTransform accepts just 1 input field on which the regex is applied. The input filed is passed to the RegexSplitTransform function using <a href="../../Components/Transform_Mapping_View.html#input_fields_grid">input fields grid</a> on transform operation editor window.</span></li>
+	<li><span><b>Output fields</b>: The field present on the output. RegexSplitTransform accepts just 1 output field which holds the values split based on regex. These are passed to the RegexSplitTransform function using <a href="../../Components/Transform_Mapping_View.html#output_fields_grid">output fields grid</a> on transform operation editor window.</span></li>
+	<li><span><b>regex</b>: The regular expression to apply on the input field to split the data into multiple records. The regex is passed to RegexSplitTransform function using <a href="../../Components/Transform_Mapping_View.html#Operation_Properties_Grid">operation properties grid</a> on operation class window. The name of the property should be <b>regex</b> and the value of the property should be the actual regex to be applied on the input field.</span></li>
+</ul>
+<p><span class="header-2">Example</span></p>
+<p><span class="header-3">Input file</span></p>
+<p><span>
+	<table>
+		<tr>
+			<th style="width:50px;">id</th>
+			<th style="width:80px;">name</th>
+			<th style="width:80px;">roles</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>John</td>
+			<td>Developer,Reviewer,Lead,Release Manager</td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td>Mary</td>
+			<td>Tester,QA Lead</td>
+		</tr>
+	</table>
+</span></p>
+<p><span class="header-3">Input fields to RegexSplitTransform function</span></p>
+<ul>
+	<li><span>roles</span></li>
+</ul>
+<p><span class="header-3">Output fields for RegexSplitTransform function</span></p>
+<ul>
+	<li><span>role</span></li>
+</ul>
+<p><span class="header-3">regex parameter for RegexSplitTransform function</span></p>
+<ul>
+	<li><span>,</span></li>
+</ul>
+<p><span class="header-3">Pass-through fields</span></p>
+<ul>
+	<li><span>id</span></li>
+	<li><span>name</span></li>
+</ul>
+<p><span class="header-3">Output of RegexSplitTransform function</span></p>
+<p><span>
+	<table>
+		<tr>
+			<th style="width:50px;">id</th>
+			<th style="width:80px;">name</th>
+			<th style="width:80px;">role</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>John</td>
+			<td>Develoepr</td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>John</td>
+			<td>Reviewer</td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>John</td>
+			<td>Lead</td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>John</td>
+			<td>Release Manager</td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td>Mary</td>
+			<td>Tester</td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td>Mary</td>
+			<td>QA Lead</td>
+		</tr>
+	</table>
+</span></p>
+</body>
+</html>

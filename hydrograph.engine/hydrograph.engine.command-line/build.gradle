@@ -1,0 +1,107 @@
+/********************************************************************************
+ * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
+
+apply from: '../version.gradle'
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'maven-publish'
+
+sourceCompatibility = 1.8
+
+archivesBaseName = 'hydrograph.engine.command-line'
+
+group = 'hydrograph'
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': archivesBaseName,
+                'Implementation-Version': version,
+                'Main-Class': 'hydrograph.engine.commandline.utilities.HydrographExecution'
+    }
+    // version = null //Version in jar name set to null to keep the name consistent for travis.yml to ftp the jar
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifact (testJar) {
+                classifier = 'tests'
+            }
+            artifact (sourcesJar) {
+                classifier = 'sources'
+            }
+
+            pom.withXml {
+                asNode().dependencies.'*'.findAll() {
+                    it.scope.text() == 'runtime' && project.configurations.compile.allDependencies.find { dep ->
+                        dep.name == it.artifactId.text()
+                    }
+                }.each() {
+                    it.scope*.value = 'compile'
+                }
+            }
+        }
+    }
+}
+
+test {
+    exclude '**/ExecutionTrackingCloneXmlTest*'
+    exclude '**/ExecutionTrackingCumulateXmlTest*'
+    exclude '**/ExecutionTrackingDiscardXmlTest*'
+    exclude '**/ExecutionTrackingFilterXmltest*'
+    exclude '**/ExecutionTrackingGenerateRecordXmlTest*'
+    exclude '**/ExecutionTrackingJoinXmlTest*'
+    exclude '**/ExecutionTrackingLimitXmltest*'
+    exclude '**/ExecutionTrackingNormalizeXmlTest*'
+    exclude '**/ExecutionTrackingPartitionByExpressionXmlTest*'
+    exclude '**/ExecutionTrackingRemoveDupXmlTest*'
+    exclude '**/ExecutionTrackingTransformXmltest*'
+    exclude '**/ExecutionTrackingUnionAllXmlTest*'
+    exclude '**/ExecutionTrackingUniqueSequenceXmlTest*'
+}
+
+
+uploadArchives {
+    repositories {
+        mavenLocal()
+    }
+}
+
+repositories {
+	flatDir {
+       dirs '../libs'
+    }
+    mavenLocal()
+    mavenCentral()
+    maven {
+        url 'http://conjars.org/repo/'
+    }
+    maven {
+        url 'http://maven.twttr.com/'
+    }
+    maven {
+        name 'redshift'
+        url 'http://redshift-maven-repository.s3-website-us-east-1.amazonaws.com/release'
+    }
+}
+
+dependencies {
+    //compile project(':hydrograph.engine.cascading')
+    compile project(':hydrograph.engine.spark')
+    compile 'org.slf4j:slf4j-api:1.7.12'
+    compile 'org.slf4j:slf4j-log4j12:1.7.12'
+    compile 'commons-lang:commons-lang:2.6'
+    compile 'commons-cli:commons-cli:1.2'
+}

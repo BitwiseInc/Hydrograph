@@ -1,0 +1,71 @@
+====================================================================================================
+Features Added:
+=====================================================================================================
+1.<23-Dec-16> - [Vibhor Tyagi] - Created Mysql Component
+2.<27-Dec-16> - [Vibhor Tyagi] - Created RunProgram Component
+3.<20-Dec-16> - [Ashika Holkar] - Created Oracle Component
+4.<06-Jan-16> - [Rakesh Kanchalwar] - Teradata Input and Output Component5. 
+5.<10-Jan-16> - [Rakesh Kanchalwar] - Restart button under File Menu option
+6.<06-Jan-17> - [Pooja Yadav] - Created Partition By Expression Component.
+7.<02-Jan-16> - [Shashank karnik,Akhilesh Joshi]-Expression editor support for Aggregate,cumulate and normalize
+8.<16-Jan-17> - [Rakesh Kanchalwar] - Input Xml component
+
+=====================================================================================================
+Enhancements implemented:
+=====================================================================================================
+1.<17-Jan-17>- [Shashank karnik] In expression editor,display class name in alphabetically order.  
+=====================================================================================================
+Issues/Defects fixed:
+=====================================================================================================
+1.#560 [Ashika Holkar] - Output Oracle:- Float datatype not properly converted
+2.#553 [Ashika Holkar] - Remove full-stop from tool-tip
+3.#557 [Ashika Holkar] -  Oracle Input/Output Component UI related Issues
+4.#562 [Vibhor Tyagi] Import XML: Error icon is getting displayed on oracle component
+5.#561 [Vibhor Tyagi] Import job XML: For the Oracle component, the value 'Null' is getting displayed in the 'SID' and 'Oracle Schema' text fields
+6.#564 [Ashika Holkar] - Oracle component : New Table -> Primary keys textbox is not getting disabled when user switches from New Table option to Insert
+7.#559 [Ashika Holkar] - Oracle input component: Error message is not getting displayed
+8.#570 [Vibhor Tyagi] - Oracle and Mysql components: Password field shouldn't be get disabled
+9.#565 [Vibhor Tyagi] -  Issues with Oracle and Mysql component 
+10.#568 [Shrirang Kumbhar] - RemoveDups :- Change in component size after closing and reopening graph
+11.#548 [Nitin Gupta] - Output component: - Tool shows incorrect scheme on UI
+12.#569 [Nitin Gupta]	-	Union All component: Error icon is not getting removed from schema tab
+13.#555 [Ashika Holkar] - Need to remove 'Validate' option 
+12.#569 [Nitin Gupta]	-	Union All component: Error icon is not getting removed from schema tab
+13.#547 [Shrirang Kumbhar] - Remote Run: Tool lock user ID if user enter incorrect password single time
+14.#563 [Vibhor Tyagi] -  Error Message is not getting displayed when User gives primary key other than the available fields
+15.#577 [Ashika Holkar] - Oracle Input Component:By default Table Name should be selected on properties window
+16.#576 [Ashika Holkar] -  Database input component: Incorrect error popup is getting displayed 
+17.#520 [Vibhor Tyagi] - Behavior of adding Output fields in Join Mapping window is not same for all type of join i.e for inner,right,left and full outer join
+18.#582 [Ashika Holkar] -  Database Component: Issues related to Test Connection
+19.     [Rakesh Kanchalwar] - Updated gradle and pom files for oracle and mysql dependencies
+20.#528 [Vibhor Tyagi] - Scroll Lock button should be present in Execution Tracking console window
+21.#586 [Shashank karnik] -   Aggregate Component: Error under error log is not getting displayed correctly when invalid expression is provided.
+22.#594 [Shashank karnik] - Unique sequence component: Schema is not getting update.
+23 #510 [Shrirang Kumbhar] - View Data xml files are getting generated under main tool folder
+24.#592	[Akhilesh Joshi] - 	Aggregate Component: java null pointer error popup is getting displayed
+25.#597	[Akhilesh Joshi] -	Aggregate Component : Validation is not appropriate for Boolean Datatype
+26.#595 [Akhilesh Joshi] - 	Aggregate Component: Expression with same id/name is getting added when user clicks on Add Operation control button
+27.#583 [Ashika Holkar] - Oracle and Mysql component: Getting error message while connecting to Mysql server/oracle database
+28.#587 [Pooja Yadav} - Delimiter component: Garbage value in header while writing delimited file.
+29.#515 [Prateem Tadas]-  	Apply button is getting enabled when user clicks on Pull Schema button.
+30.#554	[Prateem Tadas]- 	Tooltip is not getting displayed. 
+31.#590 [Shashank Karnik]- Aggregate Component: Error bubble is getting displayed on aggregate component after importing job.
+32.#522 [Shashank Karnik]- Error is not getting displayed on tool tip when key field is missing.
+33.#609 [Shashank Karnik]-  Parameter Grid: Some options are getting hide on a mac.  
+34 #534 [Prateem Tadas] -  Incorrect confirmation popup is getting displayed on tool closer.
+35.#615 [Vibhor Tyagi] - Issues with MySQL component
+36.#624 [Pooja Yadav] -  Partition By Expression : Schema is editable.
+37.#625 [Pooja Yadav] - Partition By Expression: Data type is getting Vanished from the Expression window.
+38 #599 [Akhilesh Joshi] -  Aggregate Component : Key field should be optional.
+39 		[Nitin Gupta] - Fixed import issues : 1) Failed to open Property window of transform component 2) Added proper error message if ui fails to import schema from external schema file 3) Paramerterized value of property tag was not importing
+40.#605 [Rakesh Kanchalwar] - Teradata Component: Name on the component is overlapping with error icon
+41.#629 [Rakesh Kanchalwar] - Interface Name is not getting displayed while creating custom operation class
+41 #611 [shashank karnik] -  Job is marked as unsaved after running the job.
+42.#625 [Pooja Yadav] - Partition By Expression: Data type is getting Vanished from the Expression window.
+43.#613 [Vibhor Tyagi] - Execution Tracking: On Subjob, count values are not getting display on connection links
+44.#626 [Sonia Raheja] - Cumulate Component : Error for key field is not getting displayed on tooltip.
+45.#633 [Pooja Yadav} - Partition By Expression : Warning bubble is getting displayed on component after importing job.
+46.#632 [Rakesh Kanchalwar] - Input Redshift component: Job getting failed due to there is no space between driver value.
+47.#637 [shashank karnik]- Tag for Input field is getting removed when job with expressions are imported (edit). 
+48.#632 [Rakesh Kanchalwar] - Input Redshift component: Job getting failed due to there is no space between driver value 
+

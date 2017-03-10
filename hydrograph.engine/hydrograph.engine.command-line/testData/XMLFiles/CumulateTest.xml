@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License
+ -->
+
+<p:graph name="CumulateTest" xmlns:p="hydrograph/engine/jaxb/main"
+		 xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
+		 xmlns:op="hydrograph/engine/jaxb/operationstypes"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../elt-core/src/main/java/newxmlschema/main/main.xsd  ">
+	<runtimeProperties>
+		<property name="mapreduce.job.reduces" value="12" />
+		<property name="dfs.replication" value="2" />
+	</runtimeProperties>
+
+	<inputs id="input1" xsi:type="it:textFileDelimited">
+		<outSocket id="out0">
+			<schema name="outSchema">
+				<field name="f1" type="java.lang.String" />
+				<field name="f2" type="java.math.BigDecimal" scale="2"
+					scaleType="explicit" />
+				<field name="f3" type="java.util.Date" format="yyyy-MM-dd" />
+				<field name="f4" type="java.lang.Integer" />
+				<field name="f5" type="java.lang.String" />
+				<field name="f6" type="java.lang.String" />
+				<field name="f7" type="java.lang.String" />
+				<field name="f8" type="java.lang.String" />
+				<field name="f9" type="java.lang.String" />
+				<field name="f10" type="java.lang.String" />
+				<field name="f11" type="java.lang.String" />
+				<field name="f12" type="java.lang.String" />
+				<field name="f13" type="java.util.Date" format="yyyy-MM-dd" />
+				<field name="f14" type="java.lang.Integer" />
+				<field name="f15" type="java.lang.String" />
+				<field name="f16" type="java.lang.String" />
+				<field name="f17" type="java.lang.String" />
+				<field name="f18" type="java.lang.String" />
+				<field name="f19" type="java.lang.String" />
+				<field name="f20" type="java.lang.String" />
+				<field name="f21" type="java.lang.String" />
+				<field name="f22" type="java.lang.String" />
+				<field name="f23" type="java.util.Date" format="yyyy-MM-dd" />
+				<field name="f24" type="java.lang.Integer" />
+				<field name="f25" type="java.lang.String" />
+				<field name="f26" type="java.lang.String" />
+				<field name="f27" type="java.lang.String" />
+				<field name="f28" type="java.lang.String" />
+				<field name="f29" type="java.lang.String" />
+				<field name="f30" type="java.lang.String" />
+				<field name="f31" type="java.lang.String" />
+				<field name="f32" type="java.lang.String" />
+				<field name="f33" type="java.util.Date" format="yyyy-MM-dd" />
+				<field name="f34" type="java.lang.Integer" />
+				<field name="f35" type="java.lang.String" />
+				<field name="f36" type="java.lang.String" />
+				<field name="f37" type="java.lang.String" />
+				<field name="f38" type="java.lang.String" />
+				<field name="f39" type="java.lang.String" />
+				<field name="f40" type="java.lang.String" />
+				<field name="f41" type="java.lang.String" />
+				<field name="f42" type="java.lang.String" />
+				<field name="f43" type="java.util.Date" format="yyyy-MM-dd" />
+				<field name="f44" type="java.lang.Integer" />
+				<field name="f45" type="java.lang.String" />
+				<field name="f46" type="java.lang.String" />
+				<field name="f47" type="java.lang.String" />
+				<field name="f48" type="java.lang.String" />
+				<field name="f49" type="java.lang.String" />
+				<field name="f50" type="java.lang.String" />
+				<field name="f51" type="java.lang.String" />
+				<field name="f52" type="java.lang.String" />
+				<field name="f53" type="java.lang.String" />
+				<field name="f54" type="java.lang.Integer" />
+				<field name="f55" type="java.lang.String" />
+				<field name="f56" type="java.lang.String" />
+				<field name="f57" type="java.lang.String" />
+				<field name="f58" type="java.lang.String" />
+				<field name="f59" type="java.lang.String" />
+				<field name="f60" type="java.lang.String" />
+			</schema>
+		</outSocket>
+		<path uri="testData/Input/cumulate_input.txt" />
+		<delimiter value="," />
+		<hasHeader value="false" />
+		<safe value="true" />
+		<strict value="false" />
+
+	</inputs>
+	
+	<operations id="scan" xsi:type="op:cumulate">
+		<inSocket fromComponentId="input1" fromSocketId="out0" id="in0" />
+		<operation id="opt1"
+			class="hydrograph.engine.transformation.userfunctions.cumulate.Count">
+			<inputFields>
+				<field name="f3" inSocketId="in0" />
+			</inputFields>
+			<outputFields>
+				<field name="count_date" type="java.lang.Integer" />
+			</outputFields>
+		
+		</operation>
+		<operation id="opt2"
+			class="hydrograph.engine.transformation.userfunctions.cumulate.Sum">
+			<inputFields>
+				<field name="f4" inSocketId="in0" />
+			</inputFields>
+			<outputFields>
+				<field name="new_sum" type="java.lang.Integer" />
+			</outputFields>
+			
+		</operation>
+		<outSocket id="out0">
+			<passThroughField name="f1" inSocketId="in0" />
+			<passThroughField name="f2" inSocketId="in0" />
+			<passThroughField name="f3" inSocketId="in0" />
+			<passThroughField name="f4" inSocketId="in0" />
+			<passThroughField name="f5" inSocketId="in0" />
+			<passThroughField name="f6" inSocketId="in0" />
+			<passThroughField name="f7" inSocketId="in0" />
+			<passThroughField name="f8" inSocketId="in0" />
+			<passThroughField name="f9" inSocketId="in0" />
+			<passThroughField name="f10" inSocketId="in0" />
+			<passThroughField name="f11" inSocketId="in0" />
+			<passThroughField name="f12" inSocketId="in0" />
+			<passThroughField name="f13" inSocketId="in0" />
+			<passThroughField name="f14" inSocketId="in0" />
+			<passThroughField name="f15" inSocketId="in0" />
+			<passThroughField name="f16" inSocketId="in0" />
+			<passThroughField name="f17" inSocketId="in0" />
+			<passThroughField name="f18" inSocketId="in0" />
+			<passThroughField name="f19" inSocketId="in0" />
+			<passThroughField name="f20" inSocketId="in0" />
+			<passThroughField name="f21" inSocketId="in0" />
+			<passThroughField name="f22" inSocketId="in0" />
+			<passThroughField name="f23" inSocketId="in0" />
+			<passThroughField name="f24" inSocketId="in0" />
+			<passThroughField name="f25" inSocketId="in0" />
+			<passThroughField name="f26" inSocketId="in0" />
+			<passThroughField name="f27" inSocketId="in0" />
+			<passThroughField name="f28" inSocketId="in0" />
+			<passThroughField name="f29" inSocketId="in0" />
+			<passThroughField name="f30" inSocketId="in0" />
+			<passThroughField name="f31" inSocketId="in0" />
+			<passThroughField name="f32" inSocketId="in0" />
+			<passThroughField name="f33" inSocketId="in0" />
+			<passThroughField name="f34" inSocketId="in0" />
+			<passThroughField name="f35" inSocketId="in0" />
+			<passThroughField name="f36" inSocketId="in0" />
+			<passThroughField name="f37" inSocketId="in0" />
+			<passThroughField name="f38" inSocketId="in0" />
+			<passThroughField name="f39" inSocketId="in0" />
+			<passThroughField name="f40" inSocketId="in0" />
+			<passThroughField name="f41" inSocketId="in0" />
+			<passThroughField name="f42" inSocketId="in0" />
+			<passThroughField name="f43" inSocketId="in0" />
+			<passThroughField name="f44" inSocketId="in0" />
+			<passThroughField name="f45" inSocketId="in0" />
+			<passThroughField name="f46" inSocketId="in0" />
+			<passThroughField name="f47" inSocketId="in0" />
+			<passThroughField name="f48" inSocketId="in0" />
+			<passThroughField name="f49" inSocketId="in0" />
+			<passThroughField name="f50" inSocketId="in0" />
+			<passThroughField name="f51" inSocketId="in0" />
+			<passThroughField name="f52" inSocketId="in0" />
+			<passThroughField name="f53" inSocketId="in0" />
+			<passThroughField name="f54" inSocketId="in0" />
+			<passThroughField name="f55" inSocketId="in0" />
+			<passThroughField name="f56" inSocketId="in0" />
+			<passThroughField name="f57" inSocketId="in0" />
+			<passThroughField name="f58" inSocketId="in0" />
+			<passThroughField name="f59" inSocketId="in0" />
+			<passThroughField name="f60" inSocketId="in0" />
+			<operationField name="count_date" operationId="opt1" />
+			<operationField name="new_sum" operationId="opt2" />
+		</outSocket>
+		<primaryKeys>
+			<field name="f1" />
+			<field name="f2" />
+			<field name="f3" />
+			<field name="f4" />
+		</primaryKeys>
+	</operations>
+
+	
+	<outputs id="output1" xsi:type="ot:textFileDelimited">
+		<inSocket fromComponentId="scan" fromSocketId="out0" id="in0">
+			<schema name="outSchema">
+				<field name="f1" type="java.lang.String" />
+				<field name="f2" type="java.math.BigDecimal" scale="2"
+					scaleType="explicit" />
+				<field name="f3" type="java.util.Date" format="yyyy-MM-dd" />
+				<field name="f4" type="java.lang.Integer" />
+				<field name="f5" type="java.lang.String" />
+				<field name="f6" type="java.lang.String" />
+				<field name="f7" type="java.lang.String" />
+				<field name="f8" type="java.lang.String" />
+				<field name="f9" type="java.lang.String" />
+				<field name="f10" type="java.lang.String" />
+				<field name="f11" type="java.lang.String" />
+				<field name="f12" type="java.lang.String" />
+				<field name="f13" type="java.util.Date" format="yyyy-MM-dd" />
+				<field name="f14" type="java.lang.Integer" />
+				<field name="f15" type="java.lang.String" />
+				<field name="f16" type="java.lang.String" />
+				<field name="f17" type="java.lang.String" />
+				<field name="f18" type="java.lang.String" />
+				<field name="f19" type="java.lang.String" />
+				<field name="f20" type="java.lang.String" />
+				<field name="f21" type="java.lang.String" />
+				<field name="f22" type="java.lang.String" />
+				<field name="f23" type="java.util.Date" format="yyyy-MM-dd" />
+				<field name="f24" type="java.lang.Integer" />
+				<field name="f25" type="java.lang.String" />
+				<field name="f26" type="java.lang.String" />
+				<field name="f27" type="java.lang.String" />
+				<field name="f28" type="java.lang.String" />
+				<field name="f29" type="java.lang.String" />
+				<field name="f30" type="java.lang.String" />
+				<field name="f31" type="java.lang.String" />
+				<field name="f32" type="java.lang.String" />
+				<field name="f33" type="java.util.Date" format="yyyy-MM-dd" />
+				<field name="f34" type="java.lang.Integer" />
+				<field name="f35" type="java.lang.String" />
+				<field name="f36" type="java.lang.String" />
+				<field name="f37" type="java.lang.String" />
+				<field name="f38" type="java.lang.String" />
+				<field name="f39" type="java.lang.String" />
+				<field name="f40" type="java.lang.String" />
+				<field name="f41" type="java.lang.String" />
+				<field name="f42" type="java.lang.String" />
+				<field name="f43" type="java.util.Date" format="yyyy-MM-dd" />
+				<field name="f44" type="java.lang.Integer" />
+				<field name="f45" type="java.lang.String" />
+				<field name="f46" type="java.lang.String" />
+				<field name="f47" type="java.lang.String" />
+				<field name="f48" type="java.lang.String" />
+				<field name="f49" type="java.lang.String" />
+				<field name="f50" type="java.lang.String" />
+				<field name="f51" type="java.lang.String" />
+				<field name="f52" type="java.lang.String" />
+				<field name="f53" type="java.lang.String" />
+				<field name="f54" type="java.lang.Integer" />
+				<field name="f55" type="java.lang.String" />
+				<field name="f56" type="java.lang.String" />
+				<field name="f57" type="java.lang.String" />
+				<field name="f58" type="java.lang.String" />
+				<field name="f59" type="java.lang.String" />
+				<field name="f60" type="java.lang.String" />
+				<field name="new_sum" type="java.lang.Integer" />
+				<field name="count_date" type="java.lang.Integer" />
+			</schema>
+		</inSocket>
+		<path uri="PerformacneOutput/TransformTest" />
+		<delimiter value="," />
+		<hasHeader value="true" />
+
+
+	</outputs>
+
+</p:graph>

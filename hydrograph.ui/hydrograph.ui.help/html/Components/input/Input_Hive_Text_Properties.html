@@ -1,0 +1,110 @@
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+ 
+ 
+<!doctype html>
+<html>
+<head>
+	<title>Input Hive TextFile Properties</title>
+	<link rel="stylesheet" type="text/css" href="../../css/style.css">
+</head>
+<body>
+
+<p><span class="header-1">Input Hive TextFile Properties</span></p>
+
+<p><span><b>Properties</b>&nbsp;for the Input Hive Text File component can be viewed by double clicking the component on canvas. The properties window can also be opened by right-clicking the component icon on the job canvas and clicking on the 'Properties' option.</span</p>
+<p><span>The properties contain a &#39;General&#39; tab and a &#39;Schema&#39; tab. Common properties are present in the General tab. Schema tab displays the option to accept the field schema i.e. field name, data type, scale etc. </span></p>
+
+<p><a name="general_properties"></a><span class="header-2"><b>General Properties</b></span></p>
+
+<p><img alt="" src="../../images/Input_Hive_Text_File_Properties_General.png" /></p>
+
+<p><span class="header-2">Display</span></p>
+
+<ul>
+	<li><span><b>Name</b> - The identifier for the component. This is a <b>mandatory</b> property. This property is pre-populated with the component name, i.e. 'IHiveTextFile' followed by an incremental number. It can be changed to any custom name. The name property has following restrictions:</span></li>
+	<ul>
+		<li><span>Must be specified and should not be blank.</span></li>
+		<li><span>Must be unique across the job.</span></li>
+		<li><span>Accepts only alphabets (a-z), numerals (0-9) and 4 special characters: "_", "-", ",", " " (space)<./span></li>
+	</ul>
+	<li><span><b>Base Type</b> - Base Type signifies the category of the component. Input Hive Text File is of base type Input. This is a non editable field.</span></li>
+	<li><span><b>Type</b> - Type defines the type of component within the category. This typically is the name of the component. This is a non editable field.</span></li>
+</ul>
+
+<p><span class="header-2">Configuration</span></p>
+
+<ul>
+	<li><a name="database_name"></a><span><b>Database Name</b> - Database Name is used to specify the Hive Database Name. User has to manually type the database name in the text box provided. Database name is a mandatory property.</span></li>
+</ul>
+<ul>
+	<li><a name="table_name"></a><span><b>Table Name</b> - Table Name is used to specify the Hive table Name. User has to manually type the table name in the text box provided. Table name is a mandatory property.</span></li>
+</ul>
+<ul>
+	<li><a name="external_table_path"></a><span><b>External Table Path</b> - External Table Path is used to specify the file path in case the table has been created as an external table. User has to manually type the path in the text box provided. External Table Path is an optional field.</span></li>
+</ul>
+<ul>
+	<li><a name="delimiter"></a><span><b>Delimiter</b> - The Delimiter field accepts the delimiter for the table. The default value is 'CTRL+A'. Delimiter is an optional property.</span></li>
+</ul>
+<ul>
+	<li><a name="quote"></a><span><b>Quote</b> - Quote field accepts the masked character used to mask the delimiter in the input file. When the quote is given, all the delimiters which are followed by this quote, will not be considered as delimiters rather considered as text. Quoate is an optional property.</span></li>
+</ul>
+<ul>
+	<li><a name="safe_property"></a><span><b>Safe Property</b> - This property accepts Boolean values True and False. It can also be parameterized and later on resolved during run-time. The Safe property when True, allows the input fields to pass evaluation despite of Data type mismatch. When False, fields with Data type mismatch will be rejected and the component will abort processing returning an error.</span></li>
+</ul>
+<ul>
+	<li><a name="strict"></a><span><b>Strict</b> - Strict accepts&nbsp;Boolean values True and False. It can also be parameterized and later on resolved during run-time. Strict property is used to check if the record structure i.e. number of fields, length of records, scale etc are exactly listed by the user as in the input file. When set to True, the component fails if the record structure doesn&#39;t match with the one specified by the user. Reverse in case of False.</span></li>
+</ul>
+<ul>
+	<li><a name="partiton_keys"></a><span><b>Partition Keys</b> - Partition keys accepts the partition field names. The window also allows users to specify the partition field values to read filtered data. As per Hive requirement, the partition keys should always be at the end of the schema. The partition keys window validates whether the partition fields are at the end of the schema.</span></li>
+</ul>
+	<p><img alt="" src="../../images/Input_Hive_Text_File_PartitionKeys.png" /></p>
+<ul>
+	<li><a name="runtime_properties"></a><span><b>Runtime Properties</b> -&nbsp;Runtime properties are used to override the Hadoop configurations specific to Input Hive TextFile component at run time. User is required to enter the Property Name and Value in the runtime properties grid.</span>
+	<p><span>Check <a href="../../How To Steps/How_To_Pass_Hadoop_Properties_To_Component.html"> How to pass Hadoop properties to component</a></span></p></li>
+</ul>
+	<p><img alt="" src="../../images/Runtime_Properties_Grid.png" /></p>
+<ul>
+	<li><a name="phase"></a><span><b>Phase</b> - Phase simply accepts a numeric value starting from 0 to maximum 99 and signifies the phase this component will execute in. By default this is 0.</span></li>
+</ul>
+
+<p><a name="schema"></a><span class="header-2">Schema Tab</span></p>
+
+<p><img alt="" src="../../images/Input_Hive_Text_File_Properties_Schema.png" /></p>
+<p><span>Schema is <b>mandatory</b> for Input Hive Text File component. Schema tab defines the record format on the out port of the Input Hive Text File component. A field in schema has multiple attributes as described below.</span></p>
+
+<ul>
+	<li><span><b>Internal</b> - User is provided a Grid to enter the internal schema of the Input Delimited file.</span></li>
+	<ul>
+		<li><span><b>Field Name</b> - User needs to enter all the Field names in this column.</span></li>
+		<li><span><b>Data type</b>  - The data type for the field. This is a mandatory attribute. The default data type is "String". Check <a href="../../references/SupportedDataTypes.html">supported data types</a> page for list of supported data types.</span></li>
+		<li><span><b>Date Format</b> - The format for date data type. Refer to <a href="../../references/Date_formats.html">Date formats</a> page for acceptable date formats.</span></li>
+		<li><span><b>Precision</b> - Precision for a bigdecimal field can be specified here.</span></li>
+		<li><span><b>Scale</b> - Scale for a bigdecimal field can be specified here.</span></li>
+		<li><span><b>Scale Type</b> - Scale Type accepts values as implicit or explicit for bigdecimal field and none for other data types. Explicit considers the length of ' <b>.</b> ' and implicit ignores length of ' <b>.</b> ' for the bigdecimal field.</span></li>
+		<li><span><b>Field Description</b> - User can specify field description.</span></li></ul>
+	</ul>	
+	<li><span><b>External</b> - User can provide an external Hydrograph Schema file of XML format. A text box is provided to either manually type or use the Browse button to select the schema file from File system. The External schema file path is resolved during run time and replaced with the contents of the file in the Job XML.</span></li>
+</ul>
+
+
+<p><a name="validations"></a><span class="header-2">Validations</span></p>
+<p><span>The Input Hive Text File components applies validations to the mandatory fields as described above. Upon placing the Input Hive Text File component on job canvas for the first time (from component palette), the component shows up a warning icon as mandatory properties are not provided.</span></p>
+<img src="../../images/Input_Hive_Text_File_Warning.png" alt="Warning icon displayed on component" />
+
+<p><span>The properties window also displays error icon on mandatory fields if it has an incorrect value. The error icon is displayed on the tab as well, if any of the field within the tab has some error.</span></p>
+<img src="../../images/Input_Hive_Text_File_Tab_Error.png" alt="Error icon displayed on tabs" />
+
+<p><span>If the properties window has some error even after user visit's it once, then the warning icon on the Input Hive Text File component on the job canvas changes to error icon. This error icon is removed only when all the mandatory fields are supplied with correct values.</span></p>
+<img src="../../images/Input_Hive_Text_File_Canvas_Error.png" alt="Error icon on component" />
+
+</body>
+</html>

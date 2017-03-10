@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc. Licensed 
+	under the Apache License, Version 2.0 (the "License"); you may not use this 
+	file except in compliance with the License. You may obtain a copy of the 
+	License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by 
+	applicable law or agreed to in writing, software distributed under the License 
+	is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY 
+	KIND, either express or implied. See the License for the specific language 
+	governing permissions and limitations under the License. -->
+<xs:schema xmlns:cmn="hydrograph/engine/jaxb/commontypes"
+	xmlns:itffw="hydrograph/engine/jaxb/itffw" xmlns:itfd="hydrograph/engine/jaxb/itfd"
+	xmlns:itfs="hydrograph/engine/jaxb/itfs" xmlns:igr="hydrograph/engine/jaxb/igr"
+	xmlns:ifparquet="hydrograph/engine/jaxb/ifparquet" xmlns:ihiveparquet="hydrograph/engine/jaxb/ihiveparquet"
+	xmlns:ihivetextfile="hydrograph/engine/jaxb/ihivetextfile"
+	xmlns:ifMixedScheme="hydrograph/engine/jaxb/ifmixedscheme"
+	xmlns:ifsubjob="hydrograph/engine/jaxb/ifsubjob" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:imysql="hydrograph/engine/jaxb/imysql" xmlns:iredshift="hydrograph/engine/jaxb/iredshift"
+	xmlns:isparkredshift="hydrograph/engine/jaxb/isparkredshift"
+	xmlns:ioracle="hydrograph/engine/jaxb/ioracle" xmlns:iteradata="hydrograph/engine/jaxb/iteradata"
+	xmlns:ifxml="hydrograph/engine/jaxb/ifxml" xmlns="hydrograph/engine/jaxb/inputtypes"
+	targetNamespace="hydrograph/engine/jaxb/inputtypes" elementFormDefault="unqualified">
+	<xs:import schemaLocation="../common/common-types.xsd"
+		namespace="hydrograph/engine/jaxb/commontypes" />
+	<xs:import schemaLocation="./text-file-fixed-width/text-file-fixed-types.xsd"
+		namespace="hydrograph/engine/jaxb/itffw" />
+	<xs:import schemaLocation="./text-file-delimited/text-file-delimited-types.xsd"
+		namespace="hydrograph/engine/jaxb/itfd" />
+	<xs:import schemaLocation="./sequence-file/input-sequence-file-types.xsd"
+		namespace="hydrograph/engine/jaxb/itfs" />
+	<xs:import schemaLocation="./generate-record/generate-record-types.xsd"
+		namespace="hydrograph/engine/jaxb/igr" />
+	<xs:import schemaLocation="./parquet-file/input-file-parquet-types.xsd"
+		namespace="hydrograph/engine/jaxb/ifparquet" />
+	<xs:import schemaLocation="./parquet-hive-file/input-hive-parquet-types.xsd"
+		namespace="hydrograph/engine/jaxb/ihiveparquet" />
+	<xs:import schemaLocation="./hive-text-file/input-hive-text-file-types.xsd"
+		namespace="hydrograph/engine/jaxb/ihivetextfile" />
+	<xs:import
+		schemaLocation="./text-file-mixedScheme/input-file-mixedScheme-text-types.xsd"
+		namespace="hydrograph/engine/jaxb/ifmixedscheme" />
+	<xs:import schemaLocation="./subjob/input-subjob-types.xsd"
+		namespace="hydrograph/engine/jaxb/ifsubjob" />
+	<xs:import schemaLocation="./mysql-type/input-mysql-types.xsd"
+		namespace="hydrograph/engine/jaxb/imysql" />
+	<xs:import schemaLocation="./redshift-type/input-redshift-types.xsd"
+		namespace="hydrograph/engine/jaxb/iredshift" />
+
+	<xs:import schemaLocation="./sparkredshift-type/input-sparkredshift-types.xsd"
+		namespace="hydrograph/engine/jaxb/isparkredshift" />
+	<xs:import schemaLocation="./oracle-type/input-oracle-types.xsd"
+		namespace="hydrograph/engine/jaxb/ioracle" />
+	<xs:import schemaLocation="./teradata-type/input-teradata-types.xsd"
+		namespace="hydrograph/engine/jaxb/iteradata" />
+	<xs:import schemaLocation="./xml-file/input-file-xml-types.xsd"
+		namespace="hydrograph/engine/jaxb/ifxml" />
+
+	<xs:complexType name="avroFile">
+		<xs:complexContent>
+			<xs:extension base="itfd:type-input-file-delimited-base">
+				<xs:sequence>
+					<xs:element name="path">
+						<xs:complexType>
+							<xs:attribute name="uri" type="xs:string" use="required" />
+						</xs:complexType>
+					</xs:element>
+
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+	<xs:complexType name="textFileDelimited">
+		<xs:complexContent>
+			<xs:extension base="itfd:type-input-file-delimited-base">
+				<xs:sequence>
+					<xs:element name="path">
+						<xs:complexType>
+							<xs:attribute name="uri" type="xs:string" use="required" />
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="delimiter">
+						<xs:complexType>
+							<xs:attribute name="value" type="xs:string" use="required" />
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="hasHeader" type="cmn:boolean-value-type"
+						minOccurs="0" />
+					<xs:element name="safe" type="cmn:boolean-value-type"
+						minOccurs="0" />
+					<xs:element name="strict" type="cmn:boolean-value-type"
+						minOccurs="0" />
+					<xs:element name="charset" minOccurs="0">
+						<xs:complexType>
+							<xs:attribute name="value" type="cmn:standard-charsets"
+								use="required" />
+						</xs:complexType>
+					</xs:element>
+
+					<xs:element name="quote" minOccurs="0">
+						<xs:complexType>
+							<xs:attribute name="value" type="xs:string" />
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="sequenceInputFile">
+		<xs:complexContent>
+			<xs:extension base="itfs:type-input-file-sequence-base">
+				<xs:sequence>
+					<xs:element name="path">
+						<xs:complexType>
+							<xs:attribute name="uri" type="xs:string" use="required" />
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="textFileFixedWidth">
+		<xs:complexContent>
+			<xs:extension base="itffw:type-fixed-width-base">
+				<xs:sequence>
+					<xs:element name="path">
+						<xs:complexType>
+							<xs:attribute name="uri" type="xs:string" use="required" />
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="safe" type="cmn:boolean-value-type"
+						minOccurs="0" />
+					<xs:element name="strict" type="cmn:boolean-value-type"
+						minOccurs="0" />
+					<xs:element name="charset" minOccurs="0">
+						<xs:complexType>
+							<xs:attribute name="value" type="cmn:standard-charsets"
+								use="required" />
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="generateRecord">
+		<xs:complexContent>
+			<xs:extension base="igr:type-generate-record-base">
+				<xs:sequence>
+					<xs:element name="recordCount">
+						<xs:complexType>
+							<xs:attribute name="value" type="xs:long" />
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="parquetFile">
+		<xs:complexContent>
+			<xs:extension base="ifparquet:type-input-file-delimited-base">
+				<xs:sequence>
+					<xs:element name="path">
+						<xs:complexType>
+							<xs:attribute name="uri" type="xs:string" use="required" />
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="parquetHiveFile">
+		<xs:complexContent>
+			<xs:extension base="ihiveparquet:type-input-file-delimited-base">
+				<xs:sequence>
+					<xs:element name="partitionKeys"
+						type="ihiveparquet:hive_partition_fields_type" minOccurs="0"
+						maxOccurs="1" />
+					<xs:element name="partitionFilter"
+						type="ihiveparquet:hive_partition_filter_type" minOccurs="0"
+						maxOccurs="1" />
+					<xs:element name="databaseName" type="ihiveparquet:hive_type"
+						minOccurs="1" maxOccurs="1" />
+					<xs:element name="tableName" type="ihiveparquet:hive_type"
+						minOccurs="1" maxOccurs="1" />
+					<xs:element name="externalTablePath" type="ihiveparquet:hive_path_type"
+						maxOccurs="1" minOccurs="0" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="hiveTextFile">
+		<xs:complexContent>
+			<xs:extension
+				base="ihivetextfile:type-input-hive-text-file-delimited-base">
+				<xs:sequence>
+					<xs:element name="partitionKeys"
+						type="ihivetextfile:hive_partition_fields_type" minOccurs="0"
+						maxOccurs="1" />
+					<xs:element name="partitionFilter"
+						type="ihivetextfile:hive_partition_filter_type" minOccurs="0"
+						maxOccurs="1" />
+					<xs:element name="delimiter" minOccurs="0" maxOccurs="1">
+						<xs:complexType>
+							<xs:attribute name="value" type="xs:string" use="required" />
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="databaseName" type="ihivetextfile:hive_type"
+						minOccurs="1" maxOccurs="1" />
+					<xs:element name="tableName" type="ihivetextfile:hive_type"
+						minOccurs="1" maxOccurs="1" />
+					<xs:element name="externalTablePath" type="ihivetextfile:hive_path_type"
+						maxOccurs="1" minOccurs="0" />
+					<xs:element name="quote" minOccurs="0">
+						<xs:complexType>
+							<xs:attribute name="value" type="xs:string" />
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="safe" type="cmn:boolean-value-type"
+						minOccurs="0" />
+					<xs:element name="strict" type="cmn:boolean-value-type"
+						minOccurs="0" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="textFileMixedScheme">
+		<xs:complexContent>
+			<xs:extension base="ifMixedScheme:type-mixed-base">
+				<xs:sequence>
+					<xs:element name="path">
+						<xs:complexType>
+							<xs:attribute name="uri" type="xs:string" use="required" />
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="safe" type="cmn:boolean-value-type"
+						minOccurs="0" />
+					<xs:element name="strict" type="cmn:boolean-value-type"
+						minOccurs="0" />
+					<xs:element name="charset" minOccurs="0">
+						<xs:complexType>
+							<xs:attribute name="value" type="cmn:standard-charsets"
+								use="required" />
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="quote" minOccurs="0">
+						<xs:complexType>
+							<xs:attribute name="value" type="xs:string" />
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="subjob">
+		<xs:complexContent>
+			<xs:extension base="ifsubjob:type-input-file-delimited-base">
+				<xs:sequence>
+					<xs:element name="path">
+						<xs:complexType>
+							<xs:attribute name="uri" type="xs:string" use="required" />
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="subjobParameter" type="cmn:type-properties"
+						minOccurs="0" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="subjobInput">
+		<xs:complexContent>
+			<xs:extension base="ifsubjob:type-input-file-delimited-subjob">
+				<xs:sequence>
+
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="mysql">
+		<xs:complexContent>
+			<xs:extension base="imysql:type-input-mysql-base">
+				<xs:sequence>
+					<xs:element name="databaseName" type="cmn:element-value-string-type"
+						minOccurs="1" maxOccurs="1" />
+					<xs:element name="hostName" type="cmn:element-value-string-type"
+						minOccurs="1" maxOccurs="1" />
+					<xs:element name="port" type="cmn:element-value-integer-type"
+						minOccurs="0" maxOccurs="1" />
+					<xs:element name="jdbcDriver" type="cmn:element-value-string-type"
+						minOccurs="1" maxOccurs="1" />
+					<xs:choice maxOccurs="1" minOccurs="1">
+						<xs:element name="tableName" type="cmn:element-value-string-type"
+							minOccurs="1" maxOccurs="1" />
+						<xs:sequence minOccurs="1" maxOccurs="1">
+							<xs:element name="selectQuery" type="cmn:element-value-string-type"
+								minOccurs="1" maxOccurs="1" />
+							<xs:element name="countQuery" type="cmn:element-value-string-type"
+								minOccurs="0" maxOccurs="1" />
+						</xs:sequence>
+					</xs:choice>
+
+					<xs:element name="username" type="cmn:element-value-string-type"
+						minOccurs="1" maxOccurs="1" />
+					<xs:element name="password" type="cmn:element-value-string-type"
+						minOccurs="1" maxOccurs="1" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="redshift">
+		<xs:complexContent>
+			<xs:extension base="iredshift:type-input-redshift-base">
+				<xs:sequence>
+					<xs:element name="databaseName" type="cmn:element-value-string-type"
+						minOccurs="1" maxOccurs="1" />
+					<xs:element name="hostName" type="cmn:element-value-string-type"
+						minOccurs="1" maxOccurs="1" />
+					<xs:element name="port" type="cmn:element-value-integer-type"
+						minOccurs="0" maxOccurs="1" />
+					<xs:element name="jdbcDriver" type="cmn:element-value-string-type"
+						minOccurs="1" maxOccurs="1" />
+					<xs:element name="userName" type="cmn:element-value-string-type"
+						minOccurs="1" maxOccurs="1" />
+					<xs:element name="password" type="cmn:element-value-string-type"
+						minOccurs="1" maxOccurs="1" />
+					<xs:element name="schemaName" type="cmn:element-value-string-type"
+						minOccurs="0" maxOccurs="1" />
+					<xs:choice>
+						<xs:element name="tableName" type="cmn:element-value-string-type"
+							minOccurs="0" maxOccurs="1" />
+						<xs:sequence minOccurs="1" maxOccurs="1">
+							<xs:element name="selectQuery" type="cmn:element-value-string-type"
+								minOccurs="1" maxOccurs="1" />
+							<xs:element name="countQuery" type="cmn:element-value-string-type"
+								minOccurs="0" maxOccurs="1" />
+						</xs:sequence>
+					</xs:choice>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="sparkredshift">
+		<xs:complexContent>
+			<xs:extension base="isparkredshift:type-input-sparkredshift-base">
+				<xs:sequence>
+					<xs:element name="databaseName" type="cmn:element-value-string-type"
+						minOccurs="1" maxOccurs="1" />
+					<xs:element name="hostName" type="cmn:element-value-string-type"
+						minOccurs="1" maxOccurs="1" />
+					<xs:element name="port" type="cmn:element-value-integer-type"
+						minOccurs="0" maxOccurs="1" />
+					<xs:element name="userName" type="cmn:element-value-string-type"
+						minOccurs="1" maxOccurs="1" />
+					<xs:element name="password" type="cmn:element-value-string-type"
+						minOccurs="1" maxOccurs="1" />
+					<xs:element name="schemaName" type="cmn:element-value-string-type"
+						minOccurs="0" maxOccurs="1" />
+					<xs:element name="temps3dir" type="cmn:element-value-string-type"
+						minOccurs="1" maxOccurs="1" />
+					<xs:choice>
+						<xs:element name="tableName" type="cmn:element-value-string-type"
+							minOccurs="0" maxOccurs="1" />
+						<xs:sequence minOccurs="1" maxOccurs="1">
+							<xs:element name="selectQuery" type="cmn:element-value-string-type"
+								minOccurs="1" maxOccurs="1" />
+							<xs:element name="countQuery" type="cmn:element-value-string-type"
+								minOccurs="0" maxOccurs="1" />
+						</xs:sequence>
+					</xs:choice>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="oracle">
+		<xs:complexContent>
+			<xs:extension base="ioracle:type-input-oracle-base">
+				<xs:sequence>
+					<xs:element name="sid" type="cmn:element-value-string-type"
+						minOccurs="1" maxOccurs="1" />
+					<xs:element name="hostName" type="cmn:element-value-string-type"
+						minOccurs="1" maxOccurs="1" />
+					<xs:element name="port" type="cmn:element-value-integer-type"
+						minOccurs="0" maxOccurs="1" />
+					<xs:element name="driverType" type="cmn:element-value-string-type"
+						minOccurs="1" maxOccurs="1" />
+					<xs:element name="userName" type="cmn:element-value-string-type"
+						minOccurs="1" maxOccurs="1" />
+					<xs:element name="password" type="cmn:element-value-string-type"
+						minOccurs="1" maxOccurs="1" />
+					<xs:element name="schemaName" type="cmn:element-value-string-type"
+						minOccurs="0" maxOccurs="1" />
+					<xs:choice>
+						<xs:element name="tableName" type="cmn:element-value-string-type"
+							minOccurs="0" maxOccurs="1" />
+						<xs:sequence minOccurs="1" maxOccurs="1">
+							<xs:element name="selectQuery" type="cmn:element-value-string-type"
+								minOccurs="1" maxOccurs="1" />
+							<xs:element name="countQuery" type="cmn:element-value-string-type"
+								minOccurs="0" maxOccurs="1" />
+						</xs:sequence>
+					</xs:choice>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="teradata">
+		<xs:complexContent>
+			<xs:extension base="iteradata:type-input-teradata-base">
+				<xs:sequence>
+					<xs:element name="databaseName" type="cmn:element-value-string-type"
+						minOccurs="1" maxOccurs="1" />
+					<xs:element name="hostName" type="cmn:element-value-string-type"
+						minOccurs="1" maxOccurs="1" />
+					<xs:element name="port" type="cmn:element-value-integer-type"
+						minOccurs="1" maxOccurs="1" />
+					<xs:element name="jdbcDriver" type="cmn:element-value-string-type"
+						minOccurs="1" maxOccurs="1" />
+
+					<xs:choice maxOccurs="1" minOccurs="1">
+						<xs:element name="tableName" type="cmn:element-value-string-type"
+							minOccurs="0" maxOccurs="1" />
+						<xs:sequence minOccurs="1" maxOccurs="1">
+							<xs:element name="selectQuery" type="cmn:element-value-string-type"
+								minOccurs="0" maxOccurs="1" />
+							<xs:element name="countQuery" type="cmn:element-value-string-type"
+								minOccurs="0" maxOccurs="1" />
+						</xs:sequence>
+					</xs:choice>
+					<xs:element name="exportOptions" type="cmn:element-value-string-type"
+						minOccurs="1" maxOccurs="1" />
+					<xs:element name="username" type="cmn:element-value-string-type"
+						minOccurs="1" maxOccurs="1" />
+					<xs:element name="password" type="cmn:element-value-string-type"
+						minOccurs="1" maxOccurs="1" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="xmlFile">
+		<xs:complexContent>
+			<xs:extension base="ifxml:type-input-file-xml-base">
+				<xs:sequence>
+					<xs:element name="path">
+						<xs:complexType>
+							<xs:attribute name="uri" type="xs:string" use="required" />
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="absoluteXPath">
+						<xs:complexType>
+							<xs:attribute name="value" type="xs:string" use="required" />
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="rootTag">
+						<xs:complexType>
+							<xs:attribute name="value" type="xs:string" use="required" />
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="rowTag">
+						<xs:complexType>
+							<xs:attribute name="value" type="xs:string" use="required" />
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="safe" type="cmn:boolean-value-type"
+						minOccurs="0" />
+					<xs:element name="strict" type="cmn:boolean-value-type"
+						minOccurs="0" />
+					<xs:element name="charset" minOccurs="0">
+						<xs:complexType>
+							<xs:attribute name="value" type="cmn:standard-charsets"
+								use="required" />
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+</xs:schema>

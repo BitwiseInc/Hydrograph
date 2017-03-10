@@ -1,0 +1,596 @@
+<?eclipse version="3.4"?><!--    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.    Licensed under the Apache License, Version 2.0 (the "License");    you may not use this file except in compliance with the License.    You may obtain a copy of the License at    http://www.apache.org/licenses/LICENSE-2.0    Unless required by applicable law or agreed to in writing, software    distributed under the License is distributed on an "AS IS" BASIS,    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    See the License for the specific language governing permissions and    limitations under the License. -->
+<plugin>
+<extension
+         point="org.eclipse.ui.commands">
+     
+      <command
+            id="hydrograph.ui.window.console"
+            name="console">
+      </command>
+      <command
+            id="hydrograph.ui.window.ETLNavigator"
+            name="ETLNavigator">
+      </command>
+      <command
+            id="hydrograph.ui.window.palette"
+            name="Palette">
+      </command>
+      <command
+            id="hydrograph.ui.window.portLabels.showHide"
+            name="ShowHidePortLabels">
+      </command>
+     <command
+	         id="hydrograph.ui.help.aboutHydrograph"
+            name="About Hydrograph">
+     </command>
+     <command
+           id="hydrograph.ui.menus.new.newFilterClass"
+           name="Filter Class">
+     </command>
+     <command
+           id="hydrograph.ui.menus.new.newAggClass"
+           name="Aggregate Class">
+     </command>
+     <command
+           id="hydrograph.ui.menus.new.newTranformClass"
+           name="Tranform Class">
+     </command>     <command           id="hydrograph.ui.menus.new.newNormalizeClass"           name="Normalize Class">     </command>     <command           id="hydrograph.ui.menus.new.newCumulateClass"           name="Cumulate Class">     </command>
+   </extension>
+	  <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="hydrograph.ui.menus.handlers.ConsoleHandler"
+            commandId="hydrograph.ui.window.console">
+      </handler>
+      <handler
+            class="hydrograph.ui.menus.handlers.ProjectExplorerHandler"
+            commandId="hydrograph.ui.window.ETLNavigator">
+      </handler>
+      <handler
+            class="hydrograph.ui.menus.handlers.PaletteHandler"
+            commandId="hydrograph.ui.window.palette">
+      </handler>
+      <handler
+            class="hydrograph.ui.menus.handlers.DeleteHandler"
+            commandId="org.eclipse.ui.edit.delete">
+         <activeWhen>
+            <with
+                  variable="activeEditorId">
+               <equals
+                     value="hydrograph.ui.graph.etlgraphicaleditor">
+               </equals>
+            </with>
+         </activeWhen>
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <count
+                     value="+">
+               </count>
+            </with>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="hydrograph.ui.menus.handlers.CutHandler"
+            commandId="org.eclipse.ui.edit.cut">
+         <activeWhen>
+            <with
+                  variable="activeEditorId">
+               <equals
+                     value="hydrograph.ui.graph.etlgraphicaleditor">
+               </equals>
+            </with>
+         </activeWhen>
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <count
+                     value="+">
+               </count>
+            </with>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="hydrograph.ui.menus.handlers.CopyHandler"
+            commandId="org.eclipse.ui.edit.copy">
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <count
+                     value="+">
+               </count>
+            </with>
+         </enabledWhen>
+         <activeWhen>
+            <with
+                  variable="activeEditorId">
+               <equals
+                     value="hydrograph.ui.graph.etlgraphicaleditor">
+               </equals>
+            </with>
+         </activeWhen>
+      </handler>
+      <handler
+            class="hydrograph.ui.menus.handlers.PasteHandler"
+            commandId="org.eclipse.ui.edit.paste">
+         <activeWhen>
+            <with
+                  variable="activeEditorId">
+               <equals
+                     value="hydrograph.ui.graph.etlgraphicaleditor">
+               </equals>
+            </with>
+         </activeWhen>
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <count
+                     value="+">
+               </count>
+            </with>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="hydrograph.ui.menus.handlers.UndoHandler"
+            commandId="org.eclipse.ui.edit.undo">
+         <activeWhen>
+            <with
+                  variable="activeEditorId">
+               <equals
+                     value="hydrograph.ui.graph.etlgraphicaleditor">
+               </equals>
+            </with>
+         </activeWhen>
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <count
+                     value="+">
+               </count>
+            </with>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="hydrograph.ui.menus.handlers.RedoHandler"
+            commandId="org.eclipse.ui.edit.redo">
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <count
+                     value="+">
+               </count>
+            </with>
+         </enabledWhen>
+         <activeWhen>
+            <with
+                  variable="activeEditorId">
+               <equals
+                     value="hydrograph.ui.graph.etlgraphicaleditor">
+               </equals>
+            </with>
+         </activeWhen>
+      </handler>
+      <handler
+            class="hydrograph.ui.menus.handlers.SelectAllHandler"
+            commandId="org.eclipse.ui.edit.selectAll">
+         <activeWhen>
+            <with
+                  variable="activeEditorId">
+               <equals
+                     value="hydrograph.ui.graph.etlgraphicaleditor">
+               </equals>
+            </with>
+         </activeWhen>
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <count
+                     value="+">
+               </count>
+            </with>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="hydrograph.ui.menus.handlers.ShowHidePortLabelsHandler"
+            commandId="hydrograph.ui.window.portLabels.showHide">
+      </handler>
+       <handler
+            class="hydrograph.ui.menus.handlers.AboutDialogHandler"
+            commandId="hydrograph.ui.help.aboutHydrograph">
+       </handler>
+       <handler
+             class="hydrograph.ui.menus.handlers.DeleteHandler"
+             commandId="org.eclipse.ui.edit.delete">
+          <activeWhen>
+             <with
+                   variable="activePartId">
+                <equals
+                      value="hydrograph.ui.project.structure.navigator">
+                </equals>
+             </with>
+          </activeWhen>
+          <enabledWhen>
+             <with
+                   variable="selection">
+                <count
+                      value="+">
+                </count>
+             </with>
+          </enabledWhen>
+       </handler>
+       <handler
+             class="hydrograph.ui.menus.handlers.CopyHandler"
+             commandId="org.eclipse.ui.edit.copy">
+          <enabledWhen>
+             <with
+                   variable="selection">
+                <count
+                      value="+">
+                </count>
+             </with>
+          </enabledWhen>
+          <activeWhen>
+             <with
+                   variable="activePartId">
+                <equals
+                      value="hydrograph.ui.project.structure.navigator">
+                </equals>
+             </with>
+          </activeWhen>
+       </handler>
+       <handler
+             class="hydrograph.ui.menus.handlers.PasteHandler"
+             commandId="org.eclipse.ui.edit.paste">
+          <activeWhen>
+             <with
+                   variable="activePartId">
+                <equals
+                      value="hydrograph.ui.project.structure.navigator">
+                </equals>
+             </with>
+          </activeWhen>
+          <enabledWhen>
+             <with
+                   variable="selection">
+                <count
+                      value="+">
+                </count>
+             </with>
+          </enabledWhen>
+       </handler>
+       <handler
+             class="hydrograph.ui.menus.handlers.NewCustomClassHandler"
+             commandId="hydrograph.ui.menus.new.newFilterClass">
+       </handler>
+       <handler
+             class="hydrograph.ui.menus.handlers.NewCustomClassHandler"
+             commandId="hydrograph.ui.menus.new.newAggClass">
+       </handler>
+       <handler
+             class="hydrograph.ui.menus.handlers.NewCustomClassHandler"
+             commandId="hydrograph.ui.menus.new.newTranformClass">
+       </handler>       <handler             class="hydrograph.ui.menus.handlers.NewCustomClassHandler"             commandId="hydrograph.ui.menus.new.newCumulateClass">       </handler>       <handler             class="hydrograph.ui.menus.handlers.NewCustomClassHandler"             commandId="hydrograph.ui.menus.new.newNormalizeClass">       </handler>
+   </extension>
+   		
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution  
+            allPopups="false"
+            locationURI="menu:org.eclipse.ui.main.menu">
+         <menu
+               commandId="hydrograph.ui.menuBar.open"
+               id="hydrograph.ui.menus.FileMenu"
+               label="File"
+                mnemonic ="F">
+            <menu
+                  id="hydrograph.ui.menus.NewMenu"
+                  label="New"
+                   mnemonic ="N">               <command                     commandId="org.eclipse.ui.newWizard"                     id="hydrograph.ui.graph.newJob"                     label="Job"                     mnemonic="J"                     style="push">                  <parameter                        name="newWizardId"                        value="hydrograph.ui.graph.job.wizard">                  </parameter>               </command>
+               <menu
+                     icon="icons/class_obj.gif"
+                     label="Custom Class"
+                     mnemonic="C">
+                  <command
+                        commandId="org.eclipse.ui.newWizard"
+                        icon="icons/newclass_wiz.gif"
+                        id="hydrograph.ui.menus.NewMenu.Class"
+                        label="Empty Class"
+                        mnemonic="C"
+                        style="push">
+                     <parameter
+                           name="newWizardId"
+                           value="org.eclipse.jdt.ui.wizards.NewClassCreationWizard">
+                     </parameter>
+                  </command>
+                  <command
+                        commandId="hydrograph.ui.menus.new.newFilterClass"
+                        icon="icons/filter_palette.png"
+                        label="Filter Class"
+                        mnemonic="F"
+                        style="push">
+                  </command>
+                  <command
+                        commandId="hydrograph.ui.menus.new.newAggClass"
+                        icon="icons/aggregate_palette.png"
+                        label="Aggregate Class"
+                        mnemonic="A"
+                        style="push">
+                  </command>
+                  <command
+                        commandId="hydrograph.ui.menus.new.newTranformClass"
+                        icon="icons/transform_palette.png"
+                        label="Tranform Class"
+                        mnemonic="T"
+                        style="push">
+                  </command>                  <command                        commandId="hydrograph.ui.menus.new.newNormalizeClass"                        icon="icons/normalize_palette.png"                        label="Normalize Class"                        mnemonic="N"                        style="push">                  </command>                  <command                        commandId="hydrograph.ui.menus.new.newCumulateClass"                        icon="icons/cumulate_palette.png"                        label="Cumulate Class"                        mnemonic="U"                        style="push">                  </command>
+               </menu>
+               <command
+                     commandId="org.eclipse.ui.newWizard"
+                     id="hydrograph.ui.menus.NewMenu.XmlFile"
+                     label="Xml File..."
+                     style="push"
+                      mnemonic ="M">
+                  <parameter
+                        name="newWizardId"
+                        value="org.eclipse.wst.xml.ui.internal.wizards.NewXMLWizard">
+                  </parameter>
+               </command>
+               <command
+                     commandId="org.eclipse.ui.newWizard"
+                     label="File"
+                     style="push"
+                      mnemonic ="F">
+                  <parameter
+                        name="newWizardId"
+                        value="org.eclipse.ui.wizards.new.file">
+                  </parameter>
+               </command>
+               <command
+                     commandId="org.eclipse.ui.newWizard"
+                     label="ELT Project"
+                    mnemonic="P"
+                     style="push">
+                  <parameter
+                        name="newWizardId"
+                        value="hydrograph.ui.project.structure.wizard">
+                  </parameter>
+               </command>
+               <separator
+                     name="hydrograph.ui.menus.separator1"
+                     visible="true">
+               </separator>
+               <command
+                     commandId="org.eclipse.ui.newWizard"
+                     label="&amp;Other..."
+                      mnemonic ="R">
+               </command>
+            </menu>
+            <command                  commandId="org.eclipse.ui.edit.text.openLocalFile"                  icon="icons/folder_o.png"                  id="hydrograph.ui.menus.FileMenu.OpenFile"                  label="Open File..."                  mnemonic="e">
+            </command>
+            <separator
+                  name="hydrograph.ui.graph.separator1"
+                  visible="true">
+            </separator>            <command                  commandId="org.eclipse.ui.file.close"                  id="bitwise.close.id"                  label="Close"                  mnemonic="C"                  style="push">            </command>
+            <command
+                  commandId="org.eclipse.ui.file.closeAll"
+                  label="Close All"
+                  mnemonic="l"
+                  style="push">
+            </command>
+            <separator
+                  name="hydrograph.ui.graph.separator2"
+                  visible="true">
+            </separator>
+            <command                  commandId="org.eclipse.ui.file.save"                  disabledIcon="icons/dis_save.png"                  icon="icons/save_o.png"                  id="hydrograph.ui.menus.FileMenu.SaveFile"                  label="Save"                  mnemonic="S"                  style="push">
+            </command>
+            <command
+                  commandId="org.eclipse.ui.file.saveAs"
+                  id="hydrograph.ui.menus.FileMenu.SaveAs"
+                  label="Save As..."
+                  style="push"
+                  mnemonic ="A">
+            </command>
+            <command                  commandId="org.eclipse.ui.file.saveAll"                  icon="icons/saveAll_o.png"                  label="Save All"                  style="push">
+            </command>
+            <separator
+                  name="hydrograph.ui.graph.separator3"
+                  visible="true">
+            </separator>            <command                  commandId="org.eclipse.ui.file.restartWorkbench"                  label="Restart"                  style="push">            </command>            <separator                  name="hydrograph.ui.graph.separator4"                  visible="true">            </separator>
+            <command
+                  commandId="org.eclipse.ui.file.import"
+                  label="Import"
+                  style="push"
+                  mnemonic ="I">
+            </command>
+            <command
+                  commandId="org.eclipse.ui.file.export"
+                  label="Export"
+                  style="push"
+                  mnemonic ="o">
+            </command>
+            <separator
+                  name="hydrograph.ui.graph.separator5"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="org.eclipse.ui.file.exit"
+                  label="Exit"
+                  style="push"
+                  mnemonic ="x">
+            </command>
+         </menu>
+         <menu
+               id="com.bitwsie.edit.menu"
+               label="Edit"
+               mnemonic ="E">
+            <command                  commandId="org.eclipse.ui.edit.undo"                  disabledIcon="icons/dis_undo.png"                  icon="icons/undo_o.png"                  label="Undo"                  mnemonic="U"                  style="push">
+               <visibleWhen>
+                  <with
+                        variable="selection">
+                     <count
+                           value="+">
+                     </count>
+                  </with>
+               </visibleWhen>
+            </command>
+            <command                  commandId="org.eclipse.ui.edit.redo"                  disabledIcon="icons/dis_redo.png"                  icon="icons/redo_o.png"                  label="Redo"                  mnemonic="R"                  style="push">
+            </command>
+            <separator
+                  name="hydrograph.ui.menus.separator1"
+                  visible="true">
+            </separator>
+            <command                  commandId="org.eclipse.ui.edit.cut"                  disabledIcon="icons/dis_cut.png"                  icon="icons/cut_o.png"                  label="Cut"                  mnemonic="t"                  style="push">
+            </command>
+            <command                  commandId="org.eclipse.ui.edit.copy"                  disabledIcon="icons/disable_copy_icon.png"                  icon="icons/enable_copy_icon.png"                  label="Copy"                  mnemonic="C"                  style="push">
+            </command>
+            <command                  commandId="org.eclipse.ui.edit.paste"                  disabledIcon="icons/dis_paste.png"                  icon="icons/paste_o.png"                  label="Paste"                  mnemonic="P"                  style="push">
+            </command>
+            <separator
+                  name="hydrograph.ui.menus.separator2"
+                  visible="true">
+            </separator>
+            <command                  commandId="org.eclipse.ui.edit.delete"                  icon="icons/delete.png"                  label="Delete"                  mnemonic="D"                  style="push">
+            </command>
+            <command
+                  commandId="org.eclipse.ui.edit.selectAll"
+                  label="Select All"
+                  style="push"
+                   mnemonic ="A">
+            </command>
+         </menu>
+         <menu
+               id="org.eclipse.jdt.ui.source.menu"
+               label="Source"
+               mnemonic="S">
+         </menu>
+         <menu
+               id="org.eclipse.jdt.ui.refactoring.menu"
+               label="Refactor"
+               mnemonic="t">
+         </menu>
+         <menu
+               id="hydrograph.ui.menus.WindowMenu"
+               label="Window"
+               mnemonic ="W" >
+            <command
+                  commandId="hydrograph.ui.window.console"
+                  label="Console"
+                  style="push"
+                  mnemonic ="C">
+            </command>
+            <command
+                  commandId="hydrograph.ui.window.ETLNavigator"
+                  label="Project Explorer"
+                  style="push"
+                  mnemonic ="E">
+            </command>
+            <command
+                  commandId="hydrograph.ui.window.palette"
+                  label="Palette"
+                  mnemonic ="t">
+            </command>
+            <command
+                  commandId="hydrograph.ui.window.portLabels.showHide"
+                  label="Show/Hide Port Labels"
+                  style="toggle"
+                  mnemonic ="S">
+              
+            </command>
+            <menu
+                  label="Show View"
+                  mnemonic ="V">
+               <command
+                     commandId="org.eclipse.ui.views.showView"
+                     label="Others..."
+                     style="push"
+                     mnemonic ="O">
+               </command>
+            </menu>
+            <separator
+                  name="hydrograph.ui.menus.separator3"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="org.eclipse.ui.window.preferences"
+                  label="Preferences"
+                  mnemonic="f"
+                  style="push">
+            </command>
+         </menu>
+         <menu
+               id="hydrograph.ui.menus.HelpMenu"
+               label="Help"
+               mnemonic ="H">
+            <command
+                  commandId="org.eclipse.ui.help.displayHelp"
+                 label="Help Content"
+                  style="push"
+                   mnemonic ="H">
+           </command>
+          <command
+                  commandId="hydrograph.ui.help.aboutHydrograph"
+                 label="About Hydrograph"
+                  style="push"
+                  mnemonic ="A">
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="*">
+         <hiddenMenuItem
+               id="org.eclipse.ui.run">
+         </hiddenMenuItem>
+         <hiddenMenuItem
+               id="org.eclipse.search.menu">
+         </hiddenMenuItem>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="hydrograph.ui.window.palette"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+M3+P">
+      </key>
+      <key
+            commandId="hydrograph.ui.window.ETLNavigator"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+M3+E">
+      </key>
+      <key
+            commandId="hydrograph.ui.window.portLabels.showHide"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+M3+S">
+      </key>
+       <key
+             commandId="org.eclipse.ui.help.displayHelp"
+             contextId="org.eclipse.ui.contexts.window"
+             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+             sequence="f1">
+       </key>
+   </extension>
+   <extension
+         point="org.eclipse.ui.importWizards">
+      <category
+            id="hydrograph.ui.menus.importEngineXmlCategory"
+            name="ELT Project">
+      </category>
+      <wizard
+            category="hydrograph.ui.menus.importEngineXmlCategory"
+            class="hydrograph.ui.menus.importWizards.ImportEngineXmlWizard"
+            icon="icons/import_xml_option.png"
+            id="hydrograph.ui.menus.importWizards.ImportEngineXmlWizard"
+            name="Import Target XML">
+         <description>
+            Import Target XML file from the local file system into the workspace.
+         </description>
+      </wizard>
+   </extension>
+
+</plugin>

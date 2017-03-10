@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+ -->
+<xs:schema xmlns="hydrograph/engine/jaxb/subjob"
+	xmlns:cmn="hydrograph/engine/jaxb/commontypes" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="hydrograph/engine/jaxb/subjob"
+	elementFormDefault="unqualified">
+	<xs:import schemaLocation="../../common/common-types.xsd"
+		namespace="hydrograph/engine/jaxb/commontypes" />
+
+	<xs:complexType name="type-out-socket">
+		<xs:complexContent>
+			<xs:restriction base="cmn:type-operations-out-socket">
+				<xs:choice maxOccurs="1" minOccurs="0">
+					<xs:element name="copyOfInsocket" type="cmn:type-outSocket-as-inSocket" />
+					<xs:choice maxOccurs="unbounded" minOccurs="1">
+						<xs:element name="passThroughField" type="cmn:type-input-field" />
+						<xs:element name="mapField" type="cmn:type-map-field" />
+					</xs:choice>
+				</xs:choice>
+				<xs:attribute name="id" type="xs:string" use="required" />
+				<xs:attribute name="type" type="xs:string" use="optional" />
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="type-in-socket">
+		<xs:complexContent>
+			<xs:restriction base="cmn:type-base-inSocket">
+				<xs:attribute name="id" type="xs:string" use="required" />
+				<xs:attribute name="type" type="xs:string" use="optional"
+					fixed="in" />
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="subjob-base">
+		<xs:complexContent>
+			<xs:restriction base="cmn:type-operations-component">
+				<xs:sequence>
+					<xs:element name="inSocket" type="type-in-socket"
+						minOccurs="1" maxOccurs="unbounded" />
+					<xs:element name="outSocket" type="type-out-socket"
+						minOccurs="1" maxOccurs="unbounded" />
+					<xs:element name="runtimeProperties" type="cmn:type-properties"
+						minOccurs="0" maxOccurs="1" />
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

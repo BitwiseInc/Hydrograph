@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License
+ -->
+
+<p:graph name="JoinExample" xmlns:p="hydrograph/engine/jaxb/main"
+		 xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
+		 xmlns:op="hydrograph/engine/jaxb/operationstypes"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd">
+
+<!-- 	<runtimeProperties>
+		<property name="cascading.planner.stats.path" value="testData/output/JoinDelimitedComponentsStats/plannerStats" />
+		<property name="cascading.planner.plan.path" value="testData\output\JoinDelimitedComponentsStats\plannerPlan" />
+		<property name="cascading.planner.plan.transforms.path"
+			value="testData\output\JoinDelimitedComponentsStats\plannerTransformPath" />
+	</runtimeProperties>
+ -->
+	<inputs id="input1" batch="0" xsi:type="it:textFileDelimited">
+		<outSocket id="out0">
+			<schema name="outSchema">
+				<field name="id" type="java.lang.Integer" />
+				<field name="name" type="java.lang.String" />
+				<field name="city" type="java.lang.String" />
+			</schema>
+		</outSocket>
+		<path uri="C:\Users\ANIKETMO\git\hydrograph\hydrograph.engine\hydrograph.engine.spark\testData\inputFiles\delimitedInputFile.txt" />
+		<delimiter value="," />
+		<hasHeader value="false" />
+		<charset value="ISO-8859-1" />
+	</inputs>
+
+	<inputs id="input2" batch="0" xsi:type="it:textFileDelimited">
+		<outSocket id="out0">
+			<schema name="outSchema">
+				<field name="id" type="java.lang.Integer" />
+				<field name="status" type="java.lang.String" />
+			</schema>
+		</outSocket>
+		<path uri="C:\Users\ANIKETMO\git\hydrograph\hydrograph.engine\hydrograph.engine.spark\testData\inputFiles\delimitedInputFile1_join.txt" />
+		<delimiter value="," />
+		<hasHeader value="false" />
+	</inputs>
+
+<inputs id="input3" batch="0" xsi:type="it:textFileDelimited">
+		<outSocket id="out0">
+			<schema name="outSchema">
+				<field name="id" type="java.lang.Integer" />
+				<field name="desc" type="java.lang.String" />
+				<field name="date" type="java.lang.String" />
+			</schema>
+		</outSocket>
+		<path uri="C:\Users\ANIKETMO\git\hydrograph\hydrograph.engine\hydrograph.engine.spark\testData\inputFiles\delimitedInputFile2.txt" />
+		<delimiter value="," />
+		<hasHeader value="false" />
+	</inputs>
+	
+	<operations id="join" xsi:type="op:join">
+		<inSocket fromComponentId="input1" fromSocketId="out0" id="in0" />
+		<inSocket fromComponentId="input2" fromSocketId="out0" id="in1" />
+		<inSocket fromComponentId="input3" fromSocketId="out0" id="in2" />
+		<outSocket id="out0" type="out">
+			<passThroughField name="*" inSocketId="in0" />
+			<passThroughField name="name" inSocketId="in0" />
+			
+			<mapField sourceName="name" name="name" inSocketId="in0" />
+			<mapField sourceName="id" name="in1_id" inSocketId="in1" />
+			<mapField sourceName="status" name="status" inSocketId="in1" />
+			<mapField sourceName="status" name="status2" inSocketId="in1" />
+			
+			<mapField sourceName="id" name="in2_id" inSocketId="in2" />
+			<mapField sourceName="desc" name="desc" inSocketId="in2" />
+			<mapField sourceName="date" name="date" inSocketId="in2" />
+			 
+		</outSocket>
+		<outSocket id="unused0" type="unused">
+			<copyOfInsocket inSocketId="in0" />
+		</outSocket>
+		<outSocket id="unused1" type="unused">
+			<copyOfInsocket inSocketId="in1" />
+		</outSocket>
+		<outSocket id="unused2" type="unused">
+			<copyOfInsocket inSocketId="in2" />
+		</outSocket>
+		<keys inSocketId="in0" recordRequired="true">
+			<field name="id" />
+		</keys>
+		<keys inSocketId="in1" recordRequired="true">
+			<field name="id" />
+		</keys>
+		<keys inSocketId="in2" recordRequired="false">
+			<field name="id" />
+		</keys>
+	</operations>
+
+	<outputs id="output1" xsi:type="ot:textFileDelimited">
+		<inSocket fromComponentId="join" fromSocketId="out0" id="in0">
+			<schema name="outSchema">
+				<field name="id" type="java.lang.Integer" />
+				<field name="name" type="java.lang.String" />
+				<!-- <field name="city" type="java.lang.String" /> -->
+				<field name="in1_id" type="java.lang.Integer" />
+				<field name="status" type="java.lang.String" />
+				<field name="status2" type="java.lang.String" />
+				<field name="in2_id" type="java.lang.Integer" />
+				<!-- <field name="desc" type="java.lang.String" /> -->
+				<field name="date" type="java.lang.String" />
+			</schema>
+		</inSocket>
+		<path uri="C:\Users\ANIKETMO\git\hydrograph\hydrograph.engine\hydrograph.engine.spark\testData\output\JoinDelimitedComponents\out" />
+		<delimiter value="," />
+		<hasHeader value="true" />
+		<charset value="ISO-8859-1" />
+	</outputs>
+
+	<outputs id="output2" xsi:type="ot:textFileDelimited">
+		<inSocket fromComponentId="join" fromSocketId="unused1"
+			fromSocketType="unused" id="in0">
+			<schema name="outSchema">
+				<field name="id" type="java.lang.Integer" />
+				<field name="status" type="java.lang.String" />
+			</schema>
+		</inSocket>
+		<path uri="C:\Users\ANIKETMO\git\hydrograph\hydrograph.engine\hydrograph.engine.spark\testData\output\JoinDelimitedComponents\unused1" />
+		<delimiter value="," />
+		<hasHeader value="true" />
+		<charset value="ISO-8859-1" />
+	</outputs>
+	
+	<outputs id="output3" xsi:type="ot:textFileDelimited">
+		<inSocket fromComponentId="join" fromSocketId="unused2"
+			fromSocketType="unused" id="in0">
+			<schema name="outSchema">
+				<field name="id" type="java.lang.Integer" />
+				<field name="desc" type="java.lang.String" />
+				<field name="date" type="java.lang.String" />
+			</schema>
+		</inSocket>
+		<path uri="C:\Users\ANIKETMO\git\hydrograph\hydrograph.engine\hydrograph.engine.spark\testData\output\JoinDelimitedComponents\unused2" />
+		<delimiter value="," />
+		<hasHeader value="true" />
+		<charset value="ISO-8859-1" />
+	</outputs>
+	
+	<outputs id="output4" xsi:type="ot:textFileDelimited">
+		<inSocket fromComponentId="join" fromSocketId="unused0"
+			fromSocketType="unused" id="in0">
+			<schema name="outSchema">
+				<field name="id" type="java.lang.Integer" />
+				<!-- <field name="name1" type="java.lang.String" /> -->
+				<field name="city" type="java.lang.String" />
+			</schema>
+		</inSocket>
+		<path uri="C:\Users\ANIKETMO\git\hydrograph\hydrograph.engine\hydrograph.engine.spark\testData\output\JoinDelimitedComponents\unused0" />
+		<delimiter value="," />
+		<hasHeader value="true" />
+		<charset value="ISO-8859-1" />
+	</outputs>
+
+</p:graph>

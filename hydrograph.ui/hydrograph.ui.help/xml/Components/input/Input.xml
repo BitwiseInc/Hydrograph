@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+ -->
+ 
+ 
+<?NLS TYPE="org.eclipse.help.toc"?>
+<toc label="Input" link_to="xml/Components.xml#Input"> 
+  
+
+   <topic label="Input File Delimited" href="html/Components/input/Input_File_Delimited.html">
+      <anchor id="Input File Delimited"/>
+      <link toc="xml/Components/input/inputFileDelimited.xml"/>
+   </topic>
+    
+   <topic label="Input File Fixed Width" href="html/Components/input/Input_File_Fixed_Width.html">
+      <anchor id="Input File Fixed Width"/>
+      <link toc="xml/Components/input/inputFileFixedWidth.xml"/>
+   </topic>
+   
+   <topic label="Input File Mixed Scheme" href="html/Components/input/Input_File_Mixed_Scheme.html">
+      <anchor id="Input File Mixed Scheme"/>
+      <link toc="xml/Components/input/inputFileMixedScheme.xml"/>
+   </topic>
+  
+  
+    <topic label="Input File Parquet" href="html/Components/input/Input_File_Parquet.html">
+      <anchor id="Input File Parquet"/>
+      <link toc="xml/Components/input/inputFileParquet.xml"/>
+   </topic>
+   
+     <topic label="Input Hive Parquet" href="html/Components/input/Input_Hive_Parquet.html">
+      <anchor id="Input Hive Parquet"/>
+      <link toc="xml/Components/input/inputHiveParquet.xml"/>
+   </topic>
+   
+     <topic label="Input Hive TextFile" href="html/Components/input/Input_Hive_Text.html">
+      <anchor id="Input Hive TextFile"/>
+      <link toc="xml/Components/input/inputHiveTextFile.xml"/>
+   </topic>
+   
+     <topic label="Input Oracle" href="html/Components/input/Input_Oracle.html">
+      <anchor id="Input Oracle"/>
+      <link toc="xml/Components/input/inputOracle.xml"/>
+   </topic>
+   
+     <topic label="Input Redshift" href="html/Components/input/Input_Redshift.html">
+      <anchor id="Input Redshift"/>
+      <link toc="xml/Components/input/inputRedshift.xml"/>
+   </topic>
+   
+     <topic label="Input Teradata" href="html/Components/input/Input_Teradata.html">
+      <anchor id="Input Teradata"/>
+      <link toc="xml/Components/input/inputTeradata.xml"/>
+   </topic>
+   <topic href="html/Components/input/Input_Xml.html" label="Input Xml">
+      <anchor id="Input Xml"/>
+      <link toc="xml/Components/input/InputXml.xml"/>
+   </topic>
+   
+   <topic label="Generate Records" href="html/Components/input/Generate_Records.html">
+      <anchor id="Generate Records"/>
+      <link toc="xml/Components/input/generateRecords.xml"/>
+   </topic>
+   
+   <topic label="Input Mysql" href="html/Components/input/Input_Mysql.html">
+      <anchor id="Input Mysql"/>
+      <link toc="xml/Components/input/inpuMysql.xml"/>
+   </topic>
+   
+  </toc>
+   
+   
+   

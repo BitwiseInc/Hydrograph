@@ -1,0 +1,11 @@
+/.project
+/.gradle/
+/bin/
+/build/
+/schema/
+/.classpath
+/.settings/
+/hydrograph.engine.ipr
+/hydrograph.engine.iml
+/hydrograph.engine.iws
+/.idea/

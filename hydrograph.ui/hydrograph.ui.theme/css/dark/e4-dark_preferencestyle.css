@@ -1,0 +1,66 @@
+/*******************************************************************************
+ * Copyright (c) 2014, 2015 Lars Vogel and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Lars Vogel <Lars.Vogel@gmail.com> - initial API and implementation
+ *     Andrea Guarinoni - intial color schema definition
+ *     Lars Vogel <Lars.Vogel@vogella.com> - Ongoing maintenance
+ *******************************************************************************/
+
+/* ############################## Eclipse UI properties ############################## */
+
+
+IEclipsePreferences#org-eclipse-ui-editors {
+	preferences:
+		'AbstractTextEditor.Color.Background.SystemDefault=false'
+		'AbstractTextEditor.Color.SelectionForeground.SystemDefault=false'
+		'AbstractTextEditor.Color.SelectionBackground.SystemDefault=false'
+		'AbstractTextEditor.Color.Background=41,41,41'
+		'AbstractTextEditor.Color.Foreground.SystemDefault=false'
+		'AbstractTextEditor.Color.SelectionBackground=27,98,145'
+		'AbstractTextEditor.Color.SelectionForeground=147,161,161'
+		'AbstractTextEditor.Color.Foreground=131,148,150'
+		'AbstractTextEditor.Color.FindScope=30,120,155'
+		'asOccurencesIndicationColor=72,72,72'
+		'breakpointIndicationColor=51,119,193'
+		'currentIPColor=54,54,54'
+		'currentLineColor=19,71,84'
+		'deletionIndicationColor=224,226,228'
+		'filteredSearchResultIndicationColor=27,98,145'
+		'hyperlinkColor=102,175,249'
+		'hyperlinkColor.SystemDefault=false'
+		'infoIndicationColor=86,194,170'
+		'lineNumberColor=101,123,131'
+		'linked.slave.color=66,156,255'
+		'matchingTagIndicationColor=72,72,72'
+		'occurrenceIndicationColor=27,98,145'
+		'overrideIndicatorColor=78,120,117'
+		'printMarginColor=101,123,131'
+		'searchResultHighlighting=false'
+		'searchResultIndication=true'
+		'searchResultIndicationColor=94,94,94'
+		'searchResultTextStyle=BOX'
+		'secondaryIPColor=54,54,54'
+		'spellingIndicationColor=253,170,211'
+		'writeOccurrenceIndicationColor=27,98,145'
+}
+
+IEclipsePreferences#org-eclipse-ui-workbench {
+	preferences:
+		'ACTIVE_HYPERLINK_COLOR=138,201,242'
+		'CONFLICTING_COLOR=240,15,66'
+		'CONTENT_ASSIST_BACKGROUND_COLOR=52,57,61'
+		'CONTENT_ASSIST_FOREGROUND_COLOR=238,238,238'
+		'org.eclipse.jdt.ui.Javadoc.backgroundColor=52,57,61'
+		'org.eclipse.jdt.ui.Javadoc.foregroundColor=238,238,238'
+		'ERROR_COLOR=247,68,117'
+		'HYPERLINK_COLOR=111,197,238'
+		'INCOMING_COLOR=31,179,235'
+		'OUTGOING_COLOR=238,238,238'
+		'RESOLVED_COLOR=108,210,17'
+		'org.eclipse.search.ui.match.highlight=206,92,0'
+}

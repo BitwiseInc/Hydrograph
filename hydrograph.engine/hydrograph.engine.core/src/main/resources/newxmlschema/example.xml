@@ -1,0 +1,648 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License
+ -->
+
+<p:graph xmlns:p="hydrograph/engine/jaxb/main"
+	xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
+	xmlns:spt="hydrograph/engine/jaxb/straightpulltypes"
+	xmlns:op="hydrograph/engine/jaxb/operationstypes" xmlns:ct="hydrograph/engine/jaxb/commandtypes"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="hydrograph/engine/jaxb/main ./main/main.xsd" name="graph_test">
+
+	<runtimeProperties>
+		<property name="sdf" value="dsf" />
+		<property name="fssdfdf" value="dsf" />
+		<property name="fssdfsddf" value="dsf" />
+		<property name="fssdfdf" value="dsf" />
+	</runtimeProperties>
+
+	<inputs id="sdf" phase="1" xsi:type="it:textFileFixedWidth">
+		<outSocket id="out0" viewData="true" >
+			<schema name="klk">
+				<field name="l;l;" type="java.lang.String" format="" scale="4"
+					scaleType="explicit" length="4" />
+				<field name="ddfs" type="java.lang.String" length="4" />
+			</schema>
+			
+		</outSocket>
+	
+		<path uri="kasjdk" />
+		<safe value="true" />
+		<strict value="true" />
+		<charset value="ISO-8859-1" />
+		<runtimeProperties>
+			<property name="fsdf" value="dsf" />
+		</runtimeProperties>
+	</inputs>
+
+	<inputs id="ksjdk" phase="1" xsi:type="it:textFileDelimited">
+		<outSocket id="out0" viewData="true">
+			<schema name="timepass">
+				<field name="sunlo" type="java.lang.String" />
+			</schema>
+		</outSocket>
+		
+		<path uri="sdsa" />
+		<delimiter value="asdsa" />
+		<hasHeader value="0" />
+		<safe value="true" />
+		<charset value="ISO-8859-1" />
+		<runtimeProperties>
+			<property name="fsdf" value="dsf" />
+		</runtimeProperties>
+		<quote value="asd" />
+	</inputs>
+
+	<inputs id="inputFile_record_schema" phase="1"
+		xsi:type="it:textFileDelimited">
+		<outSocket id="out0" viewData="true">
+			<schema name="timepass">
+				<record name="das">
+					<field name="c1" type="java.lang.String" />
+					<field name="c2" type="java.lang.String" />
+				</record>
+			</schema>
+		</outSocket>
+		<path uri="sdsa" />
+		<delimiter value="asdsa" />
+		<hasHeader value="0" />
+		<safe value="true" />
+		<charset value="ISO-8859-1" />
+		<quote value="asd" />
+	</inputs>
+
+	<inputs id="sfdsdsd" phase="1" xsi:type="it:textFileDelimited">
+		<outSocket id="out0" viewData="true">
+			<schema name="external">
+				<includeExternalSchema uri="XML/Schema1.xml" />
+			</schema>
+		</outSocket>
+		<path uri="sdsa" />
+		<delimiter value="asdsa" />
+		<hasHeader value="0" />
+		<safe value="true" />
+		<charset value="ISO-8859-1" />
+		<quote value="asd" />
+	</inputs>
+
+	<inputs id="parquetfile" phase="1" xsi:type="it:parquetFile">
+		<outSocket id="out0" viewData="true">
+			<schema name="timepass">
+				<field name="sunlo" type="java.lang.String" />
+			</schema>
+		</outSocket>
+		<path uri="sdsa" />
+		<runtimeProperties>
+			<property name="fsdf" value="dsf" />
+		</runtimeProperties>
+	</inputs>
+
+	<inputs id="hive_parquet" phase="1" xsi:type="it:parquetHiveFile">
+		<outSocket id="out0" viewData="true">
+			<schema name="timepass">
+				<field name="sunlo" type="java.lang.String" />
+			</schema>
+		</outSocket>
+		<partitionKeys>
+			<field name="c1" />
+			<field name="c2" />
+		</partitionKeys>
+		<databaseName value="D1" />
+		<tableName value="T1" />
+		<runtimeProperties>
+			<property name="fsdf" value="dsf" />
+		</runtimeProperties>
+	</inputs>
+
+	<inputs id="input_mixedScheme_text" phase="1"
+		xsi:type="it:textFileMixedScheme">
+		<outSocket id="out0" viewData="true">
+			<schema name="newscheme">
+				<field name="asdff" type="java.lang.String" format="" scale="4"
+					scaleType="explicit" length="6" />
+				<field name="afdfa" type="java.lang.String" format="" scale="6"
+					scaleType="implicit" delimiter="|" />
+				<field name="sdfdsaf" type="java.lang.String" format="" scale="4"
+					scaleType="implicit" delimiter="," />
+			</schema>
+		</outSocket>
+		<path uri="kasjdk" />
+		<safe value="true" />
+		<strict value="true" />
+		<charset value="ISO-8859-1" />
+		<runtimeProperties>
+			<property name="fsdf" value="dsf" />
+		</runtimeProperties>
+	</inputs>
+
+	<outputs id="ll" xsi:type="ot:textFileDelimited">
+		<inSocket fromComponentId="sdf" fromSocketId="out0" id="in0">
+			<schema name="kj">
+				<field name="kjkj" type="java.lang.String" />
+			</schema>
+		</inSocket>
+		<path uri="sdsa" />
+		<delimiter value="asdsa" />
+		<hasHeader value="0" />
+		<charset value="ISO-8859-1" />
+		<runtimeProperties>
+			<property name="fsdf" value="dsf" />
+		</runtimeProperties>
+		<quote value="asd" />
+	</outputs>
+
+	<outputs id="parquetoutput" xsi:type="ot:parquetFile">
+		<inSocket fromComponentId="sdfsadf" fromSocketId="out0" id="in0" >
+			<schema name="kj">
+				<field name="kjkj" type="java.lang.String" />
+			</schema>
+		</inSocket>
+			<overWrite value="true"/>
+		<path uri="sdsa" />
+		<runtimeProperties>
+			<property name="fsdf" value="dsf" />
+		</runtimeProperties>
+	</outputs>
+
+	<outputs id="hiveparquetoutput" xsi:type="ot:parquetHiveFile">
+		<inSocket fromComponentId="addhh" fromSocketId="out0" id="in0">
+			<schema name="kj">
+				<field name="kjkj" type="java.lang.String" />
+			</schema>
+		</inSocket>
+		<partitionKeys>
+			<field name="c1" />
+			<field name="c2" />
+		</partitionKeys>
+		<databaseName value="D1" />
+		<tableName value="T1" />
+	
+		<runtimeProperties>
+			<property name="fsdf" value="dsf" />
+			<property name="fsdasdff" value="dsdfsf" />
+		</runtimeProperties>
+	</outputs>
+
+	<outputs id="mixed_schema" xsi:type="ot:textFileMixedScheme">
+		<inSocket fromComponentId="addhh" fromSocketId="out0" id="in0">
+			<schema name="kj">
+				<field name="asdff" type="java.lang.String" format="" scale="5"
+					scaleType="explicit" length="4" />
+				<field name="afdfa" type="java.lang.String" format="" scale="4"
+					scaleType="implicit" delimiter="|" />
+				<field name="sdfdsaf" type="java.lang.String" format="" scale="6"
+					scaleType="explicit" length="4" />
+			</schema>
+		</inSocket>
+		<overWrite value="true"/>
+		<path uri="kasjdk" />
+		<strict value="true" />
+		<charset value="ISO-8859-1" />
+		<runtimeProperties>
+			<property name="fsdf" value="dsf" />
+		</runtimeProperties>
+
+	</outputs>
+
+	<outputs id="kjgk" xsi:type="ot:textFileFixedWidth">
+		<inSocket fromComponentId="sdf" fromSocketId="out0" id="in0">
+			<schema name="kj">
+				<field name="kjkj" type="java.lang.String" length="2" />
+			</schema>
+		</inSocket>
+		<overWrite value="true"/>
+		<path uri="sdsa" />
+		<safe value="true" />
+		<strict value="true" />
+		<charset value="ISO-8859-1" />
+		<runtimeProperties>
+			<property name="fsdf" value="dsf" />
+		</runtimeProperties>
+	</outputs>
+
+	<outputs id="fixedwidth-with-ext-schema" xsi:type="ot:textFileFixedWidth">
+		<inSocket fromComponentId="sdf" fromSocketId="out0" id="in0">
+			<schema name="kj">
+				<!-- <includeExternalSchema uri="XML/Schema1.xml" /> -->
+				<field name="kjkj" type="java.lang.String" length="2" />
+			</schema>
+		</inSocket>
+		<overWrite value="true"/>
+		<path uri="sdsa" />
+		<safe value="true" />
+		<strict value="true" />
+		<charset value="ISO-8859-1" />
+		<runtimeProperties>
+			<property name="fsdf" value="dsf" />
+		</runtimeProperties>
+	</outputs>
+
+	<inputs id="ksjdf" phase="1" xsi:type="it:generateRecord">
+		<outSocket id="out0" viewData="true">
+			<schema name="timepass">
+				<field name="sunlo" type="java.lang.String" />
+			</schema>
+		</outSocket>
+		<runtimeProperties>
+			<property name="fsdf" value="dsf" />
+		</runtimeProperties>
+		<recordCount value="3" />
+	</inputs>
+
+	<inputs id="asdf" phase="1" xsi:type="it:subgraph">
+		<outSocket id="out0" viewData="true">
+			<schema name="ads">
+
+			</schema>
+		</outSocket>
+		<path uri="asdfdsf" />
+		<subgraphParameter>
+			<property name="ads" value="fds" />
+		</subgraphParameter>
+	</inputs>
+
+	<inputs id="dffdd" phase="1" xsi:type="it:subgraphInput">
+		<outSocket id="out0" viewData="true">
+			<schema name="ads">
+
+			</schema>
+		</outSocket>
+		<outSocket id="out1">
+			<schema name="ads">
+
+			</schema>
+		</outSocket>
+	</inputs>
+
+	<outputs id="asd" phase="1" xsi:type="ot:subgraph">
+		<inSocket fromComponentId="adf" fromSocketId="in0" id="in0">
+			<schema name="asdf">
+			</schema>
+		</inSocket>
+		<path uri="dfasdf" />
+		<subgraphParameter>
+			<property name="ads" value="fds" />
+		</subgraphParameter>
+	</outputs>
+
+	<outputs id="sdfsd" phase="1" xsi:type="ot:subgraphOutput">
+		<inSocket fromComponentId="adf" fromSocketId="in0" id="in0">
+			<schema name="asdf">
+			</schema>
+		</inSocket>
+		<inSocket fromComponentId="ads" fromSocketId="in0" id="in1">
+			<schema name="asdf">
+			</schema>
+		</inSocket>
+	</outputs>
+
+	<straightPulls id="limit" phase="1" xsi:type="spt:limit">
+		<inSocket fromComponentId="ksjdf" fromSocketId="out0" id="in0" />
+		<outSocket id="out0" type="out" viewData="true">
+			<copyOfInsocket inSocketId="in0" />
+		</outSocket>
+		<runtimeProperties>
+			<property name="fsdf" value="dsf" />
+		</runtimeProperties>
+		<maxRecords value="100" />
+	</straightPulls>
+
+	<straightPulls id="gather" xsi:type="spt:unionAll">
+		<inSocket id="dfg" fromComponentId="limit" fromSocketId="out0" />
+		<inSocket id="dfg1" fromComponentId="ksjdk" fromSocketId="out0" />
+		<outSocket id="sdf" viewData="true" >
+			<copyOfInsocket inSocketId="dfg" />
+		</outSocket>
+		<runtimeProperties>
+			<property name="fsdf" value="dsf" />
+		</runtimeProperties>
+	</straightPulls>
+
+	<straightPulls id="replicate" xsi:type="spt:clone">
+		<inSocket id="in0" fromComponentId="limit" fromSocketId="out0" />
+		<outSocket id="out0" viewData="true">
+			<copyOfInsocket inSocketId="in0" />
+		</outSocket>
+		<outSocket id="out1">
+			<copyOfInsocket inSocketId="in0" />
+		</outSocket>
+		<runtimeProperties>
+			<property name="fsdf" value="dsf" />
+		</runtimeProperties>
+		
+	</straightPulls>
+
+	<operations id="reformat" xsi:type="op:transform">
+		<inSocket fromComponentId="replicate" fromSocketId="sdf1" id="in0" />
+		<operation id="opt" class="someclass">
+			<inputFields>
+				<field name="xyz" inSocketId="in0" />
+			</inputFields>
+			<outputFields>
+				<field name="asd" type="java.lang.String" />
+			</outputFields>
+			<properties>
+				<property name="kjk" value="dlk" />
+			</properties>
+		</operation>
+		<outSocket id="out0" viewData="true">
+			<passThroughField name="axd" inSocketId="in0" />
+			<mapField sourceName="as" name="new" inSocketId="in0" />
+			<operationField name="hula" operationId="opt" />
+		</outSocket>
+		<runtimeProperties>
+			<property name="fsdf" value="dsf" />
+		</runtimeProperties>
+	</operations>
+
+	<operations id="adf" xsi:type="op:subgraph">
+		<inSocket fromComponentId="asdf" fromSocketId="out0" id="in0" />
+		<outSocket id="out0" viewData="true">
+		</outSocket>
+		<path uri="asdf" />
+		<subgraphParameter>
+			<property name="ads" value="fds" />
+		</subgraphParameter>
+	</operations>
+
+	<operations id="aggregate" xsi:type="op:aggregate">
+		<inSocket fromComponentId="reformat" fromSocketId="out0" id="in0" />
+		<operation id="opt" class="someclass">
+			<inputFields>
+				<field name="xyz" inSocketId="in0" />
+			</inputFields>
+			<outputFields>
+				<field name="asd" type="java.lang.String" />
+			</outputFields>
+			<properties>
+				<property name="kjk" value="dlk" />
+			</properties>
+		</operation>
+		<outSocket id="out0" viewData="true">
+			<passThroughField name="axd" inSocketId="in0" />
+			<mapField sourceName="as" name="new" inSocketId="in0" />
+			<operationField name="hula" operationId="opt" />
+		</outSocket>
+		<runtimeProperties>
+			<property name="fsdf" value="dsf" />
+		</runtimeProperties>
+		<primaryKeys>
+			<field name="abc" />
+		</primaryKeys>
+		<secondaryKeys>
+			<field name="dd" order="asc" />
+			<field name="cc" order="desc" />
+		</secondaryKeys>
+	</operations>
+
+
+	<operations id="join" xsi:type="op:join">
+		<inSocket fromComponentId="reformat" fromSocketId="out0" id="in0" />
+		<inSocket fromComponentId="aggregate" fromSocketId="out0" id="in1" />
+		<outSocket id="out0" type="out" viewData="true">
+			<passThroughField name="axd" inSocketId="in0" />
+			<mapField sourceName="as" name="new" inSocketId="in0" />
+		</outSocket>
+		<outSocket id="df" type="unused">
+			<copyOfInsocket inSocketId="in0" />
+		</outSocket>
+		<outSocket id="cv" type="unused">
+			<copyOfInsocket inSocketId="in1" />
+		</outSocket>
+		<runtimeProperties>
+			<property name="fsdf" value="dsf" />
+		</runtimeProperties>
+		<keys inSocketId="in0" recordRequired="true">
+			<field name="abc" />
+		</keys>
+		<keys inSocketId="in1" recordRequired="true">
+			<field name="abc" />
+		</keys>
+
+	</operations>
+
+	<commands id="ftpin" xsi:type="ct:ftpIn">
+		<host name="myname" />
+	</commands>
+
+	<commands id="asf" xsi:type="ct:subgraph">
+		<path uri="asdffas"/>
+	</commands>
+
+	<operations id="filter" phase="1" xsi:type="op:filter">
+		<inSocket fromComponentId="join" fromSocketId="unused0" id="in0" />
+		<operation id="opt" class="someclass">
+			<inputFields>
+				<field name="Fname" inSocketId="in0" />
+			</inputFields>
+			<properties>
+				<property name="kjk" value="dlk" />
+			</properties>
+		</operation>
+
+		<outSocket id="out0" type="out" viewData="true">
+			<copyOfInsocket inSocketId="in0" />
+		</outSocket>
+		<outSocket id="unused0" type="unused">
+			<copyOfInsocket inSocketId="in0" />
+		</outSocket>
+		<runtimeProperties>
+			<property name="fsdf" value="dsf" />
+		</runtimeProperties>
+	</operations>
+
+	<straightPulls id="dedup" phase="1" xsi:type="spt:removeDups">
+		<inSocket id="in0" fromComponentId="filter" fromSocketId="out0" />
+		<outSocket id="out0" type="out">
+			<copyOfInsocket inSocketId="in0" />
+		</outSocket>
+		<outSocket id="unused1" type="unused" viewData="true">
+			<copyOfInsocket inSocketId="in0" />
+		</outSocket>
+		<runtimeProperties>
+			<property name="fsdf" value="dsf" />
+		</runtimeProperties>
+		<keep value="first" />
+		<primaryKeys>
+			<field name="abc" />
+		</primaryKeys>
+		<secondaryKeys>
+			<field name="dd" order="asc" />
+			<field name="cc" order="desc" />
+		</secondaryKeys>
+	</straightPulls>
+
+	<operations id="unique1" phase="1" xsi:type="op:generateSequence">
+		<inSocket id="in0" fromComponentId="dedup" fromSocketId="out0" />
+		<operation id="opt">
+			<outputFields>
+				<field name="sequence ids" type="java.lang.String" />
+			</outputFields>
+		</operation>
+		<outSocket id="out0" viewData="true">
+			<passThroughField name="*" inSocketId="in0" />
+			<operationField name="seq2" operationId="opt" />
+		</outSocket>
+		<runtimeProperties>
+			<property name="fsdf" value="dsf" />
+		</runtimeProperties>
+	</operations>
+
+	<operations id="unique2" phase="1" xsi:type="op:generateSequence">
+		<inSocket id="in0" fromComponentId="unique1" fromSocketId="out0" />
+		<operation id="opt">
+			<outputFields>
+				<field name="sequence ids" type="java.lang.String" />
+			</outputFields>
+		</operation>
+		<outSocket id="out0" viewData="true">
+			<passThroughField name="col1" inSocketId="in0" />
+			<passThroughField name="col3" inSocketId="in0" />
+			<operationField name="seq2" operationId="opt" />
+		</outSocket>
+		<runtimeProperties>
+			<property name="fsdf" value="dsf" />
+		</runtimeProperties>
+	</operations>
+
+	<operations id="scan" xsi:type="op:cumulate">
+		<inSocket id="in0" fromComponentId="unique2" fromSocketId="out0" />
+		<operation id="opt" class="com.bitwiseglobal.cpo.extrnlagt.Scan5">
+			<inputFields>
+				<field name="extrnl_agt_id" inSocketId="in0" />
+			</inputFields>
+			<outputFields>
+				<field name="extrnl_agt_id_prev" type="java.lang.String" />
+				<field name="extrnl_agt_id_orig" type="java.lang.String" />
+			</outputFields>
+			<properties>
+				<property name="kjk" value="dlk" />
+			</properties>
+		</operation>
+		<outSocket id="out0" viewData="true">
+			<passThroughField name="acct_id" inSocketId="in0" />
+			<passThroughField name="sor_src_id" inSocketId="in0" />
+			<operationField name="extrnl_agt_id_prev" operationId="opt" />
+			<operationField name="extrnl_agt_id_orig" operationId="opt" />
+		</outSocket>
+		<runtimeProperties>
+			<property name="fsdf" value="dsf" />
+		</runtimeProperties>
+		<primaryKeys>
+			<field name="acct_id" />
+			<field name="abc" />
+		</primaryKeys>
+		<secondaryKeys>
+			<field name="xyz" order="asc" />
+			<field name="pqr" order="desc" />
+		</secondaryKeys>
+	</operations>
+
+	<operations id="lookup" xsi:type="op:lookup">
+		<inSocket fromComponentId="reformat" fromSocketId="out0" id="in0" type="driver"/>
+		<inSocket fromComponentId="aggregate" fromSocketId="out0" id="in1" type="lookup"/>
+		<outSocket id="out0" type="out" viewData="true">
+			<passThroughField name="f1" inSocketId="in0"/>
+			<passThroughField name="f2" inSocketId="in0"/>
+			<passThroughField name="f3" inSocketId="in1"/>
+			<passThroughField name="f3" inSocketId="in1"/>
+			<mapField sourceName="f4" name="f4new" inSocketId="in1"/>
+		</outSocket>
+		<keys inSocketId="in0">
+			<field name="c4" />
+		</keys>
+		<keys inSocketId="in1">
+			<field name="c4" />
+		</keys>
+		<match value="first"/>
+	</operations>
+
+
+	<operations id="hashJoin" xsi:type="op:hashJoin">
+		<inSocket fromComponentId="reformat" fromSocketId="out0" id="in0" />
+		<inSocket fromComponentId="aggregate" fromSocketId="out0" id="in1" />
+		<outSocket id="out0" type="out">
+			<passThroughField name="c1" inSocketId="in0" />
+			<passThroughField name="c2" inSocketId="in0" />
+			<passThroughField name="c3" inSocketId="in1" />
+			<mapField sourceName="c4" name="c4new" inSocketId="in0" />
+			<mapField sourceName="c4" name="c5new" inSocketId="in1" />
+		</outSocket>
+		<runtimeProperties>
+			<property name="mapred.reduce.tasks" value="1" />
+		</runtimeProperties>
+		<keys inSocketId="in0">
+			<field name="c4" />
+		</keys>
+		<keys inSocketId="in1">
+			<field name="c4" />
+		</keys>
+		<match value="first"/>
+	</operations>
+	
+	
+	<operations id="normalize" xsi:type="op:normalize">
+		<inSocket fromComponentId="reformat" fromSocketId="out0" id="in0" />
+		<operation id="opt" class="someclass">
+			<inputFields>
+				<field name="xyz" inSocketId="in0" />
+			</inputFields>
+			<outputFields>
+				<field name="newfield" type="java.lang.String" />
+			</outputFields>
+			<properties>
+				<property name="regex" value="and" />
+			</properties>
+		</operation>
+		<outSocket id="out0" viewData="true">
+			<passThroughField name="account_no" inSocketId="in0" />
+			<operationField name="newfield" operationId="opt" />
+			<mapField sourceName="c4" name="c4new" inSocketId="in0" />
+		</outSocket>
+		<runtimeProperties>
+			<property name="fsdf" value="dsf" />
+		</runtimeProperties>
+	</operations>
+
+	<operations id="partitionByExpression" phase="1"
+		xsi:type="op:partitionByExpression">
+		<inSocket fromComponentId="ksjdf" fromSocketId="out0" id="in0" />
+		
+		<operation id="opt"	class="com.bitwiseglobal.functions.PartitionExpressionTransaction">
+			<inputFields>
+				<field name="xyz" inSocketId="in0" />
+			</inputFields>
+			<properties>
+				<property name="regex" value="and" />
+			</properties>
+		</operation>
+         <outSocket id="out0" type="out" viewData="true">
+			<copyOfInsocket inSocketId="in0" />
+		</outSocket>
+		<outSocket id="out1" type="out">
+			<copyOfInsocket inSocketId="in0" />
+		</outSocket>
+		<runtimeProperties>
+			<property name="fsdf" value="dsf" />
+		</runtimeProperties>
+		<noOfPartitions value="2" />
+	</operations>
+
+	<outputs id="trash" phase="1" xsi:type="ot:discard">
+		<inSocket fromComponentId="sdf" fromSocketId="out0" id="in0" />
+	</outputs>
+
+    
+   
+
+</p:graph>
