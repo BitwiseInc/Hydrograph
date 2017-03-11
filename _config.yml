@@ -1,0 +1,42 @@
+highlighter: rouge
+permalink: /:title
+
+# Keep as an empty string if served up at the root. If served up at a specific
+# path (e.g. on GitHub pages) leave off the trailing slash, e.g. /my-project
+#baseurl: '/pages/capitalone/Hydrograph'
+baseurl: '/Hydrograph'
+
+# Default categories (in order) to appear in the navigation
+sections: [
+    ['hyg', 'ABOUT'],
+    ['strt', 'GETTING STARTED'],
+    ['dev', 'DEVELOPERS'],
+    ['ex', 'EXAMPLES'],
+    ['con', 'CONTRIBUTING'],
+    ['ref', 'COMPONENT REFERENCE']
+]
+
+# Use the redcarpet Markdown renderer
+#markdown: redcarpet
+kramdown: redcarpet
+redcarpet:
+    extensions: [
+        'no_intra_emphasis',
+        'fenced_code_blocks',
+        'autolink',
+        'strikethrough',
+        'superscript',
+        'with_toc_data',
+        'tables',
+        'hardwrap',
+        'kramdown'
+    ]
+
+# Kramdown Configuration Added
+kramdown:
+  auto_ids:       true
+  footnote_nr:    1
+  entity_output:  as_char
+  toc_levels:     1..6
+  smart_quotes:   lsquo,rsquo,ldquo,rdquo
+  enable_coderay: false

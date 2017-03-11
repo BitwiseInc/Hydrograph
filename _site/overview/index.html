@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>Hydrograph - Overview</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+<!-- Le scripts -->
+<script src="/Hydrograph/assets/js/jquery-1.11.3.min.js">
+</script>
+<!-- Le styles -->
+<link href="/Hydrograph/assets/css/bootstrap.css" rel="stylesheet">
+<style>
+  body { padding-top: 60px; /* 60px to make the container go all the way
+  to the bottom of the topbar */ }
+</style>
+<link href="/Hydrograph/assets/css/bootstrap-responsive.css" rel="stylesheet">
+<link href="/Hydrograph/assets/css/docs.css" rel="stylesheet">
+<link href="/Hydrograph/assets/css/main.css" rel="stylesheet">
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js">
+  </script>
+<![endif]-->
+<!-- Le fav and touch icons -->
+<!--     <link rel="shortcut icon" href="/Hydrograph/assets/ico/favicon.ico">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/Hydrograph/assets/ico/apple-touch-icon-144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/Hydrograph/assets/ico/apple-touch-icon-114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/Hydrograph/assets/ico/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon-precomposed" href="/Hydrograph/assets/ico/apple-touch-icon-57-precomposed.png"> -->
+
+  </head>
+  <body>
+    <!--<a href="https://github.com/driftyco/jetstrap-docs"><img style="position: absolute; z-index: 10000; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>-->
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a href="/Hydrograph/" class="brand"><img src="/Hydrograph/assets/img/C1_OSLogo_Hydrograph_RGB_FullColor_solo.svg"></a>
+          <ul class="nav pull-right">
+            <!-- <li><a href="http://jetstrap.com/">Jetstrap</a></li> -->
+            <!-- <li><a href="http://jetstrap.com/#about">About</a></li> -->
+            <!--<li><a href="http://jetstrap.com/#love">Love</a></li>-->
+            <!-- <li><a href="http://blog.jetstrap.com/" target="_blank">Blog</a></li> -->
+            <li><a href="https://github.com/capitalone/Hydrograph/" target="_blank">Check out the code!</a></li>
+            <!-- <li style="line-height: 59px; vertical-align: middle"><a href="http://jetstrap.com/" class="orange-button">Sign up free</a></li> -->
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="container main-container">
+      <div class="row">
+        <div class="nav-container col-md-2">
+          <ul id="menu" class="nav nav-list">
+          
+    
+    
+
+    
+        
+            <li class="nav-header">ABOUT</li>
+        
+        <li data-section="overview" data-order="1"><a href="/Hydrograph/overview">Overview</a></li>
+    
+        
+        <li data-section="faq" data-order="3"><a href="/Hydrograph/faq">FAQ</a></li>
+    
+        
+        <li data-section="architecture" data-order="2"><a href="/Hydrograph/architecture">Internal Architecture</a></li>
+    
+
+    
+    
+
+    
+        
+            <li class="nav-header">GETTING STARTED</li>
+        
+        <li data-section="deploy-engine" data-order="2"><a href="/Hydrograph/deploy-remote">Remote Execution Setup</a></li>
+    
+        
+        <li data-section="getting-started" data-order="1"><a href="/Hydrograph/Getting-Started-UI">Local Development Install</a></li>
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+        
+            <li class="nav-header">CONTRIBUTING</li>
+        
+        <li data-section="getting-started" data-order="1"><a href="/Hydrograph/architecture">High Level Architecture</a></li>
+    
+
+    
+    
+
+    
+
+<li class="divider"></li>
+
+          </ul>
+        </div>
+        <div class="content-container col-md-10">
+          <div class="page-header">
+  <h1 class="landing-h1">Hydrograph - Development Accelerator </h1>
+</div>
+
+<p>Hydrograph is a powerful ETL tool that allows developers to create complex graphs using a simple drag-and-drop interface. Users build ETL graphs by using the Hydrograph UI to link together input, transformation, and output components. Users can customize a variety of pre-built components or contribute back to Hydrograph by developing additional inputs, outputs, and transformations. To execute ETL jobs Hydrograph leverages Apache Spark as the backend engine. This allows Hydrograph to handle a variety of workload sizes and provides a flexible deployment model.</p>
+
+<h3 id="features">Features</h3>
+<ul>
+  <li>Local execution mode ensures developers can quickly verify functionality, while remote execution mode provides enterprise-level performance on large volumes of data</li>
+  <li>Expression editor allows developers to quickly create and validate complex conditional statements</li>
+  <li>Execution tracking visuals enable monitoring of graph execution and help pinpoint performance bottlenecks</li>
+  <li>Advanced debugging features provide for easy visualization of data transformations at all stages of a graph</li>
+</ul>
+
+        </div>
+      </div>
+    </div>
+
+    <style>
+
+    </style>
+    <script src="/Hydrograph/assets/js/bootstrap.js">
+    </script>
+    <script>
+      function orderNav() {
+          var list,
+              section,
+              header,
+              sections = [],
+              lists = {},
+              headers = {};
+          var navUl = document.querySelectorAll('#menu')[0],
+              navLis = document.querySelectorAll('#menu li');
+          if (!navUl) return;
+          for (var i = 0; i < navLis.length; i++) {
+              var order, li = navLis[i];
+              if (li.classList.contains('nav-header')) {
+                  section = li.textContent || li.innerText;
+                  sections.push(section);
+                  headers[section] = li;
+                  continue;
+              }
+              if (!lists[section]) {
+                  lists[section] = [];
+              }
+              order = parseFloat(li.getAttribute('data-order'))
+              lists[section].push([order, li]);
+          }
+          for (var i = 0; i < sections.length; i++) {
+              section = sections[i];
+              list = lists[section].sort(function(a, b) {
+                  return a[0] - b[0];
+              });
+              if (header = headers[section]) {
+                  navUl.appendChild(header);
+              }
+              for (var j = 0; j < list.length; j++) {
+                  navUl.appendChild(list[j][1]);
+              }
+          }
+      }
+      if (document.querySelectorAll) orderNav();
+    </script>
+
+    <script>
+      $('#menu [data-section="overview"]').addClass('active');
+    </script>
+
+    <link href="/Hydrograph/assets/css/main.css" rel="stylesheet">
+<footer style="footer"> Powered by Capital One - Enterprise Data Services </footer>
+
+  </body>
+</html>

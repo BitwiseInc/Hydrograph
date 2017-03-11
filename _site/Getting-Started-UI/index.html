@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>Hydrograph - Local Development Install</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+<!-- Le scripts -->
+<script src="/Hydrograph/assets/js/jquery-1.11.3.min.js">
+</script>
+<!-- Le styles -->
+<link href="/Hydrograph/assets/css/bootstrap.css" rel="stylesheet">
+<style>
+  body { padding-top: 60px; /* 60px to make the container go all the way
+  to the bottom of the topbar */ }
+</style>
+<link href="/Hydrograph/assets/css/bootstrap-responsive.css" rel="stylesheet">
+<link href="/Hydrograph/assets/css/docs.css" rel="stylesheet">
+<link href="/Hydrograph/assets/css/main.css" rel="stylesheet">
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js">
+  </script>
+<![endif]-->
+<!-- Le fav and touch icons -->
+<!--     <link rel="shortcut icon" href="/Hydrograph/assets/ico/favicon.ico">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/Hydrograph/assets/ico/apple-touch-icon-144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/Hydrograph/assets/ico/apple-touch-icon-114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/Hydrograph/assets/ico/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon-precomposed" href="/Hydrograph/assets/ico/apple-touch-icon-57-precomposed.png"> -->
+
+  </head>
+  <body>
+    <!--<a href="https://github.com/driftyco/jetstrap-docs"><img style="position: absolute; z-index: 10000; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>-->
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a href="/Hydrograph/" class="brand"><img src="/Hydrograph/assets/img/C1_OSLogo_Hydrograph_RGB_FullColor_solo.svg"></a>
+          <ul class="nav pull-right">
+            <!-- <li><a href="http://jetstrap.com/">Jetstrap</a></li> -->
+            <!-- <li><a href="http://jetstrap.com/#about">About</a></li> -->
+            <!--<li><a href="http://jetstrap.com/#love">Love</a></li>-->
+            <!-- <li><a href="http://blog.jetstrap.com/" target="_blank">Blog</a></li> -->
+            <li><a href="https://github.com/capitalone/Hydrograph/" target="_blank">Check out the code!</a></li>
+            <!-- <li style="line-height: 59px; vertical-align: middle"><a href="http://jetstrap.com/" class="orange-button">Sign up free</a></li> -->
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="container main-container">
+      <div class="row">
+        <div class="nav-container col-md-2">
+          <ul id="menu" class="nav nav-list">
+          
+    
+    
+
+    
+        
+            <li class="nav-header">ABOUT</li>
+        
+        <li data-section="overview" data-order="1"><a href="/Hydrograph/overview">Overview</a></li>
+    
+        
+        <li data-section="faq" data-order="3"><a href="/Hydrograph/faq">FAQ</a></li>
+    
+        
+        <li data-section="architecture" data-order="2"><a href="/Hydrograph/architecture">Internal Architecture</a></li>
+    
+
+    
+    
+
+    
+        
+            <li class="nav-header">GETTING STARTED</li>
+        
+        <li data-section="deploy-engine" data-order="2"><a href="/Hydrograph/deploy-remote">Remote Execution Setup</a></li>
+    
+        
+        <li data-section="getting-started" data-order="1"><a href="/Hydrograph/Getting-Started-UI">Local Development Install</a></li>
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+        
+            <li class="nav-header">CONTRIBUTING</li>
+        
+        <li data-section="getting-started" data-order="1"><a href="/Hydrograph/architecture">High Level Architecture</a></li>
+    
+
+    
+    
+
+    
+
+<li class="divider"></li>
+
+          </ul>
+        </div>
+        <div class="content-container col-md-10">
+          <div class="page-header">
+  <h1>Install Hydrograph UI for Local Development</h1>
+</div>
+
+<p>This section will guide you through the setup of the Hydrograph UI on your local machine. Once you have Hydrograph installed on your local machine you’ll
+be able to use all of Hydrograph’s features to execute jobs locally. This set of installation instructions is recommended for people who are just getting
+started with Hydrograph.</p>
+
+<p><a href="#pre-requisites">1. Pre-requisites</a><br />
+<a href="#build">2. Build Hydrograph UI Executable</a><br />
+<a href="#launch-UI">3. Launching Hydrograph UI</a><br />
+<a href="#hgConfig">4. Hydrograph Configuration</a><br /></p>
+
+<hr />
+
+<p><a name="pre-requisites"></a>
+## 1. Pre-requisites</p>
+
+<p>Before setting up the Hydrograph UI on your local machine you’ll need to make sure you’ve completed the following pre-reqs: </p>
+
+<ul>
+  <li>JDK 1.8.xx 64 bit (<a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">download</a>)
+    <ul>
+      <li>Set the environment variable <strong>JAVA_HOME</strong> to the JDK 1.8 installation</li>
+      <li>If you have multiple Java installations, update the <strong>PATH</strong> variable and add <strong>$JAVA_HOME/bin</strong></li>
+    </ul>
+  </li>
+  <li>Gradle 3.0+ (<a href="https://gradle.org/gradle-download/">download</a>)
+    <ul>
+      <li>Add the Gradle installation path to the <strong>PATH</strong> variable.</li>
+    </ul>
+  </li>
+  <li>Maven 3.x (<a href="http://maven.apache.org/download.cgi">download</a>)
+    <ul>
+      <li>Add the Maven installation path to the <strong>PATH</strong> variable.</li>
+    </ul>
+  </li>
+  <li>Setup Hadoop environment (Required if target environment is a Hadoop installation) 
+    <ul>
+      <li>Windows users
+        <ul>
+          <li>Download/build a working copy of a 64-bit Hadoop installation</li>
+          <li><a href="https://wiki.apache.org/hadoop/Hadoop2OnWindows">How to build Hadoop on Windows</a></li>
+        </ul>
+      </li>
+      <li>Mac users
+        <ul>
+          <li>Hadoop can be downloaded from apache software foundation community (<a href="http://hadoop.apache.org/releases.html">download</a>)</li>
+        </ul>
+      </li>
+      <li><strong>NOTE</strong>: Hydrograph has been tested with Hadoop 2.6.0 and 2.7.2</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<p><a name="build"></a>
+## 2. Build Hydrograph UI Executable</p>
+
+<p>The Hydrograph code base consists of three components - the engine, the server, and the UI. Since the Hydrograph UI relies on both the server
+and engine components, we’ll start by building these projects. </p>
+
+<h3 id="a-download-the-source-code-from-github">a. Download the source code from Github</h3>
+<p>Please download the latest source code from the master branch of Github from <a href="https://github.com/capitalone/Hydrograph">here</a>. <br />
+If you download the source code as a zip file, you will require to extract the zip file on your environment.</p>
+
+<h3 id="b-build-the-engine-project">b. Build the Engine project</h3>
+<p>Once you’ve dowloaded the code, change the directory to <strong>hydrograph.engine</strong> and execute the following command to build the engine component: </p>
+
+<pre><code>gradle build
+</code></pre>
+
+<p>This will build the the project and create the required jars. You can verify that the jars are present under following relative paths:</p>
+
+<pre><code>hydrograph.engine/hydrograph.engine.command-line/build/libs
+hydrograph.engine/hydrograph.engine.core/build/libs
+hydrograph.engine/hydrograph.engine.expression/build/libs
+hydrograph.engine/hydrograph.engine.spark/build/libs
+hydrograph.engine/hydrograph.engine.transformation/build/libs
+</code></pre>
+
+<p>After verifying that the JAR files are present, you can install the project in your local Maven repository:</p>
+
+<pre><code>gradle install
+</code></pre>
+
+<p>Once you complete this step, you will observe that the engine jars will be installed in .m2 directory at the following path:</p>
+
+<pre><code>{User Home Directory}/.m2/repository/Hydrograph
+</code></pre>
+
+<h3 id="c-build-the-server-project">c. Build the Server project</h3>
+
+<p>The hydrograph.server project consists of two different services - the execution tracking services which is used to report the 
+status of each component, and the debug service which allows developers to view data at each watch point. </p>
+
+<h4 id="i-execution-tracking-service">i. Execution tracking service</h4>
+<p>Navigate to the directory <strong>hydrograph.server/hydrograph.server.execution.tracking</strong>. <br />
+You will require to update the 
+and execute the following command to build the 
+execution tracking component of the Hydrograph server: </p>
+
+<pre><code>mvn clean install
+</code></pre>
+
+<p>Just as with the engine, this creates the required jars. You can verify that jars have been created in the following directory: </p>
+
+<pre><code>hydrograph.server\hydrograph.server.execution.tracking\target\
+</code></pre>
+
+<p>Once we’ve verified that the artifacts have been created correctly we can install the project in our local Maven 
+repo and verify that the JARs are present: </p>
+
+<pre><code>{User Home Directory}/.m2/repository/hydrograph
+</code></pre>
+
+<h4 id="ii-hydrograph-debug-service">ii. Hydrograph debug service</h4>
+
+<p>To install the debug service navigate to the directory <strong>hydrograph.server/hydrograph.server.debug</strong> and build the 
+project using the following command: </p>
+
+<pre><code>gradle build
+</code></pre>
+
+<p>Just as with our previous build steps, we can verify that the artifacts have been created by navigating to the following directory</p>
+
+<pre><code>hydrograph.server\ hydrograph.server.debug\build\
+</code></pre>
+
+<p>Once we’ve verified that the artifacts are present we can install them in our local Maven repo. </p>
+
+<pre><code>gradle install
+</code></pre>
+
+<p>After installing the jars will be in the local Maven repository under the Hydrograph project. 
+~~~~~
+{Uswr Home Directory}/.m2/repository/Hydrograph
+~~~~~ </p>
+
+<h3 id="d-build-the-ui-project">d. Build the UI project</h3>
+<p>One of the pre-requisites of building the Hydrograph UI is to copy the View Data service jars produced in step a.(ii) into the
+following folder of the UI project - <em>*hydrograph.ui\hydrograph.ui.product\resources\config\service*</em> <br /></p>
+
+<p>Execute the below command for building the project:</p>
+
+<pre><code>mvn clean install
+</code></pre>
+
+<p>After a successful build, an operating System (Windows, Mac OS, etc.) specific Hydrograph IDE will be available under below relative path:
+<strong>/hydrograph.ui/hydrograph.ui.product/target/products/hydrograph.ui.perspective.ID</strong></p>
+
+<hr />
+<p><a name="launch-UI"></a></p>
+
+<h2 id="launching-hydrograph-ui">3. Launching Hydrograph UI</h2>
+
+<h4 id="a-windows-users">3.1a. Windows users</h4>
+
+<ol>
+  <li>Navigate to <strong>/hydrograph.ui/hydrograph.ui.product/target/products/hydrograph.ui.perspective.ID</strong> </li>
+  <li>Launch through hydrograph.exe</li>
+</ol>
+
+<h4 id="b-mac-users">3.1b. Mac users</h4>
+
+<ol>
+  <li>Navigate to <strong>/hydrograph.ui/hydrograph.ui.product/target/products/hydrograph.ui.perspective.ID</strong> </li>
+  <li>Right click Hydrograph_build_date_Mac file that was just extracted</li>
+  <li>Select “Show Package Contents”</li>
+  <li>Launch Hydrograph from Contents/MacOS/Config/Hydrograph</li>
+</ol>
+
+<h4 id="validate-java">3.2. Validate Java</h4>
+
+<p>Once Hydrograph is launched, verify that the selected Java JRE matches the JAVA_HOME environment variable. 
+From the top menu bar select Window-&gt; Preference -&gt; Java -&gt; Installed JREs</p>
+
+<hr />
+
+<p><a name="hgConfig"></a>
+## 4. Hydrograph Configuration
+If you wish to use a different repository to download Hydrograph dependencies, you will have to update the repository URLs in the default pom.xml or build.gradle &amp; common.gradle.
+A change in these files will ensure that any new projects that you create within the UI will have the correct configuration files.</p>
+
+<h4 id="updating-configurations-in-windows-builds--">4.1 Updating configurations in Windows builds -</h4>
+<p>The Gradle configuration files on Windows builds can be found at - <strong>&lt;Hydrograph_UI_path&gt;\config\gradle\build</strong> <br />
+The Maven configuration file can be found at - <strong>&lt;Hydrograph_UI_path&gt;\config\maven</strong></p>
+
+<h4 id="updating-configurations-in-mac-builds--">4.2 Updating configurations in Mac builds -</h4>
+<p>The Gradle configuration files in Mac builds can be found at <strong>&lt;Hydrograph_UI_path&gt;/Contents/Eclipse/config/gradle/build</strong> <br />
+The Maven configuration files can be found at <strong>&lt;Hydrograph_UI_path&gt;/Contents/Eclipse/config/maven</strong></p>
+
+        </div>
+      </div>
+    </div>
+
+    <style>
+
+    </style>
+    <script src="/Hydrograph/assets/js/bootstrap.js">
+    </script>
+    <script>
+      function orderNav() {
+          var list,
+              section,
+              header,
+              sections = [],
+              lists = {},
+              headers = {};
+          var navUl = document.querySelectorAll('#menu')[0],
+              navLis = document.querySelectorAll('#menu li');
+          if (!navUl) return;
+          for (var i = 0; i < navLis.length; i++) {
+              var order, li = navLis[i];
+              if (li.classList.contains('nav-header')) {
+                  section = li.textContent || li.innerText;
+                  sections.push(section);
+                  headers[section] = li;
+                  continue;
+              }
+              if (!lists[section]) {
+                  lists[section] = [];
+              }
+              order = parseFloat(li.getAttribute('data-order'))
+              lists[section].push([order, li]);
+          }
+          for (var i = 0; i < sections.length; i++) {
+              section = sections[i];
+              list = lists[section].sort(function(a, b) {
+                  return a[0] - b[0];
+              });
+              if (header = headers[section]) {
+                  navUl.appendChild(header);
+              }
+              for (var j = 0; j < list.length; j++) {
+                  navUl.appendChild(list[j][1]);
+              }
+          }
+      }
+      if (document.querySelectorAll) orderNav();
+    </script>
+
+    <script>
+      $('#menu [data-section="getting-started"]').addClass('active');
+    </script>
+
+    <link href="/Hydrograph/assets/css/main.css" rel="stylesheet">
+<footer style="footer"> Powered by Capital One - Enterprise Data Services </footer>
+
+  </body>
+</html>
