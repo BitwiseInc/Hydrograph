@@ -5,6 +5,8 @@
 # Hydrograph Logo TBD
 ##### [Learn more about Hydrograph] (https://github.com/pages/capitalone/Hydrograph/)
 
+[![Join the chat at https://gitter.im/capitalone/Hydrograph](https://badges.gitter.im/capitalone/Hydrograph.svg)](https://gitter.im/capitalone/Hydrograph?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ### Contributors :
 We welcome your interest in Capital One's Open Source Projects (the "Project"). Any Contributor to the project must accept and sign a CLA indicating agreement to the license terms. Except for the license granted in this CLA to Capital One and to recipients of software distributed by Capital One, you reserve all right, title, and interest in and to your contributions; this CLA does not impact your rights to use your own contributions for any other purpose.
 
