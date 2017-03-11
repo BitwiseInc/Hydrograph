@@ -3,7 +3,7 @@
 [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 # Hydrograph Logo TBD
-##### [Learn more about Hydrograph] (https://github.com/pages/capitalone/Hydrograph/)
+##### [Learn more about Hydrograph] (http://www.capitalone.io/Hydrograph/)
 
 ### Contributors :
 We welcome your interest in Capital One's Open Source Projects (the "Project"). Any Contributor to the project must accept and sign a CLA indicating agreement to the license terms. Except for the license granted in this CLA to Capital One and to recipients of software distributed by Capital One, you reserve all right, title, and interest in and to your contributions; this CLA does not impact your rights to use your own contributions for any other purpose.
