@@ -23,8 +23,7 @@
 
 	</properties>
 
-
-	<repositories>
+   <repositories>
 		<repository>
 			<id>mars</id>
 			<url>${neon-repo.url}</url>
