@@ -376,5 +376,6 @@ public class Constants {
 	public static final String GRAPH_PLUGIN_QUALIFIER = "hydrograph.ui.graph";
 	public static final String CONSOLE_BUFFER_SIZE_PREFERANCE_NAME="console_buffer_size";
 	public static final String DEFUALT_CONSOLE_BUFFER_SIZE = "10000";
+	public static final String DISALLOW_DOCTYPE_DECLARATION = "http://apache.org/xml/features/disallow-doctype-decl";
 }
 

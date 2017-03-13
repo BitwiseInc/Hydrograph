@@ -15,9 +15,6 @@
 package hydrograph.ui.engine.parsing;
 
 
-import hydrograph.ui.engine.ui.repository.UIComponentRepo;
-import hydrograph.ui.logging.factory.LogFactory;
-
 import java.io.File;
 import java.io.IOException;
 
@@ -27,6 +24,10 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.slf4j.Logger;
 import org.xml.sax.SAXException;
+
+import hydrograph.ui.common.util.Constants;
+import hydrograph.ui.engine.ui.repository.UIComponentRepo;
+import hydrograph.ui.logging.factory.LogFactory;
 
 public class XMLParser {
 	private static final Logger LOGGER = LogFactory.INSTANCE.getLogger(XMLParser.class);
@@ -41,6 +42,7 @@ public class XMLParser {
          SAXParserFactory factory = SAXParserFactory.newInstance();
          SAXParser saxParser;
 		try {
+			factory.setFeature(Constants.DISALLOW_DOCTYPE_DECLARATION,true);
 			saxParser = factory.newSAXParser();
 			XMLHandler xmlhandler = new XMLHandler(componentRepo);
 			saxParser.parse(inputFile, xmlhandler);
