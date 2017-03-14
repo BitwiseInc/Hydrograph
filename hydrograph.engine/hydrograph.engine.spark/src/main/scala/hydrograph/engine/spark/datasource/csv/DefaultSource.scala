@@ -190,7 +190,7 @@ class DefaultSource extends RelationProvider with SchemaRelationProvider with Cr
       throw new Exception("Quotation cannot be more than one character.")
     }
 
-    val csvFormat = CSVFormat.DEFAULT.withQuote(quoteChar).withDelimiter(delimiterChar).withSkipHeaderRecord(false).withRecordSeparator("\n")
+    val csvFormat = CSVFormat.DEFAULT.withQuote(quoteChar).withDelimiter(delimiterChar).withSkipHeaderRecord(false).withRecordSeparator("\n").withNullString("null")
     val generateHeader = parameters.getOrElse("header", "true").toBoolean
     val header = if (generateHeader) {
       csvFormat.format(dataFrame.columns.map(_.asInstanceOf[AnyRef]): _*)
