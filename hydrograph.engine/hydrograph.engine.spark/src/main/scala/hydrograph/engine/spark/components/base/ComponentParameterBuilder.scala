@@ -135,13 +135,8 @@ object ComponentParameterBuilder {
       this
     }
 
-    def setAccumulator(longAccumulator: PartitionStageAccumulator): Builder = {
-      baseComponent.setAccumulaor(longAccumulator)
-      this
-    }
-
-    def setLongAccumulator(longAccumulator: LongAccumulator): Builder = {
-      baseComponent.setLongAccumulaor(longAccumulator)
+    def setAccumulatorName(accumulatorName: String): Builder = {
+      baseComponent.setAccumulatorName(accumulatorName)
       this
     }
 

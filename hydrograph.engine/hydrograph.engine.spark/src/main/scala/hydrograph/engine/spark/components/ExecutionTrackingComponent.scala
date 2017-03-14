@@ -36,10 +36,10 @@ class ExecutionTrackingComponent(executionTrackingEntity: ExecutionTrackingEntit
      val fieldNameSet = new util.LinkedHashSet[String]()
     executionTrackingEntity.getOperation.getOperationInputFields.foreach(e => fieldNameSet.add(e))
     val df = componentsParams.getDataFrame()
-    val partAcc: PartitionStageAccumulator = componentsParams.getAccumulator()
+//    val partAcc: PartitionStageAccumulator = componentsParams.getAccumulator()
 //    val longAcc : LongAccumulator = componentsParams.getLongAccumulator()
-    /*val partAcc = new PartitionStageAccumulator
-    componentsParams.getSparkSession().sparkContext.register(partAcc, "partacc1")*/
+    val partAcc = new PartitionStageAccumulator
+    componentsParams.getSparkSession().sparkContext.register(partAcc, componentsParams.getAccumulatorName())
 
     val dataFrame= df.mapPartitions(itr=>{
 
