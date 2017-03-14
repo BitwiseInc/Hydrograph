@@ -1,0 +1,130 @@
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Partition By Expression Operation Class Window</title>
+<link rel="stylesheet" type="text/css" href="../../css/style.css">
+</head>
+<body>
+	<p>
+		<span class="header-1">Partition By Expression Operation Class Window</span>
+	</p>
+	<p>
+		<span>Operation class defines the operations we can perform on
+			input data using the partition by expression components. Operation class is a
+			mandatory attribute. Aggregate, Cumulate, Normalize components
+			requires to build a Custom Operation Class. With these component user
+			can create new custom classes or use the already available classes in
+			the current ELT project. Transform, Filter and partition by expression Component have options
+			to use expression editor along with operation class. </span>
+	</p>
+	<ul>
+		<li><span><a href="#custom-operation-class">Custom
+					built operation class</a></span></li>
+		<li><span><a href="#using-existing-java-class">Using
+					Existing Java class</a></span></li>
+	</ul>
+	<p>
+		<a name="custom-operation-class"></a><span class="header-2">Custom
+			Operation Class</span>
+	</p>
+	<p>
+		<span>User can create new custom classes or use the already
+			available classes in the workspace.</span>
+	</p>
+	<p>
+		<span class="header-3">Creating new custom class</span>
+	</p>
+	<p>
+		<span>To create a new custom operation class, select "Custom"
+			in the operation class drop down and click on "Create New". The "New
+			Java Class" window will open.</span>
+	</p>
+	<p>
+		<img alt="" src="../../images/op_class_1.png" />
+	</p>
+	<p>
+		<span>Fig 1</span>
+	</p>
+
+	<p>
+		<span>In New Java Class Window, Click "Browse" to select Source
+			Folder.</span>
+	</p>
+	<p>
+		<span>Specify the Package Name and Name of new class to be
+			created and click on "Finish".</span>
+	<p>
+		<img alt="" src="../../images/op_class_2.png" />
+	</p>
+	<p>
+		<span>Fig 3</span>
+	</p>
+
+	<p>
+		<span>Once the Operation class window displays the Package and
+			Class you created, click "Open" to write your custom class code.</span>
+	<p>
+		<img alt="" src="../../images/op_class_3.png" />
+	</p>
+	<p>
+		<span>Fig 4</span>
+	</p>
+
+	<p>
+		<img alt="" src="../../images/op_class_fig5.png" />
+	</p>
+	<p>
+		<span>Fig 5</span>
+	</p>
+
+	<p>
+		<a name="using-existing-java-class"></a><span class="header-2">Using
+			Existing Java Class</span>
+	</p>
+	<p>
+		<span>Alternatively, instead of creating a new java class, an
+			existing java class, compatible with the partition by expression component can also be
+			used.</span>
+	<p>
+		<span>To use an existing java class, click "Browse" button and
+			select the class available in the workspace.</span>
+	<p>
+		<img alt="" src="../../images/op_class_6.png" />
+	</p>
+	<p>
+		<span>Fig 6</span>
+	</p>
+
+	<p>
+		<a name="Operation_Properties_Grid"></a><span class="header-2">Operation
+			Properties Grid </span>
+	</p>
+	<p>
+		<span>The operation properties grid is present on the operation
+			class window. This grid is used to define operation properties. Every
+			row added to this grid defines a new operation property. A property
+			has a unique name and a value. The property value can also be
+			parameterized by using the parameter syntax (i.e. using <i>@{}</i>).
+		</span>
+	</p>
+	<p>
+		<span>These property values can be accessed in the operation
+			classes.</span>
+	</p>
+	<p>
+		<span>Operation property may or may not be specified. It is not
+			mandatory.</span>
+	</p>
+</body>
+</html>

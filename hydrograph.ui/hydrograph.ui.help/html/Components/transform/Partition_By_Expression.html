@@ -1,0 +1,48 @@
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+ 
+ 
+<!doctype html>
+<html>
+<head>
+	<title>Partition By Expression</title>
+	<link rel="stylesheet" type="text/css" href="../../css/style.css">
+</head>
+<body>
+
+<p><span class="header-1">Partition By Expression</span></p>
+
+
+<p><span><b>Partition By Expression</b>&nbsp;distributes data records to its output partitions based on evaluation of expression specified. It is present under Transform category in the component palette.</span></p>
+
+<p><span>By default it contains one input ports, two output port and one unused ports. The number of output ports can be increased in the Partition By Expression configuration property. All the records at the input that satisfy partition condition are available at its output partition. Those records that do not satisfy the condition are transmitted through the unused port. </span></p>
+
+<p><span>User is provided with options to create Java class or specify expressions. Java class includes the specified partition conditions which is then applied on the input records. Optionally, user can also use the pre-defined standard Operation Classes, more details are provided in the Operation Class section <a href="Partition_By_Expression_Operation_Window.html">Operation Class</a>
+User can manually create Expressions or use the <a href="Expression_Editor_Predefined_Functions.html">Predefined Expressions </a> provided in the Expression Editor. Based on the expression provided the records are Partitioned by the Partition By Expression component.  
+
+ <p><span>The Partition By Expression component can be easily distinguished in the component palette.</span></p>
+
+<p><img alt="" src="../../images/partition_by_expression_palette.png" /></p>
+
+<p><span>An enlarged version of the same is depicted when dragged on the canvas.</span></p>
+
+<p><span><img alt="" src="../../images/partition_by_expression_canvas.png" /></span></p>
+
+<p><span>For further reference click on the links below:</span></p>
+
+<ul>
+		<li><span><a href="Partition_By_Expression_Properties.html">Properties</a></span></li>
+		<li><span><a href="Partition_By_Expression_Operation_Window.html">Operation Class Window</a></span></li>
+		<li><span><a href="Expression_Editor_window.html">Expression Editor</a></span></li>
+		<li><span><a href="Partition_By_Expression_Properties.html#validations">Validations</a></span></li>
+</ul>
+</body>
+</html>

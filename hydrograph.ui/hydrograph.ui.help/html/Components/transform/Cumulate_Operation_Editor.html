@@ -1,0 +1,58 @@
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+ 
+<!doctype html>
+<html>
+<head>
+	<title>Cumulate Operation Editor</title>
+	<link rel="stylesheet" type="text/css" href="../../css/style.css">
+</head>
+<body>
+<p><span class="header-1">Cumulate Operation Editor</span></p>
+
+<p><span><b>Operation editor</b>&nbsp;for the Cumulate component can be viewed by clicking the Edit button next to Cumulate property on General tab.</span></p>
+<p><span>Input fields arriving from the input port are available in the <b>Input Fields Grid</b> on the left.</span></p>
+<p><span>The '<b>Operation Control</b>' allows users to add multiple cumulate operations. Each operation is displayed in the window below 'Operation Control'. Each operation has input fields and output fields.</span></p>
+<p><span><b>Map Fields</b> table in the bottom section allows user to specify pass-through and map fields.</span></p>
+<p><span>The <b>output fields grid</b> on the right contains the operation output fields of all the operations as well pass-through and map fields.</span></p>
+
+<p><img alt="Cumulate operation editor" src="../../images/Cumulate_Mapping_View1.png" width = "100%" /></p>
+<p class="center"><span>Fig 1</span></p>
+
+<p><span class="header-2"><a name="input_fields_grid"></a>Input Fields Grid</span></p>
+<p><span>The input fields grid list all the fields available on the input port of the cumulate component. This list is populated automatically based on the component connected to the input port of the cumulate component. If no component is connected to the input port of the cumulate component, this list is empty.</span></p>
+<p><span class="header-2"><a name="operation_window"></a>Operation Window</span></p>
+<p><span>The operation window defines one cumulate operation. Adding an operation is not mandatory. The output can just comprise of map or pass-through fields. The cumulate operation has following fields (mandatory fields are <u>underlined</u>):</span>
+<ul>
+	<li><a name="operation_input_fields"></a><span><u>Operation input fields</u>: These fields are passed as input to the operation. User can drag the required fields from the available fields in 'Input Fields' grid on the left.</span></li>
+	<li><a name="operation_output_fields"></a><span><u>Operation output fields</u>: These fields are the output of the operation. User has to manually add / edit this list based on the output of the operation.
+	<br />
+	These fields are automatically added to the 'Output Fields' grid on the right. The 'Output Fields' grid contains the combined output of all the operations along with the pass-through and map fields.</span></li>
+	<li><span><u>Operation Class</u>: The fully qualified Java class name which implements the cumulate operation. User can specify custom cumulate operation class, or use one of the standard operation classes from the drop-down provided. Check <a href="Cumulate_Operation_Class_Window.html">operation class window</a> page for more details.</span></li>
+	<li><span>Operation properties: User can pass additional properties to the operation from the properties grid in the 'Operation Class' window (ref Fig 2). These property values are available for use in the Java class. Check <a href="Cumulate_Operation_Class_Window.html#Operation_Properties_Grid">operation properties grid</a> section in operation class window page for details.</span></li>
+	<li><span>Parameter name: The entire operation can be parameterized. The parameter name for this operation should be specified here. The parameter value should be the entire xml tag representing the operation in the target xml.</span></li>
+</ul>
+<p class="center"><img alt="Fig 2" src="../../images/Aggregate_Operation_Class_Window.png" /></p>
+<p class="center"><span>Fig 2</span></p>
+
+<p><span class="header-2"><a name="map_fields_grid"></a>Map Fields Grid</span></p>
+<p><span>User can drag and drop single or multiple fields in the mapping grid. Alternatively, user can also use the 'add', 'delete' buttons above the map fields grid to add or delete fields manually. The fields that are passed <i>as-is</i> in the output are pass-through fields. Whereas, fields renamed in the output are map fields.</span></p>
+<p><span>Adding map fields or pass-through fields is not mandatory. The output can just contain operation output fields.</span></p>
+
+<p><span class="header-2"><a name="output_fields_grid"></a>Output Fields Grid</span></p>
+<p><span>The output fields grid contains the operation output fields of all the operations as well pass-through and map fields. The operation output fields, pass-through fields and map fields are automatically added in the output fields grid.</span></p>
+<p><span>Adding at least one output field is <b>mandatory</b>. The output filed can come from either an operation or as a map or pass-through field.</span></p>
+<p><span>The add and delete button on the top of this grid allow adding / deleting the parameter values in output fields grid.</span></p>
+<p><span>User can also opt to pull the schema from the schema tab (i.e. the out port of cumulate component) using 'Pull Schema' button <img src="../../images/Pull_Schema_Transform.png" />. The current list of fields in output fields gird is overwritten with the fields in schema tab.</span></p>
+<p><span>If there are new fields schema tab that are not available in any of the operation output or map fields, a new entry is added in map fields grid with the new field name as target and a blank source field.</span></p>
+<p><span>If the fields currently present in output fields list, which either came from operation output fields or from pass-through or map fields, are not present in the schema tab, those fields are deleted from the output fields list. Their corresponding entries in either operation output fields grid or map fields grid are also deleted.</span></p>
+</body>
+</html>

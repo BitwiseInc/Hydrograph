@@ -1,0 +1,208 @@
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+
+
+<!doctype html>
+<html>
+<head>
+<title>Partition By Expression Properties</title>
+<link rel="stylesheet" type="text/css" href="../../css/style.css">
+</head>
+<body>
+
+	<p>
+		<span class="header-1">Partition By Expression Properties</span>
+	</p>
+
+	<p>
+		<span><b>Properties</b>&nbsp;for the Partition By Expression component can be
+			viewed by Double click-&gt;component on canvas. 
+		</span>
+	</p>
+					
+	<p>
+		<span>The properties contain a &#39;General&#39; tab and a &#39;Schema&#39; tab. 
+		Common properties are present in the General tab. 
+		Schema tab displays the option to accept the field schema i.e. field name, data type, scale etc. 
+		</span>
+	</p>	
+			
+	<p>
+		<a name="general_properties"></a><span class="header-2">General
+			Properties</span>
+	</p>
+
+	<p>
+		<img alt="" src="../../images/partition_by_expression_properties.png" />
+	</p>
+
+	<p>
+		<a name="details"></a><span class="header-2">Details</span>
+	</p>
+
+	<ul>
+		<li><span><b>Name</b> - Name is an identifier for the component.
+				This is a <b>mandatory</b> property. This property is pre-populated
+				with the component name, i.e. 'PartByExp' followed by an incremental
+				number. It can be changed to any custom name. The name property has
+				following restrictions:</span></li>
+		<ul>
+			<li><span>Must be specified and should not be blank.</span></li>
+			<li><span>Must be unique across the job.</span></li>
+			<li><span>Accepts only alphabets (a-z), numerals (0-9)
+					and 4 special characters: "_", "-", ",", " " (space)</span></li>
+		</ul>
+		<li><span><b>ID</b> - ID signifies unique Id of component. This Id is generated at the time of component creation. This is a non editable field.</span></li>
+		<li><span><b>Type </b> - Type further categorizes the
+				component to detailed operation that it intends to perform. Here it
+				is of type Partition By Expression.This is a non editable field.</span></li>
+	</ul>
+
+	<p>
+		<a name="configuration"></a><span class="header-2">Configuration</span>
+	</p>
+	
+	<ul>
+		<li>
+			<span><b>Output Partitions</b> - 
+			output partitions accepts integer value greater than 1.
+			The default value for output partitions is 2.
+			output partitions can have a maximum value of 24.
+			output partitions is a mandatory property.		
+			</span>
+		
+		
+		</li>
+	</ul>
+
+	<ul>
+		<li><span><b>Expression Editor Or Operation Class</b> -
+				Edit option of Partition By Expression property window allows user to choose only one
+				option,i.e either Expression or Operation.</span>
+
+			<p>
+				<span><b>Operation Class</b> : Selecting Operation opens up a
+					grid for the user to select for an existing operation class or
+					create a new one. The operation class name can be parameterized
+					which will be resolved at runtime. Click on <a
+					href="Partition_By_Expression_Operation_Window.html">Operation Class</a></span>&nbsp;<span>
+					to know more about creating and using Standard classes here.</span>
+			</p>
+			<p>
+				<img alt="" src="../../images/operation_class.png" />
+			</p>
+			<p>
+				<span><b>Expression Editor</b> : Selecting Expression opens
+					expression editor window. Click on <a
+					href="Expression_Editor_window.html">Expression Editor</a> to know
+					more about Expression Editor .</span>
+			</p>
+			<p>
+				<img alt="" src="../../images/expression_editor.png" />
+			</p></li>
+	</ul>
+
+
+	<ul>
+		<li><span><b>Operation Fields</b> - Edit opens up a grid
+				to accept the fields that will be used to filter records from the
+				input data. Edit button is only enable if user specifics Operation Class Window for Partition By Expression.</span></li>
+	</ul>
+	<p>
+		<img alt="" src="../../images/operation_fields.png" />
+	</p>
+	<ul>
+		<li><span><b>Runtime Properties</b> -&nbsp;Runtime
+				properties are used to override the Hadoop configurations specific
+				to Partition By Expression component at run time. User is required to enter the
+				Property Name and Value in the runtime properties grid.</span></li>
+		<li><p>
+				<span>Check <a
+					href="../../How To Steps/How_To_Pass_Hadoop_Properties_To_Component.html">
+						How to pass Hadoop properties to component</a></span>
+			</p></li>
+	</ul>
+	<p>
+		<img alt="" src="../../images/Runtime_Properties_Grid.png" />
+	</p>
+	<ul>
+		<li><span><b>Batch</b> - Batch simply accepts a numeric
+				number starting from 0 and signifies the phase this component will
+				execute in. By default this is 0.</span></li>
+	</ul>
+<p><a name="schema"></a><span class="header-2">Schema Tab</span></p>
+
+<p><img alt="" src="../../images/partition_by_expression_properties_schema.png" /></p>
+
+<p><span>Schema is <b>mandatory</b> for partition by expression component. Schema tab defines the record format on the out port of the partition by expression component. A field in schema has multiple attributes as described below.</span></p>
+<ul>
+	<li><span><b>Field Name</b> - The name for the field. This is a mandatory attribute.</span></li>
+	<li><span><b>Data type</b> - The data type for the field. This is a mandatory attribute. The default data type is "String". Check <a href="../../references/SupportedDataTypes.html">supported data types</a> page for list of supported data types.</span></li>
+	<li><span><b>Scale</b> - The number of digits to the right of decimal point. Scale is defined for Double, Float or BigDecimal field.</span></li>
+	<li><span><b>Scale Type</b> - Scale Type accepts values as implicit or explicit for BigDecimal field and none for other data types. Explicit considers the length of '.' in precision and implicit ignores length of '.' precision for the BigDecimal field.</span></li>
+	<li><span><b>Date Format</b> - The format for date data type. Refer to <a href="../../references/Date_Formats.html">java date formats</a> page for acceptable date formats.</span></li>
+	<li><span><b>Precision</b> - The number of significant digits (all digits except leading zeros and trailing zeros after decimal point).</span></li>
+	<li><span><b>Field Description</b> - The description for the field.</span></li>
+</ul>
+
+	<p>
+		<a name="validations"></a><span class="header-2">Validations</span>
+	</p>
+	<p><span>The Partition By Expression component applies validations to the mandatory fields as described above. Upon placing the Partition By Expression component on job canvas for the first time (from component palette), the component shows up a warning icon as mandatory properties are not provided.</span></p>
+		<img src="../../images/partition_by_expression_warning.png" alt="" />
+	
+	<p>
+		<span><b>Validations</b>&nbsp;for the Partition By Expression component are in
+			place for each property present on the Properties window.</span>
+	</p>
+	<p>
+		<img alt="" src="../../images/partition_by_expression_properties_validation.png" />
+	</p>
+	<p>
+		<b>General Properties:</b>
+	</p>
+	<ul>
+		<li><span><b>Output Partitions</b> - Output Partitions has a default value of 2.
+				However, blank text box results in error validation and is not
+				allowed.
+				<p>
+					<img alt="" src="../../images/partition_by_expression_outputpartitions_validation.png" />
+				</p> </span></li>
+				
+		<li><span><b>Operation Class</b> - Operation Class is a
+				mandatory field and needs the user to either select a standard
+				operation class or create his own custom class. If absent, error for
+				empty field appears along with a message on tool tip for the user.
+				<p>
+					<img alt="" src="../../images/operation_class_validation.png" />
+				</p> </span></li>
+				
+		<li><span><b>Operation Fields </b> -User can select the
+				available fields that will be used within the Partition By Expression operation
+				class. Hence, known as Operation Fields. Basic validation to check
+				empty field values is present on the Operation Fields Grid.
+				<p>
+					<img alt="" src="../../images/operation_fields_validation.png" />
+				</p> </span></li>
+				
+		<li><span><b>Batch </b> -Batch has a default value of 0.
+				However, blank text box results in error validation and is not
+				allowed.
+				<p>
+					<img alt="" src="../../images/partition_by_expression_batch_validation.png" />
+				</p> </span></li>
+	</ul>
+	
+	<p><span>If the properties window has some error even after user visit's it once, then the warning icon on the Partition By Expression component on the job canvas changes to error icon. This error icon is removed only when all the mandatory fields are supplied with correct values.</span></p>
+	<p><img src="../../images/partition_by_expression_error.png" alt="" /></p>
+
+</body>
+</html>

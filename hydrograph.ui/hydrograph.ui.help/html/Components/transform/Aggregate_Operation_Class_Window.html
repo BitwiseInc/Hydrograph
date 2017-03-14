@@ -1,0 +1,61 @@
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+
+<!doctype html>
+<html>
+<head>
+	<title>Aggregate Operation Class Window</title>
+	<link rel="stylesheet" type="text/css" href="../../css/style.css">
+</head>
+<body>
+<p><span class="header-1">Aggregate Operation Class Window</span></p>
+<p><span>Operation class defines the operations that can performed on the input data using the aggregate component. Operation class is a <b>mandatory</b> attribute. Operation class can be:</span></p>
+<ul>
+	<li><span><a href="#in-built-operation-class">In-built operation class</a></span></li>
+	<li><span><a href="#custom-operation-class">Custom built operation class</a></span></li>
+</ul>
+<p class="center"><img alt="Fig 1" src="../../images/Aggregate_Operation_Class_Window.png" /></p>
+<p class="center"><span>Fig 1</span></p>
+
+<p><a name="in-built-operation-class"></a><span class="header-2">In-built Operation Class</span></p>
+<p><span>Hydrograph provides in-built set of functions in form of java classes that can be applied to the component. Aggregate component has below mentioned java classes:<p><span>
+<ul>
+	<li><span><a href="../../Operation Base Interface/Aggregate/Sum.html">Sum</a>: Calculate the sum of a specified field within the group.</span></li>
+	<li><span><a href="../../Operation Base Interface/Aggregate/Max.html">Max</a>: The max function calculates the maximum value for the specified field within the group.</span></li>
+	<li><span><a href="../../Operation Base Interface/Aggregate/Min.html">Min</a>: The min function calculates the minimum value for the specified field within the group.</span></li>
+	<li><span><a href="../../Operation Base Interface/Aggregate/Count.html">Count</a>: The count function calculates the count of records within a group.</span></li>
+	<li><span><a href="../../Operation Base Interface/Aggregate/StringAppend.html">StringAppend</a>: The string append function appends all the values of the specified field within the group.</span></li>
+</ul>
+<p><span>The in-built operation class can be selected from the operation class drop down.</span></p>
+<p><a name="custom-operation-class"></a><span class="header-2">Custom Operation Class</span></p>
+<p><span>User can create new custom classes or use the already available classes in the workspace.</span></p>
+<p><span class="header-3">Creating new custom class</span></p>
+<p><span>To create a new custom operation class, select "Custom" in the operation class drop down and click on "Create New". The "New Java Class" window will open.</span></p>
+
+<p class="center"><img alt="Fig 3" src="../../images/Aggregate_Operation_Class_Window1.png" /></p>
+<p class="center"><span>Fig 3</span></p>
+
+<p><span>In the "New Java Class" window, click ‘Browse’ to select ‘Source Folder’. Enter or browse the package name and the class name for the new class and click "Finish". Upon successful creation of the new class, the control will be redirected to operation class window. The "Open" button will open the java class to edit it. Alternatively, the new class can also be opened by browsing it from the "<a href="../../User Interface/Project_Explorer.html">Project Explorer</a>".</span></p>
+<p><span><b>Note</b>: All custom operation classes for aggregate component must implement <span class="code"><a href="../../Operation Base Interface/Aggregate/AggregateTransformBase.html">AggregateTransformBase</a></span> interface.<span></p>
+
+<p class="center"><img alt="Fig 2" src="../../images/Operation_Class_New_Java_Class.png" /></p>
+
+<p><span class="header-3">Using existing custom class</span></p>
+<p><span>Alternatively, instead of creating a new java class, an existing java class, compatible with the aggregate component can also be used. To use an existing java class, click "Browse" button and select the class available in the workspace. The class must implement <span class="code"><a href="../../Operation Base Interface/Aggregate/AggregateTransformBase.html">AggregateTransformBase</a></span> interface.</span></p>
+
+<a name="Operation_Properties_Grid"></a>
+<p><span class="header-2">Operation Properties Grid</span></p>
+<p><span>The operation properties grid is present on the operation class window. This grid is used to define operation properties. Every row added to this grid defines a new operation property. A property has a unique name and a value. The property value can also be parameterized by using the parameter syntax (i.e. using <i>@{}</i>).</span></p>
+<p><span>These property values can be accessed in the operation classes.</span></p>
+<p><span>Operation property may or may not be specified. It is not mandatory.</span></p>
+
+</body>
+</html>

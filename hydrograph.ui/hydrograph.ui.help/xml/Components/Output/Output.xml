@@ -15,7 +15,6 @@
  
 <?NLS TYPE="org.eclipse.help.toc"?>
 <toc label="Input" link_to="xml/Components.xml#Output"> 
-  
     <topic href="html/Components/output/Output_File_Delimited.html" label="Output File Delimited">
       <anchor id="OutputFileDelimited"/>
       <link toc="xml/Components/output/outputFileDelimited.xml"/>
@@ -58,6 +57,10 @@
    </topic>
     <topic href="html/Components/output/Output_Teradata.html" label="Output Teradata">
       <anchor id="outputTeradata"/>
+      <link toc="xml/Components/output/outputTeradata.xml"/>
+   </topic>
+   <topic href="html/Components/output/Discard.html" label="Discard">
+      <anchor id="Discard"/>
       <link toc="xml/Components/output/outputTeradata.xml"/>
    </topic>
   </toc>

@@ -1,0 +1,764 @@
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Expression Editor Predefined Functions</title>
+<link rel="stylesheet" type="text/css" href="../../css/style.css">
+</head>
+<body>
+
+	<p>
+		<span class="header-1">Expression Editor Predefined Functions</span>
+	</p>
+	<p>
+		<span>The<b> Expression Editor Window</b>&nbsp;provides
+			predefined expressions for the user. Below are the predefined
+			functions provided in the Expression Editor.
+		</span>
+	</p>
+	<ul>
+		<li><span><a href="#common-functions">Common Functions</a></span></li>
+		<li><span><a href="#date-functions">Date Functions</a></span></li>
+		<li><span><a href="#force-error-functions">Force Error
+					Functions</a></span></li>
+		<li><span><a href="#numeric-functions">Numeric
+					Functions</a></span></li>
+		<li><span><a href="#string-functions">String Functions</a></span></li>
+		<li><span><a href="#validate-functions">Validations
+					Functions</a></span></li>
+	</ul>
+	<p>
+		<a name="#common-functions"></a><span class="header-2">Common
+			Functions</span>
+	</p>
+	
+	
+		<p><span class="header-3">1. boolean vectorCompare(ReusableRow arg0, String arg1, String
+			arg2) </span> </p>
+		<p><span> This method can be used to simulate the
+			vector comparison like old == new, where 'old' and 'new' are vectors
+			with equal number of sub-fields in them. The field names and data
+			types should match for a correct comparison.</span></p>
+	<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputRow the ReusableRow object whose fields are to be compared</span></li>
+				<li><span>prefix1 the prefix of the vector 1 to be compared</span></li>
+				<li><span>prefix2 the prefix of the vector 2 to be compared</span></li>
+		</ul>
+		<li><span>Returns:</span></li>
+		<ul>
+			<li><span>true if all the field values match</span></li>
+			<li><span>false is any field value does not match</span></li>
+		</ul>
+					
+		</ul>			
+		
+		<p>
+		<a name="#date-functions"></a><span class="header-2">Date
+			Functions</span>
+	</p>
+		<p><span class="header-3">1. Integer today() </span> </p>
+		<p><span> Returns number of days since 1st January 1900. </span></p>
+	<ul>
+		<li><span>Returns:</span></li>
+		<ul>
+			<li><span>number of days since 1st January 1900</span></li>
+		</ul>
+		</ul>	
+				
+		<p><span class="header-3">2. TT now() </span> </p>
+		<p><span> Returns current date and time in yyyyMMddHmmssS format</span></p>
+		<ul>
+			<li><span>Returns:</span></li>
+		
+			<li><span>current date and time in yyyyMMddHmmssS format</span></li>
+		</ul>
+					
+			
+		
+		<p><span class="header-3">3. String dateFormatter(String inputValue, String oldFormat, String newFormat ) </span> </p>
+		<p><span>Formats and converts a date value into string representation in the desired new date format.</span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValue the date value in old format</span></li>
+				<li><span>oldFormat the date format of the date passed in inputValue</span></li>
+				<li><span>newFormat the desired date format</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>string representation of date in new date format </span></li>
+			<li><span>the method returns null if any parameter is null</span></li>
+		</ul>
+		<li><span>Throws:</span></li>
+		<ul>
+			<li><span>ParseException if the date value passed in inputDateInStringFormat does not match the dateFormat</span></li>
+		</ul>
+		</ul>	
+		
+		<p><span class="header-3">4. String dateFormatter(Date inputValue, String oldFormat, String newFormat) </span> </p>
+		<p><span>Formats and converts a date value into string representation in the desired new date format.</span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValue the date value in old format</span></li>
+				<li><span>oldFormat the date format of the date passed in inputValue</span></li>
+				<li><span>newFormat the desired date format</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>string representation of date in new date format </span></li>
+			<li><span>the method returns null if any parameter is null</span></li>
+		</ul>
+			<li><span>Throws:</span></li>
+			<ul>
+			<li><span>ParseException if the date value passed in inputDateInStringFormat does not match the dateFormat</span></li>
+			</ul>		
+		</ul>			
+		
+			<p><span class="header-3">5. Date getDateFromString(T inputDateInStringFormat, String dateFormat) </span> </p>
+		<p><span>Returns a date object from a string date value.</span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputDateInStringFormat the date value in string</span></li>
+				<li><span>dateFormat the date format of the date value passed in inputDateInStringFormat</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>a date object of the corresponding date value</span></li>
+			<li><span>the method returns null if any parameter is null</span></li>
+		</ul>
+			<li><span>Throws:</span></li>
+			<ul>
+			<li><span>ParseException - if the date value passed in inputDateInStringFormat does not match the dateFormat</span></li>
+			</ul>		
+		</ul>
+		
+		<p><span class="header-3">6.  String getStringDateFromDateObject(T inputDate, String dateFormat) </span> </p>
+		<p><span>Returns a string value of the date.</span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputDate the date to fetch the string value</span></li>
+				<li><span>dateFormat the date format of the date value passed in inputDate</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>a string value of the date.</span></li>
+			<li><span>the method returns null if any parameter is null</span></li>
+		</ul>
+			<li><span>Throws:</span></li>
+			<ul>
+			<li><span>ParseException - if the date value passed in inputDate does not match the dateFormat</span></li>
+			</ul>	
+		</ul>
+		
+		<p><span class="header-3">7.  String getStringDateFromDateObject(Date inputDate, String dateFormat) </span> </p>
+		<p><span>Returns a string value of the date.</span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputDate the date to fetch the string value</span></li>
+				<li><span>dateFormat the date format of the date value passed in inputDate</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>a string value of the date </span></li>
+			<li><span>the method returns null if any parameter is null</span></li>
+		</ul>
+			<li><span>Throws:</span></li>
+			<ul>
+			<li><span>ParseException - if the date value passed in inputDate does not match the dateFormat</span></li>
+			</ul>	
+		</ul>
+		
+		<p><span class="header-3">8.  boolean validateStringDate(String inputDate, String dateFormat) </span> </p>
+		<p><span>Validates the string date value to the format specified.</span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputDate the date value in string to be validated</span></li>
+				<li><span>dateFormat the date format to validate the string value against</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>true if the date value passed in inputDate matches the date format passed in dateFormat </span></li>
+			<li><span>false if the date value passed in inputDate does not match the date format passed in dateFormat</span></li>
+		</ul>
+					
+		</ul>
+		
+	<p>
+		<a name="#force-error-functions"></a><span class="header-2">Force Error
+			Functions</span>
+	</p>
+	
+	<p><span class="header-3">1. void raiseError(String errorMessage) </span> </p>
+		<p><span>Throws a runtime exception with the error message.</span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>errorMessage the error message to log</span></li>
+		</ul>
+					
+		</ul>
+		
+			
+	<p>
+		<a name="#numeric-functions"></a><span class="header-2">Numeric Functions</span>
+	</p>
+	
+	<p><span class="header-3">1. String decimalStrip(String inputValue) </span> </p>
+		<p><span>Retains just the decimal numbers 0-9 excluding the decimal point from the inputValue.</span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValue the value from which the decimals are to be retained</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>the decimals from the inputValue </span></li>
+		</ul>
+					
+		</ul>
+	
+	<p><span class="header-3">2. String decimalStrip(String inputValue, String decimal_point) </span> </p>
+		<p><span>Retains just the decimal numbers 0-9 including decimal point as specified in decimalPoint from the inputValue.</span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValue the value from which the decimals are to be retained</span></li>
+				<li><span>includeDecimalPoint</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>the decimals from the inputValue</span></li>
+		</ul>
+					
+		</ul>
+		
+		<p><span class="header-3">3. T mathAbs(T inputValue) </span> </p>
+		<p><span>Returns the absolute value of the argument.</span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValue whose absolute value is to be determined</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>the absolute value of the argument</span></li>
+		</ul>
+					
+		</ul>
+		
+		<p><span class="header-3">4. Integer random(T n) </span> </p>
+		<p><span>Returns a pseudorandom, uniformly distributed int value between 0 (inclusive) and the specified value (exclusive), drawn from this random number generator's sequence.</span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>n the bound on the random number to be returned. Must be positive.</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>the next pseudorandom, uniformly distributed int value between 0 (inclusive) and n (exclusive) from this random number generator's sequence</span></li>
+		</ul>
+					
+		</ul>
+		
+		<p><span class="header-3">5. Double getDoubleFromComparable(T inputValue)</span> </p>
+		<p><span>Returns a double value.</span></p>
+		
+		<p>
+		<a name="#string-functions"></a><span class="header-2">String Functions</span>
+	</p>
+	
+	<p><span class="header-3">1. Integer stringLength(T inputValue) </span> </p>
+		<p><span>Returns string length of the inputValue.</span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValue the value whose length is to be retrieved</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>Length of the inputValue</span></li>
+		</ul>
+					
+		</ul>
+		
+		<p><span class="header-3">2. String stringLRTrim(String inputValue) </span> </p>
+		<p><span>Trims the spaces from LHS and RHS of the inputValue. </span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValue the value whose spaces are to be trimmed</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>inputValue with spaces removed from LHS and RHS</span></li>
+		</ul>
+					
+		</ul>
+		
+		<p><span class="header-3">3. String stringRightTrim(String inputValue) </span> </p>
+		<p><span>Trims the spaces from the RHS of the inputValue. </span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValue the value whose spaces are to be trimmed</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>inputValue with spaces removed from RHS</span></li>
+		</ul>
+					
+		</ul>
+		
+		<p><span class="header-3">4. String stringLeftTrim(String inputValue) </span> </p>
+		<p><span>Trims the spaces from the LHS of the inputValue. </span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValue the value whose spaces are to be trimmed</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>inputValue with spaces removed from LHS</span></li>
+		</ul>
+					
+		</ul>
+		
+		<p><span class="header-3">5. String stringReplace(String inputValue, String srcString, String tgtString) </span> </p>
+		<p><span>Replaces source string with the target string in the inputValue.  </span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValue the value in which the source string is to be replaced with target string</span></li>
+				<li><span>srcString the source string to be replaced in inputValue</span></li>
+				<li><span>tgtString the target string to replace in inputValue</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>inputValue with source string replaced with target string</span></li>
+		</ul>
+					
+		</ul>
+		
+		<p><span class="header-3">6. String stringReplace(String inputValue, String srcString, String tgtString, int startOffset) </span> </p>
+		<p><span>Replace source string with the target string from the given offset in the inputValue. </span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValue the value in which the source string is to be replaced with target string</span></li>
+				<li><span>srcString the source string to be replaced in inputValue</span></li>
+				<li><span>tgtString the target string to replace in inputValue</span></li>
+				<li><span>startOffset the starting offset from where to start the replacement</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>inputValue with source string replaced with target string from the given offset</span></li>
+		</ul>
+					
+		</ul>
+		
+		<p><span class="header-3">7. Integer stringCompare(String inputValue, String anotherString) </span> </p>
+		<p><span>Compares two strings.</span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValue the first string to compare</span></li>
+				<li><span>anotherString the second string to compare</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>if the strings are equal return 0 else return 1 or -1</span></li>
+		</ul>
+		</ul>
+		
+		<p><span class="header-3">8. String stringConcat(String inputValue, String appendValue)  </span> </p>
+		<p><span>Appends given string values to the inputValue.</span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValue the string to append the value(s) to</span></li>
+				<li><span>appendValue the value(s) to append to</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>The concatenated string </span></li>
+		</ul>
+		</ul>
+		
+		<p><span class="header-3">9. String stringSubString(String inputValue, int start, int length)  </span> </p>
+		<p><span>Returns substring from the start position till the specified length.</span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValue the string whose substring is to be fetched</span></li>
+				<li><span>start the starting position of the substring to be retrieved. The index starts with 1</span></li>
+				<li><span>length the length of the substring to be retrieved</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>Substring from the given inputValue</span></li>
+		</ul>
+		</ul>
+		
+		<p><span class="header-3">10. Integer stringIndex(String inputValue, String searchString) </span> </p>
+		<p><span>Returns the first index of the searchString within the inputValue.</span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValue the value from which index is to be retrieved</span></li>
+				<li><span>searchString the search string whose first index is to be retrieved</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>the first index of the searchString within the inputValue</span></li>
+		</ul>
+		</ul>
+		
+		<p><span class="header-3">11. Integer stringIndex(String inputValue, String searchString, int offset) </span> </p>
+		<p><span>Returns the first index of the searchString within the inputValue from the given offset.</span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValue the value from which index is to be retrieved</span></li>
+				<li><span>searchString the search string whose first index is to be retrieved</span></li>
+				<li><span>offset the starting offset from where to start the search</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>the first index of the searchString within the inputValue from the given offset</span></li>
+		</ul>
+		</ul>
+		
+		<p><span class="header-3">12. Integer stringRightIndex(String inputValue, String searchString) </span> </p>
+		<p><span>Returns the last index of the searchString within the inputValue in case the searchString is present multiple times.</span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValue the value from which index is to be retrieved</span></li>
+				<li><span>searchString the search string whose last index is to be retrieved</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>the last index of the searchString within the inputValue</span></li>
+		</ul>
+		</ul>
+		
+		<p><span class="header-3">13. Integer stringRightIndex(String inputValue, String searchString, int offset) </span> </p>
+		<p><span>Returns the last index of the searchString within the inputValue from the given offset.</span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValue the value from which index is to be retrieved</span></li>
+				<li><span>searchString the search string whose last index is to be retrieved</span></li>
+				<li><span>offset the starting offset from where to start the search</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>the last index of the searchString within the inputValue from the given offset</span></li>
+		</ul>
+		</ul>
+		
+		<p><span class="header-3">14. String stringFilter(String inputValue, String searchString) </span> </p>
+		<p><span>Returns all the characters from searchString present in inputValue.</span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValue the input value from which the characters are to be fetched</span></li>
+				<li><span>searchString the string containing characters to search</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>all the characters from searchString present in inputValue</span></li>
+		</ul>
+		</ul>
+		
+		<p><span class="header-3">15. String stringDeFilter(String inputValue, String searchString) </span> </p>
+		<p><span>Removes all the characters from searchString from inputValue.</span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValue the input value from which the characters are to be removed</span></li>
+				<li><span>searchString the string containing characters to be removed</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>string with all the characters from searchString removed</span></li>
+		</ul>
+		</ul>
+		
+		<p><span class="header-3">16. String stringLeftPad(String inputValue, int expectedLength) </span> </p>
+		<p><span>Left pads the inputValue with spaces.</span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValue the input value to left pad</span></li>
+				<li><span>expectedLength the expected length of the resulting string</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>the inputValue with spaces padded on the left</span></li>
+		</ul>
+		</ul>
+		
+		<p><span class="header-3">16. String stringLeftPad(String inputValue, int expectedLength) </span> </p>
+		<p><span>Left pads the inputValue with spaces.</span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValue the input value to left pad</span></li>
+				<li><span>expectedLength the expected length of the resulting string</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>the inputValue with spaces padded on the left</span></li>
+		</ul>
+		</ul>
+		
+		<p><span class="header-3">17. String stringLeftPad(String inputValue, int expectedLength, T paddingCharacter) </span> </p>
+		<p><span>Left pads the inputValue with paddingCharacter.</span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValue the input value to left pad</span></li>
+				<li><span>expectedLength the expected length of the resulting string</span></li>
+				<li><span>paddingCharacter the character to pad on the left</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>the inputValue with paddingCharacter padded on the left</span></li>
+		</ul>
+		</ul>
+		
+		<p><span class="header-3">18. String[] stringSplit(String inputValue, String separator) </span> </p>
+		<p><span>Splits the inputValue on the provided separator.</span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValue the input value to split</span></li>
+				<li><span>separator the separator to split the inputValue on</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>an array of strings computed by splitting inputValue on the provided separator</span></li>
+		</ul>
+		</ul>
+		
+		<p><span class="header-3">19. String stringUpper(String inputValue) </span> </p>
+		<p><span>Converts the string to upper case.</span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValue the input value to convert to upper case</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>the inputValue in upper case</span></li>
+		</ul>
+		</ul>
+		
+		<p><span class="header-3">20. String stringLower(String inputValue) </span> </p>
+		<p><span>Converts the string to lower case. </span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValue the input value to convert to lower case</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>the inputValue in lower case</span></li>
+		</ul>
+		</ul>
+		
+		<p><span class="header-3">21. boolean stringMatch(String inputValue1, String inputValue2) </span> </p>
+		<p><span>Converts the string to lower case.</span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValue1 the input value</span></li>
+				<li><span>inputValue2 the input value</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span> true if inputValue1 is match with inputValue2 else false</span></li>
+		</ul>
+		</ul>
+		
+		<p>
+		<a name="#validate-functions"></a><span class="header-2">Validate Functions</span>
+	</p>
+	
+	<p><span class="header-3">1. T getFirstDefined(T... inputValues)</span> </p>
+		<p><span>Returns the first defined value from the number of inputValues. Skips null values as undefined.</span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValues the list / arbitrary number of input values from whom the first defined value is to be returned</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>the first defined value from the number of inputValues. Skips null values as undefined</span></li>
+		</ul>
+		</ul>
+		
+		<p><span class="header-3">2. Integer isDefined(T inputValue)</span> </p>
+		<p><span>Checks if inputValue is defined. </span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValue the input value to check</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>1 if inputValue is not null else 0</span></li>
+		</ul>
+		</ul>
+		
+			<p><span class="header-3">3.  boolean isDefinedCheck(T inputValue)</span> </p>
+		<p><span>Checks if inputValue is defined. </span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValue the input value to check</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>true if inputValue is not null else false</span></li>
+		</ul>
+		</ul>
+		
+			<p><span class="header-3">4. Integer isValid(T inputValue) </span> </p>
+		<p><span>Checks if inputValue is instance of String.</span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValue the input value to check</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>1 if inputValue is instance of String else 0</span></li>
+		</ul>
+		</ul>
+		
+		<p><span class="header-3">5. boolean isValidCheck(T inputValue) </span> </p>
+		<p><span>Checks if inputValue is instance of String.</span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValue the input value to check</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>true if inputValue is instance of String else false</span></li>
+		</ul>
+		</ul>
+		
+		<p><span class="header-3">6. Integer isNull(T inputValue) </span> </p>
+		<p><span>Checks if inputValue is null.</span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValue the input value to check</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>1 if inputValue is null else 0</span></li>
+		</ul>
+		</ul>
+		
+		<p><span class="header-3">7. boolean isNullCheck(T inputValue) </span> </p>
+		<p><span>Checks if inputValue is null.</span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValue the input value to check</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>true if inputValue is null else false</span></li>
+		</ul>
+		</ul>
+		
+		<p><span class="header-3">8. Integer isBlank(T inputValue) </span> </p>
+		<p><span>Checks if inputValue is blank.</span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValue the input value to check</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>1 if inputValue is null else 0</span></li>
+		</ul>
+		</ul>
+		
+		<p><span class="header-3">9. boolean isBlankCheck(T inputValue) </span> </p>
+		<p><span>Checks if inputValue is blank.</span></p>
+		<ul>
+		<li><span> Parameters:</span></li>
+		<ul>
+				<li><span>inputValue the input value to check</span></li>
+		</ul>
+		
+			<li><span>Returns:</span></li>
+		<ul>
+			<li><span>true if inputValue is blank else false</span></li>
+		</ul>
+		</ul>
+</body>
+</html>
