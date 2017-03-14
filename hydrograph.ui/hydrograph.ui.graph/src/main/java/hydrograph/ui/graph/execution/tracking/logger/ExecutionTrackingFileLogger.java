@@ -65,11 +65,8 @@ public class ExecutionTrackingFileLogger {
 	private void initializeTrackingLogPath(){
  		jobTrackingLogDirectory = Platform.getPreferencesService().getString(Activator.PLUGIN_ID, ExecutionPreferenceConstants.TRACKING_LOG_PATH, 
  				TrackingDisplayUtils.INSTANCE.getInstallationPath(), null);
- 		if(OSValidator.isWindows()){
- 			jobTrackingLogDirectory = jobTrackingLogDirectory + "\\";
- 		}else if(OSValidator.isMac()){
- 			jobTrackingLogDirectory = jobTrackingLogDirectory + "//";
- 		}
+ 			jobTrackingLogDirectory = jobTrackingLogDirectory + File.separator;
+ 		
  	}
 	
 	/**
@@ -118,11 +115,7 @@ public class ExecutionTrackingFileLogger {
 		}else{
 			uniqJobId = EXECUTION_TRACKING_REMOTE_MODE + uniqJobId;
 		}
-		if(OSValidator.isWindows()){
-			jobTrackingLogDirectory = jobTrackingLogDirectory + "\\";
-		}else if(OSValidator.isMac()){
-			jobTrackingLogDirectory = jobTrackingLogDirectory + "//";
-		}
+			jobTrackingLogDirectory = jobTrackingLogDirectory + File.separator;
 		
 		try {
 			createJsonFormatFile(jobTrackingLogDirectory + uniqJobId + EXECUTION_TRACKING_LOG_FILE_EXTENTION, executionStatusList);

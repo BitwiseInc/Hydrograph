@@ -116,6 +116,7 @@ public class XPathSchemaGridCellModifier implements ICellModifier {
 			
 		}
 		XPathGridRow xPathGridRow = (XPathGridRow) object;
+		if (xPathGridRow != null) {
 		if (XPathSchemaGridWidget.FIELDNAME.equals(property)){
 			xPathGridRow.setFieldName(((String) value).trim());
 		}
@@ -158,6 +159,7 @@ public class XPathSchemaGridCellModifier implements ICellModifier {
 		resetDateFormat(xPathGridRow, property);
 		viewer.refresh();
 		SchemaRowValidation.INSTANCE.highlightInvalidRowWithRedColor(xPathGridRow, (TableItem)element,xPathSchemGridWidget.getTable(), xPathSchemGridWidget.getComponentType());
+	}	
 		xPathSchemGridWidget.showHideErrorSymbol(xPathSchemGridWidget.isWidgetValid());
 		xPathSchemGridWidget.setSchemaUpdated(true);
 	}

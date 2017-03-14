@@ -275,11 +275,8 @@ public class DataViewerFileManager {
 
 	private String getDataViewerDebugFile(String csvDebugFileName) {
 		String dataViewerDebugFile = getDataViewerDebugFilePath();
-		if (OSValidator.isWindows()) {
-			dataViewerDebugFile = (dataViewerDebugFile + "\\" + csvDebugFileName.trim() + DEBUG_DATA_FILE_EXTENTION).trim();
-		} else {
-			dataViewerDebugFile = (dataViewerDebugFile + "/" + csvDebugFileName.trim() + DEBUG_DATA_FILE_EXTENTION).trim();
-		}
+			dataViewerDebugFile = (dataViewerDebugFile + File.separator + csvDebugFileName.trim() + DEBUG_DATA_FILE_EXTENTION).trim();
+		
 		return dataViewerDebugFile;
 	}
 	
@@ -291,9 +288,9 @@ public class DataViewerFileManager {
 			if(dataViewerDebugFilePath.startsWith("/")){
 				dataViewerDebugFilePath = dataViewerDebugFilePath.replaceFirst("/", "").replace("/", "\\");
 			}		
-			dataViewerDebugFilePath = dataViewerDebugFilePath + "\\";
+			dataViewerDebugFilePath = dataViewerDebugFilePath + File.separator;
 		}else{
-			dataViewerDebugFilePath = dataViewerDebugFilePath + "/";
+			dataViewerDebugFilePath = dataViewerDebugFilePath + File.separator;
 		}
 		
 		return dataViewerDebugFilePath;

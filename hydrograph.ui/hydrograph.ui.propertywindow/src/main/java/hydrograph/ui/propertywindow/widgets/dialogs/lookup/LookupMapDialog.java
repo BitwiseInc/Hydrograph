@@ -742,10 +742,10 @@ public class LookupMapDialog extends Dialog {
 		}
 		if (inputPorts != null) {
 			inputPorts.add(inputIn0PortFieldList);
-
-			for (FilterProperties inputField : inputIn0PortFieldList) {
-				allInputFields.add(IN0_PREFIX
-						+ inputField.getPropertyname());
+			if (inputIn0PortFieldList != null) {
+				for (FilterProperties inputField : inputIn0PortFieldList) {
+					allInputFields.add(IN0_PREFIX + inputField.getPropertyname());
+				}
 			}
 
 		}

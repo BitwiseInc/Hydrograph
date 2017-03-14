@@ -46,6 +46,7 @@ public static final SubjobUtility INSTANCE= new SubjobUtility();
 		for(Link link:component.getSourceConnections())
 		{
 			Component nextComponent=link.getTarget();
+			if (nextComponent != null) {
 			Schema schema=(Schema)nextComponent.getProperties().get(Constants.SCHEMA_PROPERTY_NAME);
 			while(StringUtils.equalsIgnoreCase(nextComponent.getCategory(), Constants.STRAIGHTPULL)
 					||StringUtils.equalsIgnoreCase(nextComponent.getComponentName(),Constants.FILTER)	
@@ -146,6 +147,7 @@ public static final SubjobUtility INSTANCE= new SubjobUtility();
 				else
 				break;	
 			}
+		}
 			if(StringUtils.equalsIgnoreCase(nextComponent.getCategory(),Constants.TRANSFORM))
 			{
 				nextComponent.setContinuousSchemaPropogationAllow(true);

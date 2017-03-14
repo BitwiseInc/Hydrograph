@@ -103,7 +103,7 @@ public class JobManager {
 	private static final String DEBUG_FILE_EXTENTION="_debug.xml";
 	
 	/** The Constant PROJECT_METADATA_FILE. */
-	public static final String PROJECT_METADATA_FILE="\\project.metadata";
+	public static final String PROJECT_METADATA_FILE=File.separator+"project.metadata";
 	
 	/** The data viewer map. */
 	private Map<String,DebugDataViewer> dataViewerMap;		

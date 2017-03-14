@@ -555,13 +555,15 @@ public class JobScpAndProcessUtility {
 						}else if (OSValidator.isMac()){
 							killProcess = Runtime.getRuntime().exec(MAC_COMMAND_TO_KILL_PROCESS+jpsOutput[0]);
 						}
-						InputStream streamKill = killProcess.getInputStream();
-						BufferedReader readerKill = new BufferedReader(new InputStreamReader(streamKill));
-						String lineKill = null;
-						while ((lineKill = readerKill.readLine()) != null) {
-							logger.info("Kill log: "+lineKill);
-							joblogger.logMessage(lineKill);
-							joblogger.logMessage(JOB_KILLED_SUCCESSFULLY);
+						if (killProcess != null) {
+							InputStream streamKill = killProcess.getInputStream();
+							BufferedReader readerKill = new BufferedReader(new InputStreamReader(streamKill));
+							String lineKill = null;
+							while ((lineKill = readerKill.readLine()) != null) {
+								logger.info("Kill log: " + lineKill);
+								joblogger.logMessage(lineKill);
+								joblogger.logMessage(JOB_KILLED_SUCCESSFULLY);
+							}
 						}
 						break;
 					}

@@ -162,12 +162,13 @@ public class SingleColumnWidget extends AbstractWidget {
 					break;
 				}
 			}		
-			
-		TransformMapping transformMapping=(TransformMapping) transformWidget.getProperties().get(Constants.OPERATION);
-	    for(InputField inputField:transformMapping.getInputFields())
-	    {
-	    	propogatedFields.add(inputField.getFieldName());
-	    }
+			if (transformWidget != null) {
+				TransformMapping transformMapping = (TransformMapping) transformWidget.getProperties()
+						.get(Constants.OPERATION);
+				for (InputField inputField : transformMapping.getInputFields()) {
+					propogatedFields.add(inputField.getFieldName());
+				}
+			}
 	    return propogatedFields;
 		}
 		else if(StringUtils.equalsIgnoreCase(getComponent().getComponentName(),Constants.FILTER)
@@ -181,12 +182,13 @@ public class SingleColumnWidget extends AbstractWidget {
 					schemaWidget=(ELTSchemaGridWidget)abstractWidget;
 					break;
 				}
-			}	
-			schemaWidget.refresh();
-			List<GridRow> gridRowList=(List<GridRow>)schemaWidget.getTableViewer().getInput();
-			for(GridRow gridRow:gridRowList)
-			{
-				propogatedFields.add(gridRow.getFieldName());
+			}
+			if (schemaWidget != null) {
+				schemaWidget.refresh();
+				List<GridRow> gridRowList = (List<GridRow>) schemaWidget.getTableViewer().getInput();
+				for (GridRow gridRow : gridRowList) {
+					propogatedFields.add(gridRow.getFieldName());
+				}
 			}
 			return propogatedFields;
 		}

@@ -118,6 +118,7 @@ public class SchemaGridCellModifier implements ICellModifier {
 			
 		}
 		BasicSchemaGridRow basicSchemaGridRow = (BasicSchemaGridRow) object;
+		if (basicSchemaGridRow != null) {
 		if (ELTSchemaGridWidget.FIELDNAME.equals(property))
 			basicSchemaGridRow.setFieldName(((String) value).trim());
 		else if (ELTSchemaGridWidget.DATATYPE.equals(property)){
@@ -161,6 +162,7 @@ public class SchemaGridCellModifier implements ICellModifier {
 		resetDateFormat(basicSchemaGridRow, property);
 		viewer.refresh();
 		SchemaRowValidation.INSTANCE.highlightInvalidRowWithRedColor(basicSchemaGridRow, (TableItem)element,eltGenericSchemaGridWidget.getTable(), eltGenericSchemaGridWidget.getComponentType());
+	}
 		eltGenericSchemaGridWidget.showHideErrorSymbol(eltGenericSchemaGridWidget.isWidgetValid());
 		eltGenericSchemaGridWidget.setSchemaUpdated(true);
 	}

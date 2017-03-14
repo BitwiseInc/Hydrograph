@@ -73,10 +73,12 @@ public class DebugHelper {
 							links=component_temp.getTargetConnections();
 						}
 				}	
-					for(Link str : links){
-						String sub_comp = str.getSource().getComponentLabel().getLabelContents();
-						String sub_comp_port = str.getSourceTerminal();
-						subjobWatcherList.add(sub_comp+"."+sub_comp_port);
+					if (links != null) {
+						for (Link str : links) {
+							String sub_comp = str.getSource().getComponentLabel().getLabelContents();
+							String sub_comp_port = str.getSourceTerminal();
+							subjobWatcherList.add(sub_comp + "." + sub_comp_port);
+						}
 					}
 					return subjobWatcherList;
 				}
@@ -91,19 +93,23 @@ public class DebugHelper {
 							links=component_temp.getTargetConnections();
 							break;
 						}
-					}for(Link link : links){
-						Map<String, Port> map = link.getSource().getPorts();
-						for(Entry<String, Port> entry : map.entrySet()){
-							Port port = entry.getValue();
-							String type = port.getPortType();
-							if((type.equalsIgnoreCase("out")||type.equalsIgnoreCase("unused")) && port.isWatched()){
-								Component component2 = port.getParent();
-								String subjob_componenetId = component2.getComponentLabel().getLabelContents();
-								String subjob__socketId = port.getTerminal();
-								subjobWatcherList.add(subjob_componenetId+"."+subjob__socketId);
+					}
+						if (links != null) {
+							for (Link link : links) {
+								Map<String, Port> map = link.getSource().getPorts();
+								for (Entry<String, Port> entry : map.entrySet()) {
+									Port port = entry.getValue();
+									String type = port.getPortType();
+									if ((type.equalsIgnoreCase("out") || type.equalsIgnoreCase("unused"))
+											&& port.isWatched()) {
+										Component component2 = port.getParent();
+										String subjob_componenetId = component2.getComponentLabel().getLabelContents();
+										String subjob__socketId = port.getTerminal();
+										subjobWatcherList.add(subjob_componenetId + "." + subjob__socketId);
+									}
+								}
 							}
 						}
-					}
 					return subjobWatcherList;
 					
 				  }
