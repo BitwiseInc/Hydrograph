@@ -16,9 +16,8 @@ package hydrograph.ui.parametergrid.dialog;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -1679,46 +1678,8 @@ public class MultiParameterFileDialog extends Dialog {
 		
 		saveParameters();
 
-		try {
-			FileOutputStream fout;
-			fout = new FileOutputStream(this.activeProjectLocation + "\\"
-					+ MultiParameterFileDialogConstants.PROJECT_METADATA_FILE);
-			ObjectOutputStream oos = new ObjectOutputStream(fout);
 			tempParameterFiles.remove(getJobSpecificFile());
 			getComponentCanvas().addJobLevelParamterFiles(jobLevelParamterFiles);
-			oos.writeObject(tempParameterFiles);
-			oos.close();
-			fout.close();
-		} catch (FileNotFoundException fileNotFoundException) {
-			runGraph = false;
-
-			MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_ERROR
-					| SWT.OK);
-
-			messageBox.setText(MessageType.ERROR.messageType());
-			messageBox
-					.setMessage(ErrorMessages.UNABLE_To_WRITE_PROJECT_METADAT_FILE
-							+ fileNotFoundException.getMessage());
-			messageBox.open();
-
-			logger.debug("Unable to write project metadata file",
-					fileNotFoundException.getMessage());
-			fileNotFoundException.printStackTrace();
-		} catch (IOException ioException) {
-			runGraph = false;
-			MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_ERROR
-					| SWT.OK);
-
-			messageBox.setText(MessageType.ERROR.messageType());
-			messageBox
-					.setMessage(ErrorMessages.UNABLE_To_WRITE_PROJECT_METADAT_FILE
-							+ ioException.getMessage());
-			messageBox.open();
-
-			logger.debug(ErrorMessages.UNABLE_To_WRITE_PROJECT_METADAT_FILE,
-					ioException.getMessage());
-			ioException.printStackTrace();
-		}
 		runGraph = true;
 		okPressed = true;
 	}
@@ -1818,12 +1779,25 @@ public class MultiParameterFileDialog extends Dialog {
 		ObjectInputStream in = null;
 		try {
 			// stream closed in the finally
-			in = new ObjectInputStream(bais);
+			 List<String> acceptedObjectList = new ArrayList<String>();
+			 acceptedObjectList.add(java.util.ArrayList.class.getName());
+			 acceptedObjectList.add(ParameterFile.class.getName());
+			 acceptedObjectList.add(ParamterFileTypes.class.getName());
+			 acceptedObjectList.add(java.lang.Enum.class.getName());
+			 in = new LookAheadObjectInputStream(bais,acceptedObjectList);
 			return in.readObject();
 
 		} catch (ClassNotFoundException ex) {
 			throw new SerializationException(ex);
-		} catch (IOException ex) {
+		}catch (InvalidClassException ex) {
+			int shellStyle= SWT.APPLICATION_MODAL | SWT.OK | SWT.ICON_ERROR;
+			org.eclipse.swt.widgets.MessageBox messageBox = new  org.eclipse.swt.widgets.MessageBox(Display.getDefault().getActiveShell(),shellStyle);
+			messageBox.setText("Invalid file data");
+			messageBox.setMessage("Invalid entry in list");
+			messageBox.open();
+		    throw new SerializationException(ex);
+		} 
+		catch (IOException ex) {
 			throw new SerializationException(ex);
 		} finally {
 			try {

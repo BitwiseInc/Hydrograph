@@ -20,13 +20,10 @@ import hydrograph.ui.datastructures.parametergrid.filetype.ParamterFileTypes;
 import hydrograph.ui.logging.factory.LogFactory;
 import hydrograph.ui.parametergrid.constants.ErrorMessages;
 import hydrograph.ui.parametergrid.constants.MessageType;
-import hydrograph.ui.parametergrid.constants.MultiParameterFileDialogConstants;
 import hydrograph.ui.parametergrid.dialog.MultiParameterFileDialog;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -101,12 +98,6 @@ public class ParameterGridOpenHandler extends AbstractHandler {
 		List<ParameterFile> parameterFileList = new LinkedList<>();
         updateParameterFileListWithJobSpecificFile(parameterFileList,activeProjectLocation);
 
-		try(FileInputStream fileInputStream = new FileInputStream(activeProjectLocation + MultiParameterFileDialogConstants.PROJECT_METADATA_FILE);
-				ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)){
-			parameterFileList.addAll((LinkedList<ParameterFile>) objectInputStream.readObject());
-		} catch (ClassNotFoundException | IOException exception) {
-			logger.debug("Unable to read project.metadata file, this might be a new project", exception);
-		}
 		return parameterFileList;
 	}
 
