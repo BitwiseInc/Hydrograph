@@ -62,3 +62,5 @@ gradle-app.setting
 #User specific files
 #===============================================================================
 gradle.properties
+
+.gradle
