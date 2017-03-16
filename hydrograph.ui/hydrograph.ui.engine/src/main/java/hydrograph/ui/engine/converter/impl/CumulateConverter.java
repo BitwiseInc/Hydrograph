@@ -17,7 +17,6 @@ import hydrograph.engine.jaxb.commontypes.TypeBaseInSocket;
 import hydrograph.engine.jaxb.commontypes.TypeFieldName;
 import hydrograph.engine.jaxb.commontypes.TypeOperationsOutSocket;
 import hydrograph.engine.jaxb.commontypes.TypeSortOrder;
-import hydrograph.engine.jaxb.commontypes.TypeTransformOperation;
 import hydrograph.engine.jaxb.cumulate.TypePrimaryKeyFields;
 import hydrograph.engine.jaxb.cumulate.TypeSecondaryKeyFields;
 import hydrograph.engine.jaxb.cumulate.TypeSecondayKeyFieldsAttributes;
@@ -35,6 +34,7 @@ import hydrograph.ui.logging.factory.LogFactory;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -151,7 +151,7 @@ public class CumulateConverter extends TransformConverter {
 					if (!ParameterUtil.isParameter(secondaryKeyRowEntry.getKey())) {
 						TypeSecondayKeyFieldsAttributes fieldsAttributes = new TypeSecondayKeyFieldsAttributes();
 						fieldsAttributes.setName(secondaryKeyRowEntry.getKey());
-						TypeSortOrder order = TypeSortOrder.fromValue(secondaryKeyRowEntry.getValue().toLowerCase());
+						TypeSortOrder order = TypeSortOrder.fromValue(secondaryKeyRowEntry.getValue().toLowerCase(Locale.ENGLISH));
 						fieldsAttributes.setOrder(order);
 						field.add(fieldsAttributes);
 					} else {
