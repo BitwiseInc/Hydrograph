@@ -24,64 +24,15 @@
    </topic>
     <topic label="Transform">
       <anchor id="Transform"/>
-      <link toc="xml/Components/transform/Transform.xml"/>
+      <link toc="xml/Components/transform/TransformComponents.xml"/>
    </topic>
     <topic label="Straightpull">
       <anchor id="Straightpull"/>
-      <link toc="xml/Components/straighpull/Straightpull.xml"/>
+      <link toc="xml/Components/straightpull/Straightpull.xml"/>
    </topic>
     <topic label="Command">
       <anchor id="Command"/>
       <link toc="xml/Components/command/Command.xml"/>
-   </topic>
-   <topic href="html/Components/Aggregate.html" label="Aggregate">
-      <anchor id="Aggregate"/>
-   </topic>
-   <topic href="html/Components/Clone.html" label="Clone">
-      <anchor id="Clone"/>
-   </topic>
-      <topic href="html/Components/Cumulate.html" label="Cumulate">
-      <anchor id="Cumulate"/>
-   </topic>
-    
-   <topic href="html/Components/Discard.html" label="Discard">
-      <anchor id="Discard"/>
-      </topic>
-   <topic href="html/Components/Filter.html" label="Filter">
-      <anchor id="Filter"/>
-   </topic>
-   <topic href="html/Components/Join.html" label="Join">
-      <anchor id="Join"/>
-   </topic>
-   <topic href="html/Components/Limit.html" label="Limit">
-      <anchor id="Limit"/>
-   </topic>
-   <topic href="html/Components/Lookup.html" label="Lookup">
-      <anchor id="Lookup"/>
-   </topic>
-   <topic href="html/Components/Normalize.html" label="Normalize">
-      <anchor id="Normalize"/>
-   </topic>
-       <topic href="html/Components/Partition_By_Expression.html" label="Partition By Expression">
-      <anchor id="PartitionByExpression"/>
-   </topic>
-   <topic href="html/Components/Remove_Dups.html" label="Remove Dups">
-      <anchor id="RemoveDups"/>
-   </topic>
-   <topic href="html/Components/Sort.html" label="Sort">
-      <anchor id="Sort"/>
-   </topic>
-   <topic href="html/Components/Transform.html" label="Transform">
-      <anchor id="Transform"/>
-   </topic>
-   <topic href="html/Components/Union_All.html" label="Union All">
-      <anchor id="UnionAll"/>
-   </topic>
-   <topic href="html/Components/Unique_Sequence.html" label="Unique Sequence">
-      <anchor id="UniqueSequence"/>
-   </topic>
-   <topic href="html/Components/Normalize.html" label="Normalize">
-      <anchor id="Normalize"/>
    </topic>
    <topic href="html/Components/Unknown.html" label="Unknown">
       <anchor id="Unknown"/>

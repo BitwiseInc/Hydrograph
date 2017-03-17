@@ -86,7 +86,10 @@
             file="xml/Components/command/Command.xml">
       </toc>
       <toc
-            file="xml/Components/transform.xml">
+            file="xml/Components/straightpull/Straightpull.xml">
+      </toc>
+      <toc
+            file="xml/Components/transform/TransformComponents.xml">
       </toc>
       <toc
             file="xml/Components/components.xml"
@@ -94,15 +97,6 @@
       </toc>
       <toc
             file="xml/Components/commentBox.xml">
-      </toc>
-      <toc
-            file="xml/Components/aggregate.xml">
-      </toc>
-      <toc
-            file="xml/Components/clone.xml">
-      </toc>
-      <toc
-            file="xml/Components/filter.xml">
       </toc>
       <toc
             file="xml/Components/input/inputFileDelimited.xml">
@@ -141,15 +135,6 @@
             file="xml/Components/input/inputRedshift.xml">
       </toc>
       <toc
-            file="xml/Components/join.xml">
-      </toc>
-      <toc
-            file="xml/Components/lookup.xml">
-      </toc>
-      <toc
-            file="xml/Components/normalize.xml">
-      </toc>
-      <toc
             file="xml/Components/Output/outputFileDelimited.xml">
       </toc>
       <toc
@@ -182,17 +167,53 @@
       <toc
          	file="xml/Components/Output/outputDBUpdate.xml">
 	  </toc>
+	  <toc
+            file="xml/Components/Output/discard.xml">
+      </toc>
 	        <toc
             file="xml/Components/input/generateRecords.xml">
       </toc>
-      <toc
-            file="xml/Components/removeDups.xml">
+	  <toc
+            file="xml/Components/straightpull/clone.xml">
       </toc>
       <toc
-            file="xml/Components/transform.xml">
+            file="xml/Components/straightpull/limit.xml">
       </toc>
       <toc
-            file="xml/Components/unionAll.xml">
+            file="xml/Components/straightpull/sort.xml">
+      </toc>
+      <toc
+            file="xml/Components/straightpull/removeDups.xml">
+      </toc>
+      <toc
+            file="xml/Components/straightpull/unionAll.xml">
+      </toc>
+       <toc
+            file="xml/Components/transform/aggregate.xml">
+      </toc>
+      <toc
+            file="xml/Components/transform/filter.xml">
+      </toc>
+      <toc
+            file="xml/Components/transform/join.xml">
+      </toc>
+      <toc
+            file="xml/Components/transform/lookup.xml">
+      </toc>
+      <toc
+            file="xml/Components/transform/normalize.xml">
+      </toc>
+      <toc
+            file="xml/Components/transform/transform.xml">
+      </toc>
+      <toc
+            file="xml/Components/transform/uniqueSequence.xml">
+      </toc>
+       <toc
+            file="xml/Components/transform/Cumulate.xml">
+      </toc>
+      <toc
+            file="xml/Components/transform/partitionByExpression.xml">
       </toc>
       <toc
             file="xml/Operation Base Interface/operationBaseInterface.xml"
@@ -267,15 +288,6 @@
             file="xml/User Interface/parameterGrid.xml">
       </toc>
       <toc
-            file="xml/Components/limit.xml">
-      </toc>
-      <toc
-            file="xml/Components/sort.xml">
-      </toc>
-      <toc
-            file="xml/Components/uniqueSequence.xml">
-      </toc>
-      <toc
             file="xml/Installation and Configuration/launchingHydrographOnWindows.xml">
       </toc>
       <toc
@@ -294,46 +306,32 @@
             file="html/How To Steps/How_To_Pass_Hadoop_Properties_To_Component.html">
       </toc>
       <toc
-            file="html/Components/Join_Mapping_View.html">
+            file="html/Components/transform/Join_Mapping_View.html">
       </toc>
       <toc
-            file="html/Components/Lookup_Mapping_View.html">
+            file="html/Components/transform/Lookup_Mapping_View.html">
       </toc>
       <toc
-            file="html/Components/Transform_Properties.html">
+            file="html/Components/transform/Transform_Properties.html">
       </toc>
       <toc
-            file="html/Components/Transform_Mapping_View.html">
+            file="html/Components/transform/Transform_Mapping_View.html">
       </toc>
       <toc
-            file="html/Components/Aggregate_Operation_Editor.html">
+            file="html/Components/transform/Aggregate_Operation_Editor.html">
       </toc>
       <toc
             file="html/references/Job_Examples.html">
-      </toc>
-      <toc
-            file="xml/Components/discard.xml">
-      </toc>
-      
-       <toc
-            file="xml/Components/cumulate.xml"
-            primary="false">
       </toc>
       <toc
             file="hydrograph.ui.help.toc2"
             primary="false">
       </toc>
       <toc
-            file="xml/Components/cumulate.xml">
-      </toc>
-      <toc
             file="xml/Components/Command/runProgram.xml">
       </toc>
       <toc
             file="xml/Components/Command/runSql.xml">
-      </toc>
-      <toc
-            file="xml/Components/partitionByExpression.xml">
       </toc>
    </extension>
    <extension

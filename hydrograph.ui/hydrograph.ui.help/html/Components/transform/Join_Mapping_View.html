@@ -1,0 +1,39 @@
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+ 
+ 
+<!doctype html>
+<html>
+<head>
+	<title>Join Mapping View</title>
+	<link rel="stylesheet" type="text/css" href="../../css/style.css">
+</head>
+<body>
+<p><span class="header-1">Join Mapping View</span></p>
+<p><span><b>Mapping view</b> &nbsp;for the Join component can be viewed by clicking on the Edit button near the Join property on General tab. Input ports along with the input fields arriving from each port is visible at the extreme left of the grid. In the center users can view the Mapping grid containing empty columns for source fields and mapped fields. To the extreme right, user can select between the copy of options for individual input port.</span></p>
+
+<p><img alt="" src="../../images/Join_Mapping_View1.png" /></p>
+
+<p><span>User can drag and drop single or multiple fields in the mapping grid. Those fields that are passed as is in the output are Passthrough fields. Whereas, fields renamed in the output are Map fields or in simple sense aliases for the corresponding input field. In the below example, all fields except 'Dept_id' are passed as Passthrough fields. 'Dept_No' is passed as a Map field. Here, the Copy of option is 'None'.</span></p>
+<br>
+<p><img alt="" src="../../images/Join_Mapping_View2.png" /></p>
+
+<p><span>Copy of option for a particular input port passes the input fields corresponding to that input as is. This means, all the fields of that input port will be passed as passthrough fields. In the below example we have selected 'Copy of in0', hence all fields of the input port 0 are passed into the grid as is. When user selects Copy of for any input port, the fields get displayed in the mapping view, but the view is disabled. Here user will not be able to drag-drop any other fields from available inputs.</span></p>
+<br>
+<p><img alt="" src="../../images/Join_Mapping_View3.png" /></p>
+
+<p><span>Output fields are visible in the schema grid along with their specified datatypes.</span></p>
+<br>
+<p><img alt="" src="../../images/Join_Mapping_View4.png" /></p>
+<ul>
+</ul>
+</body>
+</html>

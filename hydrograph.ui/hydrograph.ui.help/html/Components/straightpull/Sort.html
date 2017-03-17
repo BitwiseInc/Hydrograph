@@ -1,0 +1,43 @@
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+ 
+ 
+<!doctype html>
+<html>
+<head>
+	<title>Sort</title>
+	<link rel="stylesheet" type="text/css" href="../../css/style.css">
+</head>
+<body>
+<p><span class="header-1">Sort</span></p>
+
+<p><span><b>Sort</b>&nbsp; is used to sort the input records. The key fields and secondary key fields define the primary and secondary 
+key fields to sort on respectively. It is present under the Straight Pull category in the component palette since no transformations 
+are performed on the incoming data. If the ETL is run on Hadoop, Hadoop will always pass on sorted records to reducer. Even, if there 
+is no reducer involved in the operation, there could be multiple mappers involved. In this case, the sort order while distribution of 
+records to the mappers is not guaranteed. Hence, there is no guarantee that the component succeeding sort component will process the 
+records in the sorted order. </span></p>
+
+<p><span>Sort has a single input port and a single output port. It does not have an unused port on it. </span></p>
+
+<p><span>The Sort component can be easily distinguished in the component palette.</span></p>
+
+<p><img alt="" src="../../images/Sort_Palette.png" /></p>
+<p><span>An enlarged version of the same is depicted when dragged on the canvas.</span></p>
+<p><span><img alt="" src="../../images/Sort_Canvas.png" /></span></p>
+
+<p><span>For further reference click on the links below:</span></p>
+
+<ul>
+	<li><span><a href="Sort_Properties.html">Properties</a></span></li>
+</ul>
+</body>
+</html>

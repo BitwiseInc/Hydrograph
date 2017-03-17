@@ -1,0 +1,67 @@
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+ 
+ <!doctype html>
+<html>
+<head>
+	<title>Union All Properties</title>
+	<link rel="stylesheet" type="text/css" href="../../css/style.css">
+</head>
+<body>
+
+<p><span class="header-1">Union All Properties</span></p>
+
+
+
+<p><span><b>Properties</b>&nbsp;for the Union All component can be viewed by double clicking the component on canvas.The properties window can also be opened by right-clicking the component icon on the job canvas and clicking on the 'Properties' option.
+The properties contain only the &#39;General&#39; tab.Common properties are present in the General tab.</span></p>
+
+<p><a name="general_properties"></a><span class="header-2">General Properties</span></p>
+
+
+<p><img alt="" src="../../images/Union_All_Properties_General.png" /></p>
+
+<p><span class="header-2">Display</span></p>
+
+<ul>
+	<li><span><b>Name</b> - The identifier for the component. This is a <b>mandatory</b> property. This property is pre-populated with the component name, i.e. 'Transform' followed by an incremental number. It can be changed to any custom name. The name property has following restrictions:</span></li>
+	<ul>
+		<li><span>Must be specified and should not be blank.</span></li>
+		<li><span>Must be unique across the job.</span></li>
+		<li><span>Accepts only alphabets (a-z), numerals (0-9) and 4 special characters: "_", "-", ",", " " (space)<./span></li>
+	</ul>
+	<li><span><b>Base Type</b> - Base Type signifies the category of the component. Transform is of base type Transform. This is a non editable field.</span></li>
+	<li><span><b>Type</b> - Type defines the type of component within the category. This typically is the name of the component. This is a non editable field.</span></li>
+</ul>
+
+
+<p><span class="header-2">Configuration</span></p>
+
+<ul>
+	<li><a name="runtime_properties"></a><span><b>Runtime Properties</b> - Runtime properties are used to override the Hadoop configurations specific to this Transform component at run time. User is required to enter the Property Name and Property Value in the runtime properties grid.
+	<p><span>Check <a href="../../How To Steps/How_To_Pass_Hadoop_Properties_To_Component.html"> How to pass Hadoop properties to component</a></span></p></li>
+</ul>
+	<p><img alt="" src="../../images/Runtime_Properties_Grid.png" /></p>
+<ul>
+	<li><span><b>Batch</b> - Batch accepts an integer value and signifies the phase this component will execute in. The default value for batch is 0. Batch can have a maximum value of 99. Batch is a <b>mandatory</b> property.</span></li>
+</ul>
+
+<p><a name="validations"></a><span class="header-2">Validations</span></p>
+<p><span>The union all components applies validations to the mandatory fields as described above.</span></p>
+
+
+<p><span>The properties window also displays error icon on mandatory fields if it has an incorrect value. The error icon is displayed on the tab as well, if any of the field within the tab has some error.</span></p>
+<img src="../../images/Union_All_Properties_error.png" alt="Error icon displayed on tabs" />
+
+<p><span>If the properties window has some error even after user visit's it once, then the error icon is displayed on the union all component on the job canvas. This error icon is removed only when all the mandatory fields are supplied with correct values.</span></p>
+<img src="../../images/Union_All_Component_Error.png" alt="Error icon displayed on component" />
+</body>
+</html>
