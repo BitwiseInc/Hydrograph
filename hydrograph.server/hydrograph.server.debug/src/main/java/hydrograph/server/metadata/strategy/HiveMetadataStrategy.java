@@ -66,8 +66,9 @@ public class HiveMetadataStrategy extends MetadataStrategyTemplate{
         String tableName = connectionProperties.getOrDefault(Constants.TABLENAME, new ParamsCannotBeNullOrEmpty(
                 Constants.TABLENAME + " not found in request parameter")).toString();
 
-        KerberosUtilities kerberosUtilities = new KerberosUtilities();
         Configuration conf = new Configuration();
+        KerberosUtilities kerberosUtilities = new KerberosUtilities(userId, service_pwd, conf);
+
 
         // load hdfs-site.xml and core-site.xml
         String hdfsConfigPath = ServiceUtilities.getServiceConfigResourceBundle()
@@ -79,13 +80,8 @@ public class HiveMetadataStrategy extends MetadataStrategyTemplate{
         LOG.debug("Loading hdfs-site.xml:" + coreSiteConfigPath);
         conf.addResource(new Path(coreSiteConfigPath));
 
-        try {
-            kerberosUtilities.applyKerberosToken(userId, service_pwd, conf);
-        } catch (LoginException e1) {
-            throw new RuntimeException("Unable to login " + e1.getMessage());
-        } catch (IOException e1) {
-            throw new RuntimeException("Login failed : " + e1.getMessage());
-        }
+        kerberosUtilities.login();
+
         this.hiveConf = new HiveConf();
         String pathToHiveSiteXml = ServiceUtilities.getServiceConfigResourceBundle()
                 .getString(Constants.HIVE_SITE_CONFIG_PATH);
@@ -110,6 +106,8 @@ public class HiveMetadataStrategy extends MetadataStrategyTemplate{
             throw new RuntimeException(e.getMessage());
         } catch (TException e) {
             throw new RuntimeException(e.getMessage());
+        }finally {
+            kerberosUtilities.logout();
         }
 
     }

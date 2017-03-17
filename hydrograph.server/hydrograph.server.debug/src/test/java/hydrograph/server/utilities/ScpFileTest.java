@@ -12,17 +12,25 @@
  *******************************************************************************/
 package hydrograph.server.utilities;
 
+import java.io.File;
 import java.sql.Timestamp;
 import java.util.Date;
 
 public class ScpFileTest {
 	public static void main(String[] args) {
+
+
+
+		String remoteFileSeparator = "/";
+		String remoteFilePath = remoteFileSeparator+"tmp"+remoteFileSeparator+"generateRecord_input1_out0.csv";
+		String localFilePath = ".";
+
 		System.out.println("+++ Start: "
 				+ new Timestamp((new Date()).getTime()));
 		ScpFrom scpFrom = new ScpFrom();
 		scpFrom.scpFileFromRemoteServer("10.130.248.53", "hduser",
-				"Bitwise2012", "/tmp/generateRecord_input1_out0.csv",
-				"C:\\Users\\Bhaveshs\\git\\elt-debug");
+				"Bitwise2012", remoteFilePath,
+				localFilePath);
 		System.out.println("+++ End: "
 				+ new Timestamp((new Date()).getTime()));
 	}

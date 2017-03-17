@@ -40,7 +40,33 @@ public class KerberosUtilities implements PrivilegedAction<Object> {
      * @throws LoginException
      * @throws IOException
      */
-    public void applyKerberosToken(String userId, String password, Configuration conf)
+
+
+    String userId,password;
+    Configuration conf;
+    LoginContext lc;
+
+    public KerberosUtilities(String userId, String password, Configuration conf){
+
+        this.userId=userId;
+        this.password=password;
+        this.conf=conf;
+
+    }
+
+    public void login(){
+
+        try {
+            applyKerberosToken(userId,password,conf);
+        } catch (LoginException e) {
+            LOG.error("Error while Logging in to Kerberos environment: "+e.getMessage());
+        } catch (IOException e) {
+            LOG.error("Error while Logging in to Kerberos environment: "+e.getMessage());
+        }
+
+    }
+
+    private void applyKerberosToken(String userId, String password, Configuration conf)
             throws LoginException, IOException {
         String enableKerberos = ServiceUtilities.getServiceConfigResourceBundle().getString(Constants.ENABLE_KERBEROS);
         if (Boolean.parseBoolean(enableKerberos)) {
@@ -74,13 +100,21 @@ public class KerberosUtilities implements PrivilegedAction<Object> {
         LOG.info("Generating Kerberos ticket for user: " + user);
         UserGroupInformation.setConfiguration(configuration);
 
-        LoginContext lc = new LoginContext("EntryName", new UserPassCallbackHandler(user, password));
+        lc = new LoginContext("EntryName", new UserPassCallbackHandler(user, password));
         lc.login();
 
         Subject subject = lc.getSubject();
         UserGroupInformation.loginUserFromSubject(subject);
         Subject.doAs(subject, this);
         LOG.info("Kerberos ticket successfully generated for user: " + user);
+    }
+
+    public void logout(){
+        try {
+            lc.logout();
+        } catch (LoginException e) {
+            LOG.error("Error While Logging Out from  Kerberos environment: "+e.getMessage());
+        }
     }
 
     @Override
