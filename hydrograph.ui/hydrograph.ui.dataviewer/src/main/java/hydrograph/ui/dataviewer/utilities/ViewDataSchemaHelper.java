@@ -12,23 +12,28 @@
  *******************************************************************************/
 package hydrograph.ui.dataviewer.utilities;
 
-import hydrograph.ui.common.schema.Field;
-import hydrograph.ui.common.schema.Fields;
-import hydrograph.ui.common.schema.Schema;
-import hydrograph.ui.common.util.Constants;
-import hydrograph.ui.logging.factory.LogFactory;
-
 import java.io.File;
+import java.io.IOException;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.slf4j.Logger;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
+import hydrograph.ui.common.schema.Field;
+import hydrograph.ui.common.schema.Fields;
+import hydrograph.ui.common.schema.Schema;
+import hydrograph.ui.common.util.Constants;
+import hydrograph.ui.logging.factory.LogFactory;
 
 /**
  * The Class ViewDataSchemaHelper.
@@ -58,15 +63,24 @@ public class ViewDataSchemaHelper {
 			File file = new File(filePath);
 			if(file.exists()){
 				try {
+					
+					DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+					builderFactory.setExpandEntityReferences(false);
+					builderFactory.setNamespaceAware(true);
+					builderFactory.setFeature(Constants.DISALLOW_DOCTYPE_DECLARATION,true);
+					
+					DocumentBuilder documentBuilder = builderFactory.newDocumentBuilder();
+					
+					Document document = documentBuilder.parse(file);
 					JAXBContext jaxbContext = JAXBContext.newInstance(Schema.class);
 					Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-					Schema schema = (Schema) jaxbUnmarshaller.unmarshal(file);
+					Schema schema = (Schema) jaxbUnmarshaller.unmarshal(document);
 					fields = schema.getFields();
 					for(Field field : fields.getField()){
 						logger.debug("Type:{}, Name:{}, Format:{}" + field.getType(),field.getName(),field.getFormat());
 					}
-				} catch (JAXBException jaxbException) {
-					logger.error("Invalid xml file: ", jaxbException);
+				} catch (JAXBException | ParserConfigurationException | SAXException | IOException exception) {
+					logger.error("Invalid xml file: ", exception);
 				}
 			}
 		}

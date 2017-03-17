@@ -194,6 +194,7 @@ public class XMLConfigUtil {
 				DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 				dbf.setNamespaceAware(true);
 				dbf.setExpandEntityReferences(false);
+				dbf.setFeature(Constants.DISALLOW_DOCTYPE_DECLARATION,true);
 				DocumentBuilder builder = dbf.newDocumentBuilder();
 				
 				String[] configFileList = getFilteredFiles(CONFIG_FILES_PATH + SEPARATOR + Messages.XMLConfigUtil_POLICY, getFileNameFilter(Messages.XMLConfigUtil_FILE_EXTENTION));

@@ -57,7 +57,8 @@ public class XMLUtil {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();  
         DocumentBuilder builder;  
         try 
-        {  
+        {
+        	factory.setFeature(Constants.DISALLOW_DOCTYPE_DECLARATION,true);
             builder = factory.newDocumentBuilder();  
             Document doc = builder.parse( new InputSource( new StringReader( xmlString ) ) );            
             
