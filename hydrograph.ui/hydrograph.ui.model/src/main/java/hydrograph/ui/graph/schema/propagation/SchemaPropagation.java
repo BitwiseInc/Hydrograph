@@ -15,6 +15,7 @@
 package hydrograph.ui.graph.schema.propagation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -298,11 +299,30 @@ public class SchemaPropagation {
 	private Schema getSchemaFromLink(Link link) {
 		Schema schema=null;
 		if (link != null && link.getSource() != null) {
-		schema = (Schema) link.getSource().getProperties().get(Constants.SCHEMA);
+			if(StringUtils.equalsIgnoreCase(Constants.INPUT_SUBJOB_COMPONENT_NAME, link.getSource().getComponentName())
+					||StringUtils.equalsIgnoreCase(Constants.SUBJOB_COMPONENT, link.getSource().getComponentName())		
+							)
+			{
+						Map<String,Schema> inputSchemaMap=(HashMap<String,Schema>)link.getSource().getProperties().
+								get(Constants.SCHEMA_FOR_INPUTSUBJOBCOMPONENT);
+						if(inputSchemaMap!=null)
+						schema=inputSchemaMap.get(Constants.INPUT_SOCKET_TYPE+getPortIndex(link));
+			}	
+			else{
+				
+				schema = (Schema) link.getSource().getProperties().get(Constants.SCHEMA);
+			}
 		}
 		return schema;
 	}
+	private String getPortIndex(Link link) {
+		if(StringUtils.startsWithIgnoreCase(link.getSourceTerminal(), Constants.INPUT_SOCKET_TYPE)){
+			return StringUtils.remove(link.getSourceTerminal(), Constants.INPUT_SOCKET_TYPE);
+		}else {
+			return StringUtils.remove(link.getSourceTerminal(), Constants.OUTPUT_SOCKET_TYPE);
+		}
 	
+	}
 	
 	private void getSourceSchemaForUnusedPorts(Link link) {
 		LOGGER.debug("Reverse propagation for fetching source schema for component.");

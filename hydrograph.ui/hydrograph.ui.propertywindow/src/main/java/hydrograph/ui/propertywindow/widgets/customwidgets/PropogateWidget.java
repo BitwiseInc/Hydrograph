@@ -94,36 +94,23 @@ public class PropogateWidget extends AbstractWidget{
 		}
 		eltDefaultSubgroupComposite.attachWidget(eltDefaultButton);
       
-       if(getComponent().isContinuousSchemaPropogationAllow())
-	   {  
+		if(getComponent().isContinuousSchemaPropogationAllow()){  
 		  if(StringUtils.equalsIgnoreCase(getComponent().getCategory(),Constants.STRAIGHTPULL)
 				  ||StringUtils.equalsIgnoreCase(getComponent().getComponentName(),Constants.FILTER)	
 				  ||StringUtils.equalsIgnoreCase(getComponent().getComponentName(),Constants.UNIQUE_SEQUENCE)
-				  ||StringUtils.equalsIgnoreCase(getComponent().getComponentName(),Constants.PARTITION_BY_EXPRESSION)
-						)	
-		  {	  
-		for (Link link : getComponent().getTargetConnections()) {
-		 Schema previousComponentSchema=SubjobUtility.INSTANCE.getSchemaFromPreviousComponentSchema(getComponent(),link);
-		if(previousComponentSchema!=null)
-		getSchemaForInternalPropagation().getGridRow().addAll(SchemaSyncUtility.INSTANCE.
-				convertGridRowsSchemaToBasicSchemaGridRows(previousComponentSchema.getGridRow()));
-		if(StringUtils.equalsIgnoreCase(Constants.UNION_ALL,getComponent().getComponentName()))
-		break;
-		 if(StringUtils.equalsIgnoreCase(getComponent().getComponentName(),Constants.UNIQUE_SEQUENCE)
-					&&getComponent().getProperties().get(Constants.UNIQUE_SEQUENCE_PROPERTY_NAME)!=null		 
-				    )
-				 {
-			    String fieldName=(String)getComponent().getProperties().get(Constants.UNIQUE_SEQUENCE_PROPERTY_NAME);
-			    if(StringUtils.isNotBlank(fieldName))
-			    {
-			    BasicSchemaGridRow basicSchemaGridRow=SchemaPropagationHelper.INSTANCE.createSchemaGridRow(fieldName);
-				basicSchemaGridRow.setDataType(8);
-				basicSchemaGridRow.setDataTypeValue(Long.class.getCanonicalName());
-				getSchemaForInternalPropagation().getGridRow().add(basicSchemaGridRow);
-			    }
-				 }
-		}
-		}
+				  ||StringUtils.equalsIgnoreCase(getComponent().getComponentName(),Constants.PARTITION_BY_EXPRESSION)){	  
+			  for (Link link : getComponent().getTargetConnections()) {
+				  Schema previousComponentSchema=SubjobUtility.INSTANCE.getSchemaFromPreviousComponentSchema(getComponent(),link);
+				  if(previousComponentSchema!=null){
+				  getSchemaForInternalPropagation().getGridRow().addAll(SchemaSyncUtility.INSTANCE.
+								convertGridRowsSchemaToBasicSchemaGridRows(previousComponentSchema.getGridRow()));
+				  }
+				  if(StringUtils.equalsIgnoreCase(Constants.UNION_ALL,getComponent().getComponentName())){
+					break;
+				  }
+				  addUniqueSequenceFieldIfComponentIsUniqueSequence();	
+		      }
+		  	}
 	   }	  
 		 
 		  //Call when Propogate from left button is Pressed
@@ -135,161 +122,147 @@ public class PropogateWidget extends AbstractWidget{
 				for (Link link : getComponent().getTargetConnections()) {
 					Schema previousComponentSchema=SubjobUtility.INSTANCE.getSchemaFromPreviousComponentSchema(getComponent(),link);
 					if (previousComponentSchema != null){
-					if(StringUtils.equalsIgnoreCase(getComponent().getCategory(),Constants.STRAIGHTPULL)
+						if(StringUtils.equalsIgnoreCase(getComponent().getCategory(),Constants.STRAIGHTPULL)
 							  ||StringUtils.equalsIgnoreCase(getComponent().getComponentName(),Constants.FILTER)	
 							  ||StringUtils.equalsIgnoreCase(getComponent().getComponentName(),Constants.UNIQUE_SEQUENCE)
 							  ||StringUtils.equalsIgnoreCase(getComponent().getComponentName(),Constants.PARTITION_BY_EXPRESSION)
 							)
-					{	
-						getSchemaForInternalPropagation().getGridRow().clear();
-						if(StringUtils.equalsIgnoreCase(Constants.UNION_ALL,getComponent().getComponentName()))
-						{
-							if(!SubjobUtility.INSTANCE.isUnionAllInputSchemaInSync(getComponent()))
-							{
-							shouldsetContinuousSchemaPropagationFlagForNextConnectedComponents=false;
-							getComponent().getProperties().put(Constants.IS_UNION_ALL_COMPONENT_SYNC,Constants.FALSE);
-							WidgetUtility.createMessageBox(Messages.INPUTS_SCHEMA_ARE_NOT_IN_SYNC, Constants.ERROR,SWT.ICON_ERROR|SWT.OK);
+						{	
+						 getSchemaForInternalPropagation().getGridRow().clear();
+						 shouldsetContinuousSchemaPropagationFlagForNextConnectedComponents = checkIfUnionAllInputDataIsSyncOrNot(
+									shouldsetContinuousSchemaPropagationFlagForNextConnectedComponents);
+						 if(!shouldsetContinuousSchemaPropagationFlagForNextConnectedComponents){
 							break;
-							}
-							else
-							getComponent().getProperties().put(Constants.IS_UNION_ALL_COMPONENT_SYNC,Constants.TRUE);	
-								
-						}
-						 
+						 }
 						 getSchemaForInternalPropagation().getGridRow().addAll(SchemaSyncUtility.INSTANCE.
 								convertGridRowsSchemaToBasicSchemaGridRows(previousComponentSchema.getGridRow()));
-						 
-						 if(StringUtils.equalsIgnoreCase(getComponent().getComponentName(),Constants.UNIQUE_SEQUENCE)
-							&&getComponent().getProperties().get(Constants.UNIQUE_SEQUENCE_PROPERTY_NAME)!=null		 
-						    )
-						 {
-							String fieldName=(String)getComponent().getProperties().get(Constants.UNIQUE_SEQUENCE_PROPERTY_NAME);
-						    if(StringUtils.isNotBlank(fieldName))
-						    {	
-							BasicSchemaGridRow basicSchemaGridRow=SchemaPropagationHelper.INSTANCE.createSchemaGridRow(fieldName);
-							basicSchemaGridRow.setDataType(8);
-							basicSchemaGridRow.setDataTypeValue(Long.class.getCanonicalName());
-							getSchemaForInternalPropagation().getGridRow().add(basicSchemaGridRow);
-						    }
-						 }		 
+						 addUniqueSequenceFieldIfComponentIsUniqueSequence();		 
 						 getComponent().getProperties().put(Constants.SCHEMA_PROPERTY_NAME,getSchemaForInternalPropagation() );
 				    
-				    ELTSchemaGridWidget eltSchemaGridWidget=null;
-				    for(AbstractWidget abstractWidget:widgets)
-					{
-						if(abstractWidget instanceof ELTSchemaGridWidget)
-						{
-							eltSchemaGridWidget=(ELTSchemaGridWidget)abstractWidget;
-							break;
-						}
-					}
-				    if(eltSchemaGridWidget!=null &&!getSchemaForInternalPropagation().getGridRow().isEmpty())
-				    eltSchemaGridWidget.refresh();
-				    eltSchemaGridWidget.showHideErrorSymbol(!getSchemaForInternalPropagation().getGridRow().isEmpty());
-				    if(StringUtils.equalsIgnoreCase(Constants.UNION_ALL,getComponent().getComponentName()))
+						 ELTSchemaGridWidget eltSchemaGridWidget=(ELTSchemaGridWidget)getWidget();
+						 
+						 if(eltSchemaGridWidget!=null &&!getSchemaForInternalPropagation().getGridRow().isEmpty()){
+							 
+							 eltSchemaGridWidget.refresh();
+						 }
+						 eltSchemaGridWidget.showHideErrorSymbol(!getSchemaForInternalPropagation().getGridRow().isEmpty());
+						 if(StringUtils.equalsIgnoreCase(Constants.UNION_ALL,getComponent().getComponentName()))
 						 break;	
-					}
-					else if(getComponent() instanceof SubjobComponent)
-					{
-					Container container=(Container)getComponent().getProperties().get(Constants.SUBJOB_CONTAINER);
-					for(Component component:container.getUIComponentList())
-					{
-						if(component instanceof InputSubjobComponent)
+						}
+						else if(getComponent() instanceof SubjobComponent)
 						{
-							SubjobUtility.INSTANCE.initializeSchemaMapForInputSubJobComponent(component, getComponent());
-							getComponent().setContinuousSchemaPropogationAllow(true);
-							SubjobUtility.INSTANCE.setFlagForContinuousSchemaPropogation(component);
+							Container container=(Container)getComponent().getProperties().get(Constants.SUBJOB_CONTAINER);
+							for(Component component:container.getUIComponentList())
+							{
+								if(component instanceof InputSubjobComponent)
+								{
+									SubjobUtility.INSTANCE.initializeSchemaMapForInputSubJobComponent(component, getComponent());
+									getComponent().setContinuousSchemaPropogationAllow(true);
+									SubjobUtility.INSTANCE.setFlagForContinuousSchemaPropogation(component);
+									break;
+								}
+							}
+							shouldsetContinuousSchemaPropagationFlagForNextConnectedComponents=!
+							SubjobUtility.INSTANCE.checkIfSubJobHasTransformOrUnionAllComponent(getComponent());
 							break;
 						}
-					}
-					shouldsetContinuousSchemaPropagationFlagForNextConnectedComponents=!
-							SubjobUtility.INSTANCE.checkIfSubJobHasTransformOrUnionAllComponent(getComponent());
-					break;
-					}
-				    else if(
+						else if(
 				    		StringUtils.equalsIgnoreCase(getComponent().getComponentName(),Constants.AGGREGATE)
 				    		||StringUtils.equalsIgnoreCase(getComponent().getComponentName(),Constants.CUMULATE)
 				    		||StringUtils.equalsIgnoreCase(getComponent().getComponentName(),Constants.GROUP_COMBINE)
 				    		||StringUtils.equalsIgnoreCase(getComponent().getComponentName(),Constants.NORMALIZE)
 				    		||StringUtils.equalsIgnoreCase(getComponent().getComponentName(),Constants.TRANSFORM))
-					{
-						AbstractWidget transformWidget = getWidget();	
-						TransformMapping transformMapping=(TransformMapping)transformWidget.getProperties().get(Constants.OPERATION);
-						InputField inputField = null;
-						transformMapping.getInputFields().clear();
-						 if(previousComponentSchema!=null)
-						 {	 
-							for (BasicSchemaGridRow row : SchemaSyncUtility.INSTANCE.
+						{
+							AbstractWidget transformWidget = getWidget();	
+							TransformMapping transformMapping=(TransformMapping)transformWidget.getProperties().get(Constants.OPERATION);
+							InputField inputField = null;
+							transformMapping.getInputFields().clear();
+							if(previousComponentSchema!=null)
+							{	 
+								for (BasicSchemaGridRow row : SchemaSyncUtility.INSTANCE.
 									convertGridRowsSchemaToBasicSchemaGridRows(previousComponentSchema.getGridRow())) {
 								inputField = new InputField(row.getFieldName(), new ErrorObject(false, ""));
 									transformMapping.getInputFields().add(inputField);
+								}
 							}
-						 }
-						 shouldsetContinuousSchemaPropagationFlagForNextConnectedComponents=false;
-						 getComponent().setContinuousSchemaPropogationAllow(true);
+							shouldsetContinuousSchemaPropagationFlagForNextConnectedComponents=false;
+							getComponent().setContinuousSchemaPropogationAllow(true);
+						 
+						}
+						else if(StringUtils.equalsIgnoreCase(getComponent().getComponentName(),Constants.JOIN))
+						{
+							ELTJoinMapWidget  joinMapWidget = (ELTJoinMapWidget)getWidget();
 						
-					}
-				    else if(StringUtils.equalsIgnoreCase(getComponent().getComponentName(),Constants.JOIN))
-				    {
-				    	ELTJoinMapWidget  joinMapWidget = null;
-						for(AbstractWidget abstractWidget:widgets)
-						{
-							if(abstractWidget instanceof ELTJoinMapWidget)
-							{
-								joinMapWidget=(ELTJoinMapWidget)abstractWidget;
-								break;
-							}
-						}
-						List<List<FilterProperties>> sorceFieldList = SchemaPropagationHelper.INSTANCE
+							List<List<FilterProperties>> sorceFieldList = SchemaPropagationHelper.INSTANCE
 								.sortedFiledNamesBySocketId(getComponent());
-						JoinMappingGrid joinMappingGrid=(JoinMappingGrid)joinMapWidget.getProperties().get(Constants.JOIN_MAP_FIELD);
+							JoinMappingGrid joinMappingGrid=(JoinMappingGrid)joinMapWidget.getProperties().get(Constants.JOIN_MAP_FIELD);
 							
-						joinMappingGrid.setLookupInputProperties(sorceFieldList);
-						shouldsetContinuousSchemaPropagationFlagForNextConnectedComponents=false;
-				    }	
+							joinMappingGrid.setLookupInputProperties(sorceFieldList);
+							shouldsetContinuousSchemaPropagationFlagForNextConnectedComponents=false;
+						}	
 					
-				    else if(StringUtils.equalsIgnoreCase(getComponent().getComponentName(),Constants.LOOKUP))
-				    {
-				    	ELTLookupMapWidget  lookupMapWidget = null;
-						for(AbstractWidget abstractWidget:widgets)
+						else if(StringUtils.equalsIgnoreCase(getComponent().getComponentName(),Constants.LOOKUP))
 						{
-							if(abstractWidget instanceof ELTLookupMapWidget)
-							{
-								lookupMapWidget=(ELTLookupMapWidget)abstractWidget;
-								break;
-							}
-						}
-						List<List<FilterProperties>> sorceFieldList = SchemaPropagationHelper.INSTANCE
+							ELTLookupMapWidget  lookupMapWidget = (ELTLookupMapWidget)getWidget();
+							List<List<FilterProperties>> sorceFieldList = SchemaPropagationHelper.INSTANCE
 								.sortedFiledNamesBySocketId(getComponent());
-						LookupMappingGrid joinMappingGrid=(LookupMappingGrid)lookupMapWidget.getProperties().get(Constants.LOOKUP_MAP_FIELD);
+							LookupMappingGrid joinMappingGrid=(LookupMappingGrid)lookupMapWidget.getProperties().get(Constants.LOOKUP_MAP_FIELD);
 							
-						joinMappingGrid.setLookupInputProperties(sorceFieldList);
-						shouldsetContinuousSchemaPropagationFlagForNextConnectedComponents=false;
-				    }	
-				}
+							joinMappingGrid.setLookupInputProperties(sorceFieldList);
+							shouldsetContinuousSchemaPropagationFlagForNextConnectedComponents=false;
+						}	
+					}
 					oldSchemaMap.put(link.getTargetTerminal(), previousComponentSchema);	
+					}
+					getComponent().getProperties().put(Constants.PREVIOUS_COMPONENT_OLD_SCHEMA, oldSchemaMap);
+					if(shouldsetContinuousSchemaPropagationFlagForNextConnectedComponents){
+						SubjobUtility.INSTANCE.setFlagForContinuousSchemaPropogation(getComponent());
+					}
+					showHideErrorSymbol(widgets);
+			}
+
+			private boolean checkIfUnionAllInputDataIsSyncOrNot(
+					boolean shouldsetContinuousSchemaPropagationFlagForNextConnectedComponents) {
+				if(StringUtils.equalsIgnoreCase(Constants.UNION_ALL,getComponent().getComponentName())){
+					if(!SubjobUtility.INSTANCE.isUnionAllInputSchemaInSync(getComponent())){
+					shouldsetContinuousSchemaPropagationFlagForNextConnectedComponents=false;
+					getComponent().getProperties().put(Constants.IS_UNION_ALL_COMPONENT_SYNC,Constants.FALSE);
+					WidgetUtility.createMessageBox(Messages.INPUTS_SCHEMA_ARE_NOT_IN_SYNC, Constants.ERROR,SWT.ICON_ERROR|SWT.OK);
+					}
+					else{
+					getComponent().getProperties().put(Constants.IS_UNION_ALL_COMPONENT_SYNC,Constants.TRUE);	
+					}	
 				}
-				getComponent().getProperties().put(Constants.PREVIOUS_COMPONENT_OLD_SCHEMA, oldSchemaMap);
-				if(shouldsetContinuousSchemaPropagationFlagForNextConnectedComponents)
-				SubjobUtility.INSTANCE.setFlagForContinuousSchemaPropogation(getComponent());
-				showHideErrorSymbol(widgets);
+				return shouldsetContinuousSchemaPropagationFlagForNextConnectedComponents;
 			}
            });
-		
-		
 		setPropertyHelpWidget((Control) eltDefaultLable.getSWTWidgetControl());
 	}
     
+	private void addUniqueSequenceFieldIfComponentIsUniqueSequence() {
+		if(StringUtils.equalsIgnoreCase(getComponent().getComponentName(),Constants.UNIQUE_SEQUENCE)
+			&&getComponent().getProperties().get(Constants.UNIQUE_SEQUENCE_PROPERTY_NAME)!=null		 
+		    )
+		 {
+			String fieldName=(String)getComponent().getProperties().get(Constants.UNIQUE_SEQUENCE_PROPERTY_NAME);
+		    if(StringUtils.isNotBlank(fieldName))
+		    {	
+			BasicSchemaGridRow basicSchemaGridRow=SchemaPropagationHelper.INSTANCE.createSchemaGridRow(fieldName);
+			basicSchemaGridRow.setDataType(8);
+			basicSchemaGridRow.setDataTypeValue(Long.class.getCanonicalName());
+			getSchemaForInternalPropagation().getGridRow().add(basicSchemaGridRow);
+		    }
+		 }
+	}
+	
 	private AbstractWidget getWidget() {
 		for(AbstractWidget abstractWidget:widgets)
 		{
-			if(abstractWidget instanceof TransformWidget )
+			if(abstractWidget instanceof TransformWidget || abstractWidget instanceof OutputRecordCountWidget
+			  ||abstractWidget instanceof ELTSchemaGridWidget ||abstractWidget instanceof ELTJoinMapWidget
+			  ||abstractWidget instanceof ELTLookupMapWidget)
 			{
 			   return abstractWidget;
-			}
-			else if(abstractWidget instanceof OutputRecordCountWidget)
-			{
-				return abstractWidget;	
 			}
 		}
 		return null;
