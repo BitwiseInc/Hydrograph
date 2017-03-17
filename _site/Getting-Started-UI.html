@@ -127,10 +127,10 @@ started with Hydrograph.</p>
 
 <hr />
 
-<p><a name="pre-requisites"></a>
-## 1. Pre-requisites</p>
+<p><a name="pre-requisites"></a></p>
+<h2 id="1-pre-requisites">1. Pre-requisites</h2>
 
-<p>Before setting up the Hydrograph UI on your local machine you’ll need to make sure you’ve completed the following pre-reqs: </p>
+<p>Before setting up the Hydrograph UI on your local machine you’ll need to make sure you have the following items installed:</p>
 
 <ul>
   <li>JDK 1.8.xx 64 bit (<a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">download</a>)
@@ -149,117 +149,117 @@ started with Hydrograph.</p>
       <li>Add the Maven installation path to the <strong>PATH</strong> variable.</li>
     </ul>
   </li>
-  <li>Setup Hadoop environment (Required if target environment is a Hadoop installation) 
-    <ul>
-      <li>Windows users
-        <ul>
-          <li>Download/build a working copy of a 64-bit Hadoop installation</li>
-          <li><a href="https://wiki.apache.org/hadoop/Hadoop2OnWindows">How to build Hadoop on Windows</a></li>
-        </ul>
-      </li>
-      <li>Mac users
-        <ul>
-          <li>Hadoop can be downloaded from apache software foundation community (<a href="http://hadoop.apache.org/releases.html">download</a>)</li>
-        </ul>
-      </li>
-      <li><strong>NOTE</strong>: Hydrograph has been tested with Hadoop 2.6.0 and 2.7.2</li>
-    </ul>
-  </li>
 </ul>
+
+<p>If you’re behing a proxy, you’ll likely need to set up some additional configuration files. See the <a href="#hgConfig">Configuratoin</a> at
+the bottom of the page.</p>
 
 <hr />
 
-<p><a name="build"></a>
-## 2. Build Hydrograph UI Executable</p>
+<p><a name="build"></a></p>
+<h2 id="2-build-hydrograph-ui-executable">2. Build Hydrograph UI Executable</h2>
 
 <p>The Hydrograph code base consists of three components - the engine, the server, and the UI. Since the Hydrograph UI relies on both the server
-and engine components, we’ll start by building these projects. </p>
+and engine components, we’ll start by building these projects.</p>
 
 <h3 id="a-download-the-source-code-from-github">a. Download the source code from Github</h3>
-<p>Please download the latest source code from the master branch of Github from <a href="https://github.com/capitalone/Hydrograph">here</a>. <br />
-If you download the source code as a zip file, you will require to extract the zip file on your environment.</p>
+<p>Please download the latest source code from the master branch of <a href="https://github.com/capitalone/Hydrograph">GitHub</a>.If you download the 
+source code as a zip file, you will require to extract the zip file on your environment.</p>
 
 <h3 id="b-build-the-engine-project">b. Build the Engine project</h3>
-<p>Once you’ve dowloaded the code, change the directory to <strong>hydrograph.engine</strong> and execute the following command to build the engine component: </p>
+<p>Once you’ve dowloaded the code, change the directory to <strong>hydrograph.engine</strong> and execute the following command to build the engine component:</p>
 
-<pre><code>gradle build
+<div class="highlighter-rouge"><pre class="highlight"><code>gradle build
 </code></pre>
+</div>
 
-<p>This will build the the project and create the required jars. You can verify that the jars are present under following relative paths:</p>
+<p>This will build the the project and create the required JARs. You can verify that the JARs are present at following relative paths:</p>
 
-<pre><code>hydrograph.engine/hydrograph.engine.command-line/build/libs
+<div class="highlighter-rouge"><pre class="highlight"><code>hydrograph.engine/hydrograph.engine.command-line/build/libs
 hydrograph.engine/hydrograph.engine.core/build/libs
 hydrograph.engine/hydrograph.engine.expression/build/libs
 hydrograph.engine/hydrograph.engine.spark/build/libs
 hydrograph.engine/hydrograph.engine.transformation/build/libs
 </code></pre>
+</div>
 
 <p>After verifying that the JAR files are present, you can install the project in your local Maven repository:</p>
 
-<pre><code>gradle install
+<div class="highlighter-rouge"><pre class="highlight"><code>gradle install
 </code></pre>
+</div>
 
-<p>Once you complete this step, you will observe that the engine jars will be installed in .m2 directory at the following path:</p>
+<p>Once you complete this step, you can observe that the engine jars will be installed in .m2 directory at the following path:</p>
 
-<pre><code>{User Home Directory}/.m2/repository/Hydrograph
-</code></pre>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="err">User</span><span class="w"> </span><span class="err">Home</span><span class="w"> </span><span class="err">Directory</span><span class="p">}</span><span class="err">/.m</span><span class="mi">2</span><span class="err">/repository/Hydrograph</span><span class="w">
+</span></code></pre>
+</div>
 
 <h3 id="c-build-the-server-project">c. Build the Server project</h3>
 
-<p>The hydrograph.server project consists of two different services - the execution tracking services which is used to report the 
-status of each component, and the debug service which allows developers to view data at each watch point. </p>
+<p>The hydrograph.server project consists of two different services - the execution tracking service which is used to report the 
+status of each component, and the debug service which allows developers to view data at each watch point.</p>
 
 <h4 id="i-execution-tracking-service">i. Execution tracking service</h4>
-<p>Navigate to the directory <strong>hydrograph.server/hydrograph.server.execution.tracking</strong>. <br />
-You will require to update the 
-and execute the following command to build the 
-execution tracking component of the Hydrograph server: </p>
+<p>Navigate to the directory <strong>hydrograph.server/hydrograph.server.execution.tracking</strong> and perform the following commands to build
+the execution tracking service:</p>
 
-<pre><code>mvn clean install
+<div class="highlighter-rouge"><pre class="highlight"><code>mvn clean install
 </code></pre>
+</div>
 
-<p>Just as with the engine, this creates the required jars. You can verify that jars have been created in the following directory: </p>
+<p>Just as with the engine, this creates the required JARs. You can verify that JAR files have been created in the following directory:</p>
 
-<pre><code>hydrograph.server\hydrograph.server.execution.tracking\target\
+<div class="highlighter-rouge"><pre class="highlight"><code>hydrograph.server/hydrograph.server.execution.tracking/target/
 </code></pre>
+</div>
 
-<p>Once we’ve verified that the artifacts have been created correctly we can install the project in our local Maven 
-repo and verify that the JARs are present: </p>
+<p>The <code class="highlighter-rouge">mvn install</code> command also takes care of moving the JAR files to our local Maven repository. We can verify that the JARs are in our
+local Maven repo by navigating to:</p>
 
-<pre><code>{User Home Directory}/.m2/repository/hydrograph
-</code></pre>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="err">User</span><span class="w"> </span><span class="err">Home</span><span class="w"> </span><span class="err">Directory</span><span class="p">}</span><span class="err">/.m</span><span class="mi">2</span><span class="err">/repository/hydrograph</span><span class="w">
+</span></code></pre>
+</div>
 
 <h4 id="ii-hydrograph-debug-service">ii. Hydrograph debug service</h4>
 
 <p>To install the debug service navigate to the directory <strong>hydrograph.server/hydrograph.server.debug</strong> and build the 
-project using the following command: </p>
+project using the following command:</p>
 
-<pre><code>gradle build
+<div class="highlighter-rouge"><pre class="highlight"><code>gradle build
 </code></pre>
+</div>
 
 <p>Just as with our previous build steps, we can verify that the artifacts have been created by navigating to the following directory</p>
 
-<pre><code>hydrograph.server\ hydrograph.server.debug\build\
+<div class="highlighter-rouge"><pre class="highlight"><code>hydrograph.server/hydrograph.server.debug/build/
 </code></pre>
+</div>
 
-<p>Once we’ve verified that the artifacts are present we can install them in our local Maven repo. </p>
+<p>Once we’ve verified that the artifacts are present we can install them in our local Maven repo.</p>
 
-<pre><code>gradle install
+<div class="highlighter-rouge"><pre class="highlight"><code>gradle install
 </code></pre>
+</div>
 
-<p>After installing the jars will be in the local Maven repository under the Hydrograph project. 
-~~~~~
-{Uswr Home Directory}/.m2/repository/Hydrograph
-~~~~~ </p>
+<p>After installing the jars will be in the local Maven repository under the Hydrograph project.</p>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="err">Uswr</span><span class="w"> </span><span class="err">Home</span><span class="w"> </span><span class="err">Directory</span><span class="p">}</span><span class="err">/.m</span><span class="mi">2</span><span class="err">/repository/Hydrograph</span><span class="w">
+</span></code></pre>
+</div>
 
 <h3 id="d-build-the-ui-project">d. Build the UI project</h3>
-<p>One of the pre-requisites of building the Hydrograph UI is to copy the View Data service jars produced in step a.(ii) into the
-following folder of the UI project - <em>*hydrograph.ui\hydrograph.ui.product\resources\config\service*</em> <br /></p>
+<p>In order to successfully build the UI, we’ll need to make sure that the artifacts created in the previous steps are in the proper
+location for use by the UI. Navigate to the top level project directory <strong>Hydrograph/</strong> and issue the following command:</p>
 
-<p>Execute the below command for building the project:</p>
-
-<pre><code>mvn clean install
+<div class="highlighter-rouge"><pre class="highlight"><code>gradle copyLibs
 </code></pre>
+</div>
+
+<p>Now we can go ahead and build the UI by issuing the command below:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>mvn clean install
+</code></pre>
+</div>
 
 <p>After a successful build, an operating System (Windows, Mac OS, etc.) specific Hydrograph IDE will be available under below relative path:
 <strong>/hydrograph.ui/hydrograph.ui.product/target/products/hydrograph.ui.perspective.ID</strong></p>
@@ -267,43 +267,64 @@ following folder of the UI project - <em>*hydrograph.ui\hydrograph.ui.product\re
 <hr />
 <p><a name="launch-UI"></a></p>
 
-<h2 id="launching-hydrograph-ui">3. Launching Hydrograph UI</h2>
+<h2 id="3-launching-hydrograph-ui">3. Launching Hydrograph UI</h2>
 
-<h4 id="a-windows-users">3.1a. Windows users</h4>
+<h4 id="31a-windows-users">3.1a. Windows users</h4>
 
 <ol>
-  <li>Navigate to <strong>/hydrograph.ui/hydrograph.ui.product/target/products/hydrograph.ui.perspective.ID</strong> </li>
+  <li>Navigate to <strong>/hydrograph.ui/hydrograph.ui.product/target/products/hydrograph.ui.perspective.ID</strong></li>
   <li>Launch through hydrograph.exe</li>
 </ol>
 
-<h4 id="b-mac-users">3.1b. Mac users</h4>
+<h4 id="31b-mac-users">3.1b. Mac users</h4>
 
 <ol>
-  <li>Navigate to <strong>/hydrograph.ui/hydrograph.ui.product/target/products/hydrograph.ui.perspective.ID</strong> </li>
+  <li>Navigate to <strong>/hydrograph.ui/hydrograph.ui.product/target/products/hydrograph.ui.perspective.ID</strong></li>
   <li>Right click Hydrograph_build_date_Mac file that was just extracted</li>
   <li>Select “Show Package Contents”</li>
   <li>Launch Hydrograph from Contents/MacOS/Config/Hydrograph</li>
 </ol>
 
-<h4 id="validate-java">3.2. Validate Java</h4>
+<h4 id="32-validate-java">3.2. Validate Java</h4>
 
 <p>Once Hydrograph is launched, verify that the selected Java JRE matches the JAVA_HOME environment variable. 
 From the top menu bar select Window-&gt; Preference -&gt; Java -&gt; Installed JREs</p>
 
 <hr />
 
-<p><a name="hgConfig"></a>
-## 4. Hydrograph Configuration
-If you wish to use a different repository to download Hydrograph dependencies, you will have to update the repository URLs in the default pom.xml or build.gradle &amp; common.gradle.
+<p><a name="hgConfig"></a></p>
+<h2 id="4-configuration">4. Configuration</h2>
+<p>If you wish to use a different repository to download Hydrograph dependencies, you will have to update the repository URLs in the default pom.xml or build.gradle &amp; common.gradle.
 A change in these files will ensure that any new projects that you create within the UI will have the correct configuration files.</p>
 
-<h4 id="updating-configurations-in-windows-builds--">4.1 Updating configurations in Windows builds -</h4>
+<h4 id="41-updating-configurations-in-windows-builds--">4.1 Updating configurations in Windows builds -</h4>
 <p>The Gradle configuration files on Windows builds can be found at - <strong>&lt;Hydrograph_UI_path&gt;\config\gradle\build</strong> <br />
 The Maven configuration file can be found at - <strong>&lt;Hydrograph_UI_path&gt;\config\maven</strong></p>
 
-<h4 id="updating-configurations-in-mac-builds--">4.2 Updating configurations in Mac builds -</h4>
+<h4 id="42-updating-configurations-in-mac-builds--">4.2 Updating configurations in Mac builds -</h4>
 <p>The Gradle configuration files in Mac builds can be found at <strong>&lt;Hydrograph_UI_path&gt;/Contents/Eclipse/config/gradle/build</strong> <br />
 The Maven configuration files can be found at <strong>&lt;Hydrograph_UI_path&gt;/Contents/Eclipse/config/maven</strong></p>
+
+<h4 id="43-proxy-configuration">4.3 Proxy Configuration</h4>
+<p>If your behind a proxy, it’s possible that you’ll need to configure some additional files for Gradle and Maven to
+properly download dependencies.</p>
+
+<p>For Gradle you’ll need to create a <code class="highlighter-rouge">gradle.properties</code> file that contains information on the proxy server. Gradle will look for 
+this file in the directory defined by the <strong>$GRADLE_USER_HOME</strong> environment variable.</p>
+
+<p>On Linux and Mac we suggest setting the <strong>$GRADLE_USER_HOME</strong> in  your ~/.profile as the user’s home directory.</p>
+
+<p>On Windows TODO</p>
+
+<p>Once you’ve set the environment variable and created the file be sure to configure the following properties in the file</p>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="n">systemProp</span><span class="o">.</span><span class="na">http</span><span class="o">.</span><span class="na">proxyHost</span><span class="o">=&lt;</span><span class="n">proxyHostname</span><span class="o">&gt;</span>
+<span class="n">systemProp</span><span class="o">.</span><span class="na">http</span><span class="o">.</span><span class="na">proxyPort</span><span class="o">=&lt;</span><span class="n">proxyPortNum</span><span class="o">&gt;</span>
+<span class="n">systemProp</span><span class="o">.</span><span class="na">https</span><span class="o">.</span><span class="na">proxyHost</span><span class="o">=&lt;</span><span class="n">proxyHostname</span><span class="o">&gt;</span>
+<span class="n">systemProp</span><span class="o">.</span><span class="na">https</span><span class="o">.</span><span class="na">proxyPort</span><span class="o">=&lt;</span><span class="n">proxyPortNum</span><span class="o">&gt;</span>
+</code></pre>
+</div>
+
 
         </div>
       </div>
