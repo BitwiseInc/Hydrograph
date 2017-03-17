@@ -17,6 +17,7 @@ import hydrograph.engine.core.xmlparser.parametersubstitution.PropertyBank;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Locale;
 import java.util.Properties;
 
 public class CommandLineOptionsProcessor {
@@ -78,7 +79,7 @@ public class CommandLineOptionsProcessor {
 
 		if (logLevel != null ) {
 			// only the first path
-			return getValidLogLevel(logLevel[0].toUpperCase());
+			return getValidLogLevel(logLevel[0].toUpperCase(Locale.ENGLISH));
 		} else {
 			return "info";
 		}

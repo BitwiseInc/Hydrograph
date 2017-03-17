@@ -48,7 +48,7 @@ public class OrderedPropertiesHelper {
 	 * @throws IOException
 	 *             if there is a problem reading the properties file.
 	 */
-	public static OrderedProperties getOrderedProperties(String propertyFileName)
+	public static OrderedProperties PropertiesHelper(String propertyFileName)
 			throws IOException {
 		LOG.trace("Entering method : 'getProperties', file name: '"
 				+ propertyFileName + "'");
@@ -63,17 +63,20 @@ public class OrderedPropertiesHelper {
 			LOG.error("Error reading properties file: '" + propertyFileName
 					+ "'");
 			throw new RuntimeException(e);
+		} finally {
+			try {
+				SafeResourceClose.safeInputStreamClose(in);
+			} catch (IOException e) {
+				// Exception not thrown as properties file was already read. An
+				// exception in closing input stream will
+				// cause a memory leak, however, the desired functionality works
+				LOG.warn("Exception in closing input stream for properties file: '"
+						+ propertyFileName + "'", e);
+			}
 		}
 
-		try {
-			in.close();
-		} catch (IOException e) {
-			// Exception not thrown as properties file was already read. An
-			// exception in closing input stream will
-			// cause a memory leak, however, the desired functionality works
-			LOG.warn("Exception in closing input stream for properties file: '"
-					+ propertyFileName + "'", e);
-		}
+
 		return properties;
 	}
+
 }
