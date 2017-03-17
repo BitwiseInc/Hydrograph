@@ -106,9 +106,9 @@ public class SchemaHelper {
 									for(int i = 1;i<split.length-1;i++){
 										component_Id = component_Id + "." + split[i];
 									}
-									socketName = entry.getValue().getSourceTerminal();
+									socketName = entry.getValue().getTargetTerminal();
 								 }
-								 componentName = component_Id;
+								 	componentName = component_Id;
 								}else{
 									componentName = link.getSource().getComponentId();
 									socketName = link.getSourceTerminal();
@@ -137,7 +137,6 @@ public class SchemaHelper {
 				}
 			}
 		}
-		
 	}
 	
 	private void createDebugXmls(Component component, String schemaFilePath, String componentId,
