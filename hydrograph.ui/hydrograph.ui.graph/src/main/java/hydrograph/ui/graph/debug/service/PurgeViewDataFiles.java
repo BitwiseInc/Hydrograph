@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.io.FileUtils;
+import org.eclipse.core.runtime.Platform;
 import org.slf4j.Logger;
 
 import hydrograph.ui.common.debug.service.IDebugService;
@@ -28,6 +29,7 @@ import hydrograph.ui.common.util.XMLConfigUtil;
 import hydrograph.ui.dataviewer.utilities.Utils;
 import hydrograph.ui.graph.execution.tracking.replay.ViewExecutionHistoryUtility;
 import hydrograph.ui.graph.job.Job;
+import hydrograph.ui.graph.utility.DataViewerUtility;
 import hydrograph.ui.graph.utility.ViewDataUtils;
 import hydrograph.ui.logging.factory.LogFactory;
 
@@ -41,6 +43,7 @@ public class PurgeViewDataFiles  implements IDebugService{
 
 	private static final Logger logger = LogFactory.INSTANCE.getLogger(PurgeViewDataFiles.class);
 	private static final String JOB_TRACKING_LOG_PATH = "//logger//JobTrackingLog";
+	private static final String JOB_TRACKING_CSV_FILE_PATH = "debugfiles";
 
 	/* (non-Javadoc)
 	 * @see hydrograph.ui.common.debug.service.IDebugService#deleteDebugFiles()
@@ -59,12 +62,14 @@ public class PurgeViewDataFiles  implements IDebugService{
 		        for(Job job : value){
 		        	dataUtils.deleteBasePathDebugFiles(job);
 		        	dataUtils.deleteSchemaAndDataViewerFiles(job.getUniqueJobId());
+		        	DataViewerUtility.INSTANCE.closeDataViewerWindows(job);
 		        }
 			}
 			viewExecutionHistoryUtility.getTrackingJobs().clear();
 		}
 		
 		purgeViewExecutionHistoryLogs();
+		purgeViewDataCsvFiles();
 	}
 	
 	/**
@@ -79,6 +84,17 @@ public class PurgeViewDataFiles  implements IDebugService{
 		}
 	}
 	
+	/**
+	 * The Function will remove View Execution History Csv Files.
+	 */
+	private void purgeViewDataCsvFiles(){
+		try {
+			FileUtils.cleanDirectory(new File(Platform.getInstallLocation().getURL().getPath() + JOB_TRACKING_CSV_FILE_PATH));
+			logger.info("Removed ViewExecutionHistory csv file:::");
+		} catch (IOException exception) {
+			logger.error("Failed to remove ViewExecutionHistory csv file.", exception);
+		}
+	}
 	
 	
 }
