@@ -56,6 +56,7 @@ public class FileLogger extends AbstractJobLogger{
 	 * 
 	 * @param projectName - name of active project
 	 * @param jobName - name of current job
+	 * @param b 
 	 */
 	public FileLogger(String projectName, String jobName, String jobRunId) {
 		super(projectName, jobName);
@@ -83,6 +84,7 @@ public class FileLogger extends AbstractJobLogger{
 	/**
 	 * 
 	 * Initialize file logger stream
+	 * @param isRemoteMode 
 	 * 
 	 */
 	private void initLogFileStream() {
@@ -98,6 +100,7 @@ public class FileLogger extends AbstractJobLogger{
 				if (job_logs_folder.isDirectory()) {
 					File file = new File(LOGGER_FOLDER_PATH + this.projectName + "_" + this.jobRunId+ ".log");
 					logFileStream = new BufferedWriter(new FileWriter(file, true));
+					
 				} else {
 					Status status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, JOB_LOGS_ERROR);
 					StatusManager.getManager().handle(status, StatusManager.BLOCK);
