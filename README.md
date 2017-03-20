@@ -12,8 +12,8 @@ Hydrograph is a powerful ETL tool that allows developers to create complex graph
 ### Contributors :
 We welcome your interest in Capital One's Open Source Projects (the "Project"). Any Contributor to the project must accept and sign a CLA indicating agreement to the license terms. Except for the license granted in this CLA to Capital One and to recipients of software distributed by Capital One, you reserve all right, title, and interest in and to your contributions; this CLA does not impact your rights to use your own contributions for any other purpose.
 
-##### [Link to CLA] (https://docs.google.com/forms/d/19LpBBjykHPox18vrZvBbZUcK6gQTj7qv1O5hCduAZFU/viewform)
-##### [Link to Corporate Agreement] (https://docs.google.com/forms/d/e/1FAIpQLSeAbobIPLCVZD_ccgtMWBDAcN68oqbAJBQyDTSAQ1AkYuCp_g/viewform?usp=send_form)
+##### [Link to CLA](https://docs.google.com/forms/d/19LpBBjykHPox18vrZvBbZUcK6gQTj7qv1O5hCduAZFU/viewform)
+##### [Link to Corporate Agreement](https://docs.google.com/forms/d/e/1FAIpQLSeAbobIPLCVZD_ccgtMWBDAcN68oqbAJBQyDTSAQ1AkYuCp_g/viewform?usp=send_form)
 This project adheres to the [Open Source Code of Conduct][code-of-conduct]. By participating, you are expected to honor this code.
 
 [code-of-conduct]: http://www.capitalone.io/codeofconduct/
