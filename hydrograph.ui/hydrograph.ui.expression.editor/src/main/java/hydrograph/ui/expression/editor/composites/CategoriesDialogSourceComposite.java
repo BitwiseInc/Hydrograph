@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.resources.IFile;
@@ -139,12 +140,12 @@ public class CategoriesDialogSourceComposite extends Composite {
 					if (file.isFile()) {
 						IFile newFile = libsFolder.getFile(file.getName());
 						if (!newFile.exists()) {
-							try {
-								newFile.create(new FileInputStream(file.getAbsoluteFile()), true, null);
+							try(InputStream fis = new FileInputStream(file.getAbsoluteFile())) {
+								newFile.create(fis, true, null);
 								addFileToBuildPath(newFile);
 								loadComboJarListFromBuildPath(comboJarList,newFile.getName());
 								
-							} catch (FileNotFoundException | CoreException e1) {
+							} catch (CoreException |IOException e1) {
 								LOGGER.error(
 										"Exception occurred while copying jar file from local-file-system to project",
 										e1);

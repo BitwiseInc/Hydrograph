@@ -17,6 +17,7 @@ package hydrograph.ui.graph.action.subjob;
 import static hydrograph.ui.graph.execution.tracking.utils.CoolBarHelperUtility.COOLBAR_ITEMS_UTILITY;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
@@ -137,7 +138,7 @@ public class SubJobTrackingAction extends SelectionAction{
 							ViewExecutionHistoryHandler viewExecutionHistoryHandler=new ViewExecutionHistoryHandler();
 							executionStatus = ViewExecutionHistoryUtility.INSTANCE.readJsonLogFile(container.getUniqueJobId(), JobManager.INSTANCE.isLocalMode(), ExecutionTrackingConsoleUtils.INSTANCE.getLogPath());
 							viewExecutionHistoryHandler.replayExecutionTracking(executionStatus);
-						} catch (FileNotFoundException e) {
+						} catch (IOException e) {
 							logger.error("Execution tracking logger file not found:"+e);
 						}
 					}

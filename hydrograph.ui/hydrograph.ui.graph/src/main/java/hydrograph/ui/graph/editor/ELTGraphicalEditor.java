@@ -23,7 +23,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -1415,11 +1414,10 @@ public class ELTGraphicalEditor extends GraphicalEditorWithFlyoutPalette impleme
 			Container container = (Container) xStream.fromXML(file);
 			container = deleteSubjobProperties(container);
 			if (container != null) {
-				try {
-					FileOutputStream fileOutputStream = new FileOutputStream(file);
+				try(FileOutputStream fileOutputStream = new FileOutputStream(file);) {
 					xStream.toXML(container, fileOutputStream);
 
-				} catch (FileNotFoundException eFileNotFoundException) {
+				} catch (IOException eFileNotFoundException) {
 					logger.error("Exception occurred while saving sub-graph into local file-system when editor disposed",
 							eFileNotFoundException);
 				}
