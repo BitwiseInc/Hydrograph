@@ -12,9 +12,10 @@
  *******************************************************************************/
 package hydrograph.engine.transformation.userfunctions.helpers;
 
+import java.io.Serializable;
 import java.util.regex.Pattern;
 
-public class RegexSplitter {
+public class RegexSplitter implements Serializable {
 
 	Pattern pattern;
 

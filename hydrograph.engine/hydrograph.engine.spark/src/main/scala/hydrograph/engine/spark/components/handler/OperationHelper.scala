@@ -96,7 +96,7 @@ trait OperationHelper[T] {
     } else
       List()
   }
-    
+
   def getReusableRows(op: Operation, inputSchema: StructType): (InputReusableRow, OutputReusableRow) = {
     val out = if (op.getOperationFields != null) OutputReusableRow(null, new RowToReusableMapper(EncoderHelper().getEncoder(op.getOperationFields), op
       .getOperationOutputFields))
@@ -116,7 +116,7 @@ trait OperationHelper[T] {
     requiredFields.foreach(field => outSchema = outSchema.add(schema(field)))
     outSchema
   }
-  
+
   def getOutputReusableRow[U](outputSchema: StructType, x: Operation): OutputReusableRow = {
     if (x
       .getOperationOutputFields != null) OutputReusableRow(null, new RowToReusableMapper(outputSchema, x
