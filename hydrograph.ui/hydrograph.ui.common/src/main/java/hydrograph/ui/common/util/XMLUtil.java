@@ -18,6 +18,7 @@ import hydrograph.ui.logging.factory.LogFactory;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.io.Writer;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -77,13 +78,13 @@ public class XMLUtil {
 	 */
 	public static String formatXML(String xmlString){
 		
-		try{
+		try(Writer writer = new StringWriter()){
 			Transformer transformer = TransformerFactory.newInstance().newTransformer();
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 			transformer.setOutputProperty(TRANSFORMER_INDENT_AMOUNT_KEY, INDENT_SPACE);
 			transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
 			//initialize StreamResult with File object to save to file
-			StreamResult result = new StreamResult(new StringWriter());
+			StreamResult result = new StreamResult(writer);
 			
 			Document xmlDoc = convertStringToDocument(xmlString);
 			
@@ -95,6 +96,9 @@ public class XMLUtil {
 			transformer.transform(source, result);
 			return result.getWriter().toString();	
 		}catch(TransformerException e){
+			logger.debug("Unable to format XML string",e);
+		}
+		catch (IOException e){
 			logger.debug("Unable to format XML string",e);
 		}
 		

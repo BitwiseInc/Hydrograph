@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -154,11 +155,11 @@ public class ProjectStructureCreator {
 		if(listFiles != null){
 			for(File sourceFile : listFiles){
 				IFile destinationFile = project.getFile(sourceFile.getName());
-				try {
+				try(InputStream fileInputStream = new FileInputStream(sourceFile)) {
 					if(!destinationFile.exists()){ //used while importing a project
-						destinationFile.create(new FileInputStream(sourceFile), true, null);
+						destinationFile.create(fileInputStream, true, null);
 					}
-				} catch (FileNotFoundException | CoreException exception) {
+				} catch (IOException | CoreException exception) {
 					logger.debug("Copy build file operation failed");
 					throw new CoreException(new MultiStatus(Activator.PLUGIN_ID, 100, "Copy build file operation failed", exception));
 				}
@@ -328,12 +329,12 @@ public class ProjectStructureCreator {
 		if(listFiles != null){
 			for(File sourceFile : listFiles){
 				IFile destinationFile = destinationFolder.getFile(sourceFile.getName());
-				try {
+				try(InputStream fileInputStream = new FileInputStream(sourceFile)) {
 					if(!destinationFile.exists()){ //used while importing a project
-						destinationFile.create(new FileInputStream(sourceFile), true, null);
+						destinationFile.create(fileInputStream, true, null);
 					}
 					entries.add(JavaCore.newLibraryEntry(new Path(destinationFile.getLocation().toOSString()), null, null));
-				} catch (FileNotFoundException | CoreException exception) {
+				} catch (IOException | CoreException exception) {
 					logger.debug("Copy external library files operation failed", exception);
 					throw new CoreException(new MultiStatus(Activator.PLUGIN_ID, 101, "Copy external library files operation failed", exception));
 				}

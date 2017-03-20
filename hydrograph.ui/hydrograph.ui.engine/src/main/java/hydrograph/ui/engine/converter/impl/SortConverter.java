@@ -16,15 +16,14 @@ package hydrograph.ui.engine.converter.impl;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.common.util.ParameterUtil;
 import hydrograph.ui.engine.converter.StraightPullConverter;
-import hydrograph.ui.engine.helper.ConverterHelper;
 import hydrograph.ui.engine.xpath.ComponentXpathConstants;
 import hydrograph.ui.graph.model.Component;
 import hydrograph.ui.graph.model.Link;
 import hydrograph.ui.logging.factory.LogFactory;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -36,8 +35,6 @@ import hydrograph.engine.jaxb.commontypes.TypeSortOrder;
 import hydrograph.engine.jaxb.commontypes.TypeStraightPullOutSocket;
 import hydrograph.engine.jaxb.sort.TypePrimaryKeyFields;
 import hydrograph.engine.jaxb.sort.TypePrimaryKeyFieldsAttributes;
-import hydrograph.engine.jaxb.sort.TypeSecondaryKeyFields;
-import hydrograph.engine.jaxb.sort.TypeSecondayKeyFieldsAttributes;
 import hydrograph.engine.jaxb.straightpulltypes.Sort;
 
 /**
@@ -77,7 +74,7 @@ public class SortConverter extends StraightPullConverter {
 					if(!ParameterUtil.isParameter(primaryKeyRowEntry.getKey())){
 						TypePrimaryKeyFieldsAttributes field = new TypePrimaryKeyFieldsAttributes();
 						field.setName(primaryKeyRowEntry.getKey());
-						field.setOrder(TypeSortOrder.fromValue(primaryKeyRowEntry.getValue().toLowerCase()));
+						field.setOrder(TypeSortOrder.fromValue(primaryKeyRowEntry.getValue().toLowerCase(Locale.ENGLISH)));
 						fieldNameList.add(field);
 					}else{
 						converterHelper.addParamTag(this.ID, primaryKeyRowEntry.getKey(), 

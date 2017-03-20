@@ -13,19 +13,17 @@
 package hydrograph.ui.expression.editor.javasourceviewerconfiguration;
 
 import hydrograph.ui.common.util.ImagePathConstant;
-import hydrograph.ui.common.util.XMLConfigUtil;
 import hydrograph.ui.expression.editor.Constants;
-import hydrograph.ui.expression.editor.PathConstant;
 import hydrograph.ui.expression.editor.datastructure.ClassDetails;
 import hydrograph.ui.expression.editor.datastructure.MethodDetails;
 import hydrograph.ui.expression.editor.dialogs.ExpressionEditorDialog;
 import hydrograph.ui.expression.editor.repo.ClassRepo;
-import hydrograph.ui.expression.editor.util.ExpressionEditorUtil;
 import hydrograph.ui.logging.factory.LogFactory;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -39,8 +37,6 @@ import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.contentassist.IContextInformation;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.ImageData;
-import org.eclipse.swt.widgets.Display;
 import org.slf4j.Logger;
 
 public class HydrographCompletionProposalComputer implements IJavaCompletionProposalComputer {
@@ -90,8 +86,8 @@ public class HydrographCompletionProposalComputer implements IJavaCompletionProp
 			{
 				while (iterator.hasNext()) {
 					ICompletionProposal item = (ICompletionProposal) iterator.next();
-					String content = item.getDisplayString().toLowerCase();
-					if (!content.toLowerCase().startsWith(prefixLc)) {
+					String content = item.getDisplayString().toLowerCase(Locale.ENGLISH);
+					if (!content.toLowerCase(Locale.ENGLISH).startsWith(prefixLc)) {
 						iterator.remove();
 					}
 				}

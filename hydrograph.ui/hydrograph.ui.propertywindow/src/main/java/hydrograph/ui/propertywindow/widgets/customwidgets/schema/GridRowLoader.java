@@ -96,12 +96,12 @@ public class GridRowLoader {
 	public List<GridRow> importGridRowsFromXML(ListenerHelper helper){
 
 		List<GridRow> schemaGridRowListToImport = null;
-		InputStream xml, xsd;
 		
 		ELTGridDetails gridDetails = (ELTGridDetails)helper.get(HelperType.SCHEMA_GRID);
 		List<GridRow> grids = gridDetails.getGrids();
 		grids.clear();
-		try {
+		try(InputStream xml = new FileInputStream(schemaFile);
+				InputStream	xsd = new FileInputStream(SCHEMA_CONFIG_XSD_PATH);) {
 			if(StringUtils.isNotBlank(schemaFile.getPath())){
 				
 				if(!schemaFile.getName().contains("."))	{
@@ -115,9 +115,7 @@ public class GridRowLoader {
 					}
 				
 				
-				xml = new FileInputStream(schemaFile);
 				
-				xsd = new FileInputStream(SCHEMA_CONFIG_XSD_PATH);
 				
 				if(validateXML(xml, xsd)){
 					

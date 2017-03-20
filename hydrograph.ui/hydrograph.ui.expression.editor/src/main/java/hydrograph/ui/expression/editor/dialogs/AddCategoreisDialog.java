@@ -112,6 +112,7 @@ public class AddCategoreisDialog extends Dialog {
 	public boolean createPropertyFileForSavingData()  {
 		IProject iProject=BuildExpressionEditorDataSturcture.INSTANCE.getCurrentProject();
 		IFolder iFolder=iProject.getFolder(PathConstant.PROJECT_RESOURCES_FOLDER);
+		FileOutputStream file = null;
 		Properties properties=new Properties();
 		try {
 			if(!iFolder.exists()){
@@ -123,11 +124,20 @@ public class AddCategoreisDialog extends Dialog {
 				properties.setProperty(packageName,jarFileName );
 			}
 			
-			FileOutputStream file=new FileOutputStream(iFolder.getLocation().toString()+File.separator+PathConstant.EXPRESSION_EDITOR_EXTERNAL_JARS_PROPERTIES_FILES);
+			file=new FileOutputStream(iFolder.getLocation().toString()+File.separator+PathConstant.EXPRESSION_EDITOR_EXTERNAL_JARS_PROPERTIES_FILES);
 			properties.store(file, "");
 			return true;
 		} catch (IOException | CoreException exception) {
 			LOGGER.error("Exception occurred while saving jar file path at projects setting folder",exception);
+		}
+		finally{
+		      if (file != null) {
+		            try {
+		            	file.close();
+		            } catch (IOException e) {
+		            	LOGGER.warn("Exception in closing output stream. The error message is " + e.getMessage());
+		            }
+		        }
 		}
 		return false;
 	}

@@ -16,6 +16,8 @@ package hydrograph.ui.graph.execution.tracking.replay;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -225,11 +227,11 @@ public class ViewExecutionHistoryUtility {
 	 * @return
 	 * @throws FileNotFoundException
 	 */
-	public ExecutionStatus readJsonLogFile(String uniqueJobId, boolean isLocalMode, String filePath) throws FileNotFoundException{
+	public ExecutionStatus readJsonLogFile(String uniqueJobId, boolean isLocalMode, String filePath) throws IOException{
 		ExecutionStatus[] executionStatus;
 		String jobId = "";
 		String path = null;
-		
+		String jsonArray = "";
 		if(isLocalMode){
 			jobId = EXECUTION_TRACKING_LOCAL_MODE + uniqueJobId;
 		}else{
@@ -240,7 +242,9 @@ public class ViewExecutionHistoryUtility {
 		JsonParser jsonParser = new JsonParser();
 		
 		Gson gson = new Gson();
-		String jsonArray = jsonParser.parse(new FileReader(new File(path))).toString();
+		try(Reader fileReader = new FileReader(new File(path));){
+			jsonArray = jsonParser.parse(fileReader).toString();
+		}
 		executionStatus = gson.fromJson(jsonArray, ExecutionStatus[].class);
 		return executionStatus[executionStatus.length-1];
 	}
@@ -278,11 +282,14 @@ public class ViewExecutionHistoryUtility {
 	 * @return ExecutionStatus
 	 * @throws FileNotFoundException
 	 */
-	public ExecutionStatus readBrowsedJsonLogFile(String filePath) throws FileNotFoundException{
+	public ExecutionStatus readBrowsedJsonLogFile(String filePath) throws IOException{
 		ExecutionStatus[] executionStatus;
 		JsonParser jsonParser = new JsonParser();
 		Gson gson = new Gson();
-		String jsonArray = jsonParser.parse(new FileReader(new File(filePath))).toString();
+		String jsonArray = "";
+		try(Reader fileReader = new FileReader(new File(filePath));){
+			jsonArray = jsonParser.parse(fileReader).toString();
+		}
 		executionStatus = gson.fromJson(jsonArray, ExecutionStatus[].class);
 		return executionStatus[executionStatus.length-1];
 	}

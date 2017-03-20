@@ -220,8 +220,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 	 */
 	public String getServicePortFromPropFile(String propertyFile,String portNo,String serviceJar){
 		String portNumber = null;
-		try {
-			FileReader fileReader = new FileReader(XMLConfigUtil.CONFIG_FILES_PATH + propertyFile);
+		try(FileReader fileReader = new FileReader(XMLConfigUtil.CONFIG_FILES_PATH + propertyFile);) {
 			Properties properties = new Properties();
 			properties.load(fileReader);
 			if(StringUtils.isNotBlank(properties.getProperty(serviceJar))){

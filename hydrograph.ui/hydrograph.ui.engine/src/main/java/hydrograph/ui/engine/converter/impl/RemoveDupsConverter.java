@@ -17,7 +17,6 @@ import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.common.util.ParameterUtil;
 import hydrograph.ui.engine.constants.PropertyNameConstants;
 import hydrograph.ui.engine.converter.StraightPullConverter;
-import hydrograph.ui.engine.helper.ConverterHelper;
 import hydrograph.ui.engine.xpath.ComponentXpathConstants;
 import hydrograph.ui.graph.model.Component;
 import hydrograph.ui.graph.model.Link;
@@ -25,6 +24,7 @@ import hydrograph.ui.logging.factory.LogFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -116,7 +116,7 @@ public class RemoveDupsConverter extends StraightPullConverter {
 					if(!ParameterUtil.isParameter(secondaryKeyRowEntry.getKey())){
 						TypeSecondayKeyFieldsAttributes field = new TypeSecondayKeyFieldsAttributes();
 						field.setName(secondaryKeyRowEntry.getKey());
-						field.setOrder(TypeSortOrder.fromValue(secondaryKeyRowEntry.getValue().toLowerCase()));
+						field.setOrder(TypeSortOrder.fromValue(secondaryKeyRowEntry.getValue().toLowerCase(Locale.ENGLISH)));
 						fieldNameList.add(field);
 					}else{
 						converterHelper.addParamTag(this.ID, secondaryKeyRowEntry.getKey(), 
