@@ -15,6 +15,7 @@ package hydrograph.ui.engine.converter.impl;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -161,7 +162,7 @@ public class AggregateConverter extends TransformConverter {
 					if (!ParameterUtil.isParameter(secondaryKeyRowEntry.getKey())) {
 						TypeSecondayKeyFieldsAttributes fieldsAttributes = new TypeSecondayKeyFieldsAttributes();
 						fieldsAttributes.setName(secondaryKeyRowEntry.getKey());
-						TypeSortOrder order = TypeSortOrder.fromValue(secondaryKeyRowEntry.getValue().toLowerCase());
+						TypeSortOrder order = TypeSortOrder.fromValue(secondaryKeyRowEntry.getValue().toLowerCase(Locale.ENGLISH));
 						fieldsAttributes.setOrder(order);
 						field.add(fieldsAttributes);
 					} else {

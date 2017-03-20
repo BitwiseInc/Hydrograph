@@ -420,12 +420,11 @@ public abstract class ELTSchemaGridWidget extends AbstractWidget {
 		 if (schemaFile == null){
 			 return false;
 		 }
-		 InputStream xml, xsd;
 		 Fields fields;
 		 boolean verifiedSchema = true;
-		 try {
-			 xml = new FileInputStream(schemaFile);
-			 xsd = new FileInputStream(SCHEMA_CONFIG_XSD_PATH);
+		 try(InputStream  xml = new FileInputStream(schemaFile);
+				 InputStream xsd = new FileInputStream(SCHEMA_CONFIG_XSD_PATH);
+				 ) {
 
 			 if(validateXML(xml, xsd)){
 				 JAXBContext jaxbContext;
@@ -527,6 +526,9 @@ public abstract class ELTSchemaGridWidget extends AbstractWidget {
 			 logger.error(Messages.EXPORTED_SCHEMA_SYNC_ERROR ,e);
 
 
+		 }
+		 catch (IOException e){
+			 logger.error(Messages.EXPORTED_SCHEMA_SYNC_ERROR ,e);
 		 }
 		 return verifiedSchema;
 
