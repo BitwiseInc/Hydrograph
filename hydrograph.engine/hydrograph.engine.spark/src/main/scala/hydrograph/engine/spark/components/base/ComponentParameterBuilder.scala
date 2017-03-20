@@ -135,11 +135,6 @@ object ComponentParameterBuilder {
       this
     }
 
-    def setAccumulatorName(accumulatorName: String): Builder = {
-      baseComponent.setAccumulatorName(accumulatorName)
-      this
-    }
-
     def build(): BaseComponentParams = {
       baseComponent
     }

@@ -69,7 +69,7 @@ class FlowBuilder(runtimeContext: RuntimeContext) {
 
         baseComponentParams = ComponentParameterBuilder(compID, runtimeContext, outLinkMap,new BaseComponentParams())
           .setInputDataFrame().setSparkSession(runtimeContext.sparkSession).setInputDataFrameWithCompID().setInputSchemaFieldsWithCompID()
-          .setOutputSchemaFields().setInputSchemaFields().setAccumulatorName(compID).build()
+          .setOutputSchemaFields().setInputSchemaFields().build()
 
 
         adapterBase.createComponent(baseComponentParams)

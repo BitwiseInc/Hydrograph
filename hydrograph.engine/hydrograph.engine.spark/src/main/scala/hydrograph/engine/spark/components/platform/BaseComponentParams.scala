@@ -43,22 +43,12 @@ class BaseComponentParams() extends Serializable {
 
   var schemaField:Array[SchemaField] = null
 
-  var accumulatorName:String = null
-
   def addSchemaFields(fields: Array[SchemaField]) = {
     schemaField = fields
   }
 
   def getSchemaFields(): Array[SchemaField] ={
     schemaField
-  }
-
-  def getAccumulatorName(): String = {
-    accumulatorName
-  }
-
-  def setAccumulatorName(accName: String): Unit = {
-    accumulatorName = accName
   }
 
   def getSparkSession(): SparkSession = {
