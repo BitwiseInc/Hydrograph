@@ -134,6 +134,7 @@ public class MixedSchemeGridCellModifier implements ICellModifier{
 			object=((Item) element).getData();
 			}
 		MixedSchemeGridRow mixedSchemeGridRow = (MixedSchemeGridRow) object;
+		if (mixedSchemeGridRow != null) {
 		if (ELTSchemaGridWidget.FIELDNAME.equals(property))
 			mixedSchemeGridRow.setFieldName(((String) value).trim());
 		else if (ELTSchemaGridWidget.DATATYPE.equals(property)) {
@@ -174,6 +175,7 @@ public class MixedSchemeGridCellModifier implements ICellModifier{
 		resetDateFormat(mixedSchemeGridRow, property);
 		viewer.refresh();
 		SchemaRowValidation.INSTANCE.highlightInvalidRowWithRedColor(mixedSchemeGridRow,(TableItem)element,mixedSchemeWidget.getTable(), mixedSchemeWidget.getComponentType());
+	}
 		mixedSchemeWidget.showHideErrorSymbol(mixedSchemeWidget.isWidgetValid());
 	}
 	

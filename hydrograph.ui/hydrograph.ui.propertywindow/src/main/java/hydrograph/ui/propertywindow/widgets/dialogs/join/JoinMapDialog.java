@@ -975,10 +975,10 @@ public class JoinMapDialog extends Dialog {
 			}
 			if (inputPorts != null) {
 				inputPorts.add(inputPortFieldList);
-
-				for (FilterProperties inputField : inputPortFieldList) {
-					allInputFields.add(INPUT_PORT_ID_PREFIX + i + "."
-							+ inputField.getPropertyname());
+				if (inputPortFieldList != null) {
+					for (FilterProperties inputField : inputPortFieldList) {
+						allInputFields.add(INPUT_PORT_ID_PREFIX + i + "." + inputField.getPropertyname());
+					}
 				}
 
 			}

@@ -208,13 +208,14 @@ public class TextBoxWithIsParameterCheckBoxWidget extends TextBoxWithLabelWidget
 				break;
 			}
 		}
-	    eltSchemaGridWidget.refresh();
-	    if(gridRowList.isEmpty())
-	    {
-	    	eltSchemaGridWidget.getSchemaGridRowList().clear();
-	    	eltSchemaGridWidget.getTableViewer().refresh();
-	    	eltSchemaGridWidget.showHideErrorSymbol(eltSchemaGridWidget.isWidgetValid());
-	    }
+		if (eltSchemaGridWidget != null) {
+			eltSchemaGridWidget.refresh();
+			if (gridRowList.isEmpty()) {
+				eltSchemaGridWidget.getSchemaGridRowList().clear();
+				eltSchemaGridWidget.getTableViewer().refresh();
+				eltSchemaGridWidget.showHideErrorSymbol(eltSchemaGridWidget.isWidgetValid());
+			}
+		}
 	    
 	}
 

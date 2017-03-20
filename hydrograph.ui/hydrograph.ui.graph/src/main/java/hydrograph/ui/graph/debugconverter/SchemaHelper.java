@@ -261,24 +261,11 @@ public class SchemaHelper {
 	 */
 	public String validatePath(String path){
 		String validPath = null;
-		if(OSValidator.isWindows()){
-			if(StringUtils.endsWith(path, "\\")){
+			if(StringUtils.endsWith(path,File.separator)){
 				return path;
 			}else{
-				validPath = path + "\\";
+				validPath = path + File.separator;
 				return validPath;
 			}
-		}
-		else if(OSValidator.isMac()){
-			if(StringUtils.endsWith(path, "/")){
-				return path;
-			}else{
-				validPath = path + "/";
-				return validPath;
-			}
-		}
-		else if(OSValidator.isUnix()){
-		}
-		return validPath;
 	}
 }

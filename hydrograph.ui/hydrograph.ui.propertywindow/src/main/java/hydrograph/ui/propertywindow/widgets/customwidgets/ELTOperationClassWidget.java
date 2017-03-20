@@ -196,8 +196,10 @@ public class ELTOperationClassWidget extends AbstractWidget {
 						schemaWidget=(ELTSchemaGridWidget)abstractWidget;
 						break;
 					}
-				}	
-				schemaWidget.refresh();
+				}
+				if (schemaWidget != null) {
+					schemaWidget.refresh();
+				}
 				List<GridRow> gridRowList=(List<GridRow>)schemaWidget.getTableViewer().getInput();
 				return SchemaSyncUtility.INSTANCE.convertGridRowsSchemaToFixedSchemaGridRows(gridRowList);
 			}

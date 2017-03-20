@@ -132,6 +132,7 @@ public class FixedWidthGridCellModifier implements ICellModifier{
 			object = ((Item) element).getData();
 
 		FixedWidthGridRow fixedWidthGridRow = (FixedWidthGridRow) object;
+		if (fixedWidthGridRow != null) {
 		if (ELTSchemaGridWidget.FIELDNAME.equals(property))
 			fixedWidthGridRow.setFieldName(((String) value).trim());
 		else if (ELTSchemaGridWidget.DATATYPE.equals(property)) {
@@ -169,6 +170,7 @@ public class FixedWidthGridCellModifier implements ICellModifier{
 		resetDateFormat(fixedWidthGridRow, property);
 		viewer.refresh();
 		SchemaRowValidation.INSTANCE.highlightInvalidRowWithRedColor(fixedWidthGridRow, (TableItem)element,eltFixedWidget.getTable(), eltFixedWidget.getComponentType());
+	}
 		eltFixedWidget.showHideErrorSymbol(eltFixedWidget.isWidgetValid());
 	}
 	

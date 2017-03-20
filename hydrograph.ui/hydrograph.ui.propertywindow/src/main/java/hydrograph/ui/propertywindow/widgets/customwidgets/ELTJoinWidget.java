@@ -123,8 +123,11 @@ public class ELTJoinWidget extends AbstractWidget {
 						break;
 					}
 				}
-				JoinMappingGrid joinMappingGrid=(JoinMappingGrid)joinMapWidget.getProperties().get("join_mapping");
-				eltJoinConfigGrid.setSourceFieldList(joinMappingGrid.getLookupInputProperties());
+				if (joinMapWidget != null) {
+					JoinMappingGrid joinMappingGrid = (JoinMappingGrid) joinMapWidget.getProperties()
+							.get("join_mapping");
+					eltJoinConfigGrid.setSourceFieldList(joinMappingGrid.getLookupInputProperties());
+				}
 				eltJoinConfigGrid.setPropagatedFieldProperty(SchemaPropagationHelper.INSTANCE
 						.getFieldsForFilterWidget(getComponent()));
 				eltJoinConfigGrid.open();

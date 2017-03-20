@@ -88,18 +88,17 @@ public class TransformMappingFeatureUtility {
 				break;
 			}	
 		}
-		for(FilterProperties filterProperties:mappingSheetRow.getInputFields())
-		{
-			for(TableItem tableItem:inputtable.getItems())
-			{	
-				
-			if(StringUtils.equalsIgnoreCase(tableItem.getText(),filterProperties.getPropertyname()))
-					{
-				tableItem.setForeground(CustomColorRegistry.INSTANCE.getColorFromRegistry( 0, 128, 255));
-				break;
-					}		
+			if (mappingSheetRow != null) {
+				for (FilterProperties filterProperties : mappingSheetRow.getInputFields()) {
+					for (TableItem tableItem : inputtable.getItems()) {
+
+						if (StringUtils.equalsIgnoreCase(tableItem.getText(), filterProperties.getPropertyname())) {
+							tableItem.setForeground(CustomColorRegistry.INSTANCE.getColorFromRegistry(0, 128, 255));
+							break;
+						}
+					}
+				}
 			}
-		}
 		List<FilterProperties> templist = getObjectReferencePresentInOutputTable(
 				finalSortedList, mappingSheetRow);
 		for(FilterProperties filterProperties:mappingSheetRow.getOutputList())

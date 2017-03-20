@@ -157,6 +157,7 @@ public class GenerateRecordsGridCellModifier implements ICellModifier {
 		}	
 
 		GenerateRecordSchemaGridRow generateRecordSchemaGridRow = (GenerateRecordSchemaGridRow) object;
+		if (generateRecordSchemaGridRow != null) {
 		if (ELTSchemaGridWidget.FIELDNAME.equals(property))
 			generateRecordSchemaGridRow.setFieldName(((String) value).trim());
 		else if (ELTSchemaGridWidget.DATEFORMAT.equals(property))
@@ -200,6 +201,7 @@ public class GenerateRecordsGridCellModifier implements ICellModifier {
 		resetDateFormat(generateRecordSchemaGridRow, property);
 		viewer.refresh();
 		SchemaRowValidation.INSTANCE.highlightInvalidRowWithRedColor(generateRecordSchemaGridRow,(TableItem)element,generateRecordsGridWidget.getTable(), generateRecordsGridWidget.getComponentType());
+	}	
 		generateRecordsGridWidget.showHideErrorSymbol(generateRecordsGridWidget.isWidgetValid());
 	}
 

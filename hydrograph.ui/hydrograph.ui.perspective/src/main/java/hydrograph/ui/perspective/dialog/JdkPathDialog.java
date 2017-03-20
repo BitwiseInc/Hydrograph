@@ -14,6 +14,8 @@
 
 package hydrograph.ui.perspective.dialog;
 
+import java.io.File;
+
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -180,8 +182,8 @@ public class JdkPathDialog extends Dialog {
 
 	private String getTextBoxValue() {
 		String textValue = text.getText();
-		if (!StringUtils.endsWithIgnoreCase(textValue, "\\bin")) {
-			textValue = textValue + "\\bin";
+		if (!StringUtils.endsWithIgnoreCase(textValue, File.separator+"bin")) {
+			textValue = textValue + File.separator+"bin";
 		}
 		return textValue;
 	}

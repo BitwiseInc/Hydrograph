@@ -380,7 +380,9 @@ public class UiConverterUtil {
 		} finally {
 			componentRepo.flushRepository();
 			try {
-				fileOutputStream.close();
+				if (fileOutputStream != null) {
+					fileOutputStream.close();
+				}
 			} catch (IOException ioe) {
 				LOGGER.error("IOException occurred while closing output stream", ioe);
 			}

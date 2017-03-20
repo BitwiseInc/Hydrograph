@@ -195,12 +195,12 @@ public class PropogateWidget extends AbstractWidget{
 						
 							List<List<FilterProperties>> sorceFieldList = SchemaPropagationHelper.INSTANCE
 								.sortedFiledNamesBySocketId(getComponent());
-							JoinMappingGrid joinMappingGrid=(JoinMappingGrid)joinMapWidget.getProperties().get(Constants.JOIN_MAP_FIELD);
-							
-							joinMappingGrid.setLookupInputProperties(sorceFieldList);
+							if (joinMapWidget != null) {
+								JoinMappingGrid joinMappingGrid=(JoinMappingGrid)joinMapWidget.getProperties().get(Constants.JOIN_MAP_FIELD);
+							    joinMappingGrid.setLookupInputProperties(sorceFieldList);
+							}
 							shouldsetContinuousSchemaPropagationFlagForNextConnectedComponents=false;
 						}	
-					
 						else if(StringUtils.equalsIgnoreCase(getComponent().getComponentName(),Constants.LOOKUP))
 						{
 							ELTLookupMapWidget  lookupMapWidget = (ELTLookupMapWidget)getWidget();

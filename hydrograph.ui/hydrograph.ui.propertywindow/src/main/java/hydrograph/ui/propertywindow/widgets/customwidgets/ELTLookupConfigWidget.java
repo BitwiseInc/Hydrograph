@@ -91,12 +91,15 @@ public class ELTLookupConfigWidget extends AbstractWidget {
 						break;
 					}
 				}
-				LookupMappingGrid joinMappingGrid=(LookupMappingGrid)lookUpMapWidget.getProperties().get("hash_join_map");
-				ELTLookupConfigGrid eltLookupConfigGrid = new ELTLookupConfigGrid(((Button) eltDefaultButton
-						.getSWTWidgetControl()).getShell(), propertyDialogButtonBar, properties);
-				eltLookupConfigGrid.setSourceFieldList(joinMappingGrid.getLookupInputProperties());
-				eltLookupConfigGrid.open();
-				
+				if (lookUpMapWidget != null) {
+					LookupMappingGrid joinMappingGrid = (LookupMappingGrid) lookUpMapWidget.getProperties()
+							.get("hash_join_map");
+					ELTLookupConfigGrid eltLookupConfigGrid = new ELTLookupConfigGrid(
+							((Button) eltDefaultButton.getSWTWidgetControl()).getShell(), propertyDialogButtonBar,
+							properties);
+					eltLookupConfigGrid.setSourceFieldList(joinMappingGrid.getLookupInputProperties());
+					eltLookupConfigGrid.open();
+				}
 				setPortTypes();
 				
 				showHideErrorSymbol(widgets);
