@@ -2,7 +2,7 @@
 layout: default
 title: "High Level Architecture"
 category: con
-section: "getting-started"
+section: "high-level-arch"
 date: 2016-06-23 11:15:00
 order: 1
 ---

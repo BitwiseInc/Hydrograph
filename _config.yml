@@ -10,10 +10,7 @@ baseurl: '/Hydrograph'
 sections: [
     ['hyg', 'ABOUT'],
     ['strt', 'GETTING STARTED'],
-    ['dev', 'DEVELOPERS'],
-    ['ex', 'EXAMPLES'],
     ['con', 'CONTRIBUTING'],
-    ['ref', 'COMPONENT REFERENCE']
 ]
 
 # Use the redcarpet Markdown renderer
