@@ -15,6 +15,7 @@ package hydrograph.engine.spark.components;
 import com.ibatis.common.jdbc.ScriptRunner;
 import hydrograph.engine.core.component.entity.RunSqlEntity;
 import hydrograph.engine.core.component.entity.base.AssemblyEntityBase;
+import hydrograph.engine.core.component.utils.SafeResourceClose;
 import hydrograph.engine.core.constants.Constants;
 import hydrograph.engine.spark.components.base.CommandComponentSparkFlow;
 import org.apache.log4j.Logger;
@@ -65,13 +66,28 @@ public class RunSQLComponent extends CommandComponentSparkFlow implements Serial
                     log.debug("Failed to Execute" + runSqlEntity.getQueryCommand() + " The error is " + e.getMessage());
                     throw new RuntimeException(e);
                 } finally {
+                    Exception ex = null;
                     try {
-                        reader.close();
-                        tempFile.deleteOnExit();
-                        conn.close();
-                    } catch (SQLException | IOException e) {
+                        SafeResourceClose.safeReaderClose(reader);
+                    } catch (IOException e) {
                         log.debug("Failed to Execute" + runSqlEntity.getQueryCommand() + " The error is " + e.getMessage());
-                        throw new RuntimeException(e);
+                        ex = e;
+                    }
+                    try {
+                        tempFile.deleteOnExit();
+                    } catch (Exception e) {
+                        log.debug("Failed to Execute" + runSqlEntity.getQueryCommand() + " The error is " + e.getMessage());
+                        ex = e;
+                    }
+                    try {
+                        SafeResourceClose.safeConnectionClose(conn);
+                    } catch (SQLException e) {
+                        log.debug("Failed to Execute" + runSqlEntity.getQueryCommand() + " The error is " + e.getMessage());
+                        ex = e;
+                    }
+
+                    if(ex != null) {
+                        throw new RuntimeException(ex);
                     }
                 }
             } else if (runSqlEntity.getDatabaseConnectionName().equalsIgnoreCase("Oracle")) {
@@ -88,13 +104,28 @@ public class RunSQLComponent extends CommandComponentSparkFlow implements Serial
                     log.debug("Failed to Execute" + runSqlEntity.getQueryCommand() + " The error is " + e.getMessage());
                     throw new RuntimeException(e);
                 } finally {
+                    Exception ex = null;
                     try {
-                        reader.close();
-                        tempFile.deleteOnExit();
-                        conn.close();
-                    } catch (SQLException | IOException e) {
+                        SafeResourceClose.safeReaderClose(reader);
+                    } catch (IOException e) {
                         log.debug("Failed to Execute" + runSqlEntity.getQueryCommand() + " The error is " + e.getMessage());
-                        throw new RuntimeException(e);
+                        ex = e;
+                    }
+                    try {
+                        tempFile.deleteOnExit();
+                    } catch (Exception e) {
+                        log.debug("Failed to Execute" + runSqlEntity.getQueryCommand() + " The error is " + e.getMessage());
+                        ex = e;
+                    }
+                    try {
+                        SafeResourceClose.safeConnectionClose(conn);
+                    } catch (SQLException e) {
+                        log.debug("Failed to Execute" + runSqlEntity.getQueryCommand() + " The error is " + e.getMessage());
+                        ex = e;
+                    }
+
+                    if(ex != null) {
+                        throw new RuntimeException(ex);
                     }
                 }
             } else if (runSqlEntity.getDatabaseConnectionName().equalsIgnoreCase("Teradata")) {
@@ -111,13 +142,28 @@ public class RunSQLComponent extends CommandComponentSparkFlow implements Serial
                     log.debug("Failed to Execute" + runSqlEntity.getQueryCommand() + " The error is " + e.getMessage());
                     throw new RuntimeException(e);
                 } finally {
+                    Exception ex = null;
                     try {
-                        reader.close();
-                        tempFile.deleteOnExit();
-                        conn.close();
-                    } catch (SQLException | IOException e) {
+                        SafeResourceClose.safeReaderClose(reader);
+                    } catch (IOException e) {
                         log.debug("Failed to Execute" + runSqlEntity.getQueryCommand() + " The error is " + e.getMessage());
-                        throw new RuntimeException(e);
+                        ex = e;
+                    }
+                    try {
+                        tempFile.deleteOnExit();
+                    } catch (Exception e) {
+                        log.debug("Failed to Execute" + runSqlEntity.getQueryCommand() + " The error is " + e.getMessage());
+                        ex = e;
+                    }
+                    try {
+                        SafeResourceClose.safeConnectionClose(conn);
+                    } catch (SQLException e) {
+                        log.debug("Failed to Execute" + runSqlEntity.getQueryCommand() + " The error is " + e.getMessage());
+                        ex = e;
+                    }
+
+                    if(ex != null) {
+                        throw new RuntimeException(ex);
                     }
                 }
             } else if (runSqlEntity.getDatabaseConnectionName().equalsIgnoreCase("Redshift")) {
@@ -135,10 +181,18 @@ public class RunSQLComponent extends CommandComponentSparkFlow implements Serial
                     throw new RuntimeException(e);
                 } finally {
                     try {
-                        reader.close();
+                        SafeResourceClose.safeReaderClose(reader);
+                    } catch (IOException e) {
+                        log.debug("Failed to Execute" + runSqlEntity.getQueryCommand() + " The error is " + e.getMessage());
+                    }
+                    try {
                         tempFile.deleteOnExit();
-                        conn.close();
-                    } catch (SQLException | IOException e) {
+                    } catch (Exception e) {
+                        log.debug("Failed to Execute" + runSqlEntity.getQueryCommand() + " The error is " + e.getMessage());
+                    }
+                    try {
+                        SafeResourceClose.safeConnectionClose(conn);
+                    } catch (SQLException e) {
                         log.debug("Failed to Execute" + runSqlEntity.getQueryCommand() + " The error is " + e.getMessage());
                     }
                 }
@@ -176,15 +230,18 @@ public class RunSQLComponent extends CommandComponentSparkFlow implements Serial
             log.debug("Failed to Execute" + runSqlEntity.getQueryCommand() + " The error is " + e.getMessage());
         } finally {
             try {
-                if (bufferedWriter != null)
-                    bufferedWriter.close();
-                if (fileWriter != null)
-                    fileWriter.close();
-            } catch (IOException ex) {
+                SafeResourceClose.safeWriterClose(bufferedWriter);
+            }catch (IOException ex) {
+                log.debug("Failed to Execute" + runSqlEntity.getQueryCommand() + " The error is " + ex.getMessage());
+            }
+            try {
+                SafeResourceClose.safeWriterClose(fileWriter);
+            }catch (IOException ex) {
                 log.debug("Failed to Execute" + runSqlEntity.getQueryCommand() + " The error is " + ex.getMessage());
             }
         }
     }
+
 }
 
 class DatabaseConnectionException extends RuntimeException {
