@@ -11,6 +11,8 @@ import org.apache.spark.sql.types.StructType
 
 import scala.collection.JavaConverters.asScalaBufferConverter
 import scala.reflect.ClassTag
+import hydrograph.engine.spark.components.utils.EncoderHelper
+
 /**
   * The Class SparkOperation.
   *
@@ -62,6 +64,59 @@ trait OperationHelper[T] {
       List()
   }
 
+  def initializeOperationList[U](operationList: java.util.List[Operation], inputSchema: StructType)(implicit ct: ClassTag[U]): List[SparkOperation[T]] = {
+
+    def populateOperation(operationList: List[Operation]): List[SparkOperation[T]] =
+      (operationList) match {
+        case (List()) => List()
+        case (x :: xs) if x.isExpressionPresent => {
+          val tf = classLoader[T](ct.runtimeClass.getCanonicalName)
+          val fieldName = new Array[String](x.getOperationInputFields.length)
+          val fieldType = new Array[String](x.getOperationInputFields.length)
+
+          x.getOperationInputFields.zipWithIndex.foreach(s => {
+            fieldName(s._2) = inputSchema(s._1).name;
+            fieldType(s._2) = inputSchema(s._1).dataType.typeName
+          })
+
+          val (in, out) = getReusableRows(x, inputSchema)
+          SparkOperation[T](tf, x, in, out, new ValidationAPI(x.getExpression, ""), x.getAccumulatorInitialValue, x.getOperationOutputFields, fieldName, fieldType) ::
+            populateOperation(xs)
+        }
+        case (x :: xs) => {
+          val tf = classLoader[T](x.getOperationClass)
+          val (in, out) = getReusableRows(x, inputSchema)
+          SparkOperation[T](tf, x, in, out, null, null, null, null, null) ::
+            populateOperation(xs)
+        }
+      }
+
+    if (operationList != null) {
+      populateOperation(operationList.asScala.toList)
+    } else
+      List()
+  }
+    
+  def getReusableRows(op: Operation, inputSchema: StructType): (InputReusableRow, OutputReusableRow) = {
+    val out = if (op.getOperationFields != null) OutputReusableRow(null, new RowToReusableMapper(EncoderHelper().getEncoder(op.getOperationFields), op
+      .getOperationOutputFields))
+    else OutputReusableRow(null, new RowToReusableMapper(new StructType(), Array[String]()))
+
+    val in = if (op.getOperationInputFields != null) InputReusableRow(null, new RowToReusableMapper(getPartialSchema(inputSchema, op.getOperationInputFields), op
+      .getOperationInputFields))
+    else InputReusableRow(null, new RowToReusableMapper(new StructType(), Array[String]()))
+
+    println(op.getOperationId + "**********inschema" + getPartialSchema(inputSchema, op.getOperationInputFields) )
+    println(op.getOperationId + "**********outschema" + EncoderHelper().getEncoder(op.getOperationFields) )
+    (in, out)
+  }
+
+  def getPartialSchema(schema: StructType, requiredFields: Array[String]): StructType = {
+    var outSchema = new StructType();
+    requiredFields.foreach(field => outSchema = outSchema.add(schema(field)))
+    outSchema
+  }
+  
   def getOutputReusableRow[U](outputSchema: StructType, x: Operation): OutputReusableRow = {
     if (x
       .getOperationOutputFields != null) OutputReusableRow(null, new RowToReusableMapper(outputSchema, x
