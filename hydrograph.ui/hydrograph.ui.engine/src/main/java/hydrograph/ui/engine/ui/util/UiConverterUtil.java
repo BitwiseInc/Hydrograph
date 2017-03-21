@@ -401,7 +401,7 @@ public class UiConverterUtil {
 		DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
 		builderFactory.setExpandEntityReferences(false);
 		builderFactory.setNamespaceAware(true);
-		builderFactory.setFeature("http://apache.org/xml/features/disallow-doctype-decl",true);
+		builderFactory.setFeature(Constants.DISALLOW_DOCTYPE_DECLARATION,true);
 		
 		DocumentBuilder documentBuilder = builderFactory.newDocumentBuilder();
 		ByteArrayInputStream byteStream = new ByteArrayInputStream(inputFileAsString.getBytes());

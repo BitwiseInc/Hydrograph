@@ -171,7 +171,7 @@ public class WidgetHelper {
 	 */
 	public WidgetConfig getPasswordWidgetConfig(boolean isMandatory){
 		TextBoxWithLableConfig textBoxConfig = new TextBoxWithLableConfig();
-		textBoxConfig.setName(Messages.LABEL_PASSWORD);
+		textBoxConfig.setName(Messages.LABEL_PWD);
 		textBoxConfig.setGrabExcessSpace(true);
 		textBoxConfig.setMandatory(isMandatory);
 		if(isMandatory){

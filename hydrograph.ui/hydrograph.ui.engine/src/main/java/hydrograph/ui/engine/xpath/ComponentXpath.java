@@ -13,9 +13,6 @@
 
 package hydrograph.ui.engine.xpath;
 
-import hydrograph.ui.engine.util.ConverterUtil;
-import hydrograph.ui.logging.factory.LogFactory;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -43,6 +40,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
+import hydrograph.ui.common.util.Constants;
+import hydrograph.ui.engine.util.ConverterUtil;
+import hydrograph.ui.logging.factory.LogFactory;
 
 /**
  * The class ComponentXpath
@@ -86,6 +87,7 @@ public class ComponentXpath {
 					addParameterAsAttribute(entry, nodeList);
 			}
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			transformerFactory.setFeature(Constants.DISALLOW_DOCTYPE_DECLARATION,true);
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
 			out.reset();
@@ -172,6 +174,7 @@ public class ComponentXpath {
 		LOGGER.debug("Invoking X-Path instance");
 		XPath xPath = null;
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		dbFactory.setFeature(Constants.DISALLOW_DOCTYPE_DECLARATION, true);
 		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 		if (inputStream != null)
 			doc = dBuilder.parse(inputStream);

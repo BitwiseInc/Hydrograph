@@ -28,6 +28,9 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.PropertyException;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
@@ -39,6 +42,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
 import org.slf4j.Logger;
+import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import hydrograph.ui.common.schema.Field;
@@ -119,10 +123,18 @@ public class GridRowLoader {
 				
 				if(validateXML(xml, xsd)){
 					
+					DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+					builderFactory.setExpandEntityReferences(false);
+					builderFactory.setNamespaceAware(true);
+					builderFactory.setFeature(Constants.DISALLOW_DOCTYPE_DECLARATION,true);
+					
+					DocumentBuilder documentBuilder = builderFactory.newDocumentBuilder();
+					Document document=documentBuilder.parse(schemaFile);
+					
 					JAXBContext jaxbContext = JAXBContext.newInstance(Schema.class);
 					Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 					
-					Schema schema= (Schema) jaxbUnmarshaller.unmarshal(schemaFile);
+					Schema schema= (Schema) jaxbUnmarshaller.unmarshal(document);
 					fields = schema.getFields();
 					List<Field> fieldsList = fields.getField();
 					GridRow gridRow = null;
@@ -192,10 +204,19 @@ public class GridRowLoader {
 					InputStream xsd = new FileInputStream(SCHEMA_CONFIG_XSD_PATH)) {
 				
 				if(validateXML(xml, xsd)){
+					
+					DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+					builderFactory.setExpandEntityReferences(false);
+					builderFactory.setNamespaceAware(true);
+					builderFactory.setFeature(Constants.DISALLOW_DOCTYPE_DECLARATION,true);
+					
+					DocumentBuilder documentBuilder = builderFactory.newDocumentBuilder();
+					Document document=documentBuilder.parse(schemaFile);
+					
 					JAXBContext jaxbContext = JAXBContext.newInstance(Schema.class);
 					Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 					
-					Schema schema= (Schema) jaxbUnmarshaller.unmarshal(schemaFile);
+					Schema schema= (Schema) jaxbUnmarshaller.unmarshal(document);
 					fields = schema.getFields();
 					List<Field> fieldsList = fields.getField();
 					GridRow gridRow = null;
@@ -237,7 +258,10 @@ public class GridRowLoader {
 			catch (IOException ioException) {
 				logger.warn(Messages.IMPORT_XML_ERROR);
 				return schemaGridRowListToImport;
-			}
+			} catch (ParserConfigurationException | SAXException exception) {
+				logger.warn("Doctype is not allowed in schema files",exception);
+				return schemaGridRowListToImport;
+			} 
 		}else{
 			logger.warn(Messages.EXPORT_XML_EMPTY_FILENAME);
 		}

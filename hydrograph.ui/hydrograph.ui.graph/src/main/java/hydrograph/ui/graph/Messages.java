@@ -28,7 +28,6 @@ public class Messages extends NLS {
 	public static String XMLEXTENSION;
 	public static String CMD;
 	public static String SHELL;
-	public static String CLUSTER_PASSWORD;
 	public static String KILL_JOB;
 	public static String HOST;
 	public static String USERNAME;
