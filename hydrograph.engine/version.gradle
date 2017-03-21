@@ -11,26 +11,24 @@
  * limitations under the License.
  ******************************************************************************/
 ext.repo = Grgit.open()
-	version = new Version(major: 0, minor:1, revision: "spark", branch :ext.repo.branch.current.name)
+version = new Version(major: 0, minor: 1, revision: "spark", branch: ext.repo.branch.current.name)
 
 buildscript {
-repositories {
-    mavenCentral()
-  		}
-  dependencies {
-    classpath 'org.ajoberstar:gradle-git:1.3.0'
-  		}
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.ajoberstar:gradle-git:1.3.0'
+    }
 }
 
 import org.ajoberstar.grgit.*
+
 class Version {
-	int major, minor
-	String revision,branch
-	
-	String toString() {
-		if(branch=="master")
-	"$major.$minor.$revision${''}"
-		else
-		"$major.$minor.$revision${''}"
-		}
-	}
+    int major, minor
+    String revision, branch
+
+    String toString() {
+        "$major.$minor.$revision${''}"
+    }
+}
