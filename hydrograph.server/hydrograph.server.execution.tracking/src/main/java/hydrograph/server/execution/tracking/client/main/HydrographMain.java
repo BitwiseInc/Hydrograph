@@ -24,11 +24,15 @@ import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.FutureTask;
 
 import javax.websocket.CloseReason;
 import javax.websocket.DeploymentException;
 import javax.websocket.Session;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.glassfish.tyrus.client.ClientManager;
@@ -54,6 +58,7 @@ public class HydrographMain {
 
 	/** The Constant logger. */
 	private final static Logger logger = Logger.getLogger(HydrographMain.class);
+	private ExecutorService executorService;
 
 	/**
 	 * The main method.
@@ -64,99 +69,129 @@ public class HydrographMain {
 	 *             the exception
 	 */
 	public static void main(String[] args) throws Exception {
-		final CountDownLatch latch = new CountDownLatch(1);
-		HydrographMain hydrographMain = new HydrographMain();
-		Session session = null;
-		String 	trackingClientSocketPort = null;
-		boolean isExecutionTracking = false;
-		String[] argsList = args;
-		List<String> argumentList = new ArrayList<String>( Arrays.asList(args));
-		final String jobId = hydrographMain.getJobId(argumentList);
 		
-		getLogLevel(argumentList).ifPresent(x-> 
-		{
-			if(!x.equalsIgnoreCase(String.valueOf(logger.getLevel()))){
-				setLoglevel(x);
-			}else{
-				Optional.empty();
+		HydrographMain hydrographMain = new HydrographMain();
+		final Timer timer = new Timer();
+		final CountDownLatch latch = new CountDownLatch(1);
+		try{
+			Session session = null;
+			boolean isExecutionTracking = false;
+			String[] argsList = args;
+			List<String> argumentList = new ArrayList<String>( Arrays.asList(args));
+			final String jobId = hydrographMain.getJobId(argumentList);
+			
+			getLogLevel(argumentList).ifPresent(x-> 
+			{
+				if(!x.equalsIgnoreCase(String.valueOf(logger.getLevel()))){
+					setLoglevel(x);
+				}else{
+					Optional.empty();
+				}
+				
+			});
+			
+			logger.info("Argument List: " + argumentList.toString());
+			
+			String 	trackingClientSocketPort = hydrographMain.getTrackingClientSocketPort(argumentList);
+			
+			if (argumentList.contains(Constants.IS_TRACKING_ENABLE)) {
+				int index = argumentList.indexOf(Constants.IS_TRACKING_ENABLE);
+				isExecutionTracking = Boolean.valueOf(argsList[index + 1]);
+				argumentList = removeItemFromIndex(index,argumentList);
 			}
 			
-		});
-		
-		logger.info("Argument List: " + argumentList.toString());
-		
-		trackingClientSocketPort = hydrographMain.getTrackingClientSocketPort(argumentList);
-		
-		
-		if (argumentList.contains(Constants.IS_TRACKING_ENABLE)) {
-			int index = argumentList.indexOf(Constants.IS_TRACKING_ENABLE);
-			isExecutionTracking = Boolean.valueOf(argsList[index + 1]);
-			argumentList = removeItemFromIndex(index,argumentList);
-		}
-		
-		if(argumentList.contains(Constants.TRACKING_CLIENT_SOCKET_PORT)){
-			int index = argumentList.indexOf(Constants.TRACKING_CLIENT_SOCKET_PORT);
-			argumentList = removeItemFromIndex(index,argumentList);
-		}
-		
-		argsList = argumentList.toArray(new String[argumentList.size()]);
-
-
-
-		logger.debug("Execution tracking enabled - " + isExecutionTracking);
-		logger.info("Tracking Client Port: " + trackingClientSocketPort);
-
-		final Timer timer = new Timer();
-
-		/**
-		 * Start new thread to run job
-		 */
-		final HydrographService execution = new HydrographService();
-
-		
-		hydrographMain.executeGraph(latch, jobId, argsList, timer, execution,isExecutionTracking);
-
-
-		if (isExecutionTracking) {
+			if(argumentList.contains(Constants.TRACKING_CLIENT_SOCKET_PORT)){
+				int index = argumentList.indexOf(Constants.TRACKING_CLIENT_SOCKET_PORT);
+				argumentList = removeItemFromIndex(index,argumentList);
+			}
+			
+			argsList = argumentList.toArray(new String[argumentList.size()]);
+	
+			logger.debug("Execution tracking enabled - " + isExecutionTracking);
+			logger.info("Tracking Client Port: " + trackingClientSocketPort);
+	
 			/**
-			 * If tracking enable, start to post execution tracking status.
+			 * Start new thread to run job
 			 */
-			final HydrographEngineCommunicatorSocket socket = new HydrographEngineCommunicatorSocket(execution);
-			session = hydrographMain.connectToServer(socket, jobId, trackingClientSocketPort);
-			hydrographMain.sendExecutionTrackingStatus(latch, session, jobId, timer, execution,socket);
+			final HydrographService execution = new HydrographService();
+	
+			FutureTask task = hydrographMain.executeGraph(latch, jobId, argsList, execution,isExecutionTracking);
+					
+			hydrographMain.executorService = Executors.newSingleThreadExecutor();
+			hydrographMain.executorService.submit(task);
+			
+			if (isExecutionTracking) {
+				//If tracking is enabled, start to post execution tracking status.
+				final HydrographEngineCommunicatorSocket socket = new HydrographEngineCommunicatorSocket(execution);
+				session = hydrographMain.connectToServer(socket, jobId, trackingClientSocketPort);
+				hydrographMain.sendExecutionTrackingStatus(latch, session, jobId, timer, execution,socket);
+			}
+			
+			//waiting for execute graph thread 
+			task.get();
+			
+		}catch(Exception exp){
+			logger.info("Getting exception from HydrographMain");
+			throw new RuntimeException(exp);
+		}finally{
+			//cleanup threads --> executor thread and timer thread 
+			logger.info("HydrographMain releasing resources");
+			if(!hydrographMain.executorService.isShutdown() && !hydrographMain.executorService.isTerminated()){
+				hydrographMain.executorService.shutdown();
+			}
+			timer.cancel();
+			
 		}
 	}
-
-
-
-	private void executeGraph(final CountDownLatch latch, final String jobId, final String[] argsFinalList,
-			final Timer timer, final HydrographService execution, final boolean isExecutionTracking) {
-		logger.info("inside executeGraph");
-		new Thread(new Runnable() {
+ /**
+  * 
+  * 
+  * @param latch
+  * @param jobId
+  * @param argsFinalList
+  * @param execution
+  * @param isExecutionTracking
+  * @return
+  */
+	private FutureTask executeGraph(final CountDownLatch latch, final String jobId, final String[] argsFinalList,
+			final HydrographService execution, final boolean isExecutionTracking) {
+		logger.trace("Creating executor thread");
+	
+		return new FutureTask(new Runnable() {
 			public void run() {
 				try {
-					logger.info("Executing the job from execute graph");
+					logger.debug("Executing the job from execute graph");
 					execution.executeGraph(argsFinalList);
 					if(isExecutionTracking){
 						latch.await();
 					}
-				
+				    
 				} catch (Exception e) {
 					logger.error("JOB FAILED :",e);
 					if(isExecutionTracking){
 						try {
 							latch.await();
 						} catch (InterruptedException e1) {
-							
 							logger.error("job fail :",e1);
 						}
 					}
-					
+					throw new RuntimeException(e);
 				}
 			}
-		}).start();
-	}	
-		
+		},null);
+	
+	}
+
+	/**
+	 * 	
+	 * @param latch
+	 * @param session
+	 * @param jobId
+	 * @param timer
+	 * @param execution
+	 * @param socket
+	 * @throws IOException
+	 */
 	private void sendExecutionTrackingStatus(final CountDownLatch latch, Session session,final String jobId, final Timer timer, final HydrographService execution,final HydrographEngineCommunicatorSocket socket)
 			throws IOException {
 			try {
@@ -186,13 +221,17 @@ public class HydrographMain {
 								logger.error("Fail to send status for job - " + jobId, e);
 								timer.cancel();
 							}
-							//moved this after sendMessage in order to log even if the service is not running 
-							ExecutionTrackingFileLogger.INSTANCE.log(jobId, executionStatus);
+
+							if(StringUtils.isNotBlank(jobId) ){
+								//moved this after sendMessage in order to log even if the service is not running 
+								ExecutionTrackingFileLogger.INSTANCE.log(jobId, executionStatus);
+							}
+						 
 						}
-					if(!execution.getJobRunningStatus()){
-						timer.cancel();
-						latch.countDown();
-					}
+						if(!execution.getJobRunningStatus()){
+							timer.cancel();
+							latch.countDown();
+						}
 					}
 				};
 				
@@ -202,6 +241,7 @@ public class HydrographMain {
 			} catch (Throwable t) {
 				logger.error("Failure in job - " + jobId, t);
 				timer.cancel();
+				throw new RuntimeException(t);
 			} finally {
 
 				if (session != null && session.isOpen()) {

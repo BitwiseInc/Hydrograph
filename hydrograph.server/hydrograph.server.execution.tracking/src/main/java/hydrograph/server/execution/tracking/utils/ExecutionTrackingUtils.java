@@ -108,13 +108,14 @@ public class ExecutionTrackingUtils {
 	 *
 	 */
 	public void loadPropertyFile(){
-		try {
+		try(FileInputStream stream = getExternalPropertyFilePath();
+				InputStream inputStream = this.getClass().getResourceAsStream(getInternalPropertyFilePath());) {
 			Properties properties = new Properties();
-			FileInputStream stream = getExternalPropertyFilePath();
+			
 			if(stream != null){
 				properties.load(stream);
 			}else {
-				InputStream inputStream = this.getClass().getResourceAsStream(getInternalPropertyFilePath());
+				
 				properties.load(inputStream);
 			}
 			
@@ -142,16 +143,9 @@ public class ExecutionTrackingUtils {
 		try {
 			Path path = Paths.get(HydrographMain.class.getProtectionDomain().getCodeSource().getLocation().toURI());
 			String filePath = path.toString();
-			if (OSValidator.isWindows()) {
-				index = filePath.lastIndexOf("\\");
-				dirPath = filePath.substring(0, index) + "\\" + PROPERTY_FILE;
-			} else if (OSValidator.isMac()) {
-				index = filePath.lastIndexOf("/");
-				dirPath = filePath.substring(0, index) + "/" + PROPERTY_FILE;
-			} else if (OSValidator.isUnix()) {
-				index = filePath.lastIndexOf("/");
-				dirPath = filePath.substring(0, index) + "/" + PROPERTY_FILE;
-			}
+				index = filePath.lastIndexOf(File.separator);
+				dirPath = filePath.substring(0, index) + File.separator+ PROPERTY_FILE;
+			
 			File file = new File(dirPath);
 			if (file.exists()) {
 				fileInputStream = new FileInputStream(file);
