@@ -1415,11 +1415,10 @@ public class ELTGraphicalEditor extends GraphicalEditorWithFlyoutPalette impleme
 			Container container = (Container) xStream.fromXML(file);
 			container = deleteSubjobProperties(container);
 			if (container != null) {
-				try {
-					FileOutputStream fileOutputStream = new FileOutputStream(file);
+				try(FileOutputStream fileOutputStream = new FileOutputStream(file);) {
 					xStream.toXML(container, fileOutputStream);
 
-				} catch (FileNotFoundException eFileNotFoundException) {
+				} catch (IOException eFileNotFoundException) {
 					logger.error("Exception occurred while saving sub-graph into local file-system when editor disposed",
 							eFileNotFoundException);
 				}
