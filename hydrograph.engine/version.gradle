@@ -31,6 +31,6 @@ class Version {
 		if(branch=="master")
 	"$major.$minor.$revision${''}"
 		else
-		"$major.$minor.$revision${'-SNAPSHOT'}"
+		"$major.$minor.$revision${''}"
 		}
 	}
