@@ -39,20 +39,20 @@
 		<dependency>
 			<groupId>hydrograph</groupId>
 			<artifactId>hydrograph.engine.command-line</artifactId>
-			<version>0.1.spark-SNAPSHOT</version>
+			<version>0.1.spark</version>
 		</dependency>
 
 		<dependency>
 			<groupId>hydrograph</groupId>
 			<artifactId>hydrograph.engine.transformation</artifactId>
-			<version>0.1.spark-SNAPSHOT</version>
+			<version>0.1.spark</version>
 			<classifier>sources</classifier>
 		</dependency>
 
 		<dependency>
 			<groupId>hydrograph</groupId>
 			<artifactId>hydrograph.engine.plugin</artifactId>
-			<version>0.1.spark-SNAPSHOT</version>
+			<version>0.1.spark</version>
 		</dependency>
 
 		<dependency>
