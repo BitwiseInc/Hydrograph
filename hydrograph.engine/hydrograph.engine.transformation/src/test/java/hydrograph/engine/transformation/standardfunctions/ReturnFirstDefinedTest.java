@@ -16,7 +16,12 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import static hydrograph.engine.transformation.standardfunctions.ValidationFunctions.getFirstDefined;
-
+/**
+ * The Class ReturnFirstDefinedTest.
+ *
+ * @author Bitwise
+ *
+ */
 public class ReturnFirstDefinedTest {
 
 	@Test

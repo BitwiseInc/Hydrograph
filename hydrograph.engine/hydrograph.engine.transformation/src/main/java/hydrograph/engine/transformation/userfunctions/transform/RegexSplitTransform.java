@@ -18,7 +18,12 @@ import hydrograph.engine.transformation.userfunctions.helpers.RegexSplitter;
 
 import java.util.ArrayList;
 import java.util.Properties;
-
+/**
+ * The Class RegexSplitTransform.
+ *
+ * @author Bitwise
+ *
+ */
 public class RegexSplitTransform implements TransformBase {
 
 	private RegexSplitter regexSplitter;
@@ -77,3 +82,4 @@ public class RegexSplitTransform implements TransformBase {
 	}
 
 }
+

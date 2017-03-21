@@ -17,7 +17,12 @@ import hydrograph.engine.transformation.userfunctions.base.ReusableRow;
 
 import java.util.ArrayList;
 import java.util.Properties;
-
+/**
+ * The Class StringAppend.
+ *
+ * @author Bitwise
+ *
+ */
 public class StringAppend implements CumulateTransformBase {
 
 	private String appended = null;

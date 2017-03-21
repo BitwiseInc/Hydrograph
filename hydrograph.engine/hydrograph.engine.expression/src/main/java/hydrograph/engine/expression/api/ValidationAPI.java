@@ -22,7 +22,6 @@ import hydrograph.engine.expression.utils.CompileUtils;
 import hydrograph.engine.expression.utils.PropertiesLoader;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.codehaus.commons.compiler.CompileException;
 import org.codehaus.janino.ExpressionEvaluator;
 
 import javax.tools.DiagnosticCollector;
@@ -33,8 +32,9 @@ import java.math.BigDecimal;
 import java.util.*;
 
 /**
- * @author gurdits
+ * The Class ValidationAPI .
  *
+ * @author Bitwise
  */
 public class ValidationAPI implements Serializable {
 

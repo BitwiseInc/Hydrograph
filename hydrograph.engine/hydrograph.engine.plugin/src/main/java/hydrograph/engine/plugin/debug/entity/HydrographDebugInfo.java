@@ -19,7 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author gurdits
+ * The Class HydrographDebugInfo.
+ *
+ * @author Bitwise
  *
  */
 public class HydrographDebugInfo {

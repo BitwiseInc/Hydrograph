@@ -1,5 +1,9 @@
 package hydrograph.engine.transformation.schema;
-
+/**
+ * The Class Field.
+ *
+ * @author Bitwise
+ */
 public class Field {
 
     String fieldName;

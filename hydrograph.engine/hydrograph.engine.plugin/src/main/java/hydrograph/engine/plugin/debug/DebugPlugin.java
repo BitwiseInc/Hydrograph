@@ -32,7 +32,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-
+/**
+ * The Class DebugPlugin.
+ *
+ * @author Bitwise
+ *
+ */
 public class DebugPlugin implements ManipulatorListener {
 
     public static Logger LOG = LoggerFactory.getLogger(DebugPlugin.class);

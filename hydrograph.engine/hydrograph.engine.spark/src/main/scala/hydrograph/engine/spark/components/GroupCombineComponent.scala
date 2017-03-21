@@ -22,7 +22,6 @@ import hydrograph.engine.spark.components.handler.{OperationHelper, SparkOperati
 import hydrograph.engine.spark.components.platform.BaseComponentParams
 import hydrograph.engine.spark.components.utils._
 import hydrograph.engine.spark.operation.handler.GroupCombineCustomHandler
-import hydrograph.engine.transformation.standardfunctions.StringFunctions
 import hydrograph.engine.transformation.userfunctions.base.GroupCombineTransformBase
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.types.StructType
@@ -31,8 +30,12 @@ import org.slf4j.{Logger, LoggerFactory}
 
 import scala.collection.JavaConverters._
 
+
 /**
-  * Created by bitwise on 10/24/2016.
+  * The Class GroupCombineComponent.
+  *
+  * @author Bitwise
+  *
   */
 class GroupCombineComponent(groupCombineEntity: GroupCombineEntity, componentsParams: BaseComponentParams) extends
   OperationComponentBase with OperationHelper[GroupCombineTransformBase] with Serializable {

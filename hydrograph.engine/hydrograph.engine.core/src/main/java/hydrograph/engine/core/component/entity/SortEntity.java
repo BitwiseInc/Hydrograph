@@ -18,7 +18,12 @@ import hydrograph.engine.core.component.entity.elements.OutSocket;
 
 import java.util.Arrays;
 import java.util.List;
-
+/**
+ * The Class SortEntity.
+ *
+ * @author Bitwise
+ *
+ */
 public class SortEntity extends StraightPullEntityBase {
 	private KeyField[] keyFields;
 	private KeyField[] secondaryKeyFields;

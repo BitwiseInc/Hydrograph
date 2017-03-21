@@ -14,15 +14,6 @@
 
 package hydrograph.engine.jaxb.commontypes;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElements;
-import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.bind.annotation.XmlType;
 import hydrograph.engine.jaxb.exceltype.TypeExcelRecord;
 import hydrograph.engine.jaxb.igr.TypeGenerateRecordRecord;
 import hydrograph.engine.jaxb.ojdbcupdate.TypeJdbcupdateRecord;
@@ -31,6 +22,10 @@ import hydrograph.engine.jaxb.ooracle.TypeOracleRecord;
 import hydrograph.engine.jaxb.oredshift.TypeRedshiftRecord;
 import hydrograph.engine.jaxb.osparkredshift.TypeSparkredshiftRecord;
 import hydrograph.engine.jaxb.oteradata.TypeTeradataRecord;
+
+import javax.xml.bind.annotation.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**

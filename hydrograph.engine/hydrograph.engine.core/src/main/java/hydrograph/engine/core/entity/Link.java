@@ -17,6 +17,12 @@ import hydrograph.engine.jaxb.commontypes.TypeBaseOutSocket;
 
 import java.util.List;
 
+/**
+ * The Class Link.
+ *
+ * @author Bitwise
+ *
+ */
 public class Link {
 
 	private List<? extends TypeBaseInSocket> inSocket;

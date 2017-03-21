@@ -19,7 +19,12 @@ import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.engine.jaxb.operationstypes.Lookup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+/**
+ * The Class LookupEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 public class LookupEntityGenerator extends OperationComponentGeneratorBase {
 
 	private LookupEntity lookupEntity;

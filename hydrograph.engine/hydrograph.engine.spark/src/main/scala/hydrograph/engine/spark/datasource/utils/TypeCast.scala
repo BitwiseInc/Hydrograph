@@ -14,14 +14,14 @@ package hydrograph.engine.spark.datasource.utils
 
 import java.math.BigDecimal
 import java.sql.{Date, Timestamp}
-import java.text.{NumberFormat, SimpleDateFormat}
+import java.text.NumberFormat
 import java.util.Locale
 
+import org.apache.commons.lang3.time.FastDateFormat
 import org.apache.spark.sql.types.{DateType, StringType, _}
 import org.json4s.ParserUtil.ParseException
 
 import scala.util.Try
-import org.apache.commons.lang3.time.FastDateFormat
 
 /**
   * The Object TypeCast.
@@ -56,7 +56,7 @@ object TypeCast {
         		  new Date(dateFormat.parse(value).getTime)
         	  }catch{
         	  case e:Exception => {
-        		  throw new RuntimeException(", Error being -> "+e.getMessage)
+        		  throw new RuntimeException(", Error being -> ",e)
         	  }
         	  }
           }
@@ -69,7 +69,7 @@ object TypeCast {
             try{
               new Timestamp(dateFormat.parse(value).getTime)
             }catch{
-              case e:ParseException => throw new RuntimeException(e.getMessage)
+              case e:ParseException => throw new RuntimeException(", Error being -> ",e)
             }
           }
           case _ => throw new RuntimeException(s"Unsupported type: ${castType.typeName}")

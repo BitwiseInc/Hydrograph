@@ -26,7 +26,11 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import java.io.IOException;
-
+/**
+ * The Class HydrographJobGenerator.
+ *
+ * @author Bitwise
+ */
 public class HydrographJobGenerator {
 	JAXBContext context;
 	Unmarshaller unmarshaller;

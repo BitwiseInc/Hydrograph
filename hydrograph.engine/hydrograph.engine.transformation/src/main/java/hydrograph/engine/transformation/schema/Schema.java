@@ -1,7 +1,11 @@
 package hydrograph.engine.transformation.schema;
 
 import java.util.LinkedHashMap;
-
+/**
+ * The Class Schema.
+ *
+ * @author Bitwise
+ */
 public class Schema {
 
     LinkedHashMap<String, Field> fields = new LinkedHashMap<String, Field>();

@@ -21,32 +21,26 @@ import java.io._
 import java.lang.management.ManagementFactory
 import java.net._
 import java.nio.ByteBuffer
-import java.nio.channels.Channels
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.util.concurrent._
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.zip.GZIPInputStream
 import java.util.{Locale, Properties, Random, UUID}
-import javax.net.ssl.HttpsURLConnection
 
 import com.google.common.cache.{CacheBuilder, CacheLoader, LoadingCache}
 import com.google.common.io.{ByteStreams, Files => GFiles}
 import com.google.common.net.InetAddresses
 import org.apache.commons.lang3.SystemUtils
 import org.apache.hadoop.conf.Configuration
-import org.apache.hadoop.fs.{FileSystem, FileUtil, Path}
+import org.apache.hadoop.fs.{FileSystem, Path}
 import org.apache.hadoop.security.UserGroupInformation
 import org.apache.log4j.PropertyConfigurator
 import org.apache.spark._
 import org.apache.spark.deploy.SparkHadoopUtil
-import org.apache.spark.internal.Logging
-import org.apache.spark.internal.config.{DYN_ALLOCATION_INITIAL_EXECUTORS, DYN_ALLOCATION_MIN_EXECUTORS, EXECUTOR_INSTANCES}
 import org.apache.spark.network.util.JavaUtils
 import org.apache.spark.serializer.{DeserializationStream, SerializationStream, SerializerInstance}
-import org.apache.spark.util.{CallSite, ThreadStackTrace}
 import org.json4s._
-import org.slf4j.Logger
 import org.spark_project.jetty.util.MultiException
 
 import scala.annotation.tailrec
@@ -57,7 +51,12 @@ import scala.io.Source
 import scala.reflect.ClassTag
 import scala.util.Try
 import scala.util.control.{ControlThrowable, NonFatal}
-
+/**
+  * The Class CallSite.
+  *
+  * @author Bitwise
+  *
+  */
 case class CallSite(shortForm: String, longForm: String)
 object CallSite {
   val SHORT_FORM = "callSite.short"

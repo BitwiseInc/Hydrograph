@@ -19,7 +19,12 @@ import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.engine.jaxb.operationstypes.Normalize;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+/**
+ * The Class NormalizeEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 public class NormalizeEntityGenerator extends OperationComponentGeneratorBase {
 
 	/**

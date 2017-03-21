@@ -22,8 +22,9 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
- * @author gurdits
+ * The Class PropertiesLoader.
  *
+ * @author Bitwise
  */
 public class PropertiesLoader {
 	 private static Logger LOG =

@@ -21,8 +21,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @author gurdits
+ * The Class CompileUtils.
  *
+ * @author Bitwise
  */
 public class CompileUtils {
 

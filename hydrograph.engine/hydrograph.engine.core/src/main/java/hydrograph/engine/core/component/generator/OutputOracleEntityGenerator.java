@@ -21,7 +21,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
-
+/**
+ * The Class OutputOracleEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 public class OutputOracleEntityGenerator extends OutputComponentGeneratorBase {
 
     private static Logger LOG = LoggerFactory.getLogger(OutputOracleEntityGenerator.class);

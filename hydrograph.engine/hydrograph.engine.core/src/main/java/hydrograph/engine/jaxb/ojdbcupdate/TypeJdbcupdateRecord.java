@@ -14,10 +14,11 @@
 
 package hydrograph.engine.jaxb.ojdbcupdate;
 
+import hydrograph.engine.jaxb.commontypes.TypeBaseRecord;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
-import hydrograph.engine.jaxb.commontypes.TypeBaseRecord;
 
 
 /**

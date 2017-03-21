@@ -1,18 +1,19 @@
 package hydrograph.engine.testing.utils;
 
+import hydrograph.engine.transformation.userfunctions.base.NormalizeTransformBase;
+import hydrograph.engine.transformation.userfunctions.base.OutputDispatcher;
+
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Properties;
-import hydrograph.engine.transformation.userfunctions.base.AggregateTransformBase;
-import hydrograph.engine.transformation.userfunctions.base.NormalizeTransformBase;
-import hydrograph.engine.transformation.userfunctions.base.OutputDispatcher;
-import hydrograph.engine.transformation.userfunctions.base.TransformBase;
-
+/**
+ * The Class TestNormalizeOperationWrapper.
+ *
+ * @author Bitwise
+ */
 public class TestNormalizeOperationWrapper {
 
-
-	
 	public static Object[][] callNormalizeOperation(NormalizeTransformBase norm, Properties props,
 			ArrayList<String> inputFieldsName, ArrayList<String> outputFieldsName, Object[][] inputData) {
 		

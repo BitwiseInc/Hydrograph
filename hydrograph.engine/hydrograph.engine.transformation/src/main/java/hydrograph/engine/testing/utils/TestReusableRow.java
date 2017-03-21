@@ -1,12 +1,16 @@
 package hydrograph.engine.testing.utils;
 
+import hydrograph.engine.transformation.userfunctions.base.ReusableRow;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
-
-import hydrograph.engine.transformation.userfunctions.base.ReusableRow;
-
+/**
+ * The Class TestReusableRow.
+ *
+ * @author Bitwise
+ */
 public class TestReusableRow extends ReusableRow implements Serializable, Cloneable{
 
 	private Object[] inputRow;

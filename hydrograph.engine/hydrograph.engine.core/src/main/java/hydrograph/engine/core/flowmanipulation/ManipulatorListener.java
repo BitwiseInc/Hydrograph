@@ -15,7 +15,11 @@ package hydrograph.engine.core.flowmanipulation;
 import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 
 import java.util.List;
-
+/**
+ * The Interface ManipulatorListener.
+ *
+ * @author Bitwise
+ */
 public interface ManipulatorListener {
 
 	public List<TypeBaseComponent> execute(FlowManipulationContext manipulationContext);

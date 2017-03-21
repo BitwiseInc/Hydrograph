@@ -19,7 +19,12 @@ import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.engine.jaxb.straightpulltypes.RemoveDups;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+/**
+ * The Class RemoveDupsEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 public class RemoveDupsEntityGenerator extends
 		StraightPullComponentGeneratorBase {
 

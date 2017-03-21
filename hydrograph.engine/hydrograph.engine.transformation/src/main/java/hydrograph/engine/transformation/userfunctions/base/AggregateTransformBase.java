@@ -17,16 +17,9 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 /**
- * The AggregateTransformBase interface is the base interface for all the custom
- * classes defined for transformations in aggregate component in Hydrograph.
- * This interface exposes methods that enable users to perform custom aggregate
- * operation.
- * <p>
- * For a sample implementation of this interface refer any class under
- * {@link hydrograph.engine.transformation.userfunctions.aggregate} package.
- * </p>
- * 
- * @author bitwise
+ * The Interface AggregateTransformBase.
+ *
+ * @author Bitwise
  *
  */
 

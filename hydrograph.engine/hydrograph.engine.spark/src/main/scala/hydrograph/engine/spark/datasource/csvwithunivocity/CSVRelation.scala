@@ -19,9 +19,8 @@ package hydrograph.engine.spark.datasource.csvwithunivocity
 
 import org.apache.hadoop.fs.Path
 import org.apache.hadoop.io.{NullWritable, Text}
-import org.apache.hadoop.mapreduce.{RecordWriter, TaskAttemptContext}
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat
-import org.apache.spark.internal.Logging
+import org.apache.hadoop.mapreduce.{RecordWriter, TaskAttemptContext}
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql._
 import org.apache.spark.sql.catalyst.InternalRow
@@ -33,7 +32,12 @@ import org.apache.spark.sql.types._
 import org.slf4j.{Logger, LoggerFactory}
 
 import scala.util.control.NonFatal
-
+/**
+  * The Object CSVRelation.
+  *
+  * @author Bitwise
+  *
+  */
 object CSVRelation {
   private val LOG: Logger = LoggerFactory.getLogger(CSVRelation.getClass.getCanonicalName)
   def univocityTokenizer(

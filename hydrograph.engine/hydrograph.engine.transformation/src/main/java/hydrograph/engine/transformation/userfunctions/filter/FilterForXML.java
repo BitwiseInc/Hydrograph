@@ -19,7 +19,12 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Properties;
-
+/**
+ * The Class FilterForXML.
+ *
+ * @author Bitwise
+ *
+ */
 public class FilterForXML implements FilterBase {
 
 	//private static final int DEFAULT_VALUE = 0;

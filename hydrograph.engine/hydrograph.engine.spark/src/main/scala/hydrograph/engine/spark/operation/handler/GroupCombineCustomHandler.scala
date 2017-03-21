@@ -3,13 +3,18 @@ package hydrograph.engine.spark.operation.handler
 import hydrograph.engine.spark.core.reusablerow._
 import hydrograph.engine.transformation.schema
 import hydrograph.engine.transformation.schema.{Field, Schema}
-import hydrograph.engine.transformation.userfunctions.base.{GroupCombineTransformBase}
+import hydrograph.engine.transformation.userfunctions.base.GroupCombineTransformBase
 import org.apache.spark.sql.Row
 import org.apache.spark.sql.expressions.{MutableAggregationBuffer, UserDefinedAggregateFunction}
 import org.apache.spark.sql.types.{StructField, _}
 
 import scala.collection.JavaConversions._
-
+/**
+  * The Class GroupCombineCustomHandler.
+  *
+  * @author Bitwise
+  *
+  */
 case class GroupCombineCustomHandler(groupCombineTransform: GroupCombineTransformBase, inSchema: StructType, outSchema: StructType, isDeterministic: Boolean) extends UserDefinedAggregateFunction {
 
   val bufSchemaVal = bufferSchema
@@ -29,7 +34,7 @@ case class GroupCombineCustomHandler(groupCombineTransform: GroupCombineTransfor
       var brr = BufferReusableRow(buffer, bufferMapper)
       groupCombineTransform.initialize(brr)
     } catch {
-      case e: Exception => throw new RuntimeException("Exception in initialize() for Transform Class:[\"" + groupCombineTransform + "\"] for row:[\"" + buffer.toString() + "\"] error being:" + e.getMessage,e)
+      case e: Exception => throw new RuntimeException("Exception in initialize() for Transform Class:[\"" + groupCombineTransform + "\"] for row:[\"" + buffer.toString() + "\"] error being:" ,e)
     }
   }
 
@@ -39,7 +44,7 @@ case class GroupCombineCustomHandler(groupCombineTransform: GroupCombineTransfor
       val brr = BufferReusableRow(buffer, bufferMapper)
       groupCombineTransform.update(brr, InputReusableRow(input, inputMapper))
     } catch {
-      case e: Exception => throw new RuntimeException("Exception in update() for Transform Class:[\"" + groupCombineTransform + "\"] for row:[\"" + input.toString() + "\"] error being:" + e.getMessage,e)
+      case e: Exception => throw new RuntimeException("Exception in update() for Transform Class:[\"" + groupCombineTransform + "\"] for row:[\"" + input.toString() + "\"] error being:" ,e)
     }
   }
 
@@ -49,7 +54,7 @@ case class GroupCombineCustomHandler(groupCombineTransform: GroupCombineTransfor
       val irr = InputReusableRow(buffer2, bufferMapper)
       groupCombineTransform.merge(brr, irr)
     } catch {
-      case e: Exception => throw new RuntimeException("Exception in merge() for Transform Class:[\"" + groupCombineTransform + "\"] for row:[\"" + buffer1.toString() + "\"] error being:" + e.getMessage,e)
+      case e: Exception => throw new RuntimeException("Exception in merge() for Transform Class:[\"" + groupCombineTransform + "\"] for row:[\"" + buffer1.toString() + "\"] error being:" ,e)
     }
   }
 
@@ -60,7 +65,7 @@ case class GroupCombineCustomHandler(groupCombineTransform: GroupCombineTransfor
       val irr = InputReusableRow(buffer, bufferMapper)
       groupCombineTransform.evaluate(irr, orr)
     } catch {
-      case e: Exception => throw new RuntimeException("Exception in evaluate() for Transform Class:[\"" + groupCombineTransform + "\"] for row:[\"" + buffer.toString() + "\"] error being:" + e.getMessage,e)
+      case e: Exception => throw new RuntimeException("Exception in evaluate() for Transform Class:[\"" + groupCombineTransform + "\"] for row:[\"" + buffer.toString() + "\"] error being:" ,e)
     }
     Row.fromSeq(output)
   }

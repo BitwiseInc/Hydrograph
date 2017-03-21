@@ -14,15 +14,12 @@
 
 package hydrograph.engine.jaxb.commontypes;
 
+import hydrograph.engine.jaxb.commandtypes.*;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
-import hydrograph.engine.jaxb.commandtypes.FtpIn;
-import hydrograph.engine.jaxb.commandtypes.Hplsql;
-import hydrograph.engine.jaxb.commandtypes.RunProgram;
-import hydrograph.engine.jaxb.commandtypes.RunSQL;
-import hydrograph.engine.jaxb.commandtypes.Subjob;
 
 
 /**

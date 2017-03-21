@@ -14,13 +14,14 @@
 
 package hydrograph.engine.jaxb.operationstypes;
 
+import hydrograph.engine.jaxb.cumulate.CumulateBase;
+import hydrograph.engine.jaxb.cumulate.TypePrimaryKeyFields;
+import hydrograph.engine.jaxb.cumulate.TypeSecondaryKeyFields;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-import hydrograph.engine.jaxb.cumulate.CumulateBase;
-import hydrograph.engine.jaxb.cumulate.TypePrimaryKeyFields;
-import hydrograph.engine.jaxb.cumulate.TypeSecondaryKeyFields;
 
 
 /**

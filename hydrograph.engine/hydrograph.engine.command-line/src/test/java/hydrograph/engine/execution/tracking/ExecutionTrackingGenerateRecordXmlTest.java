@@ -17,7 +17,12 @@ import hydrograph.engine.helper.StatusHelper;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
+/**
+ * The Class ExecutionTrackingGenerateRecordXmlTest.
+ *
+ * @author Bitwise
+ *
+ */
 public class ExecutionTrackingGenerateRecordXmlTest {
 
 	static HydrographService hydrographService;

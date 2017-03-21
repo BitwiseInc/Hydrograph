@@ -17,8 +17,9 @@ import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Recognizer;
 
 /**
- * @author gurdits
+ * The Class DescriptiveErrorListener .
  *
+ * @author Bitwise
  */
 public class DescriptiveErrorListener extends BaseErrorListener {
 	public static DescriptiveErrorListener INSTANCE = new DescriptiveErrorListener();

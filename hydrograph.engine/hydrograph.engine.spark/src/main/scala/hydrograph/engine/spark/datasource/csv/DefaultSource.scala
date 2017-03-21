@@ -12,16 +12,15 @@
   * ******************************************************************************/
 package hydrograph.engine.spark.datasource.csv
 
-import java.text.SimpleDateFormat
 import java.util.{Locale, TimeZone}
 
 import hydrograph.engine.spark.datasource.utils.{CompressionCodecs, TextFile, TypeCast}
 import org.apache.commons.csv.CSVFormat
+import org.apache.commons.lang3.time.FastDateFormat
 import org.apache.hadoop.fs.Path
 import org.apache.spark.sql.sources._
 import org.apache.spark.sql.types.StructType
 import org.apache.spark.sql.{DataFrame, SQLContext, SaveMode}
-import org.apache.commons.lang3.time.FastDateFormat    
 
 /**
   * The Class DefaultSource.

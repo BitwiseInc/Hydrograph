@@ -12,9 +12,13 @@
  *******************************************************************************/
 package hydrograph.engine.core.core;
 
-//this class can be removed as it is just storing the graph object. The engine can directly work on jaxb generated graph object
 import hydrograph.engine.jaxb.main.Graph;
-
+/**
+ * The Class HydrographJob.
+ *
+ * @author Bitwise
+ *
+ */
 public class HydrographJob {
 	private Graph graph;
 

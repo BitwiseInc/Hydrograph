@@ -17,9 +17,10 @@ package hydrograph.engine.core.component.entity.base;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 /**
- * @author bitwise1
+ * The Class HiveEntityBase.
+ *
+ * @author Bitwise
  *
  */
 public class HiveEntityBase extends InputOutputEntityBase {

@@ -31,9 +31,11 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import java.util.ArrayList;
 import java.util.List;
-
 /**
- * The utility class for debug plugin. This class exposes a bunch of static utility methods.
+ * The Class DebugUtils.
+ *
+ * @author Bitwise
+ *
  */
 public class DebugUtils {
 

@@ -19,6 +19,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * The Class PropertiesHelper.
+ *
+ * @author Bitwise
+ */
 public class PropertiesHelper {
 
 	private static Logger LOG = LoggerFactory.getLogger(PropertiesHelper.class);

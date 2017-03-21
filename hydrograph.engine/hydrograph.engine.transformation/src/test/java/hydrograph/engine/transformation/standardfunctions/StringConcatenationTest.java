@@ -16,7 +16,12 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import static hydrograph.engine.transformation.standardfunctions.StringFunctions.stringConcat;
-
+/**
+ * The Class StringConcatenationTest.
+ *
+ * @author Bitwise
+ *
+ */
 public class StringConcatenationTest {
 
 	@Test

@@ -19,7 +19,12 @@ import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.engine.jaxb.inputtypes.GenerateRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+/**
+ * The Class GenerateRecordEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 public class GenerateRecordEntityGenerator extends InputComponentGeneratorBase {
 	private hydrograph.engine.jaxb.inputtypes.GenerateRecord jaxbGenerateRecord;
 	private GenerateRecordEntity generateRecordEntity;

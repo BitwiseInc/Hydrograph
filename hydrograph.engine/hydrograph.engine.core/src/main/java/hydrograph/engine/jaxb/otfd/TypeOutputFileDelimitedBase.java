@@ -14,13 +14,14 @@
 
 package hydrograph.engine.jaxb.otfd;
 
+import hydrograph.engine.jaxb.commontypes.TypeOutputComponent;
+import hydrograph.engine.jaxb.outputtypes.AvroFile;
+import hydrograph.engine.jaxb.outputtypes.TextFileDelimited;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
-import hydrograph.engine.jaxb.commontypes.TypeOutputComponent;
-import hydrograph.engine.jaxb.outputtypes.AvroFile;
-import hydrograph.engine.jaxb.outputtypes.TextFileDelimited;
 
 
 /**

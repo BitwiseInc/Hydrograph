@@ -18,7 +18,12 @@ import hydrograph.engine.transformation.userfunctions.base.ReusableRow;
 import hydrograph.engine.transformation.userfunctions.helpers.RegexSplitter;
 
 import java.util.Properties;
-
+/**
+ * The Class RegexSplitNormalize.
+ *
+ * @author Bitwise
+ *
+ */
 public class RegexSplitNormalize implements NormalizeTransformBase {
 
 	private RegexSplitter regexSplitter;

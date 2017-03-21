@@ -16,7 +16,12 @@ import hydrograph.engine.core.component.entity.base.OperationEntityBase;
 import hydrograph.engine.core.component.entity.elements.KeyField;
 
 import java.util.Arrays;
-
+/**
+ * The Class GroupCombineEntity.
+ *
+ * @author Bitwise
+ *
+ */
 public class GroupCombineEntity extends OperationEntityBase {
 
 	private KeyField[] keyFields;

@@ -15,7 +15,12 @@ package hydrograph.engine.core.component.generator.base;
 import hydrograph.engine.core.component.entity.base.AssemblyEntityBase;
 import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 
-
+/**
+ * The Class CommandComponentGeneratorBase.
+ *
+ * @author Bitwise
+ *
+ */
 public abstract class CommandComponentGeneratorBase implements GeneratorBase {
 
 	/**
@@ -23,7 +28,7 @@ public abstract class CommandComponentGeneratorBase implements GeneratorBase {
 	 * jaxb and calls the methods to create and initialize the entity object
 	 * using the {@link TypeBaseComponent} object
 	 * 
-	 * @param baseComponent
+	 * @param # baseComponent
 	 *            {@link TypeBaseComponent} object which holds all the
 	 *            information for the component from xml
 	 */

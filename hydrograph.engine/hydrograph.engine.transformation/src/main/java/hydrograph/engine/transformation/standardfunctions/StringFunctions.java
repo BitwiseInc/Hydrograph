@@ -20,7 +20,10 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 /**
- * The class StringFunctions provides various string manipulation functions.
+ * The Class StringFunctions.
+ *
+ * @author Bitwise
+ *
  */
 public class StringFunctions {
 
@@ -306,7 +309,7 @@ public class StringFunctions {
      * {@code null} if any of the values specified in
      * {@code appendValue} is {@code null}
      * @deprecated This method is deprecated, Use
-     * {@link StringFunctions#stringConcat(String inputValue, String[] appendValue)}
+     * {@link StringFunctions# stringConcat(String inputValue, String[] appendValue)}
      * instead
      */
     @SuppressWarnings("unchecked")

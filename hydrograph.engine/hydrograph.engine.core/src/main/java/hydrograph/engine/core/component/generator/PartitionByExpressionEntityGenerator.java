@@ -19,7 +19,12 @@ import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.engine.jaxb.operationstypes.PartitionByExpression;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+/**
+ * The Class PartitionByExpressionEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 public class PartitionByExpressionEntityGenerator extends OperationComponentGeneratorBase {
 
 	private PartitionByExpressionEntity partitionByExpressionEntity;

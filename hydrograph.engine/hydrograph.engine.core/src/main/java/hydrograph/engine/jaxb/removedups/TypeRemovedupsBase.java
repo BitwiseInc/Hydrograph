@@ -14,12 +14,13 @@
 
 package hydrograph.engine.jaxb.removedups;
 
+import hydrograph.engine.jaxb.commontypes.TypeStraightPullComponent;
+import hydrograph.engine.jaxb.straightpulltypes.RemoveDups;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
-import hydrograph.engine.jaxb.commontypes.TypeStraightPullComponent;
-import hydrograph.engine.jaxb.straightpulltypes.RemoveDups;
 
 
 /**

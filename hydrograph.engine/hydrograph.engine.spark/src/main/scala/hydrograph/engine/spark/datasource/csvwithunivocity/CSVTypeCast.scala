@@ -18,18 +18,15 @@
 package hydrograph.engine.spark.datasource.csvwithunivocity
 
 import java.math.BigDecimal
-import java.text.{DateFormat, NumberFormat}
+import java.text.NumberFormat
 import java.util.Locale
 
 import org.apache.commons.lang3.time.FastDateFormat
-import org.apache.spark.rdd.RDD
-import org.apache.spark.sql.catalyst.analysis.TypeCoercion
 import org.apache.spark.sql.catalyst.util.DateTimeUtils
 import org.apache.spark.sql.types._
 import org.apache.spark.unsafe.types.UTF8String
 
 import scala.util.Try
-import scala.util.control.Exception._
 
 /*private object CSVInferSchema {
 

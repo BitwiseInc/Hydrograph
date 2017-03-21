@@ -22,13 +22,10 @@ import java.io.Serializable;
 import java.util.*;
 
 /**
- * The utility class for entities of all operation type components. This class
- * is meant to be stateless and provide just static utility methods. There
- * should not be any instance variables of this class. The constructor has
- * deliberately been made private in order to discourage users from creating
- * instance of this class
+ * The Class OperationEntityUtils.
  *
- * @author Prabodh
+ * @author Bitwise
+ *
  */
 public class OperationEntityUtils implements Serializable {
 

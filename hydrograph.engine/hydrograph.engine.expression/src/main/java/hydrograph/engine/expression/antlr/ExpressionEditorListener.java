@@ -15,8 +15,9 @@ package hydrograph.engine.expression.antlr;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
- * This interface defines a complete listener for a parse tree produced by
- * {@link ExpressionEditorParser}.
+ * The Interface ExpressionEditorListener.
+ *
+ * @author Bitwise
  */
 public interface ExpressionEditorListener extends ParseTreeListener {
 	/**

@@ -13,23 +13,22 @@
 
 package hydrograph.engine.core.component.generator;
 
-/**
- * Created by AniruddhaS on 12/27/2016.
- */
-
-
 import hydrograph.engine.core.component.entity.InputRDBMSEntity;
 import hydrograph.engine.core.component.entity.utils.InputEntityUtils;
 import hydrograph.engine.core.component.generator.base.InputComponentGeneratorBase;
 import hydrograph.engine.core.constants.Constants;
 import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
-
 import hydrograph.engine.jaxb.inputtypes.Teradata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
-
+/**
+ * The Class InputTeradataEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 
 public class InputTeradataEntityGenerator extends
         InputComponentGeneratorBase {

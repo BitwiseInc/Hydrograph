@@ -18,9 +18,11 @@ import hydrograph.engine.core.component.entity.elements.SchemaField;
 import hydrograph.engine.jaxb.commontypes.TypeFieldName;
 
 import java.util.List;
-
 /**
- * Created by santlalg on 1/19/2017.
+ * The Class OutputJdbcUpdateEntity.
+ *
+ * @author Bitwise
+ *
  */
 public class OutputJdbcUpdateEntity extends InputOutputEntityBase {
 

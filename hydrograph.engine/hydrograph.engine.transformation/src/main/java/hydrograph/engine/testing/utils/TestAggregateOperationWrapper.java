@@ -1,17 +1,18 @@
 package hydrograph.engine.testing.utils;
 
+import hydrograph.engine.transformation.userfunctions.base.AggregateTransformBase;
+
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Properties;
-
-import hydrograph.engine.transformation.userfunctions.base.AggregateTransformBase;
-import hydrograph.engine.transformation.userfunctions.base.TransformBase;
-
+/**
+ * The Class TestAggregateOperationWrapper.
+ *
+ * @author Bitwise
+ */
 public class TestAggregateOperationWrapper {
 
-
-	
 	public static Object[] callAggregateOperation(AggregateTransformBase aggr, Properties props,
 			ArrayList<String> inputFieldsName, ArrayList<String> outputFieldsName, ArrayList<String> keyFieldsName, Object[][] inputGroup) {
 		

@@ -20,9 +20,11 @@ import hydrograph.engine.core.component.entity.elements.OutSocket;
 import hydrograph.engine.core.component.entity.elements.SchemaField;
 
 import java.util.List;
-
 /**
- * @author bitwise1
+ * The Class InputRDBMSEntity.
+ *
+ * @author Bitwise
+ *
  */
 public class InputRDBMSEntity extends InputOutputEntityBase {
     private List<OutSocket> outSocketList;

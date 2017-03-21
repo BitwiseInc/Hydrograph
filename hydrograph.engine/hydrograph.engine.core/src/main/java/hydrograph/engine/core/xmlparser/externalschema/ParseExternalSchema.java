@@ -31,7 +31,11 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * The Class ParseExternalSchema.
+ *
+ * @author Bitwise
+ */
 public class ParseExternalSchema {
 
 	private static Logger LOG = LoggerFactory

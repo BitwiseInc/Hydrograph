@@ -54,7 +54,7 @@ class GenerateRecordComponent(generateRecordEntity: GenerateRecordEntity, iCompo
 
         case nfe: NumberFormatException =>
           LOG.error("Error in Generate Record Component " + generateRecordEntity.getComponentId + ", invalid noOfPartitions")
-          throw new RuntimeException("Error in Generate Record Component " + generateRecordEntity.getComponentId + ", invalid noOfPartitions")
+          throw new RuntimeException("Error in Generate Record Component " + generateRecordEntity.getComponentId + ", invalid noOfPartitions",nfe)
       }
     } else {
       spark.sparkContext.defaultParallelism
@@ -71,7 +71,7 @@ class GenerateRecordComponent(generateRecordEntity: GenerateRecordEntity, iCompo
       } catch {
         case ae: ArithmeticException =>
           LOG.error("Error in Generate Record Component " + generateRecordEntity.getComponentId + ", noOfPartitions may be zero")
-          throw new RuntimeException("Error in Generate Record Component " + generateRecordEntity.getComponentId + ", noOfPartitions may be zero")
+          throw new RuntimeException("Error in Generate Record Component " + generateRecordEntity.getComponentId + ", noOfPartitions may be zero",ae)
       }
 
     try {
@@ -134,7 +134,7 @@ class GenerateRecordComponent(generateRecordEntity: GenerateRecordEntity, iCompo
 
       case aiob: RuntimeException =>
         LOG.error("Error in Generate Record Component in getFieldsData()" + generateRecordEntity.getComponentId + aiob)
-        throw new RuntimeException("Error in Generate Record Component:[\"" + generateRecordEntity.getComponentId + "\"] for field name:[\"" + fieldName + "\"] whose field index:[\"" + fieldIndex + "\"] and data type is [\"" + dataType + "\"]. Cause of Error: " + aiob.getMessage)
+        throw new RuntimeException("Error in Generate Record Component:[\"" + generateRecordEntity.getComponentId + "\"] for field name:[\"" + fieldName + "\"] whose field index:[\"" + fieldIndex + "\"] and data type is [\"" + dataType + "\"]. Cause of Error: " ,aiob)
 
     }
   }
@@ -171,7 +171,7 @@ class GenerateRecordComponent(generateRecordEntity: GenerateRecordEntity, iCompo
     } catch {
       case nfe: NumberFormatException =>
         LOG.error("Error in Generate Record Component in DataGenerator.java" + generateRecordEntity.getComponentId + " can not cast to integer type")
-        throw new RuntimeException("Error in Generate Record Component in DataGenerator.java" + generateRecordEntity.getComponentId + " can not cast to integer type")
+        throw new RuntimeException("Error in Generate Record Component in DataGenerator.java" + generateRecordEntity.getComponentId + " can not cast to integer type",nfe)
 
       case pe: ParseException =>
         LOG.error("Error in Generate Record Component in DataGenerator.java" + generateRecordEntity.getComponentId + " unable to parse in simple date format")
@@ -217,7 +217,7 @@ class GenerateRecordComponent(generateRecordEntity: GenerateRecordEntity, iCompo
 
       case aiob: ArrayIndexOutOfBoundsException =>
         LOG.error("Error in Generate Record Component in getFieldPropertiesList()" + generateRecordEntity.getComponentId + aiob)
-        throw new RuntimeException("Error in Generate Record Component in getFieldPropertiesList()" + generateRecordEntity.getComponentId + aiob)
+        throw new RuntimeException("Error in Generate Record Component in getFieldPropertiesList()" + generateRecordEntity.getComponentId , aiob)
     }
   }
 }

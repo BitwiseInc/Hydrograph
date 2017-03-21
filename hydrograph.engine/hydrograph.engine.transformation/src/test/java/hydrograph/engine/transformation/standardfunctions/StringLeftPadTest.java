@@ -18,7 +18,12 @@ import org.junit.Test;
 import java.math.BigDecimal;
 
 import static hydrograph.engine.transformation.standardfunctions.StringFunctions.stringLeftPad;
-
+/**
+ * The Class StringLeftPadTest.
+ *
+ * @author Bitwise
+ *
+ */
 public class StringLeftPadTest {
 
 	@Test

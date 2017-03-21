@@ -18,7 +18,11 @@ import hydrograph.engine.transformation.userfunctions.base.ReusableRow;
 
 import java.io.Serializable;
 import java.util.Properties;
-
+/**
+ * The Class PartitionByExpressionForExpression.
+ *
+ * @author Bitwise
+ */
 public class PartitionByExpressionForExpression implements CustomPartitionExpression, Serializable {
 
 	ValidationAPI validationAPI;

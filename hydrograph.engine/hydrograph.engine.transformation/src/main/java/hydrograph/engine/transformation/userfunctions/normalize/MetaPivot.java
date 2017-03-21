@@ -17,7 +17,12 @@ import hydrograph.engine.transformation.userfunctions.base.OutputDispatcher;
 import hydrograph.engine.transformation.userfunctions.base.ReusableRow;
 
 import java.util.Properties;
-
+/**
+ * The Class MetaPivot.
+ *
+ * @author Bitwise
+ *
+ */
 public class MetaPivot implements NormalizeTransformBase {
 
 	@Override

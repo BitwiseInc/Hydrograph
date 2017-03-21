@@ -52,11 +52,11 @@ BaseComponentParams) extends SparkFlow with Serializable {
      case e: AnalysisException if (e.getMessage().matches("(.*)cannot resolve(.*)given input columns(.*)"))=>
        LOG.error("Error in Output File Delimited Component "+ outputFileDelimitedEntity.getComponentId, e)
        throw new RuntimeException("Error in Output File Delimited Component '"
-         + outputFileDelimitedEntity.getComponentId+"' "+ e )
+         + outputFileDelimitedEntity.getComponentId+"' ",e )
      case e:Exception =>
        LOG.error("Error in Output File Delimited Component "+ outputFileDelimitedEntity.getComponentId, e)
        throw new RuntimeException("Error in Output File Delimited Component '"
-         + outputFileDelimitedEntity.getComponentId +"' "+ e)
+         + outputFileDelimitedEntity.getComponentId +"' ",e)
    }
     LOG.info("Created Output File Delimited Component "+ outputFileDelimitedEntity.getComponentId
       + " in Batch "+ outputFileDelimitedEntity.getBatch +" with path " + outputFileDelimitedEntity.getPath)

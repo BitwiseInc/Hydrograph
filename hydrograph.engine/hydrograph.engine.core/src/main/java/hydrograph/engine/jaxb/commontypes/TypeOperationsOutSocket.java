@@ -14,18 +14,14 @@
 
 package hydrograph.engine.jaxb.commontypes;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElements;
-import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.bind.annotation.XmlType;
 import hydrograph.engine.jaxb.executiontracking.TypeExecutiontrackingOutSocket;
 import hydrograph.engine.jaxb.filter.TypeFilterOutSocket;
 import hydrograph.engine.jaxb.partitionbyexpression.TypePbeOutSocket;
 import hydrograph.engine.jaxb.transform.TypeTransformOutSocket;
+
+import javax.xml.bind.annotation.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**

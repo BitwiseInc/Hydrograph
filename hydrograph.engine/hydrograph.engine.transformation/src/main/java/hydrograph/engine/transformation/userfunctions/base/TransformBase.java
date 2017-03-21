@@ -17,16 +17,9 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 /**
- * The TransformBase interface is the base interface for all the custom classes
- * defined for transformations in transform component in Hydrograph. This
- * interface exposes methods that enable users to perform custom transform
- * operation.
- * <p>
- * For a sample implementation of this interface refer any class under
- * {@link hydrograph.engine.transformation.userfunctions.transform} package.
- * </p>
- * 
- * @author bitwise
+ * The Interface TransformBase.
+ *
+ * @author Bitwise
  *
  */
 public interface TransformBase extends Serializable {
@@ -54,8 +47,8 @@ public interface TransformBase extends Serializable {
 	 * <p>
 	 * Since this function is called for each record in the input, the values of
 	 * variables local to this function are not persisted for every call. Use
-	 * {@link #prepare(Properties, ArrayList, ArrayList, ArrayList)} and
-	 * {@link #onCompleteGroup(ReusableRow)} functions to initialize / reset the
+	 * {@link # prepare(Properties, ArrayList, ArrayList, ArrayList)} and
+	 * {@link # onCompleteGroup(ReusableRow)} functions to initialize / reset the
 	 * required variables.
 	 * </p>
 	 * 

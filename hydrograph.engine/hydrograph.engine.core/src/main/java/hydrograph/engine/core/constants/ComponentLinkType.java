@@ -11,7 +11,11 @@
  * limitations under the License
  *******************************************************************************/
 package hydrograph.engine.core.constants;
-
+/**
+ * The Enum ComponentLinkType.
+ *
+ * @author Bitwise
+ */
 public enum ComponentLinkType {
 	unused, reject, error, out, in;
 

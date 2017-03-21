@@ -25,7 +25,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
 import java.io.IOException;
-
+/**
+ * The Class ParseExternalSchemaTest .
+ *
+ * @author Bitwise
+ */
 public class ParseExternalSchemaTest {
 
 	private static Logger LOG = LoggerFactory

@@ -13,7 +13,11 @@
 package hydrograph.engine.core.utilities;
 
 import java.util.ArrayList;
-
+/**
+ * The Class GeneralUtilities.
+ *
+ * @author Bitwise
+ */
 public class GeneralUtilities {
 
 	/**

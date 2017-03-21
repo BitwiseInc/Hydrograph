@@ -17,15 +17,15 @@
          name="RunSQLExample"
          xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd  ">
 
-  <!--  <commands id="runSQL" batch="0" xsi:type="ct:runSQL">
-        <database_Connection_Name databaseConnectionName="Redshift"/>
-        <server_Name ip_address="redshift-demo.coz8kmgqksna.us-west-2.redshift.amazonaws.com"/>
-        <port_Number portNumber="5439"/>
-        <database_Name databaseName="dev"/>
-        <db_User_Name userName="awsuser"/>
-        <db_Password password="1qaz2wsxA#5"/>
-        <queryCommand query="create table TestRedshift_Database_New (User_id int ,FIrst_Name varchar(30),Last_Name varchar(30),Address varchar(30)); insert into TestRedshift_Database values ('1','sandeep','vasande','pune'); "/>
-    </commands>-->
+    <!--  <commands id="runSQL" batch="0" xsi:type="ct:runSQL">
+         <database_Connection_Name databaseConnectionName="Redshift"/>
+         <server_Name ip_address="redshift-demo.coz8kmgqksna.us-west-2.redshift.amazonaws.com"/>
+         <port_Number portNumber="5439"/>
+         <database_Name databaseName="dev"/>
+         <db_User_Name userName="awsuser"/>
+         <db_Password password="1qaz2wsxA#5"/>
+         <queryCommand query="create table TestRedshift_Database_New (User_id int ,FIrst_Name varchar(30),Last_Name varchar(30),Address varchar(30)); insert into TestRedshift_Database values ('1','sandeep','vasande','pune'); "/>
+     </commands>-->
 
 
     <!--  <commands id="runSQL" batch="0" xsi:type="ct:runSQL">
@@ -54,7 +54,7 @@
         <database_Name databaseName="PRACTICE"/>
         <db_User_Name userName="htcd"/>
         <db_Password password="Bitwise2017"/>
-        <queryCommand query="insert into TEST_SANDEEP_ORACLE values('1111','11','11','11'); "/>
+        <queryCommand query="insert into TEST_SANDEEP_ORACLE values('1234567','11','11','11');"/>
     </commands>
 
 

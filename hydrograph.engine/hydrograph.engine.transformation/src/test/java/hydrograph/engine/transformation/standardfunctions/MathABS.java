@@ -16,7 +16,12 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.math.BigDecimal;
-
+/**
+ * The Class MathABS.
+ *
+ * @author Bitwise
+ *
+ */
 public class MathABS {
 
 	

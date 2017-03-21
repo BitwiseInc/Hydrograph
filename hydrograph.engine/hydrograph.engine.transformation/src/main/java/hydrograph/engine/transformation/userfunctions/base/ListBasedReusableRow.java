@@ -16,7 +16,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
-
+/**
+ * The Class ListBasedReusableRow.
+ *
+ * @author Bitwise
+ *
+ */
 public class ListBasedReusableRow extends ReusableRow {
 
 	private ArrayList<Comparable> values;

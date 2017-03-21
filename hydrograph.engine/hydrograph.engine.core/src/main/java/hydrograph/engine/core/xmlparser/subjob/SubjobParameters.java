@@ -15,7 +15,11 @@ package hydrograph.engine.core.xmlparser.subjob;
 import hydrograph.engine.core.xmlparser.parametersubstitution.IParameterBank;
 
 import java.util.HashMap;
-
+/**
+ * The Class SubjobParameters.
+ *
+ * @author Bitwise
+ */
 public class SubjobParameters implements IParameterBank {
 	private HashMap<String, String> parameterMap;
 	public SubjobParameters(HashMap<String, String> parameterMap) {

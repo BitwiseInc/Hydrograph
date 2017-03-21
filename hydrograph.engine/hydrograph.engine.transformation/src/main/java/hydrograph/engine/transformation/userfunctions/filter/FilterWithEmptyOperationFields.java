@@ -19,7 +19,12 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Properties;
-
+/**
+ * The Class FilterWithEmptyOperationFields.
+ *
+ * @author Bitwise
+ *
+ */
 public class FilterWithEmptyOperationFields implements FilterBase {
 
     private static Logger LOG = LoggerFactory.getLogger(Filter.class);

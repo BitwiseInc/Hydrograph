@@ -21,7 +21,12 @@ import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.engine.jaxb.outputtypes.TextFileDelimited;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+/**
+ * The Class OutputFileDelimitedEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 public class OutputFileDelimitedEntityGenerator extends OutputComponentGeneratorBase {
 
 	private OutputFileDelimitedEntity outputFileDelimitedEntity;

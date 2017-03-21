@@ -25,7 +25,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * The class DateFunctions provides various Date and Time related functions.
+ * The Class DateFunctions.
+ *
+ * @author Bitwise
  *
  */
 public class DateFunctions {

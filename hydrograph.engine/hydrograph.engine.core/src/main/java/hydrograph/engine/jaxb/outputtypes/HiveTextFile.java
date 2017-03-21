@@ -14,16 +14,13 @@
 
 package hydrograph.engine.jaxb.outputtypes;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
 import hydrograph.engine.jaxb.commontypes.BooleanValueType;
 import hydrograph.engine.jaxb.ohivetextfile.HivePartitionFieldsType;
 import hydrograph.engine.jaxb.ohivetextfile.HivePathType;
 import hydrograph.engine.jaxb.ohivetextfile.HiveType;
 import hydrograph.engine.jaxb.ohivetextfile.TypeOutputHiveTextFileDelimitedBase;
+
+import javax.xml.bind.annotation.*;
 
 
 /**

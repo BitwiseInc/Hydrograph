@@ -14,12 +14,13 @@
 
 package hydrograph.engine.jaxb.removedups;
 
+import hydrograph.engine.jaxb.commontypes.TypeFieldName;
+import hydrograph.engine.jaxb.commontypes.TypeSortOrder;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
-import hydrograph.engine.jaxb.commontypes.TypeFieldName;
-import hydrograph.engine.jaxb.commontypes.TypeSortOrder;
 
 
 /**

@@ -19,7 +19,12 @@ import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.engine.jaxb.straightpulltypes.UnionAll;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+/**
+ * The Class UnionAllEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 public class UnionAllEntityGenerator extends
 		StraightPullComponentGeneratorBase {
 

@@ -19,10 +19,9 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Class HydrographService is used to execute {@link HydrographExecution} , kill
- * the Hydrograph job or getting current status of a job.
- * 
- * @author bitwise
+ * The Class HydrographService.
+ *
+ * @author Bitwise
  *
  */
 public class HydrographService {

@@ -24,14 +24,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-
 /**
- * The utility class for entities of all straight pull type components. This
- * class is meant to be stateless and provide just static utility methods. There
- * should not be any instance variables of this class. The constructor has
- * deliberately been made private in order to discourage users from creating
- * instance of this class
- * 
+ * The Class StraightPullEntityUtils.
+ *
+ * @author Bitwise
+ *
  */
 
 public class StraightPullEntityUtils implements Serializable{
@@ -43,7 +40,7 @@ public class StraightPullEntityUtils implements Serializable{
 	 * Extracts a list of all the sockets from the output socket object of type
 	 * {@link TypeInputOutSocket}, passed as a parameter
 	 * 
-	 * @param outSocket
+	 * @param # outSocket
 	 *            list of {@link TypeInputOutSocket} objects which contain the
 	 *            socket type information
 	 * @return a list of {@link OutSocket} objects. Each object in the list

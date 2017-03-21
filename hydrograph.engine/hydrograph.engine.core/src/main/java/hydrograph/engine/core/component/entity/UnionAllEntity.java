@@ -17,7 +17,12 @@ import hydrograph.engine.core.component.entity.elements.OutSocket;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * The Class UnionAllEntity.
+ *
+ * @author Bitwise
+ *
+ */
 public class UnionAllEntity extends StraightPullEntityBase {
 
 	public OutSocket getOutSocket() {

@@ -14,14 +14,11 @@
 
 package hydrograph.engine.jaxb.outputtypes;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
 import hydrograph.engine.jaxb.commontypes.BooleanValueType;
 import hydrograph.engine.jaxb.commontypes.StandardCharsets;
 import hydrograph.engine.jaxb.ofxml.TypeOutputFileXmlBase;
+
+import javax.xml.bind.annotation.*;
 
 
 /**

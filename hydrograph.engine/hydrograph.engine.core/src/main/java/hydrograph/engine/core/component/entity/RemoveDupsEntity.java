@@ -17,7 +17,12 @@ import hydrograph.engine.core.component.entity.elements.KeyField;
 import hydrograph.engine.core.constants.Keep;
 
 import java.util.Arrays;
-
+/**
+ * The Class RemoveDupsEntity.
+ *
+ * @author Bitwise
+ *
+ */
 
 public class RemoveDupsEntity extends StraightPullEntityBase {
 

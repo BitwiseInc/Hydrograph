@@ -14,22 +14,11 @@
 
 package hydrograph.engine.jaxb.main;
 
+import hydrograph.engine.jaxb.commontypes.*;
+
+import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElements;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
-import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
-import hydrograph.engine.jaxb.commontypes.TypeCommandComponent;
-import hydrograph.engine.jaxb.commontypes.TypeInputComponent;
-import hydrograph.engine.jaxb.commontypes.TypeOperationsComponent;
-import hydrograph.engine.jaxb.commontypes.TypeOutputComponent;
-import hydrograph.engine.jaxb.commontypes.TypeProperties;
-import hydrograph.engine.jaxb.commontypes.TypeStraightPullComponent;
 
 
 /**

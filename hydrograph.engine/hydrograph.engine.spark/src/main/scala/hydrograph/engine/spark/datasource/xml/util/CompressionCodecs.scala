@@ -49,7 +49,7 @@ private[xml] object CompressionCodecs {
       } catch {
         case e: ClassNotFoundException =>
           throw new IllegalArgumentException(s"Codec [$codecName] is not " +
-            s"available. Known codecs are ${shortCompressionCodecNames.keys.mkString(", ")}.")
+            s"available. Known codecs are ${shortCompressionCodecNames.keys.mkString(", ")}.",e)
       }
   }
 }

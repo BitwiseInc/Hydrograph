@@ -18,7 +18,9 @@ package hydrograph.engine.core.component.entity.elements;
 import java.io.Serializable;
 
 /**
- * @author kirana
+ * The Class MapField.
+ *
+ * @author Bitwise
  *
  */
 public class MapField implements Serializable{

@@ -15,11 +15,12 @@ package hydrograph.engine.expression.utils;
 import hydrograph.engine.expression.api.ValidationAPI;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by gurdits on 1/6/2017.
+ * The Class ExpressionWrapper.
+ *
+ * @author Bitwise
  */
 public class ExpressionWrapper implements Serializable {
 

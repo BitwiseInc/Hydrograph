@@ -22,7 +22,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * The Class LinkGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 public class LinkGenerator {
 
 	private Map<String, Link> linkMap;

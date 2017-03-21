@@ -23,7 +23,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+/**
+ * The Class ParseSubjob.
+ *
+ * @author Bitwise
+ */
 public class ParseSubjob {
 
 	private static final String SUBJOB_OUTPUT = "subjobOutput";

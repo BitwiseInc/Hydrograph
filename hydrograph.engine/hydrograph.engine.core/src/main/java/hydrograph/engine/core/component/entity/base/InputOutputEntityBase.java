@@ -16,7 +16,12 @@ import hydrograph.engine.core.component.entity.elements.OutSocket;
 import hydrograph.engine.core.component.entity.elements.SchemaField;
 
 import java.util.List;
-
+/**
+ * The Class InputOutputEntityBase.
+ *
+ * @author Bitwise
+ *
+ */
 public abstract class InputOutputEntityBase extends AssemblyEntityBase {
 	private List<OutSocket> outSocketList;
 	private List<SchemaField> schemaFieldsList;

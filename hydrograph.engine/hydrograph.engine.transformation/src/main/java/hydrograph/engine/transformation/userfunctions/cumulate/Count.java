@@ -17,7 +17,12 @@ import hydrograph.engine.transformation.userfunctions.base.ReusableRow;
 
 import java.util.ArrayList;
 import java.util.Properties;
-
+/**
+ * The Class Count.
+ *
+ * @author Bitwise
+ *
+ */
 public class Count implements CumulateTransformBase {
 
 	private Long count;

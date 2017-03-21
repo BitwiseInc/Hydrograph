@@ -20,12 +20,17 @@ import hydrograph.engine.spark.components.base.InputComponentBase
 import hydrograph.engine.spark.components.platform.BaseComponentParams
 import hydrograph.engine.spark.components.utils.{DbTableUtils, SchemaCreator, SchemaMismatchException}
 import org.apache.hadoop.conf.Configuration
-import org.apache.spark.sql.{DataFrame, DataFrameReader, SparkSession}
 import org.apache.spark.sql.types._
+import org.apache.spark.sql.{DataFrame, DataFrameReader}
 import org.slf4j.{Logger, LoggerFactory}
 
 import scala.collection.JavaConverters._
-
+/**
+  * The Class InputSparkRedshiftComponent.
+  *
+  * @author Bitwise
+  *
+  */
 class InputSparkRedshiftComponent(inputRDBMSEntity: InputRDBMSEntity, iComponentsParams: BaseComponentParams) extends
   InputComponentBase {
   val LOG: Logger = LoggerFactory.getLogger(classOf[InputSparkRedshiftComponent])

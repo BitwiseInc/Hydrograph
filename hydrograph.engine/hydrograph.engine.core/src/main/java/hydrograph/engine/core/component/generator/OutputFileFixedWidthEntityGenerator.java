@@ -18,7 +18,12 @@ import hydrograph.engine.core.component.generator.base.OutputComponentGeneratorB
 import hydrograph.engine.jaxb.commontypes.TrueFalse;
 import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.engine.jaxb.outputtypes.TextFileFixedWidth;
-
+/**
+ * The Class OutputFileFixedWidthEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 public class OutputFileFixedWidthEntityGenerator extends OutputComponentGeneratorBase {
 
 	public OutputFileFixedWidthEntityGenerator(TypeBaseComponent baseComponent) {

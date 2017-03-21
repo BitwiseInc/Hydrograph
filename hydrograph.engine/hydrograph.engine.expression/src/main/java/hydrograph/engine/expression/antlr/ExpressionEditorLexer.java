@@ -19,7 +19,11 @@ import org.antlr.v4.runtime.atn.ATNDeserializer;
 import org.antlr.v4.runtime.atn.LexerATNSimulator;
 import org.antlr.v4.runtime.atn.PredictionContextCache;
 import org.antlr.v4.runtime.dfa.DFA;
-
+/**
+ * The Class ExpressionEditorLexer .
+ *
+ * @author Bitwise
+ */
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class ExpressionEditorLexer extends Lexer {
 	static { RuntimeMetaData.checkVersion("4.5.3", RuntimeMetaData.VERSION); }

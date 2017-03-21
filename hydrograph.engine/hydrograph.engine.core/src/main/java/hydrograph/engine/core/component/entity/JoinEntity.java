@@ -17,7 +17,12 @@ import hydrograph.engine.core.component.entity.elements.JoinKeyFields;
 
 import java.util.Arrays;
 import java.util.List;
-
+/**
+ * The Class JoinEntity.
+ *
+ * @author Bitwise
+ *
+ */
 public class JoinEntity extends OperationEntityBase {
 
 	private List<JoinKeyFields> joinKeyFields;

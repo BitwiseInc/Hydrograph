@@ -16,7 +16,12 @@ import hydrograph.engine.execution.tracking.ComponentInfo;
 
 import java.util.List;
 import java.util.Map;
-
+/**
+ * The Class StatusHelper.
+ *
+ * @author Bitwise
+ *
+ */
 public class StatusHelper {
 
 	List<ComponentInfo> status;
