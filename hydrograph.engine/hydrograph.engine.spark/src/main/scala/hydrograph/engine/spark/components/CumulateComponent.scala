@@ -85,8 +85,18 @@ class CumulateComponent(cumulateEntity: CumulateEntity, componentsParams: BaseCo
         sparkOperation.baseClassInstance match {
           case a: CumulateForExpression =>
             a.setValidationAPI(new ExpressionWrapper(sparkOperation.validatioinAPI, sparkOperation.initalValue))
-            a.init()
-            a.callPrepare(sparkOperation.fieldName,sparkOperation.fieldType)
+           try{
+
+             a.init()
+           }catch {
+             case e:Exception =>
+               LOG.error("Exception in init method of : " + a.getClass+ " " + e.getMessage, e)
+               throw new InitializationException ("Error in Cumulate Component for intialization :[\""+cumulateEntity.getComponentId+"\"] for ",e)
+           }
+try{
+
+  a.callPrepare(sparkOperation.fieldName,sparkOperation.fieldType)
+}
           case a: CumulateTransformBase => a.prepare(sparkOperation.operationEntity.getOperationProperties,
             sparkOperation.operationEntity.getOperationInputFields,
             sparkOperation.operationEntity.getOperationOutputFields, keyFields)
@@ -127,7 +137,9 @@ class CumulateComponent(cumulateEntity: CumulateEntity, componentsParams: BaseCo
             try{
               cmt.baseClassInstance.cumulate(cmt.inputRow.setRow(row), cmt.outputRow.setRow(outRow))
             } catch {
-              case e:Exception => throw new RuntimeException("Error in Cumulate Component:[\""+cumulateEntity.getComponentId+"\"] for ",e)
+              case e:Exception =>
+                LOG.error("Exception in cumulate method of : " + cmt.getClass+ " " + e.getMessage, e)
+                throw new RowFieldException("Error in Cumulate Component:[\""+cumulateEntity.getComponentId+"\"] for ",e)
             }
 
           })
@@ -151,4 +163,6 @@ class CumulateComponent(cumulateEntity: CumulateEntity, componentsParams: BaseCo
   }
 
 
+}
+class InitializationException private[components](val message: String, val exception: Throwable) extends RuntimeException(message) {
 }

@@ -51,10 +51,18 @@ class FilterComponentWithUDF(filterEntity: FilterEntity, componentsParams: BaseC
       operationSchema, outputSchema).head
     val filterClass = filterSparkOperations.baseClassInstance
 
-    filterClass match {
-      case expression: FilterForExpression => expression.setValidationAPI(filterSparkOperations.validatioinAPI)
-        expression.callPrepare(filterSparkOperations.fieldName, filterSparkOperations.fieldType)
-      case _ =>
+
+    try {
+      filterClass match {
+        case expression: FilterForExpression => expression.setValidationAPI(filterSparkOperations.validatioinAPI)
+          expression.callPrepare(filterSparkOperations.fieldName, filterSparkOperations.fieldType)
+        case _ =>
+      }
+    } catch {
+      case e: Exception =>
+        LOG.error("Error in callPrepare method of: " + filterClass.getClass + " ", e)
+        throw new FieldsMisMatchException("Exception in field initialization of: " + filterClass.getClass + " ", e)
+
     }
     val opProps = filterSparkOperations.operationEntity.getOperationProperties
 
@@ -64,25 +72,27 @@ class FilterComponentWithUDF(filterEntity: FilterEntity, componentsParams: BaseC
     def FilterUDF(cols: Row): Boolean = {
       try {
         filterClass.isRemove(filterSparkOperations.inputRow.setRow(cols))
-      }catch {
-        case e:Exception => throw new RuntimeException("Error in Filter Component:[\""+filterEntity.getComponentId+"\"]" ,e)
+      } catch {
+        case e: Exception =>
+          LOG.error("Error in isRemove method of: " + filterClass.getClass + " ", e)
+          throw new FieldsMisMatchException("Exception in Filter Component:[\"" + filterEntity.getComponentId + "\"]" + filterClass.getClass, e)
       }
     }
-    val UDFName=filterEntity.getComponentId+"UDF"
+
+    val UDFName = filterEntity.getComponentId + "UDF"
     sparkSession.udf.register(UDFName, FilterUDF(_: Row))
 
     val operationInFields = filterEntity.getOperation.getOperationInputFields.toList.mkString(",")
-    val filterQuery:String=UDFName+"(struct(" + operationInFields + "))"
+    val filterQuery: String = UDFName + "(struct(" + operationInFields + "))"
 
 
     filterEntity.getOutSocketList.asScala.foreach { outSocket =>
-      val outSocketID=outSocket.getSocketId
+      val outSocketID = outSocket.getSocketId
       LOG.info("Creating filter Component for '" + filterEntity.getComponentId + "' for socket: '"
         + outSocketID + "' of type: '" + outSocket.getSocketType + "'")
 
-
       if (outSocket.getSocketType.equalsIgnoreCase("out")) {
-        val outDF = filterDF.filter("!"+filterQuery)
+        val outDF = filterDF.filter("!" + filterQuery)
         map += (outSocketID -> outDF)
       }
       else {
@@ -92,4 +102,9 @@ class FilterComponentWithUDF(filterEntity: FilterEntity, componentsParams: BaseC
     }
     map
   }
+
+  class FieldsMisMatchException private[components](val message: String, val exception: Throwable) extends RuntimeException(message) {
+  }
+
 }
+

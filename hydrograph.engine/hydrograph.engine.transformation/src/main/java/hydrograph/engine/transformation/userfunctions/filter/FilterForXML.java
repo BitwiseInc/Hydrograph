@@ -41,7 +41,7 @@ public class FilterForXML implements FilterBase {
 	@Override
 	public boolean isRemove(ReusableRow reusableRow) {
 		//return reusableRow.getInteger("count") > value;
-		return Integer.parseInt(reusableRow.getString("Gift")) > 120;
+		return reusableRow.getString("Choice").equals("AAA");
 
 		/*
 		 * Long pin=reusableRow.getLong(0); return pin==400101 ;
