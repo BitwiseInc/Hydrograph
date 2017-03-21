@@ -74,7 +74,7 @@
 		<dependency>
 			<groupId>hydrograph</groupId>
 			<artifactId>hydrograph.engine.command-line</artifactId>
-			<version>0.1.spark-SNAPSHOT</version>
+			<version>0.1.spark</version>
 			<scope>provided</scope>
 			<exclusions>
 				<exclusion>
