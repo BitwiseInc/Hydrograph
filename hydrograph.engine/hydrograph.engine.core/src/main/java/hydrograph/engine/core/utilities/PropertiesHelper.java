@@ -12,6 +12,7 @@
  *******************************************************************************/
 package hydrograph.engine.core.utilities;
 
+import hydrograph.engine.core.component.utils.SafeResourceClose;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,16 +63,19 @@ public class PropertiesHelper {
             LOG.error("Error reading properties file: '" + propertyFileName
                     + "'");
             throw new RuntimeException(e);
+        } finally {
+            try {
+                SafeResourceClose.safeInputStreamClose(in);
+            } catch (IOException e) {
+                // Exception not thrown as properties file was already read. An
+                // exception in closing input stream will
+                // cause a memory leak, however, the desired functionality works
+                LOG.warn("Exception in closing input stream for properties file: '"
+                        + propertyFileName + "'", e);
+            }
         }
-        try {
-            in.close();
-        } catch (IOException e) {
-            // Exception not thrown as properties file was already read. An
-            // exception in closing input stream will
-            // cause a memory leak, however, the desired functionality works
-            LOG.warn("Exception in closing input stream for properties file: '"
-                    + propertyFileName + "'", e);
-        }
+
         return properties;
     }
+
 }

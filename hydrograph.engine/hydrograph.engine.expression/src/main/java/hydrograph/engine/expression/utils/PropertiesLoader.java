@@ -12,6 +12,9 @@
  *******************************************************************************/
 package hydrograph.engine.expression.utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -23,8 +26,8 @@ import java.util.Properties;
  *
  */
 public class PropertiesLoader {
-	// private static Logger LOG =
-	// LoggerFactory.getLogger(OrderedPropertiesHelper.class);
+	 private static Logger LOG =
+	 LoggerFactory.getLogger(PropertiesLoader.class);
 
 	/**
 	 * Constructor marked as private to disable instantiation
@@ -35,12 +38,12 @@ public class PropertiesLoader {
 
 	/**
 	 * Reads the property file and returns an object of
-	 * {@link OrderedProperties} class for that property file.
+	 * {@link PropertiesLoader} class for that property file.
 	 * 
 	 * @param propertyFileName
 	 *            the properties file for whom the
 	 *            <code>OrderedProperties</code> object is to be retrieved.
-	 * @return an object of {@link OrderedProperties} class for that property
+	 * @return an object of {@link PropertiesLoader} class for that property
 	 *         file.
 	 * @throws IOException
 	 *             if there is a problem reading the properties file.
@@ -67,17 +70,19 @@ public class PropertiesLoader {
 			// LOG.error("Error reading properties file: '" + propertyFileName +
 			// "'");
 			throw new RuntimeException(e);
+		} finally {
+			try {
+				safeInputStreamClose(in);
+			} catch (IOException e) {
+				// Exception not thrown as properties file was already read. An
+				// exception in closing input stream will
+				// cause a memory leak, however, the desired functionality works
+				// LOG.warn("Exception in closing input stream for properties file:
+				// '" + propertyFileName + "'", e);
+			}
 		}
 
-		try {
-			in.close();
-		} catch (IOException e) {
-			// Exception not thrown as properties file was already read. An
-			// exception in closing input stream will
-			// cause a memory leak, however, the desired functionality works
-			// LOG.warn("Exception in closing input stream for properties file:
-			// '" + propertyFileName + "'", e);
-		}
+
 		return properties;
 	}
 	
@@ -87,4 +92,16 @@ public class PropertiesLoader {
         return fileName.substring(fileName.lastIndexOf(".")+1);
         else return "";
     }
+
+	public static void safeInputStreamClose(InputStream is) throws IOException {
+		if (is != null) {
+			try {
+				is.close();
+			} catch (IOException e) {
+				LOG.warn("Exception in closing input stream. The error message is " + e.getMessage());
+				throw e;
+			}
+		}
+	}
+
 }

@@ -27,7 +27,7 @@ public class JAXBTraversal {
 
 	private Map<String, Link> linkMap;
 	private static Logger LOG = LoggerFactory.getLogger(JAXBTraversal.class);
-	private Set<String> flowCount = new HashSet<>();
+	private List<String> flows=new ArrayList<>();
 
 	private List<TypeBaseComponent> jaxbGraph;
 	private boolean isHiveComponentPresentInFlow = false;
@@ -154,12 +154,13 @@ public class JAXBTraversal {
 				+ "' and socket id '" + socketId + "'");
 	}
 
-	public Set<String> getFlowsNumber() {
-		return flowCount;
+	public List<String> getFlowsNumber() {
+		return flows;
 	}
 
 	private void populateBatch() {
-		List<String> flows=new ArrayList<>();
+
+		Set<String> flowCount=new HashSet<>();
 		for (TypeBaseComponent component : jaxbGraph) {
 			flowCount.add(component.getBatch());
 		}
@@ -181,8 +182,7 @@ public class JAXBTraversal {
 				}
 			}
 		});
-		flowCount.clear();
-		flowCount.addAll(flows);
+
 	}
 
 	public String getComponentNameFromComponentId(String componentId){
