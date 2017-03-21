@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Internal Architecture"
-category: hyg
+category: hidden
 section: "architecture"
 date: 2015-11-20 14:44:55
 order: 2
