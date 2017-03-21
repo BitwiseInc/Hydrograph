@@ -239,7 +239,7 @@ public class Messages extends NLS {
 	public static String LABEL_JDBC_DRIVER;
 	public static String LABEL_USER_NAME;
 	public static String LABEL_JDBC_URL;
-	public static String LABEL_PASSWORD;
+	public static String LABEL_PWD;
 	public static String LABEL_CHUNK_SIZE;
 	public static String LABEL_NO_OF_RECORDS;
 	public static String LABEL_HAS_HEADER;

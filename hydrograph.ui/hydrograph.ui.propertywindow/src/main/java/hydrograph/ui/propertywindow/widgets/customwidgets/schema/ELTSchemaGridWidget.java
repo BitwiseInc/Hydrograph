@@ -27,13 +27,16 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
@@ -94,6 +97,7 @@ import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.slf4j.Logger;
+import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import hydrograph.ui.common.schema.Field;
@@ -427,13 +431,20 @@ public abstract class ELTSchemaGridWidget extends AbstractWidget {
 				 ) {
 
 			 if(validateXML(xml, xsd)){
-				 JAXBContext jaxbContext;
 				 try {
-					 jaxbContext = JAXBContext.newInstance(hydrograph.ui.common.schema.Schema.class);
-					 Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-
+					 
+					 	DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+						builderFactory.setExpandEntityReferences(false);
+						builderFactory.setNamespaceAware(true);
+						builderFactory.setFeature(Constants.DISALLOW_DOCTYPE_DECLARATION,true);
+						
+						DocumentBuilder documentBuilder = builderFactory.newDocumentBuilder();
+						Document document=documentBuilder.parse(schemaFile);
+						JAXBContext jaxbContext = JAXBContext.newInstance(hydrograph.ui.common.schema.Schema.class);
+						Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+					 
 					 hydrograph.ui.common.schema.Schema schema= 
-							 (hydrograph.ui.common.schema.Schema) jaxbUnmarshaller.unmarshal(schemaFile);
+							 (hydrograph.ui.common.schema.Schema) jaxbUnmarshaller.unmarshal(document);
 					 fields = schema.getFields();
 					 ArrayList<Field> fieldsList = (ArrayList<Field>) fields.getField();
 					 GridRow gridRow = null;
@@ -509,7 +520,7 @@ public abstract class ELTSchemaGridWidget extends AbstractWidget {
 						 }
 
 					 }
-				 } catch (JAXBException e) {
+				 } catch (JAXBException | ParserConfigurationException | SAXException | IOException e) {
 					 logger.error(Messages.EXPORTED_SCHEMA_SYNC_ERROR, e);
 				 }
 

@@ -242,7 +242,7 @@ public class RunConfigDialog extends Dialog {
 		radioComposite.setLayout(new GridLayout(2, false));
 		
 		radioPassword = new Button(radioComposite, SWT.RADIO);
-		radioPassword.setText(Messages.LABEL_PASSWORD);
+		radioPassword.setText(Messages.LABEL_PWD);
 		radioPassword.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		radioPassword.addSelectionListener(radioPasswordSelectionListener);
 		
@@ -275,7 +275,7 @@ public class RunConfigDialog extends Dialog {
 
 		Label lblPassword = new Label(serverDetailsGroup.getHydroGroupClientArea(), SWT.NONE);
 		lblPassword.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblPassword.setText(Messages.LABEL_PASSWORD);
+		lblPassword.setText(Messages.LABEL_PWD);
 
 		txtPassword = new Text(serverDetailsGroup.getHydroGroupClientArea(), SWT.PASSWORD | SWT.BORDER);
 		txtPassword.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -286,7 +286,7 @@ public class RunConfigDialog extends Dialog {
 		chkbtnSavePassword.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		chkbtnSavePassword.setText(Messages.SAVE_PASSWORD);
 		
-		textPasswordListener = new EmptyTextListener(Messages.LABEL_PASSWORD);
+		textPasswordListener = new EmptyTextListener(Messages.LABEL_PWD);
 		txtPassword.addModifyListener(textPasswordListener);
 		
 		Label lblKeyFile = new Label(serverDetailsGroup.getHydroGroupClientArea(), SWT.NONE);
