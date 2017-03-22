@@ -60,6 +60,7 @@ import static spark.Spark.webSocket;
  * @author Bitwise
  */
 public class HydrographService {
+
     private static final Logger LOG = LoggerFactory.getLogger(HydrographService.class);
 
     public HydrographService() {
@@ -427,7 +428,7 @@ public class HydrographService {
                     LOG.info("+++ Stop: " + new Timestamp((new Date()).getTime()));
                 } catch (Exception e) {
                     LOG.error("Error in reading debug files", e);
-                    return "error";
+                    filePath = "error";
                 }
                 return filePath;
             }
@@ -452,7 +453,7 @@ public class HydrographService {
                     Path path = new Path(hdfsFilePath);
                     LOG.debug("Reading Debug file:" + hdfsFilePath);
                     Configuration conf = new Configuration();
-
+                    KerberosUtilities kerberosUtilities = new KerberosUtilities(userId, password, conf);
                     // load hdfs-site.xml and core-site.xml
                     String hdfsConfigPath = ServiceUtilities.getServiceConfigResourceBundle()
                             .getString(Constants.HDFS_SITE_CONFIG_PATH);
@@ -462,10 +463,8 @@ public class HydrographService {
                     conf.addResource(new Path(hdfsConfigPath));
                     LOG.debug("Loading hdfs-site.xml:" + coreSiteConfigPath);
                     conf.addResource(new Path(coreSiteConfigPath));
-
-                    KerberosUtilities kerberosUtilities = new KerberosUtilities();
                     // apply kerberos token
-                    kerberosUtilities.applyKerberosToken(userId, password, conf);
+                    kerberosUtilities.login();
 
                     listAndWriteFiles(remoteFileName, path, conf, sizeOfData);
                 } catch (Exception e) {
@@ -685,13 +684,18 @@ public class HydrographService {
                 String UUID = generateUUID();
                 String uniqueId = batchID + "_" + UUID;
                 String linugalMetaDataPath = basePath + "/filter/" + UUID;
+                Configuration conf = getConfiguration();
+                KerberosUtilities kerberosUtilities = new KerberosUtilities(username, password, conf);
 
                 String fieldNames[] = getHeader(basePath + "/debug/" + jobId + "/" + componentId + "_" + socketId,
                         username, password);
                 try {
                     HashMap<String, Type> fieldNameAndDatatype = getFieldNameAndType(remoteFilterJson);
                     Type[] fieldTypes = getFieldTypeFromMap(fieldNames, fieldNameAndDatatype);
-                    Configuration conf = getConfiguration(username, password);
+
+
+                    // apply kerberos token
+                    kerberosUtilities.login();
 
                     new LingualFilter().filterData(linugalMetaDataPath, uniqueId,
                             basePath + "/debug/" + jobId + "/" + componentId + "_" + socketId, sizeOfDataInByte,
@@ -710,6 +714,7 @@ public class HydrographService {
                         LOG.error("Error in deleting lingual result", e);
                         return "Error in deleting lingual result: " + e.getMessage();
                     }
+                    kerberosUtilities.logout();
                 }
 
                 return filePath;
@@ -731,14 +736,20 @@ public class HydrographService {
 
             private String[] readFile(String hdfsFilePath, String username, String password) {
                 String[] header = null;
+                Configuration conf = getConfiguration();
+                KerberosUtilities kerberosUtilities=new KerberosUtilities(username,password,conf);
                 try {
                     Path path = new Path(hdfsFilePath);
                     LOG.debug("Reading Debug file:" + hdfsFilePath);
-                    Configuration conf = getConfiguration(username, password);
+
+
+                    kerberosUtilities.login();
 
                     header = getHeaderArray(path, conf);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
+                }finally {
+                    kerberosUtilities.logout();
                 }
                 return header;
             }
@@ -772,24 +783,29 @@ public class HydrographService {
                 return line.split(",");
             }
 
-            private Configuration getConfiguration(String userId, String password) throws LoginException, IOException {
-                Configuration conf = new Configuration();
+            private Configuration getConfiguration()  {
 
-                // load hdfs-site.xml and core-site.xml
-                String hdfsConfigPath = ServiceUtilities.getServiceConfigResourceBundle()
-                        .getString(Constants.HDFS_SITE_CONFIG_PATH);
-                String coreSiteConfigPath = ServiceUtilities.getServiceConfigResourceBundle()
-                        .getString(Constants.CORE_SITE_CONFIG_PATH);
-                LOG.debug("Loading hdfs-site.xml:" + hdfsConfigPath);
-                conf.addResource(new Path(hdfsConfigPath));
-                LOG.debug("Loading hdfs-site.xml:" + coreSiteConfigPath);
-                conf.addResource(new Path(coreSiteConfigPath));
 
-                KerberosUtilities kerberosUtilities = new KerberosUtilities();
-                // apply kerberos token
-                kerberosUtilities.applyKerberosToken(userId, password, conf);
+                    Configuration conf = new Configuration();
+
+                    // load hdfs-site.xml and core-site.xml
+                    String hdfsConfigPath = ServiceUtilities.getServiceConfigResourceBundle()
+                            .getString(Constants.HDFS_SITE_CONFIG_PATH);
+                    String coreSiteConfigPath = ServiceUtilities.getServiceConfigResourceBundle()
+                            .getString(Constants.CORE_SITE_CONFIG_PATH);
+                    LOG.debug("Loading hdfs-site.xml:" + hdfsConfigPath);
+                    conf.addResource(new Path(hdfsConfigPath));
+                    LOG.debug("Loading hdfs-site.xml:" + coreSiteConfigPath);
+                    conf.addResource(new Path(coreSiteConfigPath));
+
+
+
                 return conf;
             }
+
+
+
+
 
             private void deleteLingualResult(String deletePath) throws IOException {
                 Configuration configuration = new Configuration();

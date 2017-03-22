@@ -18,6 +18,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -80,7 +83,7 @@ public class ServiceUtilities {
                 resBundl = ResourceBundle.getBundle("ServiceConfigOverride", Locale.getDefault(), urlLoader);
                 LOG.info("PORT:" + resBundl.getString(Constants.PORT_ID));
             } catch (MalformedURLException e) {
-                e.printStackTrace();
+                LOG.error("Malformed url exception" + e.getMessage());
             }
         }
         return resBundl;
@@ -154,14 +157,18 @@ public class ServiceUtilities {
                 break;
         }
         Class.forName(jdbcClassName);
-        Connection connectionObject;
+        Connection connectionObject=null;
+        boolean testConnectionStatus = false;
         try {
             connectionObject = DriverManager.getConnection(jdbcUrl, userId, service_pwd);
+            testConnectionStatus = testConnection(connectionObject, queryToTest);
         } catch (SQLException e) {
             LOG.error("Error while connecting to database ", e.getMessage());
             throw new Exception(e.getLocalizedMessage());
+        } finally {
+            safeConnectionClose(connectionObject);
         }
-        return testConnection(connectionObject, queryToTest);
+        return testConnectionStatus;
     }
 
     /**
@@ -202,10 +209,111 @@ public class ServiceUtilities {
             LOG.error("Unable to make Connection to Oracle Database" + e.getMessage());
             return false;
         } finally {
+            SQLException exception = null;
             // close database resources
-            rs.close();
-            stmt.close();
+            try {
+                safeResultSetClose(rs);
+            } catch (SQLException sqlException) {
+                exception = sqlException;
+            }
+
+            try {
+                safeStatementClose(stmt);
+            } catch (SQLException sqlException) {
+                exception = sqlException;
+            }
+            if (exception != null)
+                throw exception;
         }
     }
 
+    /**
+     * Close SQL ResultSet connection
+     * <p>
+     * //@param  ResultSet object
+     *
+     * @throws SQLException
+     */
+    public static void safeResultSetClose(ResultSet resultSet) throws SQLException {
+        if (resultSet != null) {
+            try {
+                resultSet.close();
+            } catch (SQLException sqlException) {
+                LOG.error("Exception in closing sql result set. The error message is " + sqlException.getMessage());
+                throw sqlException;
+            }
+        }
+    }
+
+    /**
+     * Close SQL Statement
+     * <p>
+     * //@param  Statement object
+     *
+     * @throws SQLException
+     */
+    public static void safeStatementClose(Statement statement) throws SQLException {
+        if (statement != null) {
+            try {
+                statement.close();
+            } catch (SQLException sqlException) {
+                LOG.error("Exception in closing sql statement. The error message is " + sqlException.getMessage());
+                throw sqlException;
+            }
+        }
+    }
+
+    /**
+     * Close SQL Connection
+     * <p>
+     * //@param  Connection object
+     *
+     * @throws SQLException
+     */
+    public static void safeConnectionClose(Connection connection) throws SQLException {
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException sqlException) {
+                LOG.error("Exception in closing sql connection. The error message is " + sqlException.getMessage());
+                throw sqlException;
+            }
+        }
+    }
+
+    /**
+     * Close OutputStream
+     * <p>
+     * //@param  OutputStream object
+     *
+     * @throws IOException
+     */
+    public static void safeOutputStreamClose(OutputStream outputStream) throws IOException {
+        if (outputStream != null) {
+            try {
+                outputStream.close();
+            } catch (IOException ioException) {
+                LOG.error("Exception in output stream. The error message is " + ioException.getMessage());
+                throw ioException;
+            }
+        }
+    }
+
+    /**
+     * Close InputStream
+     * <p>
+     * //@param  InputStream object
+     *
+     * @throws IOException
+     */
+    public static void safeInputStreamClose(InputStream inputStream) throws IOException {
+        if (inputStream != null) {
+            try {
+                inputStream.close();
+            } catch (IOException ioException) {
+                LOG.error("Exception in closing input stream. The error message is " + ioException.getMessage());
+                throw ioException;
+            }
+        }
+    }
 }
