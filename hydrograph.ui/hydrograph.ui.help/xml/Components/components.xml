@@ -20,7 +20,7 @@
    </topic>
     <topic label="Output">
       <anchor id="Output"/>
-      <link toc="xml/Components/output/Output.xml"/>
+      <link toc="xml/Components/Output/Output.xml"/>
    </topic>
     <topic label="Transform">
       <anchor id="Transform"/>
@@ -32,7 +32,7 @@
    </topic>
     <topic label="Command">
       <anchor id="Command"/>
-      <link toc="xml/Components/command/Command.xml"/>
+      <link toc="xml/Components/Command/Command.xml"/>
    </topic>
    <topic href="html/Components/Unknown.html" label="Unknown">
       <anchor id="Unknown"/>
