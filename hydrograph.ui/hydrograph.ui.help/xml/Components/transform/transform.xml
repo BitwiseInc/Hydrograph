@@ -17,8 +17,22 @@
 
 <toc label="Transform" link_to="xml\Components\transform\TransformComponents.xml#Transform"> 
 	<topic label="Properties"  href="html/Components/transform/Transform_Properties.html"> 
-		 <topic href="html/Components/transform/Transform_Mapping_View.html" label="Mapping View"/>
-		 <topic href="html/Components/transform/Transform_Operation_Class_Window.html" label="Operation Class"/>
+		 <topic href="html/Components/transform/Transform_Properties.html#general_properties" label="General Properties"/>
+		 <topic href="html/Components/transform/Transform_Properties.html#schema" label="Schema"/>		 
 		 <topic href="html/Components/transform/Transform_Properties.html#validations" label="Validations"/>
 	</topic>
+	<topic label="Operation Editor"  href="html/Components/transform/Transform_Mapping_View.html">
+		<topic href="html/Components/transform/Transform_Mapping_View.html#input_fields_grid" label="Input Fields Grid"/>
+	    <topic href="html/Components/transform/Transform_Mapping_View.html#operation_window" label="Operation Window"/>
+	    <topic href="html/Components/transform/Transform_Mapping_View.html#map_fields_grid" label="Map Fields Grid"/>
+	    <topic href="html/Components/transform/Transform_Mapping_View.html#output_fields_grid" label="Output Fields Grid"/>
+	</topic>
+	<topic href="html/Components/transform/Transform_Operation_Class_Window.html" label="Operation Class Window">
+	    <topic href="html/Components/transform/Transform_Operation_Class_Window.html#in-built-operation-class" label="In built operation class"/>
+	    <topic href="html/Components/transform/Transform_Operation_Class_Window.html#custom-operation-class" label="Custom built operation class"/>
+	    <topic href="html/Components/transform/Transform_Operation_Class_Window.html#Operation_Properties_Grid" label="Operation Properties Grid"/>
+	 </topic>
+ <topic href="html/Components/transform/Expression_Editor_window.html" label="Expression Editor">
+ 
+ </topic>
 </toc>

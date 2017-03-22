@@ -20,7 +20,7 @@
    <topic href="html\Hydrograph Features\View Data History.html" label="ViewData history">
       <anchor id="ViewData history"/>
    </topic>
-   <topic href="html/Components/Expression_Editor_window.html" label="Expression Editor">
+   <topic href="html/Components/transform/Expression_Editor_window.html" label="Expression Editor">
       <link toc="Link"/>
      </topic>
    <topic href="html/Hydrograph Features/Generalizing_jobs.html" label="Generalizing jobs">
