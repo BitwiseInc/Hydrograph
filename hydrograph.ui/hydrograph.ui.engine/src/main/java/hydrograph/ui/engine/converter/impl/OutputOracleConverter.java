@@ -47,6 +47,7 @@ import hydrograph.ui.logging.factory.LogFactory;
 public class OutputOracleConverter extends OutputConverter {
 	
 	private static final Logger logger = LogFactory.INSTANCE.getLogger(OutputOracleConverter.class);
+	private Oracle oracleOutput;
 
 	public OutputOracleConverter(Component component) {
 		super(component);
@@ -59,7 +60,7 @@ public class OutputOracleConverter extends OutputConverter {
 	public void prepareForXML() {
 		logger.debug("Generating XML for {}", properties.get(Constants.PARAM_NAME));
 		super.prepareForXML();
-		 Oracle oracleOutput = (Oracle) baseComponent;
+		 oracleOutput = (Oracle) baseComponent;
 		oracleOutput.setRuntimeProperties(getRuntimeProperties());
 		
 		ElementValueStringType sid = new ElementValueStringType();
@@ -109,6 +110,8 @@ public class OutputOracleConverter extends OutputConverter {
 		
 		TypeLoadChoice loadValue = addTypeLoadChoice();
 		oracleOutput.setLoadType(loadValue);
+		
+		getAdditionalParameterForDBComponent();
 	}
 	
 	private TypeLoadChoice addTypeLoadChoice() {
@@ -128,6 +131,24 @@ public class OutputOracleConverter extends OutputConverter {
 		return loadValue;
 	}
 	
+	private void getAdditionalParameterForDBComponent() {
+		
+		Map<String, String> uiValue = (Map<String, String>) properties.get(PropertyNameConstants.OUTPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value());
+		if(uiValue !=null){
+			if(StringUtils.isNotBlank((String)uiValue.get(Constants.DB_CHUNK_SIZE))){
+				ElementValueStringType chunkSize = new ElementValueStringType();
+				chunkSize.setValue(String.valueOf(uiValue.get(Constants.DB_CHUNK_SIZE)));
+				oracleOutput.setChunkSize(chunkSize);
+			}
+			
+			if(StringUtils.isNotBlank((String)uiValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB))){
+				ElementValueStringType extraUrlParams = new ElementValueStringType();
+				extraUrlParams.setValue(String.valueOf(uiValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB)));
+				oracleOutput.setExtraUrlParams(extraUrlParams);
+			}
+		}	
+	}
+
 	/**
 	 * Creates primary key fields
 	 * @param primaryKeyFeilds

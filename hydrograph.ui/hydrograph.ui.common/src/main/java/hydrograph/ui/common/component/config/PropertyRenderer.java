@@ -114,6 +114,8 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="DATABASE_LIST_WIDGET"/>
  *     &lt;enumeration value="TEMPORARY_DIR_NAME_WIDGET"/>
  *     &lt;enumeration value="GROUP_COMBINE_WIDGET"/>
+ *     &lt;enumeration value="INPUT_ADDITIONAL_PARAMETERS_WIDGET"/>
+ *     &lt;enumeration value="OUTPUT_ADDITIONAL_PARAMETERS_WIDGET"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
@@ -205,7 +207,9 @@ public enum PropertyRenderer {
 	RUN_SQL_QUERY_WIDGET,
     DATABASE_LIST_WIDGET,
     TEMPORARY_DIR_NAME_WIDGET,
-    GROUP_COMBINE_WIDGET;
+    GROUP_COMBINE_WIDGET,
+    INPUT_ADDITIONAL_PARAMETERS_WIDGET,
+    OUTPUT_ADDITIONAL_PARAMETERS_WIDGET;
 
     public String value() {
         return name();
