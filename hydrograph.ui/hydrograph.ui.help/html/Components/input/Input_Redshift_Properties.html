@@ -46,6 +46,11 @@
 	<li><span><b>User</b> - User used to specify the User name Logon to Redshift Database.</span></li>
 	<li><span><b>Password</b> - Password used to specify the password.</span></li>
 	<li><span><b>Test Connection</b> - Test Connection used to specify a response to engine should be sent to verify/test if using the above parameter values connection to database will be successful or some invalid parameters are specified by user.</span></li>
+	<li><span><b>Temporary directory on s3</b> - Temporary directory on s3 is used to specify the path of temporary s3 directory which should be already present/created on s3 before executing job.
+	Spark Redshift component uses S3 storage to read and write Redshift database. This S3 storage can also be called S3 bucket. S3 bucket should have read and write access.
+	To use S3 bucket, it requires AWS credentials(IAM or Keys or forward_spark_s3_credentials). 
+	<br><b>Note</b> - Spark redshift does not clean up the temporary files that it creates in S3. Therefore user have to provide dedicated temporary S3 bucket with an object lifecycle configuration to ensure that temporary files are automatically deleted after a specified expiration period.
+	</li>
 </ul>
 <ul>
 	<li><span><b>Select</b> - Select has two options -

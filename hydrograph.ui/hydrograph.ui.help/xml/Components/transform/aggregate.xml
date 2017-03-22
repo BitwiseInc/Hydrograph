@@ -15,7 +15,7 @@
  
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="Aggregate" link_to="xml\Components\transform\TransformComponents.xml#Transform"> 
+<toc label="Aggregate" link_to="xml\Components\transform\TransformComponents.xml#Aggregate"> 
 	<topic label="Properties"  href="html/Components/transform/Aggregate_Properties.html">
 	   	<topic href="html/Components/transform/Aggregate_Properties.html#general_properties" label="General Properties"/>
 	    <topic href="html/Components/transform/Aggregate_Properties.html#schema" label="Schema"/>
@@ -32,4 +32,6 @@
 	    <topic href="html/Components/transform/Aggregate_Operation_Class_Window.html#custom-operation-class" label="Custom built operation class"/>
 	    <topic href="html/Components/transform/Aggregate_Operation_Class_Window.html#Operation_Properties_Grid" label="Operation Properties Grid"/>
 	 </topic>
+  <topic href="html/Components/transform/Expression_Editor_window.html" label="Expression Editor">
+  </topic>
 </toc>

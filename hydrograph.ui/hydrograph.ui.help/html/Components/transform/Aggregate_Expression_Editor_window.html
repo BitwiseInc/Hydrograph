@@ -1,0 +1,70 @@
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+
+<!doctype html>
+<html>
+<head>
+	<title>Aggregate ExpressionEditor</title>
+	<link rel="stylesheet" type="text/css" href="../../css/style.css">
+</head>
+<body>
+<p><span class="header-1">Aggregate ExpressionEditor Window</span></p>
+<p class="center"><img alt="Fig 1" src="../../images/Aggregate_Mapping_View1.png" /></p>
+
+<p><span>The <b>Accumulator Field </b>is required for the computation to be performed on aggregation field based on key field used for grouping of records.
+ As aggregation operations are performed on a group of tuples, a variable Accumulator will be used to store all temporary values.
+  value obtained by evaluating the expression exposed to a tuple will be stored in this Accumulator variable and this stored value will be available when evaluating the next tuple.
+  Based on Expression to be performed on input field, user need to select the Datatype of Accumulator field.
+  This Accumulator variable will be initialized to a user provided value before starting processing of each group of tuple.
+  </span></p>
+  
+
+
+<p><span>The<b> Expression Editor</b>&nbsp;provides a full-fledged IDE editing experience that includes IntelliSense and contextual highlighting which enables you to create expression manually or by using drag and drop functionality. Expression can be validated using JAVA compiler after it is entered to ensure if your expression is syntactically correct.</span></p>
+
+
+<p class="center"><img alt="Fig 1" src="../../images/aggregate_expression_editor_window.png" /></p>
+<p class="center"><span>Fig 1</span></p>
+
+<p><a name="Features"></a><span class="header-2">Features</span></p>
+<p><span>Expression Editor has following features:<p><span>
+<ul>
+	<li><span><b>Fields pane</b>:Displays user selected input fields from available schema to be used in expression.</span></li>
+	<p class="center"><img alt="Fig 1" src="../../images/field_pane.png" /></p>
+	<li><span><b>Category pane </b>:Category are the classes under which built in or user defined functions are defined.</span></li>
+	<p class="center"><img alt="Fig 1" src="../../images/category_pane.png" /></p>
+	<li><span><b>Function Pane</b>:Displays the list of functions for selected category which can be drag and drop on expression pane or on evaluate window to create/modify the expression.
+	 You can use search box in pane to search for functions that match the characters that you type.</span></li>
+	<p class="center"><img alt="Fig 1" src="../../images/function_pane.png" /></p>
+	<p><span>You can also include user defined functions and category (classes) by registering external jars.<p><span>
+	<p><span>User can register the external jars from project properties window.<p><span>
+	<p><span>When user selects the Expression Jars option on property window (left pane) Expression jar's window will be displayed (on right pane ) as shown in below Snapshot 8, through which user will able to register external jars that he / she may requires while writing expressions .<p><span>
+	<p><span>Packages from the jars will displayed to user, user selected packages or class will be displayed in category pane and functions with respect to those classes will be displayed in function pane.<p><span>
+	<p><span>While batch run, user needs to update the property file at installation path with all the packages that he/she needs registered.<p><span>
+    <p class="center"><img alt="Fig 1" src="../../images/jar_added_window.png" /></p>
+    <li><span><b>Function Description pane</b>:Displays usage of functions as specified in the java doc description.</span></li>
+    <p class="center"><img alt="Fig 1" src="../../images/function_description_pane.png" /></p>
+    <li><span><b>Operator list</b>:Displays the list of built-in operators that you can use to create the expression.</span></li>
+    <p></p>
+    <li><span><b>Expression pane</b>:To build an expression, here in this pane you can type or drag and drop the items from other pane.</span></li>
+    <p class="center"><img alt="Fig 1" src="../../images/expression_pane.png" /></p>
+    <li><span><b>Validate expression</b>:Click validate to determine whether the syntax of expression is correct.</span></li>
+    <p></p>
+    <li><span><b>Evaluate Expression Window </b>:Click Evaluate to evaluate an expression. Evaluating an expression lets you immediately see the output so that you can verify and determine if the logic is correct without running complete graph. You can provide the constant value as a test data and can modify the expression based on the results displayed in output pane on this window.</span></li>
+    <p class="center"><img alt="Fig 1" src="../../images/evaluate_expression_window.png" /></p>
+    <li><span><b>Word wrap</b>:Wrap the expression written in expression pane.</span></li>
+    <p></p>
+    <li><span><b>Ok button</b>:will apply and confirm the defined expressions for single particular output field and will close the editor.</span></li>
+    <p></p>
+    <li><span><b>Close button</b>:will not apply or save the defined expression and will close the editor by showing warning message to user if he really want to close editor without retaining the expression.</span></li>
+ </ul>
+</body>
+</html>
