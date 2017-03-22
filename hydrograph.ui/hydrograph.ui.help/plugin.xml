@@ -192,6 +192,9 @@
             file="xml/Components/transform/aggregate.xml">
       </toc>
       <toc
+            file="xml/Components/transform/groupCombine.xml">
+      </toc>
+      <toc
             file="xml/Components/transform/filter.xml">
       </toc>
       <toc
