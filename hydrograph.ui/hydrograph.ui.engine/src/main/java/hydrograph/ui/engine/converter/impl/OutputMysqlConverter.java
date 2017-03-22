@@ -47,6 +47,7 @@ import hydrograph.ui.logging.factory.LogFactory;
 public class OutputMysqlConverter extends OutputConverter{
 
 	private static final Logger logger = LogFactory.INSTANCE.getLogger(OutputMysqlConverter.class);
+	private Mysql mysqlOutput;
 	
 	public OutputMysqlConverter(Component component) {
 		super(component);
@@ -77,7 +78,7 @@ public class OutputMysqlConverter extends OutputConverter{
 	public void prepareForXML() {
 		logger.debug("Generating XML for {}", properties.get(Constants.PARAM_NAME));
 		super.prepareForXML();
-		Mysql mysqlOutput = (Mysql) baseComponent;
+		 mysqlOutput = (Mysql) baseComponent;
 		mysqlOutput.setRuntimeProperties(getRuntimeProperties());
 		
 		ElementValueStringType tableName = new ElementValueStringType();
@@ -121,9 +122,29 @@ public class OutputMysqlConverter extends OutputConverter{
 		
 		TypeLoadChoice loadValue = addTypeLoadChoice();
 		mysqlOutput.setLoadType(loadValue);
+		
+		getAdditionalParameterForDBComponent();
 	}
 
 	
+	private void getAdditionalParameterForDBComponent() {
+		
+		Map<String, String> uiValue = (Map<String, String>) properties.get(PropertyNameConstants.OUTPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value());
+		if(uiValue !=null){
+			if(StringUtils.isNotBlank((String)uiValue.get(Constants.DB_CHUNK_SIZE))){
+				ElementValueStringType chunkSize = new ElementValueStringType();
+				chunkSize.setValue(String.valueOf(uiValue.get(Constants.DB_CHUNK_SIZE)));
+				mysqlOutput.setChunkSize(chunkSize);
+			}
+			
+			if(StringUtils.isNotBlank((String)uiValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB))){
+				ElementValueStringType extraUrlParams = new ElementValueStringType();
+				extraUrlParams.setValue(String.valueOf(uiValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB)));
+				mysqlOutput.setExtraUrlParams(extraUrlParams);
+			}
+		}	
+	}
+
 	private TypeLoadChoice addTypeLoadChoice() {
 		TypeLoadChoice loadValue = new TypeLoadChoice();
 		Map<String, String> uiValue = (Map<String, String>) properties.get(PropertyNameConstants.LOAD_TYPE_CONFIGURATION.value());

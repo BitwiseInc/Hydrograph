@@ -49,6 +49,7 @@ import hydrograph.ui.propertywindow.messages.Messages;
 public class OutputTeradataConverter extends OutputConverter{
 
 	private static final Logger logger = LogFactory.INSTANCE.getLogger(OutputTeradataConverter.class);
+	private Teradata teradataOutput;
 	
 	public OutputTeradataConverter(Component component) {
 		super(component);
@@ -79,7 +80,7 @@ public class OutputTeradataConverter extends OutputConverter{
 	public void prepareForXML() {
 		logger.debug("Generating XML for {}", properties.get(Constants.PARAM_NAME));
 		super.prepareForXML();
-		Teradata teradataOutput = (Teradata) baseComponent;
+		teradataOutput = (Teradata) baseComponent;
 		teradataOutput.setRuntimeProperties(getRuntimeProperties());
 		
 		ElementValueStringType tableName = new ElementValueStringType();
@@ -125,9 +126,29 @@ public class OutputTeradataConverter extends OutputConverter{
 		
 		TypeLoadChoice loadValue = addTypeLoadChoice();
 		teradataOutput.setLoadType(loadValue);
+		
+		getAdditionalParameterForDBComponent();
 	}
 
 	
+	private void getAdditionalParameterForDBComponent() {
+		
+		Map<String, String> uiValue = (Map<String, String>) properties.get(PropertyNameConstants.OUTPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value());
+		if(uiValue !=null){
+			if(StringUtils.isNotBlank((String)uiValue.get(Constants.DB_CHUNK_SIZE))){
+				ElementValueStringType chunkSize = new ElementValueStringType();
+				chunkSize.setValue(String.valueOf(uiValue.get(Constants.DB_CHUNK_SIZE)));
+				teradataOutput.setChunkSize(chunkSize);
+			}
+			
+			if(StringUtils.isNotBlank((String)uiValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB))){
+				ElementValueStringType extraUrlParams = new ElementValueStringType();
+				extraUrlParams.setValue(String.valueOf(uiValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB)));
+				teradataOutput.setExtraUrlParams(extraUrlParams);
+			}
+		}	
+	}
+
 	private TypeLoadChoice addTypeLoadChoice() {
 		TypeLoadChoice loadValue = new TypeLoadChoice();
 		Map<String, String> uiValue = (Map<String, String>) properties.get(PropertyNameConstants.LOAD_TYPE_CONFIGURATION.value());
