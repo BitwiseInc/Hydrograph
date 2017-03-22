@@ -20,6 +20,10 @@
       <anchor id="Aggregate"/>
       <link toc="xml/Components/transform/aggregate.xml"/>
    </topic>
+   <topic href="html/Components/transform/GroupCombine.html" label="GroupCombine">
+      <anchor id="GroupCombine"/>
+   </topic>
+   
    <topic href="html/Components/transform/Cumulate.html" label="Cumulate">
       <anchor id="Cumulate"/>
    </topic>
