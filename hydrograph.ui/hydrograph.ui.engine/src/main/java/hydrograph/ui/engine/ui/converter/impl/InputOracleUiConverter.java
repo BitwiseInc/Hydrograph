@@ -14,6 +14,7 @@ package hydrograph.ui.engine.ui.converter.impl;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,7 @@ import hydrograph.engine.jaxb.commontypes.TypeInputOutSocket;
 import hydrograph.engine.jaxb.commontypes.TypeProperties;
 import hydrograph.engine.jaxb.commontypes.TypeProperties.Property;
 import hydrograph.engine.jaxb.inputtypes.Oracle;
+import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.datastructure.property.DatabaseSelectionConfig;
 import hydrograph.ui.datastructure.property.GridRow;
 import hydrograph.ui.datastructure.property.Schema;
@@ -63,6 +65,7 @@ public class InputOracleUiConverter extends InputUiConverter {
 		LOGGER.debug("Fetching Input-Oracle-Properties for {}", componentName);
 		Oracle inputOracle = (Oracle) typeBaseComponent;
 		DatabaseSelectionConfig databaseSelectionConfig = new DatabaseSelectionConfig();
+		Map<String, Object> additionalParameterDetails = new HashMap<String, Object>();
 
 		setValueInPropertyMap(PropertyNameConstants.JDBC_DRIVER.value(),
 				inputOracle.getDriverType() == null ? "" : inputOracle.getDriverType().getValue());
@@ -115,6 +118,30 @@ public class InputOracleUiConverter extends InputUiConverter {
 		}
 
 		propertyMap.put(PropertyNameConstants.SELECT_OPTION.value(), databaseSelectionConfig);
+		
+		if(inputOracle.getNumPartitions() !=null ){
+			if(inputOracle.getNumPartitions().getValue() !=null){
+				additionalParameterDetails.put(Constants.NO_OF_PARTITION, inputOracle.getNumPartitions().getValue());
+			}
+			if(inputOracle.getNumPartitions().getColumnName() !=null && StringUtils.isNotBlank(inputOracle.getNumPartitions().getColumnName().getValue())){
+				additionalParameterDetails.put(Constants.DB_PARTITION_KEY, inputOracle.getNumPartitions().getColumnName().getValue());
+			}
+			if(inputOracle.getNumPartitions().getUpperBound() !=null ){
+				additionalParameterDetails.put(Constants.PARTITION_KEY_UPPER_BOUND, inputOracle.getNumPartitions().getUpperBound().getValue());
+			}
+			if(inputOracle.getNumPartitions().getLowerBound() !=null ){
+				additionalParameterDetails.put(Constants.PARTITION_KEY_LOWER_BOUND, inputOracle.getNumPartitions().getLowerBound().getValue());
+			}
+		}
+		
+		if(inputOracle.getFetchSize() !=null && StringUtils.isNotBlank(inputOracle.getFetchSize().getValue())){
+			additionalParameterDetails.put(Constants.FECTH_SIZE, inputOracle.getFetchSize().getValue());
+		}
+		if(inputOracle.getExtraUrlParams() !=null && StringUtils.isNotBlank(inputOracle.getExtraUrlParams().getValue())){
+			additionalParameterDetails.put(Constants.ADDITIONAL_PARAMETERS_FOR_DB, inputOracle.getExtraUrlParams().getValue());
+		}
+		
+		propertyMap.put(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value(), additionalParameterDetails);
 
 		uiComponent.setType(UIComponentsConstants.ORACLE.value());
 		uiComponent.setCategory(UIComponentsConstants.INPUT_CATEGORY.value());

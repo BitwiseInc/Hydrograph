@@ -377,5 +377,14 @@ public class Constants {
 	public static final String CONSOLE_BUFFER_SIZE_PREFERANCE_NAME="console_buffer_size";
 	public static final String DEFUALT_CONSOLE_BUFFER_SIZE = "10000";
 	public static final String DISALLOW_DOCTYPE_DECLARATION = "http://apache.org/xml/features/disallow-doctype-decl";
+	public static final String ADDITIONAL_PARAMETERS_FOR_DB_LABEL = "Additional\nParameters";
+	public static final String ADDITIONAL_PARAMETERS_FOR_DB_WINDOW_LABEL = "Additional Parameters";
+	public static final String NO_OF_PARTITION = "No. Of Partitions";
+	public static final String PARTITION_KEY_LOWER_BOUND="Partition Key Value Lower Bound";
+	public static final String PARTITION_KEY_UPPER_BOUND = "Partition Key Value Upper Bound";
+	public static final String FECTH_SIZE="Fetch Size";
+	public static final String DB_PARTITION_KEY="Partition Key";
+	public static final String ADDITIONAL_PARAMETERS_FOR_DB ="Additional DB Parameters";
+	public static final String DB_CHUNK_SIZE="Chunk Size";
 }
 

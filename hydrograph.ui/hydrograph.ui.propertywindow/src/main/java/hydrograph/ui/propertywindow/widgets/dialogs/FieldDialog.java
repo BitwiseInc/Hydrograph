@@ -91,8 +91,8 @@ import hydrograph.ui.propertywindow.widgets.utility.WidgetUtility;
 public class FieldDialog extends Dialog {
 	private static final Logger logger = LogFactory.INSTANCE.getLogger(FieldDialog.class);
 
-	private final List<FilterProperties> propertyList;
-	private List<String> fieldNameList;
+	protected final List<FilterProperties> propertyList;
+	protected List<String> fieldNameList;
 	private String componentName;
 
 	private final String PROPERTY_EXISTS_ERROR = Messages.RuntimePropertAlreadyExists;
@@ -200,7 +200,7 @@ public class FieldDialog extends Dialog {
 
 	
 	// Loads Already Saved Properties..
-	private void loadProperties(TableViewer tv) {
+	public void loadProperties(TableViewer tv) {
 
 		if (fieldNameList != null && !fieldNameList.isEmpty()) {
 			for (String key : fieldNameList) {
@@ -223,7 +223,7 @@ public class FieldDialog extends Dialog {
 		}
 	}
 
-	private boolean validateBeforeLoad(String key) {
+	protected boolean validateBeforeLoad(String key) {
 		if (key.trim().isEmpty()) {
 			return false;
 		}
@@ -262,6 +262,9 @@ public class FieldDialog extends Dialog {
 		if(Messages.PRIMARY_KEYS_WINDOW_LABEL.equalsIgnoreCase(componentName)){
 			getShell().setText(Messages.PRIMARY_KEYS_WINDOW_LABEL);
 			isPrimaryKeyDialog  =true;
+		}
+		if(Messages.PARTITION_KEYS_FOR_DB_COMPONENT.equalsIgnoreCase(componentName)){
+			getShell().setText(Messages.PARTITION_KEYS_FOR_DB_COMPONENT);
 		}
 		
 		if(OSValidator.isMac()){
@@ -449,7 +452,7 @@ public class FieldDialog extends Dialog {
 		
 	}
 
-	private void createTargetTable(Composite container) {
+	public void createTargetTable(Composite container) {
 		targetTableViewer = new TableViewer(container, SWT.BORDER | SWT.MULTI|SWT.FULL_SELECTION);
 		targetTable = targetTableViewer.getTable();
 		targetTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -525,12 +528,8 @@ public class FieldDialog extends Dialog {
 		dropTarget.setTransfer(new Transfer[] { TextTransfer.getInstance() });
 		dropTarget.addDropListener(new DropTargetAdapter() {
 			public void drop(DropTargetEvent event) {
-				operationOnDrop(event);
-				if(isPrimaryKeyDialog){
-					validateTargetFieldOnDrop();
-				}
+				dropAction(event);
 			}
-
 		});
 		attachShortcutListner(Constants.PROPERTY_TABLE);
 		attachShortcutListner(Constants.PROPERTY_NAME);
@@ -792,7 +791,7 @@ public class FieldDialog extends Dialog {
 		return false;
 	}
 
-	private void getSourceFieldsFromPropagatedSchema(Table sourceTable) {
+	public void getSourceFieldsFromPropagatedSchema(Table sourceTable) {
 		TableItem sourceTableItem = null;
 		if (sourceFieldsList != null && !sourceFieldsList.isEmpty())
 			for (String filedName : sourceFieldsList) {
@@ -954,5 +953,11 @@ public class FieldDialog extends Dialog {
 		return targetTableViewer;
 	}
 	
+	public void dropAction(DropTargetEvent event) {
+		operationOnDrop(event);
+		if(isPrimaryKeyDialog){
+			validateTargetFieldOnDrop();
+		}
+	}
 	
 }

@@ -62,7 +62,10 @@ public enum PropertyNameConstants {
 		SELECT_UPDATE_KEYS("update"),
 		URL("url"),
 		JDBC_DB_DRIVER("jdbcDriverClass"),
-		TEMPORARY_DIRECTORY_NAME("temporaryDirectory");
+		TEMPORARY_DIRECTORY_NAME("temporaryDirectory"),
+		INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS("inputAdditionalParameters"),
+		OUTPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS("outputAdditionalParameters");
+	
 	
 		private final String value;
 

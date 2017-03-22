@@ -14,6 +14,7 @@ package hydrograph.ui.engine.ui.converter.impl;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +66,7 @@ public class OutputOracleUiConverter extends OutputUiConverter {
 		LOGGER.debug("Fetching Output-Oracle-Properties for {}", componentName);
 		Oracle outputOracle = (Oracle) typeBaseComponent;
 		LinkedHashMap<String, String> loadSelectedDetails = new LinkedHashMap<String, String>();
+		Map<String, Object> additionalParameterDetails = new HashMap<String, Object>();
 		
 		setValueInPropertyMap(PropertyNameConstants.JDBC_DRIVER.value(), 
 				outputOracle.getDriverType() == null ? "" : outputOracle.getDriverType().getValue());
@@ -108,6 +110,16 @@ public class OutputOracleUiConverter extends OutputUiConverter {
 				
 		}
 		propertyMap.put(PropertyNameConstants.LOAD_TYPE_CONFIGURATION.value(), loadSelectedDetails);
+		
+			if(outputOracle.getChunkSize() !=null && StringUtils.isNotBlank(outputOracle.getChunkSize().getValue().toString())){
+				additionalParameterDetails.put(Constants.DB_CHUNK_SIZE,outputOracle.getChunkSize().getValue().toString());
+			}
+		
+			if(outputOracle.getExtraUrlParams() !=null && StringUtils.isNotBlank(outputOracle.getExtraUrlParams().getValue().toString())){
+				additionalParameterDetails.put(Constants.ADDITIONAL_PARAMETERS_FOR_DB, outputOracle.getExtraUrlParams().getValue().toString());
+			}
+		
+		propertyMap.put(PropertyNameConstants.OUTPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value(), additionalParameterDetails);
 		
 		uiComponent.setType(UIComponentsConstants.ORACLE.value());
 		uiComponent.setCategory(UIComponentsConstants.OUTPUT_CATEGORY.value());
