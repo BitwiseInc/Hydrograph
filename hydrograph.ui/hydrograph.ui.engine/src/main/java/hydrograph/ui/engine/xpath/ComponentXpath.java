@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -87,7 +88,7 @@ public class ComponentXpath {
 					addParameterAsAttribute(entry, nodeList);
 			}
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
-			transformerFactory.setFeature(Constants.DISALLOW_DOCTYPE_DECLARATION,true);
+			transformerFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
 			out.reset();
