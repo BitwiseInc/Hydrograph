@@ -56,8 +56,8 @@ class HiveTextOutputTest {
 
 
     hiveEntityBase.setFieldsList(fieldList)
-    hiveEntityBase.setDatabaseName("testDB")
-    hiveEntityBase.setTableName("testTable")
+    hiveEntityBase.setDatabaseName("testDBNew")
+    hiveEntityBase.setTableName("testTableNew")
     hiveEntityBase.setComponentName("TEXTFILE")
     hiveEntityBase.setOverWrite(true)
     hiveEntityBase.setListOfPartitionKeyValueMap(new util.ArrayList[util.HashMap[String, String]]())
@@ -77,6 +77,7 @@ class HiveTextOutputTest {
     val expectedFields = "[aaa,1.25,0.25,25,35,147258,true]"
 
     Assert.assertEquals(expectedFields,df.collectAsList().get(0).toString())
+
   }
 
 }

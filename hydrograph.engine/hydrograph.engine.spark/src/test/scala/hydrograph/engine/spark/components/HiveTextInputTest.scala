@@ -56,8 +56,8 @@ class HiveTextInputTest {
     fieldList.add(sf6)
 
     hiveEntityBase.setFieldsList(fieldList)
-    hiveEntityBase.setDatabaseName("testDB")
-    hiveEntityBase.setTableName("testTable")
+    hiveEntityBase.setDatabaseName("testDBNew")
+    hiveEntityBase.setTableName("testTableNew")
     hiveEntityBase.setComponentName("TEXTFILE")
     hiveEntityBase.setOverWrite(true)
     hiveEntityBase.setListOfPartitionKeyValueMap(new util.ArrayList[util.HashMap[String, String]]())
@@ -96,8 +96,8 @@ class HiveTextInputTest {
     outSockets.add(new OutSocket("outSocket"));
 
     hiveEntityBase.setFieldsList(fieldList)
-    hiveEntityBase.setDatabaseName("testDB")
-    hiveEntityBase.setTableName("testTable")
+    hiveEntityBase.setDatabaseName("testDBNew")
+    hiveEntityBase.setTableName("testTableNew")
     hiveEntityBase.setComponentName("TEXTFILE")
     hiveEntityBase.setOverWrite(true)
     hiveEntityBase.setListOfPartitionKeyValueMap(new util.ArrayList[util.HashMap[String, String]]())

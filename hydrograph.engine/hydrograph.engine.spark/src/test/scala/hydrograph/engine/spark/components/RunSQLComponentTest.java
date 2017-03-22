@@ -17,7 +17,7 @@ public class RunSQLComponentTest {
     Properties properties = new Properties();
 
 
-    @Test(expected = CustomTransformException.class)
+    @Test(expected = DatabaseConnectionException.class)
     public void throwException_IfDatabaseConnectionNameIsEmpty() throws IOException {
         runSqlEntity.setBatch("0");
         runSqlEntity.setComponentId("1");
@@ -106,7 +106,7 @@ public class RunSQLComponentTest {
     }
 
 
-    @Test(expected = CustomTransformException.class)
+    @Test(expected = DatabaseConnectionException.class)
     public void throwException_IfDatabaseQueryIsEmpty() throws Exception {
         runSqlEntity.setBatch("0");
         runSqlEntity.setComponentId("1");
