@@ -42,6 +42,7 @@ import hydrograph.ui.propertywindow.widgets.listeners.ELTVerifyComponentNameList
 import hydrograph.ui.propertywindow.widgets.listeners.ELTVerifyNumbericListener;
 import hydrograph.ui.propertywindow.widgets.listeners.ELTVerifySequenceFieldName;
 import hydrograph.ui.propertywindow.widgets.listeners.ELTVerifyTextListener;
+import hydrograph.ui.propertywindow.widgets.listeners.ExtraURLParameterValidationForDBComponents;
 import hydrograph.ui.propertywindow.widgets.listeners.FilePathModifyListener;
 import hydrograph.ui.propertywindow.widgets.listeners.FocusInListener;
 import hydrograph.ui.propertywindow.widgets.listeners.IELTListener;
@@ -131,7 +132,8 @@ public class ListenerFactory {
 		VERIFY_FAST_LOAD_FOR_TERADATA(VerifyTeraDataFastLoadOption.class),
 		XML_FILE_PATH_MODIFY(XmlFilePathModifyListener.class),
 		PORT_FOCUS_IN(PortFocusInListener.class),
-		PORT_FOCUS_OUT(PortFocusOutListener.class);
+		PORT_FOCUS_OUT(PortFocusOutListener.class),
+		EXTRA_URL_PARAMETER_ON_DB_COMPONENTS(ExtraURLParameterValidationForDBComponents.class);
 		
 		Class<?> clazz = null;
 		private Listners(Class<?> clazz) {

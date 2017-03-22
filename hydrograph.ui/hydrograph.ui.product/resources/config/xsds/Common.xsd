@@ -128,6 +128,8 @@
 			<enumeration value="SELECT_BY_KEYS_WIDGET" />
 			<enumeration value="TEMPORARY_DIR_NAME_WIDGET" />
 			<enumeration value="GROUP_COMBINE_WIDGET" />
+			<enumeration value="INPUT_ADDITIONAL_PARAMETERS_WIDGET" />
+			<enumeration value="OUTPUT_ADDITIONAL_PARAMETERS_WIDGET" />
 		</restriction>
 	</simpleType>
 

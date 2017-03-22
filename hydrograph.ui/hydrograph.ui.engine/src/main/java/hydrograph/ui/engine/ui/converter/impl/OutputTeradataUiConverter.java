@@ -14,6 +14,7 @@ package hydrograph.ui.engine.ui.converter.impl;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,6 +68,7 @@ public class OutputTeradataUiConverter extends OutputUiConverter{
 		LOGGER.debug("Fetching Output-teradata-Properties for {}", componentName);
 		Teradata outputTeradata = (Teradata) typeBaseComponent;
 		LinkedHashMap<String, String> loadSelectedDetails = new LinkedHashMap<String, String>();
+		Map<String, Object> additionalParameterDetails = new HashMap<String, Object>();
 		
 		setValueInPropertyMap(PropertyNameConstants.JDBC_DRIVER.value(), 
 				outputTeradata.getJdbcDriver() == null ? "" : outputTeradata.getJdbcDriver().getValue());
@@ -109,6 +111,15 @@ public class OutputTeradataUiConverter extends OutputUiConverter{
 		propertyMap.put(PropertyNameConstants.SELECT_INTERFACE.value(), getLoadUtilityInterfaceValue());
 			
 		propertyMap.put(PropertyNameConstants.LOAD_TYPE_CONFIGURATION.value(), loadSelectedDetails);
+		
+		if(outputTeradata.getChunkSize() !=null && StringUtils.isNotBlank(outputTeradata.getChunkSize().getValue().toString())){
+			additionalParameterDetails.put(Constants.DB_CHUNK_SIZE,outputTeradata.getChunkSize().getValue().toString());
+		}
+		if(outputTeradata.getExtraUrlParams()!=null && StringUtils.isNotBlank(outputTeradata.getExtraUrlParams().getValue().toString())){
+			additionalParameterDetails.put(Constants.ADDITIONAL_PARAMETERS_FOR_DB, outputTeradata.getExtraUrlParams().getValue().toString());
+		}
+		
+		propertyMap.put(PropertyNameConstants.OUTPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value(), additionalParameterDetails);
 		
 		uiComponent.setType(UIComponentsConstants.TERADATA.value());
 		uiComponent.setCategory(UIComponentsConstants.OUTPUT_CATEGORY.value());
