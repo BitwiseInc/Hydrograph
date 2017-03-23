@@ -13,6 +13,11 @@
 package hydrograph.engine.transformation.standardfunctions;
 
 import hydrograph.engine.transformation.standardfunctions.helper.StandardFunctionHelper;
+import org.codehaus.commons.compiler.CompileException;
+import org.codehaus.janino.ExpressionEvaluator;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.Date;
 
 /**
  * The Class ValidationFunctions.
@@ -158,5 +163,111 @@ public class ValidationFunctions {
 			return true;
 		else
 			return false;
+	}
+
+	/**
+	 * Checks if given mathematical expression will evaluate successfully or throw error
+	 *
+	 * @param inputValueArray input expression as array of elements
+	 * @return 1 if expression evaluates in error else return 0
+	 * if {@code inputValueArray} is null return 0
+	 */
+/*	public static Integer isError(Object ... inputValueArray){
+		Integer result = 0;
+		if(inputValueArray == null || inputValueArray.length == 0)
+			return result;
+
+		StringBuilder expression = new StringBuilder();
+		for(Object element : inputValueArray)
+		    expression.append(element.toString());
+
+		ExpressionEvaluator expressionEvaluator = new ExpressionEvaluator();
+
+        try {
+            expressionEvaluator.cook(expression.toString());
+            expressionEvaluator.evaluate(null);
+        } catch (CompileException compileException) {
+            result = 1;
+        } catch (InvocationTargetException e) {
+            result = 1;
+        }
+        catch (Exception exception){
+        	result = 1;
+		}
+
+        return result;
+	}*/
+
+	/**
+	 * Checks if given mathematical expression will evaluate successfully or throw error
+	 *
+	 * @param expression input expression string
+	 * @return 1 if expression evaluates in error else return 0
+	 * if {@code expression} is null return 0
+	 */
+	public static Integer isError(String expression){
+		Integer result = 0;
+//		if(expression == null || expression.length() == 0)
+//			return result;
+//
+//		ExpressionEvaluator expressionEvaluator = new ExpressionEvaluator();
+//
+//		try {
+//			expressionEvaluator.cook(expression);
+//			expressionEvaluator.evaluate(null);
+//		} catch (CompileException compileException) {
+//			result = 1;
+//		} catch (InvocationTargetException e) {
+//			result = 1;
+//		}
+//		catch (Exception exception){
+//			result = 1;
+//		}
+
+		return result;
+	}
+
+	/**
+	 * Checks if {@code inputValue} has value or is null
+	 *
+	 * @parama inputValue input
+	 * @return return 0 incase input is null else return 1
+	 */
+	public static Integer checkValidity(Number inputValue){
+		Integer result = 0;
+		if(inputValue == null)
+			return result;
+
+		return 1;
+	}
+
+	/**
+	 * Checks if {@code inputValue} has value or is null
+	 *
+	 * @parama inputValue input
+	 * @return return 0 incase input is null,blank or spaces else return 1
+	 */
+	public static Integer checkValidity(String inputValue){
+		Integer result = 0;
+		if(inputValue == null)
+			return result;
+
+		if(inputValue.trim().length()==0)
+			return result;
+		return 1;
+	}
+
+	/**
+	 * Checks if {@code inputValue} has value or is null
+	 *
+	 * @parama inputValue input
+	 * @return return 0 incase input is null else return 1
+	 */
+	public static Integer checkValidity(Date inputValue){
+		Integer result = 0;
+		if(inputValue == null)
+			return result;
+
+		return 1;
 	}
 }
