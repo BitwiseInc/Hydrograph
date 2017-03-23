@@ -70,8 +70,7 @@ class InputFileCsvWithDateFormatsComponent(iFileDelimitedEntity: InputFileDelimi
 
   }
 
-  class DelimiterNotFoundException private[components](val message: String, val e: Throwable) extends RuntimeException(message) {
-  }
+
   /*def getDateFormats(): String = {
       LOG.trace("In method getDateFormats() which returns \\t separated date formats for Date fields")
       var dateFormats: String = ""
@@ -84,3 +83,5 @@ class InputFileCsvWithDateFormatsComponent(iFileDelimitedEntity: InputFileDelimi
 */
 }
 
+class DelimiterNotFoundException private[components](val message: String, val e: Throwable) extends RuntimeException(message) {
+}

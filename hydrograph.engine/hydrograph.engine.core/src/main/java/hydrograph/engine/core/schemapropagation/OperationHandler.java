@@ -123,7 +123,7 @@ public class OperationHandler implements Serializable {
             }
         }
         log.warn("Exception in generateMapFields method of OperationHandler class.");
-        throw new MapFieldException ("wrong insocket id in map Fields");
+        throw new FieldNotFoundException("wrong insocket id in map Fields");
 
     }
 
@@ -154,7 +154,7 @@ public class OperationHandler implements Serializable {
             }
         }
         log.warn("Exception in generatePassthroughFields method of OperationHandler class.");
-        throw new PassthroughFieldException("wrong insocket id in passthrough fields");
+        throw new FieldNotFoundException("wrong insocket id in passthrough fields");
     }
 
     private Set<SchemaField> getSchemaFieldForPassThrough(Set<SchemaField> schemaFieldList, String fieldName) {
@@ -174,7 +174,7 @@ public class OperationHandler implements Serializable {
             }
         }
         log.warn("Exception in getSchemaField method of OperationHandler class.");
-        throw new SchemaFieldException ("wrong insocket id in map Fields");
+        throw new FieldNotFoundException("Wrong fields obtain in out socket,field name is " + fieldName);
 //        return null;
     }
 
@@ -224,16 +224,9 @@ public class OperationHandler implements Serializable {
 
 }
 
-class MapFieldException extends RuntimeException {
-    MapFieldException (String message) {
-        super(message);
-    }
-}class SchemaFieldException extends RuntimeException {
-    SchemaFieldException (String message) {
-        super(message);
-    }
-}class PassthroughFieldException extends RuntimeException {
-    PassthroughFieldException(String message) {
+class FieldNotFoundException extends RuntimeException {
+    FieldNotFoundException(String message) {
         super(message);
     }
 }
+

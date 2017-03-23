@@ -15,7 +15,7 @@ package hydrograph.engine.spark.components
 import hydrograph.engine.core.component.entity.OutputFileFixedWidthEntity
 import hydrograph.engine.spark.components.base.SparkFlow
 import hydrograph.engine.spark.components.platform.BaseComponentParams
-import hydrograph.engine.spark.components.utils.{SchemaCreator, SchemaUtils}
+import hydrograph.engine.spark.components.utils.{SchemaCreator, SchemaMisMatchException, SchemaUtils}
 import org.apache.spark.sql.{AnalysisException, SaveMode}
 import org.slf4j.{Logger, LoggerFactory}
 
@@ -66,7 +66,7 @@ BaseComponentParams) extends SparkFlow with Serializable {
           + outputFileFixedWidthEntity.getComponentId, e )
       case e:Exception =>
         LOG.error("Error in Output File Fixed Width Component "+ outputFileFixedWidthEntity.getComponentId, e)
-        throw new RuntimeException("Error in Output File Fixed Width Component "
+        throw new SchemaMisMatchException("Error in Output File Fixed Width Component "
           + outputFileFixedWidthEntity.getComponentId, e)
     }
     LOG.info("Created Output File Fixed Width Component "+ outputFileFixedWidthEntity.getComponentId

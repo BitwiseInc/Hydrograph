@@ -61,7 +61,7 @@ class FilterComponentWithUDF(filterEntity: FilterEntity, componentsParams: BaseC
     } catch {
       case e: Exception =>
         LOG.error("Error in callPrepare method of: " + filterClass.getClass + " ", e)
-        throw new FieldsMisMatchException("Exception in field initialization of: " + filterClass.getClass + " ", e)
+        throw new InitializationException("Exception in field initialization of: " + filterClass.getClass + " ", e)
 
     }
     val opProps = filterSparkOperations.operationEntity.getOperationProperties
@@ -75,7 +75,7 @@ class FilterComponentWithUDF(filterEntity: FilterEntity, componentsParams: BaseC
       } catch {
         case e: Exception =>
           LOG.error("Error in isRemove method of: " + filterClass.getClass + " ", e)
-          throw new FieldsMisMatchException("Exception in Filter Component:[\"" + filterEntity.getComponentId + "\"]" + filterClass.getClass, e)
+          throw new InitializationException("Exception in Filter Component:[\"" + filterEntity.getComponentId + "\"]" + filterClass.getClass, e)
       }
     }
 
@@ -102,9 +102,4 @@ class FilterComponentWithUDF(filterEntity: FilterEntity, componentsParams: BaseC
     }
     map
   }
-
-  class FieldsMisMatchException private[components](val message: String, val exception: Throwable) extends RuntimeException(message) {
-  }
-
 }
-

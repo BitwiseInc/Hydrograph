@@ -52,7 +52,7 @@ class FilterComponent(filterEntity: FilterEntity, componentsParams: BaseComponen
         }catch {
           case e: Exception =>
             LOG.error("Exception in callPrepare method of: " + expression.getClass + " and message is " + e.getMessage, e)
-            throw new InputInitializationException("Exception in input initialization of: " + expression.getClass + " and message is " + e.getMessage, e)
+            throw new InitializationException("Exception in initialization of: " + expression.getClass + " and message is " + e.getMessage, e)
         }
       case _ =>
     }
@@ -79,6 +79,5 @@ class FilterComponent(filterEntity: FilterEntity, componentsParams: BaseComponen
     }
     map
   }
-  class InputInitializationException private[components](val message: String, val exception: Throwable) extends RuntimeException(message) {
-  }
+
 }

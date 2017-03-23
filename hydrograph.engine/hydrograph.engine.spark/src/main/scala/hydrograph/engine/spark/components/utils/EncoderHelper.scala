@@ -77,7 +77,7 @@ class EncoderHelper extends Serializable {
     try {
       getDataType(schemaFields.filter(s => s.getFieldName.equals(fieldName))(0))
     } catch {
-      case e: Exception => throw new FieldIndexingException ("Exception in field indexing:" + fieldName + " field not found ")
+      case e: Exception => throw new SchemaMisMatchException("Exception for field mismatch: " +fieldName+ " field not found ",e)
     }
 
   }
@@ -145,6 +145,4 @@ object DataTypeConverter {
   }
 
 
-}
-class FieldIndexingException private[components](val message: String) extends RuntimeException(message) {
 }

@@ -102,7 +102,7 @@ class TransformComponent(transformEntity: TransformEntity, componentsParams: Bas
             } catch {
               case e: Exception =>
                 LOG.error("Exception in cleanup method of: " + tr.baseClassInstance.getClass + " and message is " + e.getMessage, e)
-                throw new CustomTransformExceptionForCleanup("Exception in cleanup method of: " + tr.baseClassInstance.getClass + " and message is " + e.getMessage, e)
+                throw new TransformExceptionForCleanup("Exception in cleanup method of: " + tr.baseClassInstance.getClass + " and message is " + e.getMessage, e)
             }
           }
         }
@@ -118,10 +118,7 @@ class TransformComponent(transformEntity: TransformEntity, componentsParams: Bas
 
 }
 
-class CustomTransformException private[components](val message: String, val exception: Throwable) extends RuntimeException(message) {
-}
-
-class CustomTransformExceptionForCleanup private[components](val message: String, val exception: Throwable) extends RuntimeException(message) {
+class TransformExceptionForCleanup private[components](val message: String, val exception: Throwable) extends RuntimeException(message) {
 }
 
 class RowFieldException private[components](val message: String, val exception: Throwable) extends RuntimeException(message) {

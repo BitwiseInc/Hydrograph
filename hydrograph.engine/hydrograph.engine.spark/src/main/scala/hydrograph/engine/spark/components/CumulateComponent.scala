@@ -20,7 +20,7 @@ import hydrograph.engine.expression.utils.ExpressionWrapper
 import hydrograph.engine.spark.components.base.OperationComponentBase
 import hydrograph.engine.spark.components.handler.{OperationHelper, SparkOperation}
 import hydrograph.engine.spark.components.platform.BaseComponentParams
-import hydrograph.engine.spark.components.utils.EncoderHelper
+import hydrograph.engine.spark.components.utils.{EncoderHelper, SchemaMisMatchException}
 import hydrograph.engine.transformation.userfunctions.base.CumulateTransformBase
 import org.apache.spark.sql.catalyst.encoders.RowEncoder
 import org.apache.spark.sql.functions._
@@ -29,6 +29,7 @@ import org.apache.spark.sql.{Column, Row, _}
 import org.slf4j.LoggerFactory
 
 import scala.collection.JavaConverters._
+
 /**
   * The Class CumulateComponent.
   *
@@ -85,26 +86,32 @@ class CumulateComponent(cumulateEntity: CumulateEntity, componentsParams: BaseCo
         sparkOperation.baseClassInstance match {
           case a: CumulateForExpression =>
             a.setValidationAPI(new ExpressionWrapper(sparkOperation.validatioinAPI, sparkOperation.initalValue))
-           try{
+            try {
+              a.init()
+            } catch {
+              case e: Exception =>
+                LOG.error("Exception in init method of : " + a.getClass + " " + e.getMessage, e)
+                throw new InitializationException("Error in Cumulate Component for intialization :[\"" + cumulateEntity.getComponentId + "\"] for ", e)
+            }
+            a.callPrepare(sparkOperation.fieldName, sparkOperation.fieldType)
+          case a: CumulateTransformBase =>
+            try {
+              a.prepare(sparkOperation.operationEntity.getOperationProperties,
+                sparkOperation.operationEntity.getOperationInputFields,
+                sparkOperation.operationEntity.getOperationOutputFields, keyFields)
+            }
+            catch {
+              case e: Exception =>
+                LOG.error("Exception in prepare method of : " + a.getClass + " " + e.getMessage, e)
+                throw new SchemaMisMatchException("Exception in Cumulate Component for field mis match :[\"" + cumulateEntity.getComponentId + "\"] for ",e)
+            }
 
-             a.init()
-           }catch {
-             case e:Exception =>
-               LOG.error("Exception in init method of : " + a.getClass+ " " + e.getMessage, e)
-               throw new InitializationException ("Error in Cumulate Component for intialization :[\""+cumulateEntity.getComponentId+"\"] for ",e)
-           }
-try{
-
-  a.callPrepare(sparkOperation.fieldName,sparkOperation.fieldType)
-}
-          case a: CumulateTransformBase => a.prepare(sparkOperation.operationEntity.getOperationProperties,
-            sparkOperation.operationEntity.getOperationInputFields,
-            sparkOperation.operationEntity.getOperationOutputFields, keyFields)
         }
       })
 
       var prevKeysArray: Array[Any] = null
       var isFirstRow = false
+
       def isPrevKeyDifferent(currKeysArray: Array[Any]): Boolean = {
         if (prevKeysArray == null) {
           prevKeysArray = currKeysArray
@@ -134,14 +141,7 @@ try{
           copyFields(row, outRow, passthroughIndexes)
 
           cumulateList.foreach(cmt => {
-            try{
-              cmt.baseClassInstance.cumulate(cmt.inputRow.setRow(row), cmt.outputRow.setRow(outRow))
-            } catch {
-              case e:Exception =>
-                LOG.error("Exception in cumulate method of : " + cmt.getClass+ " " + e.getMessage, e)
-                throw new RowFieldException("Error in Cumulate Component:[\""+cumulateEntity.getComponentId+"\"] for ",e)
-            }
-
+            cmt.baseClassInstance.cumulate(cmt.inputRow.setRow(row), cmt.outputRow.setRow(outRow))
           })
 
           if (itr.isEmpty) {
@@ -164,5 +164,6 @@ try{
 
 
 }
+
 class InitializationException private[components](val message: String, val exception: Throwable) extends RuntimeException(message) {
 }

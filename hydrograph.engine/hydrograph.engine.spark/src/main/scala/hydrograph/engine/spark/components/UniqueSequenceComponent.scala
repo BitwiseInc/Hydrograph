@@ -48,12 +48,11 @@ class UniqueSequenceComponent(uniqueSequenceEntity: UniqueSequenceEntity, baseCo
       LOG.info("Created Unique Sequence component " + uniqueSequenceEntity.getComponentId
         +" in batch " + uniqueSequenceEntity.getBatch )
 
-      LOG.debug("Unique Sequence component created with schema : " + baseComponentParams.getSchemaFields().mkString )
-
       Map(outSocketId -> df)
     } catch {
-      case ex: Exception => LOG.error("Error in Unique Sequence component " + uniqueSequenceEntity.getComponentId, ex)
-        throw ex
+      case ex: Exception =>
+        LOG.error("Error in Unique Sequence component " + uniqueSequenceEntity.getComponentId, ex)
+        throw new RuntimeException ("Error in Unique Sequence component",ex)
     }
   }
 }
