@@ -19,7 +19,7 @@ import hydrograph.engine.core.component.entity.OutputRDBMSEntity
 import hydrograph.engine.core.component.entity.elements.SchemaField
 import hydrograph.engine.spark.components.base.SparkFlow
 import hydrograph.engine.spark.components.platform.BaseComponentParams
-import hydrograph.engine.spark.components.utils.DbTableUtils
+import hydrograph.engine.spark.components.utils.{DbTableUtils, SchemaMisMatchException}
 import org.apache.spark.sql.Column
 import org.apache.spark.sql.execution.datasources.jdbc.JdbcUtils
 import org.apache.spark.sql.functions._
@@ -88,8 +88,8 @@ BaseComponentParams) extends SparkFlow {
       connection.close()
     } catch {
       case e: SQLException =>
-        LOG.error("Error while connecting to database " + e.getMessage)
-        throw new RuntimeException("Error message " ,e)
+       LOG.error("Error while connecting to database " + e.getMessage,e)
+        throw new SchemaMisMatchException("Error in Output File XML Component "+ outputRDBMSEntity.getComponentId, e)
       case e: Exception =>
         LOG.error("Error while executing '"+ query + "' query in executeQuery()" )
         throw new RuntimeException("Error message " ,e)

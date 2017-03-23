@@ -81,7 +81,7 @@ class InputRedshiftComponent(inputRDBMSEntity: InputRDBMSEntity, iComponentsPara
     } catch {
       case e: Exception =>
         LOG.error("Error in Input  Redshift component '" + inputRDBMSEntity.getComponentId + "', Error" + e.getMessage, e)
-        throw new RuntimeException("Error in Input Redshift Component " + inputRDBMSEntity.getComponentId, e)
+        throw new DatabaseConnectionException("Error in Input Redshift Component " + inputRDBMSEntity.getComponentId, e)
     }
   }
 
