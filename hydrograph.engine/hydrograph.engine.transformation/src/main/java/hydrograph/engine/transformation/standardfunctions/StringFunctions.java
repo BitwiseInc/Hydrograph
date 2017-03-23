@@ -14,6 +14,7 @@ package hydrograph.engine.transformation.standardfunctions;
 
 import hydrograph.engine.transformation.standardfunctions.helper.StandardFunctionHelper;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.LinkedList;
 import java.util.List;
@@ -994,13 +995,13 @@ public class StringFunctions {
      * @return true if {@code input} is numeric
      */
     public static boolean isNumeric(String input) {
-        boolean is_numeric = false;
+        boolean isNumeric = false;
         if (input == null)
-            return is_numeric;
+            return isNumeric;
         if (input.matches("[0-9]+") && input.length() > 2) {
-            is_numeric = true;
+            isNumeric = true;
         }
-        return is_numeric;
+        return isNumeric;
     }
 
     /**
@@ -1010,13 +1011,13 @@ public class StringFunctions {
      * @return true if {@code input} is alphabetic
      */
     public static boolean isAlphabetic(String input) {
-        boolean is_alphabetic = false;
+        boolean isAlphabetic = false;
         if (input == null)
-            return is_alphabetic;
+            return isAlphabetic;
         if (input.matches("[a-zA-Z]+") && input.length() > 2) {
-            is_alphabetic = true;
+            isAlphabetic = true;
         }
-        return is_alphabetic;
+        return isAlphabetic;
     }
 
     /**
@@ -1027,5 +1028,101 @@ public class StringFunctions {
      */
     public static String toHex(String input) {
         return String.format("%x", new BigInteger(1, input.getBytes()));
+    }
+
+    /**
+     * Function returns true if {@code input} starts with {@code prefix}
+     *
+     * @param input  the String value to be validated
+     * @param prefix the String to check {@code input} prefix
+     * @return true if {@code input} starts with {@code prefix} else false
+     *         false if {@code input} or {@code prefix} are null
+     */
+    public static boolean startsWith(String input, String prefix) {
+        boolean startsWith = false;
+        if (input == null || prefix==null)
+            return startsWith;
+        if (input.startsWith(prefix)) {
+            startsWith = true;
+        }
+        return startsWith;
+    }
+
+    /**
+     * Returns string of numeric {@code input}
+     *
+     * @param input  input to be converted to string
+     * @return string of numeric value
+     *         return null if {@code input} is null
+     */
+    public static String toChar(Short input) {
+        return (input == null) ? null : input.toString();
+    }
+
+    /**
+     * Returns string of numeric {@code input}
+     *
+     * @param input  input to be converted to string
+     * @return string of numeric value
+     *         return null if {@code input} is null
+     */
+    public static String toChar(Integer input) {
+        return (input == null) ? null : input.toString();
+    }
+
+    /**
+     * Returns string of numeric {@code input}
+     *
+     * @param input  input to be converted to string
+     * @return string of numeric value
+     *         return null if {@code input} is null
+     */
+    public static String toChar(Long input) {
+        return (input == null) ? null : input.toString();
+    }
+
+    /**
+     * Returns string of numeric {@code input}
+     *
+     * @param input  input to be converted to string
+     * @return string of numeric value
+     *         return null if {@code input} is null
+     */
+    public static String toChar(Float input) {
+        return (input == null) ? null : input.toString();
+    }
+
+    /**
+     * Returns string of numeric {@code input}
+     *
+     * @param input  input to be converted to string
+     * @return string of numeric value
+     *         return null if {@code input} is null
+     */
+    public static String toChar(Double input) {
+        return (input == null) ? null : input.toString();
+    }
+
+    /**
+     * Returns string of numeric {@code input}
+     *
+     * @param input  input to be converted to string
+     * @return string of numeric value
+     *         return null if {@code input} is null
+     */
+    public static String toChar(BigDecimal input) {
+        return (input == null) ? null : input.toString();
+    }
+
+    /**
+     * Returns string of numeric {@code input}
+     *
+     * @param input  input to be converted to string
+     * @param scale the number of digits to the right of the decimal point
+     * @return string of numeric value
+     *         return null if {@code input} is null
+     */
+    public static String toChar(BigDecimal input, int scale) {
+        return (input == null) ? null : NumericFunctions.truncate(input,scale).toString();
     }
 }
