@@ -71,7 +71,7 @@ class SchemaUtilsTest {
     Assert.assertTrue(SchemaUtils().compareSchema(structType1.toList, structType2.toList))
   }
 
-  @Test(expected = classOf[hydrograph.engine.spark.components.utils.SchemaMismatchException])
+  @Test(expected = classOf[SchemaMisMatchException])
   def itShouldRaiseExceptionWhenFirstSchemaFieldDataTypeDoesNotMatchWithSecondSchemaFieldDataType(): Unit = {
 
     //given
@@ -94,7 +94,7 @@ class SchemaUtilsTest {
     SchemaUtils().compareSchema(structType1.toList, structType2.toList)
   }
 
-  @Test(expected = classOf[hydrograph.engine.spark.components.utils.SchemaMismatchException])
+  @Test(expected = classOf[SchemaMisMatchException])
   def itShouldRaiseExceptionWhenFirstSchemaFieldIsNotPartOfSecondSchema(): Unit = {
 
     //given

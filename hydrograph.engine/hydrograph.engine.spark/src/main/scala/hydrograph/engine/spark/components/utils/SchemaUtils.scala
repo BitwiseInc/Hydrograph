@@ -68,6 +68,6 @@ case class SchemaUtils() {
   }
 }
 
-case class SchemaMisMatchException(message: String = "", cause: Throwable = null) extends Exception(message, cause)
+case class SchemaMisMatchException(message: String = "", cause: Throwable = null) extends RuntimeException(message, cause)
 
 
