@@ -17,9 +17,11 @@ import hydrograph.engine.jaxb.commontypes.*;
 
 import javax.xml.namespace.QName;
 import java.util.Set;
-
 /**
- * This class helps in converting the
+ * The Class JaxbSchemaFieldConverter.
+ *
+ * @author Bitwise
+ *
  */
 public class JaxbSchemaFieldConverter {
 

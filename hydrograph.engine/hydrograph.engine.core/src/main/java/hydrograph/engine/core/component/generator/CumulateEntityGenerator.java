@@ -19,6 +19,12 @@ import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.engine.jaxb.operationstypes.Cumulate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+/**
+ * The Class CumulateEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 
 public class CumulateEntityGenerator extends OperationComponentGeneratorBase {
 

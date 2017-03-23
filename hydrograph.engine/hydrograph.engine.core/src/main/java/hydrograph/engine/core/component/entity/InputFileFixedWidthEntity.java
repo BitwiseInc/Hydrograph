@@ -15,7 +15,12 @@ package hydrograph.engine.core.component.entity;
 import hydrograph.engine.core.component.entity.base.InputOutputEntityBase;
 
 import java.util.Arrays;
-
+/**
+ * The Class InputFileFixedWidthEntity.
+ *
+ * @author Bitwise
+ *
+ */
 public class InputFileFixedWidthEntity extends InputOutputEntityBase {
 
 	private boolean strict = true;

@@ -16,7 +16,12 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import static hydrograph.engine.transformation.standardfunctions.StringFunctions.stringSplit;
-
+/**
+ * The Class StringSplitTest.
+ *
+ * @author Bitwise
+ *
+ */
 public class StringSplitTest {
 
 	@Test

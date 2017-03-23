@@ -15,7 +15,12 @@ package hydrograph.engine.core.component.entity;
 import hydrograph.engine.core.component.entity.base.InputOutputEntityBase;
 
 import java.util.Arrays;
-
+/**
+ * The Class InputFileParquetEntity.
+ *
+ * @author Bitwise
+ *
+ */
 public class InputFileParquetEntity extends InputOutputEntityBase {
 
 	private String path;

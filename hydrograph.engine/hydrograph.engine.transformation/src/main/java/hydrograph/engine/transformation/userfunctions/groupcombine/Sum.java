@@ -1,14 +1,19 @@
 package hydrograph.engine.transformation.userfunctions.groupcombine;
 
 import hydrograph.engine.transformation.schema.DataType;
-import hydrograph.engine.transformation.userfunctions.base.GroupCombineTransformBase;
 import hydrograph.engine.transformation.schema.Field;
 import hydrograph.engine.transformation.schema.Schema;
+import hydrograph.engine.transformation.userfunctions.base.GroupCombineTransformBase;
 import hydrograph.engine.transformation.userfunctions.base.ReusableRow;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-
+/**
+ * The Class Sum.
+ *
+ * @author Bitwise
+ *
+ */
 public class Sum implements GroupCombineTransformBase {
 
     @Override

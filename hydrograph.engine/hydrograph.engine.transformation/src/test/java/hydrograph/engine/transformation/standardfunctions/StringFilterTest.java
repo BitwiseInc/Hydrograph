@@ -16,7 +16,12 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import static hydrograph.engine.transformation.standardfunctions.StringFunctions.stringFilter;
-
+/**
+ * The Class StringFilterTest.
+ *
+ * @author Bitwise
+ *
+ */
 public class StringFilterTest {
 
 	@Test

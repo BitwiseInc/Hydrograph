@@ -20,7 +20,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
-
+/**
+ * The Class RandomSplit.
+ *
+ * @author Bitwise
+ *
+ */
 public class RandomSplit implements CustomPartitionExpression,Serializable{
 
 	private static final long serialVersionUID = 8602448204592615430L;

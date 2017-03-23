@@ -14,18 +14,15 @@
 
 package hydrograph.engine.jaxb.commontypes;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.bind.annotation.XmlType;
 import hydrograph.engine.jaxb.limit.TypeLimitBase;
 import hydrograph.engine.jaxb.removedups.TypeRemovedupsBase;
 import hydrograph.engine.jaxb.sort.TypeSortBase;
 import hydrograph.engine.jaxb.straightpulltypes.Clone;
 import hydrograph.engine.jaxb.straightpulltypes.UnionAll;
+
+import javax.xml.bind.annotation.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**

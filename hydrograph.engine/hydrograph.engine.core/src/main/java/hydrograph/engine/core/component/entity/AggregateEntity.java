@@ -16,7 +16,12 @@ import hydrograph.engine.core.component.entity.base.OperationEntityBase;
 import hydrograph.engine.core.component.entity.elements.KeyField;
 
 import java.util.Arrays;
-
+/**
+ * The Class AggregateEntity.
+ *
+ * @author Bitwise
+ *
+ */
 public class AggregateEntity extends OperationEntityBase {
 
 	private KeyField[] keyFields;

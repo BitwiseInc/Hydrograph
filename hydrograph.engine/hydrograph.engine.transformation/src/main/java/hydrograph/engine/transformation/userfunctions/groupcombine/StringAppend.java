@@ -1,11 +1,16 @@
 package hydrograph.engine.transformation.userfunctions.groupcombine;
 
 import hydrograph.engine.transformation.schema.DataType;
-import hydrograph.engine.transformation.userfunctions.base.GroupCombineTransformBase;
 import hydrograph.engine.transformation.schema.Field;
 import hydrograph.engine.transformation.schema.Schema;
+import hydrograph.engine.transformation.userfunctions.base.GroupCombineTransformBase;
 import hydrograph.engine.transformation.userfunctions.base.ReusableRow;
-
+/**
+ * The Class StringAppend.
+ *
+ * @author Bitwise
+ *
+ */
 public class StringAppend implements GroupCombineTransformBase {
 
     @Override

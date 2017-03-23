@@ -1,8 +1,11 @@
 package hydrograph.engine.transformation.schema;
-
 /**
- * Created by Bitwise on 3/5/2017.
+ * The Enum DataType.
+ *
+ * @author Bitwise
+ *
  */
+
 public enum DataType {
 
     String, Integer, Object, Long, Double, Float, Short, Boolean, Date, BigDecimal

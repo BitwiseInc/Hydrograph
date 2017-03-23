@@ -22,7 +22,6 @@ import hydrograph.engine.spark.components.handler.{OperationHelper, SparkOperati
 import hydrograph.engine.spark.components.platform.BaseComponentParams
 import hydrograph.engine.spark.components.utils._
 import hydrograph.engine.spark.operation.handler.GroupCombineCustomHandler
-import hydrograph.engine.transformation.standardfunctions.StringFunctions
 import hydrograph.engine.transformation.userfunctions.base.GroupCombineTransformBase
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.types.StructType
@@ -31,8 +30,12 @@ import org.slf4j.{Logger, LoggerFactory}
 
 import scala.collection.JavaConverters._
 
+
 /**
-  * Created by bitwise on 10/24/2016.
+  * The Class GroupCombineComponent.
+  *
+  * @author Bitwise
+  *
   */
 class GroupCombineComponent(groupCombineEntity: GroupCombineEntity, componentsParams: BaseComponentParams) extends
   OperationComponentBase with OperationHelper[GroupCombineTransformBase] with Serializable {
@@ -79,7 +82,15 @@ class GroupCombineComponent(groupCombineEntity: GroupCombineEntity, componentsPa
           a.setValidationAPIForMergeExpression(new ExpressionWrapper(new ValidationAPI(sparkOperation.operationEntity.getMergeExpression, "")))
           a.init(sparkOperation.operationEntity.getOperationFields.head.getDataType, sparkOperation.operationEntity.getOperationFields.head.getFormat,
             sparkOperation.operationEntity.getOperationFields.head.getScale, sparkOperation.operationEntity.getOperationFields.head.getPrecision)
-          a.callPrepare(sparkOperation.fieldName, sparkOperation.fieldType)
+          try {
+            a.callPrepare(sparkOperation.fieldName, sparkOperation.fieldType)
+          } catch {
+            case e: Exception =>
+              LOG.error("Exception in callPrepare method of: " + a.getClass.getName + ".\nArguments passed to prepare() method are: \nProperties: " + sparkOperation.operationEntity.getOperationProperties + "\nInput Fields: " + sparkOperation
+                .operationEntity.getOperationInputFields.get(0) + "\nOutput Fields: " + sparkOperation.operationEntity.getOperationOutputFields.get(0), e)
+              throw new OperationEntityException("Exception in prepare method of: " + a.getClass.getName + ".\nArguments passed to prepare() method are: \nProperties: " + sparkOperation.operationEntity.getOperationProperties + "\nInput Fields: " + sparkOperation
+                .operationEntity.getOperationInputFields.get(0) + "\nOutput Fields: " + sparkOperation.operationEntity.getOperationOutputFields.get(0), e)
+          }
         }
         case _ => {}
       }
@@ -117,8 +128,12 @@ class GroupCombineComponent(groupCombineEntity: GroupCombineEntity, componentsPa
 
       Map(key -> aggregatedDf)
     } catch {
-      case e: Exception => throw new RuntimeException("Exception in GroupCombine component:[\"" + groupCombineEntity.getComponentId + "\"] where exception ", e)
+
+      case e: Exception =>
+        LOG.error("Exception in GroupCombine component:" + groupCombineEntity.getComponentId + " where exception ",e)
+        throw new RuntimeException("Exception in GroupCombine component:[\"" + groupCombineEntity.getComponentId + "\"] where exception ", e)
     }
   }
+
 
 }

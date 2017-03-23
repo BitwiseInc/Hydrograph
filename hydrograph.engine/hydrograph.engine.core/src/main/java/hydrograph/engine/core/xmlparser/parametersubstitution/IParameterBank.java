@@ -11,7 +11,11 @@
  * limitations under the License
  *******************************************************************************/
 package hydrograph.engine.core.xmlparser.parametersubstitution;
-
+/**
+ * The Interface IParameterBank.
+ *
+ * @author Bitwise
+ */
 public interface IParameterBank {
 
 	public String getParameter(String name);

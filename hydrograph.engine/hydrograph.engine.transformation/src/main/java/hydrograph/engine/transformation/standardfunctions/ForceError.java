@@ -13,14 +13,16 @@
 package hydrograph.engine.transformation.standardfunctions;
 
 /**
- * The class ForceError provides functions to terminate the flow.
+ * The Class ForceError.
+ *
+ * @author Bitwise
  *
  */
 public class ForceError {
 
 	/**
 	 * Throws a runtime exception with the error message
-	 * @see raiseError("Raised Force Error")
+	 * @see # raiseError("Raised Force Error")
 	 * @param errorMessage
 	 *            the error message to log
 	 */

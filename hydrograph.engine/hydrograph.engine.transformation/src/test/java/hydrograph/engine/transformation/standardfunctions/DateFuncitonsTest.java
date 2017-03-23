@@ -18,7 +18,12 @@ import org.junit.Test;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
+/**
+ * The Class DateFuncitonsTest.
+ *
+ * @author Bitwise
+ *
+ */
 public class DateFuncitonsTest {
 
 	@Test

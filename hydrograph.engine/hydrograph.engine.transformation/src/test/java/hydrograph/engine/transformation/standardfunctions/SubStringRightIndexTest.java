@@ -16,7 +16,12 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import static hydrograph.engine.transformation.standardfunctions.StringFunctions.stringRightIndex;
-
+/**
+ * The Class SubStringRightIndexTest.
+ *
+ * @author Bitwise
+ *
+ */
 public class SubStringRightIndexTest {
 
 	@Test

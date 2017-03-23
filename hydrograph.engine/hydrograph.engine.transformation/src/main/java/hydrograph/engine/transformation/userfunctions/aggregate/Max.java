@@ -17,7 +17,12 @@ import hydrograph.engine.transformation.userfunctions.base.ReusableRow;
 
 import java.util.ArrayList;
 import java.util.Properties;
-
+/**
+ * The Class Max.
+ *
+ * @author Bitwise
+ *
+ */
 public class Max implements AggregateTransformBase {
 	
 	Comparable maxVal;

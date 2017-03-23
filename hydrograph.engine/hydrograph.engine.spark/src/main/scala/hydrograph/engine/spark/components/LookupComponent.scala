@@ -17,7 +17,6 @@ import hydrograph.engine.spark.components.base.OperationComponentBase
 import hydrograph.engine.spark.components.platform.BaseComponentParams
 import hydrograph.engine.spark.components.utils._
 import org.apache.spark.sql.functions._
-import org.apache.spark.sql.types.StructType
 import org.apache.spark.sql.{Column, DataFrame}
 import org.slf4j.{Logger, LoggerFactory}
 
@@ -85,7 +84,7 @@ class LookupComponent(lookupEntity: LookupEntity, componentsParams: BaseComponen
     }
     catch {
       case ex: RuntimeException =>
-        LOG.error("Error in Lookup component '" + lookupEntity.getComponentId + "', Error" + ex.getMessage, ex); throw ex
+        LOG.error("Error in Lookup component '" + lookupEntity.getComponentId + "', Error", ex); throw ex
     }
 
   }

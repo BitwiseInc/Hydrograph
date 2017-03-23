@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Properties;
 
 /**
- * Created by arshadalis on 3/4/2017.
+ * The Class TestFilterOperationWrapper.
+ *
+ * @author Bitwise
  */
 public class TestFilterOperationWrapper {
 

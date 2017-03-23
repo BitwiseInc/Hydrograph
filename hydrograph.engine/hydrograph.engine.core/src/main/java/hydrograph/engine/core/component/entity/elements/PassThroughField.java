@@ -17,8 +17,11 @@ package hydrograph.engine.core.component.entity.elements;
 
 import java.io.Serializable;
 
+
 /**
- * @author kirana
+ * The Class PassThroughField.
+ *
+ * @author Bitwise
  *
  */
 public class PassThroughField implements Serializable{

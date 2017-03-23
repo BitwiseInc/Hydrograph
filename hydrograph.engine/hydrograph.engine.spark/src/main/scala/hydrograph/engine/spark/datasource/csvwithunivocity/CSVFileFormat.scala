@@ -19,6 +19,7 @@ package hydrograph.engine.spark.datasource.csvwithunivocity
 
 import java.nio.charset.{Charset, StandardCharsets}
 
+import hydrograph.engine.spark.datasource.utils.{CompressionCodecs, SerializableConfiguration}
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.fs.FileStatus
 import org.apache.hadoop.io.{LongWritable, Text}
@@ -31,11 +32,13 @@ import org.apache.spark.sql.catalyst.InternalRow
 import org.apache.spark.sql.execution.datasources._
 import org.apache.spark.sql.sources._
 import org.apache.spark.sql.types._
-import hydrograph.engine.spark.datasource.utils.{CompressionCodecs, SerializableConfiguration}
 
 /**
- * Provides access to CSV data from pure SQL statements.
- */
+  * The Class CSVFileFormat.
+  *
+  * @author Bitwise
+  *
+  */
 class CSVFileFormat extends TextBasedFileFormat with DataSourceRegister {
 
   override def shortName(): String = "csvwithunivocityparser"

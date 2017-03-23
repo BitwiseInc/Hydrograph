@@ -11,7 +11,11 @@
  * limitations under the License
  *******************************************************************************/
 package hydrograph.engine.core.constants;
-
+/**
+ * The Enum SortOrder.
+ *
+ * @author Bitwise
+ */
 public enum SortOrder {
 	Asc, Desc
 

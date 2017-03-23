@@ -19,12 +19,14 @@ import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.engine.jaxb.operationstypes.Transform;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+/**
+ * The Class TransformEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 public class TransformEntityGenerator extends OperationComponentGeneratorBase {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = -1853841267537936752L;
 
 	public TransformEntityGenerator(TypeBaseComponent baseComponent) {

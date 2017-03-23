@@ -18,14 +18,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * This is a POJO which holds the information for one OutSocket in any of the
- * components Type like
- * {@link hydrograph.engine.cascading.assembly.InputFileDelimitedAssembly Input}
- * , {@link hydrograph.engine.cascading.assembly.CloneAssembly Clone} etc. The
- * object of this class is supposed to be used in the entity classes for all
- * type of components
- * 
- * @author gurdits
+ * The Class OutSocket.
+ *
+ * @author Bitwise
  *
  */
 public class OutSocket implements Serializable {

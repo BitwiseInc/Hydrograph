@@ -19,7 +19,12 @@ import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.engine.jaxb.operationstypes.Join;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+/**
+ * The Class JoinEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 public class JoinEntityGenerator extends OperationComponentGeneratorBase {
 
 	private JoinEntity joinEntity;

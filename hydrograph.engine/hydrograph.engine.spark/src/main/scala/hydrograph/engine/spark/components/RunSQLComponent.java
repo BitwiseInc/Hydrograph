@@ -199,7 +199,7 @@ public class RunSQLComponent extends CommandComponentSparkFlow implements Serial
             }
         } else {
             log.debug("Failed to Execute" + runSqlEntity.getQueryCommand() + "Required field is empty.");
-            throw new DatabaseConnectionException("Required field is empty.");
+            throw new DatabaseConnectionException("Required field is empty.",null);
         }
     }
 
@@ -245,8 +245,8 @@ public class RunSQLComponent extends CommandComponentSparkFlow implements Serial
 }
 
 class DatabaseConnectionException extends RuntimeException {
-    DatabaseConnectionException(String message) {
-        super(message);
+    DatabaseConnectionException(String message, Throwable cause) {
+        super(message,cause);
     }
 }
 

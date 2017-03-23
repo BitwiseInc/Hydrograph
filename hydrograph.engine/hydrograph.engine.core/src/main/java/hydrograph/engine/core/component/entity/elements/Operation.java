@@ -19,12 +19,9 @@ import java.util.Arrays;
 import java.util.Properties;
 
 /**
- * This is a POJO which holds the information for one operation in any of the
- * operation type components The
- * object of this class is supposed to be used in the entity classes for the
- * transform type components
- * 
- * @author Prabodh
+ * The Class Operation.
+ *
+ * @author Bitwise
  *
  */
 

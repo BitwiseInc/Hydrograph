@@ -17,7 +17,12 @@ import org.junit.Test;
 
 import static hydrograph.engine.transformation.standardfunctions.ValidationFunctions.isDefined;
 import static hydrograph.engine.transformation.standardfunctions.ValidationFunctions.isDefinedCheck;
-
+/**
+ * The Class IsDefinedTest.
+ *
+ * @author Bitwise
+ *
+ */
 public class IsDefinedTest {
 
 	@Test

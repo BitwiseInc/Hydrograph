@@ -28,7 +28,11 @@ import javax.xml.xpath.*;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
-
+/**
+ * The Class XmlUtilities.
+ *
+ * @author Bitwise
+ */
 public class XmlUtilities {
 
 	

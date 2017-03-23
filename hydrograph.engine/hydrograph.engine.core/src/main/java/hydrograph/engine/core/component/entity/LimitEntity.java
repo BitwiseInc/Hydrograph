@@ -15,7 +15,12 @@ package hydrograph.engine.core.component.entity;
 import hydrograph.engine.core.component.entity.base.StraightPullEntityBase;
 
 import java.util.Arrays;
-
+/**
+ * The Class LimitEntity.
+ *
+ * @author Bitwise
+ *
+ */
 public class LimitEntity extends StraightPullEntityBase {
 
 	private Long maxRecord;

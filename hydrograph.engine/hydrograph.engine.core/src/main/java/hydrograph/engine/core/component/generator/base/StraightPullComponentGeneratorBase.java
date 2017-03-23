@@ -13,7 +13,12 @@
 package hydrograph.engine.core.component.generator.base;
 
 import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
-
+/**
+ * The Class StraightPullComponentGeneratorBase.
+ *
+ * @author Bitwise
+ *
+ */
 public abstract class StraightPullComponentGeneratorBase extends ComponentGeneratorBase {
 	
 	public StraightPullComponentGeneratorBase(TypeBaseComponent baseComponent) {

@@ -13,7 +13,12 @@
 package hydrograph.engine.core.component.generator.base;
 
 import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
-
+/**
+ * The Class OutputComponentGeneratorBase.
+ *
+ * @author Bitwise
+ *
+ */
 public abstract class OutputComponentGeneratorBase extends ComponentGeneratorBase {
 
 	public OutputComponentGeneratorBase(TypeBaseComponent baseComponent) {

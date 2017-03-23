@@ -11,7 +11,11 @@
  * limitations under the License
  *******************************************************************************/
 package hydrograph.engine.core.constants;
-
+/**
+ * The Enum Keep.
+ *
+ * @author Bitwise
+ */
 public enum Keep {
 	first, last, unique
 }

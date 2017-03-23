@@ -17,7 +17,12 @@ import hydrograph.engine.core.component.entity.base.AssemblyEntityBase;
 import hydrograph.engine.core.component.generator.base.CommandComponentGeneratorBase;
 import hydrograph.engine.jaxb.commandtypes.RunProgram;
 import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
-
+/**
+ * The Class RunProgramEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 public class RunProgramEntityGenerator extends CommandComponentGeneratorBase {
 
 	private RunProgram runProgram;

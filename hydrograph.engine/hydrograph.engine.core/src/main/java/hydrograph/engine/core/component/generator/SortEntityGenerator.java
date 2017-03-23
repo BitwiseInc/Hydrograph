@@ -24,7 +24,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author Prabodh
+ * The Class SortEntityGenerator.
+ *
+ * @author Bitwise
  *
  */
 public class SortEntityGenerator extends StraightPullComponentGeneratorBase {

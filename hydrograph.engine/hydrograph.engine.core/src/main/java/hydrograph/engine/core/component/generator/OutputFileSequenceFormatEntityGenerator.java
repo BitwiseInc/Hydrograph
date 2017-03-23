@@ -19,7 +19,12 @@ import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.engine.jaxb.outputtypes.SequenceOutputFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+/**
+ * The Class OutputFileSequenceFormatEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 public class OutputFileSequenceFormatEntityGenerator extends OutputComponentGeneratorBase {
 
 	private OutputFileSequenceFormatEntity outputFileSequenceFormatEntity;

@@ -18,14 +18,19 @@ import java.util.Properties
 import hydrograph.engine.core.component.entity.InputRDBMSEntity
 import hydrograph.engine.spark.components.base.InputComponentBase
 import hydrograph.engine.spark.components.platform.BaseComponentParams
-import hydrograph.engine.spark.components.utils.{DbTableUtils, SchemaCreator, SchemaMismatchException}
+import hydrograph.engine.spark.components.utils.{DbTableUtils, SchemaCreator, SchemaMisMatchException}
 import org.apache.hadoop.conf.Configuration
-import org.apache.spark.sql.{DataFrame, DataFrameReader, SparkSession}
 import org.apache.spark.sql.types._
+import org.apache.spark.sql.{DataFrame, DataFrameReader}
 import org.slf4j.{Logger, LoggerFactory}
 
 import scala.collection.JavaConverters._
-
+/**
+  * The Class InputSparkRedshiftComponent.
+  *
+  * @author Bitwise
+  *
+  */
 class InputSparkRedshiftComponent(inputRDBMSEntity: InputRDBMSEntity, iComponentsParams: BaseComponentParams) extends
   InputComponentBase {
   val LOG: Logger = LoggerFactory.getLogger(classOf[InputSparkRedshiftComponent])
@@ -125,11 +130,11 @@ class InputSparkRedshiftComponent(inputRDBMSEntity: InputRDBMSEntity, iComponent
       if (fieldExist) {
         if (!(inSchema.dataType.typeName.equalsIgnoreCase(dbDataType.typeName))) {
           LOG.error("Field '" + inSchema.name + "', data type does not match expected type:" + dbDataType + ", got type:" + inSchema.dataType)
-          throw SchemaMismatchException("Field '" + inSchema.name + "' data type does not match expected type:" + dbDataType + ", got type:" + inSchema.dataType)
+          throw SchemaMisMatchException("Field '" + inSchema.name + "' data type does not match expected type:" + dbDataType + ", got type:" + inSchema.dataType)
         }
       } else {
         LOG.error("Field '" + inSchema.name + "' does not exist in metadata")
-        throw SchemaMismatchException("Input schema does not match with metadata schema, "
+        throw SchemaMisMatchException("Input schema does not match with metadata schema, "
           + "Field '" + inSchema.name + "' does not exist in metadata")
       }
     })

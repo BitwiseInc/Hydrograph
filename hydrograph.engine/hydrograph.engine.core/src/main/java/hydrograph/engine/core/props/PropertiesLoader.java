@@ -18,7 +18,12 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Properties;
-
+/**
+ * The Class PropertiesLoader.
+ *
+ * @author Bitwise
+ *
+ */
 public class PropertiesLoader {
 
 	public static final String ENGINE_PROPERTY_FILE = "engine.properties";

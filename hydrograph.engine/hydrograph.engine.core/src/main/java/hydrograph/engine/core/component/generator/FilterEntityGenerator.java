@@ -19,7 +19,12 @@ import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.engine.jaxb.operationstypes.Filter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+/**
+ * The Class FilterEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 public class FilterEntityGenerator extends OperationComponentGeneratorBase {
 
 	private FilterEntity filterEntity;

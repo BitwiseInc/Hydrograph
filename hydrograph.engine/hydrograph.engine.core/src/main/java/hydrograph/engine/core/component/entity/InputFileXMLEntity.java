@@ -15,9 +15,11 @@ package hydrograph.engine.core.component.entity;
 import hydrograph.engine.core.component.entity.base.InputOutputEntityBase;
 
 import java.util.Arrays;
-
 /**
- * Created by bitwise on 1/12/2017.
+ * The Class InputFileXMLEntity.
+ *
+ * @author Bitwise
+ *
  */
 public class InputFileXMLEntity extends InputOutputEntityBase {
 

@@ -18,6 +18,12 @@ import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.engine.jaxb.outputtypes.Discard;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+/**
+ * The Class DiscardEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 
 public class DiscardEntityGenerator extends OutputComponentGeneratorBase {
 

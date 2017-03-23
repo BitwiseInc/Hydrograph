@@ -13,11 +13,10 @@
 package hydrograph.engine.core.constants;
 
 /**
- * This class contains the constants to be used across the project. These
- * constants are stored as static final variables of the class. This class
- * should not be instantiated and hence, the constructor is marked private
+ * The Class Constants.
  *
- * @author Prabodh
+ * @author Bitwise
+ *
  */
 public class Constants {
 

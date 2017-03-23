@@ -20,7 +20,12 @@ import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * The Class OutSocketUtils.
+ *
+ * @author Bitwise
+ *
+ */
 
 public class OutSocketUtils implements Serializable{
 

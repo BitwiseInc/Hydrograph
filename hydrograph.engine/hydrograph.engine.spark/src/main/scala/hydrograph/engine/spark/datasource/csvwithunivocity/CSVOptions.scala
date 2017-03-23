@@ -23,7 +23,12 @@ import java.util.{Locale, TimeZone}
 import hydrograph.engine.spark.datasource.utils.CompressionCodecs
 import org.apache.commons.lang3.time.FastDateFormat
 import org.slf4j.{Logger, LoggerFactory}
-
+/**
+  * The Class CSVOptions.
+  *
+  * @author Bitwise
+  *
+  */
 class CSVOptions(@transient private val parameters: Map[String, String])
   extends Serializable {
   private val LOG: Logger = LoggerFactory.getLogger(classOf[CSVOptions])
@@ -47,7 +52,7 @@ class CSVOptions(@transient private val parameters: Map[String, String])
         value.toInt
       } catch {
         case e: NumberFormatException =>
-          throw new RuntimeException(s"$paramName should be an integer. Found $value")
+          throw new RuntimeException(s"$paramName should be an integer. Found $value",e)
       }
     }
   }

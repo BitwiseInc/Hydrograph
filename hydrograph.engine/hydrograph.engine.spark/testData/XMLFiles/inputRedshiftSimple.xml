@@ -41,9 +41,9 @@
         <jdbcDriver value="JDBC 4.2"/>
         <userName value="awsuser"/>
         <password value="1qaz2wsxA#5"/>
-        <runtimeProperties>
+     <!--   <runtimeProperties>
             <property name="fetchsize" value="9"/>
-        </runtimeProperties>
+        </runtimeProperties>-->
         <!--<schemaName value="public"/>
         <tableName value="testingAllTypes"/>-->
 

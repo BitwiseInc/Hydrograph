@@ -291,7 +291,7 @@ class HydrographRuntime extends HydrographRuntimeService {
       catch {
 
         case e: IOException => {
-          throw new RuntimeException("Error reading the properties file: RegisterPlugin.properties" + e)
+          throw new RuntimeException("Error reading the properties file: RegisterPlugin.properties" , e)
         }
       }
        properties.getProperty(executionTrackingKey)

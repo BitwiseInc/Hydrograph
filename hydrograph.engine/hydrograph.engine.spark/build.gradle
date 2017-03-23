@@ -56,6 +56,11 @@ test {
     exclude '**/InputFileParquetComponentTest*'
     exclude '**/OutputFileParquetComponentTest*'
     exclude '**/InputTeradataComponentTest*'
+    exclude '**/HiveParquetInputTest*'
+    exclude '**/HiveParquetOutputTest*'
+    exclude '**/HiveTextInputTest*'
+    exclude '**/HiveTextOutputTest*'
+    exclude '**/RunSQLComponentTest*'
 }
 
 //  version = null //Version in jar name set to null to keep the name consistent for travis.yml to ftp the jar 

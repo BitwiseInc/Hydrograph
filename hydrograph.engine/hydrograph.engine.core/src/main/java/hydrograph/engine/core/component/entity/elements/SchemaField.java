@@ -19,17 +19,10 @@ import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.lang.reflect.Type;
-
 /**
- * This is a POJO which holds the information for one field of any Input and
- * Output components like
- * {@link hydrograph.engine.cascading.assembly.InputFileDelimitedAssembly
- * InputFile} ,
- * {@link hydrograph.engine.cascading.assembly.OutputFileFixedWidthAssembly
- * OutputFile} etc. The object of this class is supposed to be used in the
- * entity classes for the Input/Output type components
+ * The Class SchemaField.
  *
- * @author gurdits
+ * @author Bitwise
  *
  */
 public class SchemaField implements Cloneable,Serializable {

@@ -17,9 +17,10 @@ package hydrograph.engine.core.component.entity.elements;
 
 import java.io.Serializable;
 import java.util.Arrays;
-
 /**
- * @author kirana
+ * The Class JoinKeyFields.
+ *
+ * @author Bitwise
  *
  */
 public class JoinKeyFields implements Serializable{

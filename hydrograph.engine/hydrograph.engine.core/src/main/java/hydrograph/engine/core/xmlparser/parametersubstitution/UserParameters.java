@@ -16,7 +16,11 @@ import hydrograph.engine.core.utilities.CommandLineOptionsProcessor;
 import hydrograph.engine.core.utilities.GeneralUtilities;
 
 import java.io.IOException;
-
+/**
+ * The Class UserParameters.
+ *
+ * @author Bitwise
+ */
 public class UserParameters implements IParameterBank {
 
 	private CommandLineOptionsProcessor optionProcessor = new CommandLineOptionsProcessor();

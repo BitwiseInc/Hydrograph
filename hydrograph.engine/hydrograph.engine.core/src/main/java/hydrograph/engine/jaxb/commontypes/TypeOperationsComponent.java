@@ -14,26 +14,18 @@
 
 package hydrograph.engine.jaxb.commontypes;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElements;
-import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.bind.annotation.XmlType;
 import hydrograph.engine.jaxb.aggregate.AggregateBase;
 import hydrograph.engine.jaxb.cumulate.CumulateBase;
 import hydrograph.engine.jaxb.groupcombine.GroupcombineBase;
 import hydrograph.engine.jaxb.join.JoinBase;
 import hydrograph.engine.jaxb.lookup.LookupBase;
-import hydrograph.engine.jaxb.operationstypes.Executiontracking;
-import hydrograph.engine.jaxb.operationstypes.Filter;
-import hydrograph.engine.jaxb.operationstypes.GenerateSequence;
-import hydrograph.engine.jaxb.operationstypes.Normalize;
-import hydrograph.engine.jaxb.operationstypes.Transform;
+import hydrograph.engine.jaxb.operationstypes.*;
 import hydrograph.engine.jaxb.partitionbyexpression.PartitionByExpressionBase;
 import hydrograph.engine.jaxb.subjob.SubjobBase;
+
+import javax.xml.bind.annotation.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**

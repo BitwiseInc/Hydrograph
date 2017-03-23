@@ -18,7 +18,11 @@ import hydrograph.engine.transformation.userfunctions.base.ReusableRow;
 
 import java.util.ArrayList;
 import java.util.Properties;
-
+/**
+ * The Class CumulateForExpression.
+ *
+ * @author Bitwise
+ */
 @SuppressWarnings("rawtypes")
 public class CumulateForExpression implements CumulateTransformBase {
 

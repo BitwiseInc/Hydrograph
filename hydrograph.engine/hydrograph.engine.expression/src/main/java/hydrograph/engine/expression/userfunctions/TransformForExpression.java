@@ -18,7 +18,11 @@ import hydrograph.engine.transformation.userfunctions.base.TransformBase;
 
 import java.util.ArrayList;
 import java.util.Properties;
-
+/**
+ * The Class TransformForExpression.
+ *
+ * @author Bitwise
+ */
 @SuppressWarnings("rawtypes")
 public class TransformForExpression implements TransformBase {
 

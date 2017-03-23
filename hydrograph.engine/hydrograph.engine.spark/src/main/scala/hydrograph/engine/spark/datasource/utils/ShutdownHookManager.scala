@@ -21,13 +21,15 @@ import java.io.File
 import java.util.PriorityQueue
 
 import org.apache.hadoop.fs.FileSystem
-import org.apache.spark.util.{SparkShutdownHook, Utils}
 
 import scala.util.Try
 
 /**
- * Various utility methods used by Spark.
- */
+  * The Object ShutdownHookManager.
+  *
+  * @author Bitwise
+  *
+  */
 object ShutdownHookManager  {
   val DEFAULT_SHUTDOWN_PRIORITY = 100
 

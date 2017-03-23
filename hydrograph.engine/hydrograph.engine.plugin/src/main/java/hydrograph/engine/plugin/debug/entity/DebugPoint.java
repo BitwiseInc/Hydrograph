@@ -13,7 +13,9 @@
 package hydrograph.engine.plugin.debug.entity;
 
 /**
- * @author gurdits
+ * The Class DebugPoint.
+ *
+ * @author Bitwise
  *
  */
 public class DebugPoint {

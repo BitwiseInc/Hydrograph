@@ -19,7 +19,12 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import static hydrograph.engine.transformation.standardfunctions.NumericFunctions.getDoubleFromComparable;
-
+/**
+ * The Class LibSVMFormat.
+ *
+ * @author Bitwise
+ *
+ */
 public class LibSVMFormat implements TransformBase{
 
 	@Override

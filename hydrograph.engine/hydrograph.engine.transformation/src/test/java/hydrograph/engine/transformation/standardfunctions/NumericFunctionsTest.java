@@ -14,10 +14,12 @@ package hydrograph.engine.transformation.standardfunctions;
 
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.math.BigDecimal;
-import java.math.BigInteger;
-
+/**
+ * The Class NumericFunctionsTest.
+ *
+ * @author Bitwise
+ *
+ */
 public class NumericFunctionsTest {
 
 	@Test

@@ -17,7 +17,12 @@ import hydrograph.engine.core.component.entity.elements.Operation;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * The Class RunProgramEntity.
+ *
+ * @author Bitwise
+ *
+ */
 public class RunProgramEntity extends OperationEntityBase {
 	private String command;
 

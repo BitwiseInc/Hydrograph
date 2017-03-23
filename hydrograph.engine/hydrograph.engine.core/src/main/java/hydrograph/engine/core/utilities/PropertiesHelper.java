@@ -21,11 +21,9 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
- * This helper class helps retrieve an object of {@link Properties} for
- * the desired property file
+ * The Class PropertiesHelper.
  *
- * @author Prabodh
- *
+ * @author Bitwise
  */
 public class PropertiesHelper {
 

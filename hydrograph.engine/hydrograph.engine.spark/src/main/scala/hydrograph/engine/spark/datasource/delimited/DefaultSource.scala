@@ -13,17 +13,15 @@
 
 package hydrograph.engine.spark.datasource.delimited
 
-import java.text.SimpleDateFormat
-
 import java.util.{Locale, TimeZone}
 
 import hydrograph.engine.spark.datasource.utils.{TextFile, TypeCast}
+import org.apache.commons.lang3.time.FastDateFormat
 import org.apache.hadoop.fs.{FileSystem, Path}
 import org.apache.spark.sql.sources._
 import org.apache.spark.sql.types.StructType
 import org.apache.spark.sql.{DataFrame, SQLContext, SaveMode}
 import org.slf4j.{Logger, LoggerFactory}
-import org.apache.commons.lang3.time.FastDateFormat
 
 import scala.collection.JavaConversions._
 /**

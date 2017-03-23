@@ -61,9 +61,9 @@ class SortComponent(sortEntity: SortEntity, componentsParams: BaseComponentParam
     * Creates an array of type {@link Column} from array of {@link KeyField}
     *
     * @param keysArray
-    *            an array of {@link KeyField} containing the field name and
+    *          an array of {@ link KeyField} containing the field name and
     *            sort order
-    * @return an an array of {@link Column}
+    * @return an an array of {@ link Column}
     */
   def populateSortKeys(keysArray: Array[KeyField]): Array[Column] = {
     keysArray.map { field => if (field.getSortOrder.toLowerCase() == "desc") (col(field.getName).desc) else (col(field.getName)) }

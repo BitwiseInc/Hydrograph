@@ -22,7 +22,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
-
+/**
+ * The Class OutputMysqlEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 public class OutputMysqlEntityGenerator extends OutputComponentGeneratorBase {
 
     private Mysql jaxbOutputMysql;

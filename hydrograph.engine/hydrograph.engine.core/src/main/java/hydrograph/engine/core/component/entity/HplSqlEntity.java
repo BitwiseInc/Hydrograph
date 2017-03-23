@@ -13,7 +13,12 @@
 package hydrograph.engine.core.component.entity;
 
 import hydrograph.engine.core.component.entity.base.CommandEntityBase;
-
+/**
+ * The Class HplSqlEntity.
+ *
+ * @author Bitwise
+ *
+ */
 public class HplSqlEntity extends CommandEntityBase {
 	private String uri = null;
 	private String query = null;

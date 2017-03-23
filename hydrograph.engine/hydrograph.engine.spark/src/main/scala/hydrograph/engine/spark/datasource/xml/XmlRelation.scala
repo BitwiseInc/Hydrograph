@@ -92,7 +92,7 @@ case class XmlRelation protected[spark] (
         case e: IOException =>
           throw new IOException(
             s"Unable to clear output directory ${filesystemPath.toString} prior"
-              + s" to INSERT OVERWRITE a XML table:\n${e.toString}")
+              + s" to INSERT OVERWRITE a XML table:\n${e.toString}",e)
       }
       // Write the data. We assume that schema isn't changed, and we won't update it.
       XmlFile.saveAsXmlFile(data, filesystemPath.toString, parameters)

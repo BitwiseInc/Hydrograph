@@ -28,7 +28,12 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+/**
+ * The Class InputFileHiveTextEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 public class InputFileHiveTextEntityGenerator extends
 		InputComponentGeneratorBase {
 

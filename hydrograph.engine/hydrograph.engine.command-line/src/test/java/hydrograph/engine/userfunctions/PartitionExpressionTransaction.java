@@ -19,11 +19,10 @@ import java.io.Serializable;
 import java.util.Properties;
 
 /**
- * This class is used as custom partitionbyexpression class in
- * PartitionByExpressionAssemblyTestWithPlunger test class
- * 
- * @author Santlal
- * @see hydrograph.engine.cascading.assembly.PartitionByExpressionAssemblyTest
+ * The Class PartitionExpressionTransaction.
+ *
+ * @author Bitwise
+ *
  */
 public class PartitionExpressionTransaction implements CustomPartitionExpression, Serializable {
 

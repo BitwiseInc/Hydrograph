@@ -15,11 +15,9 @@ package hydrograph.engine.expression.antlr;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
- * This interface defines a complete generic visitor for a parse tree produced
- * by {@link ExpressionEditorParser}.
+ * The Interface ExpressionEditorVisitor.
  *
- * @param <T> The return type of the visit operation. Use {@link Void} for
- * operations with no return type.
+ * @author Bitwise
  */
 public interface ExpressionEditorVisitor<T> extends ParseTreeVisitor<T> {
 	/**

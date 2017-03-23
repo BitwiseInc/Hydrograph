@@ -13,7 +13,12 @@
 package hydrograph.engine.core.component.entity.elements;
 
 import java.io.Serializable;
-
+/**
+ * The Class InSocket.
+ *
+ * @author Bitwise
+ *
+ */
 public class InSocket implements Serializable{
 
 	private String fromComponentId;

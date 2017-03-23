@@ -49,7 +49,7 @@ class OutputFileParquetComponent(oFileParquetEntity: OutputFileParquetEntity, co
         + ", file path " + oFileParquetEntity.getPath)
     } catch {
       case ex: RuntimeException =>
-        LOG.error("Error in Output  File Parquet component '" + oFileParquetEntity.getComponentId + "', Error" + ex.getMessage, ex)
+        LOG.error("Error in Output  File Parquet component '" + oFileParquetEntity.getComponentId + "', Error" , ex)
         throw ex
     }
   }

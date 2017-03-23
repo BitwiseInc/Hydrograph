@@ -20,7 +20,12 @@ import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.engine.jaxb.inputtypes.TextFileDelimited;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+/**
+ * The Class InputFileDelimitedEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 public class InputFileDelimitedEntityGenerator extends InputComponentGeneratorBase {
 
 	private InputFileDelimitedEntity inputFileDelimitedEntity;

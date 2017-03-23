@@ -15,19 +15,10 @@ package hydrograph.engine.core.props;
 import java.util.*;
 
 /**
- * The <code>OrderedProperties</code> class is an extension of the standard
- * {@link Properties} class. This class has been built on top of
- * <code>Properties</code> class. This class maintains the order of the keys
- * which is not possible in <code>Properties</code> class.
- * <p>
- * The methods {@link Properties#list(java.io.PrintStream) list(PrintStream)}
- * and {@link Properties#list(java.io.PrintWriter) list(PrintWriter)} do not
- * print ordered list as they are called on the underlying
- * <code>Properties</code> class.
- * 
- * @author Prabodh
+ * The Class OrderedProperties.
  *
- * @see {@link Properties}
+ * @author Bitwise
+ *
  */
 public class OrderedProperties extends Properties {
 

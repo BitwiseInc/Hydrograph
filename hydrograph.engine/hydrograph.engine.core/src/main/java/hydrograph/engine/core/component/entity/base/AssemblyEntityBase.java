@@ -14,7 +14,12 @@ package hydrograph.engine.core.component.entity.base;
 
 import java.io.Serializable;
 import java.util.Properties;
-
+/**
+ * The Class AssemblyEntityBase.
+ *
+ * @author Bitwise
+ *
+ */
 public class AssemblyEntityBase implements Serializable{
 
 	private String componentId;
@@ -30,7 +35,7 @@ public class AssemblyEntityBase implements Serializable{
 	}
 
 	/**
-	 * @param componentID
+	 * @param componentId
 	 *            the componentID to set
 	 */
 	public void setComponentId(String componentId) {

@@ -18,7 +18,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-
+/**
+ * The Class FileParameters.
+ *
+ * @author Bitwise
+ */
 public class FileParameters implements IParameterBank {
 
 	private Properties params = new Properties();

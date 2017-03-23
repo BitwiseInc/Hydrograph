@@ -13,9 +13,11 @@
 package hydrograph.engine.core.component.entity;
 
 import hydrograph.engine.core.component.entity.base.OperationEntityBase;
-
 /**
- * Created by sandeepv on 1/24/2017.
+ * The Class RunSqlEntity.
+ *
+ * @author Bitwise
+ *
  */
 public class RunSqlEntity extends OperationEntityBase {
 

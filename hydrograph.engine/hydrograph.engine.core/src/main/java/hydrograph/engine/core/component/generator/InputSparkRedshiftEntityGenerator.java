@@ -23,6 +23,12 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
 
+/**
+ * The Class InputSparkRedshiftEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 
 public class InputSparkRedshiftEntityGenerator extends
         InputComponentGeneratorBase {

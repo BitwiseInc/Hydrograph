@@ -21,7 +21,12 @@ import hydrograph.engine.jaxb.commontypes.TypeProperties;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
+/**
+ * The Class FlowManipulationContext.
+ *
+ * @author Bitwise
+ *
+ */
 public class FlowManipulationContext {
 
 	private SchemaFieldHandler schemaFieldMap;

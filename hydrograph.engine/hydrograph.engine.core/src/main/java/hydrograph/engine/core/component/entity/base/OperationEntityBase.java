@@ -18,7 +18,12 @@ import hydrograph.engine.core.component.entity.elements.OutSocket;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * The Class OperationEntityBase.
+ *
+ * @author Bitwise
+ *
+ */
 public class OperationEntityBase extends AssemblyEntityBase {
 
 	private boolean operationPresent;
@@ -128,7 +133,7 @@ public class OperationEntityBase extends AssemblyEntityBase {
 	}
 
 	/**
-	 * @param inSocketList
+	 * @param # inSocketList
 	 *            the inSocketList to set
 	 */
 	public void setInSocketList(List<InSocket> outSocketList) {

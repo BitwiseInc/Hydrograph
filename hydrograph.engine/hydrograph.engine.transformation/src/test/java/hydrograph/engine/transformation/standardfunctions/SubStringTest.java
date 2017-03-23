@@ -16,7 +16,12 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import static hydrograph.engine.transformation.standardfunctions.StringFunctions.stringSubString;
-
+/**
+ * The Class SubStringTest.
+ *
+ * @author Bitwise
+ *
+ */
 public class SubStringTest {
 
 	@Test

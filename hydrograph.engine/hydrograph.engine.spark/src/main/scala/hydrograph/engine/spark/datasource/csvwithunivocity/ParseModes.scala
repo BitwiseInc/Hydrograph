@@ -16,7 +16,12 @@
  */
 
 package hydrograph.engine.spark.datasource.csvwithunivocity
-
+/**
+  * The Object ParseModes.
+  *
+  * @author Bitwise
+  *
+  */
 private object ParseModes {
   val PERMISSIVE_MODE = "PERMISSIVE"
   val DROP_MALFORMED_MODE = "DROPMALFORMED"

@@ -23,7 +23,9 @@ import hydrograph.engine.jaxb.commontypes.TypeFieldName;
 import java.util.List;
 
 /**
- * @author bitwise1
+ * The Class OutputRDBMSEntity.
+ *
+ * @author Bitwise
  *
  */
 public class OutputRDBMSEntity extends InputOutputEntityBase {

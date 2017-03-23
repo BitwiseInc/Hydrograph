@@ -13,7 +13,11 @@
 package hydrograph.engine.core.core;
 
 import java.util.Properties;
-
+/**
+ * The Interface HydrographRuntimeService.
+ *
+ * @author Bitwise
+ */
 public interface HydrographRuntimeService {
 
     /**

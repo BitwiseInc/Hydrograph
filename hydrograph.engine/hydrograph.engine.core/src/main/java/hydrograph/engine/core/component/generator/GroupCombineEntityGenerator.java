@@ -19,7 +19,12 @@ import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.engine.jaxb.operationstypes.Groupcombine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+/**
+ * The Class GroupCombineEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 public class GroupCombineEntityGenerator extends OperationComponentGeneratorBase {
 
 	private GroupCombineEntity groupCombineEntity;

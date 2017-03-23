@@ -17,16 +17,9 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 /**
- * The NormalizeTransformBase interface is the base interface for all the custom
- * classes defined for transformations in normalize component in Hydrograph.
- * This interface exposes methods that enable users to perform custom normalize
- * operation.
- * <p>
- * For a sample implementation of this interface refer any class under
- * {@link hydrograph.engine.transformation.userfunctions.normalize} package.
- * </p>
- * 
- * @author bitwise
+ * The Interface NormalizeTransformBase.
+ *
+ * @author Bitwise
  *
  */
 public interface NormalizeTransformBase extends Serializable {
@@ -50,8 +43,8 @@ public interface NormalizeTransformBase extends Serializable {
 	 * <p>
 	 * Since this function is called for each record in the input, the values of
 	 * variables local to this function are not persisted for every call. Use
-	 * {@link #prepare(Properties, ArrayList, ArrayList, ArrayList)} and
-	 * {@link #onCompleteGroup(ReusableRow)} functions to initialize / reset the
+	 * {@link # prepare(Properties, ArrayList, ArrayList, ArrayList)} and
+	 * {@link # onCompleteGroup(ReusableRow)} functions to initialize / reset the
 	 * required variables.
 	 * </p>
 	 * 
@@ -65,7 +58,7 @@ public interface NormalizeTransformBase extends Serializable {
 	 *            {@code outputDispatcher} is used to dispatch the current
 	 *            output row to the out port of the normalize component.
 	 *            <p>
-	 *            The method {@link #OutputDispatcher.sendOutput()} in
+	 *            The method {@link # OutputDispatcher.sendOutput()} in
 	 *            {@code OutputDispatcher} sends the current output row i.e.
 	 *            {@code outputRow} variable to the out port of the normalize
 	 *            component. The {@code outputRow} variable can then be reused
