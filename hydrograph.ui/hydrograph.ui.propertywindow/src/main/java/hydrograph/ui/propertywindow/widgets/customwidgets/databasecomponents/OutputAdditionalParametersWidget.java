@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.slf4j.Logger;
@@ -15,6 +17,7 @@ import hydrograph.ui.propertywindow.property.ComponentConfigrationProperty;
 import hydrograph.ui.propertywindow.property.ComponentMiscellaneousProperties;
 import hydrograph.ui.propertywindow.property.Property;
 import hydrograph.ui.propertywindow.propertydialog.PropertyDialogButtonBar;
+import hydrograph.ui.propertywindow.utils.Utils;
 import hydrograph.ui.propertywindow.widgets.customwidgets.AbstractWidget;
 import hydrograph.ui.propertywindow.widgets.customwidgets.config.RuntimeConfig;
 import hydrograph.ui.propertywindow.widgets.gridwidgets.basic.ELTDefaultButton;
@@ -32,6 +35,7 @@ public class OutputAdditionalParametersWidget extends AbstractWidget {
 	private Shell shell;
 	private ArrayList<AbstractWidget> widgets;
 	private LinkedHashMap<String, Object> tempPropertyMap;
+	private Cursor cursor;
 
 	/**
 	 * Instantiates a new OutputAdditionalParametersWidget widget.
@@ -64,7 +68,10 @@ public class OutputAdditionalParametersWidget extends AbstractWidget {
 		outputAdditionalParameterComposite.createContainerWidget();
 		this.shell = outputAdditionalParameterComposite.getContainerControl().getShell();
 		this.runtimeConfig = (RuntimeConfig) widgetConfig;
-
+		
+		Utils.INSTANCE.loadProperties();
+		cursor = subGroup.getContainerControl().getDisplay().getSystemCursor(SWT.CURSOR_HAND);
+		
 		ELTDefaultLable outputAdditionalParameterLabel = new ELTDefaultLable(runtimeConfig.getLabel());
 		outputAdditionalParameterComposite.attachWidget(outputAdditionalParameterLabel);
 		setPropertyHelpWidget((Control) outputAdditionalParameterLabel.getSWTWidgetControl());
@@ -113,7 +120,7 @@ public class OutputAdditionalParametersWidget extends AbstractWidget {
 	public void newWindowLauncher() {
 		initialMap = new LinkedHashMap<>(initialMap);
 		OutputAdditionalParametersDialog outputAdditionalParametersDialog = new OutputAdditionalParametersDialog(shell,
-				runtimeConfig.getWindowLabel(), propertyDialogButtonBar, initialMap);
+				runtimeConfig.getWindowLabel(), propertyDialogButtonBar, initialMap,cursor);
 		outputAdditionalParametersDialog.open();
 		initialMap = outputAdditionalParametersDialog.getOutputAdditionalParameterValues();
 		showHideErrorSymbol(widgets);

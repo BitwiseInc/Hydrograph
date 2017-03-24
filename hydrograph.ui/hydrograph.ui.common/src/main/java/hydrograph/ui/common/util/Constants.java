@@ -59,9 +59,11 @@ public class Constants {
 	 // Used for validating AlphaNumeric or Parameter E.g Aplha_123 or @{Param_123}
 	public static final String REGEX = "[\\@]{1}[\\{]{1}[\\w]*[\\}]{1}||[\\w]*";
 	// Used for validating Numeric values (only 4 digits) E.g. 1234 and Parameters E.g  @{Param_123}
-	public static final String REGEX_NUMERIC_AND_PARAMETER = "^([\\@]{1}[\\{]{1}[\\s\\S]+[\\}]{1})|([\\d]{4})$";
+	public static final String REGEX_NUMERIC_AND_PARAMETER = "^([\\@]{1}[\\{]{1}[\\s\\S]+[\\}]{1})|([\\d])$";
 	// Used for validating only Parameters E.g  @{Param_123}
 	public static final String PARAMETER_REGEX ="^[\\@]{1}[\\{]{1}[\\s\\S]+[\\}]{1}";
+	
+	public static final String DB_REGEX = "[\\@]{1}[\\{]{1}[\\w,\\=]*[\\}]{1}||[\\w,\\=]*";
 
 	// Used for validating AlphaNumeric or Parameter E.g Aplha_123
 	public static final String REGEX_ALPHA_NUMERIC = "[\\w]*";
@@ -386,5 +388,6 @@ public class Constants {
 	public static final String DB_PARTITION_KEY="Partition Key";
 	public static final String ADDITIONAL_PARAMETERS_FOR_DB ="Additional DB Parameters";
 	public static final String DB_CHUNK_SIZE="Chunk Size";
+	public static final String NUMERIC_REGEX = "[\\d]*";
 }
 
