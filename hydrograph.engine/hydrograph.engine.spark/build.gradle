@@ -107,6 +107,7 @@ dependencies {
     compile project(':hydrograph.engine.core')
     compile project(':hydrograph.engine.transformation')
     compile project(':hydrograph.engine.expression')
+    compile project(':hydrograph.engine.plugin')
     compileOnly name: 'oracle-ojdbc6-11.2.0.4'
     compile group: 'com.ibatis', name: 'ibatis2-common', version: '2.1.7.597'
     compile group: 'com.amazon.redshift', name: 'redshift-jdbc42', version: '1.2.1.1001'

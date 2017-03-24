@@ -16,7 +16,7 @@ import java.io.IOException
 import java.util.Properties
 
 import hydrograph.engine.core.core.{HydrographJob, HydrographRuntimeService}
-import hydrograph.engine.core.flowmanipulation.{FlowManipulationContext, FlowManipulationHandler}
+import hydrograph.engine.flowmanipulation.{FlowManipulationContext, FlowManipulationHandler}
 import hydrograph.engine.core.helper.JAXBTraversal
 import hydrograph.engine.core.props.OrderedProperties
 import hydrograph.engine.core.schemapropagation.SchemaFieldHandler

@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License
  *******************************************************************************/
-package hydrograph.engine.core.flowmanipulation;
+package hydrograph.engine.flowmanipulation;
 
 import hydrograph.engine.core.component.entity.elements.SchemaField;
 import hydrograph.engine.core.core.HydrographJob;
@@ -21,6 +21,7 @@ import hydrograph.engine.jaxb.commontypes.TypeProperties;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 /**
  * The Class FlowManipulationContext.
  *
@@ -38,7 +39,7 @@ public class FlowManipulationContext {
 	String[] args;
 
 	public FlowManipulationContext(HydrographJob hydrographJob, String[] args,
-			SchemaFieldHandler schemaFieldHandler, String jobId) {
+                                   SchemaFieldHandler schemaFieldHandler, String jobId) {
 		this.jaxbMainGraph = hydrographJob.getJAXBObject().getInputsOrOutputsOrStraightPulls();
 		this.jaxbJobLevelRuntimeProperties = hydrographJob.getJAXBObject().getRuntimeProperties();
 		this.graphName = hydrographJob.getJAXBObject().getName();
