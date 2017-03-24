@@ -3,8 +3,12 @@ package hydrograph.engine.transformation.standardfunctions;
 import java.util.Arrays;
 
 /**
- * Created by shivarajn on 3/15/2017.
+ * The Class SpecialFunctions.
+ *
+ * @author Bitwise
+ *
  */
+
 public class SpecialFunctions {
 
     /**

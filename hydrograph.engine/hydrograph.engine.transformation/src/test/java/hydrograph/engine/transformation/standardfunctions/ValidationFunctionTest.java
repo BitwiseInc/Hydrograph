@@ -7,31 +7,12 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * Created by shivarajn on 3/16/2017.
+ * The Class ValidationFunctionTest.
+ *
+ * @author Bitwise
+ *
  */
 public class ValidationFunctionTest {
-
-    //@Test
-    /*public void itShouldValidateIsError(){
-        Integer one = 1, zero = 0;
-
-        Assert.assertEquals(one, ValidationFunctions.isError("1","/","0"));
-        Assert.assertEquals(zero, ValidationFunctions.isError("1","+","1"));
-        Assert.assertEquals(zero, ValidationFunctions.isError("(","10.4","+","0",")","/","5"));
-        Assert.assertEquals(one, ValidationFunctions.isError("10","+","0sda"));
-        Assert.assertEquals(one, ValidationFunctions.isError(5,"/",0));
-        Assert.assertEquals(zero, ValidationFunctions.isError("10","+",new BigDecimal(12.887)));
-    }*/
-
-    @Test
-    public void itShouldValidateIsError(){
-        Integer one = 1, zero = 0;
-
-        Assert.assertEquals(one, ValidationFunctions.isError("1 / 0"));
-        Assert.assertEquals(zero, ValidationFunctions.isError("1 + 1"));
-        Assert.assertEquals(zero, ValidationFunctions.isError("( 10.4 + 0 ) / 5"));
-        Assert.assertEquals(one, ValidationFunctions.isError("10 + 0sda"));
-    }
 
     @Test
     public void itShouldValidateCheckValidity(){

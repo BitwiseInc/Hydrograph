@@ -4,7 +4,10 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Created by shivarajn on 3/15/2017.
+ * The Class SpecialFunctionsTest.
+ *
+ * @author Bitwise
+ *
  */
 public class SpecialFunctionsTest {
 
