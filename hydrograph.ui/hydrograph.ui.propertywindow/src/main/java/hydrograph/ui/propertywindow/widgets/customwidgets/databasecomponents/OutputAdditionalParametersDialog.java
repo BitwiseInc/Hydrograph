@@ -7,6 +7,7 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -19,10 +20,11 @@ import org.eclipse.swt.widgets.Text;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.propertywindow.messages.Messages;
 import hydrograph.ui.propertywindow.propertydialog.PropertyDialogButtonBar;
-import hydrograph.ui.propertywindow.widgets.listeners.ELTVerifyNumbericListener;
+import hydrograph.ui.propertywindow.utils.Utils;
 import hydrograph.ui.propertywindow.widgets.listeners.ExtraURLParameterValidationForDBComponents;
 import hydrograph.ui.propertywindow.widgets.listeners.ListenerHelper;
 import hydrograph.ui.propertywindow.widgets.listeners.ListenerHelper.HelperType;
+import hydrograph.ui.propertywindow.widgets.listeners.VerifyNumericandParameterForDBComponents;
 import hydrograph.ui.propertywindow.widgets.utility.WidgetUtility;
 
 public class OutputAdditionalParametersDialog extends Dialog {
@@ -36,6 +38,7 @@ public class OutputAdditionalParametersDialog extends Dialog {
 	private ControlDecoration controlDecoration;
 	private Text additionalParameterTextBox;
 	private ControlDecoration additionalParameterControlDecoration;
+	private Cursor cursor;
 
 	/**
 	 * Create the dialog.
@@ -43,10 +46,11 @@ public class OutputAdditionalParametersDialog extends Dialog {
 	 * @param parentShell
 	 * @param propertyDialogButtonBar
 	 * @param initialMap
+	 * @param cursor 
 	 * @param string
 	 */
 	public OutputAdditionalParametersDialog(Shell parentShell, String windowTitle,
-			PropertyDialogButtonBar propertyDialogButtonBar, Map<String, Object> initialMap) {
+			PropertyDialogButtonBar propertyDialogButtonBar, Map<String, Object> initialMap, Cursor cursor) {
 		super(parentShell);
 		setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.WRAP | SWT.APPLICATION_MODAL);
 		if (StringUtils.isNotBlank(windowTitle))
@@ -55,6 +59,7 @@ public class OutputAdditionalParametersDialog extends Dialog {
 			windowLabel = Constants.ADDITIONAL_PARAMETERS_FOR_DB_WINDOW_LABEL;
 		this.propertyDialogButtonBar = propertyDialogButtonBar;
 		this.outputAdditionalParameterValues = initialMap;
+		this.cursor = cursor;
 	}
 
 	/**
@@ -113,17 +118,15 @@ public class OutputAdditionalParametersDialog extends Dialog {
 		ExtraURLParameterValidationForDBComponents extraURLParameterValidation = new ExtraURLParameterValidationForDBComponents();
 		ListenerHelper helper = new ListenerHelper();
 		helper.put(HelperType.CONTROL_DECORATION, additionalParameterControlDecoration);
-		additionalParameterTextBox.addListener(SWT.Verify,
-				extraURLParameterValidation.getListener(propertyDialogButtonBar, helper, additionalParameterTextBox));
+		additionalParameterTextBox.addListener(SWT.Modify,extraURLParameterValidation.getListener(propertyDialogButtonBar, helper, additionalParameterTextBox));
+		
 	}
 
 	private void addListenerToChunkSize(Text chunkSizeTextBox) {
-		ELTVerifyNumbericListener numericValidationForDBComponents = new ELTVerifyNumbericListener();
+		VerifyNumericandParameterForDBComponents numericValidationForDBComponents = new VerifyNumericandParameterForDBComponents();
 		ListenerHelper helper = new ListenerHelper();
 		helper.put(HelperType.CONTROL_DECORATION, controlDecoration);
-		chunkSizeTextBox.addListener(SWT.Verify,
-				numericValidationForDBComponents.getListener(propertyDialogButtonBar, helper, chunkSizeTextBox));
-
+		chunkSizeTextBox.addListener(SWT.Modify,numericValidationForDBComponents.getListener(propertyDialogButtonBar, helper, chunkSizeTextBox));
 	}
 
 	private void addOutputAdditionalParameterValues() {
@@ -131,11 +134,13 @@ public class OutputAdditionalParametersDialog extends Dialog {
 		if (outputAdditionalParameterValues != null && !outputAdditionalParameterValues.isEmpty()) {
 			if (StringUtils.isNotBlank((String) outputAdditionalParameterValues.get(Constants.DB_CHUNK_SIZE))) {
 				chunkSizeTextBox.setText((String) outputAdditionalParameterValues.get(Constants.DB_CHUNK_SIZE));
+				Utils.INSTANCE.addMouseMoveListenerForTextBox(chunkSizeTextBox, cursor);
 			}
 			if (StringUtils
 					.isNotBlank((String) outputAdditionalParameterValues.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB))) {
 				additionalParameterTextBox
 						.setText((String) outputAdditionalParameterValues.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB));
+				Utils.INSTANCE.addMouseMoveListenerForTextBox(additionalParameterTextBox, cursor);
 			}
 		}
 	}

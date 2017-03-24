@@ -1,15 +1,3 @@
-/*******************************************************************************
- * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *******************************************************************************/
 package hydrograph.ui.propertywindow.widgets.listeners;
 
 import java.util.regex.Matcher;
@@ -30,10 +18,10 @@ import hydrograph.ui.propertywindow.messages.Messages;
 import hydrograph.ui.propertywindow.propertydialog.PropertyDialogButtonBar;
 import hydrograph.ui.propertywindow.widgets.listeners.ListenerHelper.HelperType;
 
-public class ExtraURLParameterValidationForDBComponents implements IELTListener{
-	
+public class VerifyNumericandParameterForDBComponents implements IELTListener{
+
 	private ControlDecoration txtDecorator;
-	
+
 	@Override
 	public int getListenerType() {
 		return SWT.Modify;
@@ -47,29 +35,37 @@ public class ExtraURLParameterValidationForDBComponents implements IELTListener{
 			txtDecorator = (ControlDecoration) helpers.get(HelperType.CONTROL_DECORATION);
 		}
 
-		Listener listener=new Listener() {
+		Listener listener = new Listener() {
 			@Override
 			public void handleEvent(Event event) {
 				String string = ((Text) widgetList[0]).getText();
+				if (event.type == SWT.Modify) {
 					if (StringUtils.isNotBlank(string)) {
-				Matcher matchs=Pattern.compile(Constants.DB_REGEX).matcher(string);
-				if(matchs.matches() || ParameterUtil.isParameter(string)){
-					txtDecorator.hide();
-					((Text) widgetList[0]).setForeground(CustomColorRegistry.INSTANCE.getColorFromRegistry(0, 0, 255));
-					((Text) widgetList[0]).setBackground(CustomColorRegistry.INSTANCE.getColorFromRegistry( 255, 255, 255));
+						Matcher matchs = Pattern.compile(Constants.NUMERIC_REGEX).matcher(string);
+						if (matchs.matches()|| ParameterUtil.isParameter(string)) {
+							txtDecorator.hide();
+							((Text) widgetList[0]).setToolTipText("");
+							((Text) widgetList[0]).setForeground(CustomColorRegistry.INSTANCE.getColorFromRegistry(0, 0, 255));
+							((Text) widgetList[0]).setBackground(CustomColorRegistry.INSTANCE.getColorFromRegistry( 255, 255, 255));
+						} else {
+							txtDecorator.show();
+							txtDecorator.setDescriptionText(Messages.DB_NUMERIC_PARAMETERZIATION_ERROR);
+							((Text) widgetList[0]).setForeground(CustomColorRegistry.INSTANCE.getColorFromRegistry(0, 0, 255));
+							((Text) widgetList[0]).setBackground(CustomColorRegistry.INSTANCE.getColorFromRegistry( 255, 255, 255));
+						}
+					} else {
+						txtDecorator.show();
+						((Text) widgetList[0]).setToolTipText(txtDecorator.getDescriptionText());
+						((Text) widgetList[0]).setBackground(CustomColorRegistry.INSTANCE.getColorFromRegistry( 255, 255, 204));
+
+					}
 				}else{
-					txtDecorator.setDescriptionText(Messages.ADDITIONAL_PARAMETER_ERROR_DECORATOR_MESSAGE);
-					txtDecorator.show();
+					txtDecorator.hide();
+					((Text) widgetList[0]).setBackground(CustomColorRegistry.INSTANCE.getColorFromRegistry( 255, 255, 255));
 				}
-			}else{
-				txtDecorator.setDescriptionText(Messages.ADDITIONAL_PARAMETER_ERROR_DECORATOR_MESSAGE);
-				txtDecorator.show();
 			}
-		}
 		};
-	return listener;
-}
+		return listener;
+	}
 
 }
-
-
