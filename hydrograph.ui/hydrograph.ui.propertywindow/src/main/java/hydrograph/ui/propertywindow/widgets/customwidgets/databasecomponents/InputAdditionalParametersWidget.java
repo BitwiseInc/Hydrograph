@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.slf4j.Logger;
@@ -19,6 +21,7 @@ import hydrograph.ui.propertywindow.property.ComponentConfigrationProperty;
 import hydrograph.ui.propertywindow.property.ComponentMiscellaneousProperties;
 import hydrograph.ui.propertywindow.property.Property;
 import hydrograph.ui.propertywindow.propertydialog.PropertyDialogButtonBar;
+import hydrograph.ui.propertywindow.utils.Utils;
 import hydrograph.ui.propertywindow.widgets.customwidgets.AbstractWidget;
 import hydrograph.ui.propertywindow.widgets.customwidgets.config.RuntimeConfig;
 import hydrograph.ui.propertywindow.widgets.gridwidgets.basic.ELTDefaultButton;
@@ -37,6 +40,7 @@ public class InputAdditionalParametersWidget extends AbstractWidget {
 	private ArrayList<AbstractWidget> widgets;
 	private List<String> schemaFields;
 	private LinkedHashMap<String, Object> tempPropertyMap;
+	private Cursor cursor;
 
 	/**
 	 * Instantiates a new AdditionalParametersWidget widget.
@@ -70,7 +74,10 @@ public class InputAdditionalParametersWidget extends AbstractWidget {
 		additionalParameterComposite.createContainerWidget();
 		this.shell = additionalParameterComposite.getContainerControl().getShell();
 		this.runtimeConfig = (RuntimeConfig) widgetConfig;
-
+		
+		Utils.INSTANCE.loadProperties();
+		cursor = subGroup.getContainerControl().getDisplay().getSystemCursor(SWT.CURSOR_HAND);
+		
 		ELTDefaultLable additionalParameterLabel = new ELTDefaultLable(runtimeConfig.getLabel());
 		additionalParameterComposite.attachWidget(additionalParameterLabel);
 		setPropertyHelpWidget((Control) additionalParameterLabel.getSWTWidgetControl());
@@ -113,7 +120,7 @@ public class InputAdditionalParametersWidget extends AbstractWidget {
 		this.schemaFields = getPropagatedSchema();
 		initialMap = new LinkedHashMap<>(initialMap);
 		InputAdditionalParametersDialog inputAdditionalParametersDialog = new InputAdditionalParametersDialog(shell,
-				runtimeConfig.getWindowLabel(), propertyDialogButtonBar, schemaFields, initialMap);
+				runtimeConfig.getWindowLabel(), propertyDialogButtonBar, schemaFields, initialMap,cursor);
 		inputAdditionalParametersDialog.open();
 		initialMap = inputAdditionalParametersDialog.getAdditionalParameterDetails();
 

@@ -251,6 +251,23 @@ public class Utils {
 		return PARAMETER_NOT_FOUND;
 	}
 	 
+	public String getParamValueForTextBox(String parameterValue) {
+		Optional<String> optional = Optional.of(parameterValue);
+		if (jobProps != null && !jobProps.isEmpty() && optional.isPresent() && parameterValue.contains("@{")) {
+			Enumeration<?> properties = jobProps.propertyNames();
+			while (properties.hasMoreElements()) {
+				String key = (String) properties.nextElement();
+				String value = jobProps.getProperty(key);
+				if (parameterValue.contains(key)) {
+					parameterValue = parameterValue.replace("@{" + key + "}", value);
+				}
+			}
+
+			return parameterValue;
+		}
+		return PARAMETER_NOT_FOUND;
+	}
+	
 	 /**
 	  * The function will remove last char of string.
 	 * @param value
@@ -304,6 +321,19 @@ public class Utils {
 		return paramValue;
 	}
 	 
+	 /**
+	 * 
+	 * get the file Path according to the Parameter value
+	 * @param extSchemaPath
+	 * @param paramValue
+	 * @param extSchemaPathText
+	 * @return the file Path according to the Parameter value
+	 */
+	public String getParamFilePathForText(String paramValue, Text extSchemaPathText) {
+		extSchemaPathText.setToolTipText(paramValue);
+		return paramValue;
+	}
+
 	 private boolean checkParameterValue(String value){
 		 boolean isParam = false;
 		 String[] splitString = value.split("/");
@@ -341,6 +371,18 @@ public class Utils {
 			extSchemaPathText.addMouseMoveListener(getMouseListner(extSchemaPathText));
 		} else {
 			extSchemaPathText.removeMouseMoveListener(getMouseListner(extSchemaPathText));
+			extSchemaPathText.setForeground(CustomColorRegistry.INSTANCE.getColorFromRegistry(0, 0, 0));
+			extSchemaPathText.setCursor(null);
+		}
+	}
+	
+	public void addMouseMoveListenerForTextBox(Text extSchemaPathText, Cursor cursor) {
+		if (extSchemaPathText.getText().contains("@{")) {
+			extSchemaPathText.setForeground(CustomColorRegistry.INSTANCE.getColorFromRegistry(0, 0, 255));
+			extSchemaPathText.setCursor(cursor);
+			extSchemaPathText.addMouseMoveListener(getMouseListnerForTextBox(extSchemaPathText));
+		} else {
+			extSchemaPathText.removeMouseMoveListener(getMouseListnerForTextBox(extSchemaPathText));
 			extSchemaPathText.setForeground(CustomColorRegistry.INSTANCE.getColorFromRegistry(0, 0, 0));
 			extSchemaPathText.setCursor(null);
 		}
@@ -419,6 +461,19 @@ public class Utils {
 		};
 		return listner;
 	}	
+	
+	
+	private MouseMoveListener getMouseListnerForTextBox(final Text extSchemaPathText) {
+		final MouseMoveListener listner = new MouseMoveListener() {
+
+			@Override
+			public void mouseMove(MouseEvent e) {
+				String paramValue = Utils.INSTANCE.getParamValueForTextBox(extSchemaPathText.getText());
+				finalParamPath = Utils.INSTANCE.getParamFilePathForText(paramValue, extSchemaPathText);
+			}
+		};
+		return listner;
+	}
 	 
 	 private File[]  listFilesForFolder(final File folder) {
 			File[] listofFiles = folder.listFiles();

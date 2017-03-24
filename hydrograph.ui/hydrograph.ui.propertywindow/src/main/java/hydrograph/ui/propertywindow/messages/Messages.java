@@ -419,7 +419,7 @@ public class Messages extends NLS {
 	public static String FETCH_SIZE_ERROR_DECORATOR_MESSAGE;
 	public static String ADDITIONAL_PARAMETER_ERROR_DECORATOR_MESSAGE;
 	public static String CHUNK_SIZE_ERROR_DECORATOR_MESSAGE;
-	
+	public static String DB_NUMERIC_PARAMETERZIATION_ERROR ;
 	
 	static {
 		// initialize resource bundle
