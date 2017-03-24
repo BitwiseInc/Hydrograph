@@ -14,6 +14,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -27,11 +28,12 @@ import org.eclipse.swt.widgets.Text;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.propertywindow.messages.Messages;
 import hydrograph.ui.propertywindow.propertydialog.PropertyDialogButtonBar;
+import hydrograph.ui.propertywindow.utils.Utils;
 import hydrograph.ui.propertywindow.widgets.dialogs.FieldDialogForDBComponents;
-import hydrograph.ui.propertywindow.widgets.listeners.ELTVerifyNumbericListener;
 import hydrograph.ui.propertywindow.widgets.listeners.ExtraURLParameterValidationForDBComponents;
 import hydrograph.ui.propertywindow.widgets.listeners.ListenerHelper;
 import hydrograph.ui.propertywindow.widgets.listeners.ListenerHelper.HelperType;
+import hydrograph.ui.propertywindow.widgets.listeners.VerifyNumericandParameterForDBComponents;
 import hydrograph.ui.propertywindow.widgets.utility.WidgetUtility;
 
 public class InputAdditionalParametersDialog extends Dialog {
@@ -59,6 +61,7 @@ public class InputAdditionalParametersDialog extends Dialog {
 	private Text additionalParameterTextBox;
 	private ControlDecoration additionalParameterControlDecoration;
 	private ControlDecoration partitionKeyControlDecoration;
+	private Cursor cursor;
 
 	/**
 	 * Create the dialog.
@@ -68,10 +71,11 @@ public class InputAdditionalParametersDialog extends Dialog {
 	 * @param propertyDialogButtonBar
 	 * @param schemaFields
 	 * @param initialMap
+	 * @param cursor 
 	 */
 	public InputAdditionalParametersDialog(Shell parentShell, String windowTitle,
 			PropertyDialogButtonBar propertyDialogButtonBar, List<String> schemaFields,
-			Map<String, Object> initialMap) {
+			Map<String, Object> initialMap, Cursor cursor) {
 		super(parentShell);
 		setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.WRAP | SWT.APPLICATION_MODAL);
 		if (StringUtils.isNotBlank(windowTitle))
@@ -81,6 +85,7 @@ public class InputAdditionalParametersDialog extends Dialog {
 		this.propertyDialogButtonBar = propertyDialogButtonBar;
 		this.schemaFields = schemaFields;
 		this.additionalParameterValue = initialMap;
+		this.cursor = cursor;
 	}
 
 	/**
@@ -212,17 +217,17 @@ public class InputAdditionalParametersDialog extends Dialog {
 		ExtraURLParameterValidationForDBComponents extraURLParameterValidation = new ExtraURLParameterValidationForDBComponents();
 		ListenerHelper helper = new ListenerHelper();
 		helper.put(HelperType.CONTROL_DECORATION, additionalParameterControlDecoration);
-		additionalParameterTextBox.addListener(SWT.Verify,
+		additionalParameterTextBox.addListener(SWT.Modify,
 				extraURLParameterValidation.getListener(propertyDialogButtonBar, helper, additionalParameterTextBox));
 	}
 
 	private void addValidationToWidgets(Text textBox, ControlDecoration txtDecorator) {
 
-		ELTVerifyNumbericListener numericValidationForDBComponents = new ELTVerifyNumbericListener();
+		VerifyNumericandParameterForDBComponents numericValidationForDBComponents = new VerifyNumericandParameterForDBComponents();
 		ListenerHelper helper = new ListenerHelper();
 		helper.put(HelperType.CONTROL_DECORATION, txtDecorator);
 
-		textBox.addListener(SWT.Verify,
+		textBox.addListener(SWT.Modify,
 				numericValidationForDBComponents.getListener(propertyDialogButtonBar, helper, textBox));
 	}
 
@@ -240,7 +245,9 @@ public class InputAdditionalParametersDialog extends Dialog {
 						partitionKeyLowerBoundControlDecoration.show();
 						partitionKeyUpperBoundControlDecoration.show();
 					}
-					partitionKeyControlDecoration.show();
+					if(StringUtils.isBlank(selectedPartitionKey) && StringUtils.isEmpty(selectedPartitionKey)){
+						partitionKeyControlDecoration.show();
+					}
 				}
 				propertyDialogButtonBar.enableApplyButton(true);
 			}
@@ -261,6 +268,9 @@ public class InputAdditionalParametersDialog extends Dialog {
 							|| StringUtils.isBlank(partitionKeyUpperBoundTextBox.getText())) {
 						partitionKeyLowerBoundControlDecoration.show();
 						partitionKeyUpperBoundControlDecoration.show();
+					}
+					if(StringUtils.isBlank(selectedPartitionKey) && StringUtils.isEmpty(selectedPartitionKey)){
+						partitionKeyControlDecoration.show();
 					}
 				}
 
@@ -285,6 +295,7 @@ public class InputAdditionalParametersDialog extends Dialog {
 		if (additionalParameterValue != null && !additionalParameterValue.isEmpty()) {
 			if (additionalParameterValue.get(Constants.NO_OF_PARTITION) != null) {
 				noOfPartitionsTextBox.setText(additionalParameterValue.get(Constants.NO_OF_PARTITION).toString());
+				Utils.INSTANCE.addMouseMoveListenerForTextBox(noOfPartitionsTextBox, cursor);
 				if (StringUtils.isNotBlank((String) additionalParameterValue.get(Constants.DB_PARTITION_KEY))) {
 					partitionKeyButton.setEnabled(true);
 					partitionKeyControlDecoration.hide();
@@ -294,6 +305,7 @@ public class InputAdditionalParametersDialog extends Dialog {
 				if (additionalParameterValue.get(Constants.PARTITION_KEY_LOWER_BOUND) != null) {
 					partitionKeyLowerBoundTextBox
 							.setText(additionalParameterValue.get(Constants.PARTITION_KEY_LOWER_BOUND).toString());
+					Utils.INSTANCE.addMouseMoveListenerForTextBox(partitionKeyLowerBoundTextBox, cursor);
 					partitionKeyLowerBoundControlDecoration.hide();
 				} else {
 					partitionKeyLowerBoundControlDecoration.show();
@@ -301,6 +313,7 @@ public class InputAdditionalParametersDialog extends Dialog {
 				if (additionalParameterValue.get(Constants.PARTITION_KEY_UPPER_BOUND) != null) {
 					partitionKeyUpperBoundTextBox
 							.setText(additionalParameterValue.get(Constants.PARTITION_KEY_UPPER_BOUND).toString());
+					Utils.INSTANCE.addMouseMoveListenerForTextBox(partitionKeyUpperBoundTextBox, cursor);
 					partitionKeyUpperBoundControlDecoration.hide();
 				} else {
 					partitionKeyUpperBoundControlDecoration.show();
@@ -308,6 +321,7 @@ public class InputAdditionalParametersDialog extends Dialog {
 			}
 			if (StringUtils.isNotBlank((String) additionalParameterValue.get(Constants.FECTH_SIZE))) {
 				fetchSizeTextBox.setText((String) additionalParameterValue.get(Constants.FECTH_SIZE));
+				Utils.INSTANCE.addMouseMoveListenerForTextBox(fetchSizeTextBox, cursor);
 				fetchSizeControlDecoration.hide();
 			} else {
 				fetchSizeTextBox.setText("1000");

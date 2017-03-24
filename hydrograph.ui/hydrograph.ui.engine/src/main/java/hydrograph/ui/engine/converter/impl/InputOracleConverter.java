@@ -28,10 +28,14 @@ import hydrograph.engine.jaxb.inputtypes.Oracle;
 import hydrograph.engine.jaxb.ioracle.TypeInputOracleOutSocket;
 import hydrograph.engine.jaxb.ioracle.TypePartitionsChoice;
 import hydrograph.ui.common.util.Constants;
+import hydrograph.ui.common.util.ParameterUtil;
 import hydrograph.ui.datastructure.property.DatabaseSelectionConfig;
 import hydrograph.ui.datastructure.property.GridRow;
 import hydrograph.ui.engine.constants.PropertyNameConstants;
 import hydrograph.ui.engine.converter.InputConverter;
+import hydrograph.ui.engine.xpath.ComponentXpath;
+import hydrograph.ui.engine.xpath.ComponentXpathConstants;
+import hydrograph.ui.engine.xpath.ComponentsAttributeAndValue;
 import hydrograph.ui.graph.model.Component;
 import hydrograph.ui.graph.model.Link;
 import hydrograph.ui.logging.factory.LogFactory;
@@ -144,6 +148,7 @@ public class InputOracleConverter extends InputConverter {
 				.get(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value());
 		
 		if (uiValue != null) {
+			
 			if (StringUtils.isNotBlank((String) uiValue.get(Constants.FECTH_SIZE))) {
 				ElementValueStringType fetchSize = new ElementValueStringType();
 				fetchSize.setValue(String.valueOf(uiValue.get(Constants.FECTH_SIZE)));
@@ -159,8 +164,10 @@ public class InputOracleConverter extends InputConverter {
 				TypePartitionsChoice typePartitionsChoice = new TypePartitionsChoice();
 
 				if (uiValue.get(Constants.NO_OF_PARTITION) !=null) {
-					BigInteger no_of_partitions = new BigInteger(
-							String.valueOf(uiValue.get(Constants.NO_OF_PARTITION)));
+					/*BigInteger no_of_partitions = new BigInteger(
+							String.valueOf(uiValue.get(Constants.NO_OF_PARTITION)));*/
+					BigInteger no_of_partitions = getParamValue(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value(),
+							Constants.NO_OF_PARTITION);
 					typePartitionsChoice.setValue(no_of_partitions);
 				}
 				if (StringUtils.isNotBlank((String) uiValue.get(Constants.DB_PARTITION_KEY))) {
@@ -170,15 +177,15 @@ public class InputOracleConverter extends InputConverter {
 				}
 				if (uiValue.get(Constants.PARTITION_KEY_LOWER_BOUND) !=null) {
 					ElementValueIntegerType partition_key_lower_bound = new ElementValueIntegerType();
-					BigInteger partition_lower_bound = new BigInteger(
-							String.valueOf(uiValue.get(Constants.PARTITION_KEY_LOWER_BOUND)));
+					BigInteger partition_lower_bound = getParamValue(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value(),
+							Constants.PARTITION_KEY_LOWER_BOUND);
 					partition_key_lower_bound.setValue(partition_lower_bound);
 					typePartitionsChoice.setLowerBound(partition_key_lower_bound);
 				}
 				if (uiValue.get(Constants.PARTITION_KEY_UPPER_BOUND) !=null) {
 					ElementValueIntegerType partition_key_upper_bound = new ElementValueIntegerType();
-					BigInteger partition_upper_bound = new BigInteger(
-							String.valueOf(uiValue.get(Constants.PARTITION_KEY_UPPER_BOUND)));
+					BigInteger partition_upper_bound = getParamValue(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value(),
+							Constants.PARTITION_KEY_UPPER_BOUND);
 					partition_key_upper_bound.setValue(partition_upper_bound);
 					typePartitionsChoice.setUpperBound(partition_key_upper_bound);
 				}
@@ -201,5 +208,21 @@ public class InputOracleConverter extends InputConverter {
 		}
 		return typeBaseFields;
 	}
-
+	
+	public BigInteger getParamValue(String propertyName , String nameOfFeild){
+		BigInteger bigInteger = null;
+		Map<String,String> propertyValue = (Map<String, String>) properties.get(propertyName);
+		if (StringUtils.isNotBlank(propertyValue.get(nameOfFeild)) && StringUtils.isNumeric(propertyValue.get(nameOfFeild))) {
+			bigInteger = new BigInteger(String.valueOf(propertyValue.get(nameOfFeild)));
+		} else if (ParameterUtil.isParameter(propertyValue.get(nameOfFeild))) {
+			ComponentXpath.INSTANCE.getXpathMap()
+					.put((ComponentXpathConstants.COMPONENT_XPATH_BOOLEAN.value().replace(ID, component.getComponentId()))
+							.replace(Constants.PARAM_PROPERTY_NAME, propertyName),
+							new ComponentsAttributeAndValue(null, properties.get(propertyName).toString()));
+			bigInteger = new BigInteger(String.valueOf(0));
+		}
+		return bigInteger;
+		
+	}
+	
 }
