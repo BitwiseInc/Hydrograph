@@ -53,7 +53,7 @@
 		<li><span><b>Batch</b> - Batch simply accepts a numeric number starting from 0 to maximum 99 and signifies the batch this component will execute in. By default this is 0.</span></li>
 	</ul>
 	
-	<p><b>Schema tab: </b></font></p>
+	<p><a name="schema_tab"></a><b>Schema tab: </b></font></p>
 	
 	<p><img alt="" src="../../images/Input_Xml_Properties_Schema.png" /></p>
 	<a name="schema_tab"></a><p><span><b>Schema Types</b></span></p>
@@ -70,6 +70,29 @@
 		<li><span><b>External</b> - User can provide an external Hydrograph Schema file of XML format. A text box is provided to either manually type or use the Browse button to select the schema file from File system. The External schema file path is resolved during run time and replaced with the contents of the file in the Job XML.</span></li>
 	</ul>	
 	
+	
+<p>
+		<a name="validations"></a><span><b>Validations</b></span>
+	</p>
+	<p>
+		<span>The Input xml components applies validations to the mandatory fields. Upon placing the 
+			Input xml component on job canvas for the first time (from component palette), the component shows up a warning icon as
+			mandatory properties are not provided.</span>
+	</p>
+	<img alt="To be updated" src="../../images/input_xml_warning_icon.PNG"  />
+
+	<p>
+		<span>The properties window also displays error icon on mandatory fields if it has an incorrect value. The error icon
+			is displayed on the tab as well, if any of the field within the tab has some error.</span>
+	</p>
+	<img alt="To be updated" src="../../images/input_xml_property_validation.png" />
+
+	<p>
+		<span>If the properties window has some error even after user visit's it once, then the warning icon on the Input xml 
+			component on the job canvas changes to error icon. This error icon is removed only when all the mandatory fields are supplied
+			with correct values.</span>
+	</p>
+	<img alt="To be updated" src="../../images/input_xml_error_icon.PNG" />
 	<p>&nbsp;</p>
 	
 	<ul>

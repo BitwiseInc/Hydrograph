@@ -18,7 +18,6 @@
 <toc label="Transform" link_to="xml/Components.xml#TransformComponents"> 
    <topic href="html/Components/transform/Aggregate.html" label="Aggregate">
       <anchor id="Aggregate"/>
-      <link toc="xml/Components/transform/aggregate.xml"/>
    </topic>
    <topic href="html/Components/transform/GroupCombine.html" label="GroupCombine">
       <anchor id="GroupCombine"/>

@@ -30,8 +30,8 @@
 	</p>
 
 	<p>
-		<span><b><a name="general_properties"></a>General
-				Properties:</b></span>
+		<span class="header-2"><a name="general_properties"></a>General
+				Properties:</span>
 	</p>
 
 	<p>
@@ -39,22 +39,20 @@
 	</p>
 
 	<p>
-		<span><b>Display</b></span>
+		<span class="header-2">Display</span>
 	</p>
 
 	<ul>
 		<li><span><b>Name</b> - The Name field will specify the
 				name of the component as desired by the user.</span></li>
-		<li><span><b>Base Type</b> - Base Type signifies the basic
-				operation area of the component. In this case it is of Base Type
-				Straight Pull.</span></li>
+				<li><span><b>ID</b> - ID field will specify unique id for every component. </span></li>
 		<li><span><b>Type </b> - Type further categorizes the
 				component to detailed operation that it intends to perform. Here it
 				is of type Clone.</span></li>
 	</ul>
 
 	<p>
-		<span><b>Configuration</b></span>
+		<span class="header-2">Configuration</b></span>
 	</p>
 
 	<ul>
@@ -81,8 +79,10 @@
 	<p>
 		<a name="validations"></a><span class="header-2">Validations</span>
 	</p>
-	<ul>
-		<li><p>
+	
+	<p><span>The Clone components applies validations to the mandatory fields as described above. Upon placing the clone component on job canvas for the first time (from component palette), the component shows up a warning icon as mandatory properties are not provided.</span></p>
+	<img src="../../images/Clone_Validation_Warning.PNG" alt="Warning icon displayed on component" />
+	<p>
 				<span>The properties window also displays error icon on
 					mandatory fields if it has an incorrect value.</span>
 			</p>
@@ -95,7 +95,10 @@
 			</p>
 			<p>
 				<img alt="" src="../../images/Clone_properties_Batch_Validation.png" />
-			</p></li>
+			</p>
+	<p><span>If the properties window has some error even after user visit's it once, then the error icon appears on clone component. This error icon is removed only when all the mandatory fields are supplied with correct values.</span></p>
+	<img src="../../images/Clone_Validation_Error.PNG" alt="Error icon displayed on component" />
+</li>
 	</ul>
 
 </body>
