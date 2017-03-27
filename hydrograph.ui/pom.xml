@@ -23,16 +23,45 @@
 
 	</properties>
 
-
+<!--
+	We are using below repository url for building Neon based Hydrograph build.
+	<repository>
+			<id>neon</id>
+			<url>http://download.eclipse.org/releases/neon/</url>
+			<layout>p2</layout>
+		</repository>
+	This url provides 4 different locations to download the required dependencies for Neon based RCp application.
+	After 23/3/2017, UI builds were failing because of 2 new locations(releases locations by eclipse after their build schedule) were added by eclipse.
+	We could observe that the new URL' contain 2 versions of below jar and same might be reason for build failure.
+		com.google.guava
+	As a temporary fix we are adding the below URL's.
+	We have also raised a Bug in Eclipse Bugzilla, Bug 514224(https://bugs.eclipse.org/bugs/show_bug.cgi?id=514224) 		
+	Once the issue is solved we will revert below changes.		
+ -->
 	<repositories>
 		<repository>
-			<id>mars</id>
-			<url>${neon-repo.url}</url>
+			<id>neon1</id>
+			<url>http://download.eclipse.org/releases/neon/201606221000/</url>
+			<layout>p2</layout>
+		</repository>
+		<repository>
+			<id>neon2</id>
+			<url>http://download.eclipse.org/releases/neon/201609281000/</url>
+			<layout>p2</layout>
+		</repository>
+		<repository>
+			<id>neon3</id>
+			<url>http://download.eclipse.org/releases/neon/201610111000/</url>
+			<layout>p2</layout>
+		</repository>
+		<repository>
+			<id>neon4</id>
+			<url>http://download.eclipse.org/releases/neon/201612211000/</url>
 			<layout>p2</layout>
 		</repository>
 
 		<repository>
-			<id>marsx</id>
+			<id>neonx</id>
 			<url>http://download.eclipse.org/e4/snapshots/org.eclipse.e4.tools/latest/</url>
 			<layout>p2</layout>
 		</repository>
