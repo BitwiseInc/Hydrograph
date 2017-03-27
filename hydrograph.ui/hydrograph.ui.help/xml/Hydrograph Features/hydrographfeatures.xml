@@ -40,7 +40,7 @@
       <topic href="html/Hydrograph Features/Execution_Tracking_Window.html#Execution-Tracking-Console" label="Execution tracking console">
       </topic>
     </topic>
-    <topic href="html/Components/Comment_Box.html" label="Comment Box">
+    <topic href="html/Components/transform/Comment_Box.html" label="Comment Box">
       <anchor id="Comment_Box"/>
    </topic>
     <topic href="html/Hydrograph Features/Schema_Propagation.html" label="Schema Propagation">

@@ -17,13 +17,11 @@
 </head>
 <body>
 <p>
-	<span class="code">hydrograph.engine.transformation.userfunctions.base</span>
 	<br />
 	<span class="header-1">GroupCombineTransformBase</span>
 </p>
-<span class="code">java.lang.Object</span><br />
-<span style="padding-left:20pt" class="code">hydrograph.engine.transformation.userfunctions.base.GroupCombineTransformBase</span>
-<p><span>The GroupCombineTransformBase interface is the base interface for all the custom classes defined for transformation in <a href="../../components/GroupCombine.html">GroupCombine</a> component. This interface exposes methods that enable users to perform custom GroupCombine functions.</span></p>
+
+<p><span>The GroupCombineTransformBase interface is the base interface for all the custom classes defined for transformation in <a href="../../Components/transform/GroupCombine.html">GroupCombine</a> component. This interface exposes methods that enable users to perform custom GroupCombine functions.</span></p>
 <p><span>Following are the in-build GroupCombine operation classes. They implement GroupCombineTransformBase interface:</span></p>
 <ul>
 	<li><span><a href="Count.html">Count</a></span></li>
@@ -85,7 +83,7 @@
 <a name="mth_onCompleteGroup" id="mth_onCompleteGroup"></a>
 <p><span class="header-3">onCompleteGroup</span></p>
 <p><span class="code">public void onCompleteGroup(<a href="../ReusableRow.html">ReusableRow</a> output)</span></p>
-<p><span>The method <span class="code">onCompleteGroup()</span> is called after processing each group. The groups are defined using <a href="../../Components/GroupCombine_Properties.html#key_fields">key fields</a> option on <a href="../../Components/GroupCombine_Properties.html">GroupCombine properties</a> window.</span></p>
+<p><span>The method <span class="code">onCompleteGroup()</span> is called after processing each group. The groups are defined using <a href="../../Components/transform/GroupCombine_Properties.html#key_fields">key fields</a> option on <a href="../../Components/transform/GroupCombine_Properties.html">GroupCombine properties</a> window.</span></p>
 <p><span>The result of the GroupCombine operation should be committed to the output row in this method.</span></p>
 <p><span>The parameter <span class="code">output</span> holds the current output row.  Refer the documentation of <a href="../ReusableRow.html">ReusableRow</a> class to get information on accessing individual field of the output row.</span></p>
 <p><span>This method is called multiple times in the entire lifecycle of the GroupCombine component. The method is invoked after completion of each group.</span></p>
@@ -98,15 +96,15 @@
 <span><b>Parameters</b></span>
 
 <p><span class="code"><b>props</b></span><br />
-<span>The <span class="code">props</span> object holds the operation properties supplied to the GroupCombine component using <a href="../../Components/GroupCombine_Operation_Class_Window.html#Operation_Properties_Grid">operation properties grid</a> on <a href="../../Components/GroupCombine_Operation_Class_Window.html">operation class window</a>. The individual properties are wrapped as key-value pairs in the <span class="code">props</span> object.</span></p>
+<span>The <span class="code">props</span> object holds the operation properties supplied to the GroupCombine component using <a href="../../Components/transform/GroupCombine_Operation_Class_Window.html#Operation_Properties_Grid">operation properties grid</a> on <a href="../../Components/transform/GroupCombine_Operation_Class_Window.html">operation class window</a>. The individual properties are wrapped as key-value pairs in the <span class="code">props</span> object.</span></p>
 
 <p><span class="code"><b>inputFields</b></span><br />
-<span>The <span class="code">inputFields</span> object holds the input field names supplied to the GroupCombine component using using <a href="../../Components/GroupCombine_Operation_Editor.html#operation_input_fields">operation input fields</a> option on <a href="../../Components/GroupCombine_Operation_Editor.html">GroupCombine operation editor</a> window.</span></p>
+<span>The <span class="code">inputFields</span> object holds the input field names supplied to the GroupCombine component using using <a href="../../Components/transform/GroupCombine_Operation_Editor.html#operation_input_fields">operation input fields</a> option on <a href="../../Components/transform/GroupCombine_Operation_Editor.html">GroupCombine operation editor</a> window.</span></p>
 
 <p><span class="code"><b>outputFields</b></span><br />
-<span>The <span class="code">outputFields</span> object holds the output field names supplied to the GroupCombine component using <a href="../../Components/GroupCombine_Operation_Editor.html#operation_output_fields">operation output fields</a> option on <a href="../../Components/GroupCombine_Operation_Editor.html">GroupCombine operation editor</a> window.</span></p>
+<span>The <span class="code">outputFields</span> object holds the output field names supplied to the GroupCombine component using <a href="../../Components/transform/GroupCombine_Operation_Editor.html#operation_output_fields">operation output fields</a> option on <a href="../../Components/transform/GroupCombine_Operation_Editor.html">GroupCombine operation editor</a> window.</span></p>
 
 <p><span class="code"><b>keyFields</b></span><br />
-<span>The <span class="code">keyFields</span> object holds the key field names supplied to the GroupCombine component using <a href="../../Components/GroupCombine_Properties.html#key_fields">key fields</a> option on <a href="../../Components/GroupCombine_Properties.html">GroupCombine properties</a> window.</span></p>
+<span>The <span class="code">keyFields</span> object holds the key field names supplied to the GroupCombine component using <a href="../../Components/transform/GroupCombine_Properties.html#key_fields">key fields</a> option on <a href="../../Components/transform/GroupCombine_Properties.html">GroupCombine properties</a> window.</span></p>
 
 </body>

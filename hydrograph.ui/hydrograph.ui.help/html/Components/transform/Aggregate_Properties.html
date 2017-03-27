@@ -35,7 +35,7 @@
 		<li><span>Must be unique across the job.</span></li>
 		<li><span>Accepts only alphabets (a-z), numerals (0-9) and 4 special characters: "_", "-", ",", " " (space)<./span></li>
 	</ul>
-	<li><span><b>Base Type</b> - Base Type signifies the category of the component. Aggregate is of base type Transform. This is a non editable field.</span></li>
+	<li><span><b>ID</b> - ID field will specify unique id for every component. </span></li>
 	<li><span><b>Type</b> - Type defines the type of component within the category. This typically is the name of the component. This is a non editable field.</span></li>
 </ul>
 
@@ -73,7 +73,7 @@
 <p><span>Schema is <b>mandatory</b> for aggregate component. Schema tab defines the record format on the out port of the aggregate component. A field in schema has multiple attributes as described below.</span></p>
 <ul>
 	<li><span><b>Field Name</b> - The name for the field. This is a mandatory attribute.</span></li>
-	<li><span><b>Data type</b> - The data type for the field. This is a mandatory attribute. The default data type is "String". Check <a href="../../references/SupportedDataTypes.html">supported data types</a> page for list of supported data types.</span></li>
+	<li><span><b>Data type</b> - The data type for the field. This is a mandatory attribute. The default data type is "String". Check supported data types page for list of supported data types.</span></li>
 	<li><span><b>Scale</b> - The number of digits to the right of decimal point. Scale is defined for Double, Float or BigDecimal field.</span></li>
 	<li><span><b>Scale Type</b> – Scale Type accepts values as implicit or explicit for BigDecimal field and none for other data types. Explicit considers the length of '.' in precision and implicit ignores length of '.' precision for the BigDecimal field.</span></li>
 	<li><span><b>Date Format</b> - The format for date data type. Refer to <a href="../../references/Date_formats.html">Date formats</a> page for acceptable date formats.</span></li>
@@ -92,7 +92,7 @@
 <img src="../../images/Aggregate_Properties_Validation.png" alt="Error icon displayed on tabs" />
 
 <p><span>If the properties window has some error even after user visit's it once, then the warning icon on the aggregate component on the job canvas changes to error icon. This error icon is removed only when all the mandatory fields are supplied with correct values.</span></p>
-<img src="../../images/Aggregate_Validation_Error.png" alt="Error icon displayed on component" />
+<img src="../../images/Aggregate_Validation_Error.PNG" alt="Error icon displayed on component" />
 
 </body>
 </html>
