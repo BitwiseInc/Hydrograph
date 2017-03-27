@@ -57,7 +57,7 @@ class InputSparkRedshiftComponent(inputRDBMSEntity: InputRDBMSEntity, iComponent
       + " reading data using query '" + selectQuery + "'")
 
     val connectionURL = "jdbc:redshift://" + inputRDBMSEntity.getHostName + ":" + inputRDBMSEntity.getPort() + "/" +
-      inputRDBMSEntity.getDatabaseName + "?user=" + inputRDBMSEntity.getUsername + "&password=" + inputRDBMSEntity.getPassword;
+      inputRDBMSEntity.getDatabaseName
 
     LOG.info("Connection  url for input Spark Redshift  component: " + connectionURL)
 
@@ -66,6 +66,8 @@ class InputSparkRedshiftComponent(inputRDBMSEntity: InputRDBMSEntity, iComponent
         .format("com.databricks.spark.redshift")
         .option("url", connectionURL)
         .option("query", selectQuery)
+        .option("user", inputRDBMSEntity.getUsername)
+        .option("password", inputRDBMSEntity.getPassword)
         .option("tempdir", inputRDBMSEntity.getTemps3dir)
 
       val df = getDataFrameReader(sparkSession.sparkContext.hadoopConfiguration,dataFrameReader, properties).load
