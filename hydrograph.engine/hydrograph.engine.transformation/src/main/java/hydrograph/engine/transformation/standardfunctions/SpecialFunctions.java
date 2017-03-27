@@ -21,13 +21,13 @@ public class SpecialFunctions {
      * if {@code keyValues} is null return null
      * if {@code keyValues} does not contain default throw exception
      */
-    public static String decode(String inputValue,String ... keyValues) throws Exception{
+    public static String decode(String inputValue,String... keyValues) throws RuntimeException{
 
         if(keyValues==null)
             return null;
         int keyValuesSize = keyValues.length;
         if(keyValuesSize%2==0)
-            throw new Exception("keyValues are even in number, default value is required");
+            throw new RuntimeException("keyValues are even in number, default value is required");
 
         int inputValuePos = Arrays.asList(keyValues).indexOf(inputValue);
 

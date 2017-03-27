@@ -120,4 +120,71 @@ public class NumericFunctionsTest {
             parseException.printStackTrace();
         }
     }
+
+    @Test
+    public void testNumericLeftPadding() {
+        String actual = NumericFunctions.numericLeftPad(9999999, 10, '*');
+        Assert.assertEquals(actual, "***9999999");
+    }
+
+    @Test
+    public void testNumericLeftPadOnInteger() {
+        String actual = NumericFunctions.numericLeftPad(9999999, 10, '*');
+        Assert.assertEquals(actual, "***9999999");
+    }
+
+    @Test
+    public void testNumericLeftPadOnIntegerInputSizeEqualsRequiredSize() {
+        String actual = NumericFunctions.numericLeftPad(999999, 6, '*');
+        Assert.assertEquals(actual, "999999");
+    }
+
+    @Test
+    public void testNumericLeftPadOnIntegerNegativeInteger() {
+        String actual = NumericFunctions.numericLeftPad(-999999, 10, '0');
+        Assert.assertEquals(actual, "-000999999");
+    }
+
+    @Test
+    public void testNumericRightPadding() {
+        String actual = NumericFunctions.numericRightPad(99999, 10, '*');
+        Assert.assertEquals(actual, "99999*****");
+    }
+
+    @Test
+    public void testNumericRightPadOnInteger() {
+        String actual = NumericFunctions.numericRightPad(9999999, 10, '*');
+        Assert.assertEquals(actual, "9999999***");
+    }
+
+    @Test
+    public void testNumericRightPadOnIntegerInputSizeEqualsRequiredSize() {
+        String actual = NumericFunctions.numericRightPad(999999, 6, '*');
+        Assert.assertEquals(actual, "999999");
+    }
+
+    @Test
+    public void testNumericRightPadOnIntegerNegativeInteger() {
+        String actual = NumericFunctions.numericRightPad(-999999, 10, '#');
+        Assert.assertEquals(actual, "-999999###");
+    }
+
+    @Test
+    public void testStringToChar() {
+        String resultShort = NumericFunctions.toChar((short) 10);
+        String resultInteger = NumericFunctions.toChar(10);
+        String resultLong = NumericFunctions.toChar(10L);
+        String resultFloat = NumericFunctions.toChar(10.1f);
+        String resultDouble = NumericFunctions.toChar(10.121);
+        String resultBigDecimal1 = NumericFunctions.toChar(new BigDecimal(121.23).setScale(2, BigDecimal.ROUND_DOWN));
+        String resultBigDecimal2 = NumericFunctions.toChar(new BigDecimal(5646754.453), 2);
+
+        Assert.assertEquals(resultShort, "10");
+        Assert.assertEquals(resultInteger, "10");
+        Assert.assertEquals(resultLong, "10");
+        Assert.assertEquals(resultFloat, "10.1");
+        Assert.assertEquals(resultDouble, "10.121");
+        Assert.assertEquals(resultBigDecimal1, "121.23");
+        Assert.assertEquals(resultBigDecimal2, "5646754.45");
+    }
 }

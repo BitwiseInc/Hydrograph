@@ -941,19 +941,6 @@ public class StringFunctions {
     }
 
     /**
-     * This function pads the left side of the {@code input} with the specified character to match the specified character length
-     *
-     * @param input   the integer value to be validated
-     * @param size    the size of String in int
-     * @param padChar the padding character in String
-     * @return String after applying left padding on {@code input}
-     */
-    public static String numericLeftPad(Integer input, int size, char padChar) {
-
-        return (input < 0) ? "-" + stringLeftPad(NumericFunctions.mathAbs(input).toString(), size - 1, padChar) : stringLeftPad(input.toString(), size, padChar);
-    }
-
-    /**
      * Right pads the {@code inputValue} with {@code paddingCharacter}
      *
      * @param inputValue       the input value to right pad
@@ -974,18 +961,6 @@ public class StringFunctions {
             padCharString += paddingCharacter;
 
         return inputValue + padCharString;
-    }
-
-    /**
-     * This function pads the right side of the {@code inputValue} with the character {@code padChar} to match the length {@code size}
-     *
-     * @param input   the integer value to be validated
-     * @param size    the size of String in int
-     * @param padChar the padding character in String
-     * @return new String after applying right padding on {@code input}
-     */
-    public static String numericRightPad(Integer input, int size, char padChar) {
-        return stringRightPad(input.toString(), size, padChar);
     }
 
     /**
@@ -1046,83 +1021,5 @@ public class StringFunctions {
             startsWith = true;
         }
         return startsWith;
-    }
-
-    /**
-     * Returns string of numeric {@code input}
-     *
-     * @param input  input to be converted to string
-     * @return string of numeric value
-     *         return null if {@code input} is null
-     */
-    public static String toChar(Short input) {
-        return (input == null) ? null : input.toString();
-    }
-
-    /**
-     * Returns string of numeric {@code input}
-     *
-     * @param input  input to be converted to string
-     * @return string of numeric value
-     *         return null if {@code input} is null
-     */
-    public static String toChar(Integer input) {
-        return (input == null) ? null : input.toString();
-    }
-
-    /**
-     * Returns string of numeric {@code input}
-     *
-     * @param input  input to be converted to string
-     * @return string of numeric value
-     *         return null if {@code input} is null
-     */
-    public static String toChar(Long input) {
-        return (input == null) ? null : input.toString();
-    }
-
-    /**
-     * Returns string of numeric {@code input}
-     *
-     * @param input  input to be converted to string
-     * @return string of numeric value
-     *         return null if {@code input} is null
-     */
-    public static String toChar(Float input) {
-        return (input == null) ? null : input.toString();
-    }
-
-    /**
-     * Returns string of numeric {@code input}
-     *
-     * @param input  input to be converted to string
-     * @return string of numeric value
-     *         return null if {@code input} is null
-     */
-    public static String toChar(Double input) {
-        return (input == null) ? null : input.toString();
-    }
-
-    /**
-     * Returns string of numeric {@code input}
-     *
-     * @param input  input to be converted to string
-     * @return string of numeric value
-     *         return null if {@code input} is null
-     */
-    public static String toChar(BigDecimal input) {
-        return (input == null) ? null : input.toString();
-    }
-
-    /**
-     * Returns string of numeric {@code input}
-     *
-     * @param input  input to be converted to string
-     * @param scale the number of digits to the right of the decimal point
-     * @return string of numeric value
-     *         return null if {@code input} is null
-     */
-    public static String toChar(BigDecimal input, int scale) {
-        return (input == null) ? null : NumericFunctions.truncate(input,scale).toString();
     }
 }
