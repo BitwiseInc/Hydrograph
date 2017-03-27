@@ -50,7 +50,7 @@ class OutputSparkRedshiftComponent(outputRDBMSEntity: OutputRDBMSEntity, oCompon
     properties.setProperty("driver", Constants.REDSHIFT_DRIVER_NAME)
 
     val connectionURL = "jdbc:redshift://" + outputRDBMSEntity.getHostName + ":" + outputRDBMSEntity.getPort() + "/" +
-      outputRDBMSEntity.getDatabaseName + "?user=" + outputRDBMSEntity.getUsername + "&password=" + outputRDBMSEntity.getPassword
+      outputRDBMSEntity.getDatabaseName
 
     LOG.info("Created Output Spark Redshift Component '" + outputRDBMSEntity.getComponentId
       + "' in Batch " + outputRDBMSEntity.getBatch
@@ -80,6 +80,8 @@ class OutputSparkRedshiftComponent(outputRDBMSEntity: OutputRDBMSEntity, oCompon
       .format("com.databricks.spark.redshift")
       .option("tempdir", outputRDBMSEntity.getTemps3dir)
       .option("url", connectionURL)
+      .option("user", outputRDBMSEntity.getUsername)
+      .option("password", outputRDBMSEntity.getPassword)
       .option("dbtable", outputRDBMSEntity.getTableName)
 
     getDataFrameWriter(oComponentsParams.getSparkSession().sparkContext.hadoopConfiguration, dataFrameWriter, properties).mode("append").save()
