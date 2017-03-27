@@ -1,32 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-    http://www.apache.org/licenses/LICENSE-2.0
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License
- -->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
-<p:graph name="DelimitedInputAndTeradataOutput" xmlns:p="hydrograph/engine/jaxb/main"
+<p:graph name="TeradataInputAndDelimitedOutput" xmlns:p="hydrograph/engine/jaxb/main"
          xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd  ">
+         xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd">
 
-    <inputs id="input1" batch="0" xsi:type="it:textFileDelimited">
+
+    <inputs id="inputTeradata" batch="0" xsi:type="it:teradata">
         <outSocket id="out0">
-            <schema name="outSchema">
+            <schema name="schema1">
                 <field name="applyingFor" type="java.lang.String" />
                 <field name="apptype" type="java.lang.String" />
                 <field name="bookletType" type="java.lang.String" />
                 <field name="givennameapplicant" type="java.lang.String" />
                 <field name="surnameapplicant" type="java.lang.String" />
                 <field name="gender" type="java.lang.String" />
-                <field name="alias1" type="java.lang.Boolean" />
+                <field name="alias1" type="java.lang.Integer" />
                 <field name="checkPrevName" type="java.lang.Boolean" />
                 <field name="dt_dob" type="java.util.Date" format="yyyy/MM/dd" />
                 <field name="validityRequired" type="java.lang.Boolean" />
@@ -74,21 +75,32 @@
                 <field name="ecDateofIssue" type="java.util.Date" format="yyyy/MM/dd" />
             </schema>
         </outSocket>
-        <path uri="hydrograph.engine.spark/testData/inputFiles/250mb.txt" />
-        <delimiter value="," />
-        <hasHeader value="false" />
+        <databaseName value="hydrograph_db" />
+        <hostName value="10.130.250.235" />
+        <port value="1025" />
+        <jdbcDriver value="TeraJDBC4" />
+        <!--<numPartitions value="7">
+            <lowerBound value="110"/>
+            <upperBound value="116"/>
+            <columnName value="yearofApplying"/>
+        </numPartitions>-->
+        <fetchSize value="100000"/>
+        <tableName value="benchmarking_00100" />
+        <exportOptions value="FASTEXPORT"/>
+        <username value="hydrograph1" />
+        <password value="teradata" />
     </inputs>
 
-    <outputs id="outputTeradata" xsi:type="ot:teradata">
-        <inSocket fromComponentId="input1" fromSocketId="out0" id="in0">
-            <schema name="schema1">
+    <outputs id="output1" xsi:type="ot:textFileDelimited">
+        <inSocket  fromComponentId="inputTeradata" fromSocketId="out0" id="in0">
+            <schema name="outSchema">
                 <field name="applyingFor" type="java.lang.String" />
                 <field name="apptype" type="java.lang.String" />
                 <field name="bookletType" type="java.lang.String" />
                 <field name="givennameapplicant" type="java.lang.String" />
                 <field name="surnameapplicant" type="java.lang.String" />
                 <field name="gender" type="java.lang.String" />
-                <field name="alias1" type="java.lang.Boolean" />
+                <field name="alias1" type="java.lang.Integer" />
                 <field name="checkPrevName" type="java.lang.Boolean" />
                 <field name="dt_dob" type="java.util.Date" format="yyyy/MM/dd" />
                 <field name="validityRequired" type="java.lang.Boolean" />
@@ -136,25 +148,10 @@
                 <field name="ecDateofIssue" type="java.util.Date" format="yyyy/MM/dd" />
             </schema>
         </inSocket>
-
-        <databaseName value="hydrograph_db" />
-        <hostName value="10.130.250.235" />
-        <port value="1025" />
-        <jdbcDriver value="TeraJDBC4" />
-        <tableName value="benchmarking_00100" />
-        <username value="hydrograph1" />
-        <password value="teradata" />
-        <chunkSize value="100000"/>
-        <loadUtilityType value="DEFAULT"/>
-
-
-            <loadType>
-               <newTable></newTable>
-            </loadType>
-
-            <!--<Insert/>-->
-            <!-- <truncateLoad/>-->
-
-
+        <overWrite value="true"/>
+        <path uri="hydrograph.engine.spark/testData/input/teradata_delimited" />
+        <delimiter value="," />
+        <hasHeader value="false" />
+        <charset value="ISO-8859-1" />
     </outputs>
 </p:graph>

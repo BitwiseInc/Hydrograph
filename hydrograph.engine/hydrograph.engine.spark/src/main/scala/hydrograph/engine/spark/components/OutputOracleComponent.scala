@@ -1,15 +1,15 @@
-/** *****************************************************************************
-  * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
-  * Licensed under the Apache License, Version 2.0 (the "License");
-  * you may not use this file except in compliance with the License.
-  * You may obtain a copy of the License at
-  * http://www.apache.org/licenses/LICENSE-2.0
-  * Unless required by applicable law or agreed to in writing, software
-  * distributed under the License is distributed on an "AS IS" BASIS,
-  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  * See the License for the specific language governing permissions and
-  * limitations under the License.
-  * ******************************************************************************/
+/*****************************************************************************************
+ * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ ****************************************************************************************/
 package hydrograph.engine.spark.components
 
 import java.sql.SQLException
@@ -40,11 +40,28 @@ class OutputOracleComponent(outputRDBMSEntity: OutputRDBMSEntity, oComponentsPar
   val LOG: Logger = LoggerFactory.getLogger(classOf[OutputOracleComponent])
 
   override def execute(): Unit = {
+
+     val batchSize: String = outputRDBMSEntity.getChunkSize match {
+      case null => "1000"
+      case _  => outputRDBMSEntity.getChunkSize
+    }
+
+    LOG.info("Using batchsize "+ batchSize)
+
+    val extraUrlParameters: String = outputRDBMSEntity.getExtraUrlParamters match {
+      case null => ""
+      case _    => "," + outputRDBMSEntity.getExtraUrlParamters
+    }
+
+    LOG.info("using extra URL parameters as "+ extraUrlParameters)
+
+
     val properties = outputRDBMSEntity.getRuntimeProperties;
     properties.setProperty("user", outputRDBMSEntity.getUsername)
     properties.setProperty("password", outputRDBMSEntity.getPassword)
+    properties.setProperty("batchsize", batchSize)
     val connectionURL = "jdbc:oracle:" + outputRDBMSEntity.getDriverType + "://@" + outputRDBMSEntity.getHostName + ":" + outputRDBMSEntity.getPort() + "/" +
-      outputRDBMSEntity.getSid;
+      outputRDBMSEntity.getSid+extraUrlParameters;
 
     LOG.info("Created Output Oracle Component '" + outputRDBMSEntity.getComponentId
       + "' in Batch " + outputRDBMSEntity.getBatch
@@ -78,10 +95,10 @@ class OutputOracleComponent(outputRDBMSEntity: OutputRDBMSEntity, oComponentsPar
     } catch {
       case e: SQLException =>
         LOG.error("Error while connecting to database " + e.getMessage)
-        throw new RuntimeException("Error message " , e)
+        throw new RuntimeException("Error message " + e.getMessage, e)
       case e: Exception =>
         LOG.error("Error while executing '" + query + "' query in executeQuery()")
-        throw new RuntimeException("Error message " , e)
+        throw new RuntimeException("Error message " + e.getMessage, e)
     }
   }
 
