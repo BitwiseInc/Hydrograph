@@ -23,9 +23,7 @@ import hydrograph.engine.jaxb.commontypes.TypeFieldName;
 import java.util.List;
 
 /**
- * The Class OutputRDBMSEntity.
- *
- * @author Bitwise
+ * @author bitwise1
  *
  */
 public class OutputRDBMSEntity extends InputOutputEntityBase {
@@ -42,8 +40,6 @@ public class OutputRDBMSEntity extends InputOutputEntityBase {
 
     private String databaseType;
     private String loadType;
-    private Integer chunkSize;
-
     private String hostName;
     private Integer port;
     private String jdbcDriver;
@@ -52,6 +48,9 @@ public class OutputRDBMSEntity extends InputOutputEntityBase {
     private String driverType;
     private String _interface;
     private String temps3dir;
+
+    private String chunkSize;
+    private String extraUrlParamters;
 
     /**
      * @return temps3dir - of type String
@@ -309,14 +308,26 @@ public class OutputRDBMSEntity extends InputOutputEntityBase {
     /**
      * @return the chunkSize
      */
-    public Integer getChunkSize() {
+    public String getChunkSize() {
         return chunkSize;
     }
 
     /**
      * @param chunkSize the chunkSize to set
      */
-    public void setChunkSize(Integer chunkSize) {
+    public void setChunkSize(String chunkSize) {
         this.chunkSize = chunkSize;
+    }
+    /**
+     * @param 'extraUrlParameters'
+     * @return String
+     * a parameters that is optional and can be set as per users preference
+     * */
+    public String getExtraUrlParamters() {
+        return extraUrlParamters;
+    }
+
+    public void setExtraUrlParamters(String extraUrlParamters) {
+        this.extraUrlParamters = extraUrlParamters;
     }
 }

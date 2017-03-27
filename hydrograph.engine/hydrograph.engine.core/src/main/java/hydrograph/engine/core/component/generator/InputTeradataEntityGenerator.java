@@ -13,22 +13,23 @@
 
 package hydrograph.engine.core.component.generator;
 
+/**
+ * Created by AniruddhaS on 12/27/2016.
+ */
+
+
 import hydrograph.engine.core.component.entity.InputRDBMSEntity;
 import hydrograph.engine.core.component.entity.utils.InputEntityUtils;
 import hydrograph.engine.core.component.generator.base.InputComponentGeneratorBase;
 import hydrograph.engine.core.constants.Constants;
 import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
+
 import hydrograph.engine.jaxb.inputtypes.Teradata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
-/**
- * The Class InputTeradataEntityGenerator.
- *
- * @author Bitwise
- *
- */
+
 
 public class InputTeradataEntityGenerator extends
         InputComponentGeneratorBase {
@@ -78,6 +79,58 @@ public class InputTeradataEntityGenerator extends
         inputRDBMSEntity.setRuntimeProperties(inputTeradataJaxb.getRuntimeProperties() == null ? new Properties():InputEntityUtils
                 .extractRuntimeProperties(inputTeradataJaxb.getRuntimeProperties()));
 
+        /**new parameters that has been added after the open source release*/
+        inputRDBMSEntity.setNumPartitionsValue(inputTeradataJaxb.getNumPartitions() == null? Integer.MIN_VALUE:inputTeradataJaxb.getNumPartitions().getValue().intValue());
+        if(inputTeradataJaxb.getNumPartitions()!=null&&inputTeradataJaxb.getNumPartitions().getValue().intValue()==0){
+            LOG.warn("The number of partitions has been entered as ZERO," +
+                    "\nThe Execution shall still continue but will work on a single" +
+                    "\npartition hence impacting performance");
+        }
+
+        /**
+         * @note : At first the check is made for the nullability of the partiton value; in case the partition
+         *          value goes missing, the upper bound, lower bound and column name must not hold a value as the
+         *          JDBCRDD has only two JDBC functions as the one which doesn't do any partitioning and does not accept
+         *          the values from the below parameters listed and the second one which does partitoning accepts the
+         *          aforementioned parameters. Absence of any one parameter may lead to undesirable outcomes
+         * */
+        if(inputTeradataJaxb.getNumPartitions()==null){
+            inputRDBMSEntity.setUpperBound(0);
+            inputRDBMSEntity.setLowerBound(0);
+            inputRDBMSEntity.setColumnName("");
+        }
+        else {
+            if (inputTeradataJaxb.getNumPartitions().getUpperBound() == null) {
+                throw new RuntimeException( "Error in Input Teradata Component '"+inputTeradataJaxb.getId()+"' Upper bound cannot be NULL when numPartitions holds an integer value");
+            } else inputRDBMSEntity.setUpperBound(inputTeradataJaxb.getNumPartitions().getUpperBound().getValue().intValue());
+
+            if (inputTeradataJaxb.getNumPartitions().getLowerBound() == null) {
+                throw new RuntimeException( "Error in Input Teradata Component '"+inputTeradataJaxb.getId()+"' Lower bound cannot be NULL when numPartitions holds an integer value");
+            } else inputRDBMSEntity.setLowerBound(inputTeradataJaxb.getNumPartitions().getLowerBound().getValue().intValue());
+
+            if (inputTeradataJaxb.getNumPartitions().getColumnName() == null) {
+                throw new RuntimeException("Error in Input Teradata Component '"+inputTeradataJaxb.getId()+"' Column name cannot be NULL when numPartitions holds an integer value");
+            } else inputRDBMSEntity.setColumnName(inputTeradataJaxb.getNumPartitions().getColumnName().getValue());
+
+            if(inputTeradataJaxb.getNumPartitions().getLowerBound().getValue()
+                    .intValue()==inputTeradataJaxb.getNumPartitions().getUpperBound().getValue().intValue()){
+                LOG.warn("'"+inputTeradataJaxb.getId()+"' The upper bound and the lower bound values are same! In this case there will only be\n" +
+                        "a single partition");
+            }
+            if(inputTeradataJaxb.getNumPartitions().getLowerBound().getValue()
+                    .intValue()>inputTeradataJaxb.getNumPartitions().getUpperBound().getValue().intValue()){
+                LOG.error( "Error in Input Teradata Component '"+inputTeradataJaxb.getId()+"' Can\'t proceed with partitioning");
+                throw new RuntimeException("Error in Input Teradata Component '"+inputTeradataJaxb.getId()+"'  The lower bound is greater than upper bound");
+
+            }
+
+        }
+        //fetchsize
+        inputRDBMSEntity.setFetchSize(inputTeradataJaxb.getFetchSize()==null?null: inputTeradataJaxb.getFetchSize().getValue());
+        //extra url parameters
+        inputRDBMSEntity.setExtraUrlParameters(inputTeradataJaxb.getExtraUrlParams()==null?null:inputTeradataJaxb.getExtraUrlParams().getValue());
+
+        /**END*/
         inputRDBMSEntity.setDatabaseType("Teradata");
     }
 

@@ -23,12 +23,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
 
-/**
- * The Class InputMysqlEntityGenerator.
- *
- * @author Bitwise
- *
- */
+
 public class InputMysqlEntityGenerator extends
         InputComponentGeneratorBase {
 
@@ -78,6 +73,58 @@ public class InputMysqlEntityGenerator extends
 //		inputRDBMSEntity.setFetchSize(inputMysqlJaxb.getFetchSize()==null?Constants.DEFAULT_DB_FETCHSIZE:inputMysqlJaxb.getFetchSize().getValue().intValue());
         inputRDBMSEntity.setRuntimeProperties(inputMysqlJaxb.getRuntimeProperties() == null ? new Properties():InputEntityUtils
                         .extractRuntimeProperties(inputMysqlJaxb.getRuntimeProperties()));
+        /**new parameters that has been added after the open source release*/
+        inputRDBMSEntity.setNumPartitionsValue(inputMysqlJaxb.getNumPartitions() == null? Integer.MIN_VALUE:inputMysqlJaxb.getNumPartitions().getValue().intValue());
+            if(inputMysqlJaxb.getNumPartitions()!=null&&inputMysqlJaxb.getNumPartitions().getValue().intValue()==0){
+                LOG.warn("The number of partitions has been entered as ZERO," +
+                        "\nThe Execution shall still continue but will work on a single" +
+                        "\npartition hence impacting performance");
+            }
+
+        /**
+         * @note : At first the check is made for the nullability of the partiton value; in case the partition
+         *          value goes missing, the upper bound, lower bound and column name must not hold a value as the
+         *          JDBCRDD has only two JDBC functions as the one which doesn't do any partitioning and does not accept
+         *          the values from the below parameters listed and the second one which does partitoning accepts the
+         *          aforementioned parameters. Absence of any one parameter may lead to undesirable outcomes
+         * */
+       if(inputMysqlJaxb.getNumPartitions()==null){
+           inputRDBMSEntity.setUpperBound(0);
+           inputRDBMSEntity.setLowerBound(0);
+           inputRDBMSEntity.setColumnName("");
+       }
+       else {
+           if (inputMysqlJaxb.getNumPartitions().getUpperBound() == null) {
+                   throw new RuntimeException("Error in Input Mysql Component '"+inputMysqlJaxb.getId()+"' Upper bound cannot be NULL when numPartitions holds an integer value");
+               } else inputRDBMSEntity.setUpperBound(inputMysqlJaxb.getNumPartitions().getUpperBound().getValue().intValue());
+
+           if (inputMysqlJaxb.getNumPartitions().getLowerBound() == null) {
+               throw new RuntimeException("Error in Input Mysql Component '"+inputMysqlJaxb.getId()+"' Lower bound cannot be NULL when numPartitions holds an integer value");
+           } else inputRDBMSEntity.setLowerBound(inputMysqlJaxb.getNumPartitions().getLowerBound().getValue().intValue());
+
+           if (inputMysqlJaxb.getNumPartitions().getColumnName() == null) {
+               throw new RuntimeException("Error in Input Oracle Component '"+inputMysqlJaxb.getId()+"' Column Name cannot be NULL when numPartitions holds an integer value");
+           } else inputRDBMSEntity.setColumnName(inputMysqlJaxb.getNumPartitions().getColumnName().getValue());
+
+           if(inputMysqlJaxb.getNumPartitions().getLowerBound().getValue()
+                   .intValue()==inputMysqlJaxb.getNumPartitions().getUpperBound().getValue().intValue()){
+               LOG.warn("'"+inputMysqlJaxb.getId()+"'The upper bound and the lower bound values are same! In this case there will only be\n" +
+                       "a single partition");
+           }
+           if(inputMysqlJaxb.getNumPartitions().getLowerBound().getValue()
+                   .intValue()>inputMysqlJaxb.getNumPartitions().getUpperBound().getValue().intValue()){
+               LOG.error("Error in Input Mysql Component '"+inputMysqlJaxb.getId()+"' Error! Can\'t proceed with partitioning");
+               throw new RuntimeException("Error in Input Mysql Component '"+inputMysqlJaxb.getId()+"' The lower bound is greater than upper bound");
+
+           }
+
+       }
+        //fetchsize
+        inputRDBMSEntity.setFetchSize(inputMysqlJaxb.getFetchSize()==null?null: inputMysqlJaxb.getFetchSize().getValue());
+        //extra url parameters
+        inputRDBMSEntity.setExtraUrlParameters(inputMysqlJaxb.getExtraUrlParams()==null?null:inputMysqlJaxb.getExtraUrlParams().getValue());
+
+        /**END*/
 
         inputRDBMSEntity.setDatabaseType("Mysql");
     }

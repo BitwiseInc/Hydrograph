@@ -21,12 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
-/**
- * The Class OutputOracleEntityGenerator.
- *
- * @author Bitwise
- *
- */
+
 public class OutputOracleEntityGenerator extends OutputComponentGeneratorBase {
 
     private static Logger LOG = LoggerFactory.getLogger(OutputOracleEntityGenerator.class);
@@ -88,6 +83,14 @@ public class OutputOracleEntityGenerator extends OutputComponentGeneratorBase {
         } else {
             outputRDBMSEntity.setSchemaName(null);
         }
+
+
+        /**New fields added since the project was open-sourced*/
+        //for batchsize which was named to chunksize since there is batch in the ETL tool as well
+        outputRDBMSEntity.setChunkSize(jaxbOutputOracle.getChunkSize()==null?null:jaxbOutputOracle.getChunkSize().getValue());
+        //extra url parameters has been
+        outputRDBMSEntity.setExtraUrlParamters(jaxbOutputOracle.getExtraUrlParams()==null?null:jaxbOutputOracle.getExtraUrlParams().getValue());
+        /**end**/
     }
 
     @Override

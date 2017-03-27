@@ -1,5 +1,5 @@
 
-/*******************************************************************************
+/*****************************************************************************************
  * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,20 +9,19 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License.
- ******************************************************************************/
+ * limitations under the License
+ ****************************************************************************************/
 
 package hydrograph.engine.jaxb.outputtypes;
-
-import hydrograph.engine.jaxb.commontypes.ElementValueIntegerType;
-import hydrograph.engine.jaxb.commontypes.ElementValueStringType;
-import hydrograph.engine.jaxb.ooracle.TypeLoadChoice;
-import hydrograph.engine.jaxb.ooracle.TypeOutputOracleBase;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import hydrograph.engine.jaxb.commontypes.ElementValueIntegerType;
+import hydrograph.engine.jaxb.commontypes.ElementValueStringType;
+import hydrograph.engine.jaxb.ooracle.TypeLoadChoice;
+import hydrograph.engine.jaxb.ooracle.TypeOutputOracleBase;
 
 
 /**
@@ -42,9 +41,10 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="tableName" type="{hydrograph/engine/jaxb/commontypes}element-value-string-type"/>
  *         &lt;element name="userName" type="{hydrograph/engine/jaxb/commontypes}element-value-string-type"/>
  *         &lt;element name="password" type="{hydrograph/engine/jaxb/commontypes}element-value-string-type"/>
+ *         &lt;element name="chunkSize" type="{hydrograph/engine/jaxb/commontypes}element-value-string-type" minOccurs="0"/>
+ *         &lt;element name="extraUrlParams" type="{hydrograph/engine/jaxb/commontypes}element-value-string-type" minOccurs="0"/>
  *         &lt;element name="loadType" type="{hydrograph/engine/jaxb/ooracle}type-load-choice"/>
  *         &lt;element name="schemaName" type="{hydrograph/engine/jaxb/commontypes}element-value-string-type" minOccurs="0"/>
- *         &lt;element name="chunkSize" type="{hydrograph/engine/jaxb/commontypes}element-value-integer-type" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -62,9 +62,10 @@ import javax.xml.bind.annotation.XmlType;
     "tableName",
     "userName",
     "password",
+    "chunkSize",
+    "extraUrlParams",
     "loadType",
-    "schemaName",
-    "chunkSize"
+    "schemaName"
 })
 public class Oracle
     extends TypeOutputOracleBase
@@ -83,10 +84,11 @@ public class Oracle
     protected ElementValueStringType userName;
     @XmlElement(required = true)
     protected ElementValueStringType password;
+    protected ElementValueStringType chunkSize;
+    protected ElementValueStringType extraUrlParams;
     @XmlElement(required = true)
     protected TypeLoadChoice loadType;
     protected ElementValueStringType schemaName;
-    protected ElementValueIntegerType chunkSize;
 
     /**
      * Gets the value of the sid property.
@@ -257,6 +259,54 @@ public class Oracle
     }
 
     /**
+     * Gets the value of the chunkSize property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link ElementValueStringType }
+     *     
+     */
+    public ElementValueStringType getChunkSize() {
+        return chunkSize;
+    }
+
+    /**
+     * Sets the value of the chunkSize property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ElementValueStringType }
+     *     
+     */
+    public void setChunkSize(ElementValueStringType value) {
+        this.chunkSize = value;
+    }
+
+    /**
+     * Gets the value of the extraUrlParams property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link ElementValueStringType }
+     *     
+     */
+    public ElementValueStringType getExtraUrlParams() {
+        return extraUrlParams;
+    }
+
+    /**
+     * Sets the value of the extraUrlParams property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ElementValueStringType }
+     *     
+     */
+    public void setExtraUrlParams(ElementValueStringType value) {
+        this.extraUrlParams = value;
+    }
+
+    /**
      * Gets the value of the loadType property.
      * 
      * @return
@@ -302,30 +352,6 @@ public class Oracle
      */
     public void setSchemaName(ElementValueStringType value) {
         this.schemaName = value;
-    }
-
-    /**
-     * Gets the value of the chunkSize property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link ElementValueIntegerType }
-     *     
-     */
-    public ElementValueIntegerType getChunkSize() {
-        return chunkSize;
-    }
-
-    /**
-     * Sets the value of the chunkSize property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link ElementValueIntegerType }
-     *     
-     */
-    public void setChunkSize(ElementValueIntegerType value) {
-        this.chunkSize = value;
     }
 
 }
