@@ -1,3 +1,15 @@
+/*******************************************************************************
+ * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *******************************************************************************/
 package hydrograph.ui.propertywindow.widgets.customwidgets.databasecomponents;
 
 import java.util.List;
@@ -333,6 +345,10 @@ public class InputAdditionalParametersDialog extends Dialog {
 						.setText((String) additionalParameterValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB));
 				additionalParameterControlDecoration.hide();
 			}
+			
+			if(StringUtils.isEmpty((String) additionalParameterValue.get(Constants.DB_PARTITION_KEY))){
+				partitionKeyControlDecoration.show();
+			}else{partitionKeyControlDecoration.hide();}
 		}
 
 	}
@@ -341,6 +357,10 @@ public class InputAdditionalParametersDialog extends Dialog {
 		partitionKeyButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				if(StringUtils.isEmpty((String) additionalParameterValue.get(Constants.DB_PARTITION_KEY))){
+					partitionKeyControlDecoration.show();
+				}else{partitionKeyControlDecoration.hide();}
+				
 				FieldDialogForDBComponents fieldDialog = new FieldDialogForDBComponents(new Shell(),
 						propertyDialogButtonBar);
 				fieldDialog.setComponentName(Messages.PARTITION_KEYS_FOR_DB_COMPONENT);
@@ -348,9 +368,11 @@ public class InputAdditionalParametersDialog extends Dialog {
 				if (StringUtils.isNotBlank((String) additionalParameterValue.get(Constants.DB_PARTITION_KEY))) {
 					fieldDialog.setPropertyFromCommaSepratedString(
 							(String) additionalParameterValue.get(Constants.DB_PARTITION_KEY));
+					
 				}
 				fieldDialog.open();
 				selectedPartitionKey = fieldDialog.getResultAsCommaSeprated();
+				
 				if (StringUtils.isEmpty(selectedPartitionKey) || StringUtils.isBlank(selectedPartitionKey)) {
 					partitionKeyControlDecoration.show();
 				} else {

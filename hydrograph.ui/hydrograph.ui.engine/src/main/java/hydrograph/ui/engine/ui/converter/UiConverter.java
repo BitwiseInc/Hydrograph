@@ -116,6 +116,7 @@ import org.eclipse.core.resources.IFile;
 		protected String getValue(String propertyName) {
 			LOGGER.debug("Getting Parameter for - {}", propertyName);
 			List<ParameterData> parameterList = currentRepository.getParammeterFactory().get(componentId);
+			System.out.println(parameterList);
 			if (parameterList != null) {
 				for (ParameterData param : parameterList) {
 					if(StringUtils.equalsIgnoreCase(param.getPropertyName(), propertyName)){

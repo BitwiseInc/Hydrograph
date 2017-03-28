@@ -156,8 +156,10 @@ public class InputTeradataConverter extends InputConverter{
 				TypePartitionsChoice typePartitionsChoice = new TypePartitionsChoice();
 
 				if (uiValue.get(Constants.NO_OF_PARTITION) !=null) {
-					BigInteger no_of_partitions = new BigInteger(
-							String.valueOf(uiValue.get(Constants.NO_OF_PARTITION)));
+					ElementValueIntegerType partitionKey = new ElementValueIntegerType();
+					BigInteger no_of_partitions = getDBAdditionalParamValue(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value(),
+							Constants.NO_OF_PARTITION, PropertyNameConstants.NUMBER_OF_PARTITIONS.value());
+					partitionKey.setValue(no_of_partitions);
 					typePartitionsChoice.setValue(no_of_partitions);
 				}
 				if (StringUtils.isNotBlank((String) uiValue.get(Constants.DB_PARTITION_KEY))) {
@@ -167,15 +169,15 @@ public class InputTeradataConverter extends InputConverter{
 				}
 				if (uiValue.get(Constants.PARTITION_KEY_LOWER_BOUND) !=null) {
 					ElementValueIntegerType partition_key_lower_bound = new ElementValueIntegerType();
-					BigInteger partition_lower_bound = new BigInteger(
-							String.valueOf(uiValue.get(Constants.PARTITION_KEY_LOWER_BOUND)));
+					BigInteger partition_lower_bound = getDBAdditionalParamValue(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value(),
+							Constants.PARTITION_KEY_LOWER_BOUND, PropertyNameConstants.NOP_LOWER_BOUND.value());
 					partition_key_lower_bound.setValue(partition_lower_bound);
 					typePartitionsChoice.setLowerBound(partition_key_lower_bound);
 				}
 				if (uiValue.get(Constants.PARTITION_KEY_UPPER_BOUND) !=null) {
 					ElementValueIntegerType partition_key_upper_bound = new ElementValueIntegerType();
-					BigInteger partition_upper_bound = new BigInteger(
-							String.valueOf(uiValue.get(Constants.PARTITION_KEY_UPPER_BOUND)));
+					BigInteger partition_upper_bound = getDBAdditionalParamValue(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value(),
+							Constants.PARTITION_KEY_UPPER_BOUND, PropertyNameConstants.NOP_UPPER_BOUND.value());
 					partition_key_upper_bound.setValue(partition_upper_bound);
 					typePartitionsChoice.setUpperBound(partition_key_upper_bound);
 				}

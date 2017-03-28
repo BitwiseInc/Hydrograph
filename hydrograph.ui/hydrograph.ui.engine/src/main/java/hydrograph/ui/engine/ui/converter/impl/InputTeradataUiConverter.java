@@ -119,17 +119,20 @@ public class InputTeradataUiConverter extends InputUiConverter{
 		propertyMap.put(PropertyNameConstants.SELECT_OPTION.value(), databaseSelectionConfig);
 		
 		if(inputTeradata.getNumPartitions() !=null ){
-			if(inputTeradata.getNumPartitions().getValue() !=null){
-				additionalParameterDetails.put(Constants.NO_OF_PARTITION, inputTeradata.getNumPartitions().getValue());
+			if(inputTeradata.getNumPartitions() !=null){
+				additionalParameterDetails.put(Constants.NO_OF_PARTITION, getParameterValue(PropertyNameConstants.NUMBER_OF_PARTITIONS.value(),
+						inputTeradata.getNumPartitions() == null ? "" : inputTeradata.getNumPartitions().getValue()));
 			}
 			if(inputTeradata.getNumPartitions().getColumnName() !=null && StringUtils.isNotBlank(inputTeradata.getNumPartitions().getColumnName().getValue())){
 				additionalParameterDetails.put(Constants.DB_PARTITION_KEY, inputTeradata.getNumPartitions().getColumnName().getValue());
 			}
 			if(inputTeradata.getNumPartitions().getUpperBound() !=null ){
-				additionalParameterDetails.put(Constants.PARTITION_KEY_UPPER_BOUND, inputTeradata.getNumPartitions().getUpperBound().getValue());
+				additionalParameterDetails.put(Constants.PARTITION_KEY_UPPER_BOUND, getParameterValue(PropertyNameConstants.UPPER_BOUND.value(),						
+						inputTeradata.getNumPartitions().getUpperBound().getValue()));
 			}
 			if(inputTeradata.getNumPartitions().getLowerBound() !=null ){
-				additionalParameterDetails.put(Constants.PARTITION_KEY_LOWER_BOUND, inputTeradata.getNumPartitions().getLowerBound().getValue());
+				additionalParameterDetails.put(Constants.PARTITION_KEY_LOWER_BOUND,getParameterValue(PropertyNameConstants.LOWER_BOUND.value(), 
+						inputTeradata.getNumPartitions().getLowerBound().getValue()));
 			}
 		}
 		
@@ -139,6 +142,8 @@ public class InputTeradataUiConverter extends InputUiConverter{
 		if(inputTeradata.getExtraUrlParams() !=null && StringUtils.isNotBlank(inputTeradata.getExtraUrlParams().getValue())){
 			additionalParameterDetails.put(Constants.ADDITIONAL_PARAMETERS_FOR_DB, inputTeradata.getExtraUrlParams().getValue());
 		}
+		
+		System.out.println(additionalParameterDetails);
 		
 		propertyMap.put(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value(), additionalParameterDetails);
 

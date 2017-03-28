@@ -76,7 +76,7 @@ public class InputOracleUiConverter extends InputUiConverter {
 		try {
 			BigInteger bigInteger = inputOracle.getPort().getValue();
 			setValueInPropertyMap(PropertyNameConstants.PORT_NO.value(),
-					inputOracle.getPort() == null ? "" : bigInteger);
+					inputOracle.getPort() == null ? "" : String.valueOf(bigInteger));
 		} catch (Exception e) {
 			LOGGER.error("Exception" + e);
 		}
@@ -121,16 +121,19 @@ public class InputOracleUiConverter extends InputUiConverter {
 		
 		if(inputOracle.getNumPartitions() !=null ){
 			if(inputOracle.getNumPartitions().getValue() !=null){
-				additionalParameterDetails.put(Constants.NO_OF_PARTITION, inputOracle.getNumPartitions().getValue());
+				additionalParameterDetails.put(Constants.NO_OF_PARTITION, getParameterValue(PropertyNameConstants.NUMBER_OF_PARTITIONS.value(),
+						inputOracle.getNumPartitions() == null ? "" : inputOracle.getNumPartitions().getValue()));
 			}
 			if(inputOracle.getNumPartitions().getColumnName() !=null && StringUtils.isNotBlank(inputOracle.getNumPartitions().getColumnName().getValue())){
 				additionalParameterDetails.put(Constants.DB_PARTITION_KEY, inputOracle.getNumPartitions().getColumnName().getValue());
 			}
 			if(inputOracle.getNumPartitions().getUpperBound() !=null ){
-				additionalParameterDetails.put(Constants.PARTITION_KEY_UPPER_BOUND, inputOracle.getNumPartitions().getUpperBound().getValue());
+				additionalParameterDetails.put(Constants.PARTITION_KEY_UPPER_BOUND, getParameterValue(PropertyNameConstants.UPPER_BOUND.value(),						
+						inputOracle.getNumPartitions().getUpperBound().getValue()));
 			}
 			if(inputOracle.getNumPartitions().getLowerBound() !=null ){
-				additionalParameterDetails.put(Constants.PARTITION_KEY_LOWER_BOUND, inputOracle.getNumPartitions().getLowerBound().getValue());
+				additionalParameterDetails.put(Constants.PARTITION_KEY_LOWER_BOUND,getParameterValue(PropertyNameConstants.LOWER_BOUND.value(), 
+						inputOracle.getNumPartitions().getLowerBound().getValue()));
 			}
 		}
 		
