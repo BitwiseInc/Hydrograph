@@ -124,16 +124,19 @@ public class InputMysqlUiConverter extends InputUiConverter{
 		
 		if(inputMysql.getNumPartitions() !=null ){
 			if(inputMysql.getNumPartitions().getValue() !=null){
-				additionalParameterDetails.put(Constants.NO_OF_PARTITION, inputMysql.getNumPartitions().getValue());
+				additionalParameterDetails.put(Constants.NO_OF_PARTITION, getParameterValue(PropertyNameConstants.NUMBER_OF_PARTITIONS.value(),
+						inputMysql.getNumPartitions() == null ? "" : inputMysql.getNumPartitions().getValue()));
 			}
 			if(inputMysql.getNumPartitions().getColumnName() !=null && StringUtils.isNotBlank(inputMysql.getNumPartitions().getColumnName().getValue())){
 				additionalParameterDetails.put(Constants.DB_PARTITION_KEY, inputMysql.getNumPartitions().getColumnName().getValue());
 			}
 			if(inputMysql.getNumPartitions().getUpperBound() !=null ){
-				additionalParameterDetails.put(Constants.PARTITION_KEY_UPPER_BOUND, inputMysql.getNumPartitions().getUpperBound().getValue());
+				additionalParameterDetails.put(Constants.PARTITION_KEY_UPPER_BOUND, getParameterValue(PropertyNameConstants.UPPER_BOUND.value(),						
+						inputMysql.getNumPartitions().getUpperBound().getValue()));
 			}
 			if(inputMysql.getNumPartitions().getLowerBound() !=null ){
-				additionalParameterDetails.put(Constants.PARTITION_KEY_LOWER_BOUND, inputMysql.getNumPartitions().getLowerBound().getValue());
+				additionalParameterDetails.put(Constants.PARTITION_KEY_LOWER_BOUND,getParameterValue(PropertyNameConstants.LOWER_BOUND.value(), 
+						inputMysql.getNumPartitions().getLowerBound().getValue()));
 			}
 		}
 		

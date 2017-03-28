@@ -77,7 +77,7 @@ public class OutputOracleUiConverter extends OutputUiConverter {
 		try {
 			BigInteger bigInteger = outputOracle.getPort().getValue();
 			setValueInPropertyMap(PropertyNameConstants.PORT_NO.value(),
-					outputOracle.getPort() == null ? "" : bigInteger);
+					outputOracle.getPort() == null ? "" : String.valueOf(bigInteger));
 		} catch (Exception e) {
 			LOGGER.error("Exception" + e);
 		}
@@ -110,8 +110,8 @@ public class OutputOracleUiConverter extends OutputUiConverter {
 				
 		}
 		propertyMap.put(PropertyNameConstants.LOAD_TYPE_CONFIGURATION.value(), loadSelectedDetails);
-		
-			if(outputOracle.getChunkSize() !=null && StringUtils.isNotBlank(outputOracle.getChunkSize().getValue().toString())){
+			System.out.println(outputOracle.getChunkSize().getValue());
+			if(outputOracle.getChunkSize() !=null && StringUtils.isNotBlank(outputOracle.getChunkSize().getValue())){
 				additionalParameterDetails.put(Constants.DB_CHUNK_SIZE,outputOracle.getChunkSize().getValue().toString());
 			}
 		

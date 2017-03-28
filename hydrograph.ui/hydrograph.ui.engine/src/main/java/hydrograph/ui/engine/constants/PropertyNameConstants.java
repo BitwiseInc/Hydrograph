@@ -14,7 +14,6 @@
  
 package hydrograph.ui.engine.constants;
 
-
 /**
  * Name constants used in component config xml files.  
  * @author Bitwise
@@ -64,7 +63,12 @@ public enum PropertyNameConstants {
 		JDBC_DB_DRIVER("jdbcDriverClass"),
 		TEMPORARY_DIRECTORY_NAME("temporaryDirectory"),
 		INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS("inputAdditionalParameters"),
-		OUTPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS("outputAdditionalParameters");
+		OUTPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS("outputAdditionalParameters"),
+		NUMBER_OF_PARTITIONS("numPartitions"),
+		NOP_LOWER_BOUND("numPartitions/lowerBound"),
+		NOP_UPPER_BOUND("numPartitions/upperBound"),
+		LOWER_BOUND("lowerBound"),
+		UPPER_BOUND("upperBound");
 	
 	
 		private final String value;

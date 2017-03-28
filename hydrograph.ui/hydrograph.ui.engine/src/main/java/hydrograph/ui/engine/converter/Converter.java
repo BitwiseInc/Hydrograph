@@ -263,4 +263,26 @@ public abstract class Converter {
 	}
 	
 	
+	/**
+	 * Converts the String to {@link BigInteger}
+	 * @param propertyName
+	 * @param nameOfFeild
+	 * @param fieldKey
+	 * @return
+	 */
+	public BigInteger getDBAdditionalParamValue(String propertyName , String nameOfFeild, String fieldKey){
+		BigInteger bigInteger = null;
+		Map<String,String> propertyValue = (Map<String, String>) properties.get(propertyName);
+		if (StringUtils.isNotBlank(propertyValue.get(nameOfFeild)) && StringUtils.isNumeric(propertyValue.get(nameOfFeild))) {
+			bigInteger = new BigInteger(String.valueOf(propertyValue.get(nameOfFeild)));
+		} else if (ParameterUtil.isParameter(propertyValue.get(nameOfFeild))) {
+			ComponentXpath.INSTANCE.getXpathMap()
+					.put((ComponentXpathConstants.COMPONENT_XPATH_BOOLEAN.value().replace(ID, component.getComponentId()))
+							.replace(Constants.PARAM_PROPERTY_NAME, fieldKey),
+							new ComponentsAttributeAndValue(null, propertyValue.get(nameOfFeild)));
+			return null;
+		}
+		return bigInteger;
+	}
+	
 }
