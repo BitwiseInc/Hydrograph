@@ -128,21 +128,23 @@ public class OutputMysqlConverter extends OutputConverter{
 
 	
 	private void getAdditionalParameterForDBComponent() {
-		
-		Map<String, String> uiValue = (Map<String, String>) properties.get(PropertyNameConstants.OUTPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value());
-		if(uiValue !=null){
-			if(StringUtils.isNotBlank((String)uiValue.get(Constants.DB_CHUNK_SIZE))){
-				ElementValueStringType chunkSize = new ElementValueStringType();
-				chunkSize.setValue(String.valueOf(uiValue.get(Constants.DB_CHUNK_SIZE)));
-				mysqlOutput.setChunkSize(chunkSize);
-			}
-			
-			if(StringUtils.isNotBlank((String)uiValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB))){
-				ElementValueStringType extraUrlParams = new ElementValueStringType();
-				extraUrlParams.setValue(String.valueOf(uiValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB)));
-				mysqlOutput.setExtraUrlParams(extraUrlParams);
-			}
-		}	
+		Object obj = properties.get(PropertyNameConstants.OUTPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value());
+		if(obj != null && StringUtils.isNotBlank(obj.toString())){
+			Map<String, String> uiValue = (Map<String, String>) properties.get(PropertyNameConstants.OUTPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value());
+			if(uiValue !=null){
+				if(StringUtils.isNotBlank((String)uiValue.get(Constants.DB_CHUNK_SIZE))){
+					ElementValueStringType chunkSize = new ElementValueStringType();
+					chunkSize.setValue(String.valueOf(uiValue.get(Constants.DB_CHUNK_SIZE)));
+					mysqlOutput.setChunkSize(chunkSize);
+				}
+				
+				if(StringUtils.isNotBlank((String)uiValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB))){
+					ElementValueStringType extraUrlParams = new ElementValueStringType();
+					extraUrlParams.setValue(String.valueOf(uiValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB)));
+					mysqlOutput.setExtraUrlParams(extraUrlParams);
+				}
+			}	
+		} 
 	}
 
 	private TypeLoadChoice addTypeLoadChoice() {

@@ -137,10 +137,11 @@ public class InputTeradataConverter extends InputConverter{
 	
 	private void addAdditionalParameters() {
 		
-		Map<String, String> uiValue = (Map<String, String>) properties
-				.get(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value());
-		
-		if (uiValue != null) {
+		Object obj = properties.get(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value());
+		if (obj != null && StringUtils.isNotBlank(obj.toString())) {
+			Map<String, String> uiValue = (Map<String, String>) properties
+					.get(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value());
+			
 			if (StringUtils.isNotBlank((String) uiValue.get(Constants.FECTH_SIZE))) {
 				ElementValueStringType fetchSize = new ElementValueStringType();
 				fetchSize.setValue(String.valueOf(uiValue.get(Constants.FECTH_SIZE)));
