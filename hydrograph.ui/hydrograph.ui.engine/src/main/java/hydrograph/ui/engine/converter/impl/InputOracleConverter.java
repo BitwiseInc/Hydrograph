@@ -143,55 +143,57 @@ public class InputOracleConverter extends InputConverter {
 	}
 
 	private void addAdditionalParameters() {
-
-		Map<String, String> uiValue = (Map<String, String>) properties
-				.get(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value());
-		
-		if (uiValue != null) {
+		Object obj = properties.get(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value());
+		if(obj != null && StringUtils.isNotBlank(obj.toString())){
+			Map<String, String> uiValue = (Map<String, String>) properties
+					.get(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value());
 			
-			if (StringUtils.isNotBlank((String) uiValue.get(Constants.FECTH_SIZE))) {
-				ElementValueStringType fetchSize = new ElementValueStringType();
-				fetchSize.setValue(String.valueOf(uiValue.get(Constants.FECTH_SIZE)));
-				oracleInput.setFetchSize(fetchSize);
-			}
-			if (StringUtils.isNotBlank((String) uiValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB))) {
-				ElementValueStringType extraUrlParams = new ElementValueStringType();
-				extraUrlParams.setValue(String.valueOf(uiValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB)));
-				oracleInput.setExtraUrlParams(extraUrlParams);
-			}
-
-			if (uiValue.get(Constants.NO_OF_PARTITION) !=null) {
-				TypePartitionsChoice typePartitionsChoice = new TypePartitionsChoice();
-
+			if (uiValue != null) {
+				
+				if (StringUtils.isNotBlank((String) uiValue.get(Constants.FECTH_SIZE))) {
+					ElementValueStringType fetchSize = new ElementValueStringType();
+					fetchSize.setValue(String.valueOf(uiValue.get(Constants.FECTH_SIZE)));
+					oracleInput.setFetchSize(fetchSize);
+				}
+				if (StringUtils.isNotBlank((String) uiValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB))) {
+					ElementValueStringType extraUrlParams = new ElementValueStringType();
+					extraUrlParams.setValue(String.valueOf(uiValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB)));
+					oracleInput.setExtraUrlParams(extraUrlParams);
+				}
+				
 				if (uiValue.get(Constants.NO_OF_PARTITION) !=null) {
-					ElementValueIntegerType partitionKey = new ElementValueIntegerType();
-					BigInteger no_of_partitions = getDBAdditionalParamValue(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value(),
-							Constants.NO_OF_PARTITION, PropertyNameConstants.NUMBER_OF_PARTITIONS.value());
-					partitionKey.setValue(no_of_partitions);
-					typePartitionsChoice.setValue(no_of_partitions);
+					TypePartitionsChoice typePartitionsChoice = new TypePartitionsChoice();
+					
+					if (uiValue.get(Constants.NO_OF_PARTITION) !=null) {
+						ElementValueIntegerType partitionKey = new ElementValueIntegerType();
+						BigInteger no_of_partitions = getDBAdditionalParamValue(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value(),
+								Constants.NO_OF_PARTITION, PropertyNameConstants.NUMBER_OF_PARTITIONS.value());
+						partitionKey.setValue(no_of_partitions);
+						typePartitionsChoice.setValue(no_of_partitions);
+					}
+					if (StringUtils.isNotBlank((String) uiValue.get(Constants.DB_PARTITION_KEY))) {
+						ElementValueStringType partitionKey = new ElementValueStringType();
+						partitionKey.setValue(String.valueOf(uiValue.get(Constants.DB_PARTITION_KEY)));
+						typePartitionsChoice.setColumnName(partitionKey);
+					}
+					if (uiValue.get(Constants.PARTITION_KEY_LOWER_BOUND) !=null) {
+						ElementValueIntegerType partition_key_lower_bound = new ElementValueIntegerType();
+						BigInteger partition_lower_bound = getDBAdditionalParamValue(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value(),
+								Constants.PARTITION_KEY_LOWER_BOUND, PropertyNameConstants.NOP_LOWER_BOUND.value());
+						partition_key_lower_bound.setValue(partition_lower_bound);
+						typePartitionsChoice.setLowerBound(partition_key_lower_bound);
+					}
+					if (uiValue.get(Constants.PARTITION_KEY_UPPER_BOUND) !=null) {
+						ElementValueIntegerType partition_key_upper_bound = new ElementValueIntegerType();
+						BigInteger partition_upper_bound = getDBAdditionalParamValue(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value(),
+								Constants.PARTITION_KEY_UPPER_BOUND, PropertyNameConstants.NOP_UPPER_BOUND.value());
+						partition_key_upper_bound.setValue(partition_upper_bound);
+						typePartitionsChoice.setUpperBound(partition_key_upper_bound);
+					}
+					oracleInput.setNumPartitions(typePartitionsChoice);
 				}
-				if (StringUtils.isNotBlank((String) uiValue.get(Constants.DB_PARTITION_KEY))) {
-					ElementValueStringType partitionKey = new ElementValueStringType();
-					partitionKey.setValue(String.valueOf(uiValue.get(Constants.DB_PARTITION_KEY)));
-					typePartitionsChoice.setColumnName(partitionKey);
-				}
-				if (uiValue.get(Constants.PARTITION_KEY_LOWER_BOUND) !=null) {
-					ElementValueIntegerType partition_key_lower_bound = new ElementValueIntegerType();
-					BigInteger partition_lower_bound = getDBAdditionalParamValue(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value(),
-							Constants.PARTITION_KEY_LOWER_BOUND, PropertyNameConstants.NOP_LOWER_BOUND.value());
-					partition_key_lower_bound.setValue(partition_lower_bound);
-					typePartitionsChoice.setLowerBound(partition_key_lower_bound);
-				}
-				if (uiValue.get(Constants.PARTITION_KEY_UPPER_BOUND) !=null) {
-					ElementValueIntegerType partition_key_upper_bound = new ElementValueIntegerType();
-					BigInteger partition_upper_bound = getDBAdditionalParamValue(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value(),
-							Constants.PARTITION_KEY_UPPER_BOUND, PropertyNameConstants.NOP_UPPER_BOUND.value());
-					partition_key_upper_bound.setValue(partition_upper_bound);
-					typePartitionsChoice.setUpperBound(partition_key_upper_bound);
-				}
-				oracleInput.setNumPartitions(typePartitionsChoice);
+				
 			}
-
 		}
 	}
 
