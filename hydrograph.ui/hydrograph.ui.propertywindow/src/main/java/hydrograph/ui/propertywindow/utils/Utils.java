@@ -355,26 +355,28 @@ public class Utils {
 			InputStream reader=null;
 			String propFilePath = null;
 			for(File propFileName : FileNameList){
+			if (!propFileName.isDirectory()) {
 				String fileName = propFileName.getName();
-				if(StringUtils.contains(propFileName.toString(), "globalparam")){
-					 propFilePath = "/" + activeProjectName +"/globalparam"+"/"+fileName;
+				if (StringUtils.contains(propFileName.toString(), "globalparam")) {
+					propFilePath = "/" + activeProjectName + "/globalparam" + "/" + fileName;
+				} else {
+					propFilePath = "/" + activeProjectName + "/param" + "/" + fileName;
 				}
-				else{
-					 propFilePath =  "/" + activeProjectName +"/param"+"/"+fileName;
-				}
+			}
+			if (propFilePath != null) {
 				IPath propPath = new Path(propFilePath);
 				IFile iFile = ResourcesPlugin.getWorkspace().getRoot().getFile(propPath);
 				try {
 					reader = iFile.getContents();
 					jobProps.load(reader);
-					
+
 				} catch (CoreException | IOException e) {
 					MessageDialog.openError(Display.getDefault().getActiveShell(), "Error",
 							"Exception occured while loading build properties from file -\n" + e.getMessage());
 				}
-				
-				finally{
-					if(reader!=null){
+
+				finally {
+					if (reader != null) {
 						try {
 							reader.close();
 						} catch (IOException ioException) {
@@ -382,6 +384,7 @@ public class Utils {
 						}
 					}
 				}
+			}
 			
 				Enumeration<?> e = jobProps.propertyNames();
 				paramsMap = new HashMap<String, String>();
