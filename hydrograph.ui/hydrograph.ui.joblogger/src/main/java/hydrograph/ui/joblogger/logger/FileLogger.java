@@ -41,13 +41,14 @@ import hydrograph.ui.logging.factory.LogFactory;
  * @author Bitwise
  */
 public class FileLogger extends AbstractJobLogger{
-	private static final String YYYY_M_MDD_H_HMMSS = "yyyyMMdd_HHmmss";
 	private static final Logger logger = LogFactory.INSTANCE.getLogger(FileLogger.class);
 	public static String LOGGER_FOLDER_PATH = Platform.getInstallLocation().getURL().getPath();
 	private final static String APPEND_PATH="config"+File.separator+"logger"+File.separator+"job_logs"+File.separator;
 	public final String JOB_LOGS_ERROR = "Job_Logs will not be created in your workspace. Delete or Move Job_Logs to another location for smooth creation of logs.";
 	
 	private BufferedWriter logFileStream;
+	private String  projectName;
+	private String jobRunId;
 	
 	/**
 	 * 
@@ -56,9 +57,10 @@ public class FileLogger extends AbstractJobLogger{
 	 * @param projectName - name of active project
 	 * @param jobName - name of current job
 	 */
-	public FileLogger(String projectName, String jobName) {
+	public FileLogger(String projectName, String jobName, String jobRunId) {
 		super(projectName, jobName);
-		
+		this.projectName = projectName;
+		this.jobRunId = jobRunId;
 		initLogFileStream();
 		logger.debug("Initialized file logger");
 	}
@@ -84,11 +86,8 @@ public class FileLogger extends AbstractJobLogger{
 	 * 
 	 */
 	private void initLogFileStream() {
-		Date date = new Date() ;
-		SimpleDateFormat dateFormat = new SimpleDateFormat(YYYY_M_MDD_H_HMMSS) ;
-		
-	   
-		logger.debug("Created logfile- " + getFullJobName() + "_" +  dateFormat.format(date) + ".log");
+
+		logger.debug("Created logfile- " + this.projectName + "_" + this.jobRunId+ ".log");
 		
 		
 			LOGGER_FOLDER_PATH = LOGGER_FOLDER_PATH + APPEND_PATH;
@@ -97,7 +96,7 @@ public class FileLogger extends AbstractJobLogger{
 			File job_logs_folder = new File(LOGGER_FOLDER_PATH);
 			if (job_logs_folder.exists()) {
 				if (job_logs_folder.isDirectory()) {
-					File file = new File(LOGGER_FOLDER_PATH + getFullJobName() + "_" + dateFormat.format(date) + ".log");
+					File file = new File(LOGGER_FOLDER_PATH + this.projectName + "_" + this.jobRunId+ ".log");
 					logFileStream = new BufferedWriter(new FileWriter(file, true));
 				} else {
 					Status status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, JOB_LOGS_ERROR);
@@ -105,7 +104,7 @@ public class FileLogger extends AbstractJobLogger{
 				}
 			} else {
 				job_logs_folder.mkdir();
-				File file = new File(LOGGER_FOLDER_PATH + getFullJobName() + "_" + dateFormat.format(date) + ".log");
+				File file = new File(LOGGER_FOLDER_PATH + this.projectName + "_" + this.jobRunId+ ".log");
 				logFileStream = new BufferedWriter(new FileWriter(file, true));
 			}
 			logger.debug("Created job log file stream");

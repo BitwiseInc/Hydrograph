@@ -80,10 +80,10 @@
             file="xml/Components/input/Input.xml">
       </toc>
       <toc
-            file="xml/Components/output/Output.xml">
+            file="xml/Components/Output/Output.xml">
       </toc>
       <toc
-            file="xml/Components/command/Command.xml">
+            file="xml/Components/Command/Command.xml">
       </toc>
       <toc
             file="xml/Components/straightpull/Straightpull.xml">
@@ -190,6 +190,9 @@
       </toc>
        <toc
             file="xml/Components/transform/aggregate.xml">
+      </toc>
+      <toc
+            file="xml/Components/transform/groupCombine.xml">
       </toc>
       <toc
             file="xml/Components/transform/filter.xml">

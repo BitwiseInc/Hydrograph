@@ -640,7 +640,7 @@ public class JobManager {
 	 * @return the job logger
 	 */
 	public JobLogger initJobLogger(DefaultGEFCanvas gefCanvas) {
-		final JobLogger joblogger = new JobLogger(gefCanvas.getActiveProject(), gefCanvas.getJobName());
+		final JobLogger joblogger = new JobLogger(gefCanvas.getActiveProject(), gefCanvas.getJobName(), gefCanvas.getUniqueJobId());
 		return joblogger;
 	}
 

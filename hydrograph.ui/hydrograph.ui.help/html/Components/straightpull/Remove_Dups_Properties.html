@@ -21,11 +21,11 @@
 
 <p><span><b>Properties</b>&nbsp;for the Remove Dups component can be viewed by Double click-&gt;component on canvas. The properties contain only the &#39;General&#39; tab since Remove Dups falls under the Straight Pull category in the component palette.</span></p>
 
-<p><span><b>General Properties:</b> </span></p>
+<p><a name="general_properties"></a><span class="header-2">General Properties</span></p>
 
 <p><img alt="" src="../../images/Removedups_Properties_General.png" /></p>
 
-<p><span><b>Display</b></span></p>
+<p><span class="header-2">Display</span></p>
 
 <ul>
 	<li><span><b>Name</b> - The identifier for the component. This is a <b>mandatory</b> property. This property is pre-populated with the component name, i.e. 'Removedups' followed by an incremental number. It can be changed to any custom name. The name property has following restrictions:</span></li>
@@ -34,11 +34,11 @@
 		<li><span>Must be unique across the job.</span></li>
 		<li><span>Accepts only alphabets (a-z), numerals (0-9) and 4 special characters: "_", "-", ",", " " (space)<./span></li>
 	</ul>
-	<li><span><b>Base Type</b> - Base Type signifies the category of the component. Remove dups is of base type Straightpull. This is a non editable field.</span></li>
+		<li><span><b>ID</b> - ID field will specify unique id for every component. </span></li>
 	<li><span><b>Type</b> - Type defines the type of component within the category. This typically is the name of the component. This is a non editable field.</span></li>
 </ul>
 
-<p><span><b>Configuration</b></span></p>
+<p><span class="header-2">Configuration</span></p>
 
 <ul>
 	<li><span><b>Key Fields</b> - The key field grid accepts the key fields that will be used to determine the duplicate records in the input data. The component uses the key fields to group the data fields before performing the operation.</span></li>
@@ -61,7 +61,17 @@
 	<li><span><b>Batch</b> - Batch simply accepts a numeric number starting from 0 to 99 and signifies the batch this component will execute in. By default this is 0.</span></li>
 	
 </ul>
-<ul>
-</ul>
+
+<p><a name="validations"></a><span class="header-2">Validations</span></p>
+	<p><span>The Remove_Dups components applies validations to the mandatory fields as described above. Upon placing the Remove_Dups component on job canvas for the first time (from component palette), the component shows up a warning icon as mandatory properties are not provided.</span></p>
+	<img src="../../images/Remove_Dups_Warning.PNG" alt="Warning icon displayed on component" />
+	<p>
+<p><span>The properties window displays error icon on mandatory fields if it has an incorrect value. The error icon is displayed on the tab as well, if any of the field within the tab has some error.</span></p>
+<img src="../../images/Remove_Dups_Validation.png" alt="Error icon displayed on tabs" />
+
+<p><span>If the properties window has some error even after user visit's it once, then the error icon appears on RemoveDups component. This error icon is removed only when all the mandatory fields are supplied with correct values.</span></p>
+<img src="../../images/Remove_Dups_Validation_Error.PNG" alt="Error icon displayed on component" />
+
+
 </body>
 </html>

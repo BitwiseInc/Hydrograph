@@ -16,6 +16,10 @@
         <topic href="/hydrograph.ui.help/html/Components/Aggregate.html"/>
     </entry>
     
+    <entry keyword="GroupCombine">
+        <topic href="/hydrograph.ui.help/html/Components/GroupCombine.html"/>
+    </entry>
+    
     <entry keyword="Sort">
     	<topic href="/hydrograph.ui.help/html/Components/Sort.html"/>
     	<topic href="/hydrograph.ui.help/html/Components/Sort_Properties.html"/>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+ -->
+ 
+ 
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="GroupCombine" link_to="xml/Components/transform/TransformComponents.xml#GroupCombine"> 
+	<topic label="Properties"  href="html/Components/transform/GroupCombine_Properties.html">
+	   	<topic href="html/Components/transform/GroupCombine_Properties.html#general_properties" label="General Properties"/>
+	    <topic href="html/Components/transform/GroupCombine_Properties.html#schema" label="Schema"/>
+	    <topic href="html/Components/transform/GroupCombine_Properties.html#validations" label="Validations"/>
+	</topic>
+	 <topic href="html/Components/transform/GroupCombine_Operation_Editor.html" label="Operation Editor">
+	    <topic href="html/Components/transform/GroupCombine_Operation_Editor.html#input_fields_grid" label="Input Fields Grid"/>
+	    <topic href="html/Components/transform/GroupCombine_Operation_Editor.html#operation_window" label="Operation Window"/>
+	    <topic href="html/Components/transform/GroupCombine_Operation_Editor.html#map_fields_grid" label="Map Fields Grid"/>
+	    <topic href="html/Components/transform/GroupCombine_Operation_Editor.html#output_fields_grid" label="Output Fields Grid"/>
+	 </topic>
+	 <topic href="html/Components/transform/GroupCombine_Operation_Class_Window.html" label="Operation Class Window">
+	    <topic href="html/Components/transform/GroupCombine_Operation_Class_Window.html#in-built-operation-class" label="In built operation class"/>
+	    <topic href="html/Components/transform/GroupCombine_Operation_Class_Window.html#custom-operation-class" label="Custom built operation class"/>
+	    <topic href="html/Components/transform/GroupCombine_Operation_Class_Window.html#Operation_Properties_Grid" label="Operation Properties Grid"/>
+	 </topic>
+  <topic href="html/Components/transform/Expression_Editor_window_for_groupCombine.html" label="Expression Editor">
+  </topic>
+</toc>

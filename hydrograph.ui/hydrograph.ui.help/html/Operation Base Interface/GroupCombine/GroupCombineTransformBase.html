@@ -1,0 +1,110 @@
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+ 
+<!doctype html>
+<html>
+<head>
+	<title>GroupCombineTransformBase</title>
+	<link rel="stylesheet" type="text/css" href="../../css/style.css">
+</head>
+<body>
+<p>
+	<br />
+	<span class="header-1">GroupCombineTransformBase</span>
+</p>
+
+<p><span>The GroupCombineTransformBase interface is the base interface for all the custom classes defined for transformation in <a href="../../Components/transform/GroupCombine.html">GroupCombine</a> component. This interface exposes methods that enable users to perform custom GroupCombine functions.</span></p>
+<p><span>Following are the in-build GroupCombine operation classes. They implement GroupCombineTransformBase interface:</span></p>
+<ul>
+	<li><span><a href="Count.html">Count</a></span></li>
+	<li><span><a href="Max.html">Max</a></span></li>
+	<li><span><a href="Min.html">Min</a></span></li>
+	<li><span><a href="StringAppend.html">StringAppend</a></span></li>
+	<li><span><a href="Sum.html">Sum</a></span></li>
+</ul>
+
+<table width="80%">
+    <tr>
+      <td colspan="2"><span class="header-3">Method Summary</span></td>
+    </tr>
+    <tr>
+		<td width="20%"><span><b>Modifier and Type</b></span></td>
+		<td><span><b>Method and Description</b></span></td>
+    </tr>
+    <tr>
+      <td><span class="code">public void</span></td>
+      <td><span class="code"><a href="#mth_GroupCombine">GroupCombine</a>(<a href="../ReusableRow.html">ReusableRow</a> inputRow)</span><br />
+	  <span>The <i>operation function</i>. This function is called for each input row.</span> 
+	</td>
+    </tr>
+    <tr>
+      <td><span class="code">public void</span></td>
+      <td><span class="code"><a href="#mth_cleanup">cleanup</a>()</span><br />
+	  <span class="code">cleanup()</span><span> method is a lifecycle method and is called at the end of entire operation.</span>
+	</td>
+    </tr>
+    <tr>
+      <td><span class="code">public void<span class="code"></td>
+      <td><span class="code"><a href="#mth_oncompletegroup">onCompleteGroup</a>(<a href="../ReusableRow.html">ReusableRow</a> outputRow)</span><br />
+	  <span class="code">onCompleteGroup()</span><span> method is called after each group is processed.</span>
+	</td>
+    </tr>
+    <tr>
+      <td><span class="code">public void</span></td>
+      <td><span class="code"><a href="#mth_prepare">prepare</a>(Properties props, ArrayList<String> inputFields,
+			ArrayList<String> outputFields, ArrayList<String> keyFields)</span><br />
+	  <span class="code">prepare()</span><span> method is a lifecycle method and is called before any operation is performed.</span>
+	</td>
+    </tr>
+</table>
+
+<p><span class="header-2">Method Detail</span></p>
+
+<a name="mth_GroupCombine" id="mth_GroupCombine"></a>
+<p><span class="header-3">GroupCombine</span></p>
+<p><span class="code">public void GroupCombine(<a href="../ReusableRow.html">ReusableRow</a> input)</span></p>
+<p><span>The method <span class="code">GroupCombine()</span> is the operation function and is called for each input row. The custom GroupCombine logic should be written in this method. Since this method is called for each record in the input, the values of variables local to this method are not persisted for every call. Use <span class="code"><a href="#mth_prepare">prepare</a>()</span> and <span class="code"><a href="#mth_onCompleteGroup">onCompleteGroup</a>()</span> methods to initialize / reset the required variables.</span></p>
+<p><span>The parameter <span class="code">input</span> holds the current input row. Refer the documentation of <a href="../ReusableRow.html">ReusableRow</a> class to get information on accessing individual field of the current input row.</span></p>
+
+<a name="mth_cleanup" id="mth_cleanup"></a>
+<p><span class="header-3">cleanup</span></p>
+<p><span class="code">public void cleanup()</span></p>
+<p><span>The method <span class="code">cleanup()</span> is called after processing all the records in the input. This method can be typically used to do cleanup activities as the name suggests.</span></p>
+<p><span>This method is called just once in the entire lifecycle of the GroupCombine component, after processing all the records.</span></p>
+
+<a name="mth_onCompleteGroup" id="mth_onCompleteGroup"></a>
+<p><span class="header-3">onCompleteGroup</span></p>
+<p><span class="code">public void onCompleteGroup(<a href="../ReusableRow.html">ReusableRow</a> output)</span></p>
+<p><span>The method <span class="code">onCompleteGroup()</span> is called after processing each group. The groups are defined using <a href="../../Components/transform/GroupCombine_Properties.html#key_fields">key fields</a> option on <a href="../../Components/transform/GroupCombine_Properties.html">GroupCombine properties</a> window.</span></p>
+<p><span>The result of the GroupCombine operation should be committed to the output row in this method.</span></p>
+<p><span>The parameter <span class="code">output</span> holds the current output row.  Refer the documentation of <a href="../ReusableRow.html">ReusableRow</a> class to get information on accessing individual field of the output row.</span></p>
+<p><span>This method is called multiple times in the entire lifecycle of the GroupCombine component. The method is invoked after completion of each group.</span></p>
+
+<a name="mth_prepare" id="mth_prepare"></a>
+<p><span class="header-3">prepare</span></p>
+<p><span class="code">public void prepare(Properties props, ArrayList<String> inputFields,ArrayList<String> outputFields, ArrayList<String> keyFields)</span></p>
+<p><span>The method <span class="code">prepare()</span> is called before processing the first record in the input. This method can be used for initialization / instansiation of artifacts to be used in the GroupCombine operation.</span></p>
+<p><span>This method is called just once in the entire lifecycle of the GroupCombine component, before processing the first record.</span></p>
+<span><b>Parameters</b></span>
+
+<p><span class="code"><b>props</b></span><br />
+<span>The <span class="code">props</span> object holds the operation properties supplied to the GroupCombine component using <a href="../../Components/transform/GroupCombine_Operation_Class_Window.html#Operation_Properties_Grid">operation properties grid</a> on <a href="../../Components/transform/GroupCombine_Operation_Class_Window.html">operation class window</a>. The individual properties are wrapped as key-value pairs in the <span class="code">props</span> object.</span></p>
+
+<p><span class="code"><b>inputFields</b></span><br />
+<span>The <span class="code">inputFields</span> object holds the input field names supplied to the GroupCombine component using using <a href="../../Components/transform/GroupCombine_Operation_Editor.html#operation_input_fields">operation input fields</a> option on <a href="../../Components/transform/GroupCombine_Operation_Editor.html">GroupCombine operation editor</a> window.</span></p>
+
+<p><span class="code"><b>outputFields</b></span><br />
+<span>The <span class="code">outputFields</span> object holds the output field names supplied to the GroupCombine component using <a href="../../Components/transform/GroupCombine_Operation_Editor.html#operation_output_fields">operation output fields</a> option on <a href="../../Components/transform/GroupCombine_Operation_Editor.html">GroupCombine operation editor</a> window.</span></p>
+
+<p><span class="code"><b>keyFields</b></span><br />
+<span>The <span class="code">keyFields</span> object holds the key field names supplied to the GroupCombine component using <a href="../../Components/transform/GroupCombine_Properties.html#key_fields">key fields</a> option on <a href="../../Components/transform/GroupCombine_Properties.html">GroupCombine properties</a> window.</span></p>
+
+</body>

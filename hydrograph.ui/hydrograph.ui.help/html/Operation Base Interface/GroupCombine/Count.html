@@ -1,0 +1,37 @@
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+ 
+<!doctype html>
+<html>
+<head>
+	<title>Count</title>
+	<link rel="stylesheet" type="text/css" href="../../css/style.css">
+</head>
+<body>
+<p><span class="header-1">Count</span></p>
+<p><span>The count function calculates the count of records within a group. This function requires following inputs:</span><p>
+<ul>
+	<li><p><span>Key fields: The key fields for aggregation. This information is already provided using the <a href="../../Components/transform/GroupCombine_Properties.html#key_fields">key fields</a> option on groupCombine properties window.</span><p></li>
+	<li><p><span>Input field name: The input field on which to count the records within the group. This information is already provided using the <a href="../../Components/transform/GroupCombine_Operation_Editor.html#operation_input_fields">operation input fields</a> option on GroupCombine operation editor window. Input field supports following data types:</span><p>
+		<ul>
+			<li><span>Integer</span></li>
+			<li><span>Float</span></li>
+			<li><span>Double</span></li>
+			<li><span>Short</span></li>
+			<li><span>Long</span></li>
+			<li><span>BigInteger</span></li>
+			<li><span>BigDecimal</span></li>
+	</li>
+	<li><p><span>Output field name: The field which stores the count of records within the group. This information is already provided using the <a href="../../Components/transform/GroupCombine_Operation_Editor.html#operation_output_fields">operation output fields</a> option on GroupCombine_Properties operation editor window.</span></p>
+		<p><span><b>Note</b>: The data type of output field is <span class="code">Long</span>.</span></p>
+	</li>
+</ul>
+</body>
