@@ -10,3 +10,4 @@ Sr.No. <GitHub Issue #>  - [fixed by] - description
 1. <> - [Pooja Yadav] - Job_Log name should contain "Project name _JobRunID" currently Job_Log name contain "Project Name.JobName_unique_number".
 2.<> - [Kalyan Rajpoot] - after editing the value in parameter value dialog when open that again , multi line was appended in single line without any spaces and become non legible.
 3.<> - [Kalyan Rajpoot] - data viewer window 'close' button was acting like 'ok' button.
+4.<> - [Sonia Raheja] - Subfolder in param folder causes the exception "Resource does not exist".
