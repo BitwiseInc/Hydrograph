@@ -44,6 +44,7 @@ public class ViewDataUniqueIdDialog extends Dialog{
 	private String selectedUniqueJobId;
 	private String[] titles = {"Job Id", "Time Stamp", "Execution Mode", "Job Status"};
 	private Table table;
+	private boolean okPressed;
 	
 	public ViewDataUniqueIdDialog(Shell parentShell, List<JobDetails> jobDetails) {
 		super(parentShell);
@@ -124,6 +125,7 @@ public class ViewDataUniqueIdDialog extends Dialog{
 		if(selectedUniqueJobId == null){
 			selectedUniqueJobId = jobDetails.get(0).getUniqueJobID();
 		}
+		okPressed = true;
 		super.okPressed();
 	}
 	
@@ -131,6 +133,13 @@ public class ViewDataUniqueIdDialog extends Dialog{
 	protected void cancelPressed() {
 		selectedUniqueJobId = "";
 		super.cancelPressed();
+	}
+	
+	@Override
+	public boolean close(){
+		if(!okPressed)
+		selectedUniqueJobId = "";
+		return super.close();
 	}
 	
 	private String getTimeStamp(String jobId){
