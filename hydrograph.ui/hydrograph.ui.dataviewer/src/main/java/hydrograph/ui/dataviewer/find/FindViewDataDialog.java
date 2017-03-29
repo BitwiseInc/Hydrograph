@@ -484,7 +484,7 @@ public class FindViewDataDialog extends Dialog{
 		
 		if(recordCount > 0){
 			label.setVisible(true);
-			label.setText("Matching count - " + recordCount);
+			label.setText("Match count - " + recordCount);
 		}else{ label.setVisible(false); }
 		
 	}
