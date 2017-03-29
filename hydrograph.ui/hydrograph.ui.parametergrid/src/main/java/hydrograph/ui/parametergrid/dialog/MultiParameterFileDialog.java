@@ -821,9 +821,9 @@ public class MultiParameterFileDialog extends Dialog {
 						if (StringUtils.isNotEmpty(paramterValueDialog
 								.getParamterValue())) {
 							String newParameterValue = paramterValueDialog
-									.getParamterValue().replaceAll("\r", "")
-									.replaceAll("\n", "").replaceAll("\t", "")
-									.replace("  ", "");
+									.getParamterValue().replaceAll("\r", " ")
+									.replaceAll("\n", " ").replaceAll("\t", " ")
+									.replace("  ", " ");
 							parameters.get(index).setParameterValue(
 									newParameterValue);
 						}else{
