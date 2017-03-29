@@ -44,10 +44,12 @@ public class JobLogger {
 		
 	private String projectName;
 	private String jobName;
+	private String jobRunId;
 	
-	public JobLogger(String projectName, String jobName ){
+	public JobLogger(String projectName, String jobName,String jobRunId){
 		this.projectName = projectName;
 		this.jobName = jobName;
+		this.jobRunId = jobRunId;
 		registerLoggers();
 		logger.debug("Registered all loggers");
 	}
@@ -55,7 +57,7 @@ public class JobLogger {
 	
 	private void registerLoggers(){
 		loggers = new ArrayList<>();
-		loggers.add(new FileLogger(projectName, jobName));
+		loggers.add(new FileLogger(projectName, jobName, jobRunId));
 		logger.debug("Registred file logger");
 		loggers.add(new ConsoleLogger(projectName, jobName));
 		logger.debug("Registered Console logger");
