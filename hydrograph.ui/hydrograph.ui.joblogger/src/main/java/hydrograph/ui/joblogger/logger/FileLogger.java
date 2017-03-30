@@ -18,8 +18,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
@@ -56,7 +54,7 @@ public class FileLogger extends AbstractJobLogger{
 	 * 
 	 * @param projectName - name of active project
 	 * @param jobName - name of current job
-	 * @param b 
+	 * @param jobRunId 
 	 */
 	public FileLogger(String projectName, String jobName, String jobRunId) {
 		super(projectName, jobName);
@@ -84,7 +82,6 @@ public class FileLogger extends AbstractJobLogger{
 	/**
 	 * 
 	 * Initialize file logger stream
-	 * @param isRemoteMode 
 	 * 
 	 */
 	private void initLogFileStream() {
