@@ -14,3 +14,4 @@ Sr.No. <GitHub Issue #>  - [fixed by] - description
 5. <> - [Pooja Yadav] - Data viewer : Need to change wordings.
 6. <> - [Pooja Yadav] - View Data - Tool should show proper message on not selecting View Data check from run config window.
 7. <> - [Pooja Yadav] - Property window should show question window instead of information window.
+8. <> - [Sonia Raheja] - Console Log Level :- For remote run tool create multiple log files in Job Logs folder of config.

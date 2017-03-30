@@ -90,4 +90,3 @@ Sr.No. <GitHub/Bugzilla Issue #>  - [fixed by] - description
 72.#755 - [Ashika Holkar] - Aggregate Component: User is unable to open component after importing job
 73.#757 - [Ashika Holkar] - Group Combine: Invalid expression error is displayed under error log after importing job 
 74.#760 - [Ashika Holkar] - Group Combine: UI issues on Mac
-75.#766 - [Sonia Raheja] - Console Log Level :- For remote run tool create multiple log files in Job Logs.
