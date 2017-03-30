@@ -98,7 +98,8 @@ public class CustomPaletteViewer extends PaletteViewer {
 					if (StringUtils.isEmpty(searchedString)) {
 						showAllContainers(paletteRoot, editor, categoryPaletteConatiner, componentsConfig);
 					} else {
-						matchFound = collectMatchingContainers(editor, categoryPaletteConatiner, componentsConfig,
+						showOpenPaletteContainers(paletteRoot.getChildren());
+						matchFound = checkSearchedComponentFoundInPalette(editor, categoryPaletteConatiner, componentsConfig,
 								 matchingComponents, searchedString);
 						showMessageWhenComponentNotFound(container, matchFound);
 						showMatchingContainers(paletteRoot, categoryPaletteConatiner, matchingComponents);
@@ -116,7 +117,7 @@ public class CustomPaletteViewer extends PaletteViewer {
 		}
 	}
 
-	private boolean collectMatchingContainers(final ELTGraphicalEditor editor,
+	private boolean checkSearchedComponentFoundInPalette(final ELTGraphicalEditor editor,
 			final Map<String, PaletteDrawer> categoryPaletteConatiner, final List<Component> componentsConfig,
 			List<Component> matchingComponents, String searchedString) {
 		boolean matchFound = false;
@@ -160,6 +161,13 @@ public class CustomPaletteViewer extends PaletteViewer {
 			paletteDrawer.setVisible(true);
 		}
 	}
+	private void showOpenPaletteContainers(List list) {
+		for (int i = 0; i < list.size(); i++) {
+			PaletteDrawer paletteDrawer = (PaletteDrawer) list.get(i);
+			paletteDrawer.setInitialState(PaletteDrawer.INITIAL_STATE_OPEN);
+			paletteDrawer.setVisible(true);
+		}
+	}
 
 	private void showMatchingContainers(PaletteRoot paletteRoot,
 			Map<String, PaletteDrawer> categoryPaletteConatiner, List<Component> matchingComponents) {
@@ -184,7 +192,6 @@ public class CustomPaletteViewer extends PaletteViewer {
 			if (Constants.UNKNOWN_COMPONENT_CATEGORY.equalsIgnoreCase(category.name()))
 				continue;
 			PaletteDrawer paletteDrawer = eLEtlGraphicalEditor.createPaletteContainer(category.name());
-			paletteDrawer.setInitialState(PaletteDrawer.INITIAL_STATE_OPEN);
 			eLEtlGraphicalEditor.addContainerToPalette(paletteRoot, paletteDrawer);
 			categoryPaletteConatiner.put(category.name(), paletteDrawer);
 		}
