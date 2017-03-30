@@ -312,6 +312,14 @@ public class JobManager {
 		DataViewerUtility.INSTANCE.deletePreviousRunsBasePathDebugFiles(previouslyExecutedJobs.get(job.getConsoleName()));
 		DataViewerUtility.INSTANCE.closeDataViewerWindows(previouslyExecutedJobs.get(job.getConsoleName()));
 		
+		if(previouslyExecutedJobs.get(job.getConsoleName())!= null){
+			if(runConfigDialog.isDebug()){
+				previouslyExecutedJobs.get(job.getConsoleName()).setDebugMode(true);
+			}else{
+				previouslyExecutedJobs.get(job.getConsoleName()).setDebugMode(false);
+			}
+		}
+		
 		launchJob(job, gefCanvas, parameterGrid, xmlPath,getUserFunctionsPropertertyFile() ,externalSchemaFiles,subJobList);
 	}
 

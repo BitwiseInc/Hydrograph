@@ -171,8 +171,11 @@ public class ViewDataCurrentJobAction extends SelectionAction{
 				showErrorMessage(mainJob);
 				return;
 			}
+		} else if (!job.isDebugMode()) {
+			showErrorMessage(job);
 		} else {
-			// Create data viewer window name, if window exist reopen same window
+			// Create data viewer window name, if window exist reopen same
+			// window
 			String dataViewerWindowName = job.getLocalJobID().replace(".", "_") + "_"
 					+ watchRecordInner.getComponentId() + "_" + watchRecordInner.getSocketId();
 			if (dataViewerMap.keySet().contains(dataViewerWindowName)) {

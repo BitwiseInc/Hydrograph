@@ -11,3 +11,6 @@ Sr.No. <GitHub Issue #>  - [fixed by] - description
 2.<> - [Kalyan Rajpoot] - after editing the value in parameter value dialog when open that again , multi line was appended in single line without any spaces and become non legible.
 3.<> - [Kalyan Rajpoot] - data viewer window 'close' button was acting like 'ok' button.
 4.<> - [Sonia Raheja] - Subfolder in param folder causes the exception "Resource does not exist".
+5. <> - [Pooja Yadav] - Data viewer : Need to change wordings.
+6. <> - [Pooja Yadav] - View Data - Tool should show proper message on not selecting View Data check from run config window.
+7. <> - [Pooja Yadav] - Property window should show question window instead of information window.
