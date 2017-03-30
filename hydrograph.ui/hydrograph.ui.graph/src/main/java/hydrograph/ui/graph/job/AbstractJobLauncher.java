@@ -94,16 +94,13 @@ abstract public class AbstractJobLauncher {
 	 * Initialize job logger
 	 * 
 	 * @param gefCanvas
+	 * @param isRemoteMode 
 	 * @return
 	 */
-	protected JobLogger initJobLogger(DefaultGEFCanvas gefCanvas,boolean logSystemInfo,boolean logJobStartInfo, String jobRunId) {
-		final JobLogger joblogger = new JobLogger(gefCanvas.getActiveProject(), gefCanvas.getJobName(), jobRunId);
-		if(logJobStartInfo)
-			joblogger.logJobStartInfo(jobRunId);;
-		
-		if(logSystemInfo)
-			joblogger.logSystemInformation();
-		
+	protected JobLogger initJobLogger(DefaultGEFCanvas gefCanvas,String jobRunId) {
+		final JobLogger joblogger = new JobLogger(gefCanvas.getActiveProject(), gefCanvas.getJobName(),jobRunId);
+		joblogger.logJobStartInfo(jobRunId);
+		joblogger.logSystemInformation();
 		return joblogger;
 	}
 	

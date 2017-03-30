@@ -75,14 +75,14 @@ public class RemoteJobLauncher extends AbstractJobLauncher {
 		String gradleCommand;
 
 		job.setJobStatus(JobStatus.RUNNING);
-		JobLogger joblogger;
 
 		gradleCommand = JobScpAndProcessUtility.INSTANCE.getCreateDirectoryCommand(job,paramFile,xmlPath,projectName,new ArrayList<String>(externalSchemaFiles),new ArrayList<>(subJobList));
 
 		JobManager.INSTANCE.enableRunJob(false);
 		
 		enableLockedResources(gefCanvas);
-		joblogger = executeCommand(job, project, gradleCommand, gefCanvas, false, false);
+		JobLogger joblogger = initJobLogger(gefCanvas,job.getUniqueJobId());
+		executeCommand(job, project, gradleCommand, gefCanvas,joblogger);
 		if (JobStatus.FAILED.equals(job.getJobStatus())) {
 			releaseResources(job, gefCanvas, joblogger);
 			ViewExecutionHistoryUtility.INSTANCE.addTrackingJobs(job.getConsoleName(), job);
@@ -107,7 +107,7 @@ public class RemoteJobLauncher extends AbstractJobLauncher {
 			}
 			gradleCommand = JobScpAndProcessUtility.INSTANCE.getSubjobScpCommand(subJobFullPath,job);
 
-			joblogger = executeCommand(job, project, gradleCommand, gefCanvas, false, false);
+			executeCommand(job, project, gradleCommand, gefCanvas,joblogger);
 			
 			if (JobStatus.FAILED.equals(job.getJobStatus())) {
 				releaseResources(job, gefCanvas, joblogger);
@@ -134,7 +134,7 @@ public class RemoteJobLauncher extends AbstractJobLauncher {
 			}
 			gradleCommand = JobScpAndProcessUtility.INSTANCE.getSchemaScpCommand(schemaFilesFullPath,job);
 
-			joblogger = executeCommand(job, project, gradleCommand, gefCanvas, false, false);
+			executeCommand(job, project, gradleCommand, gefCanvas,joblogger);
 			if (JobStatus.FAILED.equals(job.getJobStatus())) {
 				releaseResources(job, gefCanvas, joblogger);
 				ViewExecutionHistoryUtility.INSTANCE.addTrackingJobs(job.getConsoleName(), job);
@@ -149,7 +149,7 @@ public class RemoteJobLauncher extends AbstractJobLauncher {
 		}
 
 		gradleCommand = JobScpAndProcessUtility.INSTANCE.getLibararyScpCommand(job);
-		joblogger = executeCommand(job, project, gradleCommand, gefCanvas, true, true);
+		executeCommand(job, project, gradleCommand, gefCanvas,joblogger);
 		if (JobStatus.FAILED.equals(job.getJobStatus())) {
 			releaseResources(job, gefCanvas, joblogger);
 			ViewExecutionHistoryUtility.INSTANCE.addTrackingJobs(job.getConsoleName(), job);
@@ -164,7 +164,7 @@ public class RemoteJobLauncher extends AbstractJobLauncher {
 		
 		// ----------------------------- Code to copy jar files of project's lib folder 
 				gradleCommand = JobScpAndProcessUtility.INSTANCE.getScpCommandForMovingLibFolderJarFiles(job);
-				joblogger = executeCommand(job, project, gradleCommand, gefCanvas, false, false);
+				executeCommand(job, project, gradleCommand, gefCanvas,joblogger);
 				if (JobStatus.FAILED.equals(job.getJobStatus())) {
 					releaseResources(job, gefCanvas, joblogger);
 					ViewExecutionHistoryUtility.INSTANCE.addTrackingJobs(job.getConsoleName(), job);
@@ -178,7 +178,7 @@ public class RemoteJobLauncher extends AbstractJobLauncher {
 				
 		// ----------------------------- Code to copy user-functions property file from resource folder 
 				gradleCommand = JobScpAndProcessUtility.INSTANCE.getScpCommandForMovingUserFunctionsPropertyFile(job);
-				joblogger = executeCommand(job, project, gradleCommand, gefCanvas, false, false);
+				executeCommand(job, project, gradleCommand, gefCanvas,joblogger);
 				if (JobStatus.FAILED.equals(job.getJobStatus())) {
 					releaseResources(job, gefCanvas, joblogger);
 					ViewExecutionHistoryUtility.INSTANCE.addTrackingJobs(job.getConsoleName(), job);
@@ -192,7 +192,7 @@ public class RemoteJobLauncher extends AbstractJobLauncher {
 				
 		// ----------------------------- Code to copy job xml
 		gradleCommand = JobScpAndProcessUtility.INSTANCE.getJobXMLScpCommand(xmlPath,"", job);
-		joblogger = executeCommand(job, project, gradleCommand, gefCanvas, false, false);
+		executeCommand(job, project, gradleCommand, gefCanvas,joblogger);
 		if (JobStatus.FAILED.equals(job.getJobStatus())) {
 			releaseResources(job, gefCanvas, joblogger);
 			ViewExecutionHistoryUtility.INSTANCE.addTrackingJobs(job.getConsoleName(), job);
@@ -207,7 +207,7 @@ public class RemoteJobLauncher extends AbstractJobLauncher {
 
 		// ----------------------------- Code to copy parameter file
 		gradleCommand = JobScpAndProcessUtility.INSTANCE.getParameterFileScpCommand(paramFile, job);
-		joblogger = executeCommand(job, project, gradleCommand, gefCanvas, false, false);
+		executeCommand(job, project, gradleCommand, gefCanvas,joblogger);
 		if (JobStatus.FAILED.equals(job.getJobStatus())) {
 			releaseResources(job, gefCanvas, joblogger);
 			ViewExecutionHistoryUtility.INSTANCE.addTrackingJobs(job.getConsoleName(), job);
@@ -223,7 +223,7 @@ public class RemoteJobLauncher extends AbstractJobLauncher {
 		// ----------------------------- Execute job
 		gradleCommand = JobScpAndProcessUtility.INSTANCE.getExecututeJobCommand(xmlPath,"", paramFile,userFunctionsPropertyFile, job);
 		job.setJobStatus(JobStatus.SSHEXEC);
-		joblogger = executeCommand(job, project, gradleCommand, gefCanvas, false, false);
+		executeCommand(job, project, gradleCommand, gefCanvas,joblogger);
 		if (JobStatus.FAILED.equals(job.getJobStatus())) {
 			releaseResources(job, gefCanvas, joblogger);
 			ViewExecutionHistoryUtility.INSTANCE.addTrackingJobs(job.getConsoleName(), job);
@@ -261,23 +261,27 @@ public class RemoteJobLauncher extends AbstractJobLauncher {
 			JobManager.INSTANCE.enableRunJob(true);
 		}
 	}
-
-	private JobLogger executeCommand(Job job, IProject project, String gradleCommand, DefaultGEFCanvas gefCanvas,
-			boolean logSystemInfo, boolean logJobStartInfo) {
+	/**
+	 * Execute command.
+	 *
+	 * @param job the job
+	 * @param project the project
+	 * @param gradleCommand the gradle command
+	 * @param gefCanvas the gef canvas
+	 * @param joblogger 
+	 */
+	private void executeCommand(Job job, IProject project, String gradleCommand, DefaultGEFCanvas gefCanvas, JobLogger joblogger) {
 		ProcessBuilder processBuilder = JobScpAndProcessUtility.INSTANCE.getProcess(project, gradleCommand);
 		try {
 			Process process = processBuilder.start();
 
 			job.setLocalJobProcess(process);
-			JobLogger joblogger = initJobLogger(gefCanvas, logSystemInfo, logJobStartInfo, job.getUniqueJobId());
 
 			JobManager.INSTANCE.addJob(job);
 			logProcessLogsAsynchronously(joblogger, process, job, gefCanvas);
-			return joblogger;
 		} catch (IOException e) {
 			logger.debug("Unable to execute the job", e);
 		}
-		return null;
 	}
 
 

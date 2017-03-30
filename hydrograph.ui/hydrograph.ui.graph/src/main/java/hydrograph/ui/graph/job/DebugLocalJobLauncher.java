@@ -131,7 +131,7 @@ public void launchJobInDebug(String xmlPath, String debugXmlPath,String paramFil
 			Process process = processBuilder.start();
 
 			job.setLocalJobProcess(process);
-			JobLogger joblogger = initJobLogger(gefCanvas,true,true, job.getUniqueJobId());
+			JobLogger joblogger = initJobLogger(gefCanvas,job.getUniqueJobId());
 
 			JobManager.INSTANCE.addJob(job);
 			logProcessLogsAsynchronously(joblogger, process, job);
