@@ -122,6 +122,11 @@
          id="hydrograph.ui.theme.hydroblue"
          label="Hydroblue">
    </theme>
+   <theme
+         basestylesheeturi="css/hydroteal.css"
+         id="hydrograph.ui.theme.hydroteal"
+         label="Hydroteal">
+   </theme>
    </extension>
 
 </plugin>
