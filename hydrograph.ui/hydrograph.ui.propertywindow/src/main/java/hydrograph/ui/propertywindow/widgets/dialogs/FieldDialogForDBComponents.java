@@ -3,6 +3,7 @@ package hydrograph.ui.propertywindow.widgets.dialogs;
 
 import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.TableItem;
 
 import hydrograph.ui.propertywindow.propertydialog.PropertyDialogButtonBar;
 
@@ -35,6 +36,22 @@ public class FieldDialogForDBComponents extends FieldDialog{
 			return;
 		}
 	}
+	
+	@Override
+	public void deleteRow() {
+		super.deleteRow();
+		i = 0;
+	}
+	
+	@Override
+	public String formatDataToTransfer(TableItem[] selectedTableItems) {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append(sourceTable.getSelection()[0].getText() + "#");
+		
+		return buffer.toString();
+		//return super.formatDataToTransfer(selectedTableItems);
+	}
+	
 }
 
 	
