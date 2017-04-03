@@ -45,19 +45,15 @@ public class VerifyNumericandParameterForDBComponents implements IELTListener{
 						if (matchs.matches()|| ParameterUtil.isParameter(string)) {
 							txtDecorator.hide();
 							((Text) widgetList[0]).setToolTipText("");
-							((Text) widgetList[0]).setForeground(CustomColorRegistry.INSTANCE.getColorFromRegistry(0, 0, 255));
 							((Text) widgetList[0]).setBackground(CustomColorRegistry.INSTANCE.getColorFromRegistry( 255, 255, 255));
 						} else {
 							txtDecorator.show();
 							txtDecorator.setDescriptionText(Messages.DB_NUMERIC_PARAMETERZIATION_ERROR);
-							((Text) widgetList[0]).setForeground(CustomColorRegistry.INSTANCE.getColorFromRegistry(0, 0, 255));
 							((Text) widgetList[0]).setBackground(CustomColorRegistry.INSTANCE.getColorFromRegistry( 255, 255, 255));
 						}
 					} else {
-						txtDecorator.show();
-						((Text) widgetList[0]).setToolTipText(txtDecorator.getDescriptionText());
-						((Text) widgetList[0]).setBackground(CustomColorRegistry.INSTANCE.getColorFromRegistry( 255, 255, 204));
-
+						txtDecorator.hide();
+						((Text) widgetList[0]).setBackground(CustomColorRegistry.INSTANCE.getColorFromRegistry( 255, 255, 255));
 					}
 				}else{
 					txtDecorator.hide();

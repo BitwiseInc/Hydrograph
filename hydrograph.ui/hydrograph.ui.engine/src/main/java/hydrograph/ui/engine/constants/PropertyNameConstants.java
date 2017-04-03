@@ -68,7 +68,10 @@ public enum PropertyNameConstants {
 		NOP_LOWER_BOUND("numPartitions/lowerBound"),
 		NOP_UPPER_BOUND("numPartitions/upperBound"),
 		LOWER_BOUND("lowerBound"),
-		UPPER_BOUND("upperBound");
+		UPPER_BOUND("upperBound"),
+		FETCH_SIZE("fetchSize"),
+		ADDITIONAL_DB_PARAM("extraUrlParams"),
+		CHUNK_SIZE("chunkSize");
 	
 	
 		private final String value;

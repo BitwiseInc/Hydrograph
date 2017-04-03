@@ -672,10 +672,7 @@ public class FieldDialog extends Dialog {
 		sourceTableViewer = new TableViewer(container, SWT.BORDER | SWT.MULTI | SWT.FULL_SELECTION);
 		sourceTableViewer.addDoubleClickListener(new IDoubleClickListener() {
 			public void doubleClick(DoubleClickEvent event) {
-				if(sourceTable.getSelection().length==1){
-				addNewProperty(targetTableViewer, sourceTable.getSelection()[0].getText());
-				enableControlButons();
-				}
+				addFieldOnDoubleClick();
 			}
 		});
 		sourceTable = sourceTableViewer.getTable();
@@ -704,6 +701,16 @@ public class FieldDialog extends Dialog {
 	}
 
 	/**
+	 * 
+	 */
+	public void addFieldOnDoubleClick(){
+		if(sourceTable.getSelection().length==1){
+			addNewProperty(targetTableViewer, sourceTable.getSelection()[0].getText());
+			enableControlButons();
+			}
+	}
+	
+	/**
 	 * Validate.
 	 * 
 	 * @return true, if successful
@@ -715,11 +722,11 @@ public class FieldDialog extends Dialog {
 		for (FilterProperties temp : propertyList) {
 			if (!temp.getPropertyname().trim().isEmpty()) {
 				// String Regex = "[\\@]{1}[\\{]{1}[\\w]*[\\}]{1}||[\\w]*"; --- TODO PLEASE DO NOT REMOVE THIS COMMENT
-				Matcher matchs = Pattern.compile(Constants.REGEX).matcher(temp.getPropertyname().trim());
+				Matcher matchs = Pattern.compile(Constants.REGEX_ALPHA_NUMERIC).matcher(temp.getPropertyname().trim());
 				if (!matchs.matches()) {
 					targetTable.setSelection(propertyCounter);
 					lblPropertyError.setVisible(true);
-					lblPropertyError.setText(Messages.ALLOWED_CHARACTERS);
+					lblPropertyError.setText(Messages.FIELDNAME_NOT_ALPHANUMERIC_ERROR);
 					return false;
 				}
 			} else {

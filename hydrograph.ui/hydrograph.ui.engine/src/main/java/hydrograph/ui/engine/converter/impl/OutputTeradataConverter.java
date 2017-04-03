@@ -140,6 +140,10 @@ public class OutputTeradataConverter extends OutputConverter{
 					ElementValueStringType chunkSize = new ElementValueStringType();
 					chunkSize.setValue(String.valueOf(uiValue.get(Constants.DB_CHUNK_SIZE)));
 					teradataOutput.setChunkSize(chunkSize);
+				}else{
+					ElementValueStringType chunkSize = new ElementValueStringType();
+					chunkSize.setValue("1000");
+					teradataOutput.setChunkSize(chunkSize);
 				}
 				
 				if(StringUtils.isNotBlank((String)uiValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB))){
@@ -147,7 +151,11 @@ public class OutputTeradataConverter extends OutputConverter{
 					extraUrlParams.setValue(String.valueOf(uiValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB)));
 					teradataOutput.setExtraUrlParams(extraUrlParams);
 				}
-			}	
+			}
+		}else{
+			ElementValueStringType chunkSize = new ElementValueStringType();
+			chunkSize.setValue("1000");
+			teradataOutput.setChunkSize(chunkSize);
 		}
 	}
 

@@ -120,7 +120,7 @@ public class InputOracleUiConverter extends InputUiConverter {
 		propertyMap.put(PropertyNameConstants.SELECT_OPTION.value(), databaseSelectionConfig);
 		
 		if(inputOracle.getNumPartitions() !=null ){
-			if(inputOracle.getNumPartitions().getValue() !=null){
+			if(inputOracle.getNumPartitions() !=null){
 				additionalParameterDetails.put(Constants.NO_OF_PARTITION, getParameterValue(PropertyNameConstants.NUMBER_OF_PARTITIONS.value(),
 						inputOracle.getNumPartitions() == null ? "" : inputOracle.getNumPartitions().getValue()));
 			}
@@ -137,15 +137,15 @@ public class InputOracleUiConverter extends InputUiConverter {
 			}
 		}
 		
-		if(inputOracle.getFetchSize() !=null && StringUtils.isNotBlank(inputOracle.getFetchSize().getValue())){
-			additionalParameterDetails.put(Constants.FECTH_SIZE, inputOracle.getFetchSize().getValue());
-		}
-		if(inputOracle.getExtraUrlParams() !=null && StringUtils.isNotBlank(inputOracle.getExtraUrlParams().getValue())){
-			additionalParameterDetails.put(Constants.ADDITIONAL_PARAMETERS_FOR_DB, inputOracle.getExtraUrlParams().getValue());
-		}
+		additionalParameterDetails.put(Constants.FECTH_SIZE,getParameterValue(PropertyNameConstants.FETCH_SIZE.value(), 
+				inputOracle.getNumPartitions().getLowerBound().getValue()));
+		
+		additionalParameterDetails.put(Constants.ADDITIONAL_PARAMETERS_FOR_DB,getParameterValue(PropertyNameConstants.ADDITIONAL_DB_PARAM.value(), 
+				inputOracle.getNumPartitions().getLowerBound().getValue()));
 		
 		propertyMap.put(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value(), additionalParameterDetails);
 
+		System.out.println(propertyMap.toString());
 		uiComponent.setType(UIComponentsConstants.ORACLE.value());
 		uiComponent.setCategory(UIComponentsConstants.INPUT_CATEGORY.value());
 

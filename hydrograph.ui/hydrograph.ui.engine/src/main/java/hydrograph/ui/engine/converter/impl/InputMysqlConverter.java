@@ -140,14 +140,18 @@ public class InputMysqlConverter extends InputConverter{
 	}
 	
 	private void addAdditionalParameters() {
+		Object obj = properties.get(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value());
 		
-		Map<String, String> uiValue = (Map<String, String>) properties
-				.get(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value());
-		
-		if (uiValue != null) {
+		if (obj != null && StringUtils.isNotBlank(obj.toString())) {
+			Map<String, String> uiValue = (Map<String, String>) properties
+					.get(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value());
 			if (StringUtils.isNotBlank((String) uiValue.get(Constants.FECTH_SIZE))) {
 				ElementValueStringType fetchSize = new ElementValueStringType();
 				fetchSize.setValue(String.valueOf(uiValue.get(Constants.FECTH_SIZE)));
+				mysqlInput.setFetchSize(fetchSize);
+			}else{
+				ElementValueStringType fetchSize = new ElementValueStringType();
+				fetchSize.setValue("1000");
 				mysqlInput.setFetchSize(fetchSize);
 			}
 			if (StringUtils.isNotBlank((String) uiValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB))) {
@@ -156,7 +160,8 @@ public class InputMysqlConverter extends InputConverter{
 				mysqlInput.setExtraUrlParams(extraUrlParams);
 			}
 
-			if (uiValue.get(Constants.NO_OF_PARTITION) !=null) {
+			
+			if (uiValue.get(Constants.NO_OF_PARTITION) !=null && StringUtils.isNotBlank(uiValue.get(Constants.NO_OF_PARTITION))) {
 				TypePartitionsChoice typePartitionsChoice = new TypePartitionsChoice();
 
 				if (uiValue.get(Constants.NO_OF_PARTITION) !=null) {
@@ -188,6 +193,10 @@ public class InputMysqlConverter extends InputConverter{
 				mysqlInput.setNumPartitions(typePartitionsChoice);
 			}
 
+		}else{
+			ElementValueStringType fetchSize = new ElementValueStringType();
+			fetchSize.setValue("1000");
+			mysqlInput.setFetchSize(fetchSize);
 		}
 		
 	}

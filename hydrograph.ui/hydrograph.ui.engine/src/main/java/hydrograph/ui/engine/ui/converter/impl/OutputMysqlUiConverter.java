@@ -107,12 +107,11 @@ public class OutputMysqlUiConverter extends OutputUiConverter{
 		}
 		propertyMap.put(PropertyNameConstants.LOAD_TYPE_CONFIGURATION.value(), loadSelectedDetails);
 		
-		if(outputMysql.getChunkSize() !=null && StringUtils.isNotBlank(outputMysql.getChunkSize().getValue().toString())){
-			additionalParameterDetails.put(Constants.DB_CHUNK_SIZE,outputMysql.getChunkSize().getValue().toString());
-		}
-		if(outputMysql.getExtraUrlParams() !=null && StringUtils.isNotBlank(outputMysql.getExtraUrlParams().getValue().toString() )){
-			additionalParameterDetails.put(Constants.ADDITIONAL_PARAMETERS_FOR_DB, outputMysql.getExtraUrlParams().getValue().toString());
-		}
+		additionalParameterDetails.put(Constants.DB_CHUNK_SIZE, getParameterValue(PropertyNameConstants.CHUNK_SIZE.value(),
+				outputMysql.getChunkSize() == null ? "" : outputMysql.getChunkSize().getValue()));
+		
+		additionalParameterDetails.put(Constants.ADDITIONAL_PARAMETERS_FOR_DB, getParameterValue(PropertyNameConstants.ADDITIONAL_DB_PARAM.value(),
+				outputMysql.getChunkSize() == null ? "" : outputMysql.getChunkSize().getValue()));
 		
 		propertyMap.put(PropertyNameConstants.OUTPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value(), additionalParameterDetails);
 		

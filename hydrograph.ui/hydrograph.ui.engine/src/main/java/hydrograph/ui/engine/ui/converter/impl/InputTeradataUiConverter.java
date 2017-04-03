@@ -136,14 +136,11 @@ public class InputTeradataUiConverter extends InputUiConverter{
 			}
 		}
 		
-		if(inputTeradata.getFetchSize() !=null && StringUtils.isNotBlank(inputTeradata.getFetchSize().getValue())){
-			additionalParameterDetails.put(Constants.FECTH_SIZE, inputTeradata.getFetchSize().getValue());
-		}
-		if(inputTeradata.getExtraUrlParams() !=null && StringUtils.isNotBlank(inputTeradata.getExtraUrlParams().getValue())){
-			additionalParameterDetails.put(Constants.ADDITIONAL_PARAMETERS_FOR_DB, inputTeradata.getExtraUrlParams().getValue());
-		}
+		additionalParameterDetails.put(Constants.FECTH_SIZE,getParameterValue(PropertyNameConstants.FETCH_SIZE.value(), 
+				inputTeradata.getNumPartitions().getLowerBound().getValue()));
 		
-		System.out.println(additionalParameterDetails);
+		additionalParameterDetails.put(Constants.ADDITIONAL_PARAMETERS_FOR_DB,getParameterValue(PropertyNameConstants.ADDITIONAL_DB_PARAM.value(), 
+				inputTeradata.getNumPartitions().getLowerBound().getValue()));
 		
 		propertyMap.put(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value(), additionalParameterDetails);
 
