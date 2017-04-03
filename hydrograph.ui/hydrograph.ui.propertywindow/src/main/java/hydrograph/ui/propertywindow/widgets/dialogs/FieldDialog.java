@@ -101,7 +101,7 @@ public class FieldDialog extends Dialog {
 	private Label lblPropertyError;
 	private TableViewer targetTableViewer;
 	private TableViewer sourceTableViewer;
-	private Table sourceTable;
+	protected Table sourceTable;
 	private Table targetTable;
 
 	private boolean isAnyUpdatePerformed;
@@ -643,7 +643,10 @@ public class FieldDialog extends Dialog {
 	
 	}
 	
-	private void deleteRow()
+	/**
+	 * The Function will used to remove selected row from target table
+	 */
+	public void deleteRow()
 	{
 		WidgetUtility.setCursorOnDeleteRow(targetTableViewer, propertyList);
 		isAnyUpdatePerformed = true;
@@ -691,12 +694,11 @@ public class FieldDialog extends Dialog {
 		getSourceFieldsFromPropagatedSchema(sourceTable);
 		dragSource = new DragSource(sourceTable, DND.DROP_MOVE);
 		dragSource.setTransfer(new Transfer[] { TextTransfer.getInstance() });
+		
 		dragSource.addDragListener(new DragSourceAdapter() {
 			public void dragSetData(DragSourceEvent event) { // Set the data to be the first selected item's text
-
 				event.data = formatDataToTransfer(sourceTable.getSelection());
 			}
-
 		});
 	}
 
@@ -775,7 +777,11 @@ public class FieldDialog extends Dialog {
 		return propertyValidator;
 	}
 
-	private String formatDataToTransfer(TableItem[] selectedTableItems) {
+	/**
+	 * @param selectedTableItems
+	 * @return
+	 */
+	public String formatDataToTransfer(TableItem[] selectedTableItems) {
 		StringBuffer buffer = new StringBuffer();
 		for (TableItem tableItem : selectedTableItems) {
 			buffer.append(tableItem.getText() + "#");

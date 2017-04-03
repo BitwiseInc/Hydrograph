@@ -135,22 +135,21 @@ public class OutputTeradataConverter extends OutputConverter{
 		Object obj = properties.get(PropertyNameConstants.OUTPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value());
 		if(obj != null && StringUtils.isNotBlank(obj.toString())){
 			Map<String, String> uiValue = (Map<String, String>) properties.get(PropertyNameConstants.OUTPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value());
-			if(uiValue !=null){
+			if(uiValue !=null && !uiValue.isEmpty()){
 				if(StringUtils.isNotBlank((String)uiValue.get(Constants.DB_CHUNK_SIZE))){
 					ElementValueStringType chunkSize = new ElementValueStringType();
 					chunkSize.setValue(String.valueOf(uiValue.get(Constants.DB_CHUNK_SIZE)));
 					teradataOutput.setChunkSize(chunkSize);
-				}else{
-					ElementValueStringType chunkSize = new ElementValueStringType();
-					chunkSize.setValue("1000");
-					teradataOutput.setChunkSize(chunkSize);
 				}
-				
 				if(StringUtils.isNotBlank((String)uiValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB))){
 					ElementValueStringType extraUrlParams = new ElementValueStringType();
 					extraUrlParams.setValue(String.valueOf(uiValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB)));
 					teradataOutput.setExtraUrlParams(extraUrlParams);
 				}
+			}else{
+				ElementValueStringType chunkSize = new ElementValueStringType();
+				chunkSize.setValue("1000");
+				teradataOutput.setChunkSize(chunkSize);
 			}
 		}else{
 			ElementValueStringType chunkSize = new ElementValueStringType();
@@ -162,7 +161,7 @@ public class OutputTeradataConverter extends OutputConverter{
 	private TypeLoadChoice addTypeLoadChoice() {
 		TypeLoadChoice loadValue = new TypeLoadChoice();
 		Map<String, String> uiValue = (Map<String, String>) properties.get(PropertyNameConstants.LOAD_TYPE_CONFIGURATION.value());
-		if(uiValue != null){
+		if(uiValue != null && !uiValue.isEmpty()){
 			if (uiValue.containsKey(Constants.LOAD_TYPE_UPDATE_KEY)) {
 				loadValue.setUpdate(getUpdateKeys((String) uiValue.get(Constants.LOAD_TYPE_UPDATE_KEY)));
 			} else if (uiValue.containsKey(Constants.LOAD_TYPE_NEW_TABLE_KEY)) {
@@ -173,6 +172,8 @@ public class OutputTeradataConverter extends OutputConverter{
 				loadValue.setTruncateLoad(uiValue.get(Constants.LOAD_TYPE_REPLACE_KEY));
 			}
 			
+		}else{
+			loadValue.setNewTable(getPrimaryKeyColumnFields(""));
 		}
 		return loadValue;
 	}
