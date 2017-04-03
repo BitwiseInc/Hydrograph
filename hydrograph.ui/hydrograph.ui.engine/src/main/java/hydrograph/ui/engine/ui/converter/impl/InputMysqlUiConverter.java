@@ -123,7 +123,7 @@ public class InputMysqlUiConverter extends InputUiConverter{
 		propertyMap.put(PropertyNameConstants.SELECT_OPTION.value(), databaseSelectionConfig);
 		
 		if(inputMysql.getNumPartitions() !=null ){
-			if(inputMysql.getNumPartitions().getValue() !=null){
+			if(inputMysql.getNumPartitions() !=null){
 				additionalParameterDetails.put(Constants.NO_OF_PARTITION, getParameterValue(PropertyNameConstants.NUMBER_OF_PARTITIONS.value(),
 						inputMysql.getNumPartitions() == null ? "" : inputMysql.getNumPartitions().getValue()));
 			}
@@ -140,12 +140,11 @@ public class InputMysqlUiConverter extends InputUiConverter{
 			}
 		}
 		
-		if(inputMysql.getFetchSize() !=null && StringUtils.isNotBlank(inputMysql.getFetchSize().getValue())){
-			additionalParameterDetails.put(Constants.FECTH_SIZE, inputMysql.getFetchSize().getValue());
-		}
-		if(inputMysql.getExtraUrlParams() !=null && StringUtils.isNotBlank(inputMysql.getExtraUrlParams().getValue())){
-			additionalParameterDetails.put(Constants.ADDITIONAL_PARAMETERS_FOR_DB, inputMysql.getExtraUrlParams().getValue());
-		}
+		additionalParameterDetails.put(Constants.FECTH_SIZE,getParameterValue(PropertyNameConstants.FETCH_SIZE.value(), 
+				inputMysql.getNumPartitions().getLowerBound().getValue()));
+		
+		additionalParameterDetails.put(Constants.ADDITIONAL_PARAMETERS_FOR_DB,getParameterValue(PropertyNameConstants.ADDITIONAL_DB_PARAM.value(), 
+				inputMysql.getNumPartitions().getLowerBound().getValue()));
 		
 		propertyMap.put(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value(), additionalParameterDetails);
 

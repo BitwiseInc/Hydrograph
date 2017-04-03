@@ -3,7 +3,9 @@ package hydrograph.ui.propertywindow.widgets.customwidgets.databasecomponents;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.widgets.Control;
@@ -122,10 +124,23 @@ public class OutputAdditionalParametersWidget extends AbstractWidget {
 		OutputAdditionalParametersDialog outputAdditionalParametersDialog = new OutputAdditionalParametersDialog(shell,
 				runtimeConfig.getWindowLabel(), propertyDialogButtonBar, initialMap,cursor);
 		outputAdditionalParametersDialog.open();
+		
+		Map<String, Object> newValues =  outputAdditionalParametersDialog.getOutputAdditionalParameterValues();
+		if(isAnyUpdate(initialMap, newValues)){
+			propertyDialogButtonBar.enableApplyButton(true);
+		}
 		initialMap = outputAdditionalParametersDialog.getOutputAdditionalParameterValues();
 		showHideErrorSymbol(widgets);
-		propertyDialogButtonBar.enableApplyButton(true);
 
+	}
+	
+	private boolean isAnyUpdate(Map<String, Object> oldMap, Map<String, Object> newMap) {
+		for(Entry< String , Object> entry:oldMap.entrySet()){
+			if(!StringUtils.equals((String)newMap.get(entry.getKey()), (String)entry.getValue())){
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

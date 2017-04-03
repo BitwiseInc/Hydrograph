@@ -110,14 +110,11 @@ public class OutputOracleUiConverter extends OutputUiConverter {
 				
 		}
 		propertyMap.put(PropertyNameConstants.LOAD_TYPE_CONFIGURATION.value(), loadSelectedDetails);
-			System.out.println(outputOracle.getChunkSize().getValue());
-			if(outputOracle.getChunkSize() !=null && StringUtils.isNotBlank(outputOracle.getChunkSize().getValue())){
-				additionalParameterDetails.put(Constants.DB_CHUNK_SIZE,outputOracle.getChunkSize().getValue().toString());
-			}
+		additionalParameterDetails.put(Constants.DB_CHUNK_SIZE, getParameterValue(PropertyNameConstants.CHUNK_SIZE.value(),
+				outputOracle.getChunkSize() == null ? "" : outputOracle.getChunkSize().getValue()));
 		
-			if(outputOracle.getExtraUrlParams() !=null && StringUtils.isNotBlank(outputOracle.getExtraUrlParams().getValue().toString())){
-				additionalParameterDetails.put(Constants.ADDITIONAL_PARAMETERS_FOR_DB, outputOracle.getExtraUrlParams().getValue().toString());
-			}
+		additionalParameterDetails.put(Constants.ADDITIONAL_PARAMETERS_FOR_DB, getParameterValue(PropertyNameConstants.ADDITIONAL_DB_PARAM.value(),
+				outputOracle.getChunkSize() == null ? "" : outputOracle.getChunkSize().getValue()));
 		
 		propertyMap.put(PropertyNameConstants.OUTPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value(), additionalParameterDetails);
 		

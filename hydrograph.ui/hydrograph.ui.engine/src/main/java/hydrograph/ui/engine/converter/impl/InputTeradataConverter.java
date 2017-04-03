@@ -146,14 +146,19 @@ public class InputTeradataConverter extends InputConverter{
 				ElementValueStringType fetchSize = new ElementValueStringType();
 				fetchSize.setValue(String.valueOf(uiValue.get(Constants.FECTH_SIZE)));
 				teradataInput.setFetchSize(fetchSize);
+			}else{
+				ElementValueStringType fetchSize = new ElementValueStringType();
+				fetchSize.setValue("1000");
+				teradataInput.setFetchSize(fetchSize);
 			}
+			
 			if (StringUtils.isNotBlank((String) uiValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB))) {
 				ElementValueStringType extraUrlParams = new ElementValueStringType();
 				extraUrlParams.setValue(String.valueOf(uiValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB)));
 				teradataInput.setExtraUrlParams(extraUrlParams);
 			}
 
-			if (uiValue.get(Constants.NO_OF_PARTITION) !=null) {
+			if (uiValue.get(Constants.NO_OF_PARTITION) !=null && StringUtils.isNotBlank(uiValue.get(Constants.NO_OF_PARTITION))) {
 				TypePartitionsChoice typePartitionsChoice = new TypePartitionsChoice();
 
 				if (uiValue.get(Constants.NO_OF_PARTITION) !=null) {
@@ -185,6 +190,10 @@ public class InputTeradataConverter extends InputConverter{
 				teradataInput.setNumPartitions(typePartitionsChoice);
 			}
 
+		}else{
+			ElementValueStringType fetchSize = new ElementValueStringType();
+			fetchSize.setValue("1000");
+			teradataInput.setFetchSize(fetchSize);
 		}
 	}
 
