@@ -12,6 +12,7 @@
  *******************************************************************************/
 package hydrograph.ui.propertywindow.widgets.customwidgets.databasecomponents;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,10 +46,12 @@ import hydrograph.ui.propertywindow.widgets.dialogs.FieldDialogForDBComponents;
 import hydrograph.ui.propertywindow.widgets.listeners.ExtraURLParameterValidationForDBComponents;
 import hydrograph.ui.propertywindow.widgets.listeners.ListenerHelper;
 import hydrograph.ui.propertywindow.widgets.listeners.ListenerHelper.HelperType;
+import hydrograph.ui.propertywindow.widgets.listeners.ModifyNumericListenerForDBComp;
 import hydrograph.ui.propertywindow.widgets.listeners.VerifyNumericandParameterForDBComponents;
 import hydrograph.ui.propertywindow.widgets.utility.WidgetUtility;
 
 public class InputAdditionalParametersDialog extends Dialog {
+	public static final String FETCH_SIZE_VALUE = "1000";
 	private Text noOfPartitionsTextBox;
 	private Text partitionKeyUpperBoundTextBox;
 	private Text partitionKeyLowerBoundTextBox;
@@ -145,6 +148,8 @@ public class InputAdditionalParametersDialog extends Dialog {
 		partitionKeyButton.setLayoutData(gd_partitionKeyButton);
 		partitionKeyButton.setText(Messages.EDIT_BUTTON_LABEL);
 		partitionKeyButton.setEnabled(false);
+		
+		selectedPartitionKey = (String) additionalParameterValue.get(Constants.DB_PARTITION_KEY);
 
 		partitionKeyUpperBoundLabel = new Label(composite, SWT.NONE);
 		GridData gd_partitionKeyUpperBoundLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -192,7 +197,7 @@ public class InputAdditionalParametersDialog extends Dialog {
 		if (StringUtils.isNotBlank(fetchSizeTextBox.getText())) {
 			fetchSizeTextBox.setText(fetchSizeTextBox.getText());
 		} else {
-			fetchSizeTextBox.setText("1000");
+			fetchSizeTextBox.setText(FETCH_SIZE_VALUE);
 		}
 
 		additionalDBParametersLabel = new Label(composite, SWT.NONE);
@@ -212,17 +217,40 @@ public class InputAdditionalParametersDialog extends Dialog {
 		addSelectionListenerToPartitionKeyButton(partitionKeyButton);
 
 		addModifyListenerToNoOfPartitionTextBox(noOfPartitionsTextBox);
+		addModifyListener(partitionKeyUpperBoundTextBox);
+		addModifyListener(partitionKeyLowerBoundTextBox);
+		addModifyListener(fetchSizeTextBox);
+		addModifyListener(additionalParameterTextBox);
+		
 
 		addValidationToWidgets(noOfPartitionsTextBox, noOfPartitionControlDecoration);
-		addValidationToWidgets(partitionKeyUpperBoundTextBox, partitionKeyUpperBoundControlDecoration);
-		addValidationToWidgets(partitionKeyLowerBoundTextBox, partitionKeyLowerBoundControlDecoration);
+		modifyListenerForLowerUpperBoundWidget(partitionKeyUpperBoundTextBox, partitionKeyUpperBoundControlDecoration);
+		modifyListenerForLowerUpperBoundWidget(partitionKeyLowerBoundTextBox, partitionKeyLowerBoundControlDecoration);
 		addValidationToWidgets(fetchSizeTextBox, fetchSizeControlDecoration);
+		
 		addValidationToAdditionalParameterWidget(additionalParameterTextBox, additionalParameterControlDecoration);
+		
 		addAdditionalParameterMapValues();
 
 		return container;
 	}
 
+	private void modifyListenerForLowerUpperBoundWidget(Text textBox, ControlDecoration txtDecorator){
+		ListenerHelper helper = new ListenerHelper();
+		helper.put(HelperType.CONTROL_DECORATION, txtDecorator);
+		ModifyNumericListenerForDBComp listenerForDBComp = new ModifyNumericListenerForDBComp();
+		textBox.addListener(SWT.Modify, listenerForDBComp.getListener(propertyDialogButtonBar, helper, textBox));
+	}
+	
+	private void addModifyListener(Text text){
+		text.addModifyListener(new ModifyListener() {
+			@Override
+			public void modifyText(ModifyEvent e) {
+				Utils.INSTANCE.addMouseMoveListener(text, cursor);	
+			}
+		});
+	}
+	
 	private void addValidationToAdditionalParameterWidget(Text additionalParameterTextBox,
 			ControlDecoration additionalParameterControlDecoration) {
 
@@ -247,21 +275,27 @@ public class InputAdditionalParametersDialog extends Dialog {
 		noOfPartitionsTextBox.addModifyListener(new ModifyListener() {
 
 			@Override
-			public void modifyText(ModifyEvent e) {
+			public void modifyText(ModifyEvent event) {
 				partitionKeyButton.setEnabled(true);
 				partitionKeyLowerBoundTextBox.setEnabled(true);
 				partitionKeyUpperBoundTextBox.setEnabled(true);
 				if (StringUtils.isNotBlank(noOfPartitionsTextBox.getText())) {
 					if (StringUtils.isBlank(partitionKeyLowerBoundTextBox.getText())
-							|| StringUtils.isBlank(partitionKeyUpperBoundTextBox.getText())) {
+							|| StringUtils.isBlank(partitionKeyUpperBoundTextBox.getText()) 
+							|| StringUtils.isEmpty((String) additionalParameterValue.get(Constants.DB_PARTITION_KEY))) {
 						partitionKeyLowerBoundControlDecoration.show();
 						partitionKeyUpperBoundControlDecoration.show();
-					}
-					if(StringUtils.isBlank(selectedPartitionKey) && StringUtils.isEmpty(selectedPartitionKey)){
 						partitionKeyControlDecoration.show();
 					}
+				}else{
+					partitionKeyLowerBoundControlDecoration.hide();
+					partitionKeyUpperBoundControlDecoration.hide();
+					partitionKeyControlDecoration.hide();
+					partitionKeyButton.setEnabled(false);
+					partitionKeyLowerBoundTextBox.setEnabled(false);
+					partitionKeyUpperBoundTextBox.setEnabled(false);
 				}
-				propertyDialogButtonBar.enableApplyButton(true);
+				Utils.INSTANCE.addMouseMoveListener(noOfPartitionsTextBox, cursor);	
 			}
 		});
 
@@ -274,18 +308,8 @@ public class InputAdditionalParametersDialog extends Dialog {
 					partitionKeyButton.setEnabled(false);
 					partitionKeyLowerBoundTextBox.setEnabled(false);
 					partitionKeyUpperBoundTextBox.setEnabled(false);
-
-				} else if (StringUtils.isNotBlank(noOfPartitionsTextBox.getText())) {
-					if (StringUtils.isBlank(partitionKeyLowerBoundTextBox.getText())
-							|| StringUtils.isBlank(partitionKeyUpperBoundTextBox.getText())) {
-						partitionKeyLowerBoundControlDecoration.show();
-						partitionKeyUpperBoundControlDecoration.show();
-					}
-					if(StringUtils.isBlank(selectedPartitionKey) && StringUtils.isEmpty(selectedPartitionKey)){
-						partitionKeyControlDecoration.show();
-					}
+					partitionKeyControlDecoration.hide();
 				}
-
 			}
 
 			@Override
@@ -296,7 +320,6 @@ public class InputAdditionalParametersDialog extends Dialog {
 					partitionKeyButton.setEnabled(true);
 					partitionKeyLowerBoundTextBox.setEnabled(true);
 					partitionKeyUpperBoundTextBox.setEnabled(true);
-
 				}
 			}
 		});
@@ -305,50 +328,54 @@ public class InputAdditionalParametersDialog extends Dialog {
 	private void addAdditionalParameterMapValues() {
 
 		if (additionalParameterValue != null && !additionalParameterValue.isEmpty()) {
-			if (additionalParameterValue.get(Constants.NO_OF_PARTITION) != null) {
+			if (additionalParameterValue.get(Constants.NO_OF_PARTITION) != null 
+					&& StringUtils.isNotEmpty((String)additionalParameterValue.get(Constants.NO_OF_PARTITION))) {
 				noOfPartitionsTextBox.setText(additionalParameterValue.get(Constants.NO_OF_PARTITION).toString());
-				Utils.INSTANCE.addMouseMoveListenerForTextBox(noOfPartitionsTextBox, cursor);
+				//Utils.INSTANCE.addMouseMoveListenerForTextBox(noOfPartitionsTextBox, cursor);
+				Utils.INSTANCE.addMouseMoveListener(noOfPartitionsTextBox, cursor);	
 				if (StringUtils.isNotBlank((String) additionalParameterValue.get(Constants.DB_PARTITION_KEY))) {
 					partitionKeyButton.setEnabled(true);
 					partitionKeyControlDecoration.hide();
 				} else {
 					partitionKeyControlDecoration.show();
 				}
-				if (additionalParameterValue.get(Constants.PARTITION_KEY_LOWER_BOUND) != null) {
-					partitionKeyLowerBoundTextBox
-							.setText(additionalParameterValue.get(Constants.PARTITION_KEY_LOWER_BOUND).toString());
-					Utils.INSTANCE.addMouseMoveListenerForTextBox(partitionKeyLowerBoundTextBox, cursor);
+				if (additionalParameterValue.get(Constants.PARTITION_KEY_LOWER_BOUND) != null 
+						&& StringUtils.isNotEmpty((String) additionalParameterValue.get(Constants.PARTITION_KEY_LOWER_BOUND))) {
+					partitionKeyLowerBoundTextBox.setText(additionalParameterValue.get(Constants.PARTITION_KEY_LOWER_BOUND).toString());
+					//Utils.INSTANCE.addMouseMoveListenerForTextBox(partitionKeyLowerBoundTextBox, cursor);
+					Utils.INSTANCE.addMouseMoveListener(partitionKeyLowerBoundTextBox, cursor);
 					partitionKeyLowerBoundControlDecoration.hide();
 				} else {
 					partitionKeyLowerBoundControlDecoration.show();
 				}
-				if (additionalParameterValue.get(Constants.PARTITION_KEY_UPPER_BOUND) != null) {
+				if (additionalParameterValue.get(Constants.PARTITION_KEY_UPPER_BOUND) != null 
+						&& StringUtils.isNotEmpty((String) additionalParameterValue.get(Constants.PARTITION_KEY_UPPER_BOUND))) {
 					partitionKeyUpperBoundTextBox
 							.setText(additionalParameterValue.get(Constants.PARTITION_KEY_UPPER_BOUND).toString());
-					Utils.INSTANCE.addMouseMoveListenerForTextBox(partitionKeyUpperBoundTextBox, cursor);
+					//Utils.INSTANCE.addMouseMoveListenerForTextBox(partitionKeyUpperBoundTextBox, cursor);
+					Utils.INSTANCE.addMouseMoveListener(partitionKeyUpperBoundTextBox, cursor);
 					partitionKeyUpperBoundControlDecoration.hide();
 				} else {
 					partitionKeyUpperBoundControlDecoration.show();
 				}
+			}else{
+				partitionKeyControlDecoration.hide();
+				partitionKeyLowerBoundControlDecoration.hide();
+				partitionKeyUpperBoundControlDecoration.hide();
 			}
 			if (StringUtils.isNotBlank((String) additionalParameterValue.get(Constants.FECTH_SIZE))) {
 				fetchSizeTextBox.setText((String) additionalParameterValue.get(Constants.FECTH_SIZE));
-				Utils.INSTANCE.addMouseMoveListenerForTextBox(fetchSizeTextBox, cursor);
-				fetchSizeControlDecoration.hide();
+				Utils.INSTANCE.addMouseMoveListener(fetchSizeTextBox, cursor);
 			} else {
-				fetchSizeTextBox.setText("1000");
+				fetchSizeTextBox.setText(FETCH_SIZE_VALUE);
 				fetchSizeControlDecoration.hide();
 			}
 
 			if (StringUtils.isNotBlank((String) additionalParameterValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB))) {
 				additionalParameterTextBox
 						.setText((String) additionalParameterValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB));
-				additionalParameterControlDecoration.hide();
+				Utils.INSTANCE.addMouseMoveListener(additionalParameterTextBox, cursor);
 			}
-			
-			if(StringUtils.isEmpty((String) additionalParameterValue.get(Constants.DB_PARTITION_KEY))){
-				partitionKeyControlDecoration.show();
-			}else{partitionKeyControlDecoration.hide();}
 		}
 
 	}
@@ -368,18 +395,17 @@ public class InputAdditionalParametersDialog extends Dialog {
 				if (StringUtils.isNotBlank((String) additionalParameterValue.get(Constants.DB_PARTITION_KEY))) {
 					fieldDialog.setPropertyFromCommaSepratedString(
 							(String) additionalParameterValue.get(Constants.DB_PARTITION_KEY));
-					
 				}
 				fieldDialog.open();
 				selectedPartitionKey = fieldDialog.getResultAsCommaSeprated();
 				
 				if (StringUtils.isEmpty(selectedPartitionKey) || StringUtils.isBlank(selectedPartitionKey)) {
 					partitionKeyControlDecoration.show();
+					additionalParameterValue.put(partitionKeysLabel.getText(), selectedPartitionKey);
 				} else {
 					partitionKeyControlDecoration.hide();
+					additionalParameterValue.put(partitionKeysLabel.getText(), selectedPartitionKey);
 				}
-
-				propertyDialogButtonBar.enableApplyButton(true);
 			}
 		});
 
@@ -411,29 +437,25 @@ public class InputAdditionalParametersDialog extends Dialog {
 
 	@Override
 	protected void okPressed() {
-
-		additionalParameterValue.clear();
-
+		
+		additionalParameterValue= new LinkedHashMap<>();
 		if (StringUtils.isNotBlank(noOfPartitionsTextBox.getText())) {
 			additionalParameterValue.put(noOfPartitionsLabel.getText(), noOfPartitionsTextBox.getText());
-		}
-		if (StringUtils.isNotBlank(selectedPartitionKey)) {
 			additionalParameterValue.put(partitionKeysLabel.getText(), selectedPartitionKey);
-		}
-		if (StringUtils.isNotBlank(partitionKeyUpperBoundTextBox.getText())) {
 			additionalParameterValue.put(partitionKeyUpperBoundLabel.getText(),
 					partitionKeyUpperBoundTextBox.getText());
-		}
-		if (StringUtils.isNotBlank(partitionKeyLowerBoundTextBox.getText())) {
 			additionalParameterValue.put(partitionKeyLowerBoundLabel.getText(),
 					partitionKeyLowerBoundTextBox.getText());
+		}else{
+			additionalParameterValue.put(noOfPartitionsLabel.getText(), noOfPartitionsTextBox.getText());
 		}
-		if (StringUtils.isNotBlank(fetchSizeTextBox.getText())) {
+		if(StringUtils.isNotBlank(fetchSizeTextBox.getText())){
 			additionalParameterValue.put(fetchSizeLabel.getText(), fetchSizeTextBox.getText());
+		}else{
+			additionalParameterValue.put(fetchSizeLabel.getText(), FETCH_SIZE_VALUE);
 		}
-		if (StringUtils.isNotBlank(additionalParameterTextBox.getText())) {
 			additionalParameterValue.put(additionalDBParametersLabel.getText(), additionalParameterTextBox.getText());
-		}
+			
 		super.okPressed();
 	}
 

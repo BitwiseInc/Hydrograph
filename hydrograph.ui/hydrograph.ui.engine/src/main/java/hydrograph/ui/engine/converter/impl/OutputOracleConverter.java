@@ -119,7 +119,7 @@ public class OutputOracleConverter extends OutputConverter {
 		Map<String, String> uiValue = (Map<String, String>) properties.get(PropertyNameConstants.LOAD_TYPE_CONFIGURATION.value());
 		if(uiValue != null){
 			if (uiValue.containsKey(Constants.LOAD_TYPE_UPDATE_KEY)) {
-				loadValue.setUpdate(getUpdateKeys((String) uiValue.get(Constants.LOAD_TYPE_UPDATE_KEY)));
+				//loadValue.setUpdate(getUpdateKeys((String) uiValue.get(Constants.LOAD_TYPE_UPDATE_KEY)));
 			} else if (uiValue.containsKey(Constants.LOAD_TYPE_NEW_TABLE_KEY)) {
 				loadValue.setNewTable(getPrimaryKeyColumnFeilds((String) uiValue.get(Constants.LOAD_TYPE_NEW_TABLE_KEY)));
 			} else if (uiValue.containsKey(Constants.LOAD_TYPE_INSERT_KEY)) {
@@ -140,6 +140,10 @@ public class OutputOracleConverter extends OutputConverter {
 					ElementValueStringType chunkSize = new ElementValueStringType();
 					chunkSize.setValue(String.valueOf(uiValue.get(Constants.DB_CHUNK_SIZE)));
 					oracleOutput.setChunkSize(chunkSize);
+				}else{
+					ElementValueStringType chunkSize = new ElementValueStringType();
+					chunkSize.setValue("1000");
+					oracleOutput.setChunkSize(chunkSize);
 				}
 				
 				if(StringUtils.isNotBlank((String)uiValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB))){
@@ -148,6 +152,10 @@ public class OutputOracleConverter extends OutputConverter {
 					oracleOutput.setExtraUrlParams(extraUrlParams);
 				}
 			}	
+		}else{
+			ElementValueStringType chunkSize = new ElementValueStringType();
+			chunkSize.setValue("1000");
+			oracleOutput.setChunkSize(chunkSize);
 		}
 	}
 

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.SWT;
@@ -137,10 +138,23 @@ public class InputAdditionalParametersWidget extends AbstractWidget {
 		InputAdditionalParametersDialog inputAdditionalParametersDialog = new InputAdditionalParametersDialog(shell,
 				runtimeConfig.getWindowLabel(), propertyDialogButtonBar, schemaFields, initialMap,cursor);
 		inputAdditionalParametersDialog.open();
-		initialMap = inputAdditionalParametersDialog.getAdditionalParameterDetails();
+		Map<String, Object> newValues = inputAdditionalParametersDialog.getAdditionalParameterDetails();
 		
+		if(isAnyUpdate(initialMap,newValues)){
+			propertyDialogButtonBar.enableApplyButton(true);
+		}
+		
+		initialMap = newValues;
 		showHideErrorSymbol(widgets);
-		propertyDialogButtonBar.enableApplyButton(true);
+	}
+
+	private boolean isAnyUpdate(Map<String, Object> oldMap, Map<String, Object> newMap) {
+		for(Entry< String , Object> entry:oldMap.entrySet()){
+			if(!StringUtils.equals((String)newMap.get(entry.getKey()), (String)entry.getValue())){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**

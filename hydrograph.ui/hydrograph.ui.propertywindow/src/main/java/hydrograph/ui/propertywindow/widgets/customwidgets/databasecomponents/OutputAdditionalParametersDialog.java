@@ -1,5 +1,6 @@
 package hydrograph.ui.propertywindow.widgets.customwidgets.databasecomponents;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
@@ -7,6 +8,8 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
@@ -28,6 +31,7 @@ import hydrograph.ui.propertywindow.widgets.listeners.VerifyNumericandParameterF
 import hydrograph.ui.propertywindow.widgets.utility.WidgetUtility;
 
 public class OutputAdditionalParametersDialog extends Dialog {
+	public static final String CHUNK_SIZE_VALUE = "1000";
 	private Text chunkSizeTextBox;
 	private String windowLabel;
 	private PropertyDialogButtonBar propertyDialogButtonBar;
@@ -88,7 +92,7 @@ public class OutputAdditionalParametersDialog extends Dialog {
 		chunkSizeTextBox.setLayoutData(gd_chunkSizeTextBox);
 		controlDecoration = WidgetUtility.addDecorator(chunkSizeTextBox, Messages.CHUNK_SIZE_ERROR_DECORATOR_MESSAGE);
 		if (StringUtils.isBlank(chunkSizeTextBox.getText())) {
-			chunkSizeTextBox.setText("1000");
+			chunkSizeTextBox.setText(CHUNK_SIZE_VALUE);
 			controlDecoration.hide();
 		}
 
@@ -106,6 +110,9 @@ public class OutputAdditionalParametersDialog extends Dialog {
 		additionalParameterTextBox.setLayoutData(gd_additionalParameter);
 
 		addListenerToChunkSize(chunkSizeTextBox);
+		
+		addModifyListener(chunkSizeTextBox);
+		addModifyListener(additionalParameterTextBox);
 
 		addListenerToAdditionalParameter(additionalParameterTextBox);
 
@@ -114,6 +121,16 @@ public class OutputAdditionalParametersDialog extends Dialog {
 		return container;
 	}
 
+	private void addModifyListener(Text text){
+		text.addModifyListener(new ModifyListener() {
+			@Override
+			public void modifyText(ModifyEvent e) {
+				Utils.INSTANCE.addMouseMoveListener(text, cursor);	
+				
+			}
+		});
+	}
+	
 	private void addListenerToAdditionalParameter(Text additionalParameterTextBox) {
 		ExtraURLParameterValidationForDBComponents extraURLParameterValidation = new ExtraURLParameterValidationForDBComponents();
 		ListenerHelper helper = new ListenerHelper();
@@ -134,13 +151,12 @@ public class OutputAdditionalParametersDialog extends Dialog {
 		if (outputAdditionalParameterValues != null && !outputAdditionalParameterValues.isEmpty()) {
 			if (StringUtils.isNotBlank((String) outputAdditionalParameterValues.get(Constants.DB_CHUNK_SIZE))) {
 				chunkSizeTextBox.setText((String) outputAdditionalParameterValues.get(Constants.DB_CHUNK_SIZE));
-				Utils.INSTANCE.addMouseMoveListenerForTextBox(chunkSizeTextBox, cursor);
+				Utils.INSTANCE.addMouseMoveListener(chunkSizeTextBox, cursor);	
 			}
-			if (StringUtils
-					.isNotBlank((String) outputAdditionalParameterValues.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB))) {
+			if (StringUtils.isNotBlank((String) outputAdditionalParameterValues.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB))) {
 				additionalParameterTextBox
 						.setText((String) outputAdditionalParameterValues.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB));
-				Utils.INSTANCE.addMouseMoveListenerForTextBox(additionalParameterTextBox, cursor);
+				Utils.INSTANCE.addMouseMoveListener(additionalParameterTextBox, cursor);
 			}
 		}
 	}
@@ -171,16 +187,14 @@ public class OutputAdditionalParametersDialog extends Dialog {
 
 	@Override
 	protected void okPressed() {
-
-		outputAdditionalParameterValues.clear();
-
-		if (StringUtils.isNotBlank(chunkSizeTextBox.getText())) {
+		outputAdditionalParameterValues = new LinkedHashMap<>();
+		if(StringUtils.isNotBlank(chunkSizeTextBox.getText())){
 			outputAdditionalParameterValues.put(chunkSize.getText(), chunkSizeTextBox.getText());
+		}else{
+			outputAdditionalParameterValues.put(chunkSize.getText(), CHUNK_SIZE_VALUE);
 		}
-		if (StringUtils.isNotBlank(additionalParameterTextBox.getText())) {
 			outputAdditionalParameterValues.put(additionalDBParametersLabel.getText(),
 					additionalParameterTextBox.getText());
-		}
 		super.okPressed();
 	}
 

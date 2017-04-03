@@ -370,6 +370,13 @@
 					</appinfo>
 				</annotation>
 			</enumeration>
+			<enumeration value="ADDITIONAL_PARAM_VALIDATION">
+				<annotation>
+					<appinfo>
+						<jaxb:typesafeEnumMember name="AdditionalParamDBValidationRule" />
+					</appinfo>
+				</annotation>
+			</enumeration>
 		</restriction>
 	</simpleType>
 </schema>
