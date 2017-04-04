@@ -1,3 +1,15 @@
+/*******************************************************************************
+ * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *******************************************************************************/
 package hydrograph.ui.validators.impl;
 
 import java.util.List;
@@ -76,13 +88,8 @@ public class AdditionalParamDBValidationRule implements IValidator{
 				if (StringUtils.isNotBlank(additionalParam.get(key))) {
 					if(!StringUtils.equalsIgnoreCase(key, PARTITION_KEY)){
 						Matcher matchs = Pattern.compile(Constants.NUMERIC_REGEX).matcher(additionalParam.get(key));
-						if(matchs.matches()||ParameterUtil.isParameter(additionalParam.get(key))){
-							isValid =  true;
-						}else{
-							isValid = false;
-							errorMessage = propertyName + " is mandatory";
-							break;
-						}
+						isValid = validateNumbericField(additionalParam.get(key), propertyName, errorMessage, matchs);
+						if(!isValid){break;}
 					}
 				}else{
 					isValid = false;
@@ -100,14 +107,20 @@ public class AdditionalParamDBValidationRule implements IValidator{
 			if(StringUtils.equalsIgnoreCase(key, FETCH_SIZE) && StringUtils.isNotBlank(additionalParam.get(FETCH_SIZE))
 					|| StringUtils.equalsIgnoreCase(key, CHUNK_SIZE) && StringUtils.isNotBlank(additionalParam.get(CHUNK_SIZE))){
 				Matcher matchs = Pattern.compile(Constants.NUMERIC_REGEX).matcher(additionalParam.get(key));
-				if(matchs.matches()||ParameterUtil.isParameter(additionalParam.get(key))){
-					isValid =  true;
-				}else{
-					isValid = false;
-					errorMessage = propertyName + " is mandatory";
-					break;
-				}
+				isValid = validateNumbericField(additionalParam.get(key), propertyName, errorMessage, matchs);
+				if(!isValid){break;}
 			}
+		}
+		return isValid;
+	}
+	
+	private boolean validateNumbericField(String value, String propertyName, String errorMessage, Matcher matchs){
+		boolean isValid = false;
+		if(matchs.matches()||ParameterUtil.isParameter(value)){
+			isValid =  true;
+		}else{
+			isValid = false;
+			errorMessage = propertyName + " is mandatory";
 		}
 		return isValid;
 	}
@@ -117,13 +130,8 @@ public class AdditionalParamDBValidationRule implements IValidator{
 		for(String key : additionalParam.keySet()){
 			if(StringUtils.equalsIgnoreCase(key, ADDITIONAL_DB_PARAM) && StringUtils.isNotBlank(additionalParam.get(ADDITIONAL_DB_PARAM))){
 				Matcher matchs=Pattern.compile(Constants.REGEX_ALPHA_NUMERIC).matcher(additionalParam.get(key));
-				if(matchs.matches()||ParameterUtil.isParameter(additionalParam.get(key))){
-					isValid =  true;
-				}else{
-					isValid = false;
-					errorMessage = propertyName + " is mandatory";
-					break;
-				}
+				isValid = validateNumbericField(additionalParam.get(key), propertyName, errorMessage, matchs);
+				if(!isValid){break;}
 			}else{
 				isValid =  true;
 			}
