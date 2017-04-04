@@ -36,7 +36,6 @@ import org.eclipse.ui.PlatformUI;
 import org.slf4j.Logger;
 
 import hydrograph.ui.common.util.Constants;
-import hydrograph.ui.common.util.OSValidator;
 import hydrograph.ui.datastructure.property.ComponentsOutputSchema;
 import hydrograph.ui.datastructure.property.GridRow;
 import hydrograph.ui.datastructure.property.Schema;
@@ -106,9 +105,9 @@ public class SchemaHelper {
 									for(int i = 1;i<split.length-1;i++){
 										component_Id = component_Id + "." + split[i];
 									}
-									socketName = entry.getValue().getSourceTerminal();
+									socketName = entry.getValue().getTargetTerminal();
 								 }
-								 componentName = component_Id;
+								 	componentName = component_Id;
 								}else{
 									componentName = link.getSource().getComponentId();
 									socketName = link.getSourceTerminal();
@@ -137,7 +136,6 @@ public class SchemaHelper {
 				}
 			}
 		}
-		
 	}
 	
 	private void createDebugXmls(Component component, String schemaFilePath, String componentId,

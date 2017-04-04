@@ -308,8 +308,8 @@ public class JobManager {
 		
 		gefCanvas.disableRunningJobResource();
 		
-		DataViewerUtility.INSTANCE.deletePreviousRunsDataviewCsvXmlFiles(previouslyExecutedJobs.get(job.getConsoleName()));
-		DataViewerUtility.INSTANCE.deletePreviousRunsBasePathDebugFiles(previouslyExecutedJobs.get(job.getConsoleName()));
+		//DataViewerUtility.INSTANCE.deletePreviousRunsDataviewCsvXmlFiles(previouslyExecutedJobs.get(job.getConsoleName()));
+		//DataViewerUtility.INSTANCE.deletePreviousRunsBasePathDebugFiles(previouslyExecutedJobs.get(job.getConsoleName()));
 		DataViewerUtility.INSTANCE.closeDataViewerWindows(previouslyExecutedJobs.get(job.getConsoleName()));
 		
 		if(previouslyExecutedJobs.get(job.getConsoleName())!= null){
