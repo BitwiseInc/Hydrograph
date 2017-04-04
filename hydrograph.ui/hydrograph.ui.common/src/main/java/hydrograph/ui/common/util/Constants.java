@@ -66,7 +66,7 @@ public class Constants {
 	//[\\w,\\=,\\,,\\&]+
 	//[\\@]{1}[\\{]{1}[\\w,\\=]*[\\}]{1}||[\\w,\\=]*
 	//[\@]{1}[\{]{1}[\w,\=,\&]*[\}]{1}|[\w,\=,\&]*
-	public static final String DB_REGEX = "[\\@]{1}[\\{]{1}[\\w,\\=,\\&]*[\\}]{1}||[\\w,\\=,\\&]*";
+	public static final String DB_REGEX = "[\\@]{1}[\\{]{1}[\\w]*[\\}]{1}||[\\w,\\=]*";
 
 	// Used for validating AlphaNumeric or Parameter E.g Aplha_123
 	public static final String REGEX_ALPHA_NUMERIC = "[\\w]*";

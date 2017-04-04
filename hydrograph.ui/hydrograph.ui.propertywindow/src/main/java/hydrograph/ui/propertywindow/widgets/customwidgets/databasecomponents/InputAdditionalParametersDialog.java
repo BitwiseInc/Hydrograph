@@ -279,13 +279,11 @@ public class InputAdditionalParametersDialog extends Dialog {
 				partitionKeyLowerBoundTextBox.setEnabled(true);
 				partitionKeyUpperBoundTextBox.setEnabled(true);
 				if (StringUtils.isNotBlank(noOfPartitionsTextBox.getText())) {
-					if (StringUtils.isBlank(partitionKeyLowerBoundTextBox.getText())
-							|| StringUtils.isBlank(partitionKeyUpperBoundTextBox.getText()) 
-							|| StringUtils.isEmpty((String) additionalParameterValue.get(Constants.DB_PARTITION_KEY))) {
-						partitionKeyLowerBoundControlDecoration.show();
-						partitionKeyUpperBoundControlDecoration.show();
-						partitionKeyControlDecoration.show();
-					}
+					
+					if(StringUtils.isBlank(partitionKeyLowerBoundTextBox.getText())){ partitionKeyLowerBoundControlDecoration.show();}
+					if(StringUtils.isBlank(partitionKeyUpperBoundTextBox.getText())){ partitionKeyUpperBoundControlDecoration.show();}
+					if(StringUtils.isEmpty((String) additionalParameterValue.get(Constants.DB_PARTITION_KEY))){partitionKeyControlDecoration.show();}
+					
 				}else{
 					partitionKeyLowerBoundControlDecoration.hide();
 					partitionKeyUpperBoundControlDecoration.hide();

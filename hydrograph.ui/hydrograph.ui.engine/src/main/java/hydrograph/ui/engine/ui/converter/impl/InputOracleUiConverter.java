@@ -138,10 +138,12 @@ public class InputOracleUiConverter extends InputUiConverter {
 		}
 		
 		additionalParameterDetails.put(Constants.FECTH_SIZE,getParameterValue(PropertyNameConstants.FETCH_SIZE.value(), 
-				inputOracle.getNumPartitions().getLowerBound().getValue()));
+				inputOracle.getFetchSize().getValue()));
 		
-		additionalParameterDetails.put(Constants.ADDITIONAL_PARAMETERS_FOR_DB,getParameterValue(PropertyNameConstants.ADDITIONAL_DB_PARAM.value(), 
-				inputOracle.getNumPartitions().getLowerBound().getValue()));
+		if(inputOracle.getExtraUrlParams() !=null){
+			additionalParameterDetails.put(Constants.ADDITIONAL_PARAMETERS_FOR_DB,getParameterValue(PropertyNameConstants.ADDITIONAL_DB_PARAM.value(), 
+					inputOracle.getExtraUrlParams().getValue()));
+		}
 		
 		propertyMap.put(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value(), additionalParameterDetails);
 
