@@ -262,7 +262,6 @@ public class InputAdditionalParametersDialog extends Dialog {
 	}
 
 	private void addValidationToWidgets(Text textBox, ControlDecoration txtDecorator) {
-
 		VerifyNumericandParameterForDBComponents numericValidationForDBComponents = new VerifyNumericandParameterForDBComponents();
 		ListenerHelper helper = new ListenerHelper();
 		helper.put(HelperType.CONTROL_DECORATION, txtDecorator);
@@ -331,7 +330,6 @@ public class InputAdditionalParametersDialog extends Dialog {
 			if (additionalParameterValue.get(Constants.NO_OF_PARTITION) != null 
 					&& StringUtils.isNotEmpty((String)additionalParameterValue.get(Constants.NO_OF_PARTITION))) {
 				noOfPartitionsTextBox.setText(additionalParameterValue.get(Constants.NO_OF_PARTITION).toString());
-				//Utils.INSTANCE.addMouseMoveListenerForTextBox(noOfPartitionsTextBox, cursor);
 				Utils.INSTANCE.addMouseMoveListener(noOfPartitionsTextBox, cursor);	
 				if (StringUtils.isNotBlank((String) additionalParameterValue.get(Constants.DB_PARTITION_KEY))) {
 					partitionKeyButton.setEnabled(true);
@@ -342,7 +340,6 @@ public class InputAdditionalParametersDialog extends Dialog {
 				if (additionalParameterValue.get(Constants.PARTITION_KEY_LOWER_BOUND) != null 
 						&& StringUtils.isNotEmpty((String) additionalParameterValue.get(Constants.PARTITION_KEY_LOWER_BOUND))) {
 					partitionKeyLowerBoundTextBox.setText(additionalParameterValue.get(Constants.PARTITION_KEY_LOWER_BOUND).toString());
-					//Utils.INSTANCE.addMouseMoveListenerForTextBox(partitionKeyLowerBoundTextBox, cursor);
 					Utils.INSTANCE.addMouseMoveListener(partitionKeyLowerBoundTextBox, cursor);
 					partitionKeyLowerBoundControlDecoration.hide();
 				} else {
@@ -352,7 +349,6 @@ public class InputAdditionalParametersDialog extends Dialog {
 						&& StringUtils.isNotEmpty((String) additionalParameterValue.get(Constants.PARTITION_KEY_UPPER_BOUND))) {
 					partitionKeyUpperBoundTextBox
 							.setText(additionalParameterValue.get(Constants.PARTITION_KEY_UPPER_BOUND).toString());
-					//Utils.INSTANCE.addMouseMoveListenerForTextBox(partitionKeyUpperBoundTextBox, cursor);
 					Utils.INSTANCE.addMouseMoveListener(partitionKeyUpperBoundTextBox, cursor);
 					partitionKeyUpperBoundControlDecoration.hide();
 				} else {
