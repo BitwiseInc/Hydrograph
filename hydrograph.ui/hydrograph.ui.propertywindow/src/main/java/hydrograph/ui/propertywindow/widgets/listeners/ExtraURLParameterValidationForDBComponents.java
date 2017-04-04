@@ -53,12 +53,12 @@ public class ExtraURLParameterValidationForDBComponents implements IELTListener{
 				String string = ((Text) widgetList[0]).getText();
 				if (StringUtils.isNotBlank(string)) {
 					Matcher matchs=Pattern.compile(Constants.DB_REGEX).matcher(string);
-				if(matchs.matches()){
-					txtDecorator.hide();
-				}/*else if(ParameterUtil.isParameter(string)){
+				if(matchs.matches() || ParameterUtil.isParameter(string)){
+					//txtDecorator.hide();
+				/*}else if(ParameterUtil.isParameter(string)){*/
 					txtDecorator.hide();
 					((Text) widgetList[0]).setBackground(CustomColorRegistry.INSTANCE.getColorFromRegistry( 255, 255, 255));
-				}*/else{
+				}else{
 					txtDecorator.setDescriptionText(Messages.ADDITIONAL_PARAMETER_ERROR_DECORATOR_MESSAGE);
 					txtDecorator.show();
 				}

@@ -129,7 +129,7 @@ public class AdditionalParamDBValidationRule implements IValidator{
 		boolean isValid = false;
 		for(String key : additionalParam.keySet()){
 			if(StringUtils.equalsIgnoreCase(key, ADDITIONAL_DB_PARAM) && StringUtils.isNotBlank(additionalParam.get(ADDITIONAL_DB_PARAM))){
-				Matcher matchs=Pattern.compile(Constants.REGEX_ALPHA_NUMERIC).matcher(additionalParam.get(key));
+				Matcher matchs=Pattern.compile(Constants.DB_REGEX).matcher(additionalParam.get(key));
 				isValid = validateNumbericField(additionalParam.get(key), propertyName, errorMessage, matchs);
 				if(!isValid){break;}
 			}else{
