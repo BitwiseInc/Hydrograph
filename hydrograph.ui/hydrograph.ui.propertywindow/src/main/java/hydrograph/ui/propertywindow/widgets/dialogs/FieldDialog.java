@@ -118,6 +118,7 @@ public class FieldDialog extends Dialog {
 	private Button deleteButton;
 	private Button upButton;
 	private Button downButton;
+	protected Button addButton;
 
 	protected Button okButton;
 	private static final String INFORMATION="Information";
@@ -137,7 +138,7 @@ public class FieldDialog extends Dialog {
 	}
 
 	// Add New Property After Validating old properties
-	private void addNewProperty(TableViewer tv, String fieldName) {
+	public void addNewProperty(TableViewer tv, String fieldName) {
 		if (isPropertyAlreadyExists(fieldName))
 			return;
 		isAnyUpdatePerformed = true;
@@ -316,7 +317,7 @@ public class FieldDialog extends Dialog {
 		composite_1.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
 		composite_1.setLayout(new GridLayout(5, false));
 
-		Button addButton = new Button(composite_1, SWT.NONE);
+		addButton = new Button(composite_1, SWT.NONE);
 		addButton.setToolTipText(Messages.ADD_KEY_SHORTCUT_TOOLTIP);
 		addButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		addButton.setImage(ImagePathConstant.ADD_BUTTON.getImageFromRegistry());
@@ -457,6 +458,7 @@ public class FieldDialog extends Dialog {
 		targetTable = targetTableViewer.getTable();
 		targetTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
+		//validateTargetTableOnDoubleClick(targetTable);
 		targetTable.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
@@ -469,6 +471,7 @@ public class FieldDialog extends Dialog {
 				lblPropertyError.setVisible(false);
 			}
 		});
+		
 		targetTableViewer.getTable().addTraverseListener(new TraverseListener() {
 
 			@Override
@@ -546,6 +549,24 @@ public class FieldDialog extends Dialog {
 		
 	}
 	
+	/**
+	 * add new row on mouse double click in table
+	 * @param targetTable
+	 */
+	public void validateTargetTableOnDoubleClick(Table targetTable){
+		targetTable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				addNewProperty(targetTableViewer, null);
+				enableControlButons();
+			}
+
+			@Override
+			public void mouseDown(MouseEvent e) {
+				lblPropertyError.setVisible(false);
+			}
+		});
+	}
 	
 	private void attachShortcutListner(String controlName){
 		Control currentControl;

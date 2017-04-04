@@ -63,7 +63,10 @@ public class Constants {
 	// Used for validating only Parameters E.g  @{Param_123}
 	public static final String PARAMETER_REGEX ="^[\\@]{1}[\\{]{1}[\\s\\S]+[\\}]{1}";
 	
-	public static final String DB_REGEX = "[\\@]{1}[\\{]{1}[\\w,\\=]*[\\}]{1}||[\\w,\\=]*";
+	//[\\w,\\=,\\,,\\&]+
+	//[\\@]{1}[\\{]{1}[\\w,\\=]*[\\}]{1}||[\\w,\\=]*
+	//[\@]{1}[\{]{1}[\w,\=,\&]*[\}]{1}|[\w,\=,\&]*
+	public static final String DB_REGEX = "[\\@]{1}[\\{]{1}[\\w,\\=,\\&]*[\\}]{1}||[\\w,\\=,\\&]*";
 
 	// Used for validating AlphaNumeric or Parameter E.g Aplha_123
 	public static final String REGEX_ALPHA_NUMERIC = "[\\w]*";

@@ -1,8 +1,10 @@
 package hydrograph.ui.propertywindow.widgets.dialogs;
 
 
+import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 
 import hydrograph.ui.propertywindow.propertydialog.PropertyDialogButtonBar;
@@ -41,6 +43,7 @@ public class FieldDialogForDBComponents extends FieldDialog{
 	public void deleteRow() {
 		super.deleteRow();
 		i = 0;
+		addButton.setEnabled(true);
 	}
 	
 	@Override
@@ -49,9 +52,15 @@ public class FieldDialogForDBComponents extends FieldDialog{
 		buffer.append(sourceTable.getSelection()[0].getText() + "#");
 		
 		return buffer.toString();
-		//return super.formatDataToTransfer(selectedTableItems);
 	}
 	
+	@Override
+	public void addNewProperty(TableViewer tv, String fieldName) {
+		if(propertyList.size() < 1){
+			super.addNewProperty(tv, fieldName);
+			addButton.setEnabled(false);
+		}
+	}
 }
 
 	
