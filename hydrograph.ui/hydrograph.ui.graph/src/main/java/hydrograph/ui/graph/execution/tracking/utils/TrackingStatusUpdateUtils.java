@@ -183,7 +183,11 @@ public class TrackingStatusUpdateUtils {
 		if (!componentNameAndLink.isEmpty()) {
 			for (Map.Entry<String, SubjobDetails> entry : componentNameAndLink.entrySet()) {
 				for (ComponentStatus componentStatus : executionStatus.getComponentStatus()) {
-					if (entry.getKey().contains(componentStatus.getComponentId())) {
+					
+					String splitString[] = componentStatus.getComponentId().split("\\.");
+ 					String str1[] = entry.getKey().split("\\.");
+ 					String str2 =  str1.length >= splitString.length ? (String) entry.getKey().subSequence(0, entry.getKey().lastIndexOf('.')) : entry.getKey();
+ 					if (componentStatus.getComponentId().contains(str2)) {
 						List<String> portList = new ArrayList(componentStatus.getProcessedRecordCount().keySet());
 						for (String port : portList) {
 							if ((((SubjobDetails) entry.getValue()).getSourceTerminal()).equals(port)) {

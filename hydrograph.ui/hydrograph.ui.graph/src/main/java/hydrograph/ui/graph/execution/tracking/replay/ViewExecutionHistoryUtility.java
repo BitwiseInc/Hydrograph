@@ -21,6 +21,7 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +34,7 @@ import com.google.gson.JsonParser;
 
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.common.util.OSValidator;
+import hydrograph.ui.datastructures.executiontracking.ViewExecutionTrackingDetails;
 import hydrograph.ui.dataviewer.constants.MessageBoxText;
 import hydrograph.ui.graph.Activator;
 import hydrograph.ui.graph.Messages;
@@ -62,6 +64,8 @@ public class ViewExecutionHistoryUtility {
 	private Map<String, ExecutionStatus> trackingMap;
 	private Map<String, List<Job>> trackingJobMap;
 	private Map<String, String> unusedCompOnCanvas;
+	private Map<String, ViewExecutionTrackingDetails> executionTrackingFields;
+	private List<ViewExecutionTrackingDetails> selectedTrackingDetails;
 	
 	
 	/** The logger. */
@@ -74,6 +78,8 @@ public class ViewExecutionHistoryUtility {
 		trackingMap = new HashMap<String, ExecutionStatus>();
 		trackingJobMap = new HashMap<String, List<Job>>();
 		unusedCompOnCanvas = new LinkedHashMap<>();
+		executionTrackingFields = new LinkedHashMap<>();
+ 		selectedTrackingDetails = new LinkedList();
 	}
 	
 	/**
@@ -227,7 +233,7 @@ public class ViewExecutionHistoryUtility {
 	 * @return
 	 * @throws FileNotFoundException
 	 */
-	public ExecutionStatus readJsonLogFile(String uniqueJobId, boolean isLocalMode, String filePath) throws IOException{
+	public ExecutionStatus readJsonLogFile(String uniqueJobId, boolean isLocalMode, String filePath, boolean isReply) throws IOException{
 		ExecutionStatus[] executionStatus;
 		String jobId = "";
 		String path = null;
@@ -237,14 +243,23 @@ public class ViewExecutionHistoryUtility {
 		}else{
 			jobId = EXECUTION_TRACKING_REMOTE_MODE + uniqueJobId;
 		}
-		path = getLogPath() + jobId + EXECUTION_TRACKING_LOG_FILE_EXTENTION;
+		
+		
+		if(isReply){
+ 			path = filePath + jobId + EXECUTION_TRACKING_LOG_FILE_EXTENTION;
+ 		}else{
+ 			path = getLogPath() + jobId + EXECUTION_TRACKING_LOG_FILE_EXTENTION;
+ 		}
 		
 		JsonParser jsonParser = new JsonParser();
 		
 		Gson gson = new Gson();
 		try(Reader fileReader = new FileReader(new File(path));){
 			jsonArray = jsonParser.parse(fileReader).toString();
+		}catch (Exception exception) {
+			logger.error("Failed to read file: ", exception);
 		}
+		
 		executionStatus = gson.fromJson(jsonArray, ExecutionStatus[].class);
 		return executionStatus[executionStatus.length-1];
 	}
@@ -302,5 +317,38 @@ public class ViewExecutionHistoryUtility {
 		MessageBox.INSTANCE.showMessage(MessageBoxText.INFO, message);
 		return;
 	}
+	
+	/**
+ 	 * The Function will add Fields for View Execution Tracking History 
+ 	 * @param uniqueJobId
+ 	 * @param executionTrackingDetails
+ 	 */
+ 	public void addTrackingPathDetails(String uniqueJobId, ViewExecutionTrackingDetails executionTrackingDetails){
+ 		if(executionTrackingFields.get(uniqueJobId) == null && executionTrackingDetails != null){
+ 			executionTrackingFields.put(uniqueJobId, executionTrackingDetails);
+ 		}
+ 	}
+ 	
+ 	/**
+ 	 * The function will return map of ViewExecutionTracking details
+ 	 * @return
+ 	 */
+ 	public Map<String, ViewExecutionTrackingDetails> getTrackingPathDetails(){
+ 		return executionTrackingFields;
+ 	}
+ 	
+ 	/**
+ 	 * @param executionTrackingDetails
+ 	 */
+ 	public void addSelectedTrackingDetails(ViewExecutionTrackingDetails executionTrackingDetails){
+ 		selectedTrackingDetails.add(executionTrackingDetails);
+ 	}
+ 	
+ 	/**
+ 	 * @return List of tracking details
+ 	 */
+ 	public List<ViewExecutionTrackingDetails> getSelectedTrackingDetailsForSubjob(){
+ 		return selectedTrackingDetails;
+ 	}
 	
 }
