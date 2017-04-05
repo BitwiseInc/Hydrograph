@@ -1,7 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'maven'
-
+apply plugin: 'idea'
 sourceCompatibility = 1.8
 version = '0.1'
 ext.hadoopVersion = '2.6.0'
@@ -97,15 +97,15 @@ dependencies {
     compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.34'
     //The group Id and Artifact Id(Name) are Hydrograph Defined. Use the same Group Id/ Artifact Id while uploading the JARs to Artifact respository..
 
-    //Following are the URL’s to download the jars for Oracle:
+    //Following are the URLï¿½s to download the jars for Oracle:
     //Oracle: http://www.oracle.com/technetwork/apps-tech/jdbc-112010-090769.html
     compileOnly name: 'oracle-ojdbc6-11.2.0.4'
 
-    //Following are the URL’s to download the jars for RedShift:
+    //Following are the URLï¿½s to download the jars for RedShift:
     //Redshift: https://s3.amazonaws.com/redshift-downloads/drivers/RedshiftJDBC42-1.2.1.1001.jar
     compileOnly group: 'com.amazon.redshift', name: 'redshift-jdbc42', version: '1.2.1.1001'
 
-    //Following are the URL’s to download the jars for Teradata:
+    //Following are the URLï¿½s to download the jars for Teradata:
     //Teradata: http://downloads.teradata.com/download/connectivity/jdbc-driver
     compileOnly name: 'teradata-tdgssconfig-0.1'
     compileOnly name: 'teradata-terajdbc4-0.1'

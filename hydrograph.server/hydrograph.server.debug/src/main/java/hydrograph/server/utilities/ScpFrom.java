@@ -26,16 +26,21 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.UserInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Bitwise
  *
  */
 public class ScpFrom {
+
+	private static final Logger LOG = LoggerFactory.getLogger(ScpFrom.class);
+
 	/**
 	 * @param host
 	 * @param user
-	 * @param password
+	 * @param pwd
 	 * @param remoteFile
 	 */
 	public void deleteFile(String host, String user, String pwd,
@@ -68,7 +73,7 @@ public class ScpFrom {
 	/**
 	 * @param host
 	 * @param user
-	 * @param password
+	 * @param pwd
 	 * @param remoteFile
 	 * @param localFile
 	 * @return
@@ -76,6 +81,8 @@ public class ScpFrom {
 	public String scpFileFromRemoteServer(String host, String user,
 			String pwd, String remoteFile, String localFile) {
 		FileOutputStream fos = null;
+        OutputStream out = null;
+        InputStream in = null;
 		try {
 
 			String prefix = null;
@@ -97,8 +104,8 @@ public class ScpFrom {
 			((ChannelExec) channel).setCommand(command);
 
 			// get I/O streams for remote scp
-			OutputStream out = channel.getOutputStream();
-			InputStream in = channel.getInputStream();
+			out = channel.getOutputStream();
+			in = channel.getInputStream();
 
 			channel.connect();
 
@@ -112,17 +119,30 @@ public class ScpFrom {
 			fos = readRemoteFileAndWriteToLocalFile(localFile, fos, prefix,
 					out, in, buf);
 
+			channel.disconnect();
 			session.disconnect();
 		} catch (Exception e) {
-			System.out.println(e);
-			try {
-				if (fos != null)
-					fos.close();
-			} catch (Exception ee) {
-			}
+		    LOG.error("Error in scpFileFromRemoteServer method "+e.getMessage());
 			return "error";
 		}
-		return "success";
+		finally {
+            try {
+                ServiceUtilities.safeOutputStreamClose(fos);
+            } catch (IOException e) {
+               LOG.error(e.getMessage());
+            }
+            try{
+                ServiceUtilities.safeOutputStreamClose(out);
+            }catch (IOException e) {
+                LOG.error(e.getMessage());
+            }
+            try{
+                ServiceUtilities.safeInputStreamClose(in);
+            }catch (IOException e) {
+                LOG.error(e.getMessage());
+            }
+        }
+        return "success";
 	}
 
 	/**

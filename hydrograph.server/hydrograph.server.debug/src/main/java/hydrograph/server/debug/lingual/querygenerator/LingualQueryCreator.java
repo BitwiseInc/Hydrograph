@@ -19,6 +19,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import hydrograph.server.debug.antlr.parser.QueryParserBaseVisitor;
@@ -35,6 +38,7 @@ public class LingualQueryCreator extends QueryParserBaseVisitor<String> implemen
 
 	String str = "";
 	HashMap<String, String> fieldDataMap;
+    private static final Logger LOG = LoggerFactory.getLogger(LingualQueryCreator.class);
 
 	public LingualQueryCreator(List<GridRow> schema) {
 		fieldDataMap = new HashMap<String, String>();
@@ -189,20 +193,24 @@ public class LingualQueryCreator extends QueryParserBaseVisitor<String> implemen
 
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = null;
-
+        String newTimestampString = null;
 		try {
 			date = formatter.parse(timestampValue);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+        } catch (ParseException parseException) {
+            LOG.error("Failed to parse input :" + timestampValue + " to date format 'yyyy-MM-dd HH:mm:ss'" + parseException.getMessage());
+        }
 
-		Long timestampInMillis = date.getTime();
-		long timestampasperzone = timestampInMillis - zoneOffset;
+        if (date != null) {
+            Long timestampInMillis = date.getTime();
+            long timestampasperzone = timestampInMillis - zoneOffset;
 
-		Date newtimestamp = new Date(timestampasperzone);
-		return "'" + formatter.format(newtimestamp) + "'";
-	}
-	
+            Date newtimestamp = new Date(timestampasperzone);
+            newTimestampString = formatter.format(newtimestamp);
+
+        }
+        newTimestampString = (newTimestampString==null) ? timestampValue : newTimestampString;
+        return "'" + newTimestampString + "'";
+    }
 	private String generateFloatSytntax(QueryParserParser.ExpressionContext ctx, String expr, String fieldName,
 			String dataType) {
 		if (ctx.condition() == null && ctx.specialexpr() != null) {

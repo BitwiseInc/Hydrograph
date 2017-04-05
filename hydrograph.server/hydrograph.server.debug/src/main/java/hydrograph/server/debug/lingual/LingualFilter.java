@@ -19,6 +19,7 @@ import java.lang.reflect.Type;
 import java.sql.*;
 import java.util.Properties;
 
+import hydrograph.server.utilities.ServiceUtilities;
 import org.apache.hadoop.conf.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -89,7 +90,27 @@ public class LingualFilter {
 		ResultSet resultSet = psmt.executeQuery();
 
 		writeFiles(resultSet, sizeOfDataInByte, localDebugFile);
-		resultSet.close();
+
+        SQLException exception = null;
+        try {
+            ServiceUtilities.safeResultSetClose(resultSet);
+        } catch (SQLException sqlException) {
+            exception = sqlException;
+        }
+
+        try {
+            ServiceUtilities.safeStatementClose(psmt);
+        } catch (SQLException sqlException) {
+            exception = sqlException;
+        }
+        try {
+            ServiceUtilities.safeConnectionClose(connection);
+        } catch (SQLException sqlException) {
+            exception = sqlException;
+        }
+        if (exception != null) {
+            throw exception;
+        }
 	}
 
 	private void writeFiles(ResultSet resultSet, double sizeOfDataInByte, String localDebugFile)
@@ -121,7 +142,8 @@ public class LingualFilter {
 			}
 			stringBuilder.setLength(0);
 		}
-		os.close();
+
+        ServiceUtilities.safeOutputStreamClose(os);
 	}
 
 	private StringBuilder getColumnName(ResultSetMetaData metaData) throws SQLException {
