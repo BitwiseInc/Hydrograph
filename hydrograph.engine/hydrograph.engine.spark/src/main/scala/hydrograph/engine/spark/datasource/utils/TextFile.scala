@@ -21,7 +21,6 @@ import org.apache.hadoop.io.{LongWritable, Text}
 import org.apache.hadoop.mapred.TextInputFormat
 import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD
-import org.apache.spark.util.Utils
 /**
   * The Object TextFile .
   *
@@ -58,7 +57,6 @@ object TextFile {
 }
 
 object CompressionCodecs {
-  import scala.util.control.Exception._
   /*  private val shortCompressionCodecNames: Map[String, String] = {
       val codecMap = collection.mutable.Map.empty[String, String]
       allCatch toTry(codecMap += "bzip2" -> classOf[BZip2Codec].getName)
@@ -91,7 +89,7 @@ object CompressionCodecs {
       } catch {
         case e: ClassNotFoundException =>
           throw new IllegalArgumentException(s"Codec [$codecName] is not " +
-            s"available. Known codecs are ${shortCompressionCodecNames.keys.mkString(", ")}.")
+            s"available. Known codecs are ${shortCompressionCodecNames.keys.mkString(", ")}.",e)
       }
   }
 
@@ -137,7 +135,7 @@ object CompressionCodecs {
     } catch {
       case e: ClassNotFoundException =>
         throw new IllegalArgumentException(s"Codec [$codecName] " +
-          s"is not available. Known codecs are ${shortCompressionCodecNames.keys.mkString(", ")}.")
+          s"is not available. Known codecs are ${shortCompressionCodecNames.keys.mkString(", ")}.",e)
     }
   }
 }

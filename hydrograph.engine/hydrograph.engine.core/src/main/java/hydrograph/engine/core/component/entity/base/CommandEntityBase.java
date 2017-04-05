@@ -11,7 +11,12 @@
  * limitations under the License
  *******************************************************************************/
 package hydrograph.engine.core.component.entity.base;
-
+/**
+ * The Class CommandEntityBase.
+ *
+ * @author Bitwise
+ *
+ */
 public class CommandEntityBase extends AssemblyEntityBase {
 	private String command;
 

@@ -26,13 +26,9 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * The utility class for entities of all Output type components. This class is
- * meant to be stateless and provide just static utility methods. There should
- * not be any instance variables of this class. The constructor has deliberately
- * been made private in order to discourage users from creating instance of this
- * class
- * 
- * @author gurdits
+ * The Class OutputEntityUtils.
+ *
+ * @author Bitwise
  *
  */
 public class OutputEntityUtils implements Serializable{
@@ -44,7 +40,7 @@ public class OutputEntityUtils implements Serializable{
 	 * Extracts the field type for all the fields from the Schema of output
 	 * socket object of type {@link TypeBaseField}, passed as a parameter
 	 * 
-	 * @param TypeBaseField
+	 * @param # TypeBaseField
 	 *            list of {@link TypeBaseField} objects which contain the fields
 	 *            type information
 	 * @return a list of {@link SchemaField} objects. Each object in the list

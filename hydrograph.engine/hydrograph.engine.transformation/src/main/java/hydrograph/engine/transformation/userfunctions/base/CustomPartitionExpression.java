@@ -13,20 +13,12 @@
 package hydrograph.engine.transformation.userfunctions.base;
 
 import java.io.Serializable;
-import java.security.PrivateKey;
 import java.util.Properties;
 
 /**
- * The CustomPartitionExpression interface is the base interface for all the
- * custom classes defined for transformations in partition by expression
- * component in Hydrograph. This interface exposes methods that enable users to
- * perform custom partition operation.
- * <p>
- * For a sample implementation of this interface refer any class under
- * {@link hydrograph.engine.transformation.userfunctions.partition} package.
- * </p>
- * 
- * @author bitwise
+ * The Interface CustomPartitionExpression.
+ *
+ * @author Bitwise
  *
  */
 public interface CustomPartitionExpression extends Serializable {

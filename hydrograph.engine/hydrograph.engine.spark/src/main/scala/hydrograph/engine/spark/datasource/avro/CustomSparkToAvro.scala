@@ -15,8 +15,8 @@ package hydrograph.engine.spark.datasource.avro
 import java.util.{ArrayList, LinkedList}
 
 import org.apache.avro.Schema
-import org.apache.avro.Schema.{Field, Type}
 import org.apache.avro.Schema.Type._
+import org.apache.avro.Schema.{Field, Type}
 import org.apache.hadoop.hive.serde2.avro.AvroSerDe
 import org.apache.spark.sql.types.{DataType, StructField, StructType, _}
 /**

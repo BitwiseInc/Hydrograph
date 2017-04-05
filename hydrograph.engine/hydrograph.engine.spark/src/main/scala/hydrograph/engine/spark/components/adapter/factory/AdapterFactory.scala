@@ -68,7 +68,7 @@ class AdapterFactory(graph: Graph) {
   private def getAdapterObject(typeBaseComponent: TypeBaseComponent): AdapterBase = {
     val clazz = props.get(typeBaseComponent.getClass.getName)
     if(clazz == null){
-      throw new NullPointerException("Component mapping not found for: " + typeBaseComponent.getClass.getName)
+      throw new ComponentMappingNotFoundException("Component mapping not found for: " + typeBaseComponent.getClass.getName)
     }
     val adapterClass = Class.forName(clazz.toString)
     val constructor = adapterClass.getDeclaredConstructor(classOf[TypeBaseComponent])
@@ -85,5 +85,7 @@ object AdapterFactory{
     af.generatedAdapterMap(graph.getInputsOrOutputsOrStraightPulls.toList)
     af
   }
+}
+class ComponentMappingNotFoundException private[components](val message: String) extends RuntimeException(message) {
 }
 

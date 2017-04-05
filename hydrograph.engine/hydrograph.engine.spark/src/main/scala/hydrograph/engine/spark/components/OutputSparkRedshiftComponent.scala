@@ -24,16 +24,19 @@ import hydrograph.engine.spark.components.base.SparkFlow
 import hydrograph.engine.spark.components.platform.BaseComponentParams
 import hydrograph.engine.spark.components.utils.DbTableUtils
 import org.apache.hadoop.conf.Configuration
-import org.apache.spark.sql.{Column, DataFrameWriter, Row}
 import org.apache.spark.sql.execution.datasources.jdbc.JdbcUtils
 import org.apache.spark.sql.functions._
+import org.apache.spark.sql.{Column, DataFrameWriter, Row}
 import org.slf4j.{Logger, LoggerFactory}
 
 import scala.collection.JavaConversions._
 import scala.collection.JavaConverters._
 
 /**
-  * Created by bitwise on 16-12-2016.
+  * The Class OutputSparkRedshiftComponent.
+  *
+  * @author Bitwise
+  *
   */
 class OutputSparkRedshiftComponent(outputRDBMSEntity: OutputRDBMSEntity, oComponentsParams: BaseComponentParams) extends
   SparkFlow {
@@ -47,7 +50,7 @@ class OutputSparkRedshiftComponent(outputRDBMSEntity: OutputRDBMSEntity, oCompon
     properties.setProperty("driver", Constants.REDSHIFT_DRIVER_NAME)
 
     val connectionURL = "jdbc:redshift://" + outputRDBMSEntity.getHostName + ":" + outputRDBMSEntity.getPort() + "/" +
-      outputRDBMSEntity.getDatabaseName + "?user=" + outputRDBMSEntity.getUsername + "&password=" + outputRDBMSEntity.getPassword
+      outputRDBMSEntity.getDatabaseName
 
     LOG.info("Created Output Spark Redshift Component '" + outputRDBMSEntity.getComponentId
       + "' in Batch " + outputRDBMSEntity.getBatch
@@ -77,6 +80,8 @@ class OutputSparkRedshiftComponent(outputRDBMSEntity: OutputRDBMSEntity, oCompon
       .format("com.databricks.spark.redshift")
       .option("tempdir", outputRDBMSEntity.getTemps3dir)
       .option("url", connectionURL)
+      .option("user", outputRDBMSEntity.getUsername)
+      .option("password", outputRDBMSEntity.getPassword)
       .option("dbtable", outputRDBMSEntity.getTableName)
 
     getDataFrameWriter(oComponentsParams.getSparkSession().sparkContext.hadoopConfiguration, dataFrameWriter, properties).mode("append").save()
@@ -113,10 +118,10 @@ class OutputSparkRedshiftComponent(outputRDBMSEntity: OutputRDBMSEntity, oCompon
     } catch {
       case e: SQLException =>
         LOG.error("Error while connecting to database " + e.getMessage)
-        throw new RuntimeException("Error message " + e.getMessage, e)
+        throw new RuntimeException("Error message " , e)
       case e: Exception =>
         LOG.error("Error while executing '" + query + "' query in executeQuery()")
-        throw new RuntimeException("Error message " + e.getMessage, e)
+        throw new RuntimeException("Error message " , e)
     }
   }
 

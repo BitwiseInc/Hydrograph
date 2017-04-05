@@ -19,6 +19,12 @@ import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.engine.jaxb.operationstypes.Aggregate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+/**
+ * The Class AggregateEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 
 public class AggregateEntityGenerator extends OperationComponentGeneratorBase {
 

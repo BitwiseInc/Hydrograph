@@ -25,7 +25,12 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * The Class OutputFileHiveParquetEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 public class OutputFileHiveParquetEntityGenerator extends
 		OutputComponentGeneratorBase {
 

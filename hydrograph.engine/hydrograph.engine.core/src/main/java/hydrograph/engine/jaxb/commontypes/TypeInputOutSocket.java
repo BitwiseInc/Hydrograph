@@ -14,11 +14,6 @@
 
 package hydrograph.engine.jaxb.commontypes;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.bind.annotation.XmlType;
 import hydrograph.engine.jaxb.exceltype.TypeExcelOutSocket;
 import hydrograph.engine.jaxb.ifmixedscheme.TypeInputMixedOutSocket;
 import hydrograph.engine.jaxb.ifxml.TypeInputXmlOutSocket;
@@ -29,6 +24,8 @@ import hydrograph.engine.jaxb.ioracle.TypeInputOracleOutSocket;
 import hydrograph.engine.jaxb.iteradata.TypeInputTeradataOutSocket;
 import hydrograph.engine.jaxb.itffw.TypeInputFixedwidthOutSocket;
 import hydrograph.engine.jaxb.itfs.TypeInputSequenceOutSocket;
+
+import javax.xml.bind.annotation.*;
 
 
 /**

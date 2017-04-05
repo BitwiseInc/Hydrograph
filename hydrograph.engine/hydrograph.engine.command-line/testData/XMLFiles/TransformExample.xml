@@ -16,7 +16,7 @@
 		 xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
 		 xmlns:tt="hydrograph/engine/jaxb/operationstypes"
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../elt-core/src/main/resources/newxmlschema/main/main.xsd  ">
+		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd  ">
 
 	<inputs id="input1" batch="0" xsi:type="it:textFileDelimited">
 		<outSocket id="out0">
@@ -26,7 +26,7 @@
 				<field name="city" type="java.lang.String" />
 			</schema>
 		</outSocket>
-		<path uri="testData/Input/delimitedInputFile" />
+		<path uri="C:\Users\sandeepv\hydrograph_open_source\Hydrograph\hydrograph.engine\hydrograph.engine.command-line\testData\Input\delimitedInputFile" />
 		<delimiter value="," />
 		<hasHeader value="false" />
 		<safe value="false" />
@@ -61,7 +61,7 @@
 				<field name="new_city" type="java.lang.String" />
 			</schema>
 		</inSocket>
-		<path uri="testData/Output/TransformOutput1" />
+		<path uri="C:\Users\sandeepv\Output\TransformOutput1" />
 		<delimiter value="," />
 		<hasHeader value="true" />
 		<charset value="ISO-8859-1" />

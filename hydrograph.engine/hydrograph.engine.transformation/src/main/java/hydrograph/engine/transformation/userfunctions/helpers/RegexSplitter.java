@@ -14,6 +14,12 @@ package hydrograph.engine.transformation.userfunctions.helpers;
 
 import java.io.Serializable;
 import java.util.regex.Pattern;
+/**
+ * The Class RegexSplitter.
+ *
+ * @author Bitwise
+ *
+ */
 
 public class RegexSplitter implements Serializable {
 

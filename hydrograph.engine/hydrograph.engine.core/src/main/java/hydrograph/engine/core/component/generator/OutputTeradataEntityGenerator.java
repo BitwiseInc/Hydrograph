@@ -23,7 +23,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
-
+/**
+ * The Class OutputTeradataEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 public class OutputTeradataEntityGenerator extends OutputComponentGeneratorBase {
 
     private Teradata jaxbOutputTeradata;

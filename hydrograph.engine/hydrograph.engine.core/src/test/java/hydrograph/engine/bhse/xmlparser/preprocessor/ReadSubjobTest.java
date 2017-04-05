@@ -25,7 +25,11 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 
 import java.io.IOException;
-
+/**
+ * The Class ReadSubjobTest .
+ *
+ * @author Bitwise
+ */
 public class ReadSubjobTest {
 
 	private static Logger LOG = LoggerFactory.getLogger(ReadSubjobTest.class);

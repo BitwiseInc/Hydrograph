@@ -19,6 +19,12 @@ import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.engine.jaxb.straightpulltypes.Clone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+/**
+ * The Class CloneEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 
 public class CloneEntityGenerator extends StraightPullComponentGeneratorBase {
 

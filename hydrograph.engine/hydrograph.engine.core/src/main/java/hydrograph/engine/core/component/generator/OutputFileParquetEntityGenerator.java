@@ -20,7 +20,12 @@ import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.engine.jaxb.outputtypes.ParquetFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+/**
+ * The Class OutputFileParquetEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 public class OutputFileParquetEntityGenerator extends OutputComponentGeneratorBase {
 
 	private ParquetFile jaxbParquetFile;

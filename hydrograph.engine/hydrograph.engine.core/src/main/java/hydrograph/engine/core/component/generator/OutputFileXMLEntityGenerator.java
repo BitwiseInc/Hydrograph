@@ -19,9 +19,11 @@ import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.engine.jaxb.outputtypes.XmlFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 /**
- * Created by bitwise on 1/12/2017.
+ * The Class OutputFileXMLEntityGenerator.
+ *
+ * @author Bitwise
+ *
  */
 public class OutputFileXMLEntityGenerator extends OutputComponentGeneratorBase {
 

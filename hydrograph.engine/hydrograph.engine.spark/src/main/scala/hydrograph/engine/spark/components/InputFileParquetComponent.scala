@@ -53,7 +53,7 @@ class InputFileParquetComponent(iFileParquetEntity: InputFileParquetEntity, iCom
     }
     catch {
       case ex: RuntimeException =>
-        LOG.error("Error in Input  File Parquet component '" + iFileParquetEntity.getComponentId + "', Error" + ex.getMessage, ex); throw ex
+        LOG.error("Error in Input  File Parquet component '" + iFileParquetEntity.getComponentId + "', Error", ex); throw ex
     }
   }
 }

@@ -21,14 +21,13 @@ import java.io.{ByteArrayOutputStream, OutputStreamWriter, StringReader}
 import java.nio.charset.StandardCharsets
 
 import com.univocity.parsers.csv._
-import org.apache.spark.internal.Logging
 
 /**
- * Read and parse CSV-like input
- *
- * @param params Parameters object
- * @param headers headers for the columns
- */
+  * The Class CsvReader.
+  *
+  * @author Bitwise
+  *
+  */
 private abstract class CsvReader(params: CSVOptions, headers: Seq[String]) {
 
   protected lazy val parser: CsvParser = {

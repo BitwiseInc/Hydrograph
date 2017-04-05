@@ -18,7 +18,11 @@ import hydrograph.engine.jaxb.commontypes.*;
 
 import java.io.Serializable;
 import java.util.*;
-
+/**
+ * The Class SchemaFieldHandler.
+ *
+ * @author Bitwise
+ */
 public class SchemaFieldHandler implements Serializable {
 
 	private List<TypeBaseComponent> jaxbGraph;

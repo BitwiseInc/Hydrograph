@@ -19,7 +19,12 @@ import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.engine.jaxb.straightpulltypes.Limit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+/**
+ * The Class LimitEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 public class LimitEntityGenerator extends StraightPullComponentGeneratorBase {
 
 	private Limit jaxbLimit;

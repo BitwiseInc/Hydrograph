@@ -15,7 +15,12 @@ package hydrograph.engine.core.component.entity.base;
 import hydrograph.engine.core.component.entity.elements.OutSocket;
 
 import java.util.List;
-
+/**
+ * The Class StraightPullEntityBase.
+ *
+ * @author Bitwise
+ *
+ */
 public class StraightPullEntityBase extends AssemblyEntityBase {
 	private List<OutSocket> outSocketList;
 

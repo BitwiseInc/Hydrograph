@@ -85,10 +85,10 @@ class OutputRedshiftComponent(outputRDBMSEntity: OutputRDBMSEntity, oComponentsP
     } catch {
       case e: SQLException =>
         LOG.error("Error while connecting to database " + e.getMessage)
-        throw new RuntimeException("Error message " + e.getMessage, e)
+        throw new RuntimeException("Error message " , e)
       case e: Exception =>
         LOG.error("Error while executing '" + query + "' query in executeQuery()")
-        throw new RuntimeException("Error message " + e.getMessage, e)
+        throw new RuntimeException("Error message " , e)
     }
   }
 

@@ -15,7 +15,11 @@ package hydrograph.engine.core.xmlparser.parametersubstitution;
 import hydrograph.engine.core.utilities.GeneralUtilities;
 
 import java.util.Properties;
-
+/**
+ * The Class PropertyBank.
+ *
+ * @author Bitwise
+ */
 public class PropertyBank implements IParameterBank {
 
 	private Properties props = new Properties();

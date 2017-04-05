@@ -15,7 +15,9 @@ package hydrograph.engine.transformation.userfunctions.base;
 import java.io.Serializable;
 
 /**
- * @author bitwise
+ * The Interface OutputDispatcher.
+ *
+ * @author Bitwise
  *
  */
 public interface OutputDispatcher extends Serializable {

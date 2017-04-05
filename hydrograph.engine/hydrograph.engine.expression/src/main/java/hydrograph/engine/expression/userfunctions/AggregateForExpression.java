@@ -12,15 +12,17 @@
  *******************************************************************************/
 package hydrograph.engine.expression.userfunctions;
 
-import hydrograph.engine.expression.api.ValidationAPI;
 import hydrograph.engine.expression.utils.ExpressionWrapper;
 import hydrograph.engine.transformation.userfunctions.base.AggregateTransformBase;
 import hydrograph.engine.transformation.userfunctions.base.ReusableRow;
 
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Properties;
-
+/**
+ * The Class AggregateForExpression .
+ *
+ * @author Bitwise
+ */
 @SuppressWarnings("rawtypes")
 public class AggregateForExpression implements AggregateTransformBase {
 

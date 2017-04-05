@@ -56,11 +56,11 @@ case class SchemaUtils() {
       if (fieldExist) {
         if (!(inSchema.dataType.typeName.equalsIgnoreCase(dbDataType.typeName))) {
           LOG.error("Field '" + inSchema.name + "', data type does not match expected type:" + dbDataType + ", got type:" + inSchema.dataType)
-          throw SchemaMismatchException("Field '" + inSchema.name + "' data type does not match expected type:" + dbDataType + ", got type:" + inSchema.dataType)
+          throw SchemaMisMatchException("Field '" + inSchema.name + "' data type does not match expected type:" + dbDataType + ", got type:" + inSchema.dataType)
         }
       } else {
         LOG.error("Field '" + inSchema.name + "' does not exist in metadata")
-        throw SchemaMismatchException("Input schema does not match with metadata schema, "
+        throw SchemaMisMatchException("Input schema does not match with metadata schema, "
           + "Field '" + inSchema.name + "' does not exist in metadata")
       }
     })
@@ -68,6 +68,6 @@ case class SchemaUtils() {
   }
 }
 
-case class SchemaMismatchException(message: String = "", cause: Throwable = null) extends Exception(message, cause)
+case class SchemaMisMatchException(message: String = "", cause: Throwable = null) extends RuntimeException(message, cause)
 
 

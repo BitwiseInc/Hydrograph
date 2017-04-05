@@ -162,7 +162,7 @@ class RemoveDupsComponent(removeDupsEntity: RemoveDupsEntity, componentsParams: 
 
       map
     } catch {
-      case e: RuntimeException => logger.error("Error in RemoveDups Component : " + removeDupsEntity.getComponentId() + "\n" + e.getMessage, e); throw e
+      case e: RuntimeException => logger.error("Error in RemoveDups Component : " + removeDupsEntity.getComponentId() + "\n" , e); throw e
     }
   }
 

@@ -29,7 +29,11 @@ import javax.xml.bind.JAXBException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
-
+/**
+ * The Class HydrographXMLInputService.
+ *
+ * @author Bitwise
+ */
 public class HydrographXMLInputService implements HydrographInputService {
 
 	HydrographJobGenerator hydrographJobGenerator;

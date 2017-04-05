@@ -19,7 +19,11 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Locale;
 import java.util.Properties;
-
+/**
+ * The Class CommandLineOptionsProcessor.
+ *
+ * @author Bitwise
+ */
 public class CommandLineOptionsProcessor {
 
 	public static final String OPTION_XML_PATH = "xmlpath";

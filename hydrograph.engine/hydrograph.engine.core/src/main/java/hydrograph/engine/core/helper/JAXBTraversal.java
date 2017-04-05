@@ -22,7 +22,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
-
+/**
+ * The Class JAXBTraversal.
+ *
+ * @author Bitwise
+ *
+ */
 public class JAXBTraversal {
 
 	private Map<String, Link> linkMap;

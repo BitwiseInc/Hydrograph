@@ -15,7 +15,12 @@ package hydrograph.engine.core.component.entity;
 import hydrograph.engine.core.component.entity.base.OperationEntityBase;
 
 import java.util.Arrays;
-
+/**
+ * The Class NormalizeEntity.
+ *
+ * @author Bitwise
+ *
+ */
 public class NormalizeEntity extends OperationEntityBase {
 
 	/**

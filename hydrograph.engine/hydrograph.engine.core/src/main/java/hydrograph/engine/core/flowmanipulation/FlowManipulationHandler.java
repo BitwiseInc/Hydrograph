@@ -29,7 +29,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * @author gurdits
+ * The Class FlowManipulationHandler.
+ *
+ * @author Bitwise
  *
  */
 public class FlowManipulationHandler {

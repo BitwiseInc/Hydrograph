@@ -16,7 +16,12 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import static hydrograph.engine.transformation.standardfunctions.ValidationFunctions.isBlank;
-
+/**
+ * The Class IsBlankTest.
+ *
+ * @author Bitwise
+ *
+ */
 public class IsBlankTest {
 
 	@Test

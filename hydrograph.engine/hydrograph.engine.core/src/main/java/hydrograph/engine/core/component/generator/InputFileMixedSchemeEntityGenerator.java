@@ -23,7 +23,12 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Properties;
-
+/**
+ * The Class InputFileMixedSchemeEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 public class InputFileMixedSchemeEntityGenerator extends
 		InputComponentGeneratorBase {
 

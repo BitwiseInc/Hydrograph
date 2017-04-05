@@ -11,7 +11,11 @@
  * limitations under the License
  *******************************************************************************/
 package hydrograph.engine.core.utilities;
-
+/**
+ * The Enum FileEncodingEnum.
+ *
+ * @author Bitwise
+ */
 public enum FileEncodingEnum {
 	UTF_8,
 	US_ASCII,

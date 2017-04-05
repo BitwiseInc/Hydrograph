@@ -18,9 +18,10 @@ package hydrograph.engine.core.component.entity;
 import hydrograph.engine.core.component.entity.base.HiveEntityBase;
 
 import java.util.Arrays;
-
 /**
- * @author bitwise1
+ * The Class InputFileHiveTextEntity.
+ *
+ * @author Bitwise
  *
  */
 public class InputFileHiveTextEntity extends HiveEntityBase {

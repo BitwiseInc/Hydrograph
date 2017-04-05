@@ -19,7 +19,12 @@ import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.engine.jaxb.inputtypes.AvroFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+/**
+ * The Class InputFileAvroEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 public class InputFileAvroEntityGenerator extends
 		InputComponentGeneratorBase {
 

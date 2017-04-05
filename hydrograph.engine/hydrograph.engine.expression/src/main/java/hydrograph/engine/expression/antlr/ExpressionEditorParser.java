@@ -24,7 +24,11 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import java.util.List;
-
+/**
+ * The Class ExpressionEditorParser .
+ *
+ * @author Bitwise
+ */
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class ExpressionEditorParser extends Parser {
 	static { RuntimeMetaData.checkVersion("4.5.3", RuntimeMetaData.VERSION); }

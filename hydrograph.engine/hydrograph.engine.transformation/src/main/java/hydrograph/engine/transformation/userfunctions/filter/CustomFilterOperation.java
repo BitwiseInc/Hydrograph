@@ -19,11 +19,10 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 /**
- * This class is used as custom transform class in FilterAssemblyTestWithPlunger
- * test class
- * 
- * @author Prabodh
- * @see hydrograph.engine.cascading.assembly.FilterAssemblyTest
+ * The Class CustomFilterOperation.
+ *
+ * @author Bitwise
+ *
  */
 public class CustomFilterOperation implements FilterBase {
 

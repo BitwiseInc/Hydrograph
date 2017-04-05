@@ -17,7 +17,11 @@ import org.w3c.dom.Node;
 
 import javax.xml.bind.ValidationEvent;
 import javax.xml.bind.ValidationEventHandler;
-
+/**
+ * The Class ComponentValidationEventHandler.
+ *
+ * @author Bitwise
+ */
 public class ComponentValidationEventHandler implements ValidationEventHandler {
 
 	public boolean handleEvent(ValidationEvent event) {

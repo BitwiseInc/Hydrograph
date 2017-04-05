@@ -17,15 +17,9 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 /**
- * The FilterBase interface is the base interface for all the custom classes
- * defined for transformations in filter component in Hydrograph. This interface
- * exposes methods that enable users to define custom filter expressions.
- * <p>
- * For a sample implementation of this interface refer any class under
- * {@link hydrograph.engine.transformation.userfunctions.filter} package.
- * </p>
- * 
- * @author bitwise
+ * The Interface FilterBase.
+ *
+ * @author Bitwise
  *
  */
 public interface FilterBase extends Serializable {

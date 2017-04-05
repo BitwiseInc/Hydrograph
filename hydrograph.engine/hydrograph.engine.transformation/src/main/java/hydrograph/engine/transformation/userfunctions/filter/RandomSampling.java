@@ -18,7 +18,12 @@ import hydrograph.engine.transformation.userfunctions.base.ReusableRow;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Random;
-
+/**
+ * The Class RandomSampling.
+ *
+ * @author Bitwise
+ *
+ */
 public class RandomSampling implements FilterBase{
 	
 	private double weight;

@@ -19,7 +19,12 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Properties;
-
+/**
+ * The Class Sum.
+ *
+ * @author Bitwise
+ *
+ */
 public class Sum implements CumulateTransformBase {
 
 	private Number sum = null;

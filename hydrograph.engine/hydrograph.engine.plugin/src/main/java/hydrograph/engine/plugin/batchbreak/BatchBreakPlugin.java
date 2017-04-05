@@ -27,6 +27,12 @@ import org.apache.hadoop.conf.Configuration;
 
 import java.util.*;
 
+/**
+ * The Class BatchBreakPlugin.
+ *
+ * @author Bitwise
+ *
+ */
 public class BatchBreakPlugin implements ManipulatorListener {
 
     private Map<String, Set<SchemaField>> schemaFieldsMap;

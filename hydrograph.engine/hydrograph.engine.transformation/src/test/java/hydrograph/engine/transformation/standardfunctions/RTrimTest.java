@@ -16,7 +16,12 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import static hydrograph.engine.transformation.standardfunctions.StringFunctions.stringRightTrim;
-
+/**
+ * The Class RTrimTest.
+ *
+ * @author Bitwise
+ *
+ */
 public class RTrimTest {
 
 	@Test

@@ -15,7 +15,9 @@ package hydrograph.engine.transformation.standardfunctions;
 import hydrograph.engine.transformation.standardfunctions.helper.StandardFunctionHelper;
 
 /**
- * The class ValidationFunctions provides various validation functions.
+ * The Class ValidationFunctions.
+ *
+ * @author Bitwise
  *
  */
 public class ValidationFunctions {

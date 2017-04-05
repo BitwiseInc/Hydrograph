@@ -29,13 +29,9 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * The utility class for entities of all Input type components. This class is
- * meant to be stateless and provide just static utility methods. There should
- * not be any instance variables of this class. The constructor has deliberately
- * been made private in order to discourage users from creating instance of this
- * class
- * 
- * @author gurdits
+ * The Class InputEntityUtils.
+ *
+ * @author Bitwise
  *
  */
 public class InputEntityUtils implements Serializable{
@@ -49,7 +45,7 @@ public class InputEntityUtils implements Serializable{
 	 * Extracts the socket type for all the sockets from the output socket
 	 * object of type {@link TypeInputOutSocket}, passed as a parameter
 	 * 
-	 * @param outSocket
+	 * @param # outSocket
 	 *            list of {@link TypeInputOutSocket} objects which contain the
 	 *            socket type information
 	 * @return a list of {@link OutSocket} objects. Each object in the list

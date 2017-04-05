@@ -133,7 +133,7 @@ case class HydrographJDBCUtils() {
         conn.getMetaData().supportsDataDefinitionAndDataManipulationTransactions()
     } catch {
       case NonFatal(e) =>
-        throw new RuntimeException("Exception : " + e.getMessage)
+        throw new RuntimeException("Exception : ",e)
         true
     }
 
@@ -216,7 +216,7 @@ case class HydrographJDBCUtils() {
         try {
           conn.close()
         } catch {
-          case e: Exception => println("Exception " + e) //logWarning("Transaction succeeded, but closing failed", e)
+          case e: Exception => println("Exception ", e) //logWarning("Transaction succeeded, but closing failed", e)
         }
       }
     }

@@ -15,7 +15,6 @@ package hydrograph.engine.transformation.userfunctions.base;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,11 +22,9 @@ import java.util.Date;
 import java.util.LinkedHashSet;
 
 /**
- * The runtime representation of a record. This class holds the fields and their
- * values for one record (row). This class exposes getter / setter methods to
- * manipulate the values of those fields.
- * 
- * @author bitwise
+ * The Class ReusableRow.
+ *
+ * @author Bitwise
  *
  */
 public abstract class ReusableRow implements Comparable<ReusableRow>, Serializable{

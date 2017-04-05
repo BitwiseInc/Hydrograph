@@ -1,5 +1,9 @@
 package hydrograph.engine.spark.components.utils;
-
+/**
+ * The Class OSValidatorUtil.
+ *
+ * @author Bitwise
+ */
 public class OSValidatorUtil {
 
     private static String OS = System.getProperty("os.name").toLowerCase();

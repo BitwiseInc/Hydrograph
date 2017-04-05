@@ -18,7 +18,12 @@ import hydrograph.engine.core.component.entity.elements.SchemaField;
 
 import java.util.Arrays;
 import java.util.List;
-
+/**
+ * The Class GenerateRecordEntity.
+ *
+ * @author Bitwise
+ *
+ */
 public class GenerateRecordEntity extends InputOutputEntityBase{
 
 	private Long recordCount;

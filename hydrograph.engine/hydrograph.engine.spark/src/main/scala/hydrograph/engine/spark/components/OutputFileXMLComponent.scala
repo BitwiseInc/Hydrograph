@@ -15,7 +15,7 @@ package hydrograph.engine.spark.components
 import hydrograph.engine.core.component.entity.OutputFileXMLEntity
 import hydrograph.engine.spark.components.base.SparkFlow
 import hydrograph.engine.spark.components.platform.BaseComponentParams
-import hydrograph.engine.spark.components.utils.SchemaCreator
+import hydrograph.engine.spark.components.utils.{SchemaCreator, SchemaMisMatchException}
 import org.apache.spark.sql.{AnalysisException, SaveMode}
 import org.slf4j.{Logger, LoggerFactory}
 
@@ -60,14 +60,16 @@ BaseComponentParams) extends SparkFlow with Serializable {
         .format("hydrograph.engine.spark.datasource.xml")
         .save(outputFileXMLEntity.getPath)
     } catch {
-      case e: AnalysisException if (e.getMessage().matches("(.*)cannot resolve(.*)given input columns(.*)"))=>
-        LOG.error("Error in Output File XML Component "+ outputFileXMLEntity.getComponentId, e)
-        throw new RuntimeException("Error in Output File XML Component "
-          + outputFileXMLEntity.getComponentId, e )
+  /*    case e: AnalysisException if (e.getMessage().matches("(.*)cannot resolve(.*)given input columns(.*)"))=>
+        LOG.error("Error in Output File XML Component "+ outputFileXMLEntity.getComponentId, null)
+        throw new FieldsMisMatchException("Error in Output File XML Component "
+          + outputFileXMLEntity.getComponentId, null )*/
       case e:Exception =>
-        LOG.error("Error in Output File XML Component "+ outputFileXMLEntity.getComponentId, e)
-        throw new RuntimeException("Error in Output File XML Component "
-          + outputFileXMLEntity.getComponentId, e)
+        val inputFields = cp.getDataFrame().schema.fieldNames
+        val outputFields = schemaCreator.makeSchema().fieldNames
+        val unexpected = outputFields.filterNot(inputFields.toSet)
+        LOG.error("Error in Output File XML Component "+ outputFileXMLEntity.getComponentId +" and unmatched fields are "+unexpected.toList, null)
+        throw new SchemaMisMatchException("Error in Output File XML Component "+ outputFileXMLEntity.getComponentId+" and unmatched fields are "+unexpected.toList, e)
     }
     LOG.info("Created Output File XML Component "+ outputFileXMLEntity.getComponentId
       + " in Batch "+ outputFileXMLEntity.getBatch +" with path " + outputFileXMLEntity.getPath)

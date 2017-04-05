@@ -19,7 +19,12 @@ package hydrograph.engine.spark.datasource.utils
 import java.io.{ObjectInputStream, ObjectOutputStream}
 
 import org.apache.hadoop.conf.Configuration
-
+/**
+  * The Class SerializableConfiguration.
+  *
+  * @author Bitwise
+  *
+  */
 class SerializableConfiguration(@transient var value: Configuration) extends Serializable {
   private def writeObject(out: ObjectOutputStream): Unit = Utils.tryOrIOException {
     out.defaultWriteObject()

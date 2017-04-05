@@ -14,7 +14,12 @@ package hydrograph.engine.core.entity;
 
 import hydrograph.engine.jaxb.commontypes.TypeBaseInSocket;
 import hydrograph.engine.jaxb.commontypes.TypeBaseOutSocket;
-
+/**
+ * The Class LinkInfo.
+ *
+ * @author Bitwise
+ *
+ */
 public class LinkInfo {
 
 	private String componentId;

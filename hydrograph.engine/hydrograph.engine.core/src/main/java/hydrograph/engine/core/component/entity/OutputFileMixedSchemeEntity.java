@@ -17,7 +17,12 @@ import hydrograph.engine.core.component.entity.elements.SchemaField;
 
 import java.util.Arrays;
 import java.util.List;
-
+/**
+ * The Class OutputFileMixedSchemeEntity.
+ *
+ * @author Bitwise
+ *
+ */
 public class OutputFileMixedSchemeEntity extends InputOutputEntityBase {
 
 	private String path;

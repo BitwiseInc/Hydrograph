@@ -23,7 +23,12 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Properties;
-
+/**
+ * The Class InputFileFixedWidthEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 public class InputFileFixedWidthEntityGenerator extends
 		InputComponentGeneratorBase {
 	private TextFileFixedWidth jaxbInputFileFixedWidth;

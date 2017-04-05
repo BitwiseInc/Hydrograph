@@ -16,7 +16,12 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import static hydrograph.engine.transformation.standardfunctions.StringFunctions.stringReplace;
-
+/**
+ * The Class StringReplaceTest.
+ *
+ * @author Bitwise
+ *
+ */
 public class StringReplaceTest {
 
 	@Test

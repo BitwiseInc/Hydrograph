@@ -17,9 +17,10 @@ package hydrograph.engine.commandline.utilities;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 /**
- * @author Alpeshk
+ * The Class GeneralCommandLineUtilities.
+ *
+ * @author Bitwise
  *
  */
 public class GeneralCommandLineUtilities {

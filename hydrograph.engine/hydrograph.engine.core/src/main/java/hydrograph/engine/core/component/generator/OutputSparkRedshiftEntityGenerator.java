@@ -23,7 +23,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
-
+/**
+ * The Class OutputSparkRedshiftEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 public class OutputSparkRedshiftEntityGenerator extends OutputComponentGeneratorBase {
 
     private static Logger LOG = LoggerFactory.getLogger(OutputSparkRedshiftEntityGenerator.class);

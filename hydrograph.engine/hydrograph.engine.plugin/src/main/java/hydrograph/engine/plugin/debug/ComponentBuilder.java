@@ -28,7 +28,12 @@ import hydrograph.engine.plugin.debug.utils.JaxbSchemaFieldConverter;
 
 import java.util.List;
 import java.util.Set;
-
+/**
+ * The Enum ComponentBuilder.
+ *
+ * @author Bitwise
+ *
+ */
 public enum ComponentBuilder {
 	
 	REPLICATE_COMPONENT {

@@ -19,7 +19,12 @@ import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.engine.jaxb.inputtypes.ParquetFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+/**
+ * The Class InputFileParquetEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 public class InputFileParquetEntityGenerator extends InputComponentGeneratorBase {
 
 	private ParquetFile jaxbParquetFile;

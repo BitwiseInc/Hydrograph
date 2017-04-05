@@ -12,11 +12,10 @@
  *******************************************************************************/
 package hydrograph.engine.spark.datasource.fixedwidth
 
-import java.text.SimpleDateFormat
-import org.apache.commons.lang3.time.FastDateFormat
 import java.util.{Locale, TimeZone}
 
 import hydrograph.engine.spark.datasource.utils.{CompressionCodecs, TypeCast}
+import org.apache.commons.lang3.time.FastDateFormat
 import org.apache.hadoop.fs.Path
 import org.apache.spark.sql.sources.{BaseRelation, CreatableRelationProvider, RelationProvider, SchemaRelationProvider}
 import org.apache.spark.sql.types._

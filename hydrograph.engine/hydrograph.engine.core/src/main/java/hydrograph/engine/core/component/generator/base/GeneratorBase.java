@@ -16,7 +16,11 @@ import hydrograph.engine.core.component.entity.base.AssemblyEntityBase;
 import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 
 import java.io.Serializable;
-
+/**
+ * The Interface GeneratorBase.
+ *
+ * @author Bitwise
+ */
 public interface GeneratorBase extends Serializable{
 
 	/**

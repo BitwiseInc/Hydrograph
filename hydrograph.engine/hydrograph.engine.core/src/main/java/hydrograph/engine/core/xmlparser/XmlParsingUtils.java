@@ -19,7 +19,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Properties;
 import java.util.Scanner;
-
+/**
+ * The Class XmlParsingUtils.
+ *
+ * @author Bitwise
+ */
 public class XmlParsingUtils {
 
 	public static final String DEFAULT_ENCODING = "UTF-8";

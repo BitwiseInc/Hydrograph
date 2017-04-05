@@ -19,10 +19,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * This helper class helps retrieve an object of {@link OrderedProperties} for
- * the desired property file
- * 
- * @author Prabodh
+ * The Class OrderedPropertiesHelper.
+ *
+ * @author Bitwise
  *
  */
 public class OrderedPropertiesHelper {

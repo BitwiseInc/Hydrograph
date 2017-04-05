@@ -15,7 +15,7 @@ package hydrograph.engine.spark.components
 import hydrograph.engine.core.component.entity.InputRDBMSEntity
 import hydrograph.engine.spark.components.base.InputComponentBase
 import hydrograph.engine.spark.components.platform.BaseComponentParams
-import hydrograph.engine.spark.components.utils.{DbTableUtils, SchemaCreator, SchemaMismatchException}
+import hydrograph.engine.spark.components.utils.{DbTableUtils, SchemaCreator, SchemaMisMatchException}
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.types._
 import org.slf4j.{Logger, LoggerFactory}
@@ -72,7 +72,7 @@ class InputOracleComponent(inputRDBMSEntity: InputRDBMSEntity, iComponentsParams
     } catch {
       case e: Exception =>
         LOG.error("Error in Input  Oracle input component '" + inputRDBMSEntity.getComponentId + "', Error" + e.getMessage, e)
-        throw new RuntimeException("Error in Input Oracle Component " + inputRDBMSEntity.getComponentId, e)
+        throw new DatabaseConnectionException("Error in Input Oracle Component " + inputRDBMSEntity.getComponentId, e)
     }
   }
 
@@ -116,12 +116,12 @@ class InputOracleComponent(inputRDBMSEntity: InputRDBMSEntity, iComponentsParams
         if (!(inSchema.dataType.typeName.equalsIgnoreCase("Float") || inSchema.dataType.typeName.equalsIgnoreCase("double")))
           if (!(inSchema.dataType.typeName.equalsIgnoreCase(dbDataType.typeName))) {
             LOG.error("Field '" + inSchema.name + "', data type does not match expected type:" + dbDataType + ", got type:" + inSchema.dataType)
-            throw SchemaMismatchException("Field '" + inSchema.name + "' data type does not match expected type:" + dbDataType + ", got type:" + inSchema.dataType)
+            throw SchemaMisMatchException("Field '" + inSchema.name + "' data type does not match expected type:" + dbDataType + ", got type:" + inSchema.dataType)
           }
       }
       else {
         LOG.error("Field '" + inSchema.name + "' does not exist in metadata")
-        throw SchemaMismatchException("Input schema does not match with metadata schema, "
+        throw SchemaMisMatchException("Input schema does not match with metadata schema, "
           + "Field '" + inSchema.name + "' does not exist in metadata")
       }
     })

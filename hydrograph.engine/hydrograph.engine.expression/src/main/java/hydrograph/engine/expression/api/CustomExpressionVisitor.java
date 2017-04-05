@@ -20,8 +20,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * @author gurdits
+ * The Class CustomExpressionVisitor .
  *
+ * @author Bitwise
  */
 class CustomExpressionVisitor extends ExpressionEditorBaseVisitor<String> implements ExpressionEditorVisitor<String> {
 

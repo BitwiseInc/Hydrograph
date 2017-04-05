@@ -19,7 +19,9 @@ import org.slf4j.LoggerFactory;
 import java.util.TreeSet;
 
 /**
- * The class CommonFunctions provides vector related functions.
+ * The Class CommonFunctions.
+ *
+ * @author Bitwise
  *
  */
 public class CommonFunctions {

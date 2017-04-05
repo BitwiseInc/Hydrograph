@@ -27,12 +27,12 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 /**
- * @author Ganesh
+ * The Class InputFileHiveParquetEntityGenerator.
+ *
+ * @author Bitwise
  *
  */
-
 public class InputFileHiveParquetEntityGenerator extends
 		InputComponentGeneratorBase {
 

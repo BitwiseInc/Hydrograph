@@ -16,7 +16,12 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import static hydrograph.engine.transformation.standardfunctions.StringFunctions.stringLength;
-
+/**
+ * The Class StringLengthTest.
+ *
+ * @author Bitwise
+ *
+ */
 public class StringLengthTest {
 
 	@Test

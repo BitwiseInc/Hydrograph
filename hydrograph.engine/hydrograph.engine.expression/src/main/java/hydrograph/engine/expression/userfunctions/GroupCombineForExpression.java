@@ -18,12 +18,11 @@ import hydrograph.engine.transformation.schema.Field;
 import hydrograph.engine.transformation.schema.Schema;
 import hydrograph.engine.transformation.userfunctions.base.GroupCombineTransformBase;
 import hydrograph.engine.transformation.userfunctions.base.ReusableRow;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-
-import static javafx.scene.input.KeyCode.T;
-
+/**
+ * The Class GroupCombineForExpression.
+ *
+ * @author Bitwise
+ */
 @SuppressWarnings("rawtypes")
 public class GroupCombineForExpression implements GroupCombineTransformBase {
 

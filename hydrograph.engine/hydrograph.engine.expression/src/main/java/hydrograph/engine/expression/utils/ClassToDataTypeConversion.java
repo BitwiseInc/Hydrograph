@@ -13,7 +13,9 @@
 package hydrograph.engine.expression.utils;
 
 /**
- * @author gurdits
+ * The Enum ClassToDataTypeConversion.
+ *
+ * @author Bitwise
  *
  */
 public enum ClassToDataTypeConversion {

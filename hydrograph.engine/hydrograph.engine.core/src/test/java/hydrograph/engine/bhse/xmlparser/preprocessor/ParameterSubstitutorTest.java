@@ -22,7 +22,11 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 import static org.junit.Assert.assertTrue;
-
+/**
+ * The Class ParameterSubstitutorTest .
+ *
+ * @author Bitwise
+ */
 public class ParameterSubstitutorTest {
 	private static Logger LOG = LoggerFactory
 			.getLogger(ParameterSubstitutorTest.class);

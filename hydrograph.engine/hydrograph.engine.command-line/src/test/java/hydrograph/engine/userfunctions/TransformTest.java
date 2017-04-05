@@ -17,7 +17,12 @@ import hydrograph.engine.transformation.userfunctions.base.TransformBase;
 
 import java.util.ArrayList;
 import java.util.Properties;
-
+/**
+ * The Class TransformTest.
+ *
+ * @author Bitwise
+ *
+ */
 public class TransformTest implements TransformBase {
 
 	@Override

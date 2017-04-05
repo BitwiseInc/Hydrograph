@@ -31,7 +31,12 @@ import scala.collection.Seq
 import scala.collection.mutable.ArrayBuffer
 
 
-
+/**
+  * The Object InferSchema.
+  *
+  * @author Bitwise
+  *
+  */
 
 private[xml] object InferSchema {
   private val logger = LoggerFactory.getLogger(InferSchema.getClass)

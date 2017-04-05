@@ -14,18 +14,14 @@
 
 package hydrograph.engine.jaxb.commontypes;
 
-import java.util.HashMap;
-import java.util.Map;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAnyAttribute;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.bind.annotation.XmlType;
-import javax.xml.namespace.QName;
 import hydrograph.engine.jaxb.executiontracking.TypeExecutiontrackingOperation;
 import hydrograph.engine.jaxb.filter.TypeFilterOperation;
 import hydrograph.engine.jaxb.partitionbyexpression.TypePbeOperation;
+
+import javax.xml.bind.annotation.*;
+import javax.xml.namespace.QName;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**

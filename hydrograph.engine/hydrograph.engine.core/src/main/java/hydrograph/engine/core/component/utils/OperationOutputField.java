@@ -15,7 +15,10 @@ package hydrograph.engine.core.component.utils;
 import java.io.Serializable;
 
 /**
- * Created by arshadalis on 1/17/2017.
+ * The Class OperationOutputField.
+ *
+ * @author Bitwise
+ *
  */
 public class OperationOutputField  implements Serializable{
 

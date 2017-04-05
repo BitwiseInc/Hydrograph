@@ -17,7 +17,12 @@ import org.junit.Test;
 
 import static hydrograph.engine.transformation.standardfunctions.ValidationFunctions.isNull;
 import static hydrograph.engine.transformation.standardfunctions.ValidationFunctions.isNullCheck;
-
+/**
+ * The Class IsNullTest.
+ *
+ * @author Bitwise
+ *
+ */
 public class IsNullTest {
 
 	@Test

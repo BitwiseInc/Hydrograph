@@ -12,11 +12,10 @@
  *******************************************************************************/
 package hydrograph.engine.spark.datasource.mixedScheme
 
-import java.text.SimpleDateFormat
-
 import hydrograph.engine.core.constants.Constants
 import hydrograph.engine.spark.helper.DelimitedAndFixedWidthHelper
 import hydrograph.engine.spark.input.format.DelimitedAndFixedWidthInputFormat
+import org.apache.commons.lang3.time.FastDateFormat
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.io.{LongWritable, Text}
 import org.apache.hadoop.mapred.InputFormat
@@ -25,7 +24,7 @@ import org.apache.spark.sql.sources.{BaseRelation, TableScan}
 import org.apache.spark.sql.types.StructType
 import org.apache.spark.sql.{Row, SQLContext}
 import org.slf4j.{Logger, LoggerFactory}
-import org.apache.commons.lang3.time.FastDateFormat
+
 import scala.collection.JavaConversions._
 /**
   * The Class MixedSchemeRelation.
@@ -75,7 +74,7 @@ case class MixedSchemeRelation(componentName:String,
             safe, quote, dateFormats)
           } catch {
             case e:Exception => {
-              throw new RuntimeException("Error in Input Mixed Scheme Component:[\""+componentName+"\"] \n "+ e.getMessage )
+              throw new RuntimeException("Error in Input Mixed Scheme Component:[\""+componentName+"\"] \n ",e )
             }
           })
 

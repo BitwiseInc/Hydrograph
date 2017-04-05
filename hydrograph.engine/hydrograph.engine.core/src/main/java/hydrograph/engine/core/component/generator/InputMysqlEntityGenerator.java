@@ -23,7 +23,12 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
 
-
+/**
+ * The Class InputMysqlEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 public class InputMysqlEntityGenerator extends
         InputComponentGeneratorBase {
 

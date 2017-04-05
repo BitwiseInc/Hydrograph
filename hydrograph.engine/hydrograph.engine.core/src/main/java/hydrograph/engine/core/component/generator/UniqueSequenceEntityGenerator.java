@@ -19,7 +19,12 @@ import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.engine.jaxb.operationstypes.GenerateSequence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+/**
+ * The Class UniqueSequenceEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 public class UniqueSequenceEntityGenerator extends
 		OperationComponentGeneratorBase {
 

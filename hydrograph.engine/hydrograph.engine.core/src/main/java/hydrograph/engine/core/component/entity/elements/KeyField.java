@@ -13,11 +13,10 @@
 package hydrograph.engine.core.component.entity.elements;
 
 import java.io.Serializable;
-
 /**
- * A POJO for storing field name and sort order for the key field
- * 
- * @author Prabodh
+ * The Class KeyField.
+ *
+ * @author Bitwise
  *
  */
 public class KeyField implements Serializable{

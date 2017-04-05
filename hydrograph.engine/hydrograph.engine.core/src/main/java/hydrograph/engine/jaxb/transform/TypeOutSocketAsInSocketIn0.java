@@ -14,10 +14,11 @@
 
 package hydrograph.engine.jaxb.transform;
 
+import hydrograph.engine.jaxb.commontypes.TypeOutSocketAsInSocket;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
-import hydrograph.engine.jaxb.commontypes.TypeOutSocketAsInSocket;
 
 
 /**

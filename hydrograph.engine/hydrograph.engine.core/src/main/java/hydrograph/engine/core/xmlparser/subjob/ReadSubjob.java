@@ -21,7 +21,11 @@ import org.w3c.dom.Node;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
-
+/**
+ * The Class ReadSubjob.
+ *
+ * @author Bitwise
+ */
 public class ReadSubjob {
 
 	private static final String ID = "id";

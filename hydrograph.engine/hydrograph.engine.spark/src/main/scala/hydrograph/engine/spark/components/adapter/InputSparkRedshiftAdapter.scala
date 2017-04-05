@@ -18,7 +18,12 @@ import hydrograph.engine.spark.components.InputSparkRedshiftComponent
 import hydrograph.engine.spark.components.adapter.base.InputAdatperBase
 import hydrograph.engine.spark.components.base.InputComponentBase
 import hydrograph.engine.spark.components.platform.BaseComponentParams
-
+/**
+  * The Class InputSparkRedshiftAdapter.
+  *
+  * @author Bitwise
+  *
+  */
 
 class InputSparkRedshiftAdapter(typeBaseComponent: TypeBaseComponent) extends InputAdatperBase {
 

@@ -18,7 +18,11 @@ import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Stack;
-
+/**
+ * The Class ParameterSubstitutor.
+ *
+ * @author Bitwise
+ */
 public class ParameterSubstitutor {
 
 	public static final String VARIABLE_PREFIX = "@{";

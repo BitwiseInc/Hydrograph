@@ -13,6 +13,12 @@
 package hydrograph.engine.core.component.entity.elements;
 
 import java.io.Serializable;
+/**
+ * The Class OperationField.
+ *
+ * @author Bitwise
+ *
+ */
 
 public class OperationField implements Serializable{
 	private String fieldName;

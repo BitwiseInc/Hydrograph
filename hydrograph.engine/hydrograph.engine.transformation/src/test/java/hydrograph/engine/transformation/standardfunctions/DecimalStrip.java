@@ -14,7 +14,12 @@ package hydrograph.engine.transformation.standardfunctions;
 
 import org.junit.Assert;
 import org.junit.Test;
-
+/**
+ * The Class DecimalStrip.
+ *
+ * @author Bitwise
+ *
+ */
 public class DecimalStrip {
 	@Test
 	public void itShouldFetchNumericValue1() {

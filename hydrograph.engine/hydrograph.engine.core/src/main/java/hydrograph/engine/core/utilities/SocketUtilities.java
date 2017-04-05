@@ -16,7 +16,11 @@ import hydrograph.engine.jaxb.commontypes.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * The Class SocketUtilities.
+ *
+ * @author Bitwise
+ */
 public class SocketUtilities {
 
 	public static List<? extends TypeBaseInSocket> getInSocketList(

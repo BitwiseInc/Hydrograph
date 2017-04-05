@@ -26,6 +26,7 @@ import org.apache.spark.sql.{DataFrame, Row}
 import org.slf4j.{Logger, LoggerFactory}
 
 import scala.collection.JavaConverters._
+
 /**
   * The Class TransformComponent.
   *
@@ -58,15 +59,23 @@ class TransformComponent(transformEntity: TransformEntity, componentsParams: Bas
     val df = componentsParams.getDataFrame.mapPartitions(itr => {
       //Initialize Transform to call prepare Method
       val transformsList = initializeOperationList[TransformForExpression](transformEntity.getOperationsList, inputSchema, operationSchema)
-
       transformsList.foreach {
         sparkOperation =>
           sparkOperation.baseClassInstance match {
             //For Expression Editor call extra method setValidationAPI
-            case t: TransformForExpression => t.setValidationAPI(sparkOperation.validatioinAPI)
-              t.callPrepare(sparkOperation.fieldName,sparkOperation.fieldType)
-            case t: TransformBase => t.prepare(sparkOperation.operationEntity.getOperationProperties, sparkOperation
-              .operationEntity.getOperationInputFields, sparkOperation.operationEntity.getOperationOutputFields)
+            case t: TransformForExpression =>
+              t.setValidationAPI(sparkOperation.validatioinAPI)
+              t.callPrepare(sparkOperation.fieldName, sparkOperation.fieldType)
+            case t: TransformBase => try {
+              t.prepare(sparkOperation.operationEntity.getOperationProperties, sparkOperation
+                .operationEntity.getOperationInputFields, sparkOperation.operationEntity.getOperationOutputFields)
+            } catch {
+              case e: Exception =>
+                LOG.error("Exception in prepare method of: " + t.getClass.getName + ".\nArguments passed to prepare() method are: \nProperties: " + sparkOperation.operationEntity.getOperationProperties + "\nInput Fields: " + sparkOperation
+                  .operationEntity.getOperationInputFields.get(0) + "\nOutput Fields: " + sparkOperation.operationEntity.getOperationOutputFields.get(0), e)
+                throw new OperationEntityException("Exception in prepare method of: " + t.getClass.getName + ".\nArguments passed to prepare() method are: \nProperties: " + sparkOperation.operationEntity.getOperationProperties + "\nInput Fields: " + sparkOperation
+                  .operationEntity.getOperationInputFields.get(0) + "\nOutput Fields: " + sparkOperation.operationEntity.getOperationOutputFields.get(0), e)
+            }
           }
       }
 
@@ -78,15 +87,23 @@ class TransformComponent(transformEntity: TransformEntity, componentsParams: Bas
         copyFields(row, outRow, passthroughIndexes)
         transformsList.foreach { tr =>
           //Calling Transform Method
-          try{
+          try {
             tr.baseClassInstance.transform(tr.inputRow.setRow(row), tr.outputRow.setRow(outRow))
           } catch {
-            case e:Exception => throw new RuntimeException("Error in Transform Component:[\""+transformEntity.getComponentId+"\"] for "+e.getMessage)
+            case e: Exception =>
+              LOG.error("Exception in transform method of: " + tr.getClass.getName + " and message is " + e.getMessage, e)
+              throw new RowFieldException("Exception in Transform Component:[\"" + transformEntity.getComponentId + "\"] for " + tr.getClass.getName + " and message is " + e.getMessage, e)
           }
 
           if (itr.isEmpty) {
             LOG.info("Calling cleanup() method of " + tr.baseClassInstance.getClass.toString + " class.")
-            tr.baseClassInstance.cleanup()
+            try {
+              tr.baseClassInstance.cleanup()
+            } catch {
+              case e: Exception =>
+                LOG.error("Exception in cleanup method of: " + tr.baseClassInstance.getClass + " and message is " + e.getMessage, e)
+                throw new TransformExceptionForCleanup("Exception in cleanup method of: " + tr.baseClassInstance.getClass + " and message is " + e.getMessage, e)
+            }
           }
         }
         Row.fromSeq(outRow)
@@ -96,6 +113,16 @@ class TransformComponent(transformEntity: TransformEntity, componentsParams: Bas
 
     val key = transformEntity.getOutSocketList.get(0).getSocketId
     Map(key -> df)
+
   }
 
+}
+
+class TransformExceptionForCleanup private[components](val message: String, val exception: Throwable) extends RuntimeException(message) {
+}
+
+class RowFieldException private[components](val message: String, val exception: Throwable) extends RuntimeException(message) {
+}
+
+class OperationEntityException private[components](val message: String, val exception: Throwable) extends RuntimeException(message) {
 }

@@ -16,14 +16,14 @@ import java.io._
 import java.net.URI
 import java.util.zip.Deflater
 
-import com.esotericsoftware.kryo.{Kryo, KryoSerializable}
 import com.esotericsoftware.kryo.io.{Input, Output}
+import com.esotericsoftware.kryo.{Kryo, KryoSerializable}
 import hydrograph.engine.spark.datasource.avro.DefaultSource.{AvroSchema, IgnoreFilesWithoutExtensionProperty, SerializableConfiguration}
-import org.apache.avro.{Schema, SchemaBuilder}
 import org.apache.avro.file.{DataFileConstants, DataFileReader}
 import org.apache.avro.generic.{GenericDatumReader, GenericRecord}
 import org.apache.avro.mapred.{AvroOutputFormat, FsInput}
 import org.apache.avro.mapreduce.AvroJob
+import org.apache.avro.{Schema, SchemaBuilder}
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.fs.{FileStatus, Path}
 import org.apache.hadoop.mapreduce.Job

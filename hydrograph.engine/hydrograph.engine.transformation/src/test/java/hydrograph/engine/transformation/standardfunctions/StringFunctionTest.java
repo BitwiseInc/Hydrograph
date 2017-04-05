@@ -14,7 +14,12 @@ package hydrograph.engine.transformation.standardfunctions;
 
 import org.junit.Assert;
 import org.junit.Test;
-
+/**
+ * The Class StringFunctionTest.
+ *
+ * @author Bitwise
+ *
+ */
 public class StringFunctionTest {
 
 	@Test

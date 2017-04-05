@@ -15,7 +15,12 @@ package hydrograph.engine.core.component.entity;
 import hydrograph.engine.core.component.entity.base.InputOutputEntityBase;
 
 import java.util.Arrays;
-
+/**
+ * The Class InputFileDelimitedEntity.
+ *
+ * @author Bitwise
+ *
+ */
 public class InputFileDelimitedEntity extends InputOutputEntityBase {
 
 	private String quote = null;

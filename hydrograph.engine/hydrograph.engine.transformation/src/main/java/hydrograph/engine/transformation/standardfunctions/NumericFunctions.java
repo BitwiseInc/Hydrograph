@@ -23,7 +23,9 @@ import java.util.regex.Pattern;
 import static hydrograph.engine.transformation.standardfunctions.helper.StandardFunctionHelper.convertComparableObjectToString;
 
 /**
- * The class NumericFunctions provides various math and numeric functions.
+ * The Class NumericFunctions.
+ *
+ * @author Bitwise
  *
  */
 public class NumericFunctions {
@@ -96,7 +98,7 @@ public class NumericFunctions {
 	 * 
 	 * @param inputValue
 	 *            the value from which the decimals are to be retained
-	 * @param includeDecimalPoint
+	 * @param # includeDecimalPoint
 	 * @return the decimals from the {@code inputValue}
 	 * @deprecated This method is deprecated, Use
 	 *             {@link NumericFunctions#decimalStrip(String inputValue, String decimal_point)}
@@ -132,7 +134,7 @@ public class NumericFunctions {
 	 * 
 	 * @param inputValue
 	 *            the value from which the decimals are to be retained
-	 * @param includeDecimalPoint
+	 * @param # includeDecimalPoint
 	 * @return the decimals from the {@code inputValue}
 	 */
 	public static String decimalStrip(String inputValue, String decimal_point) {

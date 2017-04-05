@@ -16,7 +16,11 @@ import org.apache.commons.cli.ParseException;
 
 import javax.xml.bind.JAXBException;
 import java.util.Properties;
-
+/**
+ * The Interface HydrographInputService.
+ *
+ * @author Bitwise
+ */
 public interface HydrographInputService {
 	public HydrographJob parseHydrographJob(Properties config, String[] args) throws JAXBException, ParseException;
 }

@@ -14,14 +14,15 @@
 
 package hydrograph.engine.jaxb.outputtypes;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
 import hydrograph.engine.jaxb.commontypes.ElementValueIntegerType;
 import hydrograph.engine.jaxb.commontypes.ElementValueStringType;
 import hydrograph.engine.jaxb.oteradata.TypeLoadChoice;
 import hydrograph.engine.jaxb.oteradata.TypeOutputTeradataBase;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 
 
 /**

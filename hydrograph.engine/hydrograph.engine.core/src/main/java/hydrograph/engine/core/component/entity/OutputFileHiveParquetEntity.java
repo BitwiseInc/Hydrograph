@@ -15,7 +15,12 @@ package hydrograph.engine.core.component.entity;
 import hydrograph.engine.core.component.entity.base.HiveEntityBase;
 
 import java.util.Arrays;
-
+/**
+ * The Class OutputFileHiveParquetEntity.
+ *
+ * @author Bitwise
+ *
+ */
 public class OutputFileHiveParquetEntity extends HiveEntityBase {
 
 	/**

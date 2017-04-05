@@ -109,7 +109,7 @@ class NormalizeComponent(normalizeEntity: NormalizeEntity, componentsParams: Bas
             }
           }
         } catch {
-          case e: Exception => throw new RuntimeException("Error in Normalize Component:[\"" + normalizeEntity.getComponentId + "\"] for " + e.getMessage)
+          case e: Exception => throw new RuntimeException("Error in Normalize Component:[\"" + normalizeEntity.getComponentId + "\"] for " ,e)
         }
 
         if (itr.isEmpty) {

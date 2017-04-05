@@ -21,7 +21,10 @@ import hydrograph.engine.spark.components.base.SparkFlow
 import hydrograph.engine.spark.components.platform.BaseComponentParams
 
 /**
-  * Created by bitwise on 16-12-2016.
+  * The Class OutputSparkRedshiftAdapter.
+  *
+  * @author Bitwise
+  *
   */
 class OutputSparkRedshiftAdapter(typeBaseComponent: TypeBaseComponent) extends OutputAdatperBase {
   var outputSparkRedshiftEntityGenerator: OutputSparkRedshiftEntityGenerator = null

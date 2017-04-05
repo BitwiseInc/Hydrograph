@@ -19,7 +19,12 @@ import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.engine.jaxb.inputtypes.SequenceInputFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+/**
+ * The Class InputFileSequenceFormatEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 public class InputFileSequenceFormatEntityGenerator extends InputComponentGeneratorBase {
 
 	private InputFileSequenceFormatEntity inputFileSequenceFormatEntity;

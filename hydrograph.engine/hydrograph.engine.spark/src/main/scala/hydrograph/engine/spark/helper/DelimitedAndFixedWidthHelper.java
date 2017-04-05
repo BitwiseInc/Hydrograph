@@ -13,14 +13,13 @@
 package hydrograph.engine.spark.helper;
 
 import hydrograph.engine.core.constants.Constants;
-
 import hydrograph.engine.spark.datasource.utils.TypeCast;
+import org.apache.commons.lang3.time.FastDateFormat;
 import org.apache.spark.sql.types.StructType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.commons.lang3.time.FastDateFormat;
+
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 /**
@@ -58,7 +57,7 @@ public class DelimitedAndFixedWidthHelper {
                         + Arrays.toString(lengthsAndDelimiters)
                         + "\nDatatypes in scheme: "
                         + getTypesFromSchema(schema,dateFormats.size())
-                        + "\nSafe was set to: " + safe + "\n Error being -> " + e.getMessage());
+                        + "\nSafe was set to: " + safe + "\n Error being -> " ,e);
             }
         } else {
             return new Object[lengthsAndDelimiters.length];
@@ -131,7 +130,7 @@ public class DelimitedAndFixedWidthHelper {
             } catch (Exception exception) {
                 result[i] = null;
                 if (!safe) {
-                    throw new RuntimeException(getSafeMessage(tokens[i], i, schema) + "\n Line being parsed => " + line);
+                    throw new RuntimeException(getSafeMessage(tokens[i], i, schema) + "\n Line being parsed => " + line,exception);
                 }
             }
         }

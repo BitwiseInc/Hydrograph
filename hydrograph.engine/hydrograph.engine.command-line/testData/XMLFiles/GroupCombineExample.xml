@@ -12,7 +12,7 @@
          xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
          xmlns:spt="hydrograph/engine/jaxb/straightpulltypes" xmlns:op="hydrograph/engine/jaxb/operationstypes"
          xmlns:ct="hydrograph/engine/jaxb/commandtypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../elt-core/src/main/resources/newxmlschema/main/main.xsd ">
+         xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd ">
 
     <inputs id="input"  xsi:type="it:textFileDelimited">
         <outSocket id="out0">

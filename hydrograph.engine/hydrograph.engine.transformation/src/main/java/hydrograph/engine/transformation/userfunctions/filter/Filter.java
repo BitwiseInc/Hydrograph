@@ -19,7 +19,12 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Properties;
-
+/**
+ * The Class Filter.
+ *
+ * @author Bitwise
+ *
+ */
 public class Filter implements FilterBase {
 
     //private static final int DEFAULT_VALUE = 0;

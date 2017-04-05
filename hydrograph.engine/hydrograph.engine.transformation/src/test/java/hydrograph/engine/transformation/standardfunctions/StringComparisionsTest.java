@@ -18,7 +18,12 @@ import org.junit.Test;
 import java.math.BigDecimal;
 
 import static hydrograph.engine.transformation.standardfunctions.StringFunctions.stringCompare;
-
+/**
+ * The Class StringComparisionsTest.
+ *
+ * @author Bitwise
+ *
+ */
 public class StringComparisionsTest {
 
 	@Test

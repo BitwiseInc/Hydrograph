@@ -23,7 +23,12 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
 
-
+/**
+ * The Class InputOracleEntityGenerator.
+ *
+ * @author Bitwise
+ *
+ */
 public class InputOracleEntityGenerator extends
 InputComponentGeneratorBase {
 

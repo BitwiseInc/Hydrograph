@@ -13,17 +13,16 @@
 package hydrograph.engine.spark.datasource.delimited;
 
 import hydrograph.engine.spark.datasource.utils.TypeCast;
+import org.apache.commons.lang3.time.FastDateFormat;
 import org.apache.spark.sql.types.StructType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.lang.reflect.Type;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
-import org.apache.commons.lang3.time.FastDateFormat;
 
 /**
  * The Class HydrographDelimitedParser.
@@ -219,7 +218,7 @@ public class HydrographDelimitedParser implements Serializable {
                 result[i] = null;
                 if (!safe) {
                     LOG.error(getSafeMessage(split[i], i) + "\n Line being parsed => " + line);
-                    throw new RuntimeException(getSafeMessage(split[i], i) + "\n Line being parsed => " + line);
+                    throw new RuntimeException(getSafeMessage(split[i], i) + "\n Line being parsed => " + line,exception);
                 }
             }
         }

@@ -19,12 +19,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
- * ComponentInfo class stores the current statistics of component such as
- * component id, current status of component, record count per output
- * socket,etc.
- * 
- * @author bitwise
+ * The Class ComponentInfo.
  *
+ * @author Bitwise
  */
 public class ComponentInfo {
 

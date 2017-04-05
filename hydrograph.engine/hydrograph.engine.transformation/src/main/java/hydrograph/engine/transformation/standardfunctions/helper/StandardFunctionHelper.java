@@ -16,7 +16,12 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.util.Date;
-
+/**
+ * The Class StandardFunctionHelper.
+ *
+ * @author Bitwise
+ *
+ */
 public class StandardFunctionHelper {
 
 	private static DecimalFormat df = new DecimalFormat("#.#####");

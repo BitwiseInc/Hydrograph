@@ -12,10 +12,8 @@
  *******************************************************************************/
 package hydrograph.engine.spark.datasource.fixedwidth
 
-import java.text.SimpleDateFormat
-import org.apache.commons.lang3.time.FastDateFormat
-
 import hydrograph.engine.spark.datasource.utils.{TextFile, TypeCast}
+import org.apache.commons.lang3.time.FastDateFormat
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.sources.{BaseRelation, TableScan}
 import org.apache.spark.sql.types.StructType
@@ -89,7 +87,7 @@ class FixedWidthRelation(componentName:String, path: String, charset: String, fi
             throw new RuntimeException("Field "+ field.name +" does not have enough " +
               "length as specified in the schema. Field value is : '" + row.substring(lengthForSubString(index)._1)
               + "' which has length '" + row.substring(lengthForSubString(index)._1).length + "' but length specified " +
-              "in the schema is " + fieldlength(index))
+              "in the schema is " + fieldlength(index),e)
           case e:Exception =>
             LOG.error("Field "+ field.name +" does not have enough " +
               "length as specified in the schema. Field value is : '" + row.substring(lengthForSubString(index)._1)
@@ -97,7 +95,7 @@ class FixedWidthRelation(componentName:String, path: String, charset: String, fi
               "in the schema is " + fieldlength(index))
             throw new RuntimeException("Field "+ field.name +" has " +
               "value "+ row.substring(lengthForSubString(index)._1, lengthForSubString(index)._2) + " cannot be coerced to "
-              + field.dataType )
+              + field.dataType ,e)
         }
       }
       Row.fromSeq(tokenArray)

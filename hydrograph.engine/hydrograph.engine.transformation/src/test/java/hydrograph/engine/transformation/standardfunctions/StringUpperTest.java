@@ -16,7 +16,12 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import static hydrograph.engine.transformation.standardfunctions.StringFunctions.stringUpper;
-
+/**
+ * The Class StringUpperTest.
+ *
+ * @author Bitwise
+ *
+ */
 public class StringUpperTest {
 
 	@Test

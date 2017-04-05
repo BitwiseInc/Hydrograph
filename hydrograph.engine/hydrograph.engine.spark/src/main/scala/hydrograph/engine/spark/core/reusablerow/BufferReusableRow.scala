@@ -16,7 +16,12 @@ import java.util.{Date, LinkedHashSet}
 
 import hydrograph.engine.transformation.userfunctions.base.ReusableRow
 import org.apache.spark.sql.expressions.MutableAggregationBuffer
-
+/**
+  * The Class BufferReusableRow.
+  *
+  * @author Bitwise
+  *
+  */
 class BufferReusableRow(var inputMutableBuffer: MutableAggregationBuffer, fieldsIndexMap: Map[String, Int], fieldsIndexList: Array[Int], fields: LinkedHashSet[String])
   extends ReusableRow(fields) with Serializable {
 

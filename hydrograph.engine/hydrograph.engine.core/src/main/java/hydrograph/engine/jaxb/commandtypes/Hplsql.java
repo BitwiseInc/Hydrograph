@@ -14,12 +14,9 @@
 
 package hydrograph.engine.jaxb.commandtypes;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
 import hydrograph.engine.jaxb.commontypes.TypeCommandComponent;
+
+import javax.xml.bind.annotation.*;
 
 
 /**
