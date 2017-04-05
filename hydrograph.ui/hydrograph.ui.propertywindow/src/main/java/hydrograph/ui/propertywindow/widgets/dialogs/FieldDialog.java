@@ -292,6 +292,11 @@ public class FieldDialog extends Dialog {
 
 		addErrorLabel(container_1);
 		checkFieldsOnStartup();
+		if(Messages.PARTITION_KEYS_FOR_DB_COMPONENT.equalsIgnoreCase(componentName)){
+			if(propertyList.size() > 0){
+				addButton.setEnabled(false);
+			}
+		}
 		return container_1;
 	}
 	

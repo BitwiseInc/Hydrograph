@@ -4,7 +4,6 @@ package hydrograph.ui.propertywindow.widgets.dialogs;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 
 import hydrograph.ui.propertywindow.propertydialog.PropertyDialogButtonBar;
