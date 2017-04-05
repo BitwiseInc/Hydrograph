@@ -16,6 +16,7 @@ import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.gef.ui.parts.GraphicalEditor;
@@ -43,6 +44,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 
+import hydrograph.ui.datastructures.executiontracking.ViewExecutionTrackingDetails;
 import hydrograph.ui.graph.Messages;
 import hydrograph.ui.graph.editor.ELTGraphicalEditor;
 import hydrograph.ui.graph.execution.tracking.datastructure.ExecutionStatus;
@@ -249,7 +251,10 @@ public class ViewExecutionHistoryDataDialog extends Dialog {
 			if(getTrackingFilePath().trim().isEmpty()){
 				if(!StringUtils.isEmpty(getSelectedUniqueJobId())){
 					executionStatus= ViewExecutionHistoryUtility.INSTANCE.readJsonLogFile(getSelectedUniqueJobId(), JobManager.INSTANCE.isLocalMode(), 
-							ViewExecutionHistoryUtility.INSTANCE.getLogPath());
+							getSelectedIdFilePath(selectedUniqueJobId), true);
+					ViewExecutionHistoryUtility.INSTANCE.getSelectedTrackingDetailsForSubjob().clear();
+					ViewExecutionHistoryUtility.INSTANCE.addSelectedTrackingDetails(new ViewExecutionTrackingDetails.Builder(selectedUniqueJobId, 
+							getSelectedIdFilePath(selectedUniqueJobId), true).build());
 				}else{
 					super.okPressed();
 				}
@@ -314,5 +319,17 @@ public class ViewExecutionHistoryDataDialog extends Dialog {
 		
 		return timeStamp;
 	}
+	
+	/**
+ 	 * The Function will return file log path corresponding to selected run job id
+ 	 * @param selectedUniqueJobId
+ 	 * @return file path
+ 	 */
+ 	private String getSelectedIdFilePath(String selectedUniqueJobId){
+ 		Map<String, ViewExecutionTrackingDetails> trackingMap = ViewExecutionHistoryUtility.INSTANCE.getTrackingPathDetails();
+ 		ViewExecutionTrackingDetails trackingDetails = trackingMap.get(selectedUniqueJobId);
+ 		
+ 		return trackingDetails.getSelectedLogFilePath();
+ 	}
 	
 }

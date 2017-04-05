@@ -16,6 +16,7 @@ package hydrograph.ui.graph.debug.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -44,6 +45,9 @@ public class PurgeViewDataFiles  implements IDebugService{
 	private static final Logger logger = LogFactory.INSTANCE.getLogger(PurgeViewDataFiles.class);
 	private static final String JOB_TRACKING_LOG_PATH = "//logger//JobTrackingLog";
 	private static final String JOB_TRACKING_CSV_FILE_PATH = "debugfiles";
+	private static final String JOB_TRACKING_FILE_EXTENSION = ".track.log"; 
+	private static final String EXECUTION_TRACKING_LOCAL_MODE = "L_";
+	private static final String EXECUTION_TRACKING_REMOTE_MODE = "R_";
 
 	/* (non-Javadoc)
 	 * @see hydrograph.ui.common.debug.service.IDebugService#deleteDebugFiles()
@@ -63,6 +67,9 @@ public class PurgeViewDataFiles  implements IDebugService{
 		        	dataUtils.deleteBasePathDebugFiles(job);
 		        	dataUtils.deleteSchemaAndDataViewerFiles(job.getUniqueJobId());
 		        	DataViewerUtility.INSTANCE.closeDataViewerWindows(job);
+		        	String path = ViewExecutionHistoryUtility.INSTANCE.getTrackingPathDetails().get(job.getUniqueJobId()).getSelectedLogFilePath();
+		        	path = path + checkJobstatus(job.isRemoteMode()) + job.getUniqueJobId() + JOB_TRACKING_FILE_EXTENSION;
+		        	removeFiles(path);
 		        }
 			}
 			viewExecutionHistoryUtility.getTrackingJobs().clear();
@@ -72,13 +79,21 @@ public class PurgeViewDataFiles  implements IDebugService{
 		purgeViewDataCsvFiles();
 	}
 	
+	private String checkJobstatus(boolean status){
+		if(status){
+			return EXECUTION_TRACKING_REMOTE_MODE;
+		}else{
+			return EXECUTION_TRACKING_LOCAL_MODE;
+		}
+	}
+	
 	/**
 	 * The Function will remove View Execution History Log Files. 
 	  */
 	private void purgeViewExecutionHistoryLogs(){
 		try {
 			FileUtils.cleanDirectory(new File(XMLConfigUtil.CONFIG_FILES_PATH + JOB_TRACKING_LOG_PATH));
-			logger.info("Removed ViewExecutionHistory logs file:::");
+			logger.debug("Removed ViewExecutionHistory logs file:::");
 		} catch (IOException exception) {
 			logger.error("Failed to remove ViewExecutionHistory logs file.", exception);
 		}
@@ -90,11 +105,26 @@ public class PurgeViewDataFiles  implements IDebugService{
 	private void purgeViewDataCsvFiles(){
 		try {
 			FileUtils.cleanDirectory(new File(Platform.getInstallLocation().getURL().getPath() + JOB_TRACKING_CSV_FILE_PATH));
-			logger.info("Removed ViewExecutionHistory csv file:::");
+			logger.debug("Removed ViewExecutionHistory csv file:::");
 		} catch (IOException exception) {
 			logger.error("Failed to remove ViewExecutionHistory csv file.", exception);
 		}
 	}
 	
+	/**
+	 * Purge the file on specific path
+	 * @param filePath
+	 */
+	private void removeFiles(String filePath){
+		try{
+			File file= new File(filePath);
+			boolean result = Files.deleteIfExists(file.toPath());
+			if(result){
+				logger.debug(filePath+" file deleted.");
+			}
+		}catch(Exception exception){
+			logger.error("Failed to remove ViewExecutionHistory log file.", exception);
+		}
+	}
 	
 }
