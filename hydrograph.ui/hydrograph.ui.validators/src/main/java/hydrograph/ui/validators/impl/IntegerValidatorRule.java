@@ -47,7 +47,7 @@ public class IntegerValidatorRule implements IValidator{
 	public boolean validate(Object object, String propertyName,Map<String,List<FixedWidthGridRow>> inputSchemaMap
 			,boolean isJobImported){
 		try{
-			String value = (String)object;
+			String value = String.valueOf(object);
 			Integer.parseInt(value);
 		}
 		catch(NumberFormatException exception){
