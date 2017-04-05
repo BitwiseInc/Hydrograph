@@ -24,6 +24,7 @@
 			<xs:enumeration value="java.lang.Boolean" />
 			<xs:enumeration value="java.util.Date" />
 			<xs:enumeration value="java.math.BigDecimal" />
+			<xs:enumeration value="Binary" />
 		</xs:restriction>
 	</xs:simpleType>
 

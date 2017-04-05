@@ -104,7 +104,7 @@ public enum JavaToSQLTypeMapping {
                     put("java.util.Date", "DATE");
                     put("java.sql.Timestamp", "TIMESTAMP");
                     put("java.math.BigDecimal", "NUMBER");
-
+                    put("Binary","BLOB");
                 }
             };
         }

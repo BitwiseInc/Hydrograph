@@ -122,6 +122,7 @@ object CustomSparkToAvro {
       case DoubleType => DOUBLE
       case IntegerType => INT
       case ShortType => INT
+      case BinaryType => BYTES
     }
   }
 
