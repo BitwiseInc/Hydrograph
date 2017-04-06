@@ -65,6 +65,4 @@ repositories {
 dependencies {
  compile 'org.slf4j:slf4j-api:1.7.12'
     compile 'org.slf4j:slf4j-log4j12:1.7.12'
-    compile group: 'org.codehaus.janino', name: 'janino', version: '3.0.6'
-    compile group: 'org.codehaus.janino', name: 'commons-compiler', version: '3.0.6'
 }
