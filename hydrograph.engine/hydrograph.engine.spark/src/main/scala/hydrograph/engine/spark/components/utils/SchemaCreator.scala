@@ -137,19 +137,22 @@ case class SchemaCreator[T <: InputOutputEntityBase](inputOutputEntityBase: T) {
     case x if !x.isInstanceOf[InputFileXMLEntity] => StructType(createStructFields())
   }
 
+   def getTypeNameFromDataType(dataType: String): String = {
+    Class.forName(dataType).getSimpleName
+  }
+
   def getDataType(schemaField: SchemaField): DataType = {
-    schemaField.getFieldDataType match {
-      case "java.lang.Integer" => DataTypes.IntegerType
-      case "java.lang.String" => DataTypes.StringType
-      case "java.lang.Long" => DataTypes.LongType
-      case "java.lang.Short" => DataTypes.ShortType
-      case "java.lang.Boolean" => DataTypes.BooleanType
-      case "java.lang.Float" => DataTypes.FloatType
-      case "java.lang.Double" => DataTypes.DoubleType
-      case "java.util.Date" if schemaField.getFieldFormat.matches(".*[H|m|s|S].*") => DataTypes.TimestampType
-      case "java.util.Date" => DataTypes.DateType
-      case "java.math.BigDecimal" => DataTypes.createDecimalType(checkPrecision(schemaField.getFieldPrecision),schemaField.getFieldScale)
-      case "Binary" => DataTypes.BinaryType
+    getTypeNameFromDataType(schemaField.getFieldDataType) match {
+      case "Integer" => DataTypes.IntegerType
+      case "String" => DataTypes.StringType
+      case "Long" => DataTypes.LongType
+      case "Short" => DataTypes.ShortType
+      case "Boolean" => DataTypes.BooleanType
+      case "Float" => DataTypes.FloatType
+      case "Double" => DataTypes.DoubleType
+      case "Date" if schemaField.getFieldFormat.matches(".*[H|m|s|S].*") => DataTypes.TimestampType
+      case "Date" => DataTypes.DateType
+      case "BigDecimal" => DataTypes.createDecimalType(checkPrecision(schemaField.getFieldPrecision),schemaField.getFieldScale)
     }
   }
 
