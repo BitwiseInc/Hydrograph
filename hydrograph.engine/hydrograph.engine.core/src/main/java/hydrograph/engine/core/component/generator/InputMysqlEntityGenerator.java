@@ -122,7 +122,17 @@ public class InputMysqlEntityGenerator extends
         //fetchsize
         inputRDBMSEntity.setFetchSize(inputMysqlJaxb.getFetchSize()==null?null: inputMysqlJaxb.getFetchSize().getValue());
         //extra url parameters
-        inputRDBMSEntity.setExtraUrlParameters(inputMysqlJaxb.getExtraUrlParams()==null?null:inputMysqlJaxb.getExtraUrlParams().getValue());
+        //inputRDBMSEntity.setExtraUrlParameters(inputMysqlJaxb.getExtraUrlParams()==null?null:inputMysqlJaxb.getExtraUrlParams().getValue());
+        if(inputMysqlJaxb.getExtraUrlParams()!=null){
+            if(inputMysqlJaxb.getExtraUrlParams().getValue().contains(",")){
+                String correctedParams = inputMysqlJaxb.getExtraUrlParams().getValue().replace(",","&");
+
+                LOG.info("using extra url params as" + correctedParams);
+                inputRDBMSEntity.setExtraUrlParameters(correctedParams);
+            }
+        }else if(inputMysqlJaxb.getExtraUrlParams()==null){
+            inputRDBMSEntity.setExtraUrlParameters(null);
+        }
 
         /**END*/
 

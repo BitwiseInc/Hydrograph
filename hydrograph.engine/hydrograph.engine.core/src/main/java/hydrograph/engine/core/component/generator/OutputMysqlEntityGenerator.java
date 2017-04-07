@@ -102,8 +102,19 @@ public class OutputMysqlEntityGenerator extends OutputComponentGeneratorBase {
             //for batchsize which was named to chunksize since there is batch in the ETL tool as well
         outputRDBMSEntity.setChunkSize(jaxbOutputMysql.getChunkSize()==null?null:jaxbOutputMysql.getChunkSize().getValue());
             //extra url parameters has been
-        outputRDBMSEntity.setExtraUrlParamters(jaxbOutputMysql.getExtraUrlParams()==null?null:jaxbOutputMysql.getExtraUrlParams().getValue());
-         /**end**/
+        /*outputRDBMSEntity.setExtraUrlParamters(jaxbOutputMysql.getExtraUrlParams()==null?null:jaxbOutputMysql.getExtraUrlParams().getValue());*/
+        if(jaxbOutputMysql.getExtraUrlParams()!=null){
+            if(jaxbOutputMysql.getExtraUrlParams().getValue().contains(",")){
+                String correctedParams = jaxbOutputMysql.getExtraUrlParams().getValue().replace(",","&");
+
+                LOG.info("using extra url params as" + correctedParams);
+                outputRDBMSEntity.setExtraUrlParamters(correctedParams);
+            }
+        }else if(jaxbOutputMysql.getExtraUrlParams()==null){
+            outputRDBMSEntity.setExtraUrlParamters(null);
+        }
+
+        /**end**/
     }
 
     @Override

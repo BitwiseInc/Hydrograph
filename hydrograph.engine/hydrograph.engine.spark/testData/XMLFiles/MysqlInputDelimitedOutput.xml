@@ -86,6 +86,7 @@
        </numPartitions>
        <fetchSize value="100000"/>
        <!--<extraUrlParams value="userServerPrepStmt=false&amp;rewriteBatchStatements=true"/>-->
+       <extraUrlParams value="useServerPrepStmts=false,rewriteBatchedStatements=true"/>
         <tableName value="benchmarking_0001"/>
        <username value="root" />
        <password value="root" />
