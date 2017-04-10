@@ -1271,7 +1271,7 @@ public abstract class Component extends Model {
 	@Override
 	public Component clone() throws CloneNotSupportedException {
 		Component component = null;
-		clonedHashMap = new LinkedHashMap<String, Object>();
+		Map<String,Object> clonedHashMap = new LinkedHashMap<String, Object>();
 		try {
 			component = this.getClass().newInstance();
 			
@@ -1284,7 +1284,7 @@ public abstract class Component extends Model {
 					
 					if(entry.getValue() instanceof ArrayList)
 					{
-						clonedArrayList = new ArrayList<>();
+						List clonedArrayList = new ArrayList<>();
 						List orignalList = (ArrayList) entry.getValue();
 						if (!orignalList.isEmpty() && String.class.isAssignableFrom(orignalList.get(0).getClass())) {
 						    	 clonedArrayList.addAll(orignalList);
