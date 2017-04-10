@@ -70,10 +70,6 @@ public class Port extends Model implements Cloneable{
 		this.portAlignment = portAlignmentEnum;
 	}
 	
-	public Port() {
-		// TODO Auto-generated constructor stub
-	}
-
 	public boolean isAllowMultipleLinks() {
 		return allowMultipleLinks;
 	}
@@ -198,8 +194,7 @@ public class Port extends Model implements Cloneable{
 	
 	@Override
 	protected Port clone() throws CloneNotSupportedException {
-		Port clonedPort=new Port();
-		//Port clonedPort = (Port) super.clone();
+		Port clonedPort = (Port) super.clone();
 		clonedPort.terminal = terminal;
 		clonedPort.numberOfPortsOfThisType = numberOfPortsOfThisType;
 		clonedPort.portType = portType;
@@ -207,8 +202,7 @@ public class Port extends Model implements Cloneable{
 		clonedPort.labelOfPort = labelOfPort;
 		clonedPort.allowMultipleLinks = allowMultipleLinks;
 		clonedPort.linkMandatory = linkMandatory;
-		clonedPort.portAlignment=portAlignment;
-		clonedPort.isWatched=isWatched;
+		
 		return clonedPort;
 	}
 	
