@@ -19,12 +19,10 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -65,6 +63,7 @@ import hydrograph.ui.common.util.CanvasDataAdapter;
 import hydrograph.ui.common.util.ComponentCacheUtil;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.common.util.XMLConfigUtil;
+import hydrograph.ui.common.util.XMLUtil;
 import hydrograph.ui.engine.exceptions.EngineException;
 import hydrograph.ui.engine.parsing.XMLParser;
 import hydrograph.ui.engine.ui.converter.LinkingData;
@@ -98,7 +97,6 @@ public class UiConverterUtil {
 	private static final String FIXED_OUTPUT_PORT = "out0";
 	private static final String FIXED_UNUSED_PORT = "unused0";
 	private UIComponentRepo componentRepo ;
-	private String stringValueFromXml = "";
 	
 	public UiConverterUtil() {
 		componentRepo = new UIComponentRepo();
@@ -133,7 +131,7 @@ public class UiConverterUtil {
 			SAXException, IOException, ComponentNotFoundException {
 		Container container = getJobContainer(sourceXML, parameterFile);
 		Object[] array = updateUniqueIdForStandAloneJObs(jobFile, isSubJob, container);
-		genrateUiXml(container, jobFile, parameterFile);
+		generateUiXml(container, jobFile, parameterFile);
 		
 		return array;
 	}
@@ -226,7 +224,7 @@ public class UiConverterUtil {
 	SecurityException, EngineException, JAXBException, ParserConfigurationException, SAXException, IOException,
 	ComponentNotFoundException {
 		Container container = getJobContainer(sourceXML, parameterFile);
-		genrateSubjobUiXml(container, file, parameterFile);
+		generateSubjobUiXml(container, file, parameterFile);
 		return container;
 
 }
@@ -318,41 +316,6 @@ public class UiConverterUtil {
 
 	}
 	
-	
-	private void unformatXMLString(ByteArrayOutputStream arrayOutputStream) {
-		byte[] bytes = arrayOutputStream.toByteArray();
-		InputStream inputStream = new ByteArrayInputStream(bytes);
-		InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-		BufferedReader reader = new BufferedReader(inputStreamReader);
-		try {
-			arrayOutputStream.reset();
-			String line;
-			while ((line = reader.readLine()) != null){
-				arrayOutputStream.write((line.trim() + "\n").getBytes());
-			}
-		} catch (IOException e) {
-			LOGGER.warn("Unable to remove formatting while saving UI XML string",e);
-		}finally{
-			try {
-				reader.close();
-			} catch (IOException e) {
-				LOGGER.warn("Unable to close xml buffer reader",e);
-			}
-			try {
-				inputStream.close();
-			} catch (IOException e) {
-				LOGGER.warn("Unable to close inputStream",e);
-			}
-			try {
-				inputStreamReader.close();
-			} catch (IOException e) {
-				LOGGER.warn("Unable to close inputStreamReader",e);
-			}
-		}
-		
-	}
-	
-	
 	/**
 	 * Creates the job file based for the container object.
 	 * 
@@ -360,7 +323,7 @@ public class UiConverterUtil {
 	 * @param jobFile
 	 * @param parameterFile
 	 */
-	private void genrateUiXml(Container container, IFile jobFile, IFile parameterFile) {
+	private void generateUiXml(Container container, IFile jobFile, IFile parameterFile) {
 		LOGGER.debug("Generating UI-XML");
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		String jobXmlData = null;
@@ -370,7 +333,7 @@ public class UiConverterUtil {
 			XStream xs = new XStream();
 			xs.autodetectAnnotations(true);
 			xs.toXML(container,out);
-			unformatXMLString(out);
+			XMLUtil.unformatXMLString(out);
 			
 			if (jobFile.exists()) {
 				showMessageBox(jobFile, out, jobFile.getName() + " already exists.Do you want to replace it?");
@@ -405,29 +368,18 @@ public class UiConverterUtil {
 		}
 	}
 	
-	private void genrateSubjobUiXml(Container container, File file, IFile parameterFile) {
+	private void generateSubjobUiXml(Container container, File file, IFile parameterFile) {
 		LOGGER.debug("Generating UI-XML");
-		FileOutputStream fileOutputStream = null;
-		try {
-			XStream xs = new XStream();
-			xs.autodetectAnnotations(true);
-			fileOutputStream = new FileOutputStream(file.getPath());
+		XStream xs = new XStream();
+		xs.autodetectAnnotations(true);
+		try(FileOutputStream fileOutputStream = new FileOutputStream(file.getPath())) {
 			xs.toXML(container, fileOutputStream);
 			IPath iPath = new Path(file.getPath());
-			stringValueFromXml = getStringValueFromXMLFile(iPath);
-			storeParameterData(parameterFile, stringValueFromXml);
-			
+			storeParameterData(parameterFile, getStringValueFromXMLFile(iPath));
 		} catch (IOException ioException) {
 			LOGGER.error("Exception occurred while creating UI-XML", ioException);
 		} finally {
 			componentRepo.flushRepository();
-			try {
-				if (fileOutputStream != null) {
-					fileOutputStream.close();
-				}
-			} catch (IOException ioe) {
-				LOGGER.error("IOException occurred while closing output stream", ioe);
-			}
 		}
 	}
 
@@ -548,29 +500,23 @@ public class UiConverterUtil {
 	
 	public String getStringValueFromXMLFile(IPath xmlPath) {
 		if (xmlPath != null) {
-			InputStream inputStream = null;
-			String content = "";
-			try {
 				xmlPath = xmlPath.removeFileExtension().addFileExtension(Constants.XML_EXTENSION_FOR_IPATH);
-				if (xmlPath.toFile().exists())
-					inputStream = new FileInputStream(xmlPath.toFile());
-				else if (ResourcesPlugin.getWorkspace().getRoot().getFile(xmlPath).exists())
-					inputStream = ResourcesPlugin.getWorkspace().getRoot().getFile(xmlPath).getContents();
-				if (inputStream != null)
-					content = new Scanner(inputStream).useDelimiter("\\Z").next();
-				return content;
-			} catch (FileNotFoundException | CoreException exception) {
-				LOGGER.error("Exception occurred while fetching data from " + xmlPath.toString(), exception);
-			} finally {
-				if (inputStream != null) {
-					try {
-						inputStream.close();
-					} catch (IOException ioException) {
-						LOGGER.warn("Exception occurred while closing the inpustream", ioException);
-					}
+				if (xmlPath.toFile().exists()){
+					try(InputStream inputStream = new FileInputStream(xmlPath.toFile());
+							Scanner scanner = new Scanner(inputStream)){
+						return scanner.useDelimiter("\\Z").next();
+					} catch (IOException exception) {
+						LOGGER.error("Exception occurred while fetching data from " + xmlPath.toString(), exception);
+					} 
 				}
-
-			}
+				else if (ResourcesPlugin.getWorkspace().getRoot().getFile(xmlPath).exists()){
+					try(InputStream inputStream = ResourcesPlugin.getWorkspace().getRoot().getFile(xmlPath).getContents();
+							Scanner scanner = new Scanner(inputStream)){
+						return scanner.useDelimiter("\\Z").next();
+					} catch (IOException | CoreException exception) {
+						LOGGER.error("Exception occurred while fetching data from " + xmlPath.toString(), exception);
+					}
+				}	
 		}
 		return "";
 	}

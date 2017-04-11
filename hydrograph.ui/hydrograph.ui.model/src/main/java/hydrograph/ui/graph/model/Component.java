@@ -168,9 +168,11 @@ public abstract class Component extends Model {
 	/** The validity status. */
 	private String validityStatus;
 
+	@Deprecated
 	/** The cloned hash map. */
 	private Map<String, Object> clonedHashMap;
 	
+	@Deprecated
 	/** The cloned array list. */
 	private ArrayList<JoinConfigProperty>  clonedArrayList;
 	

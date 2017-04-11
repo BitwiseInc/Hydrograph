@@ -14,13 +14,8 @@
  
 package hydrograph.ui.graph.utility;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.Serializable;
 
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -31,6 +26,7 @@ import org.slf4j.Logger;
 import com.thoughtworks.xstream.XStream;
 
 import hydrograph.ui.common.interfaces.parametergrid.DefaultGEFCanvas;
+import hydrograph.ui.common.util.XMLUtil;
 import hydrograph.ui.logging.factory.LogFactory;
 
 
@@ -114,41 +110,9 @@ public class CanvasUtils {
 		} catch (Exception e) {
 			logger.error("Failed to convert from Object to XML", e);
 		}
-
-				unformatXMLString(outputStream);
+		XMLUtil.unformatXMLString(outputStream);
 	}
 	 
-	private static void unformatXMLString(ByteArrayOutputStream arrayOutputStream) {
-		byte[] bytes = arrayOutputStream.toByteArray();
-		InputStream inputStream = new ByteArrayInputStream(bytes);
-		InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-		BufferedReader reader = new BufferedReader(inputStreamReader);
-		try {
-			arrayOutputStream.reset();
-			String line;
-			while ((line = reader.readLine()) != null){
-				arrayOutputStream.write((line.trim() + "\n").getBytes());
-			}
-		} catch (IOException e) {
-			logger.warn("Unable to remove formatting while saving UI XML string",e);
-		}finally{
-			try {
-				reader.close();
-			} catch (IOException e) {
-				logger.warn("Unable to close xml buffer reader",e);
-			}
-			try {
-				inputStream.close();
-			} catch (IOException e) {
-				logger.warn("Unable to close inputStream",e);
-			}
-			try {
-				inputStreamReader.close();
-			} catch (IOException e) {
-				logger.warn("Unable to close inputStreamReader",e);
-			}
-		}
-		
-	}
+	
 
 }

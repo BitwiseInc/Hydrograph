@@ -15,7 +15,12 @@ package hydrograph.ui.common.util;
 
 import hydrograph.ui.logging.factory.LogFactory;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -105,5 +110,20 @@ public class XMLUtil {
 		
 		return null;
 	}
-		
+	
+	
+	public static void unformatXMLString(ByteArrayOutputStream arrayOutputStream) {
+		byte[] bytes = arrayOutputStream.toByteArray();
+		try(InputStream inputStream = new ByteArrayInputStream(bytes);
+				InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+				BufferedReader reader = new BufferedReader(inputStreamReader);){
+			arrayOutputStream.reset();
+			String line;
+			while ((line = reader.readLine()) != null){
+				arrayOutputStream.write((line.trim() + "\n").getBytes());
+			}
+		} catch (IOException e) {
+			logger.warn("Unable to remove formatting while saving UI XML string",e);
+		}
+	}
 }

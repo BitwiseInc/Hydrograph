@@ -1,0 +1,11 @@
+====================================================================================================
+Features Added:
+=====================================================================================================
+Sr.No. <date> - [developer names] - description
+
+=====================================================================================================
+Issues/Defects fixed:
+=====================================================================================================
+Sr.No. <GitHub Issue #>  - [fixed by] - description
+1. <> - [Vibhor Tyagi] - Subjob issue : Subjob was not getting imported.
+2. <> - [Prateem] - .job file size mismatch when components from one file copied to other file.

@@ -71,7 +71,6 @@ public class Port extends Model implements Cloneable{
 	}
 	
 	public Port() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public boolean isAllowMultipleLinks() {
