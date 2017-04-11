@@ -92,6 +92,7 @@ public class WidgetHelper {
 		textBoxConfig.setName(Messages.LABEL_COUNT);
 		textBoxConfig.getListeners().add(Listners.MODIFY);
 		textBoxConfig.getListeners().add(Listners.EVENT_CHANGE);
+		textBoxConfig.getListeners().add(Listners.VERIFY_TEXT);
 		textBoxConfig.getListeners().add(Listners.VERIFY_NUMERIC_OR_PARAMETER_FOCUS_IN);
 		textBoxConfig.getListeners().add(Listners.VERIFY_NUMERIC_OR_PARAMETER_FOCUS_OUT);
 		textBoxConfig.setWidgetWidth(78);
