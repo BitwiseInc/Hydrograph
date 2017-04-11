@@ -168,9 +168,11 @@ public abstract class Component extends Model {
 	/** The validity status. */
 	private String validityStatus;
 
+	@Deprecated
 	/** The cloned hash map. */
 	private Map<String, Object> clonedHashMap;
 	
+	@Deprecated
 	/** The cloned array list. */
 	private ArrayList<JoinConfigProperty>  clonedArrayList;
 	
@@ -1271,7 +1273,7 @@ public abstract class Component extends Model {
 	@Override
 	public Component clone() throws CloneNotSupportedException {
 		Component component = null;
-		clonedHashMap = new LinkedHashMap<String, Object>();
+		Map<String,Object> clonedHashMap = new LinkedHashMap<String, Object>();
 		try {
 			component = this.getClass().newInstance();
 			
@@ -1284,7 +1286,7 @@ public abstract class Component extends Model {
 					
 					if(entry.getValue() instanceof ArrayList)
 					{
-						clonedArrayList = new ArrayList<>();
+						List clonedArrayList = new ArrayList<>();
 						List orignalList = (ArrayList) entry.getValue();
 						if (!orignalList.isEmpty() && String.class.isAssignableFrom(orignalList.get(0).getClass())) {
 						    	 clonedArrayList.addAll(orignalList);
@@ -1323,6 +1325,9 @@ public abstract class Component extends Model {
 						clonedHashMap.put(entry.getKey(), null);
 					} 
 					else if (entry.getValue() !=null && isWrapperType(entry.getValue().getClass())){
+						clonedHashMap.put(entry.getKey(), entry.getValue());
+					}
+					else if(StringUtils.equalsIgnoreCase(entry.getKey(), "Container")){
 						clonedHashMap.put(entry.getKey(), entry.getValue());
 					}
 					else  if(entry.getValue()!=null)

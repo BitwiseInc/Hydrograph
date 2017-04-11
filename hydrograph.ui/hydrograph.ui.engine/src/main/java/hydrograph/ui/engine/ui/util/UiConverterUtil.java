@@ -18,16 +18,18 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.StringReader;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Properties;
+import java.util.Scanner;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -52,7 +54,6 @@ import org.slf4j.Logger;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -62,6 +63,7 @@ import hydrograph.ui.common.util.CanvasDataAdapter;
 import hydrograph.ui.common.util.ComponentCacheUtil;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.common.util.XMLConfigUtil;
+import hydrograph.ui.common.util.XMLUtil;
 import hydrograph.ui.engine.exceptions.EngineException;
 import hydrograph.ui.engine.parsing.XMLParser;
 import hydrograph.ui.engine.ui.converter.LinkingData;
@@ -129,7 +131,8 @@ public class UiConverterUtil {
 			SAXException, IOException, ComponentNotFoundException {
 		Container container = getJobContainer(sourceXML, parameterFile);
 		Object[] array = updateUniqueIdForStandAloneJObs(jobFile, isSubJob, container);
-		genrateUiXml(container, jobFile, parameterFile);
+		generateUiXml(container, jobFile, parameterFile);
+		
 		return array;
 	}
 
@@ -221,7 +224,7 @@ public class UiConverterUtil {
 	SecurityException, EngineException, JAXBException, ParserConfigurationException, SAXException, IOException,
 	ComponentNotFoundException {
 		Container container = getJobContainer(sourceXML, parameterFile);
-		genrateSubjobUiXml(container, file, parameterFile);
+		generateSubjobUiXml(container, file, parameterFile);
 		return container;
 
 }
@@ -313,28 +316,6 @@ public class UiConverterUtil {
 
 	}
 	
-	private static String unformatXMLString(String input) {
-		BufferedReader reader = new BufferedReader(new StringReader(input));
-		StringBuffer result = new StringBuffer();
-		try {
-			String line;
-			while ((line = reader.readLine()) != null){
-				result.append(line.trim() + "\n");
-			}
-			
-			return result.toString();
-		} catch (IOException e) {
-			LOGGER.warn("Unable to remove formatting while saving UI XML string",e);
-		}finally{
-			try {
-				reader.close();
-			} catch (IOException e) {
-				LOGGER.warn("Unable to close xml string reader",e);
-			}
-		}
-		return input;
-	}
-	
 	/**
 	 * Creates the job file based for the container object.
 	 * 
@@ -342,17 +323,23 @@ public class UiConverterUtil {
 	 * @param jobFile
 	 * @param parameterFile
 	 */
-	private void genrateUiXml(Container container, IFile jobFile, IFile parameterFile) {
+	private void generateUiXml(Container container, IFile jobFile, IFile parameterFile) {
 		LOGGER.debug("Generating UI-XML");
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		String jobXmlData = null;
+		IPath iPath = new Path(jobFile.getFullPath().toString());
+		
 		try {
 			XStream xs = new XStream();
 			xs.autodetectAnnotations(true);
-			jobXmlData = xs.toXML(container);
-			jobXmlData=unformatXMLString(jobXmlData);
-			storeParameterData(parameterFile, jobXmlData);
-			jobFile.create(new ByteArrayInputStream(jobXmlData.getBytes()), true, null);
+			xs.toXML(container,out);
+			XMLUtil.unformatXMLString(out);
+			
+			if (jobFile.exists()) {
+				showMessageBox(jobFile, out, jobFile.getName() + " already exists.Do you want to replace it?");
+			} else {
+				jobFile.create(new ByteArrayInputStream(out.toByteArray()), true, null);
+			}
 
 		} catch (CoreException e) {
 			LOGGER.error("Exception occurred while creating UI-XML", e);
@@ -364,28 +351,35 @@ public class UiConverterUtil {
 				LOGGER.error("IOException occurred while closing output stream", ioe);
 			}
 		}
+		
 		ImportedJobsRepository.INSTANCE.addImportedJobName(jobFile);
+		jobXmlData = getStringValueFromXMLFile(iPath);
+		storeParameterData(parameterFile, jobXmlData);
 	}
 	
-	private void genrateSubjobUiXml(Container container, File file, IFile parameterFile) {
+	private void showMessageBox(IFile iFile, ByteArrayOutputStream out, String message) throws CoreException {
+		MessageBox messageBox = new MessageBox(Display.getCurrent().getActiveShell(),
+				SWT.ICON_ERROR | SWT.YES | SWT.NO);
+		messageBox.setText("Error");
+		messageBox.setMessage(message);
+		int status = messageBox.open();
+		if (status == SWT.YES) {
+			iFile.setContents(new ByteArrayInputStream(out.toByteArray()), true, false, null);
+		}
+	}
+	
+	private void generateSubjobUiXml(Container container, File file, IFile parameterFile) {
 		LOGGER.debug("Generating UI-XML");
-		FileOutputStream fileOutputStream = null;
-		try {
-			XStream xs = new XStream();
-			xs.autodetectAnnotations(true);
-			fileOutputStream = new FileOutputStream(file.getPath());
+		XStream xs = new XStream();
+		xs.autodetectAnnotations(true);
+		try(FileOutputStream fileOutputStream = new FileOutputStream(file.getPath())) {
 			xs.toXML(container, fileOutputStream);
+			IPath iPath = new Path(file.getPath());
+			storeParameterData(parameterFile, getStringValueFromXMLFile(iPath));
 		} catch (IOException ioException) {
 			LOGGER.error("Exception occurred while creating UI-XML", ioException);
 		} finally {
 			componentRepo.flushRepository();
-			try {
-				if (fileOutputStream != null) {
-					fileOutputStream.close();
-				}
-			} catch (IOException ioe) {
-				LOGGER.error("IOException occurred while closing output stream", ioe);
-			}
 		}
 	}
 
@@ -488,7 +482,11 @@ public class UiConverterUtil {
 		}
 		try {
 			properties.store(out, null);
-			parameterFile.create(new ByteArrayInputStream(out.toByteArray()), true, null);
+			if (parameterFile.exists()) {
+				showMessageBox(parameterFile, out,parameterFile.getName()+" already exists.Do you want to replace it?");
+			} else {
+				parameterFile.create(new ByteArrayInputStream(out.toByteArray()), true, null);
+			}
 		} catch (IOException | CoreException e) {
 			LOGGER.error("Exception occurred while creating parameter file -", e);
 		} finally {
@@ -498,6 +496,29 @@ public class UiConverterUtil {
 				LOGGER.error("Exception occurred while closing parameter file's out stream -", e);
 			}
 		}
+	}
+	
+	public String getStringValueFromXMLFile(IPath xmlPath) {
+		if (xmlPath != null) {
+				xmlPath = xmlPath.removeFileExtension().addFileExtension(Constants.XML_EXTENSION_FOR_IPATH);
+				if (xmlPath.toFile().exists()){
+					try(InputStream inputStream = new FileInputStream(xmlPath.toFile());
+							Scanner scanner = new Scanner(inputStream)){
+						return scanner.useDelimiter("\\Z").next();
+					} catch (IOException exception) {
+						LOGGER.error("Exception occurred while fetching data from " + xmlPath.toString(), exception);
+					} 
+				}
+				else if (ResourcesPlugin.getWorkspace().getRoot().getFile(xmlPath).exists()){
+					try(InputStream inputStream = ResourcesPlugin.getWorkspace().getRoot().getFile(xmlPath).getContents();
+							Scanner scanner = new Scanner(inputStream)){
+						return scanner.useDelimiter("\\Z").next();
+					} catch (IOException | CoreException exception) {
+						LOGGER.error("Exception occurred while fetching data from " + xmlPath.toString(), exception);
+					}
+				}	
+		}
+		return "";
 	}
 	
 }
