@@ -10,3 +10,5 @@ Sr.No. <GitHub Issue #>  - [fixed by] - description
 1. <> - [Vibhor Tyagi] - Subjob issue : Subjob was not getting imported.
 2. <> - [Prateem] - .job file size mismatch when components from one file copied to other file.
 3. <> - [Pooja Yadav] - Count field of Limit component is converting a negative value into parameterization format.
+4. <> - [Pooja Yadav] - Run Config : - Tool shows error for unused field.
+5. <> - [Pooja Yadav] - Run configuration dialog defaults to ‘Remote’ and ‘Key file’. It should ideally be ‘Local’ and ‘Password’.

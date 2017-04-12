@@ -494,9 +494,12 @@ public class RunConfigDialog extends Dialog {
 		Point shellSize = getShell().computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		getShell().setSize(shellSize);
 		txtEdgeNode.setText(txtEdgeNode.getText());
-		txtUserName.setText(txtUserName.getText());
-		txtPassword.setText(txtPassword.getText());
-		txtKeyFile.setText(txtKeyFile.getText());
+		txtUserName.setText(txtUserName.getText());		
+		if(radioPassword.isEnabled()){
+			txtPassword.setText(txtPassword.getText());
+		}else{
+			txtKeyFile.setText(txtKeyFile.getText());
+		}
 		serverDetailsGroup.setVisible(true);
 		remotePathConfigGroup.setVisible(true);
 	}
@@ -508,8 +511,11 @@ public class RunConfigDialog extends Dialog {
 		getShell().setSize(newShellSize);
 		txtEdgeNode.setText(txtEdgeNode.getText());
 		txtUserName.setText(txtUserName.getText());
-		txtPassword.setText(txtPassword.getText());
-		txtKeyFile.setText(txtKeyFile.getText());
+		if(radioPassword.isEnabled()){
+			txtPassword.setText(txtPassword.getText());
+		}else{
+			txtKeyFile.setText(txtKeyFile.getText());
+		}
 		serverDetailsGroup.setVisible(false);
 		remotePathConfigGroup.setVisible(false);
 	}
