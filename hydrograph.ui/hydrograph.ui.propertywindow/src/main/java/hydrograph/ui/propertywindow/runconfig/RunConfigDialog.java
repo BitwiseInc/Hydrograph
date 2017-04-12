@@ -552,14 +552,14 @@ public class RunConfigDialog extends Dialog {
 	}
 
 	private void populateTextBoxes(Enumeration propertyNames) {
-		if (StringUtils.equals(buildProps.getProperty(LOCAL_MODE), TRUE)) {
-			btnLocalMode.setSelection(true);
-			btnRemoteMode.setSelection(false);
-			hideRemoteRunDetailsHolderComposite();
-		} else {
+		if (StringUtils.equals(buildProps.getProperty(REMOTE_MODE), TRUE)) {
 			btnRemoteMode.setSelection(true);
 			btnLocalMode.setSelection(false);
 			showRemoteRunDetailsHolderComposite();
+		} else {
+			btnLocalMode.setSelection(true);
+			btnRemoteMode.setSelection(false);
+			hideRemoteRunDetailsHolderComposite();
 		}
 		txtEdgeNode.setText(getBuildProperty(HOST));
 		txtUserName.setText(getBuildProperty(USER_NAME));
@@ -572,7 +572,7 @@ public class RunConfigDialog extends Dialog {
 			viewDataCheckBox.setSelection(true);
 			txtBasePath.setEnabled(true);
 		}
-		if(StringUtils.equals(buildProps.getProperty(USE_PASSWORD_AUTHENTICATION), TRUE)){
+		if(StringUtils.equals(buildProps.getProperty(USE_PASSWORD_AUTHENTICATION), TRUE) || StringUtils.isBlank(txtKeyFile.getText())){
 			togglePasswordAndKeyFile(true);
 			keyFileListener.getErrorDecoration().hide();
 			if(StringUtils.isBlank(txtKeyFile.getText())){
