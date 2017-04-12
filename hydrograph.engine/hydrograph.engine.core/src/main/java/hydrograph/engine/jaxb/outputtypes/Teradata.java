@@ -1,5 +1,5 @@
 
-/*******************************************************************************
+/*****************************************************************************************
  * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,20 +9,19 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License.
- ******************************************************************************/
+ * limitations under the License
+ ****************************************************************************************/
 
 package hydrograph.engine.jaxb.outputtypes;
-
-import hydrograph.engine.jaxb.commontypes.ElementValueIntegerType;
-import hydrograph.engine.jaxb.commontypes.ElementValueStringType;
-import hydrograph.engine.jaxb.oteradata.TypeLoadChoice;
-import hydrograph.engine.jaxb.oteradata.TypeOutputTeradataBase;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import hydrograph.engine.jaxb.commontypes.ElementValueIntegerType;
+import hydrograph.engine.jaxb.commontypes.ElementValueStringType;
+import hydrograph.engine.jaxb.oteradata.TypeLoadChoice;
+import hydrograph.engine.jaxb.oteradata.TypeOutputTeradataBase;
 
 
 /**
@@ -42,6 +41,8 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="tableName" type="{hydrograph/engine/jaxb/commontypes}element-value-string-type"/>
  *         &lt;element name="username" type="{hydrograph/engine/jaxb/commontypes}element-value-string-type"/>
  *         &lt;element name="password" type="{hydrograph/engine/jaxb/commontypes}element-value-string-type"/>
+ *         &lt;element name="chunkSize" type="{hydrograph/engine/jaxb/commontypes}element-value-string-type" minOccurs="0"/>
+ *         &lt;element name="extraUrlParams" type="{hydrograph/engine/jaxb/commontypes}element-value-string-type" minOccurs="0"/>
  *         &lt;element name="loadUtilityType" type="{hydrograph/engine/jaxb/commontypes}element-value-string-type"/>
  *         &lt;element name="loadType" type="{hydrograph/engine/jaxb/oteradata}type-load-choice"/>
  *       &lt;/sequence>
@@ -61,6 +62,8 @@ import javax.xml.bind.annotation.XmlType;
     "tableName",
     "username",
     "password",
+    "chunkSize",
+    "extraUrlParams",
     "loadUtilityType",
     "loadType"
 })
@@ -81,6 +84,8 @@ public class Teradata
     protected ElementValueStringType username;
     @XmlElement(required = true)
     protected ElementValueStringType password;
+    protected ElementValueStringType chunkSize;
+    protected ElementValueStringType extraUrlParams;
     @XmlElement(required = true)
     protected ElementValueStringType loadUtilityType;
     @XmlElement(required = true)
@@ -252,6 +257,54 @@ public class Teradata
      */
     public void setPassword(ElementValueStringType value) {
         this.password = value;
+    }
+
+    /**
+     * Gets the value of the chunkSize property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link ElementValueStringType }
+     *     
+     */
+    public ElementValueStringType getChunkSize() {
+        return chunkSize;
+    }
+
+    /**
+     * Sets the value of the chunkSize property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ElementValueStringType }
+     *     
+     */
+    public void setChunkSize(ElementValueStringType value) {
+        this.chunkSize = value;
+    }
+
+    /**
+     * Gets the value of the extraUrlParams property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link ElementValueStringType }
+     *     
+     */
+    public ElementValueStringType getExtraUrlParams() {
+        return extraUrlParams;
+    }
+
+    /**
+     * Sets the value of the extraUrlParams property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ElementValueStringType }
+     *     
+     */
+    public void setExtraUrlParams(ElementValueStringType value) {
+        this.extraUrlParams = value;
     }
 
     /**

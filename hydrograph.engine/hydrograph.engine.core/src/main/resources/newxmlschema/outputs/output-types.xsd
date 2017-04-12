@@ -351,8 +351,12 @@
                                 minOccurs="1" maxOccurs="1"/>
                     <xs:element name="password" type="cmn:element-value-string-type"
                                 minOccurs="1" maxOccurs="1"/>
-                    <xs:element name="chunkSize" type="cmn:element-value-integer-type"
+                    <!--new params additions -->
+                    <xs:element name="chunkSize" type="cmn:element-value-string-type"
                                 minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="extraUrlParams" type="cmn:element-value-string-type"
+                                minOccurs="0" maxOccurs="1"/>
+                    <!--END-->
                     <xs:element name="loadType" type="omysql:type-load-choice"
                                 minOccurs="1"/>
                 </xs:sequence>
@@ -437,11 +441,15 @@
                                 minOccurs="1" maxOccurs="1"/>
                     <xs:element name="password" type="cmn:element-value-string-type"
                                 minOccurs="1" maxOccurs="1"/>
+                    <!--new params additions -->
+                    <xs:element name="chunkSize" type="cmn:element-value-string-type"
+                                minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="extraUrlParams" type="cmn:element-value-string-type"
+                                minOccurs="0" maxOccurs="1"/>
+                    <!--END-->
                     <xs:element name="loadType" type="ooracle:type-load-choice"
                                 minOccurs="1"/>
                     <xs:element name="schemaName" type="cmn:element-value-string-type"
-                                minOccurs="0" maxOccurs="1"/>
-                    <xs:element name="chunkSize" type="cmn:element-value-integer-type"
                                 minOccurs="0" maxOccurs="1"/>
                 </xs:sequence>
             </xs:extension>
@@ -466,6 +474,12 @@
                                 minOccurs="1" maxOccurs="1"/>
                     <xs:element name="password" type="cmn:element-value-string-type"
                                 minOccurs="1" maxOccurs="1"/>
+                    <!--new params additions -->
+                    <xs:element name="chunkSize" type="cmn:element-value-string-type"
+                                minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="extraUrlParams" type="cmn:element-value-string-type"
+                                minOccurs="0" maxOccurs="1"/>
+                    <!--END-->
                     <xs:element name="loadUtilityType" type="cmn:element-value-string-type"
                                 minOccurs="1" maxOccurs="1"/>
                     <!-- <xs:element name="chunkSize" type="cmn:element-value-integer-type"

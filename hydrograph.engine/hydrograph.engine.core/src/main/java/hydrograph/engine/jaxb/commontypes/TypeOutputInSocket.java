@@ -1,5 +1,5 @@
 
-/*******************************************************************************
+/*****************************************************************************************
  * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,11 +9,15 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License.
- ******************************************************************************/
+ * limitations under the License
+ ****************************************************************************************/
 
 package hydrograph.engine.jaxb.commontypes;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.XmlType;
 import hydrograph.engine.jaxb.ofmixedscheme.TypeOutputMixedInSocket;
 import hydrograph.engine.jaxb.ofxml.TypeOutputXmlInSocket;
 import hydrograph.engine.jaxb.ohivetextfile.TypeOutputHiveTextFileDelimitedInSocket;
@@ -26,11 +30,6 @@ import hydrograph.engine.jaxb.otdiscard.TypeOutputInSocketIno;
 import hydrograph.engine.jaxb.oteradata.TypeOutputTeradataOutSocket;
 import hydrograph.engine.jaxb.otffw.TypeOutputFixedwidthInSocket;
 import hydrograph.engine.jaxb.otfs.TypeOutputSequenceInSocket;
-
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.bind.annotation.XmlType;
 
 
 /**

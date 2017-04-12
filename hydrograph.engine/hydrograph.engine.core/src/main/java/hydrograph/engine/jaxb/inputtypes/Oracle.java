@@ -1,5 +1,5 @@
 
-/*******************************************************************************
+/*****************************************************************************************
  * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,19 +9,19 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License.
- ******************************************************************************/
+ * limitations under the License
+ ****************************************************************************************/
 
 package hydrograph.engine.jaxb.inputtypes;
-
-import hydrograph.engine.jaxb.commontypes.ElementValueIntegerType;
-import hydrograph.engine.jaxb.commontypes.ElementValueStringType;
-import hydrograph.engine.jaxb.ioracle.TypeInputOracleBase;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import hydrograph.engine.jaxb.commontypes.ElementValueIntegerType;
+import hydrograph.engine.jaxb.commontypes.ElementValueStringType;
+import hydrograph.engine.jaxb.ioracle.TypeInputOracleBase;
+import hydrograph.engine.jaxb.ioracle.TypePartitionsChoice;
 
 
 /**
@@ -38,6 +38,9 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="hostName" type="{hydrograph/engine/jaxb/commontypes}element-value-string-type"/>
  *         &lt;element name="port" type="{hydrograph/engine/jaxb/commontypes}element-value-integer-type" minOccurs="0"/>
  *         &lt;element name="driverType" type="{hydrograph/engine/jaxb/commontypes}element-value-string-type"/>
+ *         &lt;element name="numPartitions" type="{hydrograph/engine/jaxb/ioracle}type-partitions-choice" minOccurs="0"/>
+ *         &lt;element name="fetchSize" type="{hydrograph/engine/jaxb/commontypes}element-value-string-type" minOccurs="0"/>
+ *         &lt;element name="extraUrlParams" type="{hydrograph/engine/jaxb/commontypes}element-value-string-type" minOccurs="0"/>
  *         &lt;element name="userName" type="{hydrograph/engine/jaxb/commontypes}element-value-string-type"/>
  *         &lt;element name="password" type="{hydrograph/engine/jaxb/commontypes}element-value-string-type"/>
  *         &lt;element name="schemaName" type="{hydrograph/engine/jaxb/commontypes}element-value-string-type" minOccurs="0"/>
@@ -62,6 +65,9 @@ import javax.xml.bind.annotation.XmlType;
     "hostName",
     "port",
     "driverType",
+    "numPartitions",
+    "fetchSize",
+    "extraUrlParams",
     "userName",
     "password",
     "schemaName",
@@ -80,6 +86,9 @@ public class Oracle
     protected ElementValueIntegerType port;
     @XmlElement(required = true)
     protected ElementValueStringType driverType;
+    protected TypePartitionsChoice numPartitions;
+    protected ElementValueStringType fetchSize;
+    protected ElementValueStringType extraUrlParams;
     @XmlElement(required = true)
     protected ElementValueStringType userName;
     @XmlElement(required = true)
@@ -183,6 +192,78 @@ public class Oracle
      */
     public void setDriverType(ElementValueStringType value) {
         this.driverType = value;
+    }
+
+    /**
+     * Gets the value of the numPartitions property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link TypePartitionsChoice }
+     *     
+     */
+    public TypePartitionsChoice getNumPartitions() {
+        return numPartitions;
+    }
+
+    /**
+     * Sets the value of the numPartitions property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link TypePartitionsChoice }
+     *     
+     */
+    public void setNumPartitions(TypePartitionsChoice value) {
+        this.numPartitions = value;
+    }
+
+    /**
+     * Gets the value of the fetchSize property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link ElementValueStringType }
+     *     
+     */
+    public ElementValueStringType getFetchSize() {
+        return fetchSize;
+    }
+
+    /**
+     * Sets the value of the fetchSize property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ElementValueStringType }
+     *     
+     */
+    public void setFetchSize(ElementValueStringType value) {
+        this.fetchSize = value;
+    }
+
+    /**
+     * Gets the value of the extraUrlParams property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link ElementValueStringType }
+     *     
+     */
+    public ElementValueStringType getExtraUrlParams() {
+        return extraUrlParams;
+    }
+
+    /**
+     * Sets the value of the extraUrlParams property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ElementValueStringType }
+     *     
+     */
+    public void setExtraUrlParams(ElementValueStringType value) {
+        this.extraUrlParams = value;
     }
 
     /**

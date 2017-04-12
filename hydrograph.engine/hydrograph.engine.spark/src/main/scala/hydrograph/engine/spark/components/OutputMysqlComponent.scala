@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*****************************************************************************************
  * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -8,8 +8,8 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License.
- *******************************************************************************/
+ * limitations under the License
+ ****************************************************************************************/
 package hydrograph.engine.spark.components
 
 import java.sql.SQLException
@@ -19,7 +19,7 @@ import hydrograph.engine.core.component.entity.OutputRDBMSEntity
 import hydrograph.engine.core.component.entity.elements.SchemaField
 import hydrograph.engine.spark.components.base.SparkFlow
 import hydrograph.engine.spark.components.platform.BaseComponentParams
-import hydrograph.engine.spark.components.utils.{DbTableUtils, SchemaMisMatchException}
+import hydrograph.engine.spark.components.utils.DbTableUtils
 import org.apache.spark.sql.Column
 import org.apache.spark.sql.execution.datasources.jdbc.JdbcUtils
 import org.apache.spark.sql.functions._
@@ -40,17 +40,32 @@ BaseComponentParams) extends SparkFlow {
 
   override def execute(): Unit = {
 
+    val batchSize: String = outputRDBMSEntity.getChunkSize match {
+      case null => "1000"
+      case _  => outputRDBMSEntity.getChunkSize
+    }
+
+    LOG.info("Using batchsize "+ batchSize)
+
+    val extraUrlParameters: String = outputRDBMSEntity.getExtraUrlParamters match {
+      case null => ""
+      case _    => "?" + outputRDBMSEntity.getExtraUrlParamters
+    }
+
+    LOG.info("using extra URL parameters as "+ extraUrlParameters)
+    val driverName = "com.mysql.jdbc.Driver"
     val properties = outputRDBMSEntity.getRuntimeProperties
+
     properties.setProperty("user", outputRDBMSEntity.getUsername)
     properties.setProperty("password", outputRDBMSEntity.getPassword)
-    val driverName = "com.mysql.jdbc.Driver"
+    properties.setProperty("batchsize", batchSize)
 
     if (outputRDBMSEntity.getJdbcDriver().equals("Connector/J")) {
       properties.setProperty("driver", driverName)
     }
 
     val connectionURL = "jdbc:mysql://" + outputRDBMSEntity.getHostName() + ":" + outputRDBMSEntity.getPort() + "/" +
-      outputRDBMSEntity.getDatabaseName() +"?rewriteBatchedStatements=true"
+      outputRDBMSEntity.getDatabaseName + extraUrlParameters
 
     LOG.info("Created Output Mysql Component '"+ outputRDBMSEntity.getComponentId
       + "' in Batch "+ outputRDBMSEntity.getBatch
@@ -88,11 +103,11 @@ BaseComponentParams) extends SparkFlow {
       connection.close()
     } catch {
       case e: SQLException =>
-       LOG.error("Error while connecting to database " + e.getMessage,e)
-        throw new SchemaMisMatchException("Error in Output File XML Component "+ outputRDBMSEntity.getComponentId, e)
+        LOG.error("Error while connecting to database " + e.getMessage)
+        throw new RuntimeException("Error message " + e.getMessage ,e)
       case e: Exception =>
         LOG.error("Error while executing '"+ query + "' query in executeQuery()" )
-        throw new RuntimeException("Error message " ,e)
+        throw new RuntimeException("Error message " + e.getMessage , e)
     }
   }
 

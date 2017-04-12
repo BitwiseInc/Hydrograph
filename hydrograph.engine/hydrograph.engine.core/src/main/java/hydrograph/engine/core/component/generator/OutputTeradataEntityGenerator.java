@@ -23,12 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
-/**
- * The Class OutputTeradataEntityGenerator.
- *
- * @author Bitwise
- *
- */
+
 public class OutputTeradataEntityGenerator extends OutputComponentGeneratorBase {
 
     private Teradata jaxbOutputTeradata;
@@ -102,7 +97,13 @@ public class OutputTeradataEntityGenerator extends OutputComponentGeneratorBase 
         outputRDBMSEntity.setRuntimeProperties(jaxbOutputTeradata.getRuntimeProperties() == null ? new Properties() : OutputEntityUtils
                 .extractRuntimeProperties(jaxbOutputTeradata.getRuntimeProperties()));
 /*		outputRDBMSEntity.setRuntimeProperties(OutputEntityUtils
-                .extractRuntimeProperties(jaxbOutputMysql.getRuntimeProperties()));*/
+                .extractRuntimeProperties(jaxbOutputTeradata.getRuntimeProperties()));*/
+        /**New fields added since the project was open-sourced*/
+        //for batchsize which was named to chunksize since there is batch in the ETL tool as well
+        outputRDBMSEntity.setChunkSize(jaxbOutputTeradata.getChunkSize()==null?null:jaxbOutputTeradata.getChunkSize().getValue());
+        //extra url parameters has been
+        outputRDBMSEntity.setExtraUrlParamters(jaxbOutputTeradata.getExtraUrlParams()==null?null:jaxbOutputTeradata.getExtraUrlParams().getValue());
+        /**end**/
     }
 
     @Override
