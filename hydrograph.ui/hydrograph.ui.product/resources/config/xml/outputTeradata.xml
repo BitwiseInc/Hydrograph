@@ -95,6 +95,12 @@
 			<tns:validator>DATABASE_KEY_VALIDATION</tns:validator>
 		</tns:property>
 		
+		<tns:property dataType="string" name="outputAdditionalParameters" value="" renderer="OUTPUT_ADDITIONAL_PARAMETERS_WIDGET"
+			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"
+			usage="REQUIRED" propertyHelpText="Used to provide additional parameters to connect Output Oracle DB">
+			<tns:validator>ADDITIONAL_PARAM_VALIDATION</tns:validator>
+		</tns:property>
+		
 		<tns:property dataType="string" name="runtime_properties" renderer="RUNTIME_PROPERTIES_WIDGET"
 			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="FALSE" tooltipDataType="NONE"
 			usage="OPTIONAL" propertyHelpText="Used to override runtime \nHadoop configurations specific to \nthis component at run time."/>

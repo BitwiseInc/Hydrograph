@@ -404,6 +404,22 @@ public class Messages extends NLS {
 	public static String PARAMETER_FIELD_VALIDATION;
 	public static String PARAMETER_FILE_EXISTS;
 	public static String NOTE_FOR_SAME_PARAMETERS_DEFINED_IN_MULTIPLE_PARAMETER_FILES_THE_LOWERMOST_FILE_WILL_BE_GIVEN_PRECEDENCE_OVER_OTHERS;
+	public static String PARTITION_KEYS_FOR_DB_COMPONENT;
+	public static String NO_OF_PARTITIONS; 
+	public static String PARTITION_KEY;
+	public static String PARTITION_KEY_UPPER_BOUND;
+	public static String PARTITION_KEY_LOWER_BOUND;
+	public static String FETCH_SIZE;
+	public static String ADDITIONAL_DB_PARAMETERS;
+	public static String DB_CHUNK_SIZE;
+	public static String NO_OF_PARTITION_ERROR_DECORATOR_MESSAGE;
+	public static String PARTITION_KEY_ERROR_DECORATOR_MESSAGE;
+	public static String UPPER_BOUND_ERROR_DECORATOR_MESSAGE;
+	public static String LOWER_BOUND_ERROR_DECORATOR_MESSAGE;
+	public static String FETCH_SIZE_ERROR_DECORATOR_MESSAGE;
+	public static String ADDITIONAL_PARAMETER_ERROR_DECORATOR_MESSAGE;
+	public static String CHUNK_SIZE_ERROR_DECORATOR_MESSAGE;
+	public static String DB_NUMERIC_PARAMETERZIATION_ERROR ;
 	
 	static {
 		// initialize resource bundle

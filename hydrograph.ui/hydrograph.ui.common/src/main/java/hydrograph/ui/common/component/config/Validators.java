@@ -58,6 +58,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="XPATH_SCHEMA_GRID_VALIDATOR"/>
  *     &lt;enumeration value="SECONDARY_KEY_VALIDATION"/>
  *     &lt;enumeration value="DATABASE_KEY_VALIDATION"/>
+ *     &lt;enumeration value="ADDITIONAL_PARAM_VALIDATION"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
@@ -116,7 +117,9 @@ public enum Validators {
     @XmlEnumValue("SECONDARY_KEY_VALIDATION")
     SecondaryColumnKeyValidation("SECONDARY_KEY_VALIDATION"),
     @XmlEnumValue("DATABASE_KEY_VALIDATION")
-    DatabaseKeyValidation("DATABASE_KEY_VALIDATION");
+    DatabaseKeyValidation("DATABASE_KEY_VALIDATION"),
+    @XmlEnumValue("ADDITIONAL_PARAM_VALIDATION")
+    AdditionalParamDBValidationRule("ADDITIONAL_PARAM_VALIDATION");
 
 
     
