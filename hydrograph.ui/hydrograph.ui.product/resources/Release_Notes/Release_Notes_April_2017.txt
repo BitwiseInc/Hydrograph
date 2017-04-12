@@ -9,3 +9,4 @@ Issues/Defects fixed:
 Sr.No. <GitHub Issue #>  - [fixed by] - description
 1. <> - [Vibhor Tyagi] - Subjob issue : Subjob was not getting imported.
 2. <> - [Prateem] - .job file size mismatch when components from one file copied to other file.
+3. <> - [Pooja Yadav] - Count field of Limit component is converting a negative value into parameterization format.
