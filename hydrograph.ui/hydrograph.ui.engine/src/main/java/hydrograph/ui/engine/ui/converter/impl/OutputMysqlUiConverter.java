@@ -14,6 +14,7 @@ package hydrograph.ui.engine.ui.converter.impl;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +66,7 @@ public class OutputMysqlUiConverter extends OutputUiConverter{
 		LOGGER.debug("Fetching Output-MySql-Properties for {}", componentName);
 		Mysql outputMysql = (Mysql) typeBaseComponent;
 		LinkedHashMap<String, String> loadSelectedDetails = new LinkedHashMap<String, String>();
+		Map<String, Object> additionalParameterDetails = new HashMap<String, Object>();
 		
 		setValueInPropertyMap(PropertyNameConstants.JDBC_DRIVER.value(), 
 				outputMysql.getJdbcDriver() == null ? "" : outputMysql.getJdbcDriver().getValue());
@@ -102,9 +104,17 @@ public class OutputMysqlUiConverter extends OutputUiConverter{
 			}else if(outputMysql.getLoadType().getNewTable() !=null){
 				loadSelectedDetails.put(Constants.LOAD_TYPE_NEW_TABLE_KEY,getLoadTypePrimaryKeyUIValue(outputMysql.getLoadType().getNewTable()));
 			}
-				
 		}
 		propertyMap.put(PropertyNameConstants.LOAD_TYPE_CONFIGURATION.value(), loadSelectedDetails);
+		
+		if(outputMysql.getChunkSize() !=null && StringUtils.isNotBlank(outputMysql.getChunkSize().getValue().toString())){
+			additionalParameterDetails.put(Constants.DB_CHUNK_SIZE,outputMysql.getChunkSize().getValue().toString());
+		}
+		if(outputMysql.getExtraUrlParams() !=null && StringUtils.isNotBlank(outputMysql.getExtraUrlParams().getValue().toString() )){
+			additionalParameterDetails.put(Constants.ADDITIONAL_PARAMETERS_FOR_DB, outputMysql.getExtraUrlParams().getValue().toString());
+		}
+		
+		propertyMap.put(PropertyNameConstants.OUTPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value(), additionalParameterDetails);
 		
 		uiComponent.setType(UIComponentsConstants.MYSQL.value());
 		uiComponent.setCategory(UIComponentsConstants.OUTPUT_CATEGORY.value());

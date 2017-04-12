@@ -1,16 +1,14 @@
 
-/*******************************************************************************
- * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- ******************************************************************************/
+/*****************************************************************************************
+ * Copyright 2017 Capital One Services, LLC and Bitwise, Inc. Licensed
+ * 	under the Apache License, Version 2.0 (the "License"); you may not use this
+ * 	file except in compliance with the License. You may obtain a copy of the
+ * 	License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by
+ * 	applicable law or agreed to in writing, software distributed under the License
+ * 	is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * 	KIND, either express or implied. See the License for the specific language
+ * 	governing permissions and limitations under the License.
+ ****************************************************************************************/
 
 package hydrograph.engine.jaxb.inputtypes;
 
@@ -21,6 +19,7 @@ import javax.xml.bind.annotation.XmlType;
 import hydrograph.engine.jaxb.commontypes.ElementValueIntegerType;
 import hydrograph.engine.jaxb.commontypes.ElementValueStringType;
 import hydrograph.engine.jaxb.iteradata.TypeInputTeradataBase;
+import hydrograph.engine.jaxb.iteradata.TypePartitionsChoice;
 
 
 /**
@@ -37,6 +36,9 @@ import hydrograph.engine.jaxb.iteradata.TypeInputTeradataBase;
  *         &lt;element name="hostName" type="{hydrograph/engine/jaxb/commontypes}element-value-string-type"/>
  *         &lt;element name="port" type="{hydrograph/engine/jaxb/commontypes}element-value-integer-type"/>
  *         &lt;element name="jdbcDriver" type="{hydrograph/engine/jaxb/commontypes}element-value-string-type"/>
+ *         &lt;element name="numPartitions" type="{hydrograph/engine/jaxb/iteradata}type-partitions-choice" minOccurs="0"/>
+ *         &lt;element name="fetchSize" type="{hydrograph/engine/jaxb/commontypes}element-value-string-type" minOccurs="0"/>
+ *         &lt;element name="extraUrlParams" type="{hydrograph/engine/jaxb/commontypes}element-value-string-type" minOccurs="0"/>
  *         &lt;choice>
  *           &lt;element name="tableName" type="{hydrograph/engine/jaxb/commontypes}element-value-string-type" minOccurs="0"/>
  *           &lt;sequence>
@@ -61,6 +63,9 @@ import hydrograph.engine.jaxb.iteradata.TypeInputTeradataBase;
     "hostName",
     "port",
     "jdbcDriver",
+    "numPartitions",
+    "fetchSize",
+    "extraUrlParams",
     "tableName",
     "selectQuery",
     "countQuery",
@@ -80,6 +85,9 @@ public class Teradata
     protected ElementValueIntegerType port;
     @XmlElement(required = true)
     protected ElementValueStringType jdbcDriver;
+    protected TypePartitionsChoice numPartitions;
+    protected ElementValueStringType fetchSize;
+    protected ElementValueStringType extraUrlParams;
     protected ElementValueStringType tableName;
     protected ElementValueStringType selectQuery;
     protected ElementValueStringType countQuery;
@@ -184,6 +192,78 @@ public class Teradata
      */
     public void setJdbcDriver(ElementValueStringType value) {
         this.jdbcDriver = value;
+    }
+
+    /**
+     * Gets the value of the numPartitions property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link TypePartitionsChoice }
+     *     
+     */
+    public TypePartitionsChoice getNumPartitions() {
+        return numPartitions;
+    }
+
+    /**
+     * Sets the value of the numPartitions property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link TypePartitionsChoice }
+     *     
+     */
+    public void setNumPartitions(TypePartitionsChoice value) {
+        this.numPartitions = value;
+    }
+
+    /**
+     * Gets the value of the fetchSize property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link ElementValueStringType }
+     *     
+     */
+    public ElementValueStringType getFetchSize() {
+        return fetchSize;
+    }
+
+    /**
+     * Sets the value of the fetchSize property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ElementValueStringType }
+     *     
+     */
+    public void setFetchSize(ElementValueStringType value) {
+        this.fetchSize = value;
+    }
+
+    /**
+     * Gets the value of the extraUrlParams property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link ElementValueStringType }
+     *     
+     */
+    public ElementValueStringType getExtraUrlParams() {
+        return extraUrlParams;
+    }
+
+    /**
+     * Sets the value of the extraUrlParams property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ElementValueStringType }
+     *     
+     */
+    public void setExtraUrlParams(ElementValueStringType value) {
+        this.extraUrlParams = value;
     }
 
     /**
