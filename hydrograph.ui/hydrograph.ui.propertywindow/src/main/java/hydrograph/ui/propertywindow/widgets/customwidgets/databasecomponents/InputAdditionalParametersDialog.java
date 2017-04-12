@@ -12,9 +12,12 @@
  *******************************************************************************/
 package hydrograph.ui.propertywindow.widgets.customwidgets.databasecomponents;
 
+import java.math.BigInteger;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.dialogs.Dialog;
@@ -37,8 +40,12 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.slf4j.Logger;
 
 import hydrograph.ui.common.util.Constants;
+import hydrograph.ui.common.util.CustomColorRegistry;
+import hydrograph.ui.common.util.ParameterUtil;
+import hydrograph.ui.logging.factory.LogFactory;
 import hydrograph.ui.propertywindow.messages.Messages;
 import hydrograph.ui.propertywindow.propertydialog.PropertyDialogButtonBar;
 import hydrograph.ui.propertywindow.utils.Utils;
@@ -47,10 +54,16 @@ import hydrograph.ui.propertywindow.widgets.listeners.ExtraURLParameterValidatio
 import hydrograph.ui.propertywindow.widgets.listeners.ListenerHelper;
 import hydrograph.ui.propertywindow.widgets.listeners.ListenerHelper.HelperType;
 import hydrograph.ui.propertywindow.widgets.listeners.ModifyNumericListenerForDBComp;
-import hydrograph.ui.propertywindow.widgets.listeners.VerifyNumericandParameterForDBComponents;
+import hydrograph.ui.propertywindow.widgets.listeners.VerifyNumericAndParameterForDBComponents;
 import hydrograph.ui.propertywindow.widgets.utility.WidgetUtility;
 
+/**
+ * InputAdditionalParametersDialog to create additional parameter dialog
+ * @author Bitwise
+ *
+ */
 public class InputAdditionalParametersDialog extends Dialog {
+	private static final Logger logger = LogFactory.INSTANCE.getLogger(InputAdditionalParametersDialog.class);
 	public static final String FETCH_SIZE_VALUE = "1000";
 	private Text noOfPartitionsTextBox;
 	private Text partitionKeyUpperBoundTextBox;
@@ -126,7 +139,8 @@ public class InputAdditionalParametersDialog extends Dialog {
 
 		noOfPartitionsTextBox = new Text(composite, SWT.BORDER);
 		noOfPartitionControlDecoration = WidgetUtility.addDecorator(noOfPartitionsTextBox,
-				Messages.NO_OF_PARTITION_ERROR_DECORATOR_MESSAGE);
+				Messages.DB_NUMERIC_PARAMETERZIATION_ERROR);
+		noOfPartitionControlDecoration.setMarginWidth(2);
 		noOfPartitionControlDecoration.hide();
 		GridData gd_noOfPartitionTextBox = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		gd_noOfPartitionTextBox.horizontalIndent = 10;
@@ -142,6 +156,7 @@ public class InputAdditionalParametersDialog extends Dialog {
 		GridData gd_partitionKeyButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		partitionKeyControlDecoration = WidgetUtility.addDecorator(partitionKeyButton,
 				Messages.PARTITION_KEY_ERROR_DECORATOR_MESSAGE);
+		partitionKeyControlDecoration.setMarginWidth(2);
 		partitionKeyControlDecoration.hide();
 		gd_partitionKeyButton.widthHint = 90;
 		gd_partitionKeyButton.horizontalIndent = 10;
@@ -159,7 +174,8 @@ public class InputAdditionalParametersDialog extends Dialog {
 
 		partitionKeyUpperBoundTextBox = new Text(composite, SWT.BORDER);
 		partitionKeyUpperBoundControlDecoration = WidgetUtility.addDecorator(partitionKeyUpperBoundTextBox,
-				Messages.UPPER_BOUND_ERROR_DECORATOR_MESSAGE);
+				Messages.DB_NUMERIC_PARAMETERZIATION_ERROR);
+		partitionKeyUpperBoundControlDecoration.setMarginWidth(2);
 		partitionKeyUpperBoundControlDecoration.hide();
 		GridData gd_partitionKeyUpperBoundTextBox = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		gd_partitionKeyUpperBoundTextBox.horizontalIndent = 10;
@@ -174,7 +190,8 @@ public class InputAdditionalParametersDialog extends Dialog {
 
 		partitionKeyLowerBoundTextBox = new Text(composite, SWT.BORDER);
 		partitionKeyLowerBoundControlDecoration = WidgetUtility.addDecorator(partitionKeyLowerBoundTextBox,
-				Messages.LOWER_BOUND_ERROR_DECORATOR_MESSAGE);
+				Messages.DB_NUMERIC_PARAMETERZIATION_ERROR);
+		partitionKeyLowerBoundControlDecoration.setMarginWidth(2);
 		partitionKeyLowerBoundControlDecoration.hide();
 		GridData gd_partitionKeyLowerBoundTextBox = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		gd_partitionKeyLowerBoundTextBox.horizontalIndent = 10;
@@ -190,15 +207,12 @@ public class InputAdditionalParametersDialog extends Dialog {
 		fetchSizeTextBox = new Text(composite, SWT.BORDER);
 		fetchSizeControlDecoration = WidgetUtility.addDecorator(fetchSizeTextBox,
 				Messages.FETCH_SIZE_ERROR_DECORATOR_MESSAGE);
+		fetchSizeControlDecoration.setMarginWidth(2);
 		fetchSizeControlDecoration.hide();
 		GridData gd_fetchSizeTextBox = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		gd_fetchSizeTextBox.horizontalIndent = 10;
 		fetchSizeTextBox.setLayoutData(gd_fetchSizeTextBox);
-		if (StringUtils.isNotBlank(fetchSizeTextBox.getText())) {
-			fetchSizeTextBox.setText(fetchSizeTextBox.getText());
-		} else {
-			fetchSizeTextBox.setText(FETCH_SIZE_VALUE);
-		}
+		fetchSizeTextBox.setText(FETCH_SIZE_VALUE);
 
 		additionalDBParametersLabel = new Label(composite, SWT.NONE);
 		GridData gd_additionalDBParametersLabel = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
@@ -209,6 +223,7 @@ public class InputAdditionalParametersDialog extends Dialog {
 		additionalParameterTextBox = new Text(composite, SWT.BORDER);
 		additionalParameterControlDecoration = WidgetUtility.addDecorator(additionalParameterTextBox,
 				Messages.ADDITIONAL_PARAMETER_ERROR_DECORATOR_MESSAGE);
+		additionalParameterControlDecoration.setMarginWidth(2);
 		additionalParameterControlDecoration.hide();
 		GridData gd_additionalParameter = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		gd_additionalParameter.horizontalIndent = 10;
@@ -224,23 +239,117 @@ public class InputAdditionalParametersDialog extends Dialog {
 		
 
 		addValidationToWidgets(noOfPartitionsTextBox, noOfPartitionControlDecoration);
-		modifyListenerForLowerUpperBoundWidget(partitionKeyUpperBoundTextBox, partitionKeyUpperBoundControlDecoration);
-		modifyListenerForLowerUpperBoundWidget(partitionKeyLowerBoundTextBox, partitionKeyLowerBoundControlDecoration);
+		//modifyListenerForLowerUpperBoundWidget(partitionKeyUpperBoundTextBox, partitionKeyUpperBoundControlDecoration);
+		//modifyListenerForLowerUpperBoundWidget(partitionKeyLowerBoundTextBox, partitionKeyLowerBoundControlDecoration);
 		addValidationToWidgets(fetchSizeTextBox, fetchSizeControlDecoration);
 		
 		addValidationToAdditionalParameterWidget(additionalParameterTextBox, additionalParameterControlDecoration);
+		partitionKeyUpperBoundTextBox.addModifyListener(new ModifyListener() {
+			@Override
+			public void modifyText(ModifyEvent event) {
+				Matcher matchs = Pattern.compile(Constants.NUMERIC_REGEX).matcher(partitionKeyUpperBoundTextBox.getText());
+				if (matchs.matches()) {
+					if(StringUtils.isNotBlank(partitionKeyLowerBoundTextBox.getText()) && validateNumericField(partitionKeyLowerBoundTextBox)){
+							int result = compareBigIntegerValue(partitionKeyUpperBoundTextBox.getText(), partitionKeyLowerBoundTextBox.getText()); 
+							if(result == -1){
+								partitionKeyUpperBoundControlDecoration.show();
+								partitionKeyUpperBoundControlDecoration.setDescriptionText("Upper Bound should be greater than lower bound.");
+							}else{
+								partitionKeyLowerBoundControlDecoration.hide();
+								partitionKeyUpperBoundControlDecoration.hide();
+							}
+					}
+				}else{
+					partitionKeyUpperBoundControlDecoration.show();
+					partitionKeyUpperBoundTextBox.setBackground(CustomColorRegistry.INSTANCE.getColorFromRegistry( 255, 255, 255));
+					partitionKeyUpperBoundControlDecoration.setDescriptionText(Messages.DB_NUMERIC_PARAMETERZIATION_ERROR);
+					validateFieldWithParameter(partitionKeyUpperBoundTextBox, partitionKeyUpperBoundControlDecoration);
+				}
+			}
+		});
+		partitionKeyLowerBoundTextBox.addModifyListener(new ModifyListener() {
+			@Override
+			public void modifyText(ModifyEvent event) {
+				Matcher matchs = Pattern.compile(Constants.NUMERIC_REGEX).matcher(partitionKeyLowerBoundTextBox.getText());
+				if (matchs.matches()) {
+					if(StringUtils.isNotBlank(partitionKeyUpperBoundTextBox.getText()) && validateNumericField(partitionKeyUpperBoundTextBox)){
+						int result = compareBigIntegerValue(partitionKeyUpperBoundTextBox.getText(), partitionKeyLowerBoundTextBox.getText());  
+						if(result == -1){
+							partitionKeyLowerBoundControlDecoration.show();
+							partitionKeyLowerBoundControlDecoration.setDescriptionText("Upper Bound should be greater than lower bound.");
+						}else{
+							partitionKeyUpperBoundControlDecoration.hide();
+							partitionKeyLowerBoundControlDecoration.hide();
+						}
+					}
+				}else{
+					partitionKeyLowerBoundControlDecoration.show();
+					partitionKeyLowerBoundTextBox.setBackground(CustomColorRegistry.INSTANCE.getColorFromRegistry( 255, 255, 255));
+					partitionKeyLowerBoundControlDecoration.setDescriptionText(Messages.DB_NUMERIC_PARAMETERZIATION_ERROR);
+					validateFieldWithParameter(partitionKeyLowerBoundTextBox, partitionKeyLowerBoundControlDecoration);
+				}
+			}
+		});
 		
 		addAdditionalParameterMapValues();
 
 		return container;
 	}
 
-	private void modifyListenerForLowerUpperBoundWidget(Text textBox, ControlDecoration txtDecorator){
+	/**
+	 * The Function will compare bigInteger values
+	 * @param value1
+	 * @param value2
+	 * @return
+	 */
+	private int compareBigIntegerValue(String value1, String value2){
+		BigInteger int1= BigInteger.valueOf(Long.parseLong(value1));
+		BigInteger int2 = BigInteger.valueOf(Long.parseLong(value2));
+		
+		return int1.compareTo(int2);
+	}
+	
+	/**
+	 * The Function used to validate parameter field 
+	 * @param text
+	 * @param txtDecorator
+	 */
+	private void validateFieldWithParameter(Text text, ControlDecoration txtDecorator){
+		if(StringUtils.isNotBlank(text.getText())){
+			if(ParameterUtil.isParameter(text.getText())){
+				txtDecorator.hide();
+				return;
+			}else{
+				txtDecorator.show();
+				text.setBackground(CustomColorRegistry.INSTANCE.getColorFromRegistry( 255, 255, 255));
+				txtDecorator.setDescriptionText(Messages.DB_NUMERIC_PARAMETERZIATION_ERROR);
+				
+			}
+		}
+	}
+	
+	/**
+	 * The Function used to validate the field & field should be positive integer
+	 * @param text
+	 * @param txtDecorator
+	 * @return
+	 */
+	private boolean validateNumericField(Text text){
+		if(StringUtils.isNotBlank(text.getText())){
+			Matcher matchs = Pattern.compile(Constants.NUMERIC_REGEX).matcher(text.getText());
+			if (matchs.matches()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/*private void modifyListenerForLowerUpperBoundWidget(Text textBox, ControlDecoration txtDecorator){
 		ListenerHelper helper = new ListenerHelper();
 		helper.put(HelperType.CONTROL_DECORATION, txtDecorator);
 		ModifyNumericListenerForDBComp listenerForDBComp = new ModifyNumericListenerForDBComp();
 		textBox.addListener(SWT.Modify, listenerForDBComp.getListener(propertyDialogButtonBar, helper, textBox));
-	}
+	}*/
 	
 	private void addModifyListener(Text text){
 		text.addModifyListener(new ModifyListener() {
@@ -262,7 +371,7 @@ public class InputAdditionalParametersDialog extends Dialog {
 	}
 
 	private void addValidationToWidgets(Text textBox, ControlDecoration txtDecorator) {
-		VerifyNumericandParameterForDBComponents numericValidationForDBComponents = new VerifyNumericandParameterForDBComponents();
+		VerifyNumericAndParameterForDBComponents numericValidationForDBComponents = new VerifyNumericAndParameterForDBComponents();
 		ListenerHelper helper = new ListenerHelper();
 		helper.put(HelperType.CONTROL_DECORATION, txtDecorator);
 
@@ -357,13 +466,8 @@ public class InputAdditionalParametersDialog extends Dialog {
 				partitionKeyLowerBoundControlDecoration.hide();
 				partitionKeyUpperBoundControlDecoration.hide();
 			}
-			if (StringUtils.isNotBlank((String) additionalParameterValue.get(Constants.FECTH_SIZE))) {
-				fetchSizeTextBox.setText((String) additionalParameterValue.get(Constants.FECTH_SIZE));
-				Utils.INSTANCE.addMouseMoveListener(fetchSizeTextBox, cursor);
-			} else {
-				fetchSizeTextBox.setText(FETCH_SIZE_VALUE);
-				fetchSizeControlDecoration.hide();
-			}
+			fetchSizeTextBox.setText((String) additionalParameterValue.get(Constants.FECTH_SIZE));
+			Utils.INSTANCE.addMouseMoveListener(fetchSizeTextBox, cursor);
 
 			if (StringUtils.isNotBlank((String) additionalParameterValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB))) {
 				additionalParameterTextBox
@@ -443,12 +547,10 @@ public class InputAdditionalParametersDialog extends Dialog {
 		}else{
 			additionalParameterValue.put(noOfPartitionsLabel.getText(), noOfPartitionsTextBox.getText());
 		}
-		if(StringUtils.isNotBlank(fetchSizeTextBox.getText())){
-			additionalParameterValue.put(fetchSizeLabel.getText(), fetchSizeTextBox.getText());
-		}else{
-			additionalParameterValue.put(fetchSizeLabel.getText(), FETCH_SIZE_VALUE);
-		}
-			additionalParameterValue.put(additionalDBParametersLabel.getText(), additionalParameterTextBox.getText());
+		
+		additionalParameterValue.put(fetchSizeLabel.getText(), fetchSizeTextBox.getText());
+	
+		additionalParameterValue.put(additionalDBParametersLabel.getText(), additionalParameterTextBox.getText());
 			
 		super.okPressed();
 	}

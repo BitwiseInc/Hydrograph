@@ -39,9 +39,14 @@ import hydrograph.ui.propertywindow.utils.Utils;
 import hydrograph.ui.propertywindow.widgets.listeners.ExtraURLParameterValidationForDBComponents;
 import hydrograph.ui.propertywindow.widgets.listeners.ListenerHelper;
 import hydrograph.ui.propertywindow.widgets.listeners.ListenerHelper.HelperType;
-import hydrograph.ui.propertywindow.widgets.listeners.VerifyNumericandParameterForDBComponents;
+import hydrograph.ui.propertywindow.widgets.listeners.VerifyNumericAndParameterForDBComponents;
 import hydrograph.ui.propertywindow.widgets.utility.WidgetUtility;
 
+/**
+ * OutputAdditionalParametersDialog to create parameter dialog for DB output components
+ * @author Bitwise
+ *
+ */
 public class OutputAdditionalParametersDialog extends Dialog {
 	public static final String CHUNK_SIZE_VALUE = "1000";
 	private Text chunkSizeTextBox;
@@ -102,7 +107,7 @@ public class OutputAdditionalParametersDialog extends Dialog {
 		GridData gd_chunkSizeTextBox = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		gd_chunkSizeTextBox.horizontalIndent = 10;
 		chunkSizeTextBox.setLayoutData(gd_chunkSizeTextBox);
-		controlDecoration = WidgetUtility.addDecorator(chunkSizeTextBox, Messages.CHUNK_SIZE_ERROR_DECORATOR_MESSAGE);
+		controlDecoration = WidgetUtility.addDecorator(chunkSizeTextBox, Messages.DB_NUMERIC_PARAMETERZIATION_ERROR);
 		if (StringUtils.isBlank(chunkSizeTextBox.getText())) {
 			chunkSizeTextBox.setText(CHUNK_SIZE_VALUE);
 			controlDecoration.hide();
@@ -152,7 +157,7 @@ public class OutputAdditionalParametersDialog extends Dialog {
 	}
 
 	private void addListenerToChunkSize(Text chunkSizeTextBox) {
-		VerifyNumericandParameterForDBComponents numericValidationForDBComponents = new VerifyNumericandParameterForDBComponents();
+		VerifyNumericAndParameterForDBComponents numericValidationForDBComponents = new VerifyNumericAndParameterForDBComponents();
 		ListenerHelper helper = new ListenerHelper();
 		helper.put(HelperType.CONTROL_DECORATION, controlDecoration);
 		chunkSizeTextBox.addListener(SWT.Modify,numericValidationForDBComponents.getListener(propertyDialogButtonBar, helper, chunkSizeTextBox));
@@ -200,13 +205,9 @@ public class OutputAdditionalParametersDialog extends Dialog {
 	@Override
 	protected void okPressed() {
 		outputAdditionalParameterValues = new LinkedHashMap<>();
-		if(StringUtils.isNotBlank(chunkSizeTextBox.getText())){
-			outputAdditionalParameterValues.put(chunkSize.getText(), chunkSizeTextBox.getText());
-		}else{
-			outputAdditionalParameterValues.put(chunkSize.getText(), CHUNK_SIZE_VALUE);
-		}
-			outputAdditionalParameterValues.put(additionalDBParametersLabel.getText(),
-					additionalParameterTextBox.getText());
+		outputAdditionalParameterValues.put(chunkSize.getText(), chunkSizeTextBox.getText());
+		outputAdditionalParameterValues.put(additionalDBParametersLabel.getText(),
+				additionalParameterTextBox.getText());
 		super.okPressed();
 	}
 

@@ -63,9 +63,7 @@ public class Constants {
 	// Used for validating only Parameters E.g  @{Param_123}
 	public static final String PARAMETER_REGEX ="^[\\@]{1}[\\{]{1}[\\s\\S]+[\\}]{1}";
 	
-	//[\\w,\\=,\\,,\\&]+
-	//[\\@]{1}[\\{]{1}[\\w,\\=]*[\\}]{1}||[\\w,\\=]*
-	//[\@]{1}[\{]{1}[\w,\=,\&]*[\}]{1}|[\w,\=,\&]*
+	//Used for validating AlphaNumeric with , and = operator or Parameter E.g Aplha_123 or @{Param_123} or i = 10, j=20
 	public static final String DB_REGEX = "[\\@]{1}[\\{]{1}[\\w]*[\\}]{1}||[\\w,\\=]*";
 
 	// Used for validating AlphaNumeric or Parameter E.g Aplha_123
@@ -392,5 +390,20 @@ public class Constants {
 	public static final String ADDITIONAL_PARAMETERS_FOR_DB ="Additional DB Parameters";
 	public static final String DB_CHUNK_SIZE="Chunk Size";
 	public static final String NUMERIC_REGEX = "[\\d]*";
+	
+	//for Db Componnts
+	public static final String ADDITIONAL_DB_PARAM = "Additional DB Parameters";
+	public static final String FETCH_SIZE = "Fetch Size";
+	public static final String NO_OF_PARAM = "No. Of Partitions";
+	public static final String PARTITION_KEY = "Partition Key";
+	public static final String CHUNK_SIZE = "Chunk Size";
+	
+	public static final String NUMBER_OF_PARTITIONS = "numPartitions";
+	public static final String NOP_LOWER_BOUND = "numPartitions/lowerBound";
+	public static final String NOP_UPPER_BOUND = "numPartitions/upperBound";
+	public static final String ADDITIONAL_DB_FETCH_SIZE = "fetchSize";
+	public static final String ADDITIONAL_DB_PARAM_URL = "extraUrlParams";
+	public static final String ADDITIONAL_DB_CHUNK_SIZE = "chunkSize";
+	
 }
 

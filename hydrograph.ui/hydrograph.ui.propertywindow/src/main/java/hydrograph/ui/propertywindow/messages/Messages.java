@@ -412,7 +412,6 @@ public class Messages extends NLS {
 	public static String FETCH_SIZE;
 	public static String ADDITIONAL_DB_PARAMETERS;
 	public static String DB_CHUNK_SIZE;
-	public static String NO_OF_PARTITION_ERROR_DECORATOR_MESSAGE;
 	public static String PARTITION_KEY_ERROR_DECORATOR_MESSAGE;
 	public static String UPPER_BOUND_ERROR_DECORATOR_MESSAGE;
 	public static String LOWER_BOUND_ERROR_DECORATOR_MESSAGE;

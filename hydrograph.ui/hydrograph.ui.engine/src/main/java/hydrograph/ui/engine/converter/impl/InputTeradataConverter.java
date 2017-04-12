@@ -138,17 +138,13 @@ public class InputTeradataConverter extends InputConverter{
 	private void addAdditionalParameters() {
 		
 		Object obj = properties.get(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value());
-		if (obj != null && StringUtils.isNotBlank(obj.toString())) {
+		if (obj != null && obj instanceof Map) {
 			Map<String, String> uiValue = (Map<String, String>) properties
 					.get(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value());
 			
 			if (StringUtils.isNotBlank((String) uiValue.get(Constants.FECTH_SIZE))) {
 				ElementValueStringType fetchSize = new ElementValueStringType();
 				fetchSize.setValue(String.valueOf(uiValue.get(Constants.FECTH_SIZE)));
-				teradataInput.setFetchSize(fetchSize);
-			}else{
-				ElementValueStringType fetchSize = new ElementValueStringType();
-				fetchSize.setValue("1000");
 				teradataInput.setFetchSize(fetchSize);
 			}
 			
@@ -161,17 +157,16 @@ public class InputTeradataConverter extends InputConverter{
 			if (uiValue.get(Constants.NO_OF_PARTITION) !=null && StringUtils.isNotBlank(uiValue.get(Constants.NO_OF_PARTITION))) {
 				TypePartitionsChoice typePartitionsChoice = new TypePartitionsChoice();
 
-				if (uiValue.get(Constants.NO_OF_PARTITION) !=null) {
 					ElementValueIntegerType partitionKey = new ElementValueIntegerType();
 					BigInteger no_of_partitions = getDBAdditionalParamValue(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value(),
 							Constants.NO_OF_PARTITION, PropertyNameConstants.NUMBER_OF_PARTITIONS.value());
 					partitionKey.setValue(no_of_partitions);
 					typePartitionsChoice.setValue(no_of_partitions);
-				}
+				
 				if (StringUtils.isNotBlank((String) uiValue.get(Constants.DB_PARTITION_KEY))) {
-					ElementValueStringType partitionKey = new ElementValueStringType();
-					partitionKey.setValue(String.valueOf(uiValue.get(Constants.DB_PARTITION_KEY)));
-					typePartitionsChoice.setColumnName(partitionKey);
+					ElementValueStringType partitionKeyColumn = new ElementValueStringType();
+					partitionKeyColumn.setValue(String.valueOf(uiValue.get(Constants.DB_PARTITION_KEY)));
+					typePartitionsChoice.setColumnName(partitionKeyColumn);
 				}
 				if (uiValue.get(Constants.PARTITION_KEY_LOWER_BOUND) !=null) {
 					ElementValueIntegerType partition_key_lower_bound = new ElementValueIntegerType();
@@ -189,7 +184,6 @@ public class InputTeradataConverter extends InputConverter{
 				}
 				teradataInput.setNumPartitions(typePartitionsChoice);
 			}
-
 		}else{
 			ElementValueStringType fetchSize = new ElementValueStringType();
 			fetchSize.setValue("1000");

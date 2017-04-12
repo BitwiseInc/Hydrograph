@@ -136,7 +136,7 @@ public class OutputOracleConverter extends OutputConverter {
 	
 	private void getAdditionalParameterForDBComponent() {
 		Object obj = properties.get(PropertyNameConstants.OUTPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value());
-		if(obj != null && StringUtils.isNotBlank(obj.toString())){
+		if(obj != null && obj instanceof Map){
 			Map<String, String> uiValue = (Map<String, String>) properties.get(PropertyNameConstants.OUTPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value());
 			if(uiValue !=null && !uiValue.isEmpty()){
 				if(StringUtils.isNotBlank((String)uiValue.get(Constants.DB_CHUNK_SIZE))){
@@ -149,11 +149,7 @@ public class OutputOracleConverter extends OutputConverter {
 					extraUrlParams.setValue(String.valueOf(uiValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB)));
 					oracleOutput.setExtraUrlParams(extraUrlParams);
 				}
-			}else{
-				ElementValueStringType chunkSize = new ElementValueStringType();
-				chunkSize.setValue("1000");
-				oracleOutput.setChunkSize(chunkSize);
-			}	
+			}
 		}else{
 			ElementValueStringType chunkSize = new ElementValueStringType();
 			chunkSize.setValue("1000");

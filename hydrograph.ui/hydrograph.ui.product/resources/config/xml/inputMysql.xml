@@ -75,7 +75,7 @@
 		
 		<tns:property dataType="string" name="testConnection" value="" renderer="TEST_CONNECTION_WIDGET"
 			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"
-			usage="REQUIRED" propertyHelpText="Used to test the connection for connecting Oracle DB">
+			usage="REQUIRED" propertyHelpText="Used to test the connection for connecting Input Mysql DB">
 		</tns:property>
 		
 		<tns:property dataType="string" name="selectOption" renderer="SELECT_JDBC_VALUES_WIDGET"

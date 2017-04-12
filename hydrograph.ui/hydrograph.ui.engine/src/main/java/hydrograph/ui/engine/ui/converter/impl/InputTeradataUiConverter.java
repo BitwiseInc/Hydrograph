@@ -119,10 +119,9 @@ public class InputTeradataUiConverter extends InputUiConverter{
 		propertyMap.put(PropertyNameConstants.SELECT_OPTION.value(), databaseSelectionConfig);
 		
 		if(inputTeradata.getNumPartitions() !=null ){
-			if(inputTeradata.getNumPartitions() !=null){
-				additionalParameterDetails.put(Constants.NO_OF_PARTITION, getParameterValue(PropertyNameConstants.NUMBER_OF_PARTITIONS.value(),
-						inputTeradata.getNumPartitions() == null ? "" : inputTeradata.getNumPartitions().getValue()));
-			}
+			additionalParameterDetails.put(Constants.NO_OF_PARTITION, getParameterValue(PropertyNameConstants.NUMBER_OF_PARTITIONS.value(),
+					inputTeradata.getNumPartitions() == null ? "" : inputTeradata.getNumPartitions().getValue()));
+				
 			if(inputTeradata.getNumPartitions().getColumnName() !=null && StringUtils.isNotBlank(inputTeradata.getNumPartitions().getColumnName().getValue())){
 				additionalParameterDetails.put(Constants.DB_PARTITION_KEY, inputTeradata.getNumPartitions().getColumnName().getValue());
 			}

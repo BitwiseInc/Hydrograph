@@ -270,19 +270,19 @@ public abstract class Converter {
 	 * @param fieldKey
 	 * @return
 	 */
-	public BigInteger getDBAdditionalParamValue(String propertyName , String nameOfFeild, String fieldKey){
-		BigInteger bigInteger = null;
+	public BigInteger getDBAdditionalParamValue(String propertyName , String nameOfField, String fieldKey){
 		Map<String,String> propertyValue = (Map<String, String>) properties.get(propertyName);
-		if (StringUtils.isNotBlank(propertyValue.get(nameOfFeild)) && StringUtils.isNumeric(propertyValue.get(nameOfFeild))) {
-			bigInteger = new BigInteger(String.valueOf(propertyValue.get(nameOfFeild)));
-		} else if (ParameterUtil.isParameter(propertyValue.get(nameOfFeild))) {
+		if (StringUtils.isNotBlank(propertyValue.get(nameOfField)) && StringUtils.isNumeric(propertyValue.get(nameOfField))) {
+			BigInteger bigInteger = new BigInteger(String.valueOf(propertyValue.get(nameOfField)));
+			return bigInteger;
+		} else if (ParameterUtil.isParameter(propertyValue.get(nameOfField))) {
 			ComponentXpath.INSTANCE.getXpathMap()
 					.put((ComponentXpathConstants.COMPONENT_XPATH_BOOLEAN.value().replace(ID, component.getComponentId()))
 							.replace(Constants.PARAM_PROPERTY_NAME, fieldKey),
-							new ComponentsAttributeAndValue(null, propertyValue.get(nameOfFeild)));
+							new ComponentsAttributeAndValue(null, propertyValue.get(nameOfField)));
 			return null;
 		}
-		return bigInteger;
+		return null;
 	}
 	
 }

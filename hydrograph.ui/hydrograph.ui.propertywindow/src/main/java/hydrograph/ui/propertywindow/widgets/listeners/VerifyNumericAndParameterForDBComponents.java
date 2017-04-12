@@ -30,7 +30,12 @@ import hydrograph.ui.propertywindow.messages.Messages;
 import hydrograph.ui.propertywindow.propertydialog.PropertyDialogButtonBar;
 import hydrograph.ui.propertywindow.widgets.listeners.ListenerHelper.HelperType;
 
-public class VerifyNumericandParameterForDBComponents implements IELTListener{
+/**
+ * VerifyNumericAndParameterForDBComponents used to verify DB components widget
+ * @author Bitwise
+ *
+ */
+public class VerifyNumericAndParameterForDBComponents implements IELTListener{
 
 	private ControlDecoration txtDecorator;
 
@@ -64,7 +69,8 @@ public class VerifyNumericandParameterForDBComponents implements IELTListener{
 							((Text) widgetList[0]).setBackground(CustomColorRegistry.INSTANCE.getColorFromRegistry( 255, 255, 255));
 						}
 					} else {
-						txtDecorator.hide();
+						txtDecorator.show();
+						txtDecorator.setDescriptionText(Messages.DB_NUMERIC_PARAMETERZIATION_ERROR);
 						((Text) widgetList[0]).setBackground(CustomColorRegistry.INSTANCE.getColorFromRegistry( 255, 255, 255));
 					}
 				}else{

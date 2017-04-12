@@ -30,6 +30,11 @@ import hydrograph.ui.propertywindow.messages.Messages;
 import hydrograph.ui.propertywindow.propertydialog.PropertyDialogButtonBar;
 import hydrograph.ui.propertywindow.widgets.listeners.ListenerHelper.HelperType;
 
+/**
+ * ExtraURLParameterValidationForDBComponents used to validate DB components widget
+ * @author Bitwise
+ *
+ */
 public class ExtraURLParameterValidationForDBComponents implements IELTListener{
 	
 	private ControlDecoration txtDecorator;

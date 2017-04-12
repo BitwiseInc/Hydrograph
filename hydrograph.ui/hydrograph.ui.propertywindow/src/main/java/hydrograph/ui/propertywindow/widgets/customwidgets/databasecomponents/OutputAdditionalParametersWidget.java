@@ -40,6 +40,11 @@ import hydrograph.ui.propertywindow.widgets.gridwidgets.container.AbstractELTCon
 import hydrograph.ui.propertywindow.widgets.gridwidgets.container.ELTDefaultSubgroupComposite;
 import hydrograph.ui.propertywindow.widgets.listeners.ListenerHelper;
 
+/**
+ * OutputAdditionalParametersWidget used to create widget
+ * @author Bitwise
+ *
+ */
 public class OutputAdditionalParametersWidget extends AbstractWidget {
 
 	private static final Logger logger = LogFactory.INSTANCE.getLogger(OutputAdditionalParametersWidget.class);

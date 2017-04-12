@@ -123,10 +123,9 @@ public class InputMysqlUiConverter extends InputUiConverter{
 		propertyMap.put(PropertyNameConstants.SELECT_OPTION.value(), databaseSelectionConfig);
 		
 		if(inputMysql.getNumPartitions() !=null ){
-			if(inputMysql.getNumPartitions() !=null){
-				additionalParameterDetails.put(Constants.NO_OF_PARTITION, getParameterValue(PropertyNameConstants.NUMBER_OF_PARTITIONS.value(),
-						inputMysql.getNumPartitions() == null ? "" : inputMysql.getNumPartitions().getValue()));
-			}
+			additionalParameterDetails.put(Constants.NO_OF_PARTITION, getParameterValue(PropertyNameConstants.NUMBER_OF_PARTITIONS.value(),
+					inputMysql.getNumPartitions() == null ? "" : inputMysql.getNumPartitions().getValue()));
+				
 			if(inputMysql.getNumPartitions().getColumnName() !=null && StringUtils.isNotBlank(inputMysql.getNumPartitions().getColumnName().getValue())){
 				additionalParameterDetails.put(Constants.DB_PARTITION_KEY, inputMysql.getNumPartitions().getColumnName().getValue());
 			}

@@ -90,7 +90,7 @@
 		
 		<tns:property dataType="string" name="inputAdditionalParameters" value="" renderer="INPUT_ADDITIONAL_PARAMETERS_WIDGET"
 			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"
-			usage="REQUIRED" propertyHelpText="Used to provide additional parameters to connect Input Oracle DB">
+			usage="REQUIRED" propertyHelpText="Used to provide additional parameters to connect Input TeraData DB">
 			<tns:validator>ADDITIONAL_PARAM_VALIDATION</tns:validator>
 		</tns:property>
 		
