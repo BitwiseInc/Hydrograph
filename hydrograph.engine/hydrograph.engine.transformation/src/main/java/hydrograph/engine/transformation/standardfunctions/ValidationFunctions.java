@@ -14,6 +14,8 @@ package hydrograph.engine.transformation.standardfunctions;
 
 import hydrograph.engine.transformation.standardfunctions.helper.StandardFunctionHelper;
 
+import java.util.Date;
+
 /**
  * The Class ValidationFunctions.
  *
@@ -158,5 +160,49 @@ public class ValidationFunctions {
 			return true;
 		else
 			return false;
+	}
+
+	/**
+	 * Checks if {@code inputValue} has value or is null
+	 *
+	 * @parama inputValue input
+	 * @return return 0 incase input is null else return 1
+	 */
+	public static Integer checkValidity(Number inputValue){
+		Integer result = 0;
+		if(inputValue == null)
+			return result;
+
+		return 1;
+	}
+
+	/**
+	 * Checks if {@code inputValue} has value or is null
+	 *
+	 * @parama inputValue input
+	 * @return return 0 incase input is null,blank or spaces else return 1
+	 */
+	public static Integer checkValidity(String inputValue){
+		Integer result = 0;
+		if(inputValue == null)
+			return result;
+
+		if(inputValue.trim().length()==0)
+			return result;
+		return 1;
+	}
+
+	/**
+	 * Checks if {@code inputValue} has value or is null
+	 *
+	 * @parama inputValue input
+	 * @return return 0 incase input is null else return 1
+	 */
+	public static Integer checkValidity(Date inputValue){
+		Integer result = 0;
+		if(inputValue == null)
+			return result;
+
+		return 1;
 	}
 }

@@ -17,6 +17,7 @@ import hydrograph.engine.transformation.standardfunctions.helper.StandardFunctio
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -707,5 +708,40 @@ public class DateFunctions {
         LocalDateTime localDateTime2 = LocalDateTime.ofInstant(date2.toInstant(), ZoneId.systemDefault());
 
         return (localDateTime1.isBefore(localDateTime2)) ? date1 : date2;
+    }
+
+    /**
+     * Returns the date for {@code timeInMillisecs}
+     *
+     * @param timeInMillisecs input date in milliseconds
+     * @return returns date value for time in milliseconds
+	 * returns null if {@code timeInMillisecs} is null
+     */
+    public static Date toDate(Long timeInMillisecs) {
+
+    	if(timeInMillisecs==null)
+    		return null;
+
+        return new Date(timeInMillisecs);
+    }
+
+    /**
+     * Returns the date for {@code year},{@code month} and {@code day}
+     * @param year input year of date
+     * @param month input month of date
+     * @param day input day of date
+     * @retrun returns date for give {@code year},(@code month} and {@day}
+	 *   return null if either of {@code year}, {@code month} or {@code day} are null
+     * @throws DateTimeException if the value of any field is out of range,
+     *  or if the day-of-month is invalid for the month-year
+     */
+    public static Date toDate(Integer year, Integer month,Integer day) throws DateTimeException {
+
+        if(year == null || month == null || day == null)
+            return null;
+
+        LocalDate localDate = LocalDate.of(year,month,day);
+
+        return java.sql.Date.valueOf(localDate);
     }
 }
