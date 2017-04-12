@@ -14,6 +14,7 @@ package hydrograph.ui.engine.ui.converter.impl;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,6 +65,7 @@ public class InputTeradataUiConverter extends InputUiConverter{
 		LOGGER.debug("Fetching Input-Teradata-Properties for {}", componentName);
 		Teradata inputTeradata = (Teradata) typeBaseComponent;
 		DatabaseSelectionConfig databaseSelectionConfig = new DatabaseSelectionConfig();
+		Map<String, Object> additionalParameterDetails = new HashMap<String, Object>();
 
 		setValueInPropertyMap(PropertyNameConstants.JDBC_DRIVER.value(),
 				inputTeradata.getJdbcDriver() == null ? "" : inputTeradata.getJdbcDriver().getValue());
@@ -115,6 +117,34 @@ public class InputTeradataUiConverter extends InputUiConverter{
 		}
 
 		propertyMap.put(PropertyNameConstants.SELECT_OPTION.value(), databaseSelectionConfig);
+		
+		if(inputTeradata.getNumPartitions() !=null ){
+			if(inputTeradata.getNumPartitions() !=null){
+				additionalParameterDetails.put(Constants.NO_OF_PARTITION, getParameterValue(PropertyNameConstants.NUMBER_OF_PARTITIONS.value(),
+						inputTeradata.getNumPartitions() == null ? "" : inputTeradata.getNumPartitions().getValue()));
+			}
+			if(inputTeradata.getNumPartitions().getColumnName() !=null && StringUtils.isNotBlank(inputTeradata.getNumPartitions().getColumnName().getValue())){
+				additionalParameterDetails.put(Constants.DB_PARTITION_KEY, inputTeradata.getNumPartitions().getColumnName().getValue());
+			}
+			if(inputTeradata.getNumPartitions().getUpperBound() !=null ){
+				additionalParameterDetails.put(Constants.PARTITION_KEY_UPPER_BOUND, getParameterValue(PropertyNameConstants.UPPER_BOUND.value(),						
+						inputTeradata.getNumPartitions().getUpperBound().getValue()));
+			}
+			if(inputTeradata.getNumPartitions().getLowerBound() !=null ){
+				additionalParameterDetails.put(Constants.PARTITION_KEY_LOWER_BOUND,getParameterValue(PropertyNameConstants.LOWER_BOUND.value(), 
+						inputTeradata.getNumPartitions().getLowerBound().getValue()));
+			}
+		}
+		
+		additionalParameterDetails.put(Constants.FECTH_SIZE,getParameterValue(PropertyNameConstants.FETCH_SIZE.value(), 
+				inputTeradata.getFetchSize().getValue()));
+		
+		if(inputTeradata.getExtraUrlParams() !=null){
+			additionalParameterDetails.put(Constants.ADDITIONAL_PARAMETERS_FOR_DB,getParameterValue(PropertyNameConstants.ADDITIONAL_DB_PARAM.value(), 
+					inputTeradata.getExtraUrlParams().getValue()));
+		}
+		
+		propertyMap.put(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value(), additionalParameterDetails);
 
 		propertyMap.put(PropertyNameConstants.SELECT_INTERFACE.value(), getExportInterfaceValue());
 

@@ -14,6 +14,7 @@ package hydrograph.ui.engine.ui.converter.impl;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +66,7 @@ public class OutputOracleUiConverter extends OutputUiConverter {
 		LOGGER.debug("Fetching Output-Oracle-Properties for {}", componentName);
 		Oracle outputOracle = (Oracle) typeBaseComponent;
 		LinkedHashMap<String, String> loadSelectedDetails = new LinkedHashMap<String, String>();
+		Map<String, Object> additionalParameterDetails = new HashMap<String, Object>();
 		
 		setValueInPropertyMap(PropertyNameConstants.JDBC_DRIVER.value(), 
 				outputOracle.getDriverType() == null ? "" : outputOracle.getDriverType().getValue());
@@ -75,7 +77,7 @@ public class OutputOracleUiConverter extends OutputUiConverter {
 		try {
 			BigInteger bigInteger = outputOracle.getPort().getValue();
 			setValueInPropertyMap(PropertyNameConstants.PORT_NO.value(),
-					outputOracle.getPort() == null ? "" : bigInteger);
+					outputOracle.getPort() == null ? "" : String.valueOf(bigInteger));
 		} catch (Exception e) {
 			LOGGER.error("Exception" + e);
 		}
@@ -108,6 +110,15 @@ public class OutputOracleUiConverter extends OutputUiConverter {
 				
 		}
 		propertyMap.put(PropertyNameConstants.LOAD_TYPE_CONFIGURATION.value(), loadSelectedDetails);
+		additionalParameterDetails.put(Constants.DB_CHUNK_SIZE, getParameterValue(PropertyNameConstants.CHUNK_SIZE.value(),
+				outputOracle.getChunkSize() == null ? "" : outputOracle.getChunkSize().getValue()));
+		
+		if(outputOracle.getExtraUrlParams() !=null){
+			additionalParameterDetails.put(Constants.ADDITIONAL_PARAMETERS_FOR_DB, getParameterValue(PropertyNameConstants.ADDITIONAL_DB_PARAM.value(),
+					outputOracle.getExtraUrlParams() == null ? "" : outputOracle.getExtraUrlParams().getValue()));
+		}
+		
+		propertyMap.put(PropertyNameConstants.OUTPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value(), additionalParameterDetails);
 		
 		uiComponent.setType(UIComponentsConstants.ORACLE.value());
 		uiComponent.setCategory(UIComponentsConstants.OUTPUT_CATEGORY.value());

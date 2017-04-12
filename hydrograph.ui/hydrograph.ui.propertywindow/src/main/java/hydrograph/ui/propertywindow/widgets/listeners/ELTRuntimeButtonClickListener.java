@@ -14,15 +14,17 @@
  
 package hydrograph.ui.propertywindow.widgets.listeners;
 
-import hydrograph.ui.propertywindow.propertydialog.PropertyDialogButtonBar;
-import hydrograph.ui.propertywindow.widgets.customwidgets.databasecomponents.LoadTypeConfigurationWidget;
-import hydrograph.ui.propertywindow.widgets.customwidgets.runtimeproperty.ELTRuntimePropertiesWidget;
-import hydrograph.ui.propertywindow.widgets.customwidgets.secondarykeys.SecondaryColumnKeysWidget;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Widget;
+
+import hydrograph.ui.propertywindow.propertydialog.PropertyDialogButtonBar;
+import hydrograph.ui.propertywindow.widgets.customwidgets.databasecomponents.InputAdditionalParametersWidget;
+import hydrograph.ui.propertywindow.widgets.customwidgets.databasecomponents.LoadTypeConfigurationWidget;
+import hydrograph.ui.propertywindow.widgets.customwidgets.databasecomponents.OutputAdditionalParametersWidget;
+import hydrograph.ui.propertywindow.widgets.customwidgets.runtimeproperty.ELTRuntimePropertiesWidget;
+import hydrograph.ui.propertywindow.widgets.customwidgets.secondarykeys.SecondaryColumnKeysWidget;
 
 
 /**
@@ -53,8 +55,10 @@ public class ELTRuntimeButtonClickListener implements IELTListener {
 						((SecondaryColumnKeysWidget)helpers.object).newWindowLauncher();
 					else if(helpers.object instanceof LoadTypeConfigurationWidget) 
 						((LoadTypeConfigurationWidget)helpers.object).newWindowLauncher();
-					
-
+					else if(helpers.object instanceof InputAdditionalParametersWidget) 
+						((InputAdditionalParametersWidget)helpers.object).newWindowLauncher();
+					else if(helpers.object instanceof OutputAdditionalParametersWidget) 
+						((OutputAdditionalParametersWidget)helpers.object).newWindowLauncher();
 				}
 
 			}

@@ -91,8 +91,8 @@ import hydrograph.ui.propertywindow.widgets.utility.WidgetUtility;
 public class FieldDialog extends Dialog {
 	private static final Logger logger = LogFactory.INSTANCE.getLogger(FieldDialog.class);
 
-	private final List<FilterProperties> propertyList;
-	private List<String> fieldNameList;
+	protected final List<FilterProperties> propertyList;
+	protected List<String> fieldNameList;
 	private String componentName;
 
 	private final String PROPERTY_EXISTS_ERROR = Messages.RuntimePropertAlreadyExists;
@@ -101,7 +101,7 @@ public class FieldDialog extends Dialog {
 	private Label lblPropertyError;
 	private TableViewer targetTableViewer;
 	private TableViewer sourceTableViewer;
-	private Table sourceTable;
+	protected Table sourceTable;
 	private Table targetTable;
 
 	private boolean isAnyUpdatePerformed;
@@ -118,6 +118,7 @@ public class FieldDialog extends Dialog {
 	private Button deleteButton;
 	private Button upButton;
 	private Button downButton;
+	protected Button addButton;
 
 	protected Button okButton;
 	private static final String INFORMATION="Information";
@@ -137,7 +138,7 @@ public class FieldDialog extends Dialog {
 	}
 
 	// Add New Property After Validating old properties
-	private void addNewProperty(TableViewer tv, String fieldName) {
+	public void addNewProperty(TableViewer tv, String fieldName) {
 		if (isPropertyAlreadyExists(fieldName))
 			return;
 		isAnyUpdatePerformed = true;
@@ -200,7 +201,7 @@ public class FieldDialog extends Dialog {
 
 	
 	// Loads Already Saved Properties..
-	private void loadProperties(TableViewer tv) {
+	public void loadProperties(TableViewer tv) {
 
 		if (fieldNameList != null && !fieldNameList.isEmpty()) {
 			for (String key : fieldNameList) {
@@ -223,7 +224,7 @@ public class FieldDialog extends Dialog {
 		}
 	}
 
-	private boolean validateBeforeLoad(String key) {
+	protected boolean validateBeforeLoad(String key) {
 		if (key.trim().isEmpty()) {
 			return false;
 		}
@@ -263,6 +264,9 @@ public class FieldDialog extends Dialog {
 			getShell().setText(Messages.PRIMARY_KEYS_WINDOW_LABEL);
 			isPrimaryKeyDialog  =true;
 		}
+		if(Messages.PARTITION_KEYS_FOR_DB_COMPONENT.equalsIgnoreCase(componentName)){
+			getShell().setText(Messages.PARTITION_KEYS_FOR_DB_COMPONENT);
+		}
 		
 		if(OSValidator.isMac()){
 			getShell().setMinimumSize(new Point(500, 500));
@@ -288,6 +292,11 @@ public class FieldDialog extends Dialog {
 
 		addErrorLabel(container_1);
 		checkFieldsOnStartup();
+		if(Messages.PARTITION_KEYS_FOR_DB_COMPONENT.equalsIgnoreCase(componentName)){
+			if(propertyList.size() > 0){
+				addButton.setEnabled(false);
+			}
+		}
 		return container_1;
 	}
 	
@@ -313,7 +322,7 @@ public class FieldDialog extends Dialog {
 		composite_1.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
 		composite_1.setLayout(new GridLayout(5, false));
 
-		Button addButton = new Button(composite_1, SWT.NONE);
+		addButton = new Button(composite_1, SWT.NONE);
 		addButton.setToolTipText(Messages.ADD_KEY_SHORTCUT_TOOLTIP);
 		addButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		addButton.setImage(ImagePathConstant.ADD_BUTTON.getImageFromRegistry());
@@ -449,11 +458,12 @@ public class FieldDialog extends Dialog {
 		
 	}
 
-	private void createTargetTable(Composite container) {
+	public void createTargetTable(Composite container) {
 		targetTableViewer = new TableViewer(container, SWT.BORDER | SWT.MULTI|SWT.FULL_SELECTION);
 		targetTable = targetTableViewer.getTable();
 		targetTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
+		//validateTargetTableOnDoubleClick(targetTable);
 		targetTable.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
@@ -466,6 +476,7 @@ public class FieldDialog extends Dialog {
 				lblPropertyError.setVisible(false);
 			}
 		});
+		
 		targetTableViewer.getTable().addTraverseListener(new TraverseListener() {
 
 			@Override
@@ -525,12 +536,8 @@ public class FieldDialog extends Dialog {
 		dropTarget.setTransfer(new Transfer[] { TextTransfer.getInstance() });
 		dropTarget.addDropListener(new DropTargetAdapter() {
 			public void drop(DropTargetEvent event) {
-				operationOnDrop(event);
-				if(isPrimaryKeyDialog){
-					validateTargetFieldOnDrop();
-				}
+				dropAction(event);
 			}
-
 		});
 		attachShortcutListner(Constants.PROPERTY_TABLE);
 		attachShortcutListner(Constants.PROPERTY_NAME);
@@ -547,6 +554,24 @@ public class FieldDialog extends Dialog {
 		
 	}
 	
+	/**
+	 * add new row on mouse double click in table
+	 * @param targetTable
+	 */
+	public void validateTargetTableOnDoubleClick(Table targetTable){
+		targetTable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				addNewProperty(targetTableViewer, null);
+				enableControlButons();
+			}
+
+			@Override
+			public void mouseDown(MouseEvent e) {
+				lblPropertyError.setVisible(false);
+			}
+		});
+	}
 	
 	private void attachShortcutListner(String controlName){
 		Control currentControl;
@@ -644,7 +669,10 @@ public class FieldDialog extends Dialog {
 	
 	}
 	
-	private void deleteRow()
+	/**
+	 * The Function will used to remove selected row from target table
+	 */
+	public void deleteRow()
 	{
 		WidgetUtility.setCursorOnDeleteRow(targetTableViewer, propertyList);
 		isAnyUpdatePerformed = true;
@@ -673,10 +701,7 @@ public class FieldDialog extends Dialog {
 		sourceTableViewer = new TableViewer(container, SWT.BORDER | SWT.MULTI | SWT.FULL_SELECTION);
 		sourceTableViewer.addDoubleClickListener(new IDoubleClickListener() {
 			public void doubleClick(DoubleClickEvent event) {
-				if(sourceTable.getSelection().length==1){
-				addNewProperty(targetTableViewer, sourceTable.getSelection()[0].getText());
-				enableControlButons();
-				}
+				addFieldOnDoubleClick();
 			}
 		});
 		sourceTable = sourceTableViewer.getTable();
@@ -695,15 +720,24 @@ public class FieldDialog extends Dialog {
 		getSourceFieldsFromPropagatedSchema(sourceTable);
 		dragSource = new DragSource(sourceTable, DND.DROP_MOVE);
 		dragSource.setTransfer(new Transfer[] { TextTransfer.getInstance() });
+		
 		dragSource.addDragListener(new DragSourceAdapter() {
 			public void dragSetData(DragSourceEvent event) { // Set the data to be the first selected item's text
-
 				event.data = formatDataToTransfer(sourceTable.getSelection());
 			}
-
 		});
 	}
 
+	/**
+	 * 
+	 */
+	public void addFieldOnDoubleClick(){
+		if(sourceTable.getSelection().length==1){
+			addNewProperty(targetTableViewer, sourceTable.getSelection()[0].getText());
+			enableControlButons();
+			}
+	}
+	
 	/**
 	 * Validate.
 	 * 
@@ -716,11 +750,11 @@ public class FieldDialog extends Dialog {
 		for (FilterProperties temp : propertyList) {
 			if (!temp.getPropertyname().trim().isEmpty()) {
 				// String Regex = "[\\@]{1}[\\{]{1}[\\w]*[\\}]{1}||[\\w]*"; --- TODO PLEASE DO NOT REMOVE THIS COMMENT
-				Matcher matchs = Pattern.compile(Constants.REGEX).matcher(temp.getPropertyname().trim());
+				Matcher matchs = Pattern.compile(Constants.REGEX_ALPHA_NUMERIC).matcher(temp.getPropertyname().trim());
 				if (!matchs.matches()) {
 					targetTable.setSelection(propertyCounter);
 					lblPropertyError.setVisible(true);
-					lblPropertyError.setText(Messages.ALLOWED_CHARACTERS);
+					lblPropertyError.setText(Messages.FIELDNAME_NOT_ALPHANUMERIC_ERROR);
 					return false;
 				}
 			} else {
@@ -769,7 +803,11 @@ public class FieldDialog extends Dialog {
 		return propertyValidator;
 	}
 
-	private String formatDataToTransfer(TableItem[] selectedTableItems) {
+	/**
+	 * @param selectedTableItems
+	 * @return
+	 */
+	public String formatDataToTransfer(TableItem[] selectedTableItems) {
 		StringBuffer buffer = new StringBuffer();
 		for (TableItem tableItem : selectedTableItems) {
 			buffer.append(tableItem.getText() + "#");
@@ -792,7 +830,7 @@ public class FieldDialog extends Dialog {
 		return false;
 	}
 
-	private void getSourceFieldsFromPropagatedSchema(Table sourceTable) {
+	public void getSourceFieldsFromPropagatedSchema(Table sourceTable) {
 		TableItem sourceTableItem = null;
 		if (sourceFieldsList != null && !sourceFieldsList.isEmpty())
 			for (String filedName : sourceFieldsList) {
@@ -954,5 +992,11 @@ public class FieldDialog extends Dialog {
 		return targetTableViewer;
 	}
 	
+	public void dropAction(DropTargetEvent event) {
+		operationOnDrop(event);
+		if(isPrimaryKeyDialog){
+			validateTargetFieldOnDrop();
+		}
+	}
 	
 }
