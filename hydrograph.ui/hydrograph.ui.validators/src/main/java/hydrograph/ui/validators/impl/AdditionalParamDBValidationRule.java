@@ -12,6 +12,7 @@
  *******************************************************************************/
 package hydrograph.ui.validators.impl;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -46,7 +47,7 @@ public class AdditionalParamDBValidationRule implements IValidator{
 			boolean isJobFileImported) {
 		
 		Map<String, String> additionalParam = null;
-		if(object != null && object instanceof Map){
+		if(object != null && Map.class.isAssignableFrom(object.getClass())){
 				additionalParam = (Map<String, String>) object;
 				if (!additionalParam.isEmpty()) {
 					return validatePropertyMap(additionalParam, propertyName);
@@ -62,60 +63,52 @@ public class AdditionalParamDBValidationRule implements IValidator{
 		return errorMessage;
 	}
 
-	private boolean validatePropertyMap(Map<String, String> additionalParam,
-			String propertyName) {
-		boolean retValue = false;
-
-		if(StringUtils.isNotBlank(additionalParam.get(Constants.NO_OF_PARAM))){
-			retValue = validatePopertyFields(additionalParam, propertyName, propertyName);
-		}else{
-			retValue = true;
+	private boolean validatePropertyMap(Map<String, String> additionalParam, String propertyName) {
+		if(additionalParam.containsKey(Constants.NUMBER_OF_PARTITIONS) && 
+				additionalParam.containsKey(Constants.ADDITIONAL_DB_FETCH_SIZE) &&
+				additionalParam.containsKey(Constants.ADDITIONAL_PARAMETERS_FOR_DB)){//input
+			if((StringUtils.isNotBlank(additionalParam.get(Constants.NUMBER_OF_PARTITIONS))
+					&& validatePopertyFields(additionalParam, propertyName, propertyName))	
+					&& (additionalParam.containsKey(Constants.ADDITIONAL_DB_FETCH_SIZE) &&
+							validateFetchSizeField(additionalParam, propertyName, propertyName)) 
+					&& validateAdditionalParam(additionalParam, propertyName, propertyName)){
+				return true;
+			}
 		}
-		if(retValue){
-			retValue = validateAdditionField(additionalParam, propertyName, propertyName);
+		else if(additionalParam.containsKey(Constants.ADDITIONAL_DB_CHUNK_SIZE) && 
+				additionalParam.containsKey(Constants.ADDITIONAL_PARAMETERS_FOR_DB)){//output
+			if(validateChunkSize(additionalParam, propertyName, propertyName) &&
+					validateAdditionalParam(additionalParam, propertyName, propertyName)){
+				return true;
+			}
 		}
-		
-		if(retValue){
-			retValue = validateAdditionalParam(additionalParam, propertyName, propertyName);
-		}
-		
-		return retValue;
+		return false;
 	}
+	
 	
 	private boolean validatePopertyFields(Map<String, String> additionalParam, String errorMessage, String propertyName){
-		boolean isValid = false;
-		for (String key : additionalParam.keySet()) {
-			if(!StringUtils.equalsIgnoreCase(key, Constants.ADDITIONAL_DB_PARAM) && !StringUtils.equalsIgnoreCase(key, Constants.FETCH_SIZE)){
-				if (StringUtils.isNotBlank(additionalParam.get(key))) {
-					if(!StringUtils.equalsIgnoreCase(key, Constants.PARTITION_KEY)){
-						Matcher matchs = Pattern.compile(Constants.NUMERIC_REGEX).matcher(additionalParam.get(key));
-						isValid = validateNumbericField(additionalParam.get(key), propertyName, errorMessage, matchs);
-						if(!isValid){break;}
-					}
-				}else{
-					isValid = false;
-					errorMessage = propertyName + " is mandatory";
-					break;
-				}
-			}
+		if(validateNumeric(additionalParam, Constants.NUMBER_OF_PARTITIONS, propertyName) && 
+				validateNumeric(additionalParam, Constants.NOP_UPPER_BOUND, propertyName) &&
+				validateNumeric(additionalParam, Constants.NOP_LOWER_BOUND, propertyName) &&
+				StringUtils.isNotBlank(additionalParam.get(Constants.DB_PARTITION_KEY)) && 
+				compareBigIntegerValue(additionalParam.get(Constants.NOP_UPPER_BOUND), additionalParam.get(Constants.NOP_LOWER_BOUND))){
+			return true;
+		}else{
+			errorMessage = propertyName + " is mandatory";
+			return false;
 		}
-		return isValid;
+	}	
+	
+	private boolean validateNumeric(Map<String, String> additionalParam, String key, String propertyName){
+		if (StringUtils.isNotBlank(additionalParam.get(key))) {
+			Matcher matchs = Pattern.compile(Constants.NUMERIC_REGEX).matcher(additionalParam.get(key));
+			return validateNumericField(additionalParam.get(key), propertyName, errorMessage, matchs);
+		}
+		return false;
 	}
 	
-	private boolean validateAdditionField(Map<String, String> additionalParam, String errorMessage, String propertyName){
-		boolean isValid = false;
-		for(String key : additionalParam.keySet()){
-			if(StringUtils.equalsIgnoreCase(key, Constants.FETCH_SIZE) && StringUtils.isNotBlank(additionalParam.get(Constants.FETCH_SIZE))
-					|| StringUtils.equalsIgnoreCase(key, Constants.CHUNK_SIZE) && StringUtils.isNotBlank(additionalParam.get(Constants.CHUNK_SIZE))){
-				Matcher matchs = Pattern.compile(Constants.NUMERIC_REGEX).matcher(additionalParam.get(key));
-				isValid = validateNumbericField(additionalParam.get(key), propertyName, errorMessage, matchs);
-				if(!isValid){break;}
-			}
-		}
-		return isValid;
-	}
 	
-	private boolean validateNumbericField(String value, String propertyName, String errorMessage, Matcher matchs){
+	private boolean validateNumericField(String value, String propertyName, String errorMessage, Matcher matchs){
 		boolean isValid = false;
 		if(matchs.matches()||ParameterUtil.isParameter(value)){
 			isValid =  true;
@@ -126,12 +119,20 @@ public class AdditionalParamDBValidationRule implements IValidator{
 		return isValid;
 	}
 	
+	private boolean validateFetchSizeField(Map<String, String> additionalParam, String errorMessage, String propertyName){
+		return validateNumeric(additionalParam, Constants.ADDITIONAL_DB_FETCH_SIZE, propertyName);
+	}
+	
+	private boolean validateChunkSize(Map<String, String> additionalParam, String errorMessage, String propertyName){
+		return validateNumeric(additionalParam, Constants.ADDITIONAL_DB_CHUNK_SIZE, propertyName);
+	}
+	
 	private boolean validateAdditionalParam(Map<String, String> additionalParam, String errorMessage, String propertyName){
 		boolean isValid = false;
 		for(String key : additionalParam.keySet()){
-			if(StringUtils.equalsIgnoreCase(key, Constants.ADDITIONAL_DB_PARAM) && StringUtils.isNotBlank(additionalParam.get(Constants.ADDITIONAL_DB_PARAM))){
+			if(StringUtils.equalsIgnoreCase(key, Constants.ADDITIONAL_PARAMETERS_FOR_DB) && StringUtils.isNotBlank(additionalParam.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB))){
 				Matcher matchs=Pattern.compile(Constants.DB_REGEX).matcher(additionalParam.get(key));
-				isValid = validateNumbericField(additionalParam.get(key), propertyName, errorMessage, matchs);
+				isValid = validateNumericField(additionalParam.get(key), propertyName, errorMessage, matchs);
 				if(!isValid){break;}
 			}else{
 				isValid =  true;
@@ -139,5 +140,40 @@ public class AdditionalParamDBValidationRule implements IValidator{
 			
 		}
 		return isValid;
+	}
+	
+	/**
+	 * The Function will compare bigInteger values
+	 * @param value1
+	 * @param value2
+	 * @return
+	 */
+	private boolean compareBigIntegerValue(String value1, String value2){
+		if(StringUtils.isNotBlank(value1) && StringUtils.isNotBlank(value2) && validateNumericField(value1) && validateNumericField(value2) ){
+			BigInteger int1= BigInteger.valueOf(Long.parseLong(value1));
+			BigInteger int2 = BigInteger.valueOf(Long.parseLong(value2));
+			if(int1.compareTo(int2) == -1){
+				return false;
+			}
+			
+		}
+		return true;
+	}
+	
+	
+	/**
+	 * The Function used to validate the field & field should be positive integer
+	 * @param text
+	 * @param text1Decorator
+	 * @return
+	 */
+	private boolean validateNumericField(String text){
+		if(StringUtils.isNotBlank(text)){
+			Matcher matchs = Pattern.compile(Constants.NUMERIC_REGEX).matcher(text);
+			if (matchs.matches()) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

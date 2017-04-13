@@ -112,7 +112,7 @@ public class OutputTeradataUiConverter extends OutputUiConverter{
 			
 		propertyMap.put(PropertyNameConstants.LOAD_TYPE_CONFIGURATION.value(), loadSelectedDetails);
 		
-		additionalParameterDetails.put(Constants.DB_CHUNK_SIZE, getParameterValue(PropertyNameConstants.CHUNK_SIZE.value(),
+		additionalParameterDetails.put(Constants.ADDITIONAL_DB_CHUNK_SIZE, getParameterValue(PropertyNameConstants.CHUNK_SIZE.value(),
 				outputTeradata.getChunkSize() == null ? "" : outputTeradata.getChunkSize().getValue()));
 		
 		if(outputTeradata.getExtraUrlParams() !=null){

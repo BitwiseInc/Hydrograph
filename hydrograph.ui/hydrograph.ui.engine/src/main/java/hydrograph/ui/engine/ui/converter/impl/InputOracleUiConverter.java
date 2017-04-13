@@ -120,24 +120,24 @@ public class InputOracleUiConverter extends InputUiConverter {
 		propertyMap.put(PropertyNameConstants.SELECT_OPTION.value(), databaseSelectionConfig);
 		
 		if(inputOracle.getNumPartitions() !=null ){
-			additionalParameterDetails.put(Constants.NO_OF_PARTITION, getParameterValue(PropertyNameConstants.NUMBER_OF_PARTITIONS.value(),
+			additionalParameterDetails.put(Constants.NUMBER_OF_PARTITIONS, getParameterValue(PropertyNameConstants.NUMBER_OF_PARTITIONS.value(),
 					inputOracle.getNumPartitions() == null ? "" : inputOracle.getNumPartitions().getValue()));
 				
 			if(inputOracle.getNumPartitions().getColumnName() !=null && StringUtils.isNotBlank(inputOracle.getNumPartitions().getColumnName().getValue())){
 				additionalParameterDetails.put(Constants.DB_PARTITION_KEY, inputOracle.getNumPartitions().getColumnName().getValue());
 			}
 			if(inputOracle.getNumPartitions().getUpperBound() !=null ){
-				additionalParameterDetails.put(Constants.PARTITION_KEY_UPPER_BOUND, getParameterValue(PropertyNameConstants.UPPER_BOUND.value(),						
+				additionalParameterDetails.put(Constants.NOP_UPPER_BOUND, getParameterValue(PropertyNameConstants.UPPER_BOUND.value(),						
 						inputOracle.getNumPartitions().getUpperBound().getValue()));
 			}
 			if(inputOracle.getNumPartitions().getLowerBound() !=null ){
-				additionalParameterDetails.put(Constants.PARTITION_KEY_LOWER_BOUND,getParameterValue(PropertyNameConstants.LOWER_BOUND.value(), 
+				additionalParameterDetails.put(Constants.NOP_LOWER_BOUND,getParameterValue(PropertyNameConstants.LOWER_BOUND.value(), 
 						inputOracle.getNumPartitions().getLowerBound().getValue()));
 			}
 		}
 		
 		if(inputOracle.getFetchSize() != null){
-			additionalParameterDetails.put(Constants.FECTH_SIZE,getParameterValue(PropertyNameConstants.FETCH_SIZE.value(), 
+			additionalParameterDetails.put(Constants.ADDITIONAL_DB_FETCH_SIZE,getParameterValue(PropertyNameConstants.FETCH_SIZE.value(), 
 					inputOracle.getFetchSize().getValue()));
 		}
 		

@@ -77,7 +77,7 @@ public class OutputAdditionalParametersDialog extends Dialog {
 		if (StringUtils.isNotBlank(windowTitle))
 			windowLabel = windowTitle;
 		else
-			windowLabel = Constants.ADDITIONAL_PARAMETERS_FOR_DB_WINDOW_LABEL;
+			windowLabel = Messages.ADDITIONAL_PARAMETERS_FOR_DB_WINDOW_LABEL;
 		this.propertyDialogButtonBar = propertyDialogButtonBar;
 		this.outputAdditionalParameterValues = initialMap;
 		this.cursor = cursor;
@@ -107,11 +107,10 @@ public class OutputAdditionalParametersDialog extends Dialog {
 		GridData gd_chunkSizeTextBox = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		gd_chunkSizeTextBox.horizontalIndent = 10;
 		chunkSizeTextBox.setLayoutData(gd_chunkSizeTextBox);
+		chunkSizeTextBox.setText(CHUNK_SIZE_VALUE);
 		controlDecoration = WidgetUtility.addDecorator(chunkSizeTextBox, Messages.DB_NUMERIC_PARAMETERZIATION_ERROR);
-		if (StringUtils.isBlank(chunkSizeTextBox.getText())) {
-			chunkSizeTextBox.setText(CHUNK_SIZE_VALUE);
-			controlDecoration.hide();
-		}
+		controlDecoration.hide();
+		controlDecoration.setMarginWidth(2);
 
 		additionalDBParametersLabel = new Label(composite, SWT.NONE);
 		GridData gd_additionalDBParametersLabel = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
@@ -121,6 +120,7 @@ public class OutputAdditionalParametersDialog extends Dialog {
 
 		additionalParameterTextBox = new Text(composite, SWT.BORDER);
 		additionalParameterControlDecoration = WidgetUtility.addDecorator(additionalParameterTextBox,Messages.ADDITIONAL_PARAMETER_ERROR_DECORATOR_MESSAGE);
+		additionalParameterControlDecoration.setMarginWidth(2);
 		additionalParameterControlDecoration.hide();
 		GridData gd_additionalParameter = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		gd_additionalParameter.horizontalIndent = 10;
@@ -166,10 +166,8 @@ public class OutputAdditionalParametersDialog extends Dialog {
 	private void addOutputAdditionalParameterValues() {
 
 		if (outputAdditionalParameterValues != null && !outputAdditionalParameterValues.isEmpty()) {
-			if (StringUtils.isNotBlank((String) outputAdditionalParameterValues.get(Constants.DB_CHUNK_SIZE))) {
-				chunkSizeTextBox.setText((String) outputAdditionalParameterValues.get(Constants.DB_CHUNK_SIZE));
+				chunkSizeTextBox.setText((String) outputAdditionalParameterValues.get(Constants.ADDITIONAL_DB_CHUNK_SIZE));
 				Utils.INSTANCE.addMouseMoveListener(chunkSizeTextBox, cursor);	
-			}
 			if (StringUtils.isNotBlank((String) outputAdditionalParameterValues.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB))) {
 				additionalParameterTextBox
 						.setText((String) outputAdditionalParameterValues.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB));
@@ -205,9 +203,8 @@ public class OutputAdditionalParametersDialog extends Dialog {
 	@Override
 	protected void okPressed() {
 		outputAdditionalParameterValues = new LinkedHashMap<>();
-		outputAdditionalParameterValues.put(chunkSize.getText(), chunkSizeTextBox.getText());
-		outputAdditionalParameterValues.put(additionalDBParametersLabel.getText(),
-				additionalParameterTextBox.getText());
+		outputAdditionalParameterValues.put(Constants.ADDITIONAL_DB_CHUNK_SIZE, chunkSizeTextBox.getText());
+		outputAdditionalParameterValues.put(Constants.ADDITIONAL_PARAMETERS_FOR_DB, additionalParameterTextBox.getText());
 		super.okPressed();
 	}
 

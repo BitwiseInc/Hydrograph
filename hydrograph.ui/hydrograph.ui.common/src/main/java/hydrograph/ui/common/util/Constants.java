@@ -380,30 +380,16 @@ public class Constants {
 	public static final String CONSOLE_BUFFER_SIZE_PREFERANCE_NAME="console_buffer_size";
 	public static final String DEFUALT_CONSOLE_BUFFER_SIZE = "10000";
 	public static final String DISALLOW_DOCTYPE_DECLARATION = "http://apache.org/xml/features/disallow-doctype-decl";
-	public static final String ADDITIONAL_PARAMETERS_FOR_DB_LABEL = "Additional\nParameters";
-	public static final String ADDITIONAL_PARAMETERS_FOR_DB_WINDOW_LABEL = "Additional Parameters";
-	public static final String NO_OF_PARTITION = "No. Of Partitions";
-	public static final String PARTITION_KEY_LOWER_BOUND="Partition Key Value Lower Bound";
-	public static final String PARTITION_KEY_UPPER_BOUND = "Partition Key Value Upper Bound";
-	public static final String FECTH_SIZE="Fetch Size";
-	public static final String DB_PARTITION_KEY="Partition Key";
-	public static final String ADDITIONAL_PARAMETERS_FOR_DB ="Additional DB Parameters";
-	public static final String DB_CHUNK_SIZE="Chunk Size";
 	public static final String NUMERIC_REGEX = "[\\d]*";
 	
-	//for Db Componnts
-	public static final String ADDITIONAL_DB_PARAM = "Additional DB Parameters";
-	public static final String FETCH_SIZE = "Fetch Size";
-	public static final String NO_OF_PARAM = "No. Of Partitions";
-	public static final String PARTITION_KEY = "Partition Key";
-	public static final String CHUNK_SIZE = "Chunk Size";
 	
 	public static final String NUMBER_OF_PARTITIONS = "numPartitions";
-	public static final String NOP_LOWER_BOUND = "numPartitions/lowerBound";
-	public static final String NOP_UPPER_BOUND = "numPartitions/upperBound";
+	public static final String NOP_LOWER_BOUND = "lowerBound";
+	public static final String NOP_UPPER_BOUND = "upperBound";
 	public static final String ADDITIONAL_DB_FETCH_SIZE = "fetchSize";
-	public static final String ADDITIONAL_DB_PARAM_URL = "extraUrlParams";
 	public static final String ADDITIONAL_DB_CHUNK_SIZE = "chunkSize";
+	public static final String DB_PARTITION_KEY="partitionKey";
+	public static final String ADDITIONAL_PARAMETERS_FOR_DB ="additionalDBParameters";
 	
 }
 

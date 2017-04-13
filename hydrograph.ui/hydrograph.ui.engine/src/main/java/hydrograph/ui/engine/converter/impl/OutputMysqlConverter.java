@@ -129,12 +129,12 @@ public class OutputMysqlConverter extends OutputConverter{
 	
 	private void getAdditionalParameterForDBComponent() {
 		Object obj = properties.get(PropertyNameConstants.OUTPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value());
-		if(obj != null && obj instanceof Map){
+		if(obj != null && Map.class.isAssignableFrom(obj.getClass())){
 			Map<String, String> uiValue = (Map<String, String>) properties.get(PropertyNameConstants.OUTPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value());
 			if(uiValue !=null && !uiValue.isEmpty()){
-				if(StringUtils.isNotBlank((String)uiValue.get(Constants.DB_CHUNK_SIZE))){
+				if(StringUtils.isNotBlank((String)uiValue.get(Constants.ADDITIONAL_DB_CHUNK_SIZE))){
 					ElementValueStringType chunkSize = new ElementValueStringType();
-					chunkSize.setValue(String.valueOf(uiValue.get(Constants.DB_CHUNK_SIZE)));
+					chunkSize.setValue(String.valueOf(uiValue.get(Constants.ADDITIONAL_DB_CHUNK_SIZE)));
 					mysqlOutput.setChunkSize(chunkSize);
 				}
 				if(StringUtils.isNotBlank((String)uiValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB))){
