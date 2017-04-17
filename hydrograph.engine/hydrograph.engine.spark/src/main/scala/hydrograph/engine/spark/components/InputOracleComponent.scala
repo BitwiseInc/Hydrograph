@@ -115,7 +115,7 @@ class InputOracleComponent(inputRDBMSEntity: InputRDBMSEntity, iComponentsParams
     } catch {
       case e: Exception =>
         LOG.error("Error in Input  Oracle input component '" + inputRDBMSEntity.getComponentId + "', Error" + e.getMessage, e)
-        throw new RuntimeException("Error in Input Oracle Component " + inputRDBMSEntity.getComponentId, e)
+        throw new DatabaseConnectionException("Error in Input Oracle Component " + inputRDBMSEntity.getComponentId, e)
     }
   }
 
