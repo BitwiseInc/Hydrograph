@@ -321,18 +321,6 @@ public class Utils {
 		return paramValue;
 	}
 	 
-	 /**
-	 * 
-	 * get the file Path according to the Parameter value
-	 * @param paramValue
-	 * @param extSchemaPathText
-	 * @return the file Path according to the Parameter value
-	 */
-	/*public String getParamFilePathForText(String paramValue, Text extSchemaPathText) {
-		extSchemaPathText.setToolTipText(paramValue);
-		return paramValue;
-	}*/
-
 	 private boolean checkParameterValue(String value){
 		 boolean isParam = false;
 		 String[] splitString = value.split("/");
@@ -375,18 +363,6 @@ public class Utils {
 		}
 	}
 	
-	/*public void addMouseMoveListenerForTextBox(Text extSchemaPathText, Cursor cursor) {
-		if (extSchemaPathText.getText().contains("@{")) {
-			extSchemaPathText.setForeground(CustomColorRegistry.INSTANCE.getColorFromRegistry(0, 0, 255));
-			extSchemaPathText.setCursor(cursor);
-			extSchemaPathText.addMouseMoveListener(getMouseListnerForTextBox(extSchemaPathText));
-		} else {
-			extSchemaPathText.removeMouseMoveListener(getMouseListnerForTextBox(extSchemaPathText));
-			extSchemaPathText.setForeground(CustomColorRegistry.INSTANCE.getColorFromRegistry(0, 0, 0));
-			extSchemaPathText.setCursor(null);
-		}
-	}*/
-	 
 	 private void getParamMap(List<File> FileNameList){
 			IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 			IFileEditorInput input = (IFileEditorInput) page.getActiveEditor().getEditorInput();
@@ -465,18 +441,6 @@ public class Utils {
 	}	
 	
 	
-	/*private MouseMoveListener getMouseListnerForTextBox(final Text extSchemaPathText) {
-		final MouseMoveListener listner = new MouseMoveListener() {
-
-			@Override
-			public void mouseMove(MouseEvent e) {
-				String paramValue = Utils.INSTANCE.getParamValueForTextBox(extSchemaPathText.getText());
-				finalParamPath = Utils.INSTANCE.getParamFilePathForText(paramValue, extSchemaPathText);
-			}
-		};
-		return listner;
-	}*/
-	 
 	 private File[]  listFilesForFolder(final File folder) {
 			File[] listofFiles = folder.listFiles();
 			

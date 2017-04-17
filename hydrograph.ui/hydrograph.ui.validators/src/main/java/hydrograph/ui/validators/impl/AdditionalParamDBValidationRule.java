@@ -73,6 +73,8 @@ public class AdditionalParamDBValidationRule implements IValidator{
 							validateFetchSizeField(additionalParam, propertyName, propertyName)) 
 					&& validateAdditionalParam(additionalParam, propertyName, propertyName)){
 				return true;
+			}else{
+				return true;
 			}
 		}
 		else if(additionalParam.containsKey(Constants.ADDITIONAL_DB_CHUNK_SIZE) && 

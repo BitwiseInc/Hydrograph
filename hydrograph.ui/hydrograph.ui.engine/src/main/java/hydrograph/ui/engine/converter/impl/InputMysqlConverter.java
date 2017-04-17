@@ -156,7 +156,7 @@ public class InputMysqlConverter extends InputConverter{
 			}
 
 			
-			if (uiValue.get(Constants.NUMBER_OF_PARTITIONS) !=null && StringUtils.isNotBlank(uiValue.get(Constants.NUMBER_OF_PARTITIONS))) {
+			if (StringUtils.isNotBlank((String)uiValue.get(Constants.NUMBER_OF_PARTITIONS))) {
 				TypePartitionsChoice typePartitionsChoice = new TypePartitionsChoice();
 
 					ElementValueIntegerType partitionKey = new ElementValueIntegerType();

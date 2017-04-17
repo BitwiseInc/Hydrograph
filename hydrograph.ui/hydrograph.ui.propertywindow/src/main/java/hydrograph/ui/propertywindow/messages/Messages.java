@@ -422,7 +422,7 @@ public class Messages extends NLS {
 	public static String DB_NUMERIC_PARAMETERZIATION_ERROR ;
 	public static String ADDITIONAL_PARAMETERS_FOR_DB_WINDOW_LABEL;
 	public static String UPPER_LOWER_BOUND_ERROR;
-	public static String ADDITIONAL_PARAMETERS_FOR_DB_LABEL = "Additional\nParameters";
+	public static String ADDITIONAL_PARAMETERS_FOR_DB_LABEL;
 	
 	
 	static {
