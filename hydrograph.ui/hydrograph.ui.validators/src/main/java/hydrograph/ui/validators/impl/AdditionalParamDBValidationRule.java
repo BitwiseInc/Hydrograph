@@ -64,20 +64,26 @@ public class AdditionalParamDBValidationRule implements IValidator{
 	}
 
 	private boolean validatePropertyMap(Map<String, String> additionalParam, String propertyName) {
-		if(additionalParam.containsKey(Constants.NUMBER_OF_PARTITIONS) && 
-				additionalParam.containsKey(Constants.ADDITIONAL_DB_FETCH_SIZE) &&
-				additionalParam.containsKey(Constants.ADDITIONAL_PARAMETERS_FOR_DB)){//input
-			if((StringUtils.isNotBlank(additionalParam.get(Constants.NUMBER_OF_PARTITIONS))
-					&& validatePopertyFields(additionalParam, propertyName, propertyName))	
+		if(!additionalParam.containsKey(Constants.ADDITIONAL_DB_CHUNK_SIZE) &&
+				(additionalParam.containsKey(Constants.NUMBER_OF_PARTITIONS) || 
+				additionalParam.containsKey(Constants.ADDITIONAL_DB_FETCH_SIZE) ||
+				additionalParam.containsKey(Constants.ADDITIONAL_PARAMETERS_FOR_DB))){//input
+			
+			if(StringUtils.isNotBlank(additionalParam.get(Constants.NUMBER_OF_PARTITIONS))){
+				if((validatePopertyFields(additionalParam, propertyName, propertyName))	
 					&& (additionalParam.containsKey(Constants.ADDITIONAL_DB_FETCH_SIZE) &&
 							validateFetchSizeField(additionalParam, propertyName, propertyName)) 
 					&& validateAdditionalParam(additionalParam, propertyName, propertyName)){
-				return true;
-			}else{
+					return true;
+				}
+			}else if((additionalParam.containsKey(Constants.ADDITIONAL_DB_FETCH_SIZE) &&
+					validateFetchSizeField(additionalParam, propertyName, propertyName)) 
+			&& validateAdditionalParam(additionalParam, propertyName, propertyName)){
 				return true;
 			}
-		}
-		else if(additionalParam.containsKey(Constants.ADDITIONAL_DB_CHUNK_SIZE) && 
+			
+			
+		}else if(additionalParam.containsKey(Constants.ADDITIONAL_DB_CHUNK_SIZE) || 
 				additionalParam.containsKey(Constants.ADDITIONAL_PARAMETERS_FOR_DB)){//output
 			if(validateChunkSize(additionalParam, propertyName, propertyName) &&
 					validateAdditionalParam(additionalParam, propertyName, propertyName)){

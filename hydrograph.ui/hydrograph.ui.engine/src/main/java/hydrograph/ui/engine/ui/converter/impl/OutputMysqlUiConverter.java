@@ -107,8 +107,10 @@ public class OutputMysqlUiConverter extends OutputUiConverter{
 		}
 		propertyMap.put(PropertyNameConstants.LOAD_TYPE_CONFIGURATION.value(), loadSelectedDetails);
 		
-		additionalParameterDetails.put(Constants.ADDITIONAL_DB_CHUNK_SIZE, getParameterValue(PropertyNameConstants.CHUNK_SIZE.value(),
-				outputMysql.getChunkSize() == null ? "" : outputMysql.getChunkSize().getValue()));
+		if(outputMysql.getChunkSize() !=null){
+			additionalParameterDetails.put(Constants.ADDITIONAL_DB_CHUNK_SIZE, getParameterValue(PropertyNameConstants.CHUNK_SIZE.value(),
+					outputMysql.getChunkSize() == null ? "" : outputMysql.getChunkSize().getValue()));
+		}
 
 		if(outputMysql.getExtraUrlParams() !=null){
 			additionalParameterDetails.put(Constants.ADDITIONAL_PARAMETERS_FOR_DB, getParameterValue(PropertyNameConstants.ADDITIONAL_DB_PARAM.value(),

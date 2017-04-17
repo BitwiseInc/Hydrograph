@@ -139,8 +139,10 @@ public class InputMysqlUiConverter extends InputUiConverter{
 			}
 		}
 		
-		additionalParameterDetails.put(Constants.ADDITIONAL_DB_FETCH_SIZE,getParameterValue(PropertyNameConstants.FETCH_SIZE.value(), 
-				inputMysql.getFetchSize().getValue()));
+		if(inputMysql.getFetchSize() !=null){
+			additionalParameterDetails.put(Constants.ADDITIONAL_DB_FETCH_SIZE,getParameterValue(PropertyNameConstants.FETCH_SIZE.value(), 
+					inputMysql.getFetchSize().getValue()));
+		}
 		
 		if(inputMysql.getExtraUrlParams() !=null){
 			additionalParameterDetails.put(Constants.ADDITIONAL_PARAMETERS_FOR_DB,getParameterValue(PropertyNameConstants.ADDITIONAL_DB_PARAM.value(), 

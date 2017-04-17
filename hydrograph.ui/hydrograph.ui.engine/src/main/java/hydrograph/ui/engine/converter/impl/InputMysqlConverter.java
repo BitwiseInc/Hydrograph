@@ -148,7 +148,12 @@ public class InputMysqlConverter extends InputConverter{
 				ElementValueStringType fetchSize = new ElementValueStringType();
 				fetchSize.setValue(String.valueOf(uiValue.get(Constants.ADDITIONAL_DB_FETCH_SIZE)));
 				mysqlInput.setFetchSize(fetchSize);
+			}else{
+				ElementValueStringType fetchSize = new ElementValueStringType();
+				fetchSize.setValue("1000");
+				mysqlInput.setFetchSize(fetchSize);
 			}
+			
 			if (StringUtils.isNotBlank((String) uiValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB))) {
 				ElementValueStringType extraUrlParams = new ElementValueStringType();
 				extraUrlParams.setValue(String.valueOf(uiValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB)));
@@ -156,7 +161,7 @@ public class InputMysqlConverter extends InputConverter{
 			}
 
 			
-			if (StringUtils.isNotBlank((String)uiValue.get(Constants.NUMBER_OF_PARTITIONS))) {
+			if (StringUtils.isNotBlank(uiValue.get(Constants.NUMBER_OF_PARTITIONS))) {
 				TypePartitionsChoice typePartitionsChoice = new TypePartitionsChoice();
 
 					ElementValueIntegerType partitionKey = new ElementValueIntegerType();

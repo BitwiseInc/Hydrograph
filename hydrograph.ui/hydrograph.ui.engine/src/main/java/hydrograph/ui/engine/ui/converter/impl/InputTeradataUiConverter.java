@@ -135,8 +135,10 @@ public class InputTeradataUiConverter extends InputUiConverter{
 			}
 		}
 		
-		additionalParameterDetails.put(Constants.ADDITIONAL_DB_FETCH_SIZE,getParameterValue(PropertyNameConstants.FETCH_SIZE.value(), 
-				inputTeradata.getFetchSize().getValue()));
+		if(inputTeradata.getFetchSize() != null){
+			additionalParameterDetails.put(Constants.ADDITIONAL_DB_FETCH_SIZE,getParameterValue(PropertyNameConstants.FETCH_SIZE.value(), 
+					inputTeradata.getFetchSize().getValue()));
+		}
 		
 		if(inputTeradata.getExtraUrlParams() !=null){
 			additionalParameterDetails.put(Constants.ADDITIONAL_PARAMETERS_FOR_DB,getParameterValue(PropertyNameConstants.ADDITIONAL_DB_PARAM.value(), 

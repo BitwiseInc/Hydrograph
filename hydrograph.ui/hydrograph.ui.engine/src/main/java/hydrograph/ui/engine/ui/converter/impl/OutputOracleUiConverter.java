@@ -110,8 +110,11 @@ public class OutputOracleUiConverter extends OutputUiConverter {
 				
 		}
 		propertyMap.put(PropertyNameConstants.LOAD_TYPE_CONFIGURATION.value(), loadSelectedDetails);
-		additionalParameterDetails.put(Constants.ADDITIONAL_DB_CHUNK_SIZE, getParameterValue(PropertyNameConstants.CHUNK_SIZE.value(),
-				outputOracle.getChunkSize() == null ? "" : outputOracle.getChunkSize().getValue()));
+		
+		if(outputOracle.getChunkSize() !=null){
+			additionalParameterDetails.put(Constants.ADDITIONAL_DB_CHUNK_SIZE, getParameterValue(PropertyNameConstants.CHUNK_SIZE.value(),
+					outputOracle.getChunkSize() == null ? "" : outputOracle.getChunkSize().getValue()));
+		}
 		
 		if(outputOracle.getExtraUrlParams() !=null){
 			additionalParameterDetails.put(Constants.ADDITIONAL_PARAMETERS_FOR_DB, getParameterValue(PropertyNameConstants.ADDITIONAL_DB_PARAM.value(),

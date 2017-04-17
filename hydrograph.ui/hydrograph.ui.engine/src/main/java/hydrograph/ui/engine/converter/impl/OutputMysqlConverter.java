@@ -142,6 +142,10 @@ public class OutputMysqlConverter extends OutputConverter{
 					extraUrlParams.setValue(String.valueOf(uiValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB)));
 					mysqlOutput.setExtraUrlParams(extraUrlParams);
 				}
+			}else{
+				ElementValueStringType chunkSize = new ElementValueStringType();
+				chunkSize.setValue("1000");
+				mysqlOutput.setChunkSize(chunkSize);
 			}	
 		}else{
 			ElementValueStringType chunkSize = new ElementValueStringType();
