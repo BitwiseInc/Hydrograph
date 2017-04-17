@@ -61,7 +61,9 @@ import hydrograph.ui.propertywindow.widgets.customwidgets.UpdateByKeysWidget;
 import hydrograph.ui.propertywindow.widgets.customwidgets.WidgetHelper;
 import hydrograph.ui.propertywindow.widgets.customwidgets.config.WidgetConfig;
 import hydrograph.ui.propertywindow.widgets.customwidgets.databasecomponents.DatabaseTestConnectionWidget;
+import hydrograph.ui.propertywindow.widgets.customwidgets.databasecomponents.InputAdditionalParametersWidget;
 import hydrograph.ui.propertywindow.widgets.customwidgets.databasecomponents.LoadTypeConfigurationWidget;
+import hydrograph.ui.propertywindow.widgets.customwidgets.databasecomponents.OutputAdditionalParametersWidget;
 import hydrograph.ui.propertywindow.widgets.customwidgets.databasecomponents.SelectionDatabaseWidget;
 import hydrograph.ui.propertywindow.widgets.customwidgets.joinproperty.ELTJoinPortCount;
 import hydrograph.ui.propertywindow.widgets.customwidgets.metastore.ELTExtractMetaStoreDataWidget;
@@ -174,6 +176,8 @@ public class WidgetFactory {
 		
 		EXTRACT_METASTORE_DATA_WIDGET(ELTExtractMetaStoreDataWidget.class),
 		LOAD_TYPE_CONFIGURATION_WIDGET(LoadTypeConfigurationWidget.class, WidgetHelper.INSTANCE.getRunTimeWidgetConfig(Constants.LOAD_TYPE_CONFIGURATION_LABEL,Messages.LOAD_TYPE_CONFIGURATION_WINDOW_LABEL)),
+		INPUT_ADDITIONAL_PARAMETERS_WIDGET(InputAdditionalParametersWidget.class, WidgetHelper.INSTANCE.getRunTimeWidgetConfig(Messages.ADDITIONAL_PARAMETERS_FOR_DB_LABEL,Messages.ADDITIONAL_PARAMETERS_FOR_DB_WINDOW_LABEL)),
+		OUTPUT_ADDITIONAL_PARAMETERS_WIDGET(OutputAdditionalParametersWidget.class, WidgetHelper.INSTANCE.getRunTimeWidgetConfig(Messages.ADDITIONAL_PARAMETERS_FOR_DB_LABEL,Messages.ADDITIONAL_PARAMETERS_FOR_DB_WINDOW_LABEL)),
 		PROPOGATE_WIDGET(PropogateWidget.class),
 		RUNPROGRAM_TEXT_WIDGET (RunComponentWidget.class),
 		OUTPUT_RECORD_COUNT_WIDGET(OutputRecordCountWidget.class,WidgetHelper.INSTANCE.getOperationClassForTransformWidgetConfig(Constants.NORMALIZE,Constants.NORMALIZE_DISPLAYNAME, Constants.NORMALIZE_WINDOW_TITLE)),

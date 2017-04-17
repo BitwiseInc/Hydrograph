@@ -15,6 +15,7 @@ package hydrograph.ui.engine.converter.impl;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -25,9 +26,10 @@ import hydrograph.engine.jaxb.commontypes.TypeBaseField;
 import hydrograph.engine.jaxb.commontypes.TypeInputOutSocket;
 import hydrograph.engine.jaxb.inputtypes.Oracle;
 import hydrograph.engine.jaxb.ioracle.TypeInputOracleOutSocket;
+import hydrograph.engine.jaxb.ioracle.TypePartitionsChoice;
 import hydrograph.ui.common.util.Constants;
-import hydrograph.ui.datastructure.property.GridRow;
 import hydrograph.ui.datastructure.property.DatabaseSelectionConfig;
+import hydrograph.ui.datastructure.property.GridRow;
 import hydrograph.ui.engine.constants.PropertyNameConstants;
 import hydrograph.ui.engine.converter.InputConverter;
 import hydrograph.ui.graph.model.Component;
@@ -41,6 +43,7 @@ import hydrograph.ui.logging.factory.LogFactory;
 public class InputOracleConverter extends InputConverter {
 
 	private static final Logger logger = LogFactory.INSTANCE.getLogger(InputOracleConverter.class);
+	private Oracle oracleInput;
 
 	public InputOracleConverter(Component component) {
 		super(component);
@@ -68,7 +71,7 @@ public class InputOracleConverter extends InputConverter {
 	public void prepareForXML() {
 		logger.debug("Generating XML for {}", properties.get(Constants.PARAM_NAME));
 		super.prepareForXML();
-		 Oracle oracleInput = (Oracle) baseComponent;
+		  oracleInput = (Oracle) baseComponent;
 		oracleInput.setRuntimeProperties(getRuntimeProperties());
 
 		ElementValueStringType sid = new ElementValueStringType();
@@ -130,7 +133,71 @@ public class InputOracleConverter extends InputConverter {
 				}
 			}
 		}
+		
+		addAdditionalParameters();
 
+	}
+
+	private void addAdditionalParameters() {
+		Object obj = properties.get(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value());
+		if(obj != null && Map.class.isAssignableFrom(obj.getClass())){
+			Map<String, String> uiValue = (Map<String, String>) properties
+					.get(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value());
+			
+			if (uiValue != null) {
+				
+				if (StringUtils.isNotBlank((String) uiValue.get(Constants.ADDITIONAL_DB_FETCH_SIZE))) {
+					ElementValueStringType fetchSize = new ElementValueStringType();
+					fetchSize.setValue(String.valueOf(uiValue.get(Constants.ADDITIONAL_DB_FETCH_SIZE)));
+					oracleInput.setFetchSize(fetchSize);
+				}else{
+					ElementValueStringType fetchSize = new ElementValueStringType();
+					fetchSize.setValue("1000");
+					oracleInput.setFetchSize(fetchSize);
+				}
+				
+				if (StringUtils.isNotBlank((String) uiValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB))) {
+					ElementValueStringType extraUrlParams = new ElementValueStringType();
+					extraUrlParams.setValue(String.valueOf(uiValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB)));
+					oracleInput.setExtraUrlParams(extraUrlParams);
+				}
+				
+				if (StringUtils.isNotBlank(uiValue.get(Constants.NUMBER_OF_PARTITIONS))) {
+					TypePartitionsChoice typePartitionsChoice = new TypePartitionsChoice();
+					
+						ElementValueIntegerType partitionKey = new ElementValueIntegerType();
+						BigInteger no_of_partitions = getDBAdditionalParamValue(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value(),
+								Constants.NUMBER_OF_PARTITIONS, PropertyNameConstants.NUMBER_OF_PARTITIONS.value());
+						partitionKey.setValue(no_of_partitions);
+						typePartitionsChoice.setValue(no_of_partitions);
+						
+					if (StringUtils.isNotBlank((String) uiValue.get(Constants.DB_PARTITION_KEY))) {
+						ElementValueStringType partitionKeyColumn = new ElementValueStringType();
+						partitionKeyColumn.setValue(String.valueOf(uiValue.get(Constants.DB_PARTITION_KEY)));
+						typePartitionsChoice.setColumnName(partitionKeyColumn);
+					}
+					if (uiValue.get(Constants.NOP_LOWER_BOUND) !=null) {
+						ElementValueIntegerType partition_key_lower_bound = new ElementValueIntegerType();
+						BigInteger partition_lower_bound = getDBAdditionalParamValue(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value(),
+								Constants.NOP_LOWER_BOUND, PropertyNameConstants.NOP_LOWER_BOUND.value());
+						partition_key_lower_bound.setValue(partition_lower_bound);
+						typePartitionsChoice.setLowerBound(partition_key_lower_bound);
+					}
+					if (uiValue.get(Constants.NOP_UPPER_BOUND) !=null) {
+						ElementValueIntegerType partition_key_upper_bound = new ElementValueIntegerType();
+						BigInteger partition_upper_bound = getDBAdditionalParamValue(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value(),
+								Constants.NOP_UPPER_BOUND, PropertyNameConstants.NOP_UPPER_BOUND.value());
+						partition_key_upper_bound.setValue(partition_upper_bound);
+						typePartitionsChoice.setUpperBound(partition_key_upper_bound);
+					}
+					oracleInput.setNumPartitions(typePartitionsChoice);
+				}
+			}
+		}else{
+			ElementValueStringType fetchSize = new ElementValueStringType();
+			fetchSize.setValue("1000");
+			oracleInput.setFetchSize(fetchSize);
+		}
 	}
 
 	@Override
@@ -146,5 +213,5 @@ public class InputOracleConverter extends InputConverter {
 		}
 		return typeBaseFields;
 	}
-
+	
 }

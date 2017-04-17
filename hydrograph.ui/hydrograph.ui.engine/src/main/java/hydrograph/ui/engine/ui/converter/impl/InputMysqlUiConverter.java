@@ -14,6 +14,7 @@ package hydrograph.ui.engine.ui.converter.impl;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,7 @@ import hydrograph.engine.jaxb.commontypes.TypeInputOutSocket;
 import hydrograph.engine.jaxb.commontypes.TypeProperties;
 import hydrograph.engine.jaxb.commontypes.TypeProperties.Property;
 import hydrograph.engine.jaxb.inputtypes.Mysql;
+import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.datastructure.property.DatabaseSelectionConfig;
 import hydrograph.ui.datastructure.property.GridRow;
 import hydrograph.ui.datastructure.property.Schema;
@@ -61,6 +63,7 @@ public class InputMysqlUiConverter extends InputUiConverter{
 		LOGGER.debug("Fetching Input-Mysql-Properties for {}", componentName);
 		Mysql inputMysql = (Mysql) typeBaseComponent;
 		DatabaseSelectionConfig databaseSelectionConfig = new DatabaseSelectionConfig();
+		Map<String, Object> additionalParameterDetails = new HashMap<String, Object>();
 
 		setValueInPropertyMap(PropertyNameConstants.JDBC_DRIVER.value(),
 				inputMysql.getJdbcDriver() == null ? "" : inputMysql.getJdbcDriver().getValue());
@@ -118,6 +121,36 @@ public class InputMysqlUiConverter extends InputUiConverter{
 		 */
 
 		propertyMap.put(PropertyNameConstants.SELECT_OPTION.value(), databaseSelectionConfig);
+		
+		if(inputMysql.getNumPartitions() !=null ){
+			additionalParameterDetails.put(Constants.NUMBER_OF_PARTITIONS, getParameterValue(PropertyNameConstants.NUMBER_OF_PARTITIONS.value(),
+					inputMysql.getNumPartitions() == null ? "" : inputMysql.getNumPartitions().getValue()));
+				
+			if(inputMysql.getNumPartitions().getColumnName() !=null && StringUtils.isNotBlank(inputMysql.getNumPartitions().getColumnName().getValue())){
+				additionalParameterDetails.put(Constants.DB_PARTITION_KEY, inputMysql.getNumPartitions().getColumnName().getValue());
+			}
+			if(inputMysql.getNumPartitions().getUpperBound() !=null ){
+				additionalParameterDetails.put(Constants.NOP_UPPER_BOUND, getParameterValue(PropertyNameConstants.UPPER_BOUND.value(),						
+						inputMysql.getNumPartitions().getUpperBound().getValue()));
+			}
+			if(inputMysql.getNumPartitions().getLowerBound() !=null ){
+				additionalParameterDetails.put(Constants.NOP_LOWER_BOUND,getParameterValue(PropertyNameConstants.LOWER_BOUND.value(), 
+						inputMysql.getNumPartitions().getLowerBound().getValue()));
+			}
+		}
+		
+		if(inputMysql.getFetchSize() !=null){
+			additionalParameterDetails.put(Constants.ADDITIONAL_DB_FETCH_SIZE,getParameterValue(PropertyNameConstants.FETCH_SIZE.value(), 
+					inputMysql.getFetchSize().getValue()));
+		}
+		
+		if(inputMysql.getExtraUrlParams() !=null){
+			additionalParameterDetails.put(Constants.ADDITIONAL_PARAMETERS_FOR_DB,getParameterValue(PropertyNameConstants.ADDITIONAL_DB_PARAM.value(), 
+					inputMysql.getExtraUrlParams().getValue()));
+		}
+		
+		propertyMap.put(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value(), additionalParameterDetails);
+
 
 		uiComponent.setType(UIComponentsConstants.MYSQL.value());
 		uiComponent.setCategory(UIComponentsConstants.INPUT_CATEGORY.value());

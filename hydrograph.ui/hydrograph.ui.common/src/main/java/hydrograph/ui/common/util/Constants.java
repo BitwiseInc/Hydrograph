@@ -59,9 +59,12 @@ public class Constants {
 	 // Used for validating AlphaNumeric or Parameter E.g Aplha_123 or @{Param_123}
 	public static final String REGEX = "[\\@]{1}[\\{]{1}[\\w]*[\\}]{1}||[\\w]*";
 	// Used for validating Numeric values (only 4 digits) E.g. 1234 and Parameters E.g  @{Param_123}
-	public static final String REGEX_NUMERIC_AND_PARAMETER = "^([\\@]{1}[\\{]{1}[\\s\\S]+[\\}]{1})|([\\d]{4})$";
+	public static final String REGEX_NUMERIC_AND_PARAMETER = "^([\\@]{1}[\\{]{1}[\\s\\S]+[\\}]{1})|([\\d])$";
 	// Used for validating only Parameters E.g  @{Param_123}
 	public static final String PARAMETER_REGEX ="^[\\@]{1}[\\{]{1}[\\s\\S]+[\\}]{1}";
+	
+	//Used for validating AlphaNumeric with , and = operator or Parameter E.g Aplha_123 or @{Param_123} or i = 10, j=20
+	public static final String DB_REGEX = "[\\@]{1}[\\{]{1}[\\w]*[\\}]{1}||[\\w,\\=]*";
 
 	// Used for validating AlphaNumeric or Parameter E.g Aplha_123
 	public static final String REGEX_ALPHA_NUMERIC = "[\\w]*";
@@ -377,5 +380,16 @@ public class Constants {
 	public static final String CONSOLE_BUFFER_SIZE_PREFERANCE_NAME="console_buffer_size";
 	public static final String DEFUALT_CONSOLE_BUFFER_SIZE = "10000";
 	public static final String DISALLOW_DOCTYPE_DECLARATION = "http://apache.org/xml/features/disallow-doctype-decl";
+	public static final String NUMERIC_REGEX = "[\\d]*";
+	
+	
+	public static final String NUMBER_OF_PARTITIONS = "numPartitions";
+	public static final String NOP_LOWER_BOUND = "lowerBound";
+	public static final String NOP_UPPER_BOUND = "upperBound";
+	public static final String ADDITIONAL_DB_FETCH_SIZE = "fetchSize";
+	public static final String ADDITIONAL_DB_CHUNK_SIZE = "chunkSize";
+	public static final String DB_PARTITION_KEY="partitionKey";
+	public static final String ADDITIONAL_PARAMETERS_FOR_DB ="additionalDBParameters";
+	
 }
 

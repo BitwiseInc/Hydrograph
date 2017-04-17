@@ -251,6 +251,23 @@ public class Utils {
 		return PARAMETER_NOT_FOUND;
 	}
 	 
+	public String getParamValueForTextBox(String parameterValue) {
+		Optional<String> optional = Optional.of(parameterValue);
+		if (jobProps != null && !jobProps.isEmpty() && optional.isPresent() && parameterValue.contains("@{")) {
+			Enumeration<?> properties = jobProps.propertyNames();
+			while (properties.hasMoreElements()) {
+				String key = (String) properties.nextElement();
+				String value = jobProps.getProperty(key);
+				if (parameterValue.contains(key)) {
+					parameterValue = parameterValue.replace("@{" + key + "}", value);
+				}
+			}
+
+			return parameterValue;
+		}
+		return PARAMETER_NOT_FOUND;
+	}
+	
 	 /**
 	  * The function will remove last char of string.
 	 * @param value
@@ -345,7 +362,7 @@ public class Utils {
 			extSchemaPathText.setCursor(null);
 		}
 	}
-	 
+	
 	 private void getParamMap(List<File> FileNameList){
 			IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 			IFileEditorInput input = (IFileEditorInput) page.getActiveEditor().getEditorInput();
@@ -422,7 +439,8 @@ public class Utils {
 		};
 		return listner;
 	}	
-	 
+	
+	
 	 private File[]  listFilesForFolder(final File folder) {
 			File[] listofFiles = folder.listFiles();
 			

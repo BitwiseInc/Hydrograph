@@ -47,6 +47,7 @@ import hydrograph.ui.logging.factory.LogFactory;
 public class OutputMysqlConverter extends OutputConverter{
 
 	private static final Logger logger = LogFactory.INSTANCE.getLogger(OutputMysqlConverter.class);
+	private Mysql mysqlOutput;
 	
 	public OutputMysqlConverter(Component component) {
 		super(component);
@@ -77,7 +78,7 @@ public class OutputMysqlConverter extends OutputConverter{
 	public void prepareForXML() {
 		logger.debug("Generating XML for {}", properties.get(Constants.PARAM_NAME));
 		super.prepareForXML();
-		Mysql mysqlOutput = (Mysql) baseComponent;
+		 mysqlOutput = (Mysql) baseComponent;
 		mysqlOutput.setRuntimeProperties(getRuntimeProperties());
 		
 		ElementValueStringType tableName = new ElementValueStringType();
@@ -121,13 +122,42 @@ public class OutputMysqlConverter extends OutputConverter{
 		
 		TypeLoadChoice loadValue = addTypeLoadChoice();
 		mysqlOutput.setLoadType(loadValue);
+		
+		getAdditionalParameterForDBComponent();
 	}
 
 	
+	private void getAdditionalParameterForDBComponent() {
+		Object obj = properties.get(PropertyNameConstants.OUTPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value());
+		if(obj != null && Map.class.isAssignableFrom(obj.getClass())){
+			Map<String, String> uiValue = (Map<String, String>) properties.get(PropertyNameConstants.OUTPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value());
+			if(uiValue !=null && !uiValue.isEmpty()){
+				if(StringUtils.isNotBlank((String)uiValue.get(Constants.ADDITIONAL_DB_CHUNK_SIZE))){
+					ElementValueStringType chunkSize = new ElementValueStringType();
+					chunkSize.setValue(String.valueOf(uiValue.get(Constants.ADDITIONAL_DB_CHUNK_SIZE)));
+					mysqlOutput.setChunkSize(chunkSize);
+				}
+				if(StringUtils.isNotBlank((String)uiValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB))){
+					ElementValueStringType extraUrlParams = new ElementValueStringType();
+					extraUrlParams.setValue(String.valueOf(uiValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB)));
+					mysqlOutput.setExtraUrlParams(extraUrlParams);
+				}
+			}else{
+				ElementValueStringType chunkSize = new ElementValueStringType();
+				chunkSize.setValue("1000");
+				mysqlOutput.setChunkSize(chunkSize);
+			}	
+		}else{
+			ElementValueStringType chunkSize = new ElementValueStringType();
+			chunkSize.setValue("1000");
+			mysqlOutput.setChunkSize(chunkSize);
+		}
+	}
+
 	private TypeLoadChoice addTypeLoadChoice() {
 		TypeLoadChoice loadValue = new TypeLoadChoice();
 		Map<String, String> uiValue = (Map<String, String>) properties.get(PropertyNameConstants.LOAD_TYPE_CONFIGURATION.value());
-		if(uiValue != null){
+		if(uiValue != null && !uiValue.isEmpty()){
 			if (uiValue.containsKey(Constants.LOAD_TYPE_UPDATE_KEY)) {
 				loadValue.setUpdate(getUpdateKeys((String) uiValue.get(Constants.LOAD_TYPE_UPDATE_KEY)));
 			} else if (uiValue.containsKey(Constants.LOAD_TYPE_NEW_TABLE_KEY)) {
@@ -137,8 +167,10 @@ public class OutputMysqlConverter extends OutputConverter{
 			} else if (uiValue.containsKey(Constants.LOAD_TYPE_REPLACE_KEY)) {
 				loadValue.setTruncateLoad(uiValue.get(Constants.LOAD_TYPE_REPLACE_KEY));
 			}
-			
+		}else{
+			loadValue.setNewTable(getPrimaryKeyColumnFields(""));
 		}
+		
 		return loadValue;
 	}
 	

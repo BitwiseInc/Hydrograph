@@ -1,5 +1,5 @@
 
-/*******************************************************************************
+/*****************************************************************************************
  * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -10,7 +10,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- ******************************************************************************/
+ ****************************************************************************************/
 
 package hydrograph.engine.jaxb.outputtypes;
 
@@ -41,7 +41,8 @@ import hydrograph.engine.jaxb.omysql.TypeOutputMysqlBase;
  *         &lt;element name="tableName" type="{hydrograph/engine/jaxb/commontypes}element-value-string-type"/>
  *         &lt;element name="username" type="{hydrograph/engine/jaxb/commontypes}element-value-string-type"/>
  *         &lt;element name="password" type="{hydrograph/engine/jaxb/commontypes}element-value-string-type"/>
- *         &lt;element name="chunkSize" type="{hydrograph/engine/jaxb/commontypes}element-value-integer-type" minOccurs="0"/>
+ *         &lt;element name="chunkSize" type="{hydrograph/engine/jaxb/commontypes}element-value-string-type" minOccurs="0"/>
+ *         &lt;element name="extraUrlParams" type="{hydrograph/engine/jaxb/commontypes}element-value-string-type" minOccurs="0"/>
  *         &lt;element name="loadType" type="{hydrograph/engine/jaxb/omysql}type-load-choice"/>
  *       &lt;/sequence>
  *     &lt;/extension>
@@ -61,6 +62,7 @@ import hydrograph.engine.jaxb.omysql.TypeOutputMysqlBase;
     "username",
     "password",
     "chunkSize",
+    "extraUrlParams",
     "loadType"
 })
 public class Mysql
@@ -80,7 +82,8 @@ public class Mysql
     protected ElementValueStringType username;
     @XmlElement(required = true)
     protected ElementValueStringType password;
-    protected ElementValueIntegerType chunkSize;
+    protected ElementValueStringType chunkSize;
+    protected ElementValueStringType extraUrlParams;
     @XmlElement(required = true)
     protected TypeLoadChoice loadType;
 
@@ -257,10 +260,10 @@ public class Mysql
      * 
      * @return
      *     possible object is
-     *     {@link ElementValueIntegerType }
+     *     {@link ElementValueStringType }
      *     
      */
-    public ElementValueIntegerType getChunkSize() {
+    public ElementValueStringType getChunkSize() {
         return chunkSize;
     }
 
@@ -269,11 +272,35 @@ public class Mysql
      * 
      * @param value
      *     allowed object is
-     *     {@link ElementValueIntegerType }
+     *     {@link ElementValueStringType }
      *     
      */
-    public void setChunkSize(ElementValueIntegerType value) {
+    public void setChunkSize(ElementValueStringType value) {
         this.chunkSize = value;
+    }
+
+    /**
+     * Gets the value of the extraUrlParams property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link ElementValueStringType }
+     *     
+     */
+    public ElementValueStringType getExtraUrlParams() {
+        return extraUrlParams;
+    }
+
+    /**
+     * Sets the value of the extraUrlParams property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ElementValueStringType }
+     *     
+     */
+    public void setExtraUrlParams(ElementValueStringType value) {
+        this.extraUrlParams = value;
     }
 
     /**

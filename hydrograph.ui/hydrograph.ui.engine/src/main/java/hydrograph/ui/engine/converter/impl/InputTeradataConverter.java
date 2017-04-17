@@ -15,6 +15,7 @@ package hydrograph.ui.engine.converter.impl;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -25,6 +26,7 @@ import hydrograph.engine.jaxb.commontypes.TypeBaseField;
 import hydrograph.engine.jaxb.commontypes.TypeInputOutSocket;
 import hydrograph.engine.jaxb.inputtypes.Teradata;
 import hydrograph.engine.jaxb.iteradata.TypeInputTeradataOutSocket;
+import hydrograph.engine.jaxb.iteradata.TypePartitionsChoice;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.datastructure.property.DatabaseSelectionConfig;
 import hydrograph.ui.datastructure.property.GridRow;
@@ -44,6 +46,7 @@ import hydrograph.ui.propertywindow.messages.Messages;
 public class InputTeradataConverter extends InputConverter{
 
 	private static final Logger logger = LogFactory.INSTANCE.getLogger(InputTeradataConverter.class);
+	private Teradata teradataInput;
 	
 	public InputTeradataConverter(Component component) {
 		super(component);
@@ -70,7 +73,7 @@ public class InputTeradataConverter extends InputConverter{
 	@Override
 	public void prepareForXML() {
 		super.prepareForXML();
-		Teradata teradataInput = (Teradata) baseComponent;
+		 teradataInput = (Teradata) baseComponent;
 		teradataInput.setRuntimeProperties(getRuntimeProperties());
 
 		ElementValueStringType dataBaseName = new ElementValueStringType();
@@ -128,8 +131,70 @@ public class InputTeradataConverter extends InputConverter{
 				}
 			}
 		}
+		
+		addAdditionalParameters();
 	}
 	
+	private void addAdditionalParameters() {
+		
+		Object obj = properties.get(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value());
+		if (obj != null && Map.class.isAssignableFrom(obj.getClass())) {
+			Map<String, String> uiValue = (Map<String, String>) properties
+					.get(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value());
+			
+			if (StringUtils.isNotBlank((String) uiValue.get(Constants.ADDITIONAL_DB_FETCH_SIZE))) {
+				ElementValueStringType fetchSize = new ElementValueStringType();
+				fetchSize.setValue(String.valueOf(uiValue.get(Constants.ADDITIONAL_DB_FETCH_SIZE)));
+				teradataInput.setFetchSize(fetchSize);
+			}else{
+				ElementValueStringType fetchSize = new ElementValueStringType();
+				fetchSize.setValue("1000");
+				teradataInput.setFetchSize(fetchSize);
+			}
+			
+			if (StringUtils.isNotBlank((String) uiValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB))) {
+				ElementValueStringType extraUrlParams = new ElementValueStringType();
+				extraUrlParams.setValue(String.valueOf(uiValue.get(Constants.ADDITIONAL_PARAMETERS_FOR_DB)));
+				teradataInput.setExtraUrlParams(extraUrlParams);
+			}
+
+			if (StringUtils.isNotBlank(uiValue.get(Constants.NUMBER_OF_PARTITIONS))) {
+				TypePartitionsChoice typePartitionsChoice = new TypePartitionsChoice();
+
+					ElementValueIntegerType partitionKey = new ElementValueIntegerType();
+					BigInteger no_of_partitions = getDBAdditionalParamValue(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value(),
+							Constants.NUMBER_OF_PARTITIONS, PropertyNameConstants.NUMBER_OF_PARTITIONS.value());
+					partitionKey.setValue(no_of_partitions);
+					typePartitionsChoice.setValue(no_of_partitions);
+				
+				if (StringUtils.isNotBlank((String) uiValue.get(Constants.DB_PARTITION_KEY))) {
+					ElementValueStringType partitionKeyColumn = new ElementValueStringType();
+					partitionKeyColumn.setValue(String.valueOf(uiValue.get(Constants.DB_PARTITION_KEY)));
+					typePartitionsChoice.setColumnName(partitionKeyColumn);
+				}
+				if (uiValue.get(Constants.NOP_LOWER_BOUND) !=null) {
+					ElementValueIntegerType partition_key_lower_bound = new ElementValueIntegerType();
+					BigInteger partition_lower_bound = getDBAdditionalParamValue(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value(),
+							Constants.NOP_LOWER_BOUND, PropertyNameConstants.NOP_LOWER_BOUND.value());
+					partition_key_lower_bound.setValue(partition_lower_bound);
+					typePartitionsChoice.setLowerBound(partition_key_lower_bound);
+				}
+				if (uiValue.get(Constants.NOP_UPPER_BOUND) !=null) {
+					ElementValueIntegerType partition_key_upper_bound = new ElementValueIntegerType();
+					BigInteger partition_upper_bound = getDBAdditionalParamValue(PropertyNameConstants.INPUT_ADDITIONAL_PARAMETERS_FOR_DB_COMPONENTS.value(),
+							Constants.NOP_UPPER_BOUND, PropertyNameConstants.NOP_UPPER_BOUND.value());
+					partition_key_upper_bound.setValue(partition_upper_bound);
+					typePartitionsChoice.setUpperBound(partition_key_upper_bound);
+				}
+				teradataInput.setNumPartitions(typePartitionsChoice);
+			}
+		}else{
+			ElementValueStringType fetchSize = new ElementValueStringType();
+			fetchSize.setValue("1000");
+			teradataInput.setFetchSize(fetchSize);
+		}
+	}
+
 	@Override
 	protected List<TypeBaseField> getFieldOrRecord(List<GridRow> list) {
 		logger.debug("Generating data for {} for property {}",
