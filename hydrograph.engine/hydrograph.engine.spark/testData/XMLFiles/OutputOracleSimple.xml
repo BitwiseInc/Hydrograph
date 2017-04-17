@@ -20,20 +20,59 @@
     <inputs id="input1" batch="0" xsi:type="it:textFileDelimited">
         <outSocket id="out0">
             <schema name="outSchema">
-                <field name="aa" type="java.lang.Integer"/>
-                <field name="bb" type="java.lang.Boolean"/>
-                <field name="cc" type="java.lang.Long"/>
-                <field name="dd" type="java.lang.Float"/>
-                <field name="ee" type="java.lang.Integer"/>
-                <field name="gg" type="java.lang.String"/>
-                <field name="ff" type="java.lang.Double"/>
-                <field name="hh" type="java.util.Date" format="yyyy/MM/dd"/>
-                <field name="ii" type="java.util.Date" format="yyyy/MM/dd HH:mm:ss"/>
-                <field name="jj" type="java.math.BigDecimal" scale="2"
-                       precision="10" scaleType="explicit"/>
+                <field name="APPLYINGFOR" type="java.lang.String" />
+                <field name="APPTYPE" 		type="java.lang.String" />
+                <field name="BOOKLETTYPE" type="java.lang.String" />
+                <field name="GIVENNAMEAPPLICANT" type="java.lang.String" />
+                <field name="SURNAMEAPPLICANT" type="java.lang.String" />
+                <field name="GENDER" type="java.lang.String" />
+                <field name="ALIAS" type="java.lang.String" />
+                <field name="CHECKPREVNAME" type="java.lang.String" />
+                <field name="DT_DOB" type="java.util.Date" format="yyyy/MM/dd" />
+                <field name="VALIDITYREQUIRED" type="java.lang.String" />
+                <field name="CHECKPOBOUTSIDEINDIA" type="java.lang.String" />
+                <field name="POB" type="java.lang.String" />
+                <field name="COUNTRY" type="java.lang.String" />
+                <field name="STATE" type="java.lang.String" />
+                <field name="STATEPROVINCE" type="java.lang.String" />
+                <field name="MARITALSTATUS" type="java.lang.String" />
+                <field name="CITIZENSHIPOFINDIABY" type="java.lang.String" />
+                <field name="PAN" type="java.lang.Long" />
+                <field name="VOTEID" type="java.lang.Long" />
+                <field name="EMPLOYMENTTYPE" type="java.lang.String" />
+                <field name="ORGANIZATIONNAME" type="java.lang.String" />
+                <field name="PARENTSPOUSEGOVTEMP" type="java.lang.String" />
+                <field name="EDUCATIONALQUALIFICATION" type="java.lang.String" />
+                <field name="NONECR" type="java.lang.String" />
+                <field name="AADHAARNUMBER" type="java.lang.Long" />
+                <field name="FATHERGUARDIANFILEPASSNUMBER" type="java.math.BigDecimal" scale="3" scaleType="explicit" precision="7" />
+                <field name="FATHERGUARDIANISNOTINDIAN" type="java.lang.String" />
+                <field name="MOTHERGUARDIANFILEPASSNUMBER" type="java.lang.Long" />
+                <field name="MOTHERGUARDIANISNOTINDIAN" type="java.lang.String" />
+                <field name="CHECKTEMPVISIT" type="java.lang.String" />
+                <field name="RESIDINGSINCEMONTH" type="java.lang.String" />
+                <field name="RESIDINGSINCEYEAR" type="java.lang.Integer" />
+                <field name="STATEPRESENTADD" type="java.lang.String" />
+                <field name="PIN" type="java.lang.Long" />
+                <field name="MOBILENUMBER" type="java.lang.Long" />
+                <field name="TELEPHONENUMBER" type="java.lang.Long" />
+                <field name="CHECKDIPLOMAATICOFFICIAL" type="java.lang.String" />
+                <field name="TF_DIPLOFFICIALPASSPORTNUMBER" type="java.lang.Long" />
+                <field name="DDISSUEDATE" type="java.util.Date" format="yyyy/MM/dd HH:mm:ss" />
+                <field name="DDEXPIRYDATE" type="java.util.Date" format="yyyy/MM/dd HH:mm:ss" />
+                <field name="CHECKAPPLIEDPP" type="java.lang.String" />
+                <field name="FILENUMBER" type="java.math.BigDecimal" scale="5" scaleType="explicit" precision="9" />
+                <field name="MONTHOFAPPLYING" type="java.lang.String" />
+                <field name="YEAROFAPPLYING" type="java.lang.Integer" />
+                <field name="CHECKCRIMINAL" type="java.lang.String" />
+                <field name="CHECKOFFENCE5YEARS" type="java.lang.String" />
+                <field name="CHECKPASSPORTREFUSED" type="java.lang.String" />
+                <field name="CHECKIMPOUNDEDREVOKED" type="java.lang.String" />
+                <field name="TF_PASSPORTNUMBER_REVOKE" type="java.lang.Long" />
+                <field name="ECDATEOFISSUE" type="java.util.Date" format="yyyy/MM/dd" />
             </schema>
         </outSocket>
-        <path uri="hydrograph.engine.spark\testData\inputFiles\RedshiftData.txt"/>
+        <path uri="hydrograph.engine.spark/testData/inputFiles/250mb.txt"/>
         <delimiter value=","/>
         <hasHeader value="false"/>
     </inputs>
@@ -41,39 +80,75 @@
     <outputs id="out oracle" batch="0" xsi:type="ot:oracle">
         <inSocket fromComponentId="input1" fromSocketId="out0" id="in0" type="in">
             <schema name="schema1">
-                <field name="aa" type="java.lang.Short"/>
-                <field name="bb" type="java.lang.Boolean"/>
-                <field name="cc" type="java.lang.Long"/>
-                <field name="dd" type="java.lang.Float"/>
-                <field name="ee" type="java.lang.Integer"/>
-                <field name="gg" type="java.lang.String"/>
-                <field name="ff" type="java.lang.Double"/>
-                <field name="hh" type="java.util.Date" format="yyyy-MM-dd"/>
-                <field name="ii" type="java.util.Date" format="yyyy-MM-dd HH:mm:ss"/>
-                <field name="jj" type="java.math.BigDecimal" scale="2"
-                       precision="10" scaleType="explicit"/>
+                <field name="APPLYINGFOR" type="java.lang.String" />
+                <field name="APPTYPE" 		type="java.lang.String" />
+                <field name="BOOKLETTYPE" type="java.lang.String" />
+                <field name="GIVENNAMEAPPLICANT" type="java.lang.String" />
+                <field name="SURNAMEAPPLICANT" type="java.lang.String" />
+                <field name="GENDER" type="java.lang.String" />
+                <field name="ALIAS" type="java.lang.String" />
+                <field name="CHECKPREVNAME" type="java.lang.String" />
+                <field name="DT_DOB" type="java.util.Date" format="yyyy/MM/dd" />
+                <field name="VALIDITYREQUIRED" type="java.lang.String" />
+                <field name="CHECKPOBOUTSIDEINDIA" type="java.lang.String" />
+                <field name="POB" type="java.lang.String" />
+                <field name="COUNTRY" type="java.lang.String" />
+                <field name="STATE" type="java.lang.String" />
+                <field name="STATEPROVINCE" type="java.lang.String" />
+                <field name="MARITALSTATUS" type="java.lang.String" />
+                <field name="CITIZENSHIPOFINDIABY" type="java.lang.String" />
+                <field name="PAN" type="java.lang.Long" />
+                <field name="VOTEID" type="java.lang.Long" />
+                <field name="EMPLOYMENTTYPE" type="java.lang.String" />
+                <field name="ORGANIZATIONNAME" type="java.lang.String" />
+                <field name="PARENTSPOUSEGOVTEMP" type="java.lang.String" />
+                <field name="EDUCATIONALQUALIFICATION" type="java.lang.String" />
+                <field name="NONECR" type="java.lang.String" />
+                <field name="AADHAARNUMBER" type="java.lang.Long" />
+                <field name="FATHERGUARDIANFILEPASSNUMBER" type="java.math.BigDecimal" scale="3" scaleType="explicit" precision="7" />
+                <field name="FATHERGUARDIANISNOTINDIAN" type="java.lang.String" />
+                <field name="MOTHERGUARDIANFILEPASSNUMBER" type="java.lang.Long" />
+                <field name="MOTHERGUARDIANISNOTINDIAN" type="java.lang.String" />
+                <field name="CHECKTEMPVISIT" type="java.lang.String" />
+                <field name="RESIDINGSINCEMONTH" type="java.lang.String" />
+                <field name="RESIDINGSINCEYEAR" type="java.lang.Integer" />
+                <field name="STATEPRESENTADD" type="java.lang.String" />
+                <field name="PIN" type="java.lang.Long" />
+                <field name="MOBILENUMBER" type="java.lang.Long" />
+                <field name="TELEPHONENUMBER" type="java.lang.Long" />
+                <field name="CHECKDIPLOMAATICOFFICIAL" type="java.lang.String" />
+                <field name="TF_DIPLOFFICIALPASSPORTNUMBER" type="java.lang.Long" />
+                <field name="DDISSUEDATE" type="java.util.Date" format="yyyy/MM/dd HH:mm:ss" />
+                <field name="DDEXPIRYDATE" type="java.util.Date" format="yyyy/MM/dd HH:mm:ss" />
+                <field name="CHECKAPPLIEDPP" type="java.lang.String" />
+                <field name="FILENUMBER" type="java.math.BigDecimal" scale="5" scaleType="explicit" precision="9" />
+                <field name="MONTHOFAPPLYING" type="java.lang.String" />
+                <field name="YEAROFAPPLYING" type="java.lang.Integer" />
+                <field name="CHECKCRIMINAL" type="java.lang.String" />
+                <field name="CHECKOFFENCE5YEARS" type="java.lang.String" />
+                <field name="CHECKPASSPORTREFUSED" type="java.lang.String" />
+                <field name="CHECKIMPOUNDEDREVOKED" type="java.lang.String" />
+                <field name="TF_PASSPORTNUMBER_REVOKE" type="java.lang.Long" />
+                <field name="ECDATEOFISSUE" type="java.util.Date" format="yyyy/MM/dd" />
             </schema>
         </inSocket>
         <sid value="PRACTICE"/>
         <hostName value="DBDEVSRV"/>
         <port value="1521"/>
         <driverType value="thin"/>
-        <tableName value="testingTableAllTablesbatchSize"/>
+        <tableName value="newTable1125"/>
         <userName value="htcd"/>
         <password value="Bitwise2017"/>
+        <chunkSize value="100000"/>
         <loadType>
-            <newTable>
-                <primaryKeys>
-                    <field name="aa"/>
-                </primaryKeys>
-            </newTable>
+<!--
+            <newTable></newTable>
+-->
+
             <!--<truncateLoad />-->
-            <!--<Insert/>-->
+            <Insert/>
         </loadType>
         <!--<schemaName value="htcd"/>-->
         <!--<chunkSize value="2"/>-->
-        <runtimeProperties>
-            <property name="batchsize" value="9"/>
-        </runtimeProperties>
     </outputs>
 </p:graph>

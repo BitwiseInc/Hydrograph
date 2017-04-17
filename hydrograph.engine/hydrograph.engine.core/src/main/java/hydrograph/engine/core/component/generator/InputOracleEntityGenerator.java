@@ -89,6 +89,58 @@ InputComponentGeneratorBase {
         } else {
             inputRDBMSEntity.setSchemaName(null);
         }
+        /**new parameters that has been added after the open source release*/
+        inputRDBMSEntity.setNumPartitionsValue(inputOracleJaxb.getNumPartitions() == null? Integer.MIN_VALUE:inputOracleJaxb.getNumPartitions().getValue().intValue());
+        if(inputOracleJaxb.getNumPartitions()!=null&&inputOracleJaxb.getNumPartitions().getValue().intValue()==0){
+            LOG.warn("The number of partitions has been entered as ZERO," +
+                    "\nThe Execution shall still continue but will work on a single" +
+                    "\npartition hence impacting performance");
+        }
+
+        /**
+         * @note : At first the check is made for the nullability of the partiton value; in case the partition
+         *          value goes missing, the upper bound, lower bound and column name must not hold a value as the
+         *          JDBCRDD has only two JDBC functions as the one which doesn't do any partitioning and does not accept
+         *          the values from the below parameters listed and the second one which does partitoning accepts the
+         *          aforementioned parameters. Absence of any one parameter may lead to undesirable outcomes
+         * */
+        if(inputOracleJaxb.getNumPartitions()==null){
+            inputRDBMSEntity.setUpperBound(0);
+            inputRDBMSEntity.setLowerBound(0);
+            inputRDBMSEntity.setColumnName("");
+        }
+        else {
+            if (inputOracleJaxb.getNumPartitions().getUpperBound() == null) {
+                throw new RuntimeException("Error in Input Oracle Component '"+inputOracleJaxb.getId()+"'  Upper bound cannot be NULL when numPartitions holds an integer value");
+            } else inputRDBMSEntity.setUpperBound(inputOracleJaxb.getNumPartitions().getUpperBound().getValue().intValue());
+
+            if (inputOracleJaxb.getNumPartitions().getLowerBound() == null) {
+                throw new RuntimeException("Error in Input Oracle Component '"+inputOracleJaxb.getId()+"'  Lower bound cannot be NULL when numPartitions holds an integer value");
+            } else inputRDBMSEntity.setLowerBound(inputOracleJaxb.getNumPartitions().getLowerBound().getValue().intValue());
+
+            if (inputOracleJaxb.getNumPartitions().getColumnName() == null) {
+                throw new RuntimeException("Error in Input Oracle Component '"+inputOracleJaxb.getId()+"' Column Name cannot be NULL when numPartitions holds an integer value");
+            } else inputRDBMSEntity.setColumnName(inputOracleJaxb.getNumPartitions().getColumnName().getValue());
+
+            if(inputOracleJaxb.getNumPartitions().getLowerBound().getValue()
+                    .intValue()==inputOracleJaxb.getNumPartitions().getUpperBound().getValue().intValue()){
+                LOG.warn("'"+inputOracleJaxb.getId()+"'The upper bound and the lower bound values are same! In this case there will only be\n" +
+                        "a single partition");
+            }
+            if(inputOracleJaxb.getNumPartitions().getLowerBound().getValue()
+                    .intValue()>inputOracleJaxb.getNumPartitions().getUpperBound().getValue().intValue()){
+                LOG.error("Error in Input Oracle Component '"+inputOracleJaxb.getId()+"'  Can\'t proceed with partitioning");
+                throw new RuntimeException("Error in Input Oracle Component '"+inputOracleJaxb.getId()+"'  The lower bound is greater than upper bound");
+
+            }
+
+        }
+        //fetchsize
+        inputRDBMSEntity.setFetchSize(inputOracleJaxb.getFetchSize()==null?null: inputOracleJaxb.getFetchSize().getValue());
+        //extra url parameters
+        inputRDBMSEntity.setExtraUrlParameters(inputOracleJaxb.getExtraUrlParams()==null?null:inputOracleJaxb.getExtraUrlParams().getValue());
+
+        /**END*/
     }
 
 

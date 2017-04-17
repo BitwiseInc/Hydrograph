@@ -11,14 +11,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-
 package hydrograph.engine.jaxb.inputtypes;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 import hydrograph.engine.jaxb.commontypes.BooleanValueType;
 import hydrograph.engine.jaxb.commontypes.StandardCharsets;
 import hydrograph.engine.jaxb.itfd.TypeInputFileDelimitedBase;
-
-import javax.xml.bind.annotation.*;
 
 
 /**
@@ -93,24 +95,24 @@ public class TextFileDelimited
 {
 
     @XmlElement(required = true)
-    protected TextFileDelimited.Path path;
+    protected Path path;
     @XmlElement(required = true)
-    protected TextFileDelimited.Delimiter delimiter;
+    protected Delimiter delimiter;
     protected BooleanValueType hasHeader;
     protected BooleanValueType safe;
     protected BooleanValueType strict;
-    protected TextFileDelimited.Charset charset;
-    protected TextFileDelimited.Quote quote;
+    protected Charset charset;
+    protected Quote quote;
 
     /**
      * Gets the value of the path property.
      * 
      * @return
      *     possible object is
-     *     {@link TextFileDelimited.Path }
+     *     {@link Path }
      *     
      */
-    public TextFileDelimited.Path getPath() {
+    public Path getPath() {
         return path;
     }
 
@@ -119,10 +121,10 @@ public class TextFileDelimited
      * 
      * @param value
      *     allowed object is
-     *     {@link TextFileDelimited.Path }
+     *     {@link Path }
      *     
      */
-    public void setPath(TextFileDelimited.Path value) {
+    public void setPath(Path value) {
         this.path = value;
     }
 
@@ -131,10 +133,10 @@ public class TextFileDelimited
      * 
      * @return
      *     possible object is
-     *     {@link TextFileDelimited.Delimiter }
+     *     {@link Delimiter }
      *     
      */
-    public TextFileDelimited.Delimiter getDelimiter() {
+    public Delimiter getDelimiter() {
         return delimiter;
     }
 
@@ -143,10 +145,10 @@ public class TextFileDelimited
      * 
      * @param value
      *     allowed object is
-     *     {@link TextFileDelimited.Delimiter }
+     *     {@link Delimiter }
      *     
      */
-    public void setDelimiter(TextFileDelimited.Delimiter value) {
+    public void setDelimiter(Delimiter value) {
         this.delimiter = value;
     }
 
@@ -227,10 +229,10 @@ public class TextFileDelimited
      * 
      * @return
      *     possible object is
-     *     {@link TextFileDelimited.Charset }
+     *     {@link Charset }
      *     
      */
-    public TextFileDelimited.Charset getCharset() {
+    public Charset getCharset() {
         return charset;
     }
 
@@ -239,10 +241,10 @@ public class TextFileDelimited
      * 
      * @param value
      *     allowed object is
-     *     {@link TextFileDelimited.Charset }
+     *     {@link Charset }
      *     
      */
-    public void setCharset(TextFileDelimited.Charset value) {
+    public void setCharset(Charset value) {
         this.charset = value;
     }
 
@@ -251,10 +253,10 @@ public class TextFileDelimited
      * 
      * @return
      *     possible object is
-     *     {@link TextFileDelimited.Quote }
+     *     {@link Quote }
      *     
      */
-    public TextFileDelimited.Quote getQuote() {
+    public Quote getQuote() {
         return quote;
     }
 
@@ -263,10 +265,10 @@ public class TextFileDelimited
      * 
      * @param value
      *     allowed object is
-     *     {@link TextFileDelimited.Quote }
+     *     {@link Quote }
      *     
      */
-    public void setQuote(TextFileDelimited.Quote value) {
+    public void setQuote(Quote value) {
         this.quote = value;
     }
 

@@ -21,44 +21,138 @@
    <inputs id="inputMysql" batch="0" xsi:type="it:mysql">
     <outSocket id="out0">
         <schema name="schema1">
-            <field name="id" type="java.lang.Integer" />
-            <field name="name" type="java.lang.String" />
-            <field name="city" type="java.lang.String" />
-            <field name="creditPoint" type="java.lang.Double" />
-            <field name="Deptno" type="java.lang.Integer" />
-            <field name="dob" type="java.util.Date" format="yyyy-MM-dd"/>
-            <field name="dobj" type="java.util.Date" format="yyyy-MM-dd HH:mm:ss" />
-            <field name="extra" type="java.math.BigDecimal" scale="2"
-                   precision="10" scaleType="explicit" />
+            <field name="applyingFor" type="java.lang.String" />
+            <field name="apptype" type="java.lang.String" />
+            <field name="bookletType" type="java.lang.String" />
+            <field name="givennameapplicant" type="java.lang.String" />
+            <field name="surnameapplicant" type="java.lang.String" />
+            <field name="gender" type="java.lang.String" />
+            <field name="alias" type="java.lang.Boolean" />
+            <field name="checkPrevName" type="java.lang.Boolean" />
+            <field name="dt_dob" type="java.util.Date" format="yyyy/MM/dd" />
+            <field name="validityRequired" type="java.lang.Boolean" />
+            <field name="checkPOBOutsideIndia" type="java.lang.Boolean" />
+            <field name="POB" type="java.lang.String" />
+            <field name="country" type="java.lang.String" />
+            <field name="state" type="java.lang.String" />
+            <field name="stateProvince" type="java.lang.String" />
+            <field name="maritalStatus" type="java.lang.String" />
+            <field name="citizenshipOfIndiaBy" type="java.lang.String" />
+            <field name="PAN" type="java.lang.Long" />
+            <field name="voteId" type="java.lang.Long" />
+            <field name="employmentType" type="java.lang.String" />
+            <field name="organizationName" type="java.lang.String" />
+            <field name="parentSpouseGovtEmp" type="java.lang.Boolean" />
+            <field name="educationalQualification" type="java.lang.String" />
+            <field name="nonECR" type="java.lang.Boolean" />
+            <field name="aadhaarNumber" type="java.lang.Long" />
+            <field name="fatherGuardianFilePassportNumber" type="java.math.BigDecimal"
+                   scale="3" scaleType="explicit" precision="7" />
+            <field name="fatherGuardiannationalityNotIndian" type="java.lang.Boolean" />
+            <field name="motherGuardianFilePassportNumber" type="java.lang.Long" />
+            <field name="motherGuardiannationalityNotIndian" type="java.lang.Boolean" />
+            <field name="checkTempVisit" type="java.lang.Boolean" />
+            <field name="residingSinceMonth" type="java.lang.String" />
+            <field name="residingSinceYear" type="java.lang.Integer" />
+            <field name="statePresentAdd" type="java.lang.String" />
+            <field name="pin" type="java.lang.Long" />
+            <field name="mobileNumber" type="java.lang.Long" />
+            <field name="telephoneNumber" type="java.lang.Long" />
+            <field name="checkDiplomaaticOfficial" type="java.lang.Boolean" />
+            <field name="tf_DiplOfficialpassportNumber" type="java.lang.Long" />
+            <field name="dDissueDate" type="java.util.Date" format="yyyy/MM/dd HH:mm:ss" />
+            <field name="dDExpiryDate" type="java.util.Date" format="yyyy/MM/dd HH:mm:ss" />
+            <field name="checkappliedPP" type="java.lang.Boolean" />
+            <field name="fileNumber" type="java.math.BigDecimal" scale="5"
+                   scaleType="explicit" precision="9" />
+            <field name="monthofApplying" type="java.lang.String" />
+            <field name="yearofApplying" type="java.lang.Integer" />
+            <field name="checkCriminal" type="java.lang.Boolean" />
+            <field name="checkOffence5years" type="java.lang.Boolean" />
+            <field name="checkPassportRefused" type="java.lang.Boolean" />
+            <field name="checkImpoundedRevoked" type="java.lang.Boolean" />
+            <field name="tf_passportNumber_revoke" type="java.lang.Long" />
+            <field name="ecDateofIssue" type="java.util.Date" format="yyyy/MM/dd" />
         </schema>
     </outSocket>
     <databaseName value="test" />
     <hostName value="10.130.248.53" />
     <!-- <port value="3306" /> -->
     <jdbcDriver value="Connector/J" />
-    <!--<tableName value="ideaJDBC" />-->
-    <selectQuery value="select * from ideaJDBC where id=10" />
+       <numPartitions value="10">
+           <lowerBound value="110"/>
+           <upperBound value="116"/>
+           <columnName value="yearofApplying"/>
+       </numPartitions>
+       <fetchSize value="100000"/>
+       <!--<extraUrlParams value="userServerPrepStmt=false&amp;rewriteBatchStatements=true"/>-->
+       <extraUrlParams value="useServerPrepStmts=false,rewriteBatchedStatements=true"/>
+        <tableName value="benchmarking_0001"/>
+       <username value="root" />
+       <password value="root" />
+        
 
-    <username value="root" />
-    <password value="root" />
    </inputs>
 
     <outputs id="output1" xsi:type="ot:textFileDelimited">
         <inSocket  fromComponentId="inputMysql" fromSocketId="out0" id="in0">
             <schema name="outSchema">
-                <field name="id" type="java.lang.Integer" />
-                <field name="name" type="java.lang.String" />
-                <field name="city" type="java.lang.String" />
-                <field name="creditPoint" type="java.lang.Double" />
-                <field name="Deptno" type="java.lang.Integer" />
-                <field name="dob" type="java.util.Date" format="yyyy-MM-dd"/>
-                <field name="dobj" type="java.util.Date" format="yyyy-MM-dd HH:mm:ss" />
-                <field name="extra" type="java.math.BigDecimal" scale="2"
-                       precision="10" scaleType="explicit" />
+                <field name="applyingFor" type="java.lang.String" />
+                <field name="apptype" type="java.lang.String" />
+                <field name="bookletType" type="java.lang.String" />
+                <field name="givennameapplicant" type="java.lang.String" />
+                <field name="surnameapplicant" type="java.lang.String" />
+                <field name="gender" type="java.lang.String" />
+                <field name="alias" type="java.lang.Boolean" />
+                <field name="checkPrevName" type="java.lang.Boolean" />
+                <field name="dt_dob" type="java.util.Date" format="yyyy/MM/dd" />
+                <field name="validityRequired" type="java.lang.Boolean" />
+                <field name="checkPOBOutsideIndia" type="java.lang.Boolean" />
+                <field name="POB" type="java.lang.String" />
+                <field name="country" type="java.lang.String" />
+                <field name="state" type="java.lang.String" />
+                <field name="stateProvince" type="java.lang.String" />
+                <field name="maritalStatus" type="java.lang.String" />
+                <field name="citizenshipOfIndiaBy" type="java.lang.String" />
+                <field name="PAN" type="java.lang.Long" />
+                <field name="voteId" type="java.lang.Long" />
+                <field name="employmentType" type="java.lang.String" />
+                <field name="organizationName" type="java.lang.String" />
+                <field name="parentSpouseGovtEmp" type="java.lang.Boolean" />
+                <field name="educationalQualification" type="java.lang.String" />
+                <field name="nonECR" type="java.lang.Boolean" />
+                <field name="aadhaarNumber" type="java.lang.Long" />
+                <field name="fatherGuardianFilePassportNumber" type="java.math.BigDecimal"
+                       scale="3" scaleType="explicit" precision="7" />
+                <field name="fatherGuardiannationalityNotIndian" type="java.lang.Boolean" />
+                <field name="motherGuardianFilePassportNumber" type="java.lang.Long" />
+                <field name="motherGuardiannationalityNotIndian" type="java.lang.Boolean" />
+                <field name="checkTempVisit" type="java.lang.Boolean" />
+                <field name="residingSinceMonth" type="java.lang.String" />
+                <field name="residingSinceYear" type="java.lang.Integer" />
+                <field name="statePresentAdd" type="java.lang.String" />
+                <field name="pin" type="java.lang.Long" />
+                <field name="mobileNumber" type="java.lang.Long" />
+                <field name="telephoneNumber" type="java.lang.Long" />
+                <field name="checkDiplomaaticOfficial" type="java.lang.Boolean" />
+                <field name="tf_DiplOfficialpassportNumber" type="java.lang.Long" />
+                <field name="dDissueDate" type="java.util.Date" format="yyyy/MM/dd HH:mm:ss" />
+                <field name="dDExpiryDate" type="java.util.Date" format="yyyy/MM/dd HH:mm:ss" />
+                <field name="checkappliedPP" type="java.lang.Boolean" />
+                <field name="fileNumber" type="java.math.BigDecimal" scale="5"
+                       scaleType="explicit" precision="9" />
+                <field name="monthofApplying" type="java.lang.String" />
+                <field name="yearofApplying" type="java.lang.Integer" />
+                <field name="checkCriminal" type="java.lang.Boolean" />
+                <field name="checkOffence5years" type="java.lang.Boolean" />
+                <field name="checkPassportRefused" type="java.lang.Boolean" />
+                <field name="checkImpoundedRevoked" type="java.lang.Boolean" />
+                <field name="tf_passportNumber_revoke" type="java.lang.Long" />
+                <field name="ecDateofIssue" type="java.util.Date" format="yyyy/MM/dd" />
             </schema>
         </inSocket>
         <overWrite value="true"/>
-        <path uri="hydrograph.engine.spark/testData/output/mysql" />
+        <path uri="hydrograph.engine.spark/testData/input/mysql_2l" />
         <delimiter value="," />
         <hasHeader value="false" />
         <charset value="ISO-8859-1" />
