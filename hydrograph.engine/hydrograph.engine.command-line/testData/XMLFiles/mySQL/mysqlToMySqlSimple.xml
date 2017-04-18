@@ -12,11 +12,10 @@
     limitations under the License
  -->
 
-<p:graph name="MYSQL INPUT EXAMPLE" xmlns:p="hydrograph/engine/jaxb/main"
+<p:graph name="MysqlToMySqlSimple" xmlns:p="hydrograph/engine/jaxb/main"
 		 xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd  ">
-
 
 	<inputs id="inputMysql" xsi:type="it:mysql">
 		<outSocket id="out0">
@@ -34,14 +33,12 @@
 					precision="10" scaleType="explicit" />
 			</schema>
 		</outSocket>
-		<databaseName value="test" />
-		<hostName value="10.130.248.53"/>
-		<!-- <port value="3306" /> -->
-		<jdbcDriver value="Connector/J" />
-		<!-- <tableName value="emp" /> -->
-		<selectQuery value="select * from mysqltarget2 where empid > 700" />
-		<username value="root" />
-		<password value="root" />
+		<databaseName value="@{databaseName}" />
+		<hostName value="@{hostName}"/>
+		<jdbcDriver value="@{jdbcDriver}" />
+		<selectQuery value="select * from myTable where empid > 700" />
+		<username value="@{username}" />
+		<password value="@{password}" />
 	</inputs>
 
 
@@ -63,28 +60,19 @@
 			</schema>
 		</inSocket>
 		
-		<databaseName value="test" />
-		<hostName value="10.130.248.53"/>
-		<!-- <port value="3306" /> -->
-		<jdbcDriver value="Connector/J" />
-		<tableName value="targettable1" />
-		<username value="root" />
-		<password value="root" />
-		<!-- <chunkSize value="2" /> -->
+		<databaseName value="@{databaseName}" />
+		<hostName value="@{hostName}"/>
+		<jdbcDriver value="@{jdbcDriver}" />
+		<tableName value="@{tableName}" />
+		<username value="@{username}" />
+		<password value="@{password}" />
 		<loadType>
 			<newTable>
 				<primaryKeys>
 					<field name="empid" />
 				</primaryKeys> 
 			</newTable>  
-			<!-- <truncateLoad/> -->
-		   <!-- <Insert/> -->  
-			<!-- <update>
-				<updateByKeys>
-					<field name="empid" />
-					<field name="Deptno" />
-				</updateByKeys>
-			</update> -->
+
 		</loadType>
 	</outputs>
 

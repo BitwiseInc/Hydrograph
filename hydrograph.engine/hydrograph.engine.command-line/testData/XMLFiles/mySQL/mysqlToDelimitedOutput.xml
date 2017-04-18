@@ -12,11 +12,10 @@
     limitations under the License
  -->
 
-<p:graph name="MYSQL INPUT EXAMPLE" xmlns:p="hydrograph/engine/jaxb/main"
+<p:graph name="MysqlToDelimitedOutput" xmlns:p="hydrograph/engine/jaxb/main"
 		 xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd  ">
-
 
 	<inputs id="inputMysql" batch="0" xsi:type="it:mysql">
 		<outSocket id="out0">
@@ -34,16 +33,14 @@
 					precision="10" scaleType="explicit" />
 			</schema>
 		</outSocket>
-		<databaseName value="test" />
-		<hostName value="10.130.248.53" />
-		<!-- <port value="3306" /> -->
-		<jdbcDriver value="Connector/J" />
-		<!-- <tableName value="mysqltargetNew" /> -->
-		<!-- <tableName value="mysqltargetNew" /> -->
+		<databaseName value="@{databaseName}" />
+		<hostName value="@{hostName}" />
+		<jdbcDriver value="@{jdbcDriver}" />
 		<selectQuery value="select * from mysqltargetNew where empid=731" />
 		<!-- <countQuery value="select count(*) from mysqlTarget" /> -->
-		<username value="root" />
-		<password value="root" />
+		<username value="@{username}" />
+		<password value="@{password}" />
+		
 	</inputs>
 
 	<outputs id="output" batch="0" xsi:type="ot:textFileDelimited">

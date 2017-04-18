@@ -76,7 +76,7 @@ class InputSequenceFileComponentTest {
     outSockets.add(new OutSocket("outSocket"));
     inputFileSequenceFormatEntity.setComponentId("inpuSequenceFile");
     inputFileSequenceFormatEntity.setOutSocketList(outSockets)
-    inputFileSequenceFormatEntity.setPath("testData/inputFiles/sequenceInputFile")
+    inputFileSequenceFormatEntity.setPath("./../hydrograph.engine.command-line//testData/Input/sequenceInputFile")
 
     //when
     val df: Map[String, DataFrame] = new InputSequenceFileComponent(inputFileSequenceFormatEntity, cp).createComponent()

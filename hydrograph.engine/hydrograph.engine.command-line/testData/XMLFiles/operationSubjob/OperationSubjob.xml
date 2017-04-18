@@ -15,7 +15,7 @@
 <p:graph name="OperationSubjob" xmlns:it="hydrograph/engine/jaxb/inputtypes"
 		 xmlns:ot="hydrograph/engine/jaxb/outputtypes" xmlns:spt="hydrograph/engine/jaxb/straightpulltypes"
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="hydrograph/engine/jaxb/main"
-		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../../elt-core/src/main/resources/newxmlschema/main/main.xsd ">
+		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd ">
 
 	<inputs id="subjobInput" batch="0" xsi:type="it:subjobInput">
 		<outSocket id="in0">

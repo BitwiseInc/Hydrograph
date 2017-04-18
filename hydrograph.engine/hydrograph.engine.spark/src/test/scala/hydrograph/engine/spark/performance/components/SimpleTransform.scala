@@ -31,7 +31,7 @@ object SimpleTransform {
       .option("header", false)
       .option("charset", "ISO-8859-1")
       .schema(StructType(Array(StructField("id", LongType, false), StructField("name", StringType, false), StructField("number", LongType, false), StructField("city", StringType, false))))
-      .csv("C:/PushpenderG/DART/POC/hydrograph_spark/testfiles/input/aggregateInputFile.txt")
+      .csv("./../hydrograph.engine.command-line//testData/Input/aggregateInputFile.txt")
 
     readDF.createOrReplaceTempView("tmp")
     val odf = sparkSession.sql("select id, city, number, length(name) name_length from tmp")
@@ -41,7 +41,7 @@ object SimpleTransform {
       .option("header", false)
       .option("charset", "")
       .mode(SaveMode.Overwrite)
-      .csv("testData/output/ioperformance")
+      .csv("testData/Output/ioperformance")
 
   }
 

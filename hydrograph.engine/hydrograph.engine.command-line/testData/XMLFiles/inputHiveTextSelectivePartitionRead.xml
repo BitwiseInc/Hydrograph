@@ -12,10 +12,10 @@
     limitations under the License
  -->
 
-<p:graph name="inputFileHiveTextTimeStamp" xmlns:p="hydrograph/engine/jaxb/main"
+<p:graph name="InputHiveTextSelectivePartitionRead" xmlns:p="hydrograph/engine/jaxb/main"
 		 xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../elt-core/src/main/resources/newxmlschema/main/main.xsd ">
+		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd ">
 
 	<inputs id="hive_text" batch="0" xsi:type="it:hiveTextFile">
 		<outSocket id="out0">
@@ -49,8 +49,8 @@
 			</partitionColumn>
 		</partitionFilter>
 		<delimiter value="," />
-		<databaseName value="bitwise" />
-		<tableName value="countrywiseHiveText3" />
+		<databaseName value="@{databaseName}" />
+		<tableName value="@{tableName}" />
 	</inputs>
 
 	<outputs id="OFDelimited_01" batch="0" xsi:type="ot:textFileDelimited">

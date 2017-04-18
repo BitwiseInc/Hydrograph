@@ -39,7 +39,7 @@ class InputFileParquetComponentTest {
       .getOrCreate()
 
 
-    val path: String = "testData/inputFiles/input.parquet"
+    val path: String = "./../hydrograph.engine.command-line//testData/Input/input.parquet"
     val inputFileParquetEntity = new InputFileParquetEntity
     inputFileParquetEntity.setPath(path)
 

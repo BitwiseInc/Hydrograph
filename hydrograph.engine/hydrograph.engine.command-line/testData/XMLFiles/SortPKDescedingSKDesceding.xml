@@ -40,20 +40,17 @@
 		<primaryKeys>
 			<field name="name" order="desc" />
 		</primaryKeys>	
-		<secondaryKeys>
-			<field name="city" order="desc" />
-		</secondaryKeys>	
 	</straightPulls>
 
-	<outputs id="output1" xsi:type="ot:textFileDelimited" batch="1">
-		<inSocket fromComponentId="sort" fromSocketId="out0" id="in0">
+	<outputs id="output1" xsi:type="ot:textFileDelimited" batch="0">
+		<inSocket fromComponentId="sort" fromSocketId="out0" id="in0"> 
 			<schema name="outSchema">
 				<field name="id" type="java.lang.Integer" />
 				<field name="name" type="java.lang.String" />
 				<field name="city" type="java.lang.String" />
 			</schema>
 		</inSocket>
-		<path uri="testData\output\sortPKDescSKDescOutput" />
+		<path uri="testData\Output\SortPKDescSKDescOutput" />
 		<delimiter value="," />
 		<hasHeader value="true" />
 		<charset value="ISO-8859-1" />

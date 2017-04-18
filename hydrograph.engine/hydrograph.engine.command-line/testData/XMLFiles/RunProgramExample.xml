@@ -17,20 +17,18 @@
 		 xmlns:spt="hydrograph/engine/jaxb/straightpulltypes"
 		 xmlns:ct="hydrograph/engine/jaxb/commandtypes"
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../elt-core/src/main/resources/newxmlschema/main/main.xsd  ">
+		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd  ">
 
 	<commands id="runprog" batch="0" xsi:type="ct:runProgram">
 		<command value="mkdir testDirectory"></command>
 	</commands>
-
 
 	<inputs id="input1" batch="1" xsi:type="it:textFileDelimited">
 		<outSocket id="out0" type="out">
 			<schema name="abc">
 				<field name="f1" type="java.lang.String" />
 				<field name="f2" type="java.util.Date" format="yyyy-MM-dd" />
-				<field name="f3" type="java.math.BigDecimal" precision="10"
-					scale="2" />
+				<field name="f3" type="java.math.BigDecimal" precision="10"	scale="2" />
 			</schema>
 		</outSocket>
 		<path uri="testData/Input/input.txt" />
@@ -48,18 +46,16 @@
 		</outSocket>
 	</straightPulls>
 
-
 	<outputs id="output1" batch="1" xsi:type="ot:textFileDelimited">
 		<inSocket id="in0" fromComponentId="clone" fromSocketId="sdf0"
 			type="in">
 			<schema name="kj">
 				<field name="f1" type="java.lang.String" />
 				<field name="f2" type="java.util.Date" format="yyyy-MM-dd" />
-				<field name="f3" type="java.math.BigDecimal" precision="10"
-					scale="2" />
+				<field name="f3" type="java.math.BigDecimal" precision="10"	scale="2" />
 			</schema>
 		</inSocket>
-		<path uri="testData/Output_clone/replicate-out1" />
+		<path uri="testData/Output/Output_clone/replicate-out1" />
 		<delimiter value="," />
 	</outputs>
 
@@ -69,11 +65,10 @@
 			<schema name="kj">
 				<field name="f1" type="java.lang.String" />
 				<field name="f2" type="java.util.Date" format="yyyy-MM-dd" />
-				<field name="f3" type="java.math.BigDecimal" precision="10"
-					scale="2" />
+				<field name="f3" type="java.math.BigDecimal" precision="10"	scale="2" />
 			</schema>
 		</inSocket>
-		<path uri="testData/Output_clone/replicate-out2" />
+		<path uri="testData/Output/Output_clone/replicate-out2" />
 		<delimiter value="," />
 	</outputs>
 

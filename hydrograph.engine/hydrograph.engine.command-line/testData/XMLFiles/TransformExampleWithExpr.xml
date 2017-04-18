@@ -70,7 +70,7 @@
 				<field name="new_field2" type="java.lang.String" />
 			</schema>
 		</inSocket>
-		<path uri="testData/Output/TransformOutput1" />
+		<path uri="testData/Output/TransformWithExprOutput" />
 		<delimiter value="," />
 		<hasHeader value="true" />
 		<charset value="ISO-8859-1" />

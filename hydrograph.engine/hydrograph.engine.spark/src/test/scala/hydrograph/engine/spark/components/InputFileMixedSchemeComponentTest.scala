@@ -63,7 +63,7 @@ class InputFileMixedSchemeComponentTest {
     inputFileMixedSchemeEntity setStrict(false)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
-    inputFileMixedSchemeEntity setPath("testData/inputFiles/schemes/TextMixed/input/itShouldProduceValidResultsForSimpleMixedScheme.txt")
+    inputFileMixedSchemeEntity setPath("./../hydrograph.engine.command-line//testData/Input/schemes/TextMixed/input/itShouldProduceValidResultsForSimpleMixedScheme.txt")
 
     val outSockets = new util.ArrayList[OutSocket]();
     outSockets add(new OutSocket("outSocket"));
@@ -125,7 +125,7 @@ class InputFileMixedSchemeComponentTest {
     inputFileMixedSchemeEntity setStrict(false)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
-    inputFileMixedSchemeEntity setPath("testData/inputFiles/schemes/TextMixed/input/itShouldProduceValidResultsForAllRecordsInOneLine.txt")
+    inputFileMixedSchemeEntity setPath("./../hydrograph.engine.command-line//testData/Input/schemes/TextMixed/input/itShouldProduceValidResultsForAllRecordsInOneLine.txt")
 
     val outSockets = new util.ArrayList[OutSocket]();
     outSockets add(new OutSocket("outSocket"));
@@ -187,7 +187,7 @@ class InputFileMixedSchemeComponentTest {
     inputFileMixedSchemeEntity setStrict(false)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
-    inputFileMixedSchemeEntity setPath("testData/inputFiles/schemes/TextMixed/input/itShouldProduceValidResultsForCedillaDelimitedRecords.txt")
+    inputFileMixedSchemeEntity setPath("./../hydrograph.engine.command-line//testData/Input/schemes/TextMixed/input/itShouldProduceValidResultsForCedillaDelimitedRecords.txt")
 
     val outSockets = new util.ArrayList[OutSocket]();
     outSockets add(new OutSocket("outSocket"));
@@ -249,7 +249,7 @@ class InputFileMixedSchemeComponentTest {
     inputFileMixedSchemeEntity setStrict(false)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
-    inputFileMixedSchemeEntity setPath("testData/inputFiles/schemes/TextMixed/input/itShouldProduceValidResultsForRecordSpanningMultipleLines.txt")
+    inputFileMixedSchemeEntity setPath("./../hydrograph.engine.command-line//testData/Input/schemes/TextMixed/input/itShouldProduceValidResultsForRecordSpanningMultipleLines.txt")
 
     val outSockets = new util.ArrayList[OutSocket]();
     outSockets add(new OutSocket("outSocket"));
@@ -311,7 +311,7 @@ class InputFileMixedSchemeComponentTest {
     inputFileMixedSchemeEntity setStrict(false)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
-    inputFileMixedSchemeEntity setPath("testData/inputFiles/schemes/TextMixed/input/itShouldProduceValidResultsForRecordWithLastFixedWidthField.txt")
+    inputFileMixedSchemeEntity setPath("./../hydrograph.engine.command-line//testData/Input/schemes/TextMixed/input/itShouldProduceValidResultsForRecordWithLastFixedWidthField.txt")
 
     val outSockets = new util.ArrayList[OutSocket]();
     outSockets add(new OutSocket("outSocket"));
@@ -377,7 +377,7 @@ class InputFileMixedSchemeComponentTest {
     inputFileMixedSchemeEntity setStrict(false)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
-    inputFileMixedSchemeEntity setPath("testData/inputFiles/schemes/TextMixed/input/itShouldProduceValidResultsForSimpleMixedSchemeWithFixedNewlineField.txt")
+    inputFileMixedSchemeEntity setPath("./../hydrograph.engine.command-line//testData/Input/schemes/TextMixed/input/itShouldProduceValidResultsForSimpleMixedSchemeWithFixedNewlineField.txt")
 
     val outSockets = new util.ArrayList[OutSocket]();
     outSockets add(new OutSocket("outSocket"));
@@ -443,7 +443,7 @@ class InputFileMixedSchemeComponentTest {
     inputFileMixedSchemeEntity setStrict(false)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
-    inputFileMixedSchemeEntity setPath("testData/inputFiles/schemes/TextMixed/input/itShouldProduceValidResultsForAllRecordsInOneLineWithFixedNewlineField.txt")
+    inputFileMixedSchemeEntity setPath("./../hydrograph.engine.command-line//testData/Input/schemes/TextMixed/input/itShouldProduceValidResultsForAllRecordsInOneLineWithFixedNewlineField.txt")
 
     val outSockets = new util.ArrayList[OutSocket]();
     outSockets add(new OutSocket("outSocket"));
@@ -505,7 +505,7 @@ class InputFileMixedSchemeComponentTest {
     inputFileMixedSchemeEntity setStrict(false)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
-    inputFileMixedSchemeEntity setPath("testData/inputFiles/schemes/TextMixed/input/itShouldProduceValidResultsForCedillaDelimitedRecordsWithFixedNewlineField.txt")
+    inputFileMixedSchemeEntity setPath("./../hydrograph.engine.command-line//testData/Input/schemes/TextMixed/input/itShouldProduceValidResultsForCedillaDelimitedRecordsWithFixedNewlineField.txt")
 
     val outSockets = new util.ArrayList[OutSocket]();
     outSockets add(new OutSocket("outSocket"));
@@ -571,7 +571,7 @@ class InputFileMixedSchemeComponentTest {
     inputFileMixedSchemeEntity setStrict(false)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
-    inputFileMixedSchemeEntity setPath("testData/inputFiles/schemes/TextMixed/input/itShouldProduceValidResultsForRecordSpanningMultipleLinesWithFixedNewlineField.txt")
+    inputFileMixedSchemeEntity setPath("./../hydrograph.engine.command-line//testData/Input/schemes/TextMixed/input/itShouldProduceValidResultsForRecordSpanningMultipleLinesWithFixedNewlineField.txt")
 
     val outSockets = new util.ArrayList[OutSocket]();
     outSockets add(new OutSocket("outSocket"));
@@ -637,7 +637,7 @@ class InputFileMixedSchemeComponentTest {
     inputFileMixedSchemeEntity setStrict(false)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
-    inputFileMixedSchemeEntity setPath("testData/inputFiles/schemes/TextMixed/input/itShouldProduceValidResultsForRecordWithLastFixedWidthFieldAndFixedNewlineField.txt")
+    inputFileMixedSchemeEntity setPath("./../hydrograph.engine.command-line//testData/Input/schemes/TextMixed/input/itShouldProduceValidResultsForRecordWithLastFixedWidthFieldAndFixedNewlineField.txt")
 
     val outSockets = new util.ArrayList[OutSocket]();
     outSockets add(new OutSocket("outSocket"));
@@ -703,7 +703,7 @@ class InputFileMixedSchemeComponentTest {
     inputFileMixedSchemeEntity setStrict(false)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
-    inputFileMixedSchemeEntity setPath("testData/inputFiles/schemes/TextMixed/input/itShouldProduceValidResultsForSimpleMixedSchemeWithDelimitedNewlineField.txt")
+    inputFileMixedSchemeEntity setPath("./../hydrograph.engine.command-line//testData/Input/schemes/TextMixed/input/itShouldProduceValidResultsForSimpleMixedSchemeWithDelimitedNewlineField.txt")
 
     val outSockets = new util.ArrayList[OutSocket]();
     outSockets add(new OutSocket("outSocket"));
@@ -769,7 +769,7 @@ class InputFileMixedSchemeComponentTest {
     inputFileMixedSchemeEntity setStrict(false)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
-    inputFileMixedSchemeEntity setPath("testData/inputFiles/schemes/TextMixed/input/itShouldProduceValidResultsForAllRecordsInOneLineWithDelimitedNewlineField.txt")
+    inputFileMixedSchemeEntity setPath("./../hydrograph.engine.command-line//testData/Input/schemes/TextMixed/input/itShouldProduceValidResultsForAllRecordsInOneLineWithDelimitedNewlineField.txt")
 
     val outSockets = new util.ArrayList[OutSocket]();
     outSockets add(new OutSocket("outSocket"));
@@ -835,7 +835,7 @@ class InputFileMixedSchemeComponentTest {
     inputFileMixedSchemeEntity setStrict(false)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
-    inputFileMixedSchemeEntity setPath("testData/inputFiles/schemes/TextMixed/input/itShouldProduceValidResultsForCedillaDelimitedRecordsWithDelimitedNewlineField.txt")
+    inputFileMixedSchemeEntity setPath("./../hydrograph.engine.command-line//testData/Input/schemes/TextMixed/input/itShouldProduceValidResultsForCedillaDelimitedRecordsWithDelimitedNewlineField.txt")
 
     val outSockets = new util.ArrayList[OutSocket]();
     outSockets add(new OutSocket("outSocket"));
@@ -901,7 +901,7 @@ class InputFileMixedSchemeComponentTest {
     inputFileMixedSchemeEntity setStrict(false)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
-    inputFileMixedSchemeEntity setPath("testData/inputFiles/schemes/TextMixed/input/itShouldProduceValidResultsForRecordSpanningMultipleLinesWithDelimitedNewlineField.txt")
+    inputFileMixedSchemeEntity setPath("./../hydrograph.engine.command-line//testData/Input/schemes/TextMixed/input/itShouldProduceValidResultsForRecordSpanningMultipleLinesWithDelimitedNewlineField.txt")
 
     val outSockets = new util.ArrayList[OutSocket]();
     outSockets add(new OutSocket("outSocket"));
@@ -967,7 +967,7 @@ class InputFileMixedSchemeComponentTest {
     inputFileMixedSchemeEntity setStrict(false)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
-    inputFileMixedSchemeEntity setPath("testData/inputFiles/schemes/TextMixed/input/itShouldProduceValidResultsForRecordWithLastFixedWidthFieldAndDelimitedNewlineField.txt")
+    inputFileMixedSchemeEntity setPath("./../hydrograph.engine.command-line//testData/Input/schemes/TextMixed/input/itShouldProduceValidResultsForRecordWithLastFixedWidthFieldAndDelimitedNewlineField.txt")
 
     val outSockets = new util.ArrayList[OutSocket]();
     outSockets add(new OutSocket("outSocket"));
@@ -1029,7 +1029,7 @@ class InputFileMixedSchemeComponentTest {
     inputFileMixedSchemeEntity setStrict(false)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
-    inputFileMixedSchemeEntity setPath("testData/inputFiles/schemes/TextMixed/input/itShouldProduceValidResultsForFixedWidthRecordsInOneLine.txt")
+    inputFileMixedSchemeEntity setPath("./../hydrograph.engine.command-line//testData/Input/schemes/TextMixed/input/itShouldProduceValidResultsForFixedWidthRecordsInOneLine.txt")
 
     val outSockets = new util.ArrayList[OutSocket]();
     outSockets add(new OutSocket("outSocket"));
@@ -1091,7 +1091,7 @@ class InputFileMixedSchemeComponentTest {
     inputFileMixedSchemeEntity setStrict(false)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
-    inputFileMixedSchemeEntity setPath("testData/inputFiles/schemes/TextMixed/input/itShouldProduceValidResultsForDelimiterPresentInFixedWidthData.txt")
+    inputFileMixedSchemeEntity setPath("./../hydrograph.engine.command-line//testData/Input/schemes/TextMixed/input/itShouldProduceValidResultsForDelimiterPresentInFixedWidthData.txt")
 
     val outSockets = new util.ArrayList[OutSocket]();
     outSockets add(new OutSocket("outSocket"));
@@ -1153,7 +1153,7 @@ class InputFileMixedSchemeComponentTest {
     inputFileMixedSchemeEntity setStrict(false)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
-    inputFileMixedSchemeEntity setPath("testData/inputFiles/schemes/TextMixed/input/itShouldProduceValidResultsForSimpleMixedSchemeWithQuoteChar.txt")
+    inputFileMixedSchemeEntity setPath("./../hydrograph.engine.command-line//testData/Input/schemes/TextMixed/input/itShouldProduceValidResultsForSimpleMixedSchemeWithQuoteChar.txt")
 
     val outSockets = new util.ArrayList[OutSocket]();
     outSockets add(new OutSocket("outSocket"));
@@ -1215,7 +1215,7 @@ class InputFileMixedSchemeComponentTest {
     inputFileMixedSchemeEntity setStrict(false)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
-    inputFileMixedSchemeEntity setPath("testData/inputFiles/schemes/TextMixed/input/utf8InputFileWindowsEOLTest.txt")
+    inputFileMixedSchemeEntity setPath("./../hydrograph.engine.command-line//testData/Input/schemes/TextMixed/input/utf8InputFileWindowsEOLTest.txt")
 
     val outSockets = new util.ArrayList[OutSocket]();
     outSockets add(new OutSocket("outSocket"));
@@ -1277,7 +1277,7 @@ class InputFileMixedSchemeComponentTest {
     inputFileMixedSchemeEntity setStrict(false)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
-    inputFileMixedSchemeEntity setPath("testData/inputFiles/schemes/TextMixed/input/isoInputFileWindowsEOLTest.txt")
+    inputFileMixedSchemeEntity setPath("./../hydrograph.engine.command-line//testData/Input/schemes/TextMixed/input/isoInputFileWindowsEOLTest.txt")
 
     val outSockets = new util.ArrayList[OutSocket]();
     outSockets add(new OutSocket("outSocket"));
@@ -1339,7 +1339,7 @@ class InputFileMixedSchemeComponentTest {
     inputFileMixedSchemeEntity setStrict(false)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
-    inputFileMixedSchemeEntity setPath("testData/inputFiles/schemes/TextMixed/input/utf8InputFileLinuxEOLTest.txt")
+    inputFileMixedSchemeEntity setPath("./../hydrograph.engine.command-line//testData/Input/schemes/TextMixed/input/utf8InputFileLinuxEOLTest.txt")
 
     val outSockets = new util.ArrayList[OutSocket]();
     outSockets add(new OutSocket("outSocket"));
@@ -1401,7 +1401,7 @@ class InputFileMixedSchemeComponentTest {
     inputFileMixedSchemeEntity setStrict(false)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
     inputFileMixedSchemeEntity setFieldsList(fieldList)
-    inputFileMixedSchemeEntity setPath("testData/inputFiles/schemes/TextMixed/input/isoInputFileLinuxEOLTest.txt")
+    inputFileMixedSchemeEntity setPath("./../hydrograph.engine.command-line//testData/Input/schemes/TextMixed/input/isoInputFileLinuxEOLTest.txt")
 
     val outSockets = new util.ArrayList[OutSocket]();
     outSockets add(new OutSocket("outSocket"));

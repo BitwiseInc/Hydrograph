@@ -12,7 +12,7 @@
     limitations under the License
  -->
 
-<p:graph name="MYSQL OUTPUT EXAMPLE" xmlns:p="hydrograph/engine/jaxb/main"
+<p:graph name="DelimitedToMySqlOutput" xmlns:p="hydrograph/engine/jaxb/main"
 		 xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd  ">
@@ -55,25 +55,19 @@
 			</schema>
 		</inSocket>
 
-		<databaseName value="test" />
-		<hostName value="10.130.248.53" />
-		<port value="3306" />
-		<jdbcDriver value="Connector/J" />
-		<tableName value="mysqltargetNew34344113" />
-		<username value="root" />
-		<password value="root" />
-		<!-- <chunkSize value="2" /> -->
+		<databaseName value="@{databaseName}" />
+		<hostName value="@{hostName}" />
+		<port value="0000" />
+		<jdbcDriver value="@{jdbcDriver}" />
+		<tableName value="@{tableName}" />
+		<username value="@{username}" />
+		<password value="@{password}" />
+	
 		<loadType>
 			<newTable>
-				<!-- <primaryKeys>
-					<field name="empid" />
-					<field name="ename" />
-				</primaryKeys> -->
+				
 			</newTable>
-			<!-- <truncateLoad/> -->
-			<!-- <Insert/> -->
-			<!-- <update> <updateByKeys> <field name="empid" /> </updateByKeys> </update> -->
-		</loadType>
+			</loadType>
 	</outputs>
 
 </p:graph>

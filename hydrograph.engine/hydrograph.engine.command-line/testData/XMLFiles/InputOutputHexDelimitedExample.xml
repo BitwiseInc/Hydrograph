@@ -12,10 +12,10 @@
     limitations under the License
  -->
 
-<p:graph name="OutputFileParquetExample" xmlns:p="hydrograph/engine/jaxb/main"
+<p:graph name="InputOutputHexDelimitedExample" xmlns:p="hydrograph/engine/jaxb/main"
 		 xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../elt-core/src/main/resources/newxmlschema/main/main.xsd ">
+		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd ">
 
 	<inputs id="input1" batch="0" xsi:type="it:textFileDelimited">
 		<outSocket id="out0">
@@ -30,11 +30,9 @@
 		<hasHeader value="false" />
 		<safe value="true" />
 		<charset value="ISO-8859-1" />
-		<quote value="asd" />
 	</inputs>
 
-
-	<outputs id="output1" xsi:type="ot:textFileDelimited" batch="1">
+	<outputs id="output1" xsi:type="ot:textFileDelimited" batch="0">
 		<inSocket fromComponentId="input1" fromSocketId="out0" id="in0">
 			<schema name="outSchema">
 				<field name="id" type="java.lang.String" />
@@ -47,4 +45,5 @@
 		<delimiter value="\t" />
 		<hasHeader value="true" />
 	</outputs>
+	
 </p:graph>

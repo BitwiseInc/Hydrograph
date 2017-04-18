@@ -12,10 +12,10 @@
     limitations under the License
  -->
 
-<p:graph name="InputFileParquetExample" xmlns:p="hydrograph/engine/jaxb/main"
+<p:graph name="InputFileHiveParquetExampleExternalTable" xmlns:p="hydrograph/engine/jaxb/main"
 		 xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../elt-core/src/main/resources/newxmlschema/main/main.xsd ">
+		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd ">
 
 	<inputs id="hive_parquet" batch="0" xsi:type="it:parquetHiveFile">
 		<outSocket id="out0">
@@ -28,8 +28,8 @@
 		<partitionKeys>
 			<field name="city" />
 		</partitionKeys>
-		<databaseName value="d1External" />
-		<tableName value="t1ExternalTable" />
+		<databaseName value="@{databaseName}" />
+		<tableName value="@{tableName}" />
 		<externalTablePath
 			uri="C:/HiveParquet" />
 	</inputs>
@@ -44,7 +44,7 @@
 				<field name="city" type="java.lang.String" />
 			</schema>
 		</inSocket>
-		<path uri="testData/Output/HiveParquetOutputExternalTableTarget" />
+		<path uri="testData/Output/HiveParquetExternalTableOutput" />
 		<delimiter value="|" />
 		<hasHeader value="true" />
 		<charset value="UTF-8" />

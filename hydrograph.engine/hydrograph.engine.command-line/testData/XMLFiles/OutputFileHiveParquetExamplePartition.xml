@@ -15,9 +15,8 @@
 <p:graph xmlns:p="hydrograph/engine/jaxb/main"
 		 xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../elt-core/src/main/resources/newxmlschema/main/main.xsd"
-		 name="graph1_test">
-
+		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd"
+		 name="OutputFileHiveParquetExamplePartition">
 
 	<inputs id="IFDelimited_01" batch="1" xsi:type="it:textFileDelimited">
 		<outSocket id="out0" type="out">
@@ -50,8 +49,8 @@
 		<partitionKeys>
 			<field name="id" />
 		</partitionKeys>
-		<databaseName value="d1Partition" />
-		<tableName value="t1Partition" />
+		<databaseName value="@{databaseName}" />
+		<tableName value="@{tableName}" />
 		</outputs>
 </p:graph>
 	

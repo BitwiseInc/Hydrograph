@@ -16,7 +16,7 @@
 		 xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
 		 xmlns:op="hydrograph/engine/jaxb/operationstypes"
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../elt-core/src/main/resources/newxmlschema/main/main.xsd  ">
+		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd  ">
 
 	<inputs id="input1" batch="0" xsi:type="it:textFileDelimited">
 		<outSocket id="out0">
@@ -58,7 +58,6 @@
 		<noOfPartitions value="3" />
 	</operations>
 
-
 	<outputs id="output1" xsi:type="ot:textFileDelimited">
 		<inSocket fromComponentId="partitionByExpression"
 			fromSocketId="out_credit" id="in0">
@@ -70,7 +69,7 @@
 				<field name="total_count" type="java.lang.Long" />
 			</schema>
 		</inSocket>
-		<path uri="testData/output/PartitionByExpression_credit" />
+		<path uri="testData/Output/PartitionByExpression_credit" />
 		<delimiter value="," />
 		<hasHeader value="true" />
 		<charset value="ISO-8859-1" />
@@ -87,7 +86,7 @@
 				<field name="total_count" type="java.lang.Long" />
 			</schema>
 		</inSocket>
-		<path uri="testData/output/PartitionByExpression_debit" />
+		<path uri="testData/Output/PartitionByExpression_debit" />
 		<delimiter value="," />
 		<hasHeader value="true" />
 		<charset value="ISO-8859-1" />
@@ -103,7 +102,7 @@
 				<field name="total_count" type="java.lang.Long" />
 			</schema>
 		</inSocket>
-		<path uri="testData/output/PartitionByExpression_mix" />
+		<path uri="testData/Output/PartitionByExpression_mix" />
 		<delimiter value="," />
 		<hasHeader value="true" />
 		<charset value="ISO-8859-1" />

@@ -16,68 +16,42 @@
 		 xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
 		 xmlns:op="hydrograph/engine/jaxb/operationstypes"
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../elt-core/src/main/resources/newxmlschema/main/main.xsd  ">
+		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd  ">
 
 	<inputs id="input1" batch="0" xsi:type="it:textFileDelimited">
 		<outSocket id="out0">
 			<schema name="outSchema">
-				<field name="id" type="java.lang.String" />
+				<field name="id" type="java.lang.Integer" />
 				<field name="name" type="java.lang.String" />
-				<field name="dob" type="java.util.Date" format="yyyy-MM-dd"/>
-				<field name="sal" type="java.lang.String"/>
+				<field name="dob" type="java.lang.String" format="yyyy-MM-dd"/>
+				<field name="sal" type="java.lang.Long" scale="2"/>
 			</schema>
 		</outSocket>
-		<path uri="testData/Input/Source1-delimited.txt" />
+		<path uri="testData/Input/delimitedInputFile3.txt" />
 		<delimiter value="," />
 		<hasHeader value="false" />
 	</inputs>
 
 	<operations id="scan" xsi:type="op:cumulate">
 		<inSocket fromComponentId="input1" fromSocketId="out0" id="in0" />
-		<operation id="opt1"
-			class="hydrograph.engine.transformation.userfunctions.cumulate.StringAppend">
-			<inputFields>
-				<field name="id" inSocketId="in0" />
-			</inputFields>
-			<outputFields>
-				<field name="count1" type="java.lang.String" />
-			</outputFields>
-		</operation>
-		<operation id="opt3"
-			class="hydrograph.engine.transformation.userfunctions.cumulate.StringAppend">
-			<inputFields>
-				<field name="sal" inSocketId="in0" />
-			</inputFields>
-			<outputFields>
-				<field name="count2" type="java.lang.String" />
-			</outputFields>
-		</operation>
 		<outSocket id="out0">
-			<passThroughField name="id" inSocketId="in0" />
-			<passThroughField name="name" inSocketId="in0" />
-			<passThroughField name="dob" inSocketId="in0" />
-			<!-- <mapField sourceName="dob" name="date" inSocketId="in0" /> -->
-			<operationField name="count1" operationId="opt1" />
-			<operationField name="count2" operationId="opt3" />
+			<passThroughField name="*" inSocketId="in0" />	
 		</outSocket>
 		<primaryKeys>
-			<field name="name" />
-			<field name="dob" />
+			<field name="id" />
 		</primaryKeys>
 	</operations>
-
 
 	<outputs id="output1" xsi:type="ot:textFileDelimited">
 		<inSocket fromComponentId="scan" fromSocketId="out0" id="in0">
 			<schema name="outSchema">
-				<field name="id" type="java.lang.String" />
+				<field name="id" type="java.lang.Integer" />
 				<field name="name" type="java.lang.String" />
-				<field name="dob" type="java.util.Date" format="yyyy-MM-dd"/>
-				<field name="count1" type="java.lang.String" />
-				<field name="count2" type="java.lang.String"/>
+				<field name="dob" type="java.lang.String" format="yyyy-MM-dd"/>
+				<field name="sal" type="java.lang.Long" scale="2"/>
 			</schema>
 		</inSocket>
-		<path uri="testData/output/CumulateOutput1" />
+		<path uri="testData/Output/CumulateExampleOutput" />
 		<delimiter value="," />
 		<hasHeader value="true" />
 	</outputs>

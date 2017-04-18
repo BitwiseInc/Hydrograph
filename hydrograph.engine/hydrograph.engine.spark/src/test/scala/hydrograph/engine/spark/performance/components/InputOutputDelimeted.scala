@@ -32,14 +32,14 @@ object InputOutputDelimeted {
       .option("header", false)
       .option("charset", "ISO-8859-1")
       .schema(StructType(Array(StructField("id", LongType, false), StructField("name", StringType, false), StructField("number", LongType, false), StructField("city", StringType, false))))
-      .csv("C:/PushpenderG/DART/POC/hydrograph_spark/testfiles/input/aggregateInputFile.txt")
+      .csv("./../hydrograph.engine.command-line//testData/Input/aggregateInputFile.txt")
 
     readDF.write
       .option("delimiter", ",")
       .option("header", false)
       .option("charset", "")
       .mode(SaveMode.Overwrite)
-      .csv("testData/output/ioperformance")
+      .csv("testData/Output/ioperformance")
 
   }
 
