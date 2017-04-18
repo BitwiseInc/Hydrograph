@@ -15,11 +15,11 @@
 <p:graph name="GenerateRecordExample" xmlns:p="hydrograph/engine/jaxb/main"
 		 xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../elt-core/src/main/resources/newxmlschema/main/main.xsd  ">
+		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd  ">
 
 	<inputs id="input1" batch="0" xsi:type="it:generateRecord">
 		<outSocket id="out0">
-			<schema name="timepass">
+			<schema name="outSchema">
 				<field name="f1" type="java.lang.String" length="5" />
 				<field name="f2" type="java.math.BigDecimal" scale="3" />
 				<field name="f3" type="java.util.Date" format="yyyy-MM-dd"
@@ -41,12 +41,10 @@
 		<recordCount value="5" />
 	</inputs>
 
-
-
 	<outputs id="output1" xsi:type="ot:textFileDelimited">
 		<inSocket fromComponentId="input1" fromSocketId="out0" id="in0"
 			type="in">
-			<schema name="kj">
+			<schema name="outSchema">
 				<field name="f1" type="java.lang.String" />
 				<field name="f2" type="java.math.BigDecimal"/>
 				<field name="f3" type="java.util.Date" format="yyyy-MM-dd" />

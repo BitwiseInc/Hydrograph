@@ -90,6 +90,8 @@
         <outSocket id="out0">
             <passThroughField name="ecDateofIssue" inSocketId="in0" />
             <passThroughField name="tf_passportNumber_revoke" inSocketId="in0" />
+            <passThroughField name="monthofApplying" inSocketId="in0" />
+            <passThroughField name="maritalStatus" inSocketId="in0" />
             <mapField sourceName="checkPassportRefused" name="checkPassportRefused_new" inSocketId="in0"/>
             <operationField name="count" operationId="monthofapplying" />
         </outSocket>

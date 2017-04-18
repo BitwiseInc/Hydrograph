@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License
+ -->
+
+<p:graph name="AggregateWithSingleExpr" xmlns:it="hydrograph/engine/jaxb/inputtypes"
+         xmlns:ot="hydrograph/engine/jaxb/outputtypes"
+         xmlns:op="hydrograph/engine/jaxb/operationstypes"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="hydrograph/engine/jaxb/main"
+         xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd">
+
+	<inputs id="input1" batch="0" xsi:type="it:textFileDelimited">
+		<outSocket id="out0">
+			<schema name="outSchema">
+				<field name="id" type="java.lang.Integer" />
+				<field name="name" type="java.lang.String" />
+				<field name="city" type="java.lang.String" />
+			</schema>
+		</outSocket>
+
+		<path uri="testData/Input/delimitedInputFile" />
+		<delimiter value="," />
+		<hasHeader value="false" />
+		<charset value="ISO-8859-1" />
+	</inputs>
+
+	<operations id="aggregate" batch="0" xsi:type="op:aggregate">
+		<inSocket fromComponentId="input1" fromSocketId="out0" id="in0" />
+		<operation id="opt4"
+				   class="hydrograph.engine.transformation.userfunctions.aggregate.StringAppend">
+			<inputFields>
+				<field name="name" inSocketId="in0" />
+			</inputFields>
+			<outputFields>
+				<field name="sum2" type="java.lang.String" />
+			</outputFields>
+		</operation>
+		<expression accumulatorInitalValue="-99" expr="(id &gt; _accumulator)?id:_accumulator;" id="e1">
+			<inputFields>
+				<field name="id" inSocketId="in0" />
+			</inputFields>
+			<outputFields>
+				<field name="new_field" type="java.lang.Integer" />
+			</outputFields>
+		</expression>
+		<outSocket id="out0">
+			<passThroughField name="id" inSocketId="in0" />
+			<passThroughField name="name" inSocketId="in0" />
+			<mapField sourceName="city" name="new_city" inSocketId="in0" />
+			<operationField name="sum2" operationId="opt4" />
+			<expressionField name="new_field" expressionId="e1"/>
+		</outSocket>
+		<primaryKeys>
+			<field name="name" />
+		</primaryKeys>
+	</operations>
+
+	<outputs id="output1" batch="0" xsi:type="ot:textFileDelimited" >
+		<inSocket fromComponentId="aggregate" fromSocketId="out0" id="in0">
+			<schema name="outSchema">
+				<field name="id" type="java.lang.String" />
+				<field name="name" type="java.lang.String" />
+				<field name="new_field" type="java.lang.Integer" />
+				<field name="sum2" type="java.lang.String" />
+			</schema>
+		</inSocket>
+		<path uri="testData/Output/AggregateWithSingleExprOutput" />
+		<delimiter value="," />
+		<hasHeader value="true" />
+		<charset value="ISO-8859-1" />
+	</outputs>
+</p:graph>

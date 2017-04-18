@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License
+ -->
+
+<p:graph name="Lookupexample" xmlns:p="hydrograph/engine/jaxb/main"
+		 xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
+		 xmlns:op="hydrograph/engine/jaxb/operationstypes"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd">
+
+	<inputs id="input1" xsi:type="it:textFileDelimited">
+		<outSocket id="out0">
+			<schema name="outSchema">
+				<field name="id" type="java.lang.Integer" />
+				<field name="name" type="java.lang.String" />
+				<field name="num" type="java.lang.Integer" />
+				<field name="city" type="java.lang.String" />
+			</schema>
+		</outSocket>
+		<path uri="testData/Input/aggregateInputFile.txt" />
+		<delimiter value="," />
+		<hasHeader value="false" />
+		<charset value="ISO-8859-1" />
+	</inputs>
+
+	<inputs id="input2" xsi:type="it:textFileDelimited">
+		<outSocket id="out0">
+			<schema name="outSchema">
+				<field name="name" type="java.lang.String" />
+				<field name="name_description" type="java.lang.String" />
+			</schema>
+		</outSocket>
+		<path uri="testData/Input/lookup/lookup_file" />
+		<delimiter value="," />
+		<hasHeader value="false" />
+		<safe value="false" />
+		<charset value="ISO-8859-1" />
+	</inputs>
+
+	<operations id="lookup" xsi:type="op:lookup">
+		<inSocket fromComponentId="input1" fromSocketId="out0" id="in0" type="driver"/>
+		<inSocket fromComponentId="input2" fromSocketId="out0" id="in1" type="lookup"/>
+		<outSocket id="out0" type="out">
+			<mapField sourceName="id" name="id1" inSocketId="in0" />
+			<mapField sourceName="name" name="name1" inSocketId="in0" />
+			<mapField sourceName="num" name="num1" inSocketId="in0" />
+			<mapField sourceName="city" name="city1" inSocketId="in0" />
+			<mapField sourceName="name" name="name2" inSocketId="in1" />
+			<mapField sourceName="name_description" name="name_description2" inSocketId="in1" />
+		</outSocket>
+		<keys inSocketId="in0">
+			<field name="name" />
+		</keys>
+		<keys inSocketId="in1">
+			<field name="name" />
+		</keys>
+		<match value="last" />
+	</operations>
+
+	<outputs id="output1" xsi:type="ot:textFileDelimited">
+		<inSocket fromComponentId="lookup" fromSocketId="out0" id="in0">
+			<schema name="outSchema">
+				<field name="id1" type="java.lang.Integer" />
+				<field name="name1" type="java.lang.String" />
+				<field name="num1" type="java.lang.Integer" />
+				<field name="city1" type="java.lang.String" />
+				<field name="name2" type="java.lang.String" />
+				<field name="name_description2" type="java.lang.String" />
+			</schema>
+		</inSocket>
+		<path uri="testData/Output/Lookup_big_out" />
+		<delimiter value="," />
+		<hasHeader value="true" />
+		<charset value="ISO-8859-1" />
+	</outputs>
+
+</p:graph>

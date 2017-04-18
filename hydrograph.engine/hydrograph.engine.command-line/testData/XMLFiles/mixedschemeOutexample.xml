@@ -12,11 +12,10 @@
     limitations under the License
  -->
 
-<p:graph name="mixedschemeOutExample" xmlns:p="hydrograph/engine/jaxb/main"
+<p:graph name="MixedschemeOutExample" xmlns:p="hydrograph/engine/jaxb/main"
 		 xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../elt-core/src/main/resources/newxmlschema/main/main.xsd  ">
-
+		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd  ">
 
 	<inputs id="input1" batch="0" xsi:type="it:textFileDelimited">
 		<outSocket id="out0">
@@ -35,7 +34,7 @@
 
 	<outputs id="mixed_schema" xsi:type="ot:textFileMixedScheme">
 		<inSocket fromComponentId="input1" fromSocketId="out0" id="in0">
-			<schema name="kj">
+			<schema name="outSchema">
 				<field name="name1" type="java.lang.String" format="" scale="5"
 					scaleType="explicit" length="3" />
 				<field name="city1" type="java.lang.String" format="" scale="4"
@@ -43,10 +42,9 @@
 			</schema>
 		</inSocket>
 		<overWrite value="true"/>
-		<path uri="testData\output\mixedSchemeOut"/>
+		<path uri="testData\Output\mixedSchemeOut"/>
 		<strict value="true" />
 		<charset value="ISO-8859-1" />
 	</outputs>
-
 
 </p:graph>

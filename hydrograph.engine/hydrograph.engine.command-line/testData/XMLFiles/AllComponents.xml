@@ -25,7 +25,7 @@
 				<field name="f1" type="java.lang.String" length="3" />
 			</schema>
 		</outSocket>
-		<path uri="testData/Input/input1.txt" />
+		<path uri="testData/Input/input2.txt" />
 		<safe value="false" />
 		<strict value="true" />
 		<charset value="ISO-8859-1" />
@@ -33,7 +33,7 @@
 
 	<inputs id="input2" batch="0" xsi:type="it:textFileDelimited">
 		<outSocket id="out0">
-			<schema name="timepass">
+			<schema name="outSchema">
 				<field name="f1" type="java.lang.String" />
 			</schema>
 		</outSocket>
@@ -42,7 +42,6 @@
 		<hasHeader value="false" />
 		<charset value="ISO-8859-1" />
 	</inputs>
-
 
 	<straightPulls id="gather" xsi:type="spt:unionAll">
 		<inSocket id="dfg" fromComponentId="input1" fromSocketId="out0" />
@@ -94,7 +93,7 @@
 				<field name="f1" type="java.lang.String" />
 			</schema>
 		</inSocket>
-		<path uri="testData/output/AllComponent/DelimitedFile" />
+		<path uri="testData/Output/AllComponents/DelimitedFile" />
 		<delimiter value="," />
 		<hasHeader value="0" />
 		<charset value="ISO-8859-1" />
@@ -107,7 +106,7 @@
 				<field name="f1" type="java.lang.String" length="3" />
 			</schema>
 		</inSocket>
-		<path uri="testData/output/AllComponent/FixedWidth" />
+		<path uri="testData/Output/AllComponents/FixedWidth" />
 		<safe value="false" />
 		<strict value="true" />
 		<charset value="ISO-8859-1" />

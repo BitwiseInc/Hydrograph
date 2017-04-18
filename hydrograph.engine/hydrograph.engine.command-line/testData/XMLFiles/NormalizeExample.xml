@@ -13,23 +13,21 @@
  -->
 
 <p:graph name="NormalizeExample" xmlns:p="hydrograph/engine/jaxb/main"
-		 xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
-		 xmlns:op="hydrograph/engine/jaxb/operationstypes"
-		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../elt-core/src/main/resources/newxmlschema/main/main.xsd  ">
+         xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
+         xmlns:op="hydrograph/engine/jaxb/operationstypes"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd  ">
 
-	<inputs id="input1" batch="0" xsi:type="it:textFileDelimited">
+	<inputs id="input1"  xsi:type="it:textFileDelimited">
 		<outSocket id="out0">
 			<schema name="outSchema">
-				<field name="account_no" type="java.lang.String" />
-				<field name="names" type="java.lang.String" />
-				<field name="transaction_type" type="java.lang.String" />
-				<field name="total_amount" type="java.lang.String"/>
-				<field name="total_count" type="java.lang.String" />
+				<field name="ID" type="java.lang.String" />
+				<field name="Transactions" type="java.lang.String" />
+				<field name="Rewards" type="java.lang.String" />
 			</schema>
 		</outSocket>
-		<path uri="C:\Users\gurdits\Hydrograph-workspace\hydrograph-gitlab\hydrograph.engine\hydrograph.engine.command-line\testData\Input\normalize_input.txt" />
-		<delimiter value="," />
+		<path uri="testData\Input\normalize_input.txt" />
+		<delimiter value="|" />
 		<hasHeader value="false" />
 		<safe value="true" />
 		<charset value="ISO-8859-1" />
@@ -37,33 +35,54 @@
 
 	<operations id="normalize" xsi:type="op:normalize">
 		<inSocket fromComponentId="input1" fromSocketId="out0" id="in0" />
-		<operation id="opt1"
-			class="hydrograph.engine.transformation.userfunctions.normalize.RegexSplitNormalize">
+		<expression expr="(index >= (Transactions.split(&quot;,&quot;)).length)?&quot;xxx&quot;:(Transactions.split(&quot;,&quot;))[index]"
+					id="e1" >
 			<inputFields>
-				<field name="names" inSocketId="in0" />
+				<field name="Transactions" inSocketId="in0" />
 			</inputFields>
 			<outputFields>
-				<field name="name" type="java.lang.String" />
+				<field name="Transaction" type="java.lang.String" />
 			</outputFields>
-			<properties>
-				<property name="regex" value=" and " />
-			</properties>
-		</operation>
+		</expression>
+		<expression expr="(Rewards.split(&quot;,&quot;))[index]"
+					id="e2" >
+			<inputFields>
+				<field name="Rewards" inSocketId="in0" />
+			</inputFields>
+			<outputFields>
+				<field name="Reward" type="java.lang.String" />
+			</outputFields>
+		</expression>
+		<expression expr="((Rewards.split(&quot;,&quot;))[index].equals(&quot;ddd&quot;))?&quot;TransactionsalReward&quot;:&quot;AdditionalReward&quot;"
+					id="e3" >
+			<inputFields>
+				<field name="Rewards" inSocketId="in0" />
+			</inputFields>
+			<outputFields>
+				<field name="RewardCategory" type="java.lang.String" />
+			</outputFields>
+		</expression>
+		<outputRecordCount value="((Transactions.split(&quot;,&quot;)).length>(Rewards.split(&quot;,&quot;)).length)?(Transactions.split(&quot;,&quot;)).length:(Rewards.split(&quot;,&quot;)).length"/>
 		<outSocket id="out0">
-			<mapField sourceName="account_no" name="account_no_new"
-				inSocketId="in0" />
-			<operationField name="name" operationId="opt1" />
+			<passThroughField name="*" inSocketId="in0" />
+			<mapField sourceName="ID" name="ID_new"
+					  inSocketId="in0" />
+			<expressionField name="Transaction" expressionId="e1" />
+			<expressionField name="Reward" expressionId="e2" />
+			<expressionField name="RewardCategory" expressionId="e3" />
 		</outSocket>
 	</operations>
 
 	<outputs id="output1" xsi:type="ot:textFileDelimited">
 		<inSocket fromComponentId="normalize" fromSocketId="out0" id="in0">
 			<schema name="outSchema">
-				<field name="account_no_new" type="java.lang.String" />
-				<field name="name" type="java.lang.String" />
+				<field name="ID_new" type="java.lang.String" />
+				<field name="Transaction" type="java.lang.String" />
+				<field name="Reward" type="java.lang.String" />
+				<field name="RewardCategory" type="java.lang.String" />
 			</schema>
 		</inSocket>
-		<path uri="C:\Users\gurdits\Hydrograph-workspace\hydrograph-gitlab\hydrograph.engine\hydrograph.engine.command-line\testData/Output/NormalizeOp1" />
+		<path uri="testData\Output\NormalizeExample" />
 		<delimiter value="," />
 		<hasHeader value="true" />
 		<charset value="ISO-8859-1" />

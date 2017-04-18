@@ -16,15 +16,14 @@
 		 xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
 		 xmlns:op="hydrograph/engine/jaxb/operationstypes"
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../elt-core/src/main/resources/newxmlschema/main/main.xsd  ">
+		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd  ">
 
 	<inputs id="input1" batch="0" xsi:type="it:textFileDelimited">
 		<outSocket id="out0" type="out">
 			<schema name="klk">
 				<field name="name" type="java.lang.String"  />
 				<field name="Gift" type="java.lang.String"  />
-				<field name="DOB" type="java.util.Date" format="yyyy-MM-dd"
-					/>
+				<field name="DOB" type="java.util.Date" format="yyyy-MM-dd"  />
 				<field name="Choice" type="java.lang.String"  />
 			</schema>
 		</outSocket>
@@ -35,7 +34,7 @@
 
 	<operations id="trans" batch="0" xsi:type="op:filter">
 		<inSocket fromComponentId="input1" fromSocketId="out0" id="in0" />
-		<operation id="operation1" class="hydrograph.engine.transformation.userfunctions.filter.Filter">
+		<operation id="operation1" class="hydrograph.engine.transformation.userfunctions.filter.FilterForXML">
 			<inputFields>
 				<field name="Choice" inSocketId="in0" />
 			</inputFields>
@@ -51,7 +50,6 @@
 		</outSocket>
 	</operations>
 
-
 	<outputs id="output1" batch="0" xsi:type="ot:textFileDelimited">
 		<inSocket fromComponentId="trans" fromSocketId="out1" id="in0">
 			<schema name="Detail">
@@ -61,7 +59,7 @@
 				<field name="Choice" type="java.lang.String"/>
 			</schema>
 		</inSocket>
-		<path uri="testData/output/FilterOutput" />
+		<path uri="testData/Output/Filter/Output" />
 		<delimiter value="," />
 		<hasHeader value="false" />
 		<charset value="ISO-8859-1" />
@@ -77,7 +75,7 @@
 				<field name="Choice" type="java.lang.String"  />
 			</schema>
 		</inSocket>
-		<path uri="testData/output/FilterUnusedOutput" />
+		<path uri="testData/Output/Filter/UnusedOutput" />
 		<delimiter value="," />
 		<hasHeader value="false" />
 		<charset value="ISO-8859-1" />

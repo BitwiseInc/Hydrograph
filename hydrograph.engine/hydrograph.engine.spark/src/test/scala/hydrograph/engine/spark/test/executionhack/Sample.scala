@@ -34,7 +34,7 @@ object Sample extends App {
   val inputService: HydrographXMLInputService = new HydrographXMLInputService()
 
   val job: HydrographJob = inputService.parseHydrographJob(
-    propertiesLoader.getInputServiceProperties(), Array("-xmlpath", "C:/PushpenderG/DART/POC/hydrograph_spark/spark_poc/hydrograph/hydrograph.engine/hydrograph.engine.command-line/testData/XMLFiles/TransformPerformanceCheck.xml"))
+    propertiesLoader.getInputServiceProperties(), Array("-xmlpath", "./../hydrograph.engine.command-line//testData/Input/TransformPerformanceCheck.xml"))
 
   val schemaFieldHandler: SchemaFieldHandler = new SchemaFieldHandler(
     job.getJAXBObject().getInputsOrOutputsOrStraightPulls());
@@ -49,7 +49,7 @@ object Sample extends App {
     .option("header", false)
     .option("charset", "ISO-8859-1")
     .schema(StructType(Array(StructField("id", LongType, false), StructField("name", StringType, false), StructField("number", LongType, false), StructField("city", StringType, false))))
-    .csv("C:/PushpenderG/DART/POC/hydrograph_spark/testfiles/input/aggregateInputFile.txt")
+    .csv("./../hydrograph.engine.command-line//testData/Input/aggregateInputFile.txt")
 
   val adapterBase = adapterFactroy.getAdapterMap().get("reformat").get
 

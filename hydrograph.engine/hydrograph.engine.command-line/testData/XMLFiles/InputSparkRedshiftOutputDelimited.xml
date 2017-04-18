@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License
+ -->
+
+<p:graph name="SparkRedshiftInputAndDelimitedOutput" xmlns:p="hydrograph/engine/jaxb/main"
+         xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd">
+
+    <inputs id="inputSparkRedshift" batch="0" xsi:type="it:sparkredshift">
+        <outSocket id="out0">
+            <schema name="schema1">
+                <field name="aa" type="java.lang.Integer"/>
+                <field name="bb" type="java.lang.Boolean"/>
+                <field name="cc" type="java.lang.Long"/>
+                <field name="dd" type="java.lang.Float"/>
+                <field name="ee" type="java.lang.Integer"/>
+                <field name="gg" type="java.lang.String"/>
+                <field name="ff" type="java.lang.Double"/>
+                <field name="hh" type="java.util.Date" format="yyyy/MM/dd"/>
+                <field name="ii" type="java.util.Date" format="yyyy/MM/dd HH:mm:ss"/>
+                <field name="jj" type="java.math.BigDecimal" scale="2"
+                       precision="10" scaleType="explicit"/>
+            </schema>
+        </outSocket>
+        <runtimeProperties>
+            <property name="fs.s3n.awsAccessKeyId" value="@{accessKeyId}" />
+            <property name="fs.s3n.awsSecretAccessKey" value="@{SecretAccessKey}" />
+            <property name="aws_iam_role" value="@{iam_role}" />
+            <property name="forward_spark_s3_credentials" value="@{forward_credentials}" />
+        </runtimeProperties>
+        <databaseName value="@{databaseName}"/>
+        <hostName value="@{hostName}"/>
+        <!-- <port value="@{port}"/> -->
+        <userName value="@{user}"/>
+        <password value="@{password}"/>
+        <temps3dir value="@{tempS3Dir}" />
+        <tableName value="testingalltypesbatchsize166"/>
+       <!-- <selectQuery value="select * from tableName"/>-->
+
+    </inputs>
+    <outputs id="output1" xsi:type="ot:textFileDelimited">
+        <inSocket  fromComponentId="inputSparkRedshift" fromSocketId="out0" id="in0">
+            <schema name="outSchema">
+                <field name="aa" type="java.lang.Integer"/>
+                <field name="bb" type="java.lang.Boolean"/>
+                <field name="cc" type="java.lang.Long"/>
+                <field name="dd" type="java.lang.Float"/>
+                <field name="ee" type="java.lang.Integer"/>
+                <field name="gg" type="java.lang.String"/>
+                <field name="ff" type="java.lang.Double"/>
+                <field name="hh" type="java.util.Date" format="yyyy/MM/dd"/>
+                <field name="ii" type="java.util.Date" format="yyyy/MM/dd HH:mm:ss"/>
+                <field name="jj" type="java.math.BigDecimal" scale="2"
+                       precision="10" scaleType="explicit"/>
+            </schema>
+        </inSocket>
+        <overWrite value="true"/>
+        <path uri="testData/Output/SparkRedshift" />
+        <delimiter value="," />
+        <hasHeader value="false" />
+        <charset value="ISO-8859-1" />
+    </outputs>
+</p:graph>

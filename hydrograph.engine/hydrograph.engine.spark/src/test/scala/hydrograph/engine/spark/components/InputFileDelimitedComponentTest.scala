@@ -95,7 +95,7 @@ class InputFileDelimitedComponentTest {
 
     //Given
 
-    val inputPathCase0: String = "testData/inputFiles/employees.txt"
+    val inputPathCase0: String = "./../hydrograph.engine.command-line//testData/Input/employees.txt"
 
     inputFileDelimitedEntity.setStrict(true)
     inputFileDelimitedEntity.setSafe(false)
@@ -118,7 +118,7 @@ class InputFileDelimitedComponentTest {
 
     //Given
 
-    val inputPathCase1: String = "testData/inputFiles/employees1.txt"
+    val inputPathCase1: String = "./../hydrograph.engine.command-line//testData/Input/employees1.txt"
 
     inputFileDelimitedEntity.setStrict(true)
     inputFileDelimitedEntity.setSafe(false)
@@ -142,7 +142,7 @@ class InputFileDelimitedComponentTest {
 
     //Given
 
-    val inputPathCase2: String = "testData/inputFiles/employees2.txt"
+    val inputPathCase2: String = "./../hydrograph.engine.command-line//testData/Input/employees2.txt"
 
     inputFileDelimitedEntity.setStrict(true)
     inputFileDelimitedEntity.setSafe(true)
@@ -168,7 +168,7 @@ class InputFileDelimitedComponentTest {
 
     //Given
 
-    val inputPathCase3: String = "testData/inputFiles/employees3.txt"
+    val inputPathCase3: String = "./../hydrograph.engine.command-line//testData/Input/employees3.txt"
 
     inputFileDelimitedEntity.setStrict(true)
     inputFileDelimitedEntity.setSafe(true)
@@ -192,7 +192,7 @@ class InputFileDelimitedComponentTest {
 
     //Given
 
-    val inputPathCase3: String = "testData/inputFiles/employees3.txt"
+    val inputPathCase3: String = "./../hydrograph.engine.command-line//testData/Input/employees3.txt"
 
     inputFileDelimitedEntity.setStrict(true)
     inputFileDelimitedEntity.setSafe(false)
@@ -218,7 +218,7 @@ class InputFileDelimitedComponentTest {
 
     //Given
 
-    val inputPathCase4: String = "testData/inputFiles/employees4.txt"
+    val inputPathCase4: String = "./../hydrograph.engine.command-line//testData/Input/employees4.txt"
 
     inputFileDelimitedEntity.setStrict(true)
     inputFileDelimitedEntity.setSafe(true)
@@ -242,7 +242,7 @@ class InputFileDelimitedComponentTest {
 
     //Given
 
-    val inputPathCase4: String = "testData/inputFiles/employees4.txt"
+    val inputPathCase4: String = "./../hydrograph.engine.command-line//testData/Input/employees4.txt"
 
     inputFileDelimitedEntity.setStrict(false)
     inputFileDelimitedEntity.setSafe(true)
@@ -266,7 +266,7 @@ class InputFileDelimitedComponentTest {
 
     //Given
 
-    val inputPathCase4: String = "testData/inputFiles/employees4.txt"
+    val inputPathCase4: String = "./../hydrograph.engine.command-line//testData/Input/employees4.txt"
 
     inputFileDelimitedEntity.setStrict(false)
     inputFileDelimitedEntity.setSafe(false)
