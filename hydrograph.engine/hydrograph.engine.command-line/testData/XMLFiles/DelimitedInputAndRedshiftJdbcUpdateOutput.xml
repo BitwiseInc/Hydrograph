@@ -58,7 +58,7 @@
         <url value="@{url}" />
         <jdbcDriverClass value="@{jdbcDriverClass}" />
         <tableName value="@{tableName}" />
-        <batchSize value="00"/>
+        <batchSize value="10"/>
         <userName value="@{userName}"/>
         <password value="@{password}"/>
         <update>

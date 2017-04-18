@@ -59,7 +59,7 @@
 
         <databaseName value="@{databaseName}"/>
         <hostName value="@{hostname}"/>
-        <port value="0000"/>
+        <!-- <port value="@{port}"/> -->
         <tableName value="@{tableName}"/>
         <userName value="@{user}"/>
         <password value="@{password}"/>

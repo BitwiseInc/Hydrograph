@@ -59,7 +59,7 @@
 
         <databaseName value="@{databaseName}" />
         <hostName value="@{hostName}" />
-        <port value="0000" />
+        <port value="@{port}" />
         <jdbcDriver value="@{jdbcDriver}" />
         <tableName value="@{tableName}" />
         

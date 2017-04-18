@@ -59,7 +59,7 @@
         </runtimeProperties>
         <sid value="@{sid}"/>
         <hostName value="@{hostName}"/>
-        <port value="0000"/>
+        <port value="@{port}"/>
         <driverType value="thin"/>
         <tableName value="@{tableName}"/>
         <userName value="@{userName}"/>

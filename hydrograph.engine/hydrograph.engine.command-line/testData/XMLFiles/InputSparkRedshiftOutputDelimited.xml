@@ -41,8 +41,7 @@
         </runtimeProperties>
         <databaseName value="@{databaseName}"/>
         <hostName value="@{hostName}"/>
-        <port value="0000"/>
-
+        <!-- <port value="@{port}"/> -->
         <userName value="@{user}"/>
         <password value="@{password}"/>
         <temps3dir value="@{tempS3Dir}" />
