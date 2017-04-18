@@ -40,7 +40,7 @@ class OutputFileCsvUnivocityComponentTest {
       .build()
 
 
-    outputFileDelimitedEntity.setPath("testData/outputFiles/delimitedOutput")
+    outputFileDelimitedEntity.setPath("testData/outputFiles/csvUnivocityOutput")
     val sf0: SchemaField = new SchemaField("col1", "java.lang.String")
     val sf1: SchemaField = new SchemaField("col2", "java.lang.Double")
     val sf2: SchemaField = new SchemaField("col3", "java.lang.Float")
@@ -85,7 +85,7 @@ class OutputFileCsvUnivocityComponentTest {
     val comp = new OutputFileCsvUnivocityComponent(outputFileDelimitedEntity, baseComponentParams)
     comp.execute()
 
-    val dataFrame = spark.read.format("text").load("testData/outputFiles/delimitedOutput")
+    val dataFrame = spark.read.format("text").load("testData/outputFiles/csvUnivocityOutput")
 
     //then
     val expectedHeader = "[col1,col2,col3,col4,col5,col6,col7,col8,col9,col10]"
@@ -103,7 +103,7 @@ class OutputFileCsvUnivocityComponentTest {
     val comp = new OutputFileCsvUnivocityComponent(outputFileDelimitedEntity, baseComponentParams)
     comp.execute()
 
-    val dataFrame = spark.read.format("text").load("testData/outputFiles/delimitedOutput")
+    val dataFrame = spark.read.format("text").load("testData/outputFiles/csvUnivocityOutput")
 
     //then
     val expectedRowData = "[aaa,1.25,0.25,25,35,147258,true,12.1500000000,2014-02-05,2014-02-05 14:25:36]"
@@ -124,7 +124,7 @@ class OutputFileCsvUnivocityComponentTest {
     val comp = new OutputFileCsvUnivocityComponent(outputFileDelimitedEntity, baseComponentParams)
     comp.execute()
 
-    val dataFrame = spark.read.format("text").load("testData/outputFiles/delimitedOutput")
+    val dataFrame = spark.read.format("text").load("testData/outputFiles/csvUnivocityOutput")
 
     //then
     val expectedRowData = "[aaa|1.25|0.25|25|35|147258|true|12.1500000000|2014-02-05|2014-02-05 14:25:36]"
@@ -145,7 +145,7 @@ class OutputFileCsvUnivocityComponentTest {
       .build()
 
     val outputFileDelimitedEntity1: OutputFileDelimitedEntity = new OutputFileDelimitedEntity
-    outputFileDelimitedEntity1.setPath("testData/outputFiles/delimitedFewColumnOutput")
+    outputFileDelimitedEntity1.setPath("testData/outputFiles/csvUnivocityFewColumnOutput")
     val sf0: SchemaField = new SchemaField("col1", "java.lang.String")
     val sf1: SchemaField = new SchemaField("col2", "java.lang.Double")
     val sf2: SchemaField = new SchemaField("col3", "java.lang.Float")
@@ -166,7 +166,7 @@ class OutputFileCsvUnivocityComponentTest {
     val comp = new OutputFileCsvUnivocityComponent(outputFileDelimitedEntity1, baseComponentParams)
     comp.execute()
 
-    val dataFrame = spark.read.format("text").load("testData/outputFiles/delimitedFewColumnOutput")
+    val dataFrame = spark.read.format("text").load("testData/outputFiles/csvUnivocityFewColumnOutput")
 
     //then
     val expectedRowData = "[aaa,1.25,0.25]"
@@ -186,7 +186,7 @@ class OutputFileCsvUnivocityComponentTest {
       .build()
 
     val outputFileDelimitedEntity2: OutputFileDelimitedEntity = new OutputFileDelimitedEntity
-    outputFileDelimitedEntity2.setPath("testData/outputFiles/delimitedOutputQuote")
+    outputFileDelimitedEntity2.setPath("testData/outputFiles/csvUnivocityOutputQuote")
     val sf0: SchemaField = new SchemaField("col1", "java.lang.Integer")
     val sf1: SchemaField = new SchemaField("col2", "java.lang.String")
     val sf2: SchemaField = new SchemaField("col3", "java.lang.Float")
@@ -207,7 +207,7 @@ class OutputFileCsvUnivocityComponentTest {
     val comp = new OutputFileCsvUnivocityComponent(outputFileDelimitedEntity2, baseComponentParams1)
     comp.execute()
 
-    val dataFrame = spark.read.format("text").load("testData/outputFiles/delimitedOutputQuote")
+    val dataFrame = spark.read.format("text").load("testData/outputFiles/csvUnivocityOutputQuote")
 
     //then
     val expectedRowData = "[1,'aaa,bbb',1.25]"
