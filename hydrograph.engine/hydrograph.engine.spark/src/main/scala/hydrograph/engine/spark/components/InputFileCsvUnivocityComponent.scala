@@ -1,15 +1,15 @@
-/*******************************************************************************
- * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *******************************************************************************/
+/** *****************************************************************************
+  * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+  * Licensed under the Apache License, Version 2.0 (the "License");
+  * you may not use this file except in compliance with the License.
+  * You may obtain a copy of the License at
+  * http://www.apache.org/licenses/LICENSE-2.0
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  * ******************************************************************************/
 package hydrograph.engine.spark.components
 
 import hydrograph.engine.core.component.entity.InputFileDelimitedEntity
@@ -29,12 +29,11 @@ import scala.collection.JavaConverters._
   */
 class InputFileCsvUnivocityComponent(iFileDelimitedEntity: InputFileDelimitedEntity, iComponentsParams: BaseComponentParams)
   extends InputComponentBase with Serializable {
-  private val LOG:Logger = LoggerFactory.getLogger(classOf[InputFileCsvUnivocityComponent])
+  private val LOG: Logger = LoggerFactory.getLogger(classOf[InputFileCsvUnivocityComponent])
+
   override def createComponent(): Map[String, DataFrame] = {
     LOG.trace("In method createComponent()")
     val schemaCreator = SchemaCreator(iFileDelimitedEntity)
-//    val dateFormats=schemaCreator.getDateFormats()
-//    val schemaField = schemaCreator.makeSchema
     try {
       val df = iComponentsParams.getSparkSession().read
         .option("delimiter", iFileDelimitedEntity.getDelimiter)
@@ -42,7 +41,10 @@ class InputFileCsvUnivocityComponent(iFileDelimitedEntity: InputFileDelimitedEnt
         .option("header", iFileDelimitedEntity.isHasHeader)
         .option("charset", iFileDelimitedEntity.getCharset)
         .option("safe", iFileDelimitedEntity.isSafe)
-        .option("strict", iFileDelimitedEntity.isStrict)
+        .option("mode", iFileDelimitedEntity.isStrict match {
+          case true => "FAILFAST"
+          case false => "PERMISSIVE"
+        })
         .option("dateFormats", schemaCreator.getDateFormats)
         .option("componentId", iFileDelimitedEntity.getComponentId)
         .schema(schemaCreator.makeSchema)
@@ -50,11 +52,11 @@ class InputFileCsvUnivocityComponent(iFileDelimitedEntity: InputFileDelimitedEnt
         .load(iFileDelimitedEntity.getPath)
 
       val key = iFileDelimitedEntity.getOutSocketList.get(0).getSocketId
-      LOG.info("Created Input File Delimited Component "+ iFileDelimitedEntity.getComponentId
-        + " in Batch "+ iFileDelimitedEntity.getBatch +" with output socket " + key
-        + " and path "  + iFileDelimitedEntity.getPath)
-      LOG.debug("Component Id: '"+ iFileDelimitedEntity.getComponentId
-        +"' in Batch: " + iFileDelimitedEntity.getBatch
+      LOG.info("Created Input File Delimited Component " + iFileDelimitedEntity.getComponentId
+        + " in Batch " + iFileDelimitedEntity.getBatch + " with output socket " + key
+        + " and path " + iFileDelimitedEntity.getPath)
+      LOG.debug("Component Id: '" + iFileDelimitedEntity.getComponentId
+        + "' in Batch: " + iFileDelimitedEntity.getBatch
         + " having schema: [ " + iFileDelimitedEntity.getFieldsList.asScala.mkString(",")
         + " ] with delimiter: " + iFileDelimitedEntity.getDelimiter
         + " and quote: " + iFileDelimitedEntity.getQuote
@@ -63,9 +65,9 @@ class InputFileCsvUnivocityComponent(iFileDelimitedEntity: InputFileDelimitedEnt
       Map(key -> df)
     } catch {
 
-      case e : Exception =>
-        LOG.error("Error in Input File Delimited Component "+ iFileDelimitedEntity.getComponentId, e)
-        throw new RuntimeException("Error in Input File Delimited Component "+ iFileDelimitedEntity.getComponentId, e)
+      case e: Exception =>
+        LOG.error("Error in Input File Delimited Component " + iFileDelimitedEntity.getComponentId, e)
+        throw new RuntimeException("Error in Input File Delimited Component " + iFileDelimitedEntity.getComponentId, e)
     }
 
   }

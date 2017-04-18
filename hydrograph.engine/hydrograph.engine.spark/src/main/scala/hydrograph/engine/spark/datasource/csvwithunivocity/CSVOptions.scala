@@ -23,6 +23,7 @@ import java.util.{Locale, TimeZone}
 import hydrograph.engine.spark.datasource.utils.CompressionCodecs
 import org.apache.commons.lang3.time.FastDateFormat
 import org.slf4j.{Logger, LoggerFactory}
+
 /**
   * The Class CSVOptions.
   *
@@ -32,6 +33,61 @@ import org.slf4j.{Logger, LoggerFactory}
 class CSVOptions(@transient private val parameters: Map[String, String])
   extends Serializable {
   private val LOG: Logger = LoggerFactory.getLogger(classOf[CSVOptions])
+
+  val delimiter = CSVTypeCast.toChar(
+    parameters.getOrElse("sep", parameters.getOrElse("delimiter", ",")))
+  val charset = parameters.getOrElse("encoding", parameters.getOrElse("charset", StandardCharsets.UTF_8.name))
+  val quote = getChar("quote", '\"')
+  val escape = getChar("escape", '\\')
+  val comment = getChar("comment", '\u0000')
+  val headerFlag = getBool("header")
+  val inferSchemaFlag = getBool("inferSchema")
+  val ignoreLeadingWhiteSpaceFlag = getBool("ignoreLeadingWhiteSpace")
+  val ignoreTrailingWhiteSpaceFlag = getBool("ignoreTrailingWhiteSpace")
+  private val parseMode = parameters.getOrElse("mode", "PERMISSIVE")
+  val failFast = ParseModes.isFailFastMode(parseMode)
+  val dropMalformed = ParseModes.isDropMalformedMode(parseMode)
+  val permissive = ParseModes.isPermissiveMode(parseMode)
+  val nullValue = parameters.getOrElse("nullValue", "")
+  val nanValue = parameters.getOrElse("nanValue", "NaN")
+
+  // Parse mode flags
+  if (!ParseModes.isValidMode(parseMode)) {
+    LOG.warn(s"$parseMode is not a valid parse mode. Using ${ParseModes.DEFAULT}.")
+  }
+  val positiveInf = parameters.getOrElse("positiveInf", "Inf")
+  val negativeInf = parameters.getOrElse("negativeInf", "-Inf")
+  val isSafe = getBool("safe")
+  val compressionCodec: Option[String] = {
+    val name = parameters.get("compression").orElse(parameters.get("codec"))
+    if (name.nonEmpty && name.get != null) {
+      name.map(CompressionCodecs.getCodecClassName)
+    } else {
+      null
+    }
+
+  }
+  val dateFormat: List[FastDateFormat] = getDateFormats(parameters.getOrElse("dateFormats", "null").split("\t").toList)
+  val maxColumns = getInt("maxColumns", 20480)
+  val maxCharsPerColumn = getInt("maxCharsPerColumn", 1000000)
+  val escapeQuotes = getBool("escapeQuotes", true)
+  val maxMalformedLogPerPartition = getInt("maxMalformedLogPerPartition", 10)
+  val quoteAll = getBool("quoteAll", false)
+  val inputBufferSize = 128
+
+
+  // Uses `FastDateFormat` which can be direct replacement for `SimpleDateFormat` and thread-safe.
+  //  val dateFormat: FastDateFormat =
+  //    FastDateFormat.getInstance(parameters.getOrElse("dateFormat", "yyyy-MM-dd"))
+  val isCommentSet = this.comment != '\u0000'
+
+  /* val timestampFormat: FastDateFormat =
+     FastDateFormat.getInstance(
+       parameters.getOrElse("timestampFormat", "yyyy-MM-dd'T'HH:mm:ss.SSSZZ"))*/
+  val rowSeparator = "\n"
+
+
+
   private def getChar(paramName: String, default: Char): Char = {
     val paramValue = parameters.get(paramName)
     paramValue match {
@@ -52,7 +108,7 @@ class CSVOptions(@transient private val parameters: Map[String, String])
         value.toInt
       } catch {
         case e: NumberFormatException =>
-          throw new RuntimeException(s"$paramName should be an integer. Found $value",e)
+          throw new RuntimeException(s"$paramName should be an integer. Found $value", e)
       }
     }
   }
@@ -70,48 +126,6 @@ class CSVOptions(@transient private val parameters: Map[String, String])
     }
   }
 
-  val delimiter = CSVTypeCast.toChar(
-    parameters.getOrElse("sep", parameters.getOrElse("delimiter", ",")))
-  private val parseMode = parameters.getOrElse("mode", "PERMISSIVE")
-  val charset = parameters.getOrElse("encoding",
-    parameters.getOrElse("charset", StandardCharsets.UTF_8.name()))
-
-  val quote = getChar("quote", '\"')
-  val escape = getChar("escape", '\\')
-  val comment = getChar("comment", '\u0000')
-
-  val headerFlag = getBool("header")
-  val inferSchemaFlag = getBool("inferSchema")
-  val ignoreLeadingWhiteSpaceFlag = getBool("ignoreLeadingWhiteSpace")
-  val ignoreTrailingWhiteSpaceFlag = getBool("ignoreTrailingWhiteSpace")
-
-  // Parse mode flags
-  if (!ParseModes.isValidMode(parseMode)) {
-    LOG.warn(s"$parseMode is not a valid parse mode. Using ${ParseModes.DEFAULT}.")
-  }
-
-  val failFast = ParseModes.isFailFastMode(parseMode)
-  val dropMalformed = ParseModes.isDropMalformedMode(parseMode)
-  val permissive = ParseModes.isPermissiveMode(parseMode)
-
-  val nullValue = parameters.getOrElse("nullValue", "")
-
-  val nanValue = parameters.getOrElse("nanValue", "NaN")
-
-  val positiveInf = parameters.getOrElse("positiveInf", "Inf")
-  val negativeInf = parameters.getOrElse("negativeInf", "-Inf")
-
-
-  val compressionCodec: Option[String] = {
-    val name = parameters.get("compression").orElse(parameters.get("codec"))
-    if (name.nonEmpty && name.get != null){
-      name.map(CompressionCodecs.getCodecClassName)
-    } else {
-      null
-    }
-
-  }
-
   private def getDateFormats(dateFormats: List[String]): List[FastDateFormat] = dateFormats.map { e =>
     if (e.equals("null")) {
       null
@@ -119,41 +133,14 @@ class CSVOptions(@transient private val parameters: Map[String, String])
       fastDateFormat(e)
     }
   }
+
   private def fastDateFormat(dateFormat: String): FastDateFormat = if (!dateFormat.equalsIgnoreCase("null")) {
-    val date = FastDateFormat.getInstance(dateFormat,TimeZone.getDefault,Locale.getDefault)
+    val date = FastDateFormat.getInstance(dateFormat, TimeZone.getDefault, Locale.getDefault)
     //    val date = new FastDateFormat(dateFormat, Locale.getDefault)
     //    date.setLenient(false)
     //    date.setTimeZone(TimeZone.getDefault)
     date
   } else null
-
-
-  // Uses `FastDateFormat` which can be direct replacement for `SimpleDateFormat` and thread-safe.
-//  val dateFormat: FastDateFormat =
-//    FastDateFormat.getInstance(parameters.getOrElse("dateFormat", "yyyy-MM-dd"))
-
-
-  val dateFormat: List[FastDateFormat] =  getDateFormats(parameters.getOrElse("dateFormats", "null").split("\t").toList)
-
- /* val timestampFormat: FastDateFormat =
-    FastDateFormat.getInstance(
-      parameters.getOrElse("timestampFormat", "yyyy-MM-dd'T'HH:mm:ss.SSSZZ"))*/
-
-  val maxColumns = getInt("maxColumns", 20480)
-
-  val maxCharsPerColumn = getInt("maxCharsPerColumn", 1000000)
-
-  val escapeQuotes = getBool("escapeQuotes", true)
-
-  val maxMalformedLogPerPartition = getInt("maxMalformedLogPerPartition", 10)
-
-  val quoteAll = getBool("quoteAll", false)
-
-  val inputBufferSize = 128
-
-  val isCommentSet = this.comment != '\u0000'
-
-  val rowSeparator = "\n"
 }
 
 object CSVOptions {
