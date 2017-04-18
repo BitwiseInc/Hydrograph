@@ -11,12 +11,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-
 package hydrograph.engine.jaxb.inputtypes;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 import hydrograph.engine.jaxb.ifparquet.TypeInputFileDelimitedBase;
-
-import javax.xml.bind.annotation.*;
 
 
 /**
@@ -55,17 +57,17 @@ public class ParquetFile
 {
 
     @XmlElement(required = true)
-    protected ParquetFile.Path path;
+    protected Path path;
 
     /**
      * Gets the value of the path property.
      * 
      * @return
      *     possible object is
-     *     {@link ParquetFile.Path }
+     *     {@link Path }
      *     
      */
-    public ParquetFile.Path getPath() {
+    public Path getPath() {
         return path;
     }
 
@@ -74,10 +76,10 @@ public class ParquetFile
      * 
      * @param value
      *     allowed object is
-     *     {@link ParquetFile.Path }
+     *     {@link Path }
      *     
      */
-    public void setPath(ParquetFile.Path value) {
+    public void setPath(Path value) {
         this.path = value;
     }
 

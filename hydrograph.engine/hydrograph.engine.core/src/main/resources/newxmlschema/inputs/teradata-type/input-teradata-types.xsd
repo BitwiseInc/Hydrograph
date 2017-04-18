@@ -13,6 +13,15 @@
 	<xs:import schemaLocation="../../common/common-types.xsd"
 		namespace="hydrograph/engine/jaxb/commontypes" />
 
+	<xs:complexType name="type-partitions-choice">
+		<xs:sequence>
+			<xs:element name="lowerBound" type="cmn:element-value-integer-type" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="upperBound" type="cmn:element-value-integer-type" minOccurs="1" maxOccurs="1" />
+			<xs:element name="columnName" type="cmn:element-value-string-type"  minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+		<xs:attribute name="value" type="xs:integer" use="required" />
+		<!--<xs:anyAttribute />-->
+	</xs:complexType>
 
 	<xs:complexType name="type-input-teradata-out-socket">
 		<xs:complexContent>

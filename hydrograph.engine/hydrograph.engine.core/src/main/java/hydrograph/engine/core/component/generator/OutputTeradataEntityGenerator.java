@@ -103,6 +103,12 @@ public class OutputTeradataEntityGenerator extends OutputComponentGeneratorBase 
                 .extractRuntimeProperties(jaxbOutputTeradata.getRuntimeProperties()));
 /*		outputRDBMSEntity.setRuntimeProperties(OutputEntityUtils
                 .extractRuntimeProperties(jaxbOutputMysql.getRuntimeProperties()));*/
+/**New fields added since the project was open-sourced*/
+        //for batchsize which was named to chunksize since there is batch in the ETL tool as well
+        outputRDBMSEntity.setChunkSize(jaxbOutputTeradata.getChunkSize()==null?null:jaxbOutputTeradata.getChunkSize().getValue());
+        //extra url parameters has been
+        outputRDBMSEntity.setExtraUrlParamters(jaxbOutputTeradata.getExtraUrlParams()==null?null:jaxbOutputTeradata.getExtraUrlParams().getValue());
+        /**end**/
     }
 
     @Override

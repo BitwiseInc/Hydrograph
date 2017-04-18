@@ -47,6 +47,93 @@ public class InputRDBMSEntity extends InputOutputEntityBase {
     private String _interface;
     private String temps3dir;
 
+    private Integer numPartitionsValue;
+    private Integer upperBound;
+    private Integer lowerBound;
+    private String columnName;
+    private String fetchSize;
+    private String extraUrlParameters;
+
+
+    /**
+     * @param  'numPartitionsValue'
+     * @return Integer
+     * number of partitions in order to get optimized performance
+     * */
+    public Integer getNumPartitionsValue() {
+        return numPartitionsValue;
+    }
+
+    public void setNumPartitionsValue(Integer numPartitionsValue) {
+        this.numPartitionsValue = numPartitionsValue;
+    }
+
+    /**
+     * @param 'upperBound'
+     * @return Integer
+     * upper limit for the chosen column of integral type
+     * */
+    public Integer getUpperBound() {
+        return upperBound;
+    }
+
+    public void setUpperBound(Integer upperBound) {
+        this.upperBound = upperBound;
+    }
+
+    /**
+     * @param 'lowerBound'
+     * @return Integer
+     * lower limit for the chosen column of integral type
+     * */
+    public Integer getLowerBound() {
+        return lowerBound;
+    }
+
+    public void setLowerBound(Integer lowerBound) {
+        this.lowerBound = lowerBound;
+    }
+
+    /**
+     * @param 'columnName'
+     * @return String
+     * name of the column of integral type where partitioning needs to be done
+     */
+    public String getColumnName() {
+        return columnName;
+    }
+
+    public void setColumnName(String columnName) {
+        this.columnName = columnName;
+    }
+
+    /**
+     * @param 'fetchSize'
+     * @return Integer
+     * a JDBC parameter in order to get more set of rows from the database per network trips
+     */
+    public String getFetchSize() {
+        return fetchSize;
+    }
+
+    public void setFetchSize(String fetchSize) {
+        this.fetchSize = fetchSize;
+    }
+
+    /**
+     * @param 'extraUrlParameters'
+     * @return String
+     * a parameters that is optional and can be set as per users preference
+     * */
+    public String getExtraUrlParameters() {
+        return extraUrlParameters;
+    }
+
+    public void setExtraUrlParameters(String extraUrlParameters) {
+        this.extraUrlParameters = extraUrlParameters;
+    }
+
+
     /**
      * @return temps3dir - ot type String
      */

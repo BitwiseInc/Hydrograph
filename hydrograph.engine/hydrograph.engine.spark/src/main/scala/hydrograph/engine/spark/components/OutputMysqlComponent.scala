@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*****************************************************************************************
  * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -8,8 +8,8 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License.
- *******************************************************************************/
+ * limitations under the License
+ ****************************************************************************************/
 package hydrograph.engine.spark.components
 
 import java.sql.SQLException
@@ -40,17 +40,32 @@ BaseComponentParams) extends SparkFlow {
 
   override def execute(): Unit = {
 
+    val batchSize: String = outputRDBMSEntity.getChunkSize match {
+      case null => "1000"
+      case _  => outputRDBMSEntity.getChunkSize
+    }
+
+    LOG.info("Using batchsize "+ batchSize)
+
+    val extraUrlParameters: String = outputRDBMSEntity.getExtraUrlParamters match {
+      case null => ""
+      case _    => "?" + outputRDBMSEntity.getExtraUrlParamters
+    }
+
+    LOG.info("using extra URL parameters as "+ extraUrlParameters)
+    val driverName = "com.mysql.jdbc.Driver"
     val properties = outputRDBMSEntity.getRuntimeProperties
+
     properties.setProperty("user", outputRDBMSEntity.getUsername)
     properties.setProperty("password", outputRDBMSEntity.getPassword)
-    val driverName = "com.mysql.jdbc.Driver"
+    properties.setProperty("batchsize", batchSize)
 
     if (outputRDBMSEntity.getJdbcDriver().equals("Connector/J")) {
       properties.setProperty("driver", driverName)
     }
 
     val connectionURL = "jdbc:mysql://" + outputRDBMSEntity.getHostName() + ":" + outputRDBMSEntity.getPort() + "/" +
-      outputRDBMSEntity.getDatabaseName() +"?rewriteBatchedStatements=true"
+      outputRDBMSEntity.getDatabaseName + extraUrlParameters
 
     LOG.info("Created Output Mysql Component '"+ outputRDBMSEntity.getComponentId
       + "' in Batch "+ outputRDBMSEntity.getBatch

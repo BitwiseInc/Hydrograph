@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*****************************************************************************************
  * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -8,8 +8,8 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License.
- *******************************************************************************/
+ * limitations under the License
+ ****************************************************************************************/
 
 package hydrograph.engine.spark.components
 
@@ -29,12 +29,6 @@ import org.slf4j.{Logger, LoggerFactory}
 
 import scala.collection.JavaConverters._
 
-/**
-  * The Class OutputTeradataComponent.
-  *
-  * @author Bitwise
-  *
-  */
 class OutputTeradataComponent(outputRDBMSEntity: OutputRDBMSEntity,
                               cp: BaseComponentParams) extends SparkFlow {
 
@@ -43,9 +37,22 @@ class OutputTeradataComponent(outputRDBMSEntity: OutputRDBMSEntity,
 
   override def execute(): Unit = {
 
+    val batchSize: String = outputRDBMSEntity.getChunkSize match {
+      case null => "1000"
+      case _  => outputRDBMSEntity.getChunkSize
+    }
+
+    LOG.info("Using batchsize "+ batchSize)
+
+    val extraUrlParameters: String = outputRDBMSEntity.getExtraUrlParamters match {
+      case null => ""
+      case _    => "," + outputRDBMSEntity.getExtraUrlParamters
+    }
+
     val properties = outputRDBMSEntity.getRuntimeProperties
     properties.setProperty("user", outputRDBMSEntity.getUsername)
     properties.setProperty("password", outputRDBMSEntity.getPassword)
+    properties.setProperty("batchsize", batchSize)
     val driverName = "com.teradata.jdbc.TeraDriver"
 
     if (outputRDBMSEntity.getJdbcDriver().equals("TeraJDBC4")) {
@@ -54,7 +61,7 @@ class OutputTeradataComponent(outputRDBMSEntity: OutputRDBMSEntity,
 
 
     val connectionURL = "jdbc:teradata://" + outputRDBMSEntity.getHostName() + "/DBS_PORT="+outputRDBMSEntity.getPort()+",DATABASE=" +
-      outputRDBMSEntity.getDatabaseName()+",TYPE=DEFAULT,TMODE=ANSI";
+      outputRDBMSEntity.getDatabaseName()+",TYPE=DEFAULT,TMODE=ANSI"+extraUrlParameters
     /*outputRDBMSEntity.get_interface()*/
 
     LOG.info("Created Output Teradata Component '"+ outputRDBMSEntity.getComponentId

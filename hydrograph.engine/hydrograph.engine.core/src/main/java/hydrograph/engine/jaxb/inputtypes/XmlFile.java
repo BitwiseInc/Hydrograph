@@ -11,14 +11,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-
 package hydrograph.engine.jaxb.inputtypes;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 import hydrograph.engine.jaxb.commontypes.BooleanValueType;
 import hydrograph.engine.jaxb.commontypes.StandardCharsets;
 import hydrograph.engine.jaxb.ifxml.TypeInputFileXmlBase;
-
-import javax.xml.bind.annotation.*;
 
 
 /**
@@ -101,26 +103,26 @@ public class XmlFile
 {
 
     @XmlElement(required = true)
-    protected XmlFile.Path path;
+    protected Path path;
     @XmlElement(required = true)
-    protected XmlFile.AbsoluteXPath absoluteXPath;
+    protected AbsoluteXPath absoluteXPath;
     @XmlElement(required = true)
-    protected XmlFile.RootTag rootTag;
+    protected RootTag rootTag;
     @XmlElement(required = true)
-    protected XmlFile.RowTag rowTag;
+    protected RowTag rowTag;
     protected BooleanValueType safe;
     protected BooleanValueType strict;
-    protected XmlFile.Charset charset;
+    protected Charset charset;
 
     /**
      * Gets the value of the path property.
      * 
      * @return
      *     possible object is
-     *     {@link XmlFile.Path }
+     *     {@link Path }
      *     
      */
-    public XmlFile.Path getPath() {
+    public Path getPath() {
         return path;
     }
 
@@ -129,10 +131,10 @@ public class XmlFile
      * 
      * @param value
      *     allowed object is
-     *     {@link XmlFile.Path }
+     *     {@link Path }
      *     
      */
-    public void setPath(XmlFile.Path value) {
+    public void setPath(Path value) {
         this.path = value;
     }
 
@@ -141,10 +143,10 @@ public class XmlFile
      * 
      * @return
      *     possible object is
-     *     {@link XmlFile.AbsoluteXPath }
+     *     {@link AbsoluteXPath }
      *     
      */
-    public XmlFile.AbsoluteXPath getAbsoluteXPath() {
+    public AbsoluteXPath getAbsoluteXPath() {
         return absoluteXPath;
     }
 
@@ -153,10 +155,10 @@ public class XmlFile
      * 
      * @param value
      *     allowed object is
-     *     {@link XmlFile.AbsoluteXPath }
+     *     {@link AbsoluteXPath }
      *     
      */
-    public void setAbsoluteXPath(XmlFile.AbsoluteXPath value) {
+    public void setAbsoluteXPath(AbsoluteXPath value) {
         this.absoluteXPath = value;
     }
 
@@ -165,10 +167,10 @@ public class XmlFile
      * 
      * @return
      *     possible object is
-     *     {@link XmlFile.RootTag }
+     *     {@link RootTag }
      *     
      */
-    public XmlFile.RootTag getRootTag() {
+    public RootTag getRootTag() {
         return rootTag;
     }
 
@@ -177,10 +179,10 @@ public class XmlFile
      * 
      * @param value
      *     allowed object is
-     *     {@link XmlFile.RootTag }
+     *     {@link RootTag }
      *     
      */
-    public void setRootTag(XmlFile.RootTag value) {
+    public void setRootTag(RootTag value) {
         this.rootTag = value;
     }
 
@@ -189,10 +191,10 @@ public class XmlFile
      * 
      * @return
      *     possible object is
-     *     {@link XmlFile.RowTag }
+     *     {@link RowTag }
      *     
      */
-    public XmlFile.RowTag getRowTag() {
+    public RowTag getRowTag() {
         return rowTag;
     }
 
@@ -201,10 +203,10 @@ public class XmlFile
      * 
      * @param value
      *     allowed object is
-     *     {@link XmlFile.RowTag }
+     *     {@link RowTag }
      *     
      */
-    public void setRowTag(XmlFile.RowTag value) {
+    public void setRowTag(RowTag value) {
         this.rowTag = value;
     }
 
@@ -261,10 +263,10 @@ public class XmlFile
      * 
      * @return
      *     possible object is
-     *     {@link XmlFile.Charset }
+     *     {@link Charset }
      *     
      */
-    public XmlFile.Charset getCharset() {
+    public Charset getCharset() {
         return charset;
     }
 
@@ -273,10 +275,10 @@ public class XmlFile
      * 
      * @param value
      *     allowed object is
-     *     {@link XmlFile.Charset }
+     *     {@link Charset }
      *     
      */
-    public void setCharset(XmlFile.Charset value) {
+    public void setCharset(Charset value) {
         this.charset = value;
     }
 

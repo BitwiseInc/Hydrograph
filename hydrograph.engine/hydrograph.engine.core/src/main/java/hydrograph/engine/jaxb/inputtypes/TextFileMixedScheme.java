@@ -11,14 +11,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-
 package hydrograph.engine.jaxb.inputtypes;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 import hydrograph.engine.jaxb.commontypes.BooleanValueType;
 import hydrograph.engine.jaxb.commontypes.StandardCharsets;
 import hydrograph.engine.jaxb.ifmixedscheme.TypeMixedBase;
-
-import javax.xml.bind.annotation.*;
 
 
 /**
@@ -81,21 +83,21 @@ public class TextFileMixedScheme
 {
 
     @XmlElement(required = true)
-    protected TextFileMixedScheme.Path path;
+    protected Path path;
     protected BooleanValueType safe;
     protected BooleanValueType strict;
-    protected TextFileMixedScheme.Charset charset;
-    protected TextFileMixedScheme.Quote quote;
+    protected Charset charset;
+    protected Quote quote;
 
     /**
      * Gets the value of the path property.
      * 
      * @return
      *     possible object is
-     *     {@link TextFileMixedScheme.Path }
+     *     {@link Path }
      *     
      */
-    public TextFileMixedScheme.Path getPath() {
+    public Path getPath() {
         return path;
     }
 
@@ -104,10 +106,10 @@ public class TextFileMixedScheme
      * 
      * @param value
      *     allowed object is
-     *     {@link TextFileMixedScheme.Path }
+     *     {@link Path }
      *     
      */
-    public void setPath(TextFileMixedScheme.Path value) {
+    public void setPath(Path value) {
         this.path = value;
     }
 
@@ -164,10 +166,10 @@ public class TextFileMixedScheme
      * 
      * @return
      *     possible object is
-     *     {@link TextFileMixedScheme.Charset }
+     *     {@link Charset }
      *     
      */
-    public TextFileMixedScheme.Charset getCharset() {
+    public Charset getCharset() {
         return charset;
     }
 
@@ -176,10 +178,10 @@ public class TextFileMixedScheme
      * 
      * @param value
      *     allowed object is
-     *     {@link TextFileMixedScheme.Charset }
+     *     {@link Charset }
      *     
      */
-    public void setCharset(TextFileMixedScheme.Charset value) {
+    public void setCharset(Charset value) {
         this.charset = value;
     }
 
@@ -188,10 +190,10 @@ public class TextFileMixedScheme
      * 
      * @return
      *     possible object is
-     *     {@link TextFileMixedScheme.Quote }
+     *     {@link Quote }
      *     
      */
-    public TextFileMixedScheme.Quote getQuote() {
+    public Quote getQuote() {
         return quote;
     }
 
@@ -200,10 +202,10 @@ public class TextFileMixedScheme
      * 
      * @param value
      *     allowed object is
-     *     {@link TextFileMixedScheme.Quote }
+     *     {@link Quote }
      *     
      */
-    public void setQuote(TextFileMixedScheme.Quote value) {
+    public void setQuote(Quote value) {
         this.quote = value;
     }
 

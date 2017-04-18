@@ -297,6 +297,15 @@
 						minOccurs="0" maxOccurs="1" />
 					<xs:element name="jdbcDriver" type="cmn:element-value-string-type"
 						minOccurs="1" maxOccurs="1" />
+					<!--extra params -->
+					<xs:element name="numPartitions" type="imysql:type-partitions-choice" minOccurs="0"/>
+					<xs:element name="fetchSize" type="cmn:element-value-string-type"
+								minOccurs="0" maxOccurs="1"/>
+					<xs:element name="extraUrlParams" type="cmn:element-value-string-type"
+								minOccurs="0" maxOccurs="1"/>
+
+
+					<!--end-->
 					<xs:choice maxOccurs="1" minOccurs="1">
 						<xs:element name="tableName" type="cmn:element-value-string-type"
 							minOccurs="1" maxOccurs="1" />
@@ -395,6 +404,14 @@
 						minOccurs="0" maxOccurs="1" />
 					<xs:element name="driverType" type="cmn:element-value-string-type"
 						minOccurs="1" maxOccurs="1" />
+					<!--extra params -->
+
+					<xs:element name="numPartitions" type="ioracle:type-partitions-choice" minOccurs="0"/>
+					<xs:element name="fetchSize" type="cmn:element-value-string-type"
+								minOccurs="0" maxOccurs="1"/>
+					<xs:element name="extraUrlParams" type="cmn:element-value-string-type"
+								minOccurs="0" maxOccurs="1"/>
+					<!--end-->
 					<xs:element name="userName" type="cmn:element-value-string-type"
 						minOccurs="1" maxOccurs="1" />
 					<xs:element name="password" type="cmn:element-value-string-type"
@@ -428,7 +445,13 @@
 						minOccurs="1" maxOccurs="1" />
 					<xs:element name="jdbcDriver" type="cmn:element-value-string-type"
 						minOccurs="1" maxOccurs="1" />
-
+					<!--extra params -->
+					<xs:element name="numPartitions" type="iteradata:type-partitions-choice" minOccurs="0"/>
+					<xs:element name="fetchSize" type="cmn:element-value-string-type"
+								minOccurs="0" maxOccurs="1"/>
+					<xs:element name="extraUrlParams" type="cmn:element-value-string-type"
+								minOccurs="0" maxOccurs="1"/>
+					<!--end-->
 					<xs:choice maxOccurs="1" minOccurs="1">
 						<xs:element name="tableName" type="cmn:element-value-string-type"
 							minOccurs="0" maxOccurs="1" />

@@ -11,14 +11,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-
 package hydrograph.engine.jaxb.inputtypes;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 import hydrograph.engine.jaxb.commontypes.BooleanValueType;
 import hydrograph.engine.jaxb.commontypes.StandardCharsets;
 import hydrograph.engine.jaxb.itffw.TypeFixedWidthBase;
-
-import javax.xml.bind.annotation.*;
 
 
 /**
@@ -71,20 +73,20 @@ public class TextFileFixedWidth
 {
 
     @XmlElement(required = true)
-    protected TextFileFixedWidth.Path path;
+    protected Path path;
     protected BooleanValueType safe;
     protected BooleanValueType strict;
-    protected TextFileFixedWidth.Charset charset;
+    protected Charset charset;
 
     /**
      * Gets the value of the path property.
      * 
      * @return
      *     possible object is
-     *     {@link TextFileFixedWidth.Path }
+     *     {@link Path }
      *     
      */
-    public TextFileFixedWidth.Path getPath() {
+    public Path getPath() {
         return path;
     }
 
@@ -93,10 +95,10 @@ public class TextFileFixedWidth
      * 
      * @param value
      *     allowed object is
-     *     {@link TextFileFixedWidth.Path }
+     *     {@link Path }
      *     
      */
-    public void setPath(TextFileFixedWidth.Path value) {
+    public void setPath(Path value) {
         this.path = value;
     }
 
@@ -153,10 +155,10 @@ public class TextFileFixedWidth
      * 
      * @return
      *     possible object is
-     *     {@link TextFileFixedWidth.Charset }
+     *     {@link Charset }
      *     
      */
-    public TextFileFixedWidth.Charset getCharset() {
+    public Charset getCharset() {
         return charset;
     }
 
@@ -165,10 +167,10 @@ public class TextFileFixedWidth
      * 
      * @param value
      *     allowed object is
-     *     {@link TextFileFixedWidth.Charset }
+     *     {@link Charset }
      *     
      */
-    public void setCharset(TextFileFixedWidth.Charset value) {
+    public void setCharset(Charset value) {
         this.charset = value;
     }
 

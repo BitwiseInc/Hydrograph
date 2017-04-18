@@ -77,7 +77,6 @@ public class OutputMysqlEntityGenerator extends OutputComponentGeneratorBase {
 
         outputRDBMSEntity.setPort(jaxbOutputMysql.getPort() == null ? Constants.DEFAULT_MYSQL_PORT : jaxbOutputMysql.getPort().getValue().intValue());
         outputRDBMSEntity.setJdbcDriver(jaxbOutputMysql.getJdbcDriver() == null ? null : jaxbOutputMysql.getJdbcDriver().getValue());
-        outputRDBMSEntity.setChunkSize(jaxbOutputMysql.getChunkSize() == null ? Constants.DEFAULT_CHUNKSIZE : jaxbOutputMysql.getChunkSize().getValue().intValue());
         outputRDBMSEntity.setDatabaseType("Mysql");
 
         if (jaxbOutputMysql.getLoadType().getNewTable() != null)
@@ -102,6 +101,23 @@ public class OutputMysqlEntityGenerator extends OutputComponentGeneratorBase {
                 .extractRuntimeProperties(jaxbOutputMysql.getRuntimeProperties()));
 /*		outputRDBMSEntity.setRuntimeProperties(OutputEntityUtils
                 .extractRuntimeProperties(jaxbOutputMysql.getRuntimeProperties()));*/
+/**New fields added since the project was open-sourced*/
+        //for batchsize which was named to chunksize since there is batch in the ETL tool as well
+        outputRDBMSEntity.setChunkSize(jaxbOutputMysql.getChunkSize()==null?null:jaxbOutputMysql.getChunkSize().getValue());
+        //extra url parameters has been
+        /*outputRDBMSEntity.setExtraUrlParamters(jaxbOutputMysql.getExtraUrlParams()==null?null:jaxbOutputMysql.getExtraUrlParams().getValue());*/
+        if(jaxbOutputMysql.getExtraUrlParams()!=null){
+            if(jaxbOutputMysql.getExtraUrlParams().getValue().contains(",")){
+                String correctedParams = jaxbOutputMysql.getExtraUrlParams().getValue().replace(",","&");
+
+                LOG.info("using extra url params as" + correctedParams);
+                outputRDBMSEntity.setExtraUrlParamters(correctedParams);
+            }
+        }else if(jaxbOutputMysql.getExtraUrlParams()==null){
+            outputRDBMSEntity.setExtraUrlParamters(null);
+        }
+
+        /**end**/
     }
 
     @Override
