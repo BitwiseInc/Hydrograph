@@ -77,7 +77,7 @@ private class LineCsvWriter(params: CSVOptions, headers: Seq[String])  {
 
   private var buffer = new ByteArrayOutputStream()
   private var writer = new CsvWriter(
-    new OutputStreamWriter(buffer, StandardCharsets.UTF_8),
+    new OutputStreamWriter(buffer, params.charset),
     writerSettings)
 
   def writeRow(row: Seq[String], includeHeader: Boolean): Unit = {
@@ -89,10 +89,10 @@ private class LineCsvWriter(params: CSVOptions, headers: Seq[String])  {
 
   def flush(): String = {
     writer.close()
-    val lines = buffer.toString.stripLineEnd
+    val lines = buffer.toString(params.charset).stripLineEnd
     buffer = new ByteArrayOutputStream()
     writer = new CsvWriter(
-      new OutputStreamWriter(buffer, StandardCharsets.UTF_8),
+      new OutputStreamWriter(buffer, params.charset),
       writerSettings)
     lines
   }
