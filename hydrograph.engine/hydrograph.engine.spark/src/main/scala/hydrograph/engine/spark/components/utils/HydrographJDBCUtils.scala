@@ -13,7 +13,7 @@
 
 package hydrograph.engine.spark.components.utils
 
-import java.sql.{Connection, Driver, DriverManager, SQLException}
+import java.sql.{Connection, Driver, DriverManager, SQLException, Types}
 import java.util.Properties
 
 import org.apache.spark.sql._
@@ -153,7 +153,22 @@ case class HydrographJDBCUtils() {
           while (j < numFields) {
             var i = updateIndex(j)
             if (row.isNullAt(i)) {
-              stmt.setNull(i + 1, 0)
+              rddSchema.fields(i).dataType match {
+                case IntegerType => stmt.setNull(j + 1, Types.INTEGER)
+                case LongType => stmt.setNull(j + 1, Types.BIGINT)
+                case DoubleType => stmt.setNull(j + 1, Types.DOUBLE)
+                case FloatType => stmt.setNull(j + 1, Types.FLOAT)
+                case ShortType => stmt.setNull(j + 1, Types.INTEGER)
+                case ByteType => stmt.setNull(j + 1, Types.INTEGER)
+                case BooleanType => stmt.setNull(j + 1, Types.BOOLEAN)
+                case StringType => stmt.setNull(j + 1, Types.VARCHAR)
+                case BinaryType => stmt.setNull(j + 1, Types.INTEGER)
+                case TimestampType => stmt.setNull(j + 1, Types.TIMESTAMP)
+                case DateType => stmt.setNull(j + 1, Types.DATE)
+                case t: DecimalType => stmt.setNull(j + 1, Types.DECIMAL)
+
+                case _ => stmt.setNull(j + 1, Types.NULL)
+              }
             } else {
               rddSchema.fields(i).dataType match {
                 case IntegerType => stmt.setInt(j + 1, row.getInt(i))
