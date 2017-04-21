@@ -162,6 +162,19 @@ public abstract class Component extends Model {
 	/** The properties. */
 	private Map<String, Object> properties;
 	
+	@XStreamOmitField
+	private Map<String,Object> subJobContainer;
+	
+	public Map<String, Object> getSubJobContainer() {
+		if(subJobContainer==null){
+			subJobContainer=new LinkedHashMap<>();
+		}
+		return subJobContainer;
+	}
+
+	public void setSubJobContainer(Map<String, Object> subJobContainer) {
+		this.subJobContainer = subJobContainer;
+	}
 	/** The parent. */
 	private Container parent;
 	
@@ -277,6 +290,7 @@ public abstract class Component extends Model {
 		location = new Point(0, 0);
 		size = new Dimension(100, 80);
 		properties = new LinkedHashMap<>();
+		subJobContainer= new LinkedHashMap<>();
 		leftPortCount = 0;
 		rightPortCount = 0;
 		bottomPortCount = 0;

@@ -95,7 +95,8 @@ public static final SubjobUtility INSTANCE= new SubjobUtility();
 				
 				if(nextComponent instanceof SubjobComponent)
 				{	
-					Container container=(Container)nextComponent.getProperties().get(Constants.SUBJOB_CONTAINER);
+					//Container container=(Container)nextComponent.getProperties().get(Constants.SUBJOB_CONTAINER);
+					Container container=(Container)nextComponent.getSubJobContainer().get(Constants.SUBJOB_CONTAINER);
 					for(Component subjobComponent:container.getUIComponentList())
 					{
 						if(subjobComponent instanceof InputSubjobComponent)
@@ -112,7 +113,8 @@ public static final SubjobUtility INSTANCE= new SubjobUtility();
 				}
 				else if(nextComponent instanceof OutputSubjobComponent)
 				{
-					Component subJobComponent=(Component)nextComponent.getProperties().get(Constants.SUBJOB_COMPONENT);
+					//Component subJobComponent=(Component)nextComponent.getProperties().get(Constants.SUBJOB_COMPONENT);
+					Component subJobComponent = (Component) nextComponent.getSubJobContainer().get(Constants.SUBJOB_COMPONENT);
 					if(subJobComponent!=null)
 					SubjobUtility.INSTANCE.initializeSchemaMapForInputSubJobComponent(subJobComponent, nextComponent);
 					setFlagForContinuousSchemaPropogation(subJobComponent);
@@ -203,7 +205,9 @@ public static final SubjobUtility INSTANCE= new SubjobUtility();
 	 */
 	public boolean checkIfSubJobHasTransformOrUnionAllComponent(Component component) {
 		boolean containsTransformOrUnionAllComponent=false;
-		Container container=(Container)component.getProperties().get(Constants.SUBJOB_CONTAINER);
+		//Container container=(Container)component.getProperties().get(Constants.SUBJOB_CONTAINER);
+		Container container=(Container)component.getSubJobContainer().get(Constants.SUBJOB_CONTAINER);
+		
 		if(container!=null)
 		{
 		for(Object object:container.getChildren())
@@ -275,7 +279,7 @@ public static final SubjobUtility INSTANCE= new SubjobUtility();
 		} else {
 			for (int i = 0; i < subJobContainer.getUIComponentList().size(); i++) {
 				if(subJobContainer.getUIComponentList().get(i) instanceof Component){
-					Component component = (Component)subJobContainer.getUIComponentList().get(i);
+					Component component = subJobContainer.getUIComponentList().get(i);
 				if (!(component instanceof InputSubjobComponent || component instanceof OutputSubjobComponent)) {
 					if (StringUtils.equalsIgnoreCase(Constants.ERROR, 
 							component.getProperties().get(Constants.VALIDITY_STATUS).toString())

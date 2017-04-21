@@ -87,7 +87,7 @@ public class TrackingStatusUpdateUtils {
 				GraphicalViewer graphicalViewer = (GraphicalViewer) ((GraphicalEditor) editor).getAdapter(GraphicalViewer.class);
 				
 				for (Iterator<EditPart> ite = graphicalViewer.getEditPartRegistry().values().iterator(); ite.hasNext();) {
-					EditPart editPart = (EditPart) ite.next();
+					EditPart editPart = ite.next();
 					if (editPart instanceof ComponentEditPart) {
 						Component component = ((ComponentEditPart) editPart).getCastedModel();
 					
@@ -197,13 +197,14 @@ public class TrackingStatusUpdateUtils {
  					if (componentStatus.getComponentId().contains(selectedComponentId)) {
 						List<String> portList = new ArrayList(componentStatus.getProcessedRecordCount().keySet());
 						for (String port : portList) {
-							if ((((SubjobDetails) entry.getValue()).getSourceTerminal()).equals(port)) {
-								//find the source link to update record count
+
+							if ((entry.getValue().getSourceTerminal()).equals(port)) {
+
 								for (Link link : component.getSourceConnections()) {
 									if (link.getSourceTerminal().toString()
-											.equals(((SubjobDetails) entry.getValue()).getTargetTerminal())) {
+											.equals(entry.getValue().getTargetTerminal())) {
 										link.updateRecordCount(componentStatus.getProcessedRecordCount()
-												.get(((SubjobDetails) entry.getValue()).getSourceTerminal())
+												.get(entry.getValue().getSourceTerminal())
 												.toString());
 										break;
 									}
@@ -227,7 +228,7 @@ public class TrackingStatusUpdateUtils {
 	 * @param subjobPrefix use to identify inner subjob components
 	 */
 	private void populateSubjobRecordCount(Map<String, SubjobDetails> componentNameAndLink, Component component,StringBuilder subjobPrefix,boolean isParent) {
-		Component outputSubjobComponent=(Component) component.getProperties().get(Messages.OUTPUT_SUBJOB_COMPONENT);
+		Component outputSubjobComponent=(Component) component.getSubJobContainer().get(Messages.OUTPUT_SUBJOB_COMPONENT);
 		if(outputSubjobComponent!=null){
 			for(Link link:outputSubjobComponent.getTargetConnections()){
 				Component componentPrevToOutput = link.getSource();
@@ -253,7 +254,8 @@ public class TrackingStatusUpdateUtils {
 	
 	private boolean applyPendingStatus(Component component, ExecutionStatus executionStatus) {
 		boolean isPending = false;
-		Container container=(Container)component.getProperties().get(Constants.SUBJOB_CONTAINER);
+		//Container container=(Container)component.getProperties().get(Constants.SUBJOB_CONTAINER);
+		Container container=(Container)component.getSubJobContainer().get(Constants.SUBJOB_CONTAINER);
 		for (Component innerSubComponent : container.getUIComponentList()) {
 			if(!(innerSubComponent.getComponentName().equals(Messages.INPUT_SUBJOB_COMPONENT)) && 
 					!(innerSubComponent.getComponentName().equals(Messages.OUTPUT_SUBJOB_COMPONENT))){
@@ -275,7 +277,8 @@ public class TrackingStatusUpdateUtils {
 
 	private boolean applyRunningStatus(Component component, ExecutionStatus executionStatus) {
 		boolean isRunning = false;
-		Container container = (Container) component.getProperties().get(Constants.SUBJOB_CONTAINER);
+	//	Container container = (Container) component.getProperties().get(Constants.SUBJOB_CONTAINER);
+		Container container=(Container)component.getSubJobContainer().get(Constants.SUBJOB_CONTAINER);
 		for (Component innerSubComponent : container.getUIComponentList()) {
 			for( ComponentStatus componentStatus: executionStatus.getComponentStatus()){
 			if (Constants.SUBJOB_COMPONENT.equals(innerSubComponent.getComponentName())) {
@@ -293,7 +296,9 @@ public class TrackingStatusUpdateUtils {
 	
 	private boolean applyFailStatus(Component component, ExecutionStatus executionStatus) {
 		boolean isFail = false;
-		Container container = (Container) component.getProperties().get(Constants.SUBJOB_CONTAINER);
+		
+		//Container container = (Container) component.getProperties().get(Constants.SUBJOB_CONTAINER);
+		Container container = (Container) component.getSubJobContainer().get(Constants.SUBJOB_CONTAINER);
 		for (Component innerSubComponent : container.getUIComponentList()) {
 			for( ComponentStatus componentStatus: executionStatus.getComponentStatus()){
 			if (Constants.SUBJOB_COMPONENT.equals(innerSubComponent.getComponentName())) {
@@ -311,7 +316,8 @@ public class TrackingStatusUpdateUtils {
 	
 	private boolean applySuccessStatus(Component component, ExecutionStatus executionStatus) {
 		boolean isSuccess = true;
-		Container container = (Container) component.getProperties().get(Constants.SUBJOB_CONTAINER);
+		//Container container = (Container) component.getProperties().get(Constants.SUBJOB_CONTAINER);
+		Container container=(Container)component.getSubJobContainer().get(Constants.SUBJOB_CONTAINER);
 		
 		boolean isSubjobComponentStatusAvailable= isSubjobAllComponentsStatusAvailable(container,executionStatus,component);
 		

@@ -287,7 +287,7 @@ public class SubJobUtility {
 		 */
 		Component inputSubComponent = SubJobPortLinkUtilty.addInputSubJobComponentAndLink(container,
 				inputSubjobCompCache, clipboardList);
-		System.out.println("aa");
+	//	System.out.println("aa");
 		Component outSubComponent = SubJobPortLinkUtilty.addOutputSubJobComponentAndLink(container,
 				inputSubjobCompCache, outputSubjobCompCache, clipboardList);
 
@@ -300,9 +300,10 @@ public class SubJobUtility {
 
 		doSaveAsSubJob(file, container);
 		inputSubComponent.getProperties().put(Constants.SCHEMA_TO_PROPAGATE, new HashMap<>());
-		propogateSchemaToSubjob((((ComponentEditPart) componentEditPart).getCastedModel()), outSubComponent);
-		updateParametersInGrid((((ComponentEditPart) componentEditPart).getCastedModel()), file.getFullPath());
-		((ComponentEditPart) componentEditPart).getCastedModel().getProperties().put(Constants.SUBJOB_CONTAINER, container);
+		propogateSchemaToSubjob((componentEditPart.getCastedModel()), outSubComponent);
+		updateParametersInGrid((componentEditPart.getCastedModel()), file.getFullPath());
+		//((ComponentEditPart) componentEditPart).getCastedModel().getProperties().put(Constants.SUBJOB_CONTAINER, container);
+		componentEditPart.getCastedModel().getSubJobContainer().put(Constants.SUBJOB_CONTAINER, container);
 	    return container;
 	}
 
@@ -332,7 +333,8 @@ public class SubJobUtility {
 
 			}
 			component.getProperties().put(Constants.SCHEMA_TO_PROPAGATE, inputSchemaMap);
-			subjobComponent.getProperties().put(Constants.INPUT_SUBJOB, component);
+			//subjobComponent.getProperties().put(Constants.INPUT_SUBJOB, component);
+			subjobComponent.getSubJobContainer().put(Constants.INPUT_SUBJOB, component);
 			SchemaPropagation.INSTANCE.continuousSchemaPropagation(subjobComponent, inputSchemaMap);
 		}
 		if (Constants.OUTPUT_SUBJOB.equalsIgnoreCase(component.getComponentName())) {
@@ -352,8 +354,10 @@ public class SubJobUtility {
 		
 			component.getProperties().put(Constants.SCHEMA_TO_PROPAGATE, outputSchemaMap);
 			subjobComponent.getProperties().put(Constants.SCHEMA_TO_PROPAGATE, outputSchemaMap);
-			subjobComponent.getProperties().put(Constants.OUTPUT_SUBJOB, component);
-			component.getProperties().put(Constants.SUBJOB_COMPONENT, subjobComponent);
+			//subjobComponent.getProperties().put(Constants.OUTPUT_SUBJOB, component);
+			subjobComponent.getSubJobContainer().put(Constants.OUTPUT_SUBJOB, component);
+			//component.getProperties().put(Constants.SUBJOB_COMPONENT, subjobComponent);
+			component.getSubJobContainer().put(Constants.SUBJOB_COMPONENT, subjobComponent);
 			if(intializeSchemaMap)
 			SubjobUtility.INSTANCE.initializeSchemaMapForInputSubJobComponent(subjobComponent, component);
 		}
@@ -414,7 +418,8 @@ public class SubJobUtility {
 				}
 			}
 		}
-		selectedSubjobComponent.getProperties().put(Constants.SUBJOB_CONTAINER, container);
+		//selectedSubjobComponent.getProperties().put(Constants.SUBJOB_CONTAINER, container);
+		selectedSubjobComponent.getSubJobContainer().put(Constants.SUBJOB_CONTAINER, container);
 		return container;
 	}
 
@@ -593,7 +598,10 @@ public class SubJobUtility {
 	 */
 	private boolean updateSubjobVersionForRefresh(Component subJobComponent){
 		boolean isVersionChanged = false;
-		Container container = (Container) subJobComponent.getProperties().get(Constants.SUBJOB_CONTAINER);
+		//Container container = (Container) subJobComponent.getProperties().get(Constants.SUBJOB_CONTAINER);
+		
+		Container container = (Container) subJobComponent.getSubJobContainer().get(Constants.SUBJOB_CONTAINER);	
+		
 		
 		if (subJobComponent != null && subJobComponent.getProperties().get(Constants.PATH_PROPERTY_NAME) != null
 				&& subJobComponent.getProperties().get(Constants.SUBJOB_VERSION) != null) {
@@ -675,7 +683,8 @@ public class SubJobUtility {
 				nextComponent.setContinuousSchemaPropogationAllow(true);
 				if(nextComponent instanceof SubjobComponent)
 				{	
-					Container container=(Container)nextComponent.getProperties().get(Constants.SUBJOB_CONTAINER);
+					//Container container=(Container)nextComponent.getProperties().get(Constants.SUBJOB_CONTAINER);
+					Container container=(Container)nextComponent.getSubJobContainer().get(Constants.SUBJOB_CONTAINER);
 					for(Component subjobComponent:container.getUIComponentList())
 					{
 						if(subjobComponent instanceof InputSubjobComponent)
@@ -689,7 +698,8 @@ public class SubJobUtility {
 				}
 				else if(nextComponent instanceof OutputSubjobComponent)
 				{
-					Component subJobComponent=(Component)nextComponent.getProperties().get(Constants.SUBJOB_COMPONENT);
+					//Component subJobComponent=(Component)nextComponent.getProperties().get(Constants.SUBJOB_COMPONENT);
+					Component subJobComponent=(Component)nextComponent.getSubJobContainer().get(Constants.SUBJOB_COMPONENT);
 					if(subJobComponent!=null)
 					SubjobUtility.INSTANCE.initializeSchemaMapForInputSubJobComponent(subJobComponent, nextComponent);
 					setFlagForContinuousSchemaPropogation(subJobComponent);

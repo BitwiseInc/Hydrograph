@@ -188,8 +188,9 @@ public class SchemaPropagation {
 			return;
 		
 		String outPutTargetTerminal = getTagetTerminalForSubjob(targetTerminal);
-		if (subJobComponent.getProperties().get(Constants.INPUT_SUBJOB) != null) {
-			Component inputSubjobComponent = (Component) subJobComponent.getProperties().get(
+		//if (subJobComponent.getProperties().get(Constants.INPUT_SUBJOB) != null) {
+		if (subJobComponent.getSubJobContainer().get(Constants.INPUT_SUBJOB) != null) {
+			Component inputSubjobComponent = (Component) subJobComponent.getSubJobContainer().get(
 					Constants.INPUT_SUBJOB);
 			Map<String, ComponentsOutputSchema> schemaMap = (Map<String, ComponentsOutputSchema>) inputSubjobComponent
 					.getProperties().get(Constants.SCHEMA_TO_PROPAGATE);
@@ -414,7 +415,8 @@ public class SchemaPropagation {
 	private void propagateSchemaFromOutputSubjobComponent(Component outputSubjobComponent, String targetTerminal,
 			ComponentsOutputSchema componentsOutputSchema) {
 
-		Component parentSubjob = (Component) outputSubjobComponent.getProperties().get(Constants.SUBJOB_COMPONENT);
+		//Component parentSubjob = (Component) outputSubjobComponent.getProperties().get(Constants.SUBJOB_COMPONENT);
+		Component parentSubjob = (Component) outputSubjobComponent.getSubJobContainer().get(Constants.SUBJOB_COMPONENT);
 		Map<String, ComponentsOutputSchema> schemaMap = (Map<String, ComponentsOutputSchema>) outputSubjobComponent
 				.getProperties().get(Constants.SCHEMA_TO_PROPAGATE);
 		if (schemaMap != null)

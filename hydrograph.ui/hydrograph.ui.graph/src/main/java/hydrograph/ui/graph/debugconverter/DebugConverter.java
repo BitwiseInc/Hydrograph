@@ -82,7 +82,7 @@ public class DebugConverter {
 			for (Iterator<EditPart> iterator = graphicalViewer.getEditPartRegistry().values().iterator(); 
 					iterator.hasNext();)
 			{
-				EditPart editPart = (EditPart) iterator.next();
+				EditPart editPart = iterator.next();
 				if(editPart instanceof ComponentEditPart){
 					Component component = ((ComponentEditPart)editPart).getCastedModel();
 					if (component instanceof SubjobComponent) {
@@ -180,7 +180,8 @@ public class DebugConverter {
 	private String getComponentName(Component component) {
 		Component componentPrevToOutput = null;
 		String componentName = "";
-		Component outputSubjobComponent = (Component) component.getProperties().get(Messages.OUTPUT_SUBJOB_COMPONENT);
+		//Component outputSubjobComponent = (Component) component.getProperties().get(Messages.OUTPUT_SUBJOB_COMPONENT);
+		Component outputSubjobComponent = (Component) component.getSubJobContainer().get(Messages.OUTPUT_SUBJOB_COMPONENT);
 		if (outputSubjobComponent != null) {
 			for (Link link : outputSubjobComponent.getTargetConnections()) {
 				componentPrevToOutput = link.getSource();

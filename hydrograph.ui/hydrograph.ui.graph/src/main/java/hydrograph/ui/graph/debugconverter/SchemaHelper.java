@@ -173,7 +173,7 @@ public class SchemaHelper {
 				.getProperties().get(Constants.SCHEMA_TO_PROPAGATE);
 		Set<String> keys = componentOutputSchema.keySet();
 		for (String key : keys) {
-			componentsOutputSchema = (ComponentsOutputSchema) componentOutputSchema.get(key);
+			componentsOutputSchema = componentOutputSchema.get(key);
 		}
 		return componentsOutputSchema;
 	}
@@ -217,7 +217,8 @@ public class SchemaHelper {
 		String componentId = "";
 		Component componentPrevToOutput = null;
 		String portNumber = null;
-		Component outputSubjobComponent = (Component) component.getProperties().get(Messages.OUTPUT_SUBJOB_COMPONENT);
+		//Component outputSubjobComponent = (Component) component.getProperties().get(Messages.OUTPUT_SUBJOB_COMPONENT);
+		Component outputSubjobComponent = (Component) component.getSubJobContainer().get(Messages.OUTPUT_SUBJOB_COMPONENT);
 		if (outputSubjobComponent != null) {
 			for (Link link : outputSubjobComponent.getTargetConnections()) {
 				componentPrevToOutput = link.getSource();

@@ -16,12 +16,19 @@ package hydrograph.ui.graph.controller;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.IFigure;
@@ -55,9 +62,11 @@ import hydrograph.ui.graph.figure.ELTFigureConstants;
 import hydrograph.ui.graph.figure.PortFigure;
 import hydrograph.ui.graph.model.Component;
 import hydrograph.ui.graph.model.ComponentLabel;
+import hydrograph.ui.graph.model.Container;
 import hydrograph.ui.graph.model.Link;
 import hydrograph.ui.graph.model.processor.DynamicClassProcessor;
 import hydrograph.ui.graph.propertywindow.ELTPropertyWindow;
+import hydrograph.ui.graph.utility.CanvasUtils;
 import hydrograph.ui.graph.utility.SubJobUtility;
 import hydrograph.ui.logging.factory.LogFactory;
 
@@ -83,9 +92,57 @@ public class ComponentEditPart extends AbstractGraphicalEditPart implements Node
 			super.activate();
 			((Component) getModel()).addPropertyChangeListener(this);
 			((Component) getModel()).setComponentEditPart(this);
+			
 		}
+	
 		backwardCompatibilityForChangingPhaseToBatch();
 		backwardCompatibilityForLoadingComponentId();
+		
+		
+	}
+
+	private void reloadSubjobContainer() {
+		
+		IPath subJobFilePath = null;
+		Container container = null;
+		InputStream inputStream =null;
+		FileInputStream fileInputStream=null;
+		Component subJobComponent =(Component) getModel();
+		 subJobFilePath=new Path(((String)subJobComponent.getProperties().get(Constants.JOB_PATH)));
+		
+		 try {
+		if (ResourcesPlugin.getWorkspace().getRoot().getFile(subJobFilePath).exists()) {
+				inputStream = ResourcesPlugin.getWorkspace().getRoot().getFile(subJobFilePath).getContents();
+			container = (Container)CanvasUtils.INSTANCE.fromXMLToObject(inputStream);
+		} else if (subJobFilePath !=null && isFileExistsOnLocalFileSystem(subJobFilePath)) {
+			fileInputStream = new FileInputStream(subJobFilePath.toFile());
+			container = (Container) CanvasUtils.INSTANCE.fromXMLToObject(fileInputStream);
+		}
+		
+				
+		subJobComponent.getSubJobContainer().put(Constants.SUBJOB_CONTAINER, container);
+				
+		for (Component component : container.getUIComponentList()){
+			/*if (Constants.INPUT_SUBJOB.equalsIgnoreCase(component.getComponentName())){
+				//input connector
+				subJobComponent.getSubJobContainer().put(Constants.INPUT_SUBJOB, component);
+			}*/
+			if(Constants.OUTPUT_SUBJOB.equalsIgnoreCase(component.getComponentName())){
+				//output connector
+				subJobComponent.getSubJobContainer().put(Constants.OUTPUT_SUBJOB, component);	
+				component.getSubJobContainer().put(Constants.SUBJOB_COMPONENT, subJobComponent);
+			}
+			
+		}
+				
+		
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	// Temp method for loading component's Id.
@@ -160,7 +217,7 @@ public class ComponentEditPart extends AbstractGraphicalEditPart implements Node
 	protected IFigure createFigure() {
 		IFigure figure = createFigureForModel();
 		figure.setOpaque(true); // non-transparent figure
-		updateSubjobComponent(figure);
+    	updateSubjobComponent(figure);
 		return figure;
 	}
 
@@ -172,6 +229,15 @@ public class ComponentEditPart extends AbstractGraphicalEditPart implements Node
 	public void updateSubjobComponent(IFigure figure) {
 		LinkedHashMap<String, Object> properties = getCastedModel().getProperties();
 		if (StringUtils.equals(getCastedModel().getComponentName(), Constants.SUBJOB_COMPONENT)) {
+			
+			if(null==getCastedModel().getSubJobContainer().get(Constants.SUBJOB_CONTAINER)&&
+					getCastedModel().getSubJobContainer().size()==0){
+			if(StringUtils.isNotBlank((String)(getCastedModel().getProperties().get(Constants.JOB_PATH)))){
+			
+				reloadSubjobContainer();
+			
+			}
+			}
 			SubJobUtility graphUtility=new SubJobUtility();
 			graphUtility.updateSubjobCompVersion(getCastedModel());
 		}
@@ -342,14 +408,14 @@ public class ComponentEditPart extends AbstractGraphicalEditPart implements Node
 		
 		// Opens Property Window only on Double click.
 		if (req.getType().equals(RequestConstants.REQ_OPEN)) {
-			ComponentFigure componentFigure=((ComponentEditPart)this).getComponentFigure();
+			ComponentFigure componentFigure=this.getComponentFigure();
 			componentFigure.terminateToolTipTimer();
 			ELTPropertyWindow propertyWindow = new ELTPropertyWindow(getModel());
 			propertyWindow.open();
 			
 			if(Constants.SUBJOB_COMPONENT.equalsIgnoreCase(getCastedModel().getComponentName())){
 				SubJobUtility subJobUtility=new SubJobUtility();
-				subJobUtility.updateSubjobPropertyAndGetSubjobContainer((ComponentEditPart)this,null,null,true);
+				subJobUtility.updateSubjobPropertyAndGetSubjobContainer(this,null,null,true);
 			} 
 			if(propertyWindow.isPropertyChanged()){
 				updateSubjobVersion();
@@ -690,6 +756,14 @@ public class ComponentEditPart extends AbstractGraphicalEditPart implements Node
 			}
 		}
 		refreshComponentStatusOfAllComponent();
+	}
+	
+	public boolean isFileExistsOnLocalFileSystem(IPath jobFilePath){
+		if (ResourcesPlugin.getWorkspace().getRoot().getFile(jobFilePath).exists())
+			return true;
+		else if (jobFilePath.toFile().exists())
+			return true;
+		return false;
 	}
 
 }
