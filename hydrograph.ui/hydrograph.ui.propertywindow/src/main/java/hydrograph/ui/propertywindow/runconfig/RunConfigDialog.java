@@ -500,7 +500,7 @@ public class RunConfigDialog extends Dialog {
 		txtUserName.setText(txtUserName.getText());	
 		txtPassword.setText(txtPassword.getText());
 		txtKeyFile.setText(txtKeyFile.getText());
-		if(radioKeyFile.isEnabled()){
+		if(radioKeyFile.isEnabled() && txtKeyFile.isEnabled()){
 			textPasswordListener.getErrorDecoration().hide();
 		}else{
 			keyFileListener.getErrorDecoration().hide();
@@ -518,11 +518,6 @@ public class RunConfigDialog extends Dialog {
 		txtUserName.setText(txtUserName.getText());
 		txtPassword.setText(txtPassword.getText());
 		txtKeyFile.setText(txtKeyFile.getText());
-		if(radioKeyFile.isEnabled()){
-			textPasswordListener.getErrorDecoration().hide();
-		}else{
-			keyFileListener.getErrorDecoration().hide();
-		}
 		serverDetailsGroup.setVisible(false);
 		remotePathConfigGroup.setVisible(false);
 	}
