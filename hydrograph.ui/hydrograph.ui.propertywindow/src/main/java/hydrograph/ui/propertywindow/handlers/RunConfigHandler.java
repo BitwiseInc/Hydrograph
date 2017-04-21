@@ -13,14 +13,15 @@
 
  
 package hydrograph.ui.propertywindow.handlers;
+import hydrograph.ui.logging.factory.LogFactory;
 import hydrograph.ui.propertywindow.runconfig.RunConfigDialog;
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
+import org.slf4j.Logger;
 
 
 /**
@@ -31,7 +32,7 @@ import org.eclipse.swt.widgets.Display;
 
 public class RunConfigHandler extends AbstractHandler implements IHandler {
 
-
+	private Logger logger = LogFactory.INSTANCE.getLogger(RunConfigHandler.class);
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		 
@@ -40,9 +41,11 @@ public class RunConfigHandler extends AbstractHandler implements IHandler {
 				runConfig.open();
 			}catch(IllegalArgumentException e){
 				MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Warning", e.getMessage());
+				logger.error("Failed to start run configuration : ",e);
 			}
 			catch(Exception e){
 				MessageDialog.openWarning(Display.getDefault().getActiveShell(), "Warning", "Please save the graph before setting the run configuration.");
+				logger.error("Failed to start run configuration : ",e);
 			}
 		return null;
 	}

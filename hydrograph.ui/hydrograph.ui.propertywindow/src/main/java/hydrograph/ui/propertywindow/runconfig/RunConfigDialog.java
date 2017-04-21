@@ -394,6 +394,9 @@ public class RunConfigDialog extends Dialog {
 			if(hydrographSecureStorageRunDialogHostNode!=null){
 				String password=hydrographSecureStorageRunDialogHostNode.get(txtUserName.getText(), "");
 				txtPassword.setText(password);
+				if(radioPassword.isEnabled()){
+					textPasswordListener.getErrorDecoration().hide();
+				}
 				if(!StringUtils.isBlank(password)){
 					chkbtnSavePassword.setSelection(true);
 				}else{
@@ -494,11 +497,13 @@ public class RunConfigDialog extends Dialog {
 		Point shellSize = getShell().computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		getShell().setSize(shellSize);
 		txtEdgeNode.setText(txtEdgeNode.getText());
-		txtUserName.setText(txtUserName.getText());		
-		if(radioPassword.isEnabled()){
-			txtPassword.setText(txtPassword.getText());
+		txtUserName.setText(txtUserName.getText());	
+		txtPassword.setText(txtPassword.getText());
+		txtKeyFile.setText(txtKeyFile.getText());
+		if(radioKeyFile.isEnabled()){
+			textPasswordListener.getErrorDecoration().hide();
 		}else{
-			txtKeyFile.setText(txtKeyFile.getText());
+			keyFileListener.getErrorDecoration().hide();
 		}
 		serverDetailsGroup.setVisible(true);
 		remotePathConfigGroup.setVisible(true);
@@ -511,10 +516,12 @@ public class RunConfigDialog extends Dialog {
 		getShell().setSize(newShellSize);
 		txtEdgeNode.setText(txtEdgeNode.getText());
 		txtUserName.setText(txtUserName.getText());
-		if(radioPassword.isEnabled()){
-			txtPassword.setText(txtPassword.getText());
+		txtPassword.setText(txtPassword.getText());
+		txtKeyFile.setText(txtKeyFile.getText());
+		if(radioKeyFile.isEnabled()){
+			textPasswordListener.getErrorDecoration().hide();
 		}else{
-			txtKeyFile.setText(txtKeyFile.getText());
+			keyFileListener.getErrorDecoration().hide();
 		}
 		serverDetailsGroup.setVisible(false);
 		remotePathConfigGroup.setVisible(false);
