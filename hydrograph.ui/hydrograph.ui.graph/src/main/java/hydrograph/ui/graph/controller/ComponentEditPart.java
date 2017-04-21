@@ -118,7 +118,7 @@ public class ComponentEditPart extends AbstractGraphicalEditPart implements Node
 			fileInputStream = new FileInputStream(subJobFilePath.toFile());
 			container = (Container) CanvasUtils.INSTANCE.fromXMLToObject(fileInputStream);
 		}
-		
+		 
 				
 		subJobComponent.getSubJobContainer().put(Constants.SUBJOB_CONTAINER, container);
 				
