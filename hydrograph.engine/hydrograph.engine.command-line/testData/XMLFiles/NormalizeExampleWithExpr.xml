@@ -26,7 +26,7 @@
 				<field name="Rewards" type="java.lang.String" />
 			</schema>
 		</outSocket>
-		<path uri="testData\Input\delimitedInputFileForExpr" />
+		<path uri="testData/Input/delimitedInputFileForExpr" />
 		<delimiter value="|" />
 		<hasHeader value="false" />
 		<safe value="true" />

@@ -27,7 +27,7 @@
 				<field name="sal" type="java.lang.String" />
 			</schema>
 		</outSocket>
-		<path uri="testData\Input\Source1-delimited.txt" />
+		<path uri="testData/Input/Source1-delimited.txt" />
 		<delimiter value="," />
 		<hasHeader value="false" />
 	</inputs>
@@ -74,7 +74,7 @@
 				<field name="sum2" type="java.lang.String" />
 			</schema>
 		</inSocket>
-		<path uri="testData\Output\CumulateExprOutput" />
+		<path uri="testData/Output/CumulateExprOutput" />
 		<delimiter value="," />
 		<hasHeader value="true" />
 	</outputs>

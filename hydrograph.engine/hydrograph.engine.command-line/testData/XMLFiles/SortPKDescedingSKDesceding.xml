@@ -26,7 +26,7 @@
 			</schema>
 		</outSocket>
 
-		<path uri="testData\Input\sort_input.txt" />
+		<path uri="testData/Input/sort_input.txt" />
 		<delimiter value="," />
 		<hasHeader value="false" />
 		<charset value="ISO-8859-1" />
@@ -50,7 +50,7 @@
 				<field name="city" type="java.lang.String" />
 			</schema>
 		</inSocket>
-		<path uri="testData\Output\SortPKDescSKDescOutput" />
+		<path uri="testData/Output/SortPKDescSKDescOutput" />
 		<delimiter value="," />
 		<hasHeader value="true" />
 		<charset value="ISO-8859-1" />

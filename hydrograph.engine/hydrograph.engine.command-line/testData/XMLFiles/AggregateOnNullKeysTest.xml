@@ -26,7 +26,7 @@
 				<field name="city" type="java.lang.String" />
 			</schema>
 		</outSocket>
-		<path uri="testData\Input\delimitedInputFile" />
+		<path uri="testData/Input/delimitedInputFile" />
 		<delimiter value="," />
 		<hasHeader value="false" />
 		<charset value="ISO-8859-1" />
@@ -96,7 +96,7 @@
 				<field name="sum2" type="java.lang.Long" />
 			</schema>
 		</inSocket>
-		<path uri="testData\Output\AggregateNullKeysOutput" />
+		<path uri="testData/Output/AggregateNullKeysOutput" />
 		<delimiter value="," />
 		<hasHeader value="true" />
 		<charset value="ISO-8859-1" />

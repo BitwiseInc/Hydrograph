@@ -61,7 +61,7 @@
 			</schema>
 		</inSocket>
 		<overWrite value="true" />
-		<path uri="testData\Output\mysqlOp" />
+		<path uri="testData/Output/mysqlOp" />
 		<delimiter value="," />
 		<hasHeader value="false" />
 		<charset value="ISO-8859-1" />

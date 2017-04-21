@@ -74,6 +74,11 @@ private class AvroOutputGenerator(
   }
 
   private def decimalToBinary(bigDecimal: BigDecimal, schema: Schema): AnyRef = {
+    if(bigDecimal==null){
+        throw new IncompatibleSchemaException(
+            s"\nBigdecimal field can't be null & must have precision & scale"+
+            "\nmake sure the field given in input schema matches with the expected schema field")
+    }
     val prec = bigDecimal.precision()
     val scale = bigDecimal.scale()
     val decimalBytes = bigDecimal.setScale(scale).unscaledValue().toByteArray()
@@ -159,3 +164,4 @@ private class AvroOutputGenerator(
     }
   }
 }
+class IncompatibleSchemaException(msg: String, ex: Throwable = null) extends Exception(msg, ex)

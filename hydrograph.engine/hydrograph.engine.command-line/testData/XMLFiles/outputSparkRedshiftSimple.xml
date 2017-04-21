@@ -32,7 +32,7 @@
                 <field name="jj" type="java.math.BigDecimal" scale="2" precision="10" scaleType="explicit"/>
             </schema>
         </outSocket>
-        <path uri="testData\Input\RedshiftData.txt"/>
+        <path uri="testData/Input/RedshiftData.txt"/>
         <delimiter value=","/>
         <hasHeader value="false"/>
     </inputs>

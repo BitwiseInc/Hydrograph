@@ -25,7 +25,7 @@
 				<field name="city" type="java.lang.String" />
 			</schema>
 		</outSocket>
-		<path uri="testData\Input\delimitedInputFile" />
+		<path uri="testData/Input/delimitedInputFile" />
 		<delimiter value="," />
 		<hasHeader value="false" />
 		<safe value="true" />
@@ -41,6 +41,6 @@
 			</schema>
 		</inSocket>
 		<overWrite value="true"/>
-		<path uri="testData\Output\ParquetOutput" />
+		<path uri="testData/Output/ParquetOutput" />
 	</outputs>
 </p:graph>

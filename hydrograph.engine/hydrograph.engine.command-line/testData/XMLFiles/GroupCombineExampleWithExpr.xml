@@ -71,7 +71,7 @@
                 <field name="ecDateofIssue" type="java.util.Date" format="yyyy/MM/dd" />
             </schema>
         </outSocket>
-        <path uri="testData\Input\FiftyFields\100Records.txt" />
+        <path uri="testData/Input/FiftyFields/100Records.txt" />
         <delimiter value="," />
         <hasHeader value="false" />
     </inputs>
@@ -113,7 +113,7 @@
             </schema>
         </inSocket>
         <overWrite value="true" />
-        <path uri="testData\Output\GroupCombineExampleWithExpr" />
+        <path uri="testData/Output/GroupCombineExampleWithExpr" />
         <delimiter value="," />
         <hasHeader value="true" />
         <charset value="ISO-8859-1" />

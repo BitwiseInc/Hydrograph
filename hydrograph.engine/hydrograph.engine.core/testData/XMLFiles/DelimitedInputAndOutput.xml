@@ -22,7 +22,7 @@
 				<includeExternalSchema uri="../hydrograph.engine.core/testData/XMLFiles/schema.xml" />
 			</schema>
 		</outSocket>
-		<path uri="testData\input\delimitedInputFile" />
+		<path uri="testData/input/delimitedInputFile" />
 		<delimiter value="," />
 		<hasHeader value="false" />
 		<safe value="false" />
@@ -36,7 +36,7 @@
 				<field name="city" type="java.lang.String" />
 			</schema>
 		</inSocket>
-		<path uri="testData\output\DelimitedComponentsOp" />
+		<path uri="testData/Output/DelimitedComponentsOp" />
 		<delimiter value="," />
 		<hasHeader value="true" />
 	</outputs>

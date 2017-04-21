@@ -1,4 +1,4 @@
-/*******************************************************************************
+/******************************************************************************
  * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,14 +17,15 @@ import hydrograph.engine.spark.components.base.InputComponentBase
 import hydrograph.engine.spark.components.platform.BaseComponentParams
 import hydrograph.engine.spark.components.utils.SchemaCreator
 import org.apache.spark.sql._
-import org.slf4j.{Logger, LoggerFactory}
+import org.slf4j.{ Logger, LoggerFactory }
+import hydrograph.engine.spark.datasource.avro.CustomAvroToSpark
 
 /**
-  * The Class InputFileAvroComponent.
-  *
-  * @author Bitwise
-  *
-  */
+ * The Class InputFileAvroComponent.
+ *
+ * @author Bitwise
+ *
+ */
 class InputFileAvroComponent(inputFileAvroEntity: InputFileAvroEntity, baseComponentParams: BaseComponentParams) extends InputComponentBase {
   private val LOG: Logger = LoggerFactory.getLogger(classOf[InputFileAvroComponent])
 
@@ -35,10 +36,20 @@ class InputFileAvroComponent(inputFileAvroEntity: InputFileAvroEntity, baseCompo
     try {
       val schemaField = SchemaCreator(inputFileAvroEntity).makeSchema()
       val sparkSession = baseComponentParams.getSparkSession()
-      val df = sparkSession.read.schema(schemaField).format("hydrograph.engine.spark.datasource.avro").load(inputFileAvroEntity.getPath)
+      val df = sparkSession.read
+        .option("safe", inputFileAvroEntity.isSafe)
+        .option("strict", inputFileAvroEntity.isStrict)
+        .schema(schemaField)
+        .format("hydrograph.engine.spark.datasource.avro")
+        .load(inputFileAvroEntity.getPath)
       val key = inputFileAvroEntity.getOutSocketList.get(0).getSocketId
-      LOG.debug("Created Input File Avro Component '" + inputFileAvroEntity.getComponentId + "' in Batch" + inputFileAvroEntity.getBatch
-        + ", file path " + inputFileAvroEntity.getPath)
+      LOG.info("Created Input File Avro Component " + inputFileAvroEntity.getComponentId
+        + " in Batch " + inputFileAvroEntity.getBatch + " with output socket " + key
+        + " and path " + inputFileAvroEntity.getPath)
+      LOG.debug("Component Id: '" + inputFileAvroEntity.getComponentId
+        + "' in Batch: " + inputFileAvroEntity.getBatch
+        + " strict as " + inputFileAvroEntity.isStrict + " safe as " + inputFileAvroEntity.isSafe
+        + " at Path: " + inputFileAvroEntity.getPath)
       Map(key -> df)
     } catch {
       case e: Exception =>
@@ -47,5 +58,7 @@ class InputFileAvroComponent(inputFileAvroEntity: InputFileAvroEntity, baseCompo
           + inputFileAvroEntity.getComponentId, e)
     }
   }
+  CustomAvroToSpark.setSafe(inputFileAvroEntity.isSafe())
+  CustomAvroToSpark.setStrict(inputFileAvroEntity.isStrict())
 }
     

@@ -15,6 +15,7 @@ package hydrograph.engine.core.component.entity;
 import hydrograph.engine.core.component.entity.base.InputOutputEntityBase;
 
 import java.util.Arrays;
+
 /**
  * The Class InputFileAvroEntity.
  *
@@ -23,6 +24,8 @@ import java.util.Arrays;
  */
 public class InputFileAvroEntity extends InputOutputEntityBase {
 	private String path;
+	private boolean safe = false;
+	private boolean strict = true;
 
 	public String getPath() {
 		return path;
@@ -30,6 +33,22 @@ public class InputFileAvroEntity extends InputOutputEntityBase {
 
 	public void setPath(String path) {
 		this.path = path;
+	}
+
+	public boolean isStrict() {
+		return strict;
+	}
+
+	public void setStrict(boolean strict) {
+		this.strict = strict;
+	}
+
+	public boolean isSafe() {
+		return safe;
+	}
+
+	public void setSafe(boolean safe) {
+		this.safe = safe;
 	}
 
 	/**

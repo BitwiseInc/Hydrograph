@@ -55,7 +55,7 @@
             </schema>
         </inSocket>
         <overWrite value="true"/>
-        <path uri="testData\Output\FixedWidthOutputDelimitedInput"/>
+        <path uri="testData/Output/FixedWidthOutputDelimitedInput"/>
         <charset value="ISO-8859-1"/>
     </outputs>
 </p:graph>

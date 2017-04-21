@@ -25,7 +25,7 @@
 				<field name="city1" type="java.lang.String"  delimiter="|" />
 			</schema>
 		</outSocket>
-		<path uri="testData\Input\mixedSchemeInputFile" />
+		<path uri="testData/Input/mixedSchemeInputFile" />
 	</inputs>
 
 	<outputs id="mixed_schema" xsi:type="ot:textFileMixedScheme">
@@ -37,7 +37,7 @@
 			</schema>
 		</inSocket>
 		<overWrite value="true"/>
-		<path uri="testData\Output\MixedDelimitedComponentsOp"/>
+		<path uri="testData/Output/MixedDelimitedComponentsOp"/>
 		<charset value="ISO-8859-1" />
 	</outputs>
 	
