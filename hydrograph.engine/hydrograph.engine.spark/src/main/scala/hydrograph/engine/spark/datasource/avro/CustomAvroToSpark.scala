@@ -292,12 +292,7 @@ object CustomAvroToSpark {
               s"\nCannot convert Avro schema to target type because schema at field " +
                 s"${path.mkString(".")} is not compatible.\n(expected = $left, got = $right)")
           } else {
-            (item: AnyRef) =>
-              if (item == null) {
-                null
-              } else {
-                null
-              }
+          null
           }
       }
     }
