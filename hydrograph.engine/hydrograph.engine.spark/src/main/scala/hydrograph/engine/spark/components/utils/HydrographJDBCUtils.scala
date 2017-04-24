@@ -165,7 +165,6 @@ case class HydrographJDBCUtils() {
                 case BinaryType => stmt.setNull(j + 1, Types.INTEGER)
                 case TimestampType => stmt.setNull(j + 1, Types.TIMESTAMP)
                 case DateType => stmt.setNull(j + 1, Types.DATE)
-                case t: DecimalType => stmt.setNull(j + 1, Types.DECIMAL)
 
                 case _ => stmt.setNull(j + 1, Types.NULL)
               }
