@@ -580,7 +580,7 @@ public class RunConfigDialog extends Dialog {
 			viewDataCheckBox.setSelection(true);
 			txtBasePath.setEnabled(true);
 		}
-		if(StringUtils.equals(buildProps.getProperty(USE_PASSWORD_AUTHENTICATION), TRUE) || StringUtils.isBlank(txtKeyFile.getText())){
+		if(StringUtils.equals(buildProps.getProperty(USE_PASSWORD_AUTHENTICATION), TRUE) ){
 			togglePasswordAndKeyFile(true);
 			keyFileListener.getErrorDecoration().hide();
 			if(StringUtils.isBlank(txtPassword.getText())){
