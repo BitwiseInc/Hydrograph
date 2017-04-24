@@ -394,6 +394,9 @@ public class RunConfigDialog extends Dialog {
 			if(hydrographSecureStorageRunDialogHostNode!=null){
 				String password=hydrographSecureStorageRunDialogHostNode.get(txtUserName.getText(), "");
 				txtPassword.setText(password);
+				if(radioPassword.isEnabled() && !txtPassword.isEnabled()){
+					textPasswordListener.getErrorDecoration().hide();
+				}
 				if(!StringUtils.isBlank(password)){
 					chkbtnSavePassword.setSelection(true);
 				}else{
@@ -494,9 +497,14 @@ public class RunConfigDialog extends Dialog {
 		Point shellSize = getShell().computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		getShell().setSize(shellSize);
 		txtEdgeNode.setText(txtEdgeNode.getText());
-		txtUserName.setText(txtUserName.getText());
+		txtUserName.setText(txtUserName.getText());	
 		txtPassword.setText(txtPassword.getText());
 		txtKeyFile.setText(txtKeyFile.getText());
+		if(radioKeyFile.isEnabled() && txtKeyFile.isEnabled()){
+			textPasswordListener.getErrorDecoration().hide();
+		}else{
+			keyFileListener.getErrorDecoration().hide();
+		}
 		serverDetailsGroup.setVisible(true);
 		remotePathConfigGroup.setVisible(true);
 	}
@@ -552,14 +560,14 @@ public class RunConfigDialog extends Dialog {
 	}
 
 	private void populateTextBoxes(Enumeration propertyNames) {
-		if (StringUtils.equals(buildProps.getProperty(LOCAL_MODE), TRUE)) {
-			btnLocalMode.setSelection(true);
-			btnRemoteMode.setSelection(false);
-			hideRemoteRunDetailsHolderComposite();
-		} else {
+		if (StringUtils.equals(buildProps.getProperty(REMOTE_MODE), TRUE)) {
 			btnRemoteMode.setSelection(true);
 			btnLocalMode.setSelection(false);
 			showRemoteRunDetailsHolderComposite();
+		} else {
+			btnLocalMode.setSelection(true);
+			btnRemoteMode.setSelection(false);
+			hideRemoteRunDetailsHolderComposite();
 		}
 		txtEdgeNode.setText(getBuildProperty(HOST));
 		txtUserName.setText(getBuildProperty(USER_NAME));
@@ -572,10 +580,10 @@ public class RunConfigDialog extends Dialog {
 			viewDataCheckBox.setSelection(true);
 			txtBasePath.setEnabled(true);
 		}
-		if(StringUtils.equals(buildProps.getProperty(USE_PASSWORD_AUTHENTICATION), TRUE)){
+		if(StringUtils.equals(buildProps.getProperty(USE_PASSWORD_AUTHENTICATION), TRUE) ){
 			togglePasswordAndKeyFile(true);
 			keyFileListener.getErrorDecoration().hide();
-			if(StringUtils.isBlank(txtKeyFile.getText())){
+			if(StringUtils.isBlank(txtPassword.getText())){
 				textPasswordListener.getErrorDecoration().show();
 			}
 		}
