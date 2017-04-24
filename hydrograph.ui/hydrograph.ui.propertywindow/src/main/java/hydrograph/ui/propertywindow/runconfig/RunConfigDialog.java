@@ -394,7 +394,7 @@ public class RunConfigDialog extends Dialog {
 			if(hydrographSecureStorageRunDialogHostNode!=null){
 				String password=hydrographSecureStorageRunDialogHostNode.get(txtUserName.getText(), "");
 				txtPassword.setText(password);
-				if(radioPassword.isEnabled()){
+				if(radioPassword.isEnabled() && !txtPassword.isEnabled()){
 					textPasswordListener.getErrorDecoration().hide();
 				}
 				if(!StringUtils.isBlank(password)){
@@ -583,7 +583,7 @@ public class RunConfigDialog extends Dialog {
 		if(StringUtils.equals(buildProps.getProperty(USE_PASSWORD_AUTHENTICATION), TRUE) || StringUtils.isBlank(txtKeyFile.getText())){
 			togglePasswordAndKeyFile(true);
 			keyFileListener.getErrorDecoration().hide();
-			if(StringUtils.isBlank(txtKeyFile.getText())){
+			if(StringUtils.isBlank(txtPassword.getText())){
 				textPasswordListener.getErrorDecoration().show();
 			}
 		}
