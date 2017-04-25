@@ -179,7 +179,7 @@ public class JoinMapDialog extends Dialog {
 		SashForm composite = new SashForm(container, SWT.SMOOTH);
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-		createInputFieldExpandBarSection(composite);
+		createInputFieldExpandBarSection(composite, container);
 
 		creatFieldMappingSection(composite);
 
@@ -906,7 +906,7 @@ public class JoinMapDialog extends Dialog {
 		});
 	}
 
-	private void createInputFieldExpandBarSection(Composite composite) {
+	private void createInputFieldExpandBarSection(Composite composite, Composite container) {
 		Composite composite_1 = new Composite(composite, SWT.NONE);
 		GridLayout gl_composite_1 = new GridLayout(1, false);
 		gl_composite_1.horizontalSpacing = 0;
@@ -944,12 +944,13 @@ public class JoinMapDialog extends Dialog {
 				SWT.DEFAULT));
 		
 		
-		composite_7.addControlListener(new ControlAdapter() {
+		container.addControlListener(new ControlAdapter() {
 			@Override
 			public void controlResized(ControlEvent e) {
 				
 				for(ExpandItem expandItem:expandBar.getItems()){
 					((TableColumn)expandItem.getData("TableColumn")).setWidth(scrolledComposite_1.getSize().x);
+					expandItem.setHeight((container.getSize().y)/4);
 				}
 			}
 		});
@@ -1036,7 +1037,7 @@ public class JoinMapDialog extends Dialog {
 			}
 		});
 
-		xpndtmItem.setHeight(190);
+		xpndtmItem.setHeight(210);
 		xpndtmItem.setExpanded(true);
 		
 		table_1.addControlListener(new ControlListener() {
