@@ -16,7 +16,6 @@ package hydrograph.ui.graph.action.subjob;
 
 import static hydrograph.ui.graph.execution.tracking.utils.CoolBarHelperUtility.COOLBAR_ITEMS_UTILITY;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -37,6 +36,7 @@ import org.eclipse.ui.ide.IDE;
 import org.slf4j.Logger;
 
 import hydrograph.ui.common.util.Constants;
+import hydrograph.ui.datastructures.executiontracking.ViewExecutionTrackingDetails;
 import hydrograph.ui.graph.controller.ComponentEditPart;
 import hydrograph.ui.graph.editor.ELTGraphicalEditor;
 import hydrograph.ui.graph.execution.tracking.datastructure.ExecutionStatus;
@@ -61,6 +61,11 @@ public class SubJobTrackingAction extends SelectionAction{
 	private static final String TEMP_DIRECTORY="temp"; 
 
 	private Job job;
+	private String uniqueJobId;
+	  
+ 	private String trackingLogPath;
+ 	  
+ 	private boolean isExecutionTrackingEnable = false;
 	
 	private static Logger logger = LogFactory.INSTANCE.getLogger(SubJobTrackingAction.class);
 
@@ -82,7 +87,8 @@ public class SubJobTrackingAction extends SelectionAction{
 		super.init();
 
 		ISharedImages sharedImages = PlatformUI.getWorkbench().getSharedImages();
-		setText(Constants.VIEW_TRACKING_OR_WATCH_POINT_DATA);
+		//setText(Constants.VIEW_TRACKING_OR_WATCH_POINT_DATA);
+		setText(Constants.SUBJOB_TRACKING); 
 		setId(Constants.SUBJOB_TRACKING);
 		setEnabled(false);
 	}
@@ -104,11 +110,13 @@ public class SubJobTrackingAction extends SelectionAction{
 						Component subjobComponent = ((ComponentEditPart) obj).getCastedModel();
 						ELTGraphicalEditor eltGraphicalEditor=(ELTGraphicalEditor) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 						Container container=(Container)subjobComponent.getProperties().get(Constants.SUBJOB_CONTAINER);
+						validateExecutionTrackingEnable(eltGraphicalEditor.getJobId());
 						if(subjobComponent.getParent().isCurrentGraphSubjob()){
 							container.setUniqueJobId(subjobComponent.getParent().getUniqueJobId());
+							uniqueJobId = subjobComponent.getParent().getUniqueJobId();
 						}
 						else{
-							container.setUniqueJobId(eltGraphicalEditor.getJobId());
+							container.setUniqueJobId(uniqueJobId);
 						}
 						String tempFileName =new Path(eltGraphicalEditor.getJobName()+"."+subjobComponent.getComponentLabel().getLabelContents()).toString();
 						IFolder folder=ResourcesPlugin.getWorkspace().getRoot().getFolder(new Path(eltGraphicalEditor.getActiveProject()+"/"+TEMP_DIRECTORY));
@@ -136,7 +144,8 @@ public class SubJobTrackingAction extends SelectionAction{
 						ExecutionStatus executionStatus;
 						try {
 							ViewExecutionHistoryHandler viewExecutionHistoryHandler=new ViewExecutionHistoryHandler();
-							executionStatus = ViewExecutionHistoryUtility.INSTANCE.readJsonLogFile(container.getUniqueJobId(), JobManager.INSTANCE.isLocalMode(), ExecutionTrackingConsoleUtils.INSTANCE.getLogPath());
+							executionStatus = ViewExecutionHistoryUtility.INSTANCE.readJsonLogFile(uniqueJobId, 
+									JobManager.INSTANCE.isLocalMode(), trackingLogPath, isExecutionTrackingEnable);
 							viewExecutionHistoryHandler.replayExecutionTracking(executionStatus);
 						} catch (IOException e) {
 							logger.error("Execution tracking logger file not found:"+e);
@@ -176,5 +185,25 @@ public class SubJobTrackingAction extends SelectionAction{
 		return false;
 
 	}
+	
+	/**
+ 	 * Validate the ViewExecutionTracking and update the fields
+ 	 * @param jobId
+ 	 */
+ 	private void validateExecutionTrackingEnable(String jobId){
+ 		if(ViewExecutionHistoryUtility.INSTANCE.getSelectedTrackingDetailsForSubjob() != null && 
+ 				!ViewExecutionHistoryUtility.INSTANCE.getSelectedTrackingDetailsForSubjob().isEmpty()){
+ 	   
+ 			ViewExecutionTrackingDetails  executionTrackingDetails = ViewExecutionHistoryUtility.INSTANCE
+ 					.getSelectedTrackingDetailsForSubjob().get(0);
+ 	   
+ 			uniqueJobId = executionTrackingDetails.getSelectedUniqueJobId();
+ 			trackingLogPath = executionTrackingDetails.getSelectedLogFilePath();
+ 			isExecutionTrackingEnable = executionTrackingDetails.isViewHistoryTracking();
+ 		}else{
+ 			trackingLogPath = ExecutionTrackingConsoleUtils.INSTANCE.getLogPath();
+ 			uniqueJobId = jobId;
+ 		}
+ 	}
 	
    }

@@ -220,7 +220,7 @@ public class FilterValidator {
 		if(FilterConstants.TYPE_BOOLEAN.equals(type)){
 			Boolean convertedBoolean = Boolean.valueOf(value);
 			if(!StringUtils.equalsIgnoreCase(convertedBoolean.toString(), value)){
-				return false;
+				throw new ParseException("",0); //dummy exception
 			}
 		}
 		else if(FilterConstants.TYPE_DOUBLE.equals(type)){

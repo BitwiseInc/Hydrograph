@@ -15,8 +15,9 @@ Export-Package: hydrograph.ui.common.cloneableinterface,
  hydrograph.ui.datastructure.expression,
  hydrograph.ui.datastructure.property,
  hydrograph.ui.datastructure.property.mapping,
+ hydrograph.ui.datastructures.executiontracking,
+ hydrograph.ui.datastructures.metadata,
  hydrograph.ui.datastructures.parametergrid,
- hydrograph.ui.datastructures.parametergrid.filetype,
- hydrograph.ui.datastructures.metadata
+ hydrograph.ui.datastructures.parametergrid.filetype
 Import-Package: org.apache.commons.lang
 

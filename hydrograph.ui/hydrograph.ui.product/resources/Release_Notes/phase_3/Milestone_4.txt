@@ -92,3 +92,4 @@ Sr.No. <GitHub/Bugzilla Issue #>  - [fixed by] - description
 74.#760 - [Ashika Holkar] - Group Combine: UI issues on Mac
 75.#768 - [Vibhor Tyagi] - Subjob : If Subjob contains multiple out connection then view data and execution not work
 76.#780 - [Vibhor Tyagi] - View Data :- Tool do not show view data of prior runs (removes debug files)
+77.#526 [Vibhor Tyagi] - View Execution Tracking History : Incorrect popup File not exists is getting displayed

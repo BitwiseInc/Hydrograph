@@ -24,7 +24,7 @@ public class DebugServiceMethods {
 	public static final String GET_DEBUG_FILE_PATH = "/read";
 	public static final String DELETE_DEBUG_CSV_FILE="/deleteLocalDebugFile";
 	public static final String DELETE_BASEPATH_FILES="/delete";
-	public static final String GET_FILTERED_FILE_PATH = "/filter";
+	public static final String GET_FILTERED_FILE_PATH = "/sparkSqlFilter";
 	public static final String READ_METASTORE="/readFromMetastore";
 	public static final String TEST_CONNECTION="/getConnectionStatus";
 }
