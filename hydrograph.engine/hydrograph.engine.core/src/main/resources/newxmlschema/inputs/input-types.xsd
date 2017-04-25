@@ -63,7 +63,10 @@
 							<xs:attribute name="uri" type="xs:string" use="required" />
 						</xs:complexType>
 					</xs:element>
-
+					<xs:element name="safe" type="cmn:boolean-value-type"
+						minOccurs="0" />
+					<xs:element name="strict" type="cmn:boolean-value-type"
+						minOccurs="0" />
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>

@@ -33,7 +33,7 @@
                        precision="10" scaleType="explicit" />
             </schema>
         </outSocket>
-        <path uri="testData\Input\all.txt" />
+        <path uri="testData/Input/all.txt" />
         <delimiter value="," />
         <hasHeader value="false" />
     </inputs>

@@ -18,6 +18,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+
+import hydrograph.engine.jaxb.commontypes.BooleanValueType;
 import hydrograph.engine.jaxb.itfd.TypeInputFileDelimitedBase;
 
 
@@ -50,7 +52,9 @@ import hydrograph.engine.jaxb.itfd.TypeInputFileDelimitedBase;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "avroFile", namespace = "hydrograph/engine/jaxb/inputtypes", propOrder = {
-    "path"
+    "path",
+    "safe",
+	"strict"
 })
 public class AvroFile
     extends TypeInputFileDelimitedBase
@@ -58,6 +62,9 @@ public class AvroFile
 
     @XmlElement(required = true)
     protected Path path;
+    protected BooleanValueType safe;
+    protected BooleanValueType strict;
+    
 
     /**
      * Gets the value of the path property.
@@ -83,6 +90,53 @@ public class AvroFile
         this.path = value;
     }
 
+    /**
+     * Gets the value of the safe property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BooleanValueType }
+     *     
+     */
+    public BooleanValueType getSafe() {
+        return safe;
+    }
+
+    /**
+     * Sets the value of the safe property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BooleanValueType }
+     *     
+     */
+    public void setSafe(BooleanValueType value) {
+        this.safe = value;
+    }
+
+    /**
+     * Gets the value of the strict property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BooleanValueType }
+     *     
+     */
+    public BooleanValueType getStrict() {
+        return strict;
+    }
+
+    /**
+     * Sets the value of the strict property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BooleanValueType }
+     *     
+     */
+    public void setStrict(BooleanValueType value) {
+        this.strict = value;
+    }
 
     /**
      * <p>Java class for anonymous complex type.

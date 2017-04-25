@@ -62,7 +62,7 @@
 				<field name="number" type="java.lang.Long" />
 			</schema>
 		</inSocket>
-		<path uri="testData\Output\Transformperformance" />
+		<path uri="testData/Output/Transformperformance" />
 		<delimiter value="," />
 		<hasHeader value="true" />
 		<charset value="ISO-8859-1" />

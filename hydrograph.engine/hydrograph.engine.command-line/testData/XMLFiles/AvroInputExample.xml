@@ -32,7 +32,7 @@
                 <field name="BECE" type="java.math.BigDecimal" precision="6" scale="3"/>
        </schema>
         </outSocket>
-		<path uri="testData\Input\avro_input.avro"/>
+		<path uri="testData/Input/avro_input2.avro"/>
 	</inputs>
 	  <outputs id="output1" xsi:type="ot:textFileDelimited">
 		<inSocket  fromComponentId="input1" fromSocketId="out0" id="in0">

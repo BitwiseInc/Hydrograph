@@ -31,7 +31,7 @@
                        precision="10" scaleType="explicit" length="5"/>
             </schema>
         </outSocket>
-        <path uri="testData\Input\fixedwidth"/>
+        <path uri="testData/Input/fixedwidth"/>
         <safe value="true"/>
         <strict value="false"/>
         <charset value="ISO-8859-1"/>

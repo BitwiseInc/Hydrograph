@@ -27,7 +27,7 @@
 			</schema>
 		</outSocket>
 
-		<path uri="testData\Input\delimitedInputFile" />
+		<path uri="testData/Input/delimitedInputFile" />
 		<delimiter value="," />
 		<hasHeader value="false" />
 		<charset value="ISO-8859-1" />
@@ -73,7 +73,7 @@
 				<field name="sum2" type="java.lang.String" />
 			</schema>
 		</inSocket>
-		<path uri="testData\Output\AggregateExprOutput" />
+		<path uri="testData/Output/AggregateExprOutput" />
 		<delimiter value="," />
 		<hasHeader value="true" />
 		<charset value="ISO-8859-1" />

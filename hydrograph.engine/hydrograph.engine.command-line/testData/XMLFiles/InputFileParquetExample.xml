@@ -25,7 +25,7 @@
                 <field name="city" type="java.lang.String"/>
 			</schema>
 		</outSocket>
-	<path uri="testData\Input\part-r-00000-fcd1ad04-268f-4f72-b51d-864310681f57.snappy.parquet" />
+	<path uri="testData/Input/part-r-00000-fcd1ad04-268f-4f72-b51d-864310681f57.snappy.parquet" />
 	</inputs>
     
      <outputs id="OFDelimited_01" batch="0" xsi:type="ot:textFileDelimited">
@@ -36,7 +36,7 @@
                 <field name="city" type="java.lang.String"/>
             </schema>
         </inSocket>
-        <path uri="testData\Output\ParquetFileOutput"/>
+        <path uri="testData/Output/ParquetFileOutput"/>
         <delimiter value="|"/>
         <hasHeader value="true"/>
         <safe value="false"/>

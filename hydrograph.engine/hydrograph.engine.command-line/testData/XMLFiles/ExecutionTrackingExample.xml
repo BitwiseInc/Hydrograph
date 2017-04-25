@@ -27,7 +27,7 @@
 				<field name="Choice" type="java.lang.String"  />
 			</schema>
 		</outSocket>
-		<path uri="testData\Input\FilterFile.txt" />
+		<path uri="testData/Input/FilterFile.txt" />
 		<delimiter value="," />
 		<hasHeader value="false" />
 	</inputs>
