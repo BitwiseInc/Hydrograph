@@ -15,8 +15,10 @@
 package hydrograph.ui.propertywindow.widgets.customwidgets;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.events.ModifyEvent;
@@ -36,9 +38,12 @@ import org.eclipse.swt.widgets.Button;
 
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.datastructure.property.BasicSchemaGridRow;
+import hydrograph.ui.datastructure.property.ComponentsOutputSchema;
+import hydrograph.ui.datastructure.property.FixedWidthGridRow;
 import hydrograph.ui.datastructure.property.GridRow;
 import hydrograph.ui.datastructure.property.Schema;
 import hydrograph.ui.graph.model.Link;
+import hydrograph.ui.graph.schema.propagation.SchemaPropagation;
 import hydrograph.ui.propertywindow.messages.Messages;
 import hydrograph.ui.propertywindow.property.ComponentConfigrationProperty;
 import hydrograph.ui.propertywindow.property.ComponentMiscellaneousProperties;
@@ -195,6 +200,15 @@ public class TextBoxWithIsParameterCheckBoxWidget extends TextBoxWithLabelWidget
         {	
         	internalSchemaGridRows.add(createSchemaForNewField(fieldName));
         }
+		if (internalSchemaGridRows != null && !internalSchemaGridRows.isEmpty()) {
+			Map<String, ComponentsOutputSchema> schemaMap = new HashMap<>();
+			ComponentsOutputSchema componentsOutputSchema = new ComponentsOutputSchema();
+			List<FixedWidthGridRow> fixedWidthGridRows = SchemaPropagation.INSTANCE
+					.convertGridRowsSchemaToFixedSchemaGridRows(internalSchemaGridRows);
+			componentsOutputSchema.setFixedWidthGridRowsOutputFields(fixedWidthGridRows);
+			schemaMap.put(Constants.FIXED_OUTSOCKET_ID, componentsOutputSchema);
+			getComponent().getProperties().put(Constants.SCHEMA_TO_PROPAGATE, schemaMap);
+		}
         refreshSchemaWidget(internalSchemaGridRows);
 	}
 
