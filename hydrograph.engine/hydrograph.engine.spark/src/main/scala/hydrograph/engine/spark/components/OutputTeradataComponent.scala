@@ -21,7 +21,8 @@ import hydrograph.engine.core.component.entity.OutputRDBMSEntity
 import hydrograph.engine.core.component.entity.elements.SchemaField
 import hydrograph.engine.spark.components.base.SparkFlow
 import hydrograph.engine.spark.components.platform.BaseComponentParams
-import hydrograph.engine.spark.components.utils.TeradataTableUtils
+import hydrograph.engine.spark.components.utils.{SchemaMisMatchException, TeradataTableUtils}
+import org.apache.hadoop.mapred.InvalidInputException
 import org.apache.spark.sql.Column
 import org.apache.spark.sql.execution.datasources.jdbc.JdbcUtils
 import org.apache.spark.sql.functions._
@@ -94,10 +95,14 @@ class OutputTeradataComponent(outputRDBMSEntity: OutputRDBMSEntity,
             throw new RuntimeException("Cannot update a table with pre-existing records in FASTLOAD mode!")
           }
           case "DEFAULT" => {
-            cp.getDataFrame()
-              .select(createSchema(outputRDBMSEntity.getFieldsList): _*)
-              .write.mode("append")
-              .jdbc(connectionURL, outputRDBMSEntity.getTableName, properties)
+            try {
+              cp.getDataFrame()
+                .select(createSchema(outputRDBMSEntity.getFieldsList): _*)
+                .write.mode("append")
+                .jdbc(connectionURL, outputRDBMSEntity.getTableName, properties)
+            }catch{
+              case e: InvalidInputException => throw new InputFileDoesNotExistException(e.getMessage)
+            }
           }
         }
       /*cp.getDataFrame()
@@ -158,9 +163,10 @@ class OutputTeradataComponent(outputRDBMSEntity: OutputRDBMSEntity,
       connection.close()
     } catch {
       case e: SQLException =>
-        LOG.error("Error while connecting to database " + e.getMessage)
+        LOG.error("Error while connecting to database: Reason " + e.getMessage)
 
-        throw new RuntimeException("Error message " ,e)
+        throw new TeradataComponentException(e.getMessage)
+        //throw new RuntimeException("Error message " ,e)
       case e: Exception =>
         LOG.error("Error while executing '"+ query + "' query in executeQuery()" )
         throw new RuntimeException("Error message " ,e)
@@ -181,4 +187,10 @@ class OutputTeradataComponent(outputRDBMSEntity: OutputRDBMSEntity,
     LOG.debug("Schema created for Output Teradata Component : " + schema.mkString)
     schema
   }
+
+
+
 }
+case class TeradataComponentException(message: String) extends RuntimeException(message)
+case class InputFileDoesNotExistException(message: String) extends RuntimeException(message)
+
