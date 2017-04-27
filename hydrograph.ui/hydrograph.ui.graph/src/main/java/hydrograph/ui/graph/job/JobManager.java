@@ -48,6 +48,7 @@ import org.slf4j.Logger;
 import hydrograph.ui.common.interfaces.parametergrid.DefaultGEFCanvas;
 import hydrograph.ui.common.util.MultiParameterFileUIUtils;
 import hydrograph.ui.common.util.OSValidator;
+import hydrograph.ui.datastructures.executiontracking.ViewExecutionTrackingDetails;
 import hydrograph.ui.datastructures.parametergrid.ParameterFile;
 import hydrograph.ui.datastructures.parametergrid.filetype.ParamterFileTypes;
 import hydrograph.ui.dataviewer.window.DebugDataViewer;
@@ -59,6 +60,7 @@ import hydrograph.ui.graph.execution.tracking.datastructure.ExecutionStatus;
 import hydrograph.ui.graph.execution.tracking.logger.ExecutionTrackingFileLogger;
 import hydrograph.ui.graph.execution.tracking.preferences.ExecutionPreferenceConstants;
 import hydrograph.ui.graph.execution.tracking.preferences.JobRunPreference;
+import hydrograph.ui.graph.execution.tracking.replay.ViewExecutionHistoryUtility;
 import hydrograph.ui.graph.execution.tracking.utils.TrackingDisplayUtils;
 import hydrograph.ui.graph.execution.tracking.windows.ExecutionTrackingConsole;
 import hydrograph.ui.graph.handler.JobHandler;
@@ -296,6 +298,7 @@ public class JobManager {
 		job.setUsername(runConfigDialog.getUsername());
 		job.setPassword(clusterPassword);
 		job.setHost(runConfigDialog.getHost());
+		job.setDebugMode(false);
 		job.setRemoteMode(runConfigDialog.isRemoteMode());
 		
 		if(runConfigDialog.isRemoteMode()){
@@ -308,8 +311,6 @@ public class JobManager {
 		
 		gefCanvas.disableRunningJobResource();
 		
-		//DataViewerUtility.INSTANCE.deletePreviousRunsDataviewCsvXmlFiles(previouslyExecutedJobs.get(job.getConsoleName()));
-		//DataViewerUtility.INSTANCE.deletePreviousRunsBasePathDebugFiles(previouslyExecutedJobs.get(job.getConsoleName()));
 		DataViewerUtility.INSTANCE.closeDataViewerWindows(previouslyExecutedJobs.get(job.getConsoleName()));
 		
 		if(previouslyExecutedJobs.get(job.getConsoleName())!= null){
@@ -319,6 +320,7 @@ public class JobManager {
 				previouslyExecutedJobs.get(job.getConsoleName()).setDebugMode(false);
 			}
 		}
+		addExecutionDetails(job);
 		
 		launchJob(job, gefCanvas, parameterGrid, xmlPath,getUserFunctionsPropertertyFile() ,externalSchemaFiles,subJobList);
 	}
@@ -406,6 +408,9 @@ public class JobManager {
 		gefCanvas.disableRunningJobResource();
 		
 		previouslyExecutedJobs.put(job.getConsoleName(), job);
+		
+		addExecutionDetails(job);
+		
 		launchJobWithDebugParameter(job, gefCanvas, parameterGrid, xmlPath, debugXmlPath,getUserFunctionsPropertertyFile() ,externalSchemaFiles,subJobList);
 		
 	}
@@ -528,7 +533,6 @@ public class JobManager {
 	 * @return the parameter file dialog
 	 */
 	private MultiParameterFileDialog getParameterFileDialog(){
-		
 	    String activeProjectLocation=MultiParameterFileUIUtils.getActiveProjectLocation();
 		List<ParameterFile> filepathList = new LinkedList<>();
 		
@@ -868,6 +872,15 @@ public class JobManager {
 				ExecutionPreferenceConstants.EXECUTION_TRACKING, true, null);
 		
 		return isExeTrackingOn;
+	}
+	
+	private void addExecutionDetails(Job job){
+		if(job.isExecutionTrack()){
+			//add execution tracking details on job execution
+			ViewExecutionHistoryUtility.INSTANCE.addTrackingPathDetails(job.getUniqueJobId(), 
+					new ViewExecutionTrackingDetails.Builder(job.getUniqueJobId(), ViewExecutionHistoryUtility.INSTANCE.getTrackingLogPath(),
+							job.isExecutionTrack()).build());
+		}
 	}
 
 }

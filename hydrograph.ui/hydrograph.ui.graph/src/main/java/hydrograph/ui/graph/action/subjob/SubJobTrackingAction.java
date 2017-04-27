@@ -16,7 +16,6 @@ package hydrograph.ui.graph.action.subjob;
 
 import static hydrograph.ui.graph.execution.tracking.utils.CoolBarHelperUtility.COOLBAR_ITEMS_UTILITY;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -60,8 +59,6 @@ public class SubJobTrackingAction extends SelectionAction{
 
 	private static final String TEMP_DIRECTORY="temp"; 
 
-	private Job job;
-	
 	private static Logger logger = LogFactory.INSTANCE.getLogger(SubJobTrackingAction.class);
 
 	/**
@@ -82,7 +79,8 @@ public class SubJobTrackingAction extends SelectionAction{
 		super.init();
 
 		ISharedImages sharedImages = PlatformUI.getWorkbench().getSharedImages();
-		setText(Constants.VIEW_TRACKING_OR_WATCH_POINT_DATA);
+		//setText(Constants.VIEW_TRACKING_OR_WATCH_POINT_DATA);
+		setText(Constants.SUBJOB_TRACKING); 
 		setId(Constants.SUBJOB_TRACKING);
 		setEnabled(false);
 	}
@@ -104,11 +102,13 @@ public class SubJobTrackingAction extends SelectionAction{
 						Component subjobComponent = ((ComponentEditPart) obj).getCastedModel();
 						ELTGraphicalEditor eltGraphicalEditor=(ELTGraphicalEditor) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 						Container container=(Container)subjobComponent.getProperties().get(Constants.SUBJOB_CONTAINER);
+						String uniqueJobId = selectedExecutionHistoryJobId(eltGraphicalEditor.getJobId());
 						if(subjobComponent.getParent().isCurrentGraphSubjob()){
 							container.setUniqueJobId(subjobComponent.getParent().getUniqueJobId());
+							uniqueJobId = subjobComponent.getParent().getUniqueJobId();
 						}
 						else{
-							container.setUniqueJobId(eltGraphicalEditor.getJobId());
+							container.setUniqueJobId(uniqueJobId);
 						}
 						String tempFileName =new Path(eltGraphicalEditor.getJobName()+"."+subjobComponent.getComponentLabel().getLabelContents()).toString();
 						IFolder folder=ResourcesPlugin.getWorkspace().getRoot().getFolder(new Path(eltGraphicalEditor.getActiveProject()+"/"+TEMP_DIRECTORY));
@@ -136,7 +136,8 @@ public class SubJobTrackingAction extends SelectionAction{
 						ExecutionStatus executionStatus;
 						try {
 							ViewExecutionHistoryHandler viewExecutionHistoryHandler=new ViewExecutionHistoryHandler();
-							executionStatus = ViewExecutionHistoryUtility.INSTANCE.readJsonLogFile(container.getUniqueJobId(), JobManager.INSTANCE.isLocalMode(), ExecutionTrackingConsoleUtils.INSTANCE.getLogPath());
+							executionStatus = ViewExecutionHistoryUtility.INSTANCE.readJsonLogFile(uniqueJobId, 
+									JobManager.INSTANCE.isLocalMode(), getTrackingLogPath(), isTrackingEnable());
 							viewExecutionHistoryHandler.replayExecutionTracking(executionStatus);
 						} catch (IOException e) {
 							logger.error("Execution tracking logger file not found:"+e);
@@ -161,7 +162,7 @@ public class SubJobTrackingAction extends SelectionAction{
 						} else {
 							ELTGraphicalEditor editor = (ELTGraphicalEditor) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 							String currentJobName = editor.getActiveProject() + "." + editor.getJobName();
-							job = editor.getJobInstance(currentJobName);
+							Job job = editor.getJobInstance(currentJobName);
 							if (job != null && job.getJobStatus()!=null &&(job.getJobStatus().equalsIgnoreCase(JobStatus.RUNNING)
 									|| job.getJobStatus().equalsIgnoreCase(JobStatus.SUCCESS)
 									|| job.getJobStatus().equalsIgnoreCase(JobStatus.SSHEXEC) // This status is only for remote run while using scp command 
@@ -175,6 +176,42 @@ public class SubJobTrackingAction extends SelectionAction{
 		}
 		return false;
 
+	}
+	
+	/**The Function will return tracking log path
+	 * @return tracking path
+	 */
+	private String getTrackingLogPath(){
+		if(ViewExecutionHistoryUtility.INSTANCE.getSelectedTrackingDetailsForSubjob() != null && 
+ 				!ViewExecutionHistoryUtility.INSTANCE.getSelectedTrackingDetailsForSubjob().isEmpty()){
+			return ViewExecutionHistoryUtility.INSTANCE.getSelectedTrackingDetailsForSubjob().get(0).getSelectedLogFilePath();
+		}else{
+			return ExecutionTrackingConsoleUtils.INSTANCE.getLogPath();
+		}
+	}
+	
+	/**
+	 * @param jobId
+	 * @return uniqueRun Id
+	 */
+	private String selectedExecutionHistoryJobId(String jobId){
+		if(ViewExecutionHistoryUtility.INSTANCE.getSelectedTrackingDetailsForSubjob() != null && 
+ 				!ViewExecutionHistoryUtility.INSTANCE.getSelectedTrackingDetailsForSubjob().isEmpty()){
+			return ViewExecutionHistoryUtility.INSTANCE.getSelectedTrackingDetailsForSubjob().get(0).getSelectedUniqueJobId();
+		}else{
+			return jobId;
+		}
+	}
+	
+	/** The Function return boolean value if tracking enable
+	 * @return boolean
+	 */
+	private boolean isTrackingEnable(){
+		if(ViewExecutionHistoryUtility.INSTANCE.getSelectedTrackingDetailsForSubjob() != null && 
+ 				!ViewExecutionHistoryUtility.INSTANCE.getSelectedTrackingDetailsForSubjob().isEmpty()){
+			return ViewExecutionHistoryUtility.INSTANCE.getSelectedTrackingDetailsForSubjob().get(0).isViewHistoryTracking();
+		}
+		return false;
 	}
 	
    }

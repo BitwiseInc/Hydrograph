@@ -136,7 +136,9 @@ public class TrackingStatusUpdateUtils {
 		for( ComponentStatus componentStatus: executionStatus.getComponentStatus()){
 			if(componentStatus.getComponentId().substring(componentStatus.getComponentId().lastIndexOf(".")+1).equals(component.getComponentId())){
 				logger.debug("Updating normal component {} status {}",component.getComponentId(), componentStatus.getCurrentStatus());
-				component.updateStatus(componentStatus.getCurrentStatus());
+				if(StringUtils.isNotBlank(componentStatus.getCurrentStatus())){
+					component.updateStatus(componentStatus.getCurrentStatus());
+				}
 				
 				for(Link link: component.getSourceConnections()){
 					if(componentStatus.getComponentId().substring(componentStatus.getComponentId().lastIndexOf(".")+1).equals(link.getSource().getComponentId())){
@@ -183,10 +185,20 @@ public class TrackingStatusUpdateUtils {
 		if (!componentNameAndLink.isEmpty()) {
 			for (Map.Entry<String, SubjobDetails> entry : componentNameAndLink.entrySet()) {
 				for (ComponentStatus componentStatus : executionStatus.getComponentStatus()) {
-					if (entry.getKey().contains(componentStatus.getComponentId())) {
+					//IFDelimited_01
+					String componentStatusNameTokens[] = componentStatus.getComponentId().split("\\.");
+					//split componentId and socket id ([Subjob_01, Clone_01, out0])
+					String componentIdTokens[] = entry.getKey().split("\\.");
+ 					//In subjob's case, componentId comes with socket id(Eg:Subjob_01_Clone_01_out0). 
+					//We are comparing if  componentIdTokens is greater than componentStatusNameTokens, so it will remove socket id from  componentIdTokens else it will return same variable.
+					//So, it returns componentId(Eg : Subjob_01_Clone_01).
+ 					String selectedComponentId =  componentIdTokens.length >= componentStatusNameTokens.length ? (String) entry.getKey().subSequence(0, entry.getKey().lastIndexOf('.')) : entry.getKey();
+ 					//update record count on subjob component port as per componentId
+ 					if (componentStatus.getComponentId().contains(selectedComponentId)) {
 						List<String> portList = new ArrayList(componentStatus.getProcessedRecordCount().keySet());
 						for (String port : portList) {
 							if ((((SubjobDetails) entry.getValue()).getSourceTerminal()).equals(port)) {
+								//find the source link to update record count
 								for (Link link : component.getSourceConnections()) {
 									if (link.getSourceTerminal().toString()
 											.equals(((SubjobDetails) entry.getValue()).getTargetTerminal())) {
