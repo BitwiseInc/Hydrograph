@@ -12,5 +12,5 @@ Sr.No. <GitHub Issue #>  - [fixed by] - description
 3. <> - [Pooja Yadav] - Count field of Limit component is converting a negative value into parameterization format.
 4. <> - [Pooja Yadav] - Run Config : - Tool shows error for unused field.
 5. <> - [Pooja Yadav] - Run configuration dialog defaults to ‘Remote’ and ‘Key file’. It should ideally be ‘Local’ and ‘Password’.
-6.#526 - [Vibhor Tyagi]- View Execution Tracking History : Incorrect popup File not exists is getting displayed
-7.#649 - [Vibhor Tyagi]-Execution Tracking: Track subjob shows previous job tracking status on a component
+6. <> - [Vibhor Tyagi]- View Execution Tracking History : Incorrect popup File not exists is getting displayed
+7. <> - [Vibhor Tyagi]-Execution Tracking: Track subjob shows previous job tracking status on a component
