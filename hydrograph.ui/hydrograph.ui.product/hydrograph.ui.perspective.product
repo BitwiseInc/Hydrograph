@@ -117,7 +117,6 @@ openFile
       <plugin id="ch.qos.logback.classic"/>
       <plugin id="ch.qos.logback.core"/>
       <plugin id="ch.qos.logback.slf4j" fragment="true"/>
-      <plugin id="com.google.gson"/>
       <plugin id="com.google.guava"/>
       <plugin id="com.ibm.icu"/>
       <plugin id="com.jcraft.jsch"/>
@@ -281,7 +280,6 @@ openFile
       <plugin id="org.eclipse.jdt.apt.ui"/>
       <plugin id="org.eclipse.jdt.compiler.apt" fragment="true"/>
       <plugin id="org.eclipse.jdt.compiler.tool" fragment="true"/>
-      <plugin id="org.eclipse.jdt.core"/>
       <plugin id="org.eclipse.jdt.core.manipulation"/>
       <plugin id="org.eclipse.jdt.debug"/>
       <plugin id="org.eclipse.jdt.debug.ui"/>
@@ -349,7 +347,6 @@ openFile
       <plugin id="org.eclipse.ui.intro"/>
       <plugin id="org.eclipse.ui.navigator"/>
       <plugin id="org.eclipse.ui.navigator.resources"/>
-      <plugin id="org.eclipse.ui.net"/>
       <plugin id="org.eclipse.ui.views"/>
       <plugin id="org.eclipse.ui.views.log"/>
       <plugin id="org.eclipse.ui.views.properties.tabbed"/>
@@ -367,7 +364,6 @@ openFile
       <plugin id="org.eclipse.wst.common.project.facet.core"/>
       <plugin id="org.eclipse.wst.common.ui"/>
       <plugin id="org.eclipse.wst.common.uriresolver"/>
-      <plugin id="org.eclipse.wst.internet.cache"/>
       <plugin id="org.eclipse.wst.sse.core"/>
       <plugin id="org.eclipse.wst.sse.ui"/>
       <plugin id="org.eclipse.wst.validation"/>
