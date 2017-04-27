@@ -59,6 +59,7 @@ import hydrograph.ui.datastructure.property.MixedSchemeGridRow;
 import hydrograph.ui.datastructure.property.XPathGridRow;
 import hydrograph.ui.logging.factory.LogFactory;
 import hydrograph.ui.propertywindow.messages.Messages;
+import hydrograph.ui.propertywindow.utils.Utils;
 import hydrograph.ui.propertywindow.widgets.listeners.ListenerHelper;
 import hydrograph.ui.propertywindow.widgets.listeners.ListenerHelper.HelperType;
 import hydrograph.ui.propertywindow.widgets.listeners.grid.ELTGridDetails;
@@ -343,7 +344,13 @@ public class GridRowLoader {
 
 		for (GridRow gridRow : schemaGridRowList) {
 			Field field = new Field();
-			field.setName(gridRow.getFieldName());
+			if (gridRow.getFieldName().startsWith("@{")) {
+				Utils.INSTANCE.loadProperties();
+				String paramValue = Utils.INSTANCE.getParamValueForRunSql(gridRow.getFieldName());
+				field.setName(paramValue);
+			} else {
+				field.setName(gridRow.getFieldName());
+			}
 			field.setType(FieldDataTypes.fromValue(gridRow.getDataTypeValue()));
 			
 			if(gridRow instanceof XPathGridRow){
