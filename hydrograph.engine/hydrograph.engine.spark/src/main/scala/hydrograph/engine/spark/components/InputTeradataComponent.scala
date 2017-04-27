@@ -41,10 +41,7 @@ class InputTeradataComponent(inputRDBMSEntity: InputRDBMSEntity,
     val schemaField = SchemaCreator(inputRDBMSEntity).makeSchema()
 
     val sparkSession = iComponentsParams.getSparkSession()
-    val numPartitions: Int = inputRDBMSEntity getNumPartitionsValue match {
-      case null => Int.MinValue
-      case p => inputRDBMSEntity getNumPartitionsValue
-    }
+    val numPartitions: Int = inputRDBMSEntity getNumPartitionsValue
     val upperBound: Int = inputRDBMSEntity getUpperBound
     val lowerBound: Int = inputRDBMSEntity getLowerBound
 
