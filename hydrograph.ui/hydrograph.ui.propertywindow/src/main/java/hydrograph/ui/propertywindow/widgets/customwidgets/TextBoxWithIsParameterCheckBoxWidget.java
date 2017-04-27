@@ -39,6 +39,7 @@ import hydrograph.ui.datastructure.property.BasicSchemaGridRow;
 import hydrograph.ui.datastructure.property.GridRow;
 import hydrograph.ui.graph.model.Link;
 import hydrograph.ui.graph.schema.propagation.SchemaPropagation;
+import hydrograph.ui.graph.schema.propagation.SequenceFieldPropagation;
 import hydrograph.ui.propertywindow.messages.Messages;
 import hydrograph.ui.propertywindow.property.ComponentConfigrationProperty;
 import hydrograph.ui.propertywindow.property.ComponentMiscellaneousProperties;
@@ -77,10 +78,8 @@ public class TextBoxWithIsParameterCheckBoxWidget extends TextBoxWithLabelWidget
 	}
 
 	public LinkedHashMap<String, Object> getProperties() {
-		BasicSchemaGridRow sequenceFieldSchema=createSchemaForNewField(textBox.getText());
-		List<GridRow> internalSchemaGridRows=getSchemaForInternalPropagation().getGridRow();
-		SchemaPropagation.INSTANCE.loadAndPropagateNewField(internalSchemaGridRows,getComponent(),textBox,sequenceFieldSchema);
-		refreshSchemaWidget(internalSchemaGridRows);
+		SequenceFieldPropagation.INSTANCE.loadAndPropagateSequenceField(getSchemaForInternalPropagation().getGridRow(),getComponent(),textBox,createSchemaForNewField(textBox.getText()));
+		refreshSchemaWidget(getSchemaForInternalPropagation().getGridRow());
 		return super.getProperties();
 	}
 

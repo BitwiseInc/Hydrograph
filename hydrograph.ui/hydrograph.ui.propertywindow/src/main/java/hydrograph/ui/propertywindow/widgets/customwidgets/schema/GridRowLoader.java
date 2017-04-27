@@ -344,7 +344,7 @@ public class GridRowLoader {
 
 		for (GridRow gridRow : schemaGridRowList) {
 			Field field = new Field();
-			if (gridRow.getFieldName().startsWith("@{")) {
+			if (StringUtils.indexOf(gridRow.getFieldName(), "}") - StringUtils.indexOf(gridRow.getFieldName(), "@{") >= 3) {
 				Utils.INSTANCE.loadProperties();
 				String paramValue = Utils.INSTANCE.getParamValueForRunSql(gridRow.getFieldName());
 				field.setName(paramValue);

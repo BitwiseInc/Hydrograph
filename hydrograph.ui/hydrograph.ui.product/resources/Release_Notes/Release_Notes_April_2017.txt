@@ -15,3 +15,4 @@ Sr.No. <GitHub Issue #>  - [fixed by] - description
 6. <> - [Vibhor Tyagi]- View Execution Tracking History : Incorrect popup File not exists is getting displayed
 7. <> - [Vibhor Tyagi]-Execution Tracking: Track subjob shows previous job tracking status on a component
 8. <> - [Sonia Raheja] - Unique sequence component: Getting error pop on a Data Viewer window.
+9. <> - [Sonia Raheja] - DB Update component: Job getting failed "ClassNotFound" exception.
