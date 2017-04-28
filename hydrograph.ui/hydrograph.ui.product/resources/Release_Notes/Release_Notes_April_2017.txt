@@ -14,3 +14,4 @@ Sr.No. <GitHub Issue #>  - [fixed by] - description
 5. <> - [Pooja Yadav] - Run configuration dialog defaults to ‘Remote’ and ‘Key file’. It should ideally be ‘Local’ and ‘Password’.
 6. <> - [Vibhor Tyagi]- View Execution Tracking History : Incorrect popup File not exists is getting displayed
 7. <> - [Vibhor Tyagi]-Execution Tracking: Track subjob shows previous job tracking status on a component
+8. <> - [Pooja Yadav] - Join Mapping window:- Need to increase the size input port grid 
