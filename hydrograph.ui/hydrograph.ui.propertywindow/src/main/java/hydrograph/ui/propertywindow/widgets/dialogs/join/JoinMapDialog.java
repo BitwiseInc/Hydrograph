@@ -944,16 +944,17 @@ public class JoinMapDialog extends Dialog {
 				SWT.DEFAULT));
 		
 		
-		container.addControlListener(new ControlAdapter() {
+		composite.addControlListener(new ControlAdapter() {
 			@Override
 			public void controlResized(ControlEvent e) {
 				
 				for(ExpandItem expandItem:expandBar.getItems()){
 					((TableColumn)expandItem.getData("TableColumn")).setWidth(scrolledComposite_1.getSize().x);
-					expandItem.setHeight((container.getSize().y)/4);
-				}
+					if(expandBar.getItemCount()<=4){
+					expandItem.setHeight((composite.getSize().y)/(expandBar.getItemCount()+1));
+				}			
 			}
-		});
+		}});
 	}
 
 	private void populateInputFieldExpandBarSection(ExpandBar expandBar) {
@@ -986,6 +987,15 @@ public class JoinMapDialog extends Dialog {
 			
 			addExpandItem(expandBar, inputPortFieldList, i);
 		}
+		setExpandItemHieght(expandBar);
+	}
+
+	private void setExpandItemHieght(ExpandBar expandBar) {
+		for(ExpandItem expandItem: expandBar.getItems()){
+			if(expandBar.getItemCount()<5){
+				expandItem.setHeight(90);
+			}
+		}	
 	}
 
 	private void addExpandItem(ExpandBar expandBar,
@@ -1036,8 +1046,8 @@ public class JoinMapDialog extends Dialog {
 				event.data = addDelimeter(portLabel, table_1.getSelection());
 			}
 		});
-
-		xpndtmItem.setHeight(210);
+		
+		xpndtmItem.setHeight(140);
 		xpndtmItem.setExpanded(true);
 		
 		table_1.addControlListener(new ControlListener() {
