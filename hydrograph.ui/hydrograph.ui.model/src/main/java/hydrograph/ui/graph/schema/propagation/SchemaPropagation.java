@@ -22,7 +22,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.apache.commons.lang.StringUtils;
-import org.eclipse.swt.widgets.Text;
 import org.slf4j.Logger;
 
 import hydrograph.ui.common.util.Constants;

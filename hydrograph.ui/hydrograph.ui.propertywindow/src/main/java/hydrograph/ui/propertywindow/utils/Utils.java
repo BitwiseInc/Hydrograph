@@ -238,9 +238,7 @@ public class Utils {
 	public String getParamValueForRunSql(String parameterValue) {
 		if ((jobProps != null && !jobProps.isEmpty()) && (StringUtils.isNotBlank(parameterValue))) {
 			for (Entry<Object, Object> entry : jobProps.entrySet()) {
-				if (parameterValue.contains((String) entry.getKey())) {
 					parameterValue = parameterValue.replace("@{" + entry.getKey() + "}", (String) entry.getValue());
-				}
 			}
 			return parameterValue;
 		}
