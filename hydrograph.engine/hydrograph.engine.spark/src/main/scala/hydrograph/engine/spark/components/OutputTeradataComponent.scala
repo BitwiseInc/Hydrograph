@@ -40,14 +40,14 @@ class OutputTeradataComponent(outputRDBMSEntity: OutputRDBMSEntity,
 
     val batchSize: String = outputRDBMSEntity.getChunkSize match {
       case null => "1000"
-      case _  => outputRDBMSEntity.getChunkSize
+      case _ => outputRDBMSEntity.getChunkSize
     }
 
-    LOG.info("Using batchsize "+ batchSize)
+    LOG.info("Using batchsize " + batchSize)
 
     val extraUrlParameters: String = outputRDBMSEntity.getExtraUrlParamters match {
       case null => ""
-      case _    => "," + outputRDBMSEntity.getExtraUrlParamters
+      case _ => "," + outputRDBMSEntity.getExtraUrlParamters
     }
 
     val properties = outputRDBMSEntity.getRuntimeProperties
@@ -61,20 +61,20 @@ class OutputTeradataComponent(outputRDBMSEntity: OutputRDBMSEntity,
     }
 
 
-    val connectionURL = "jdbc:teradata://" + outputRDBMSEntity.getHostName() + "/DBS_PORT="+outputRDBMSEntity.getPort()+",DATABASE=" +
-      outputRDBMSEntity.getDatabaseName()+",TYPE=DEFAULT,TMODE=ANSI"+extraUrlParameters
+    val connectionURL = "jdbc:teradata://" + outputRDBMSEntity.getHostName() + "/DBS_PORT=" + outputRDBMSEntity.getPort() + ",DATABASE=" +
+      outputRDBMSEntity.getDatabaseName() + ",TYPE=DEFAULT,TMODE=ANSI" + extraUrlParameters
     /*outputRDBMSEntity.get_interface()*/
 
-    LOG.info("Created Output Teradata Component '"+ outputRDBMSEntity.getComponentId
-      + "' in Batch "+ outputRDBMSEntity.getBatch
-      +" with Connection url " + connectionURL
+    LOG.info("Created Output Teradata Component '" + outputRDBMSEntity.getComponentId
+      + "' in Batch " + outputRDBMSEntity.getBatch
+      + " with Connection url " + connectionURL
       + " with data load option " + outputRDBMSEntity.getLoadType)
 
-    LOG.debug("Component Id '"+ outputRDBMSEntity.getComponentId
-      +"' in Batch " + outputRDBMSEntity.getBatch
+    LOG.debug("Component Id '" + outputRDBMSEntity.getComponentId
+      + "' in Batch " + outputRDBMSEntity.getBatch
       + " having schema [ " + outputRDBMSEntity.getFieldsList.asScala.mkString(",")
       + " ] with load type " + outputRDBMSEntity.getLoadType
-      +" at connection url  " + connectionURL)
+      + " at connection url  " + connectionURL)
 
 
     outputRDBMSEntity.getLoadType
@@ -84,7 +84,7 @@ class OutputTeradataComponent(outputRDBMSEntity: OutputRDBMSEntity,
         executeQuery(connectionURL, properties, TeradataTableUtils().getCreateTableQuery(outputRDBMSEntity))
         //cp.getDataFrame()
         outputRDBMSEntity.get_interface() match {
-          case  "FASTLOAD" => if(areRecordsPresent(connectionURL, properties, outputRDBMSEntity)==false){
+          case "FASTLOAD" => if (areRecordsPresent(connectionURL, properties, outputRDBMSEntity) == false) {
             cp.getDataFrame()
               .select(createSchema(outputRDBMSEntity.getFieldsList): _*)
               .write.mode("append")
@@ -100,8 +100,9 @@ class OutputTeradataComponent(outputRDBMSEntity: OutputRDBMSEntity,
                 .select(createSchema(outputRDBMSEntity.getFieldsList): _*)
                 .write.mode("append")
                 .jdbc(connectionURL, outputRDBMSEntity.getTableName, properties)
-            }catch{
-              case e: InvalidInputException => throw new InputFileDoesNotExistException(e.getMessage)
+            } catch {
+              case e: InvalidInputException => throw new InputFileDoesNotExistException(e.getMessage, e)
+              case e: Exception => throw new RuntimeException("Error in OuptutTeradataComponent" + outputRDBMSEntity.getComponentId, e)
             }
           }
         }
@@ -114,7 +115,7 @@ class OutputTeradataComponent(outputRDBMSEntity: OutputRDBMSEntity,
       case "insert" =>
         LOG.info("selected " + outputRDBMSEntity.get_interface() + " option")
         outputRDBMSEntity.get_interface() match {
-          case  "FASTLOAD" => if(areRecordsPresent(connectionURL, properties, outputRDBMSEntity)==false){
+          case "FASTLOAD" => if (areRecordsPresent(connectionURL, properties, outputRDBMSEntity) == false) {
             cp.getDataFrame()
               .select(createSchema(outputRDBMSEntity.getFieldsList): _*)
               .write.mode("append")
@@ -125,72 +126,81 @@ class OutputTeradataComponent(outputRDBMSEntity: OutputRDBMSEntity,
             throw new RuntimeException("Cannot update a table with pre-existing records in FASTLOAD mode!")
           }
           case "DEFAULT" => {
-            cp.getDataFrame()
-              .select(createSchema(outputRDBMSEntity.getFieldsList): _*)
-              .write.mode("append")
-              .jdbc(connectionURL, outputRDBMSEntity.getTableName, properties)
+            try {
+              cp.getDataFrame()
+                .select(createSchema(outputRDBMSEntity.getFieldsList): _*)
+                .write.mode("append")
+                .jdbc(connectionURL, outputRDBMSEntity.getTableName, properties)
+            } catch {
+              case e: InvalidInputException => throw new InputFileDoesNotExistException(e.getMessage, e)
+              case e: Exception => throw new RuntimeException("Error in OuptutTeradataComponent" + outputRDBMSEntity.getComponentId, e)
+            }
           }
+
+          case "truncateLoad" =>
+            executeQuery(connectionURL, properties, getTruncateQuery)
+            try {
+              cp.getDataFrame()
+                .select(createSchema(outputRDBMSEntity.getFieldsList): _*)
+                .write.mode("append")
+                .jdbc(connectionURL, outputRDBMSEntity.getTableName, properties)
+            } catch {
+              case e: InvalidInputException => throw new InputFileDoesNotExistException(e.getMessage, e)
+              case e: Exception => throw new RuntimeException("Error in OuptutTeradataComponent" + outputRDBMSEntity.getComponentId, e)
+            }
         }
-
-      case "truncateLoad" =>
-        executeQuery(connectionURL, properties, getTruncateQuery)
-        cp.getDataFrame()
-          .select(createSchema(outputRDBMSEntity.getFieldsList): _*)
-          .write
-          .mode("append")
-          .jdbc(connectionURL, outputRDBMSEntity.getTableName, properties)
     }
-  }
 
-  def areRecordsPresent(connectionURL: String, properties:Properties, outputRDBMSEntity: OutputRDBMSEntity): Boolean = {
-    LOG.warn("FASTLOAD WORKS ONLY IF THERE EXISTS NO RECORDS IN THE TARGET TABLE")
-    val connection = JdbcUtils.createConnectionFactory(connectionURL, properties)()
-    LOG.info("Performing a check to analyze the presence of data in table")
-    val statment = connection.prepareStatement("select TOP 1 * from " + outputRDBMSEntity.getTableName + ";")
-    val resultSet = statment.executeQuery()
-    resultSet.next
-  }
-
-  def executeQuery(connectionURL: String, properties: java.util.Properties, query: String): Unit = {
-    LOG.debug("Executing '" + query + "' query for Teradata output component")
-    LOG.trace("In method executeQuery() executing '" + query
-      + "' query with connection url " + connectionURL )
-
-    try {
+    def areRecordsPresent(connectionURL: String, properties: Properties, outputRDBMSEntity: OutputRDBMSEntity): Boolean = {
+      LOG.warn("FASTLOAD WORKS ONLY IF THERE EXISTS NO RECORDS IN THE TARGET TABLE")
       val connection = JdbcUtils.createConnectionFactory(connectionURL, properties)()
-      val statment = connection.prepareStatement(query)
-      val resultSet = statment.executeUpdate()
-      connection.close()
-    } catch {
-      case e: SQLException =>
-        LOG.error("Error while connecting to database: Reason " + e.getMessage)
-
-        throw new TeradataComponentException(e.getMessage)
-        //throw new RuntimeException("Error message " ,e)
-      case e: Exception =>
-        LOG.error("Error while executing '"+ query + "' query in executeQuery()" )
-        throw new RuntimeException("Error message " ,e)
+      LOG.info("Performing a check to analyze the presence of data in table")
+      val statment = connection.prepareStatement("select TOP 1 * from " + outputRDBMSEntity.getTableName + ";")
+      val resultSet = statment.executeQuery()
+      resultSet.next
     }
+
+    def executeQuery(connectionURL: String, properties: java.util.Properties, query: String): Unit = {
+      LOG.debug("Executing '" + query + "' query for Teradata output component")
+      LOG.trace("In method executeQuery() executing '" + query
+        + "' query with connection url " + connectionURL)
+
+      try {
+        val connection = JdbcUtils.createConnectionFactory(connectionURL, properties)()
+        val statment = connection.prepareStatement(query)
+        val resultSet = statment.executeUpdate()
+        connection.close()
+      } catch {
+        case e: SQLException =>
+          LOG.error("Error while connecting to database: Reason " + e.getMessage)
+
+          throw new TeradataComponentException(e.getMessage, e)
+        //throw new RuntimeException("Error message " ,e)
+        case e: Exception =>
+          LOG.error("Error while executing '" + query + "' query in executeQuery()")
+          throw new RuntimeException("Error message ", e)
+      }
+    }
+
+    def getTruncateQuery(): String = "delete " + outputRDBMSEntity.getTableName
+
+    def createSchema(getFieldsList: util.List[SchemaField]): Array[Column] = {
+      LOG.trace("In method createSchema()")
+
+      val schema = new Array[Column](getFieldsList.size())
+      getFieldsList
+        .asScala
+        .zipWithIndex
+        .foreach { case (f, i) => schema(i) = col(f.getFieldName) }
+
+      LOG.debug("Schema created for Output Teradata Component : " + schema.mkString)
+      schema
+    }
+
+
   }
-
-  def getTruncateQuery(): String = "delete " + outputRDBMSEntity.getTableName
-
-  def createSchema(getFieldsList: util.List[SchemaField]): Array[Column] =  {
-    LOG.trace("In method createSchema()")
-
-    val schema = new Array[Column](getFieldsList.size())
-    getFieldsList
-      .asScala
-      .zipWithIndex
-      .foreach { case (f, i) => schema(i) =  col(f.getFieldName) }
-
-    LOG.debug("Schema created for Output Teradata Component : " + schema.mkString)
-    schema
-  }
-
-
-
 }
-case class TeradataComponentException(message: String) extends RuntimeException(message)
-case class InputFileDoesNotExistException(message: String) extends RuntimeException(message)
+case class TeradataComponentException(message: String, exception: Exception) extends RuntimeException(message)
+case class InputFileDoesNotExistException(message: String, exception: Exception) extends RuntimeException(message, exception)
+
 
