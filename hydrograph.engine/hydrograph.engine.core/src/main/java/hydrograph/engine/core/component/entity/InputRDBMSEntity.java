@@ -47,10 +47,10 @@ public class InputRDBMSEntity extends InputOutputEntityBase {
     private String _interface;
     private String temps3dir;
 
-    private Integer numPartitionsValue;
-    private Integer upperBound;
-    private Integer lowerBound;
-    private String columnName;
+    private int numPartitionsValue=Integer.MIN_VALUE;
+    private int upperBound=0;
+    private int lowerBound=0;
+    private String columnName="";
     private String fetchSize;
     private String extraUrlParameters;
 

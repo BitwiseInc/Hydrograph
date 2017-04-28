@@ -13,6 +13,8 @@
 
 package hydrograph.engine.spark.components
 
+import java.sql.SQLException
+
 import hydrograph.engine.core.component.entity.InputRDBMSEntity
 import hydrograph.engine.spark.components.base.InputComponentBase
 import hydrograph.engine.spark.components.platform.BaseComponentParams
@@ -110,6 +112,9 @@ class InputTeradataComponent(inputRDBMSEntity: InputRDBMSEntity,
       val key = inputRDBMSEntity.getOutSocketList.get(0).getSocketId
       Map(key -> df)
     } catch {
+      case e: SQLException =>
+        LOG.error("\"Error in Input  Teradata input component '" + inputRDBMSEntity.getComponentId + "', Error" + e.getMessage, e)
+        throw TableDoesNotExistException("\"Error in Input  Teradata input component '" + inputRDBMSEntity.getComponentId + "', Error" + e.getMessage, e)
       case e: Exception =>
         LOG.error("Error in Input  Teradata input component '" + inputRDBMSEntity.getComponentId + "', Error" + e.getMessage, e)
         throw new RuntimeException("Error in Input Teradata Component " + inputRDBMSEntity.getComponentId, e)
@@ -120,8 +125,9 @@ class InputTeradataComponent(inputRDBMSEntity: InputRDBMSEntity,
 
   private def getDataType(dataType: DataType): Option[DataType] = {
     dataType.typeName.toUpperCase match {
-      case "DOUBLE" => Option(FloatType)  /** In teradata if we create a table with a field type as Double,
-        *it creates a schema and replaces the Double datatype with Float datatype which is Teradata specific.
+      case "DOUBLE" => Option(FloatType)
+      /** In teradata if we create a table with a field type as Double,
+        * it creates a schema and replaces the Double datatype with Float datatype which is Teradata specific.
         * Contrary to that if we attempt to read the data from a Teradata table, we have created by using the
         * output schema as Double, the execution gets stopped
         * as the data gets exported from Teradata as Float. In order to get Double type data while reading from a Teradata
@@ -132,3 +138,4 @@ class InputTeradataComponent(inputRDBMSEntity: InputRDBMSEntity,
     }
   }
 }
+case class TableDoesNotExistException(errorMessage: String, e: Exception) extends RuntimeException(errorMessage,e)
