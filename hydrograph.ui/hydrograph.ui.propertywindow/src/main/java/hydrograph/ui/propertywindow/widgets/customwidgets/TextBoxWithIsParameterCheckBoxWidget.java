@@ -37,8 +37,9 @@ import org.eclipse.swt.widgets.Button;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.datastructure.property.BasicSchemaGridRow;
 import hydrograph.ui.datastructure.property.GridRow;
-import hydrograph.ui.datastructure.property.Schema;
 import hydrograph.ui.graph.model.Link;
+import hydrograph.ui.graph.schema.propagation.SchemaPropagation;
+import hydrograph.ui.graph.schema.propagation.SequenceFieldPropagation;
 import hydrograph.ui.propertywindow.messages.Messages;
 import hydrograph.ui.propertywindow.property.ComponentConfigrationProperty;
 import hydrograph.ui.propertywindow.property.ComponentMiscellaneousProperties;
@@ -77,7 +78,8 @@ public class TextBoxWithIsParameterCheckBoxWidget extends TextBoxWithLabelWidget
 	}
 
 	public LinkedHashMap<String, Object> getProperties() {
-		loadNewFieldAndPropagate(textBox.getText());
+		SequenceFieldPropagation.INSTANCE.loadAndPropagateSequenceField(getSchemaForInternalPropagation().getGridRow(),getComponent(),textBox,createSchemaForNewField(textBox.getText()));
+		refreshSchemaWidget(getSchemaForInternalPropagation().getGridRow());
 		return super.getProperties();
 	}
 
@@ -177,26 +179,6 @@ public class TextBoxWithIsParameterCheckBoxWidget extends TextBoxWithLabelWidget
 			return false;
 	}
 
-	private void loadNewFieldAndPropagate(String fieldName) {
-		List<GridRow> internalSchemaGridRows=getSchemaForInternalPropagation().getGridRow();
-		String previousValue=(String)getComponent().getProperties().get(Constants.UNIQUE_SEQUENCE_PROPERTY_NAME);
-		if(StringUtils.isNotBlank(previousValue))
-		{	
-		removePreviousSequenceFieldFromSchema(internalSchemaGridRows,previousValue);
-		}
-		Schema schema=(Schema)getComponent().getProperties().get(Constants.SCHEMA);
-		
-		if(schema!=null && internalSchemaGridRows.isEmpty() )
-		{
-		removePreviousSequenceFieldFromSchema(schema.getGridRow(), previousValue);	
-		internalSchemaGridRows.addAll(schema.getGridRow());
-		}
-        if (StringUtils.isNotBlank(textBox.getText()))
-        {	
-        	internalSchemaGridRows.add(createSchemaForNewField(fieldName));
-        }
-        refreshSchemaWidget(internalSchemaGridRows);
-	}
 
 	private void refreshSchemaWidget(List<GridRow> gridRowList) {
 		ELTSchemaGridWidget eltSchemaGridWidget=null;
@@ -219,19 +201,6 @@ public class TextBoxWithIsParameterCheckBoxWidget extends TextBoxWithLabelWidget
 	    
 	}
 
-    private void removePreviousSequenceFieldFromSchema(List<GridRow> gridRows, String previousValue) {
-		
-		if(!gridRows.isEmpty())
-		{
-		GridRow gridRow=gridRows.get(gridRows.size()-1);
-		if(StringUtils.equalsIgnoreCase(gridRow.getFieldName(),previousValue)
-		 && StringUtils.equalsIgnoreCase(Long.class.getCanonicalName(),gridRow.getDataTypeValue())
-		  )
-		{
-			gridRows.remove(gridRow);
-		}	
-		}
-	}
 
 	private BasicSchemaGridRow createSchemaForNewField(String fieldName) {
 		BasicSchemaGridRow basicSchemaGridRow = SchemaPropagationHelper.INSTANCE.createSchemaGridRow(fieldName);

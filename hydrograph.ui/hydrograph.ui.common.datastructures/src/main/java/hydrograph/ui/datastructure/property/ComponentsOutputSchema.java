@@ -373,5 +373,8 @@ public class ComponentsOutputSchema implements IDataStructure {
 		}
 		return gridRows;
 	}
+	public void setFixedWidthGridRowsOutputFields(List<FixedWidthGridRow> fixedWidthGridRowsOutputFields) {
+		this.fixedWidthGridRowsOutputFields = fixedWidthGridRowsOutputFields;
+	}
 	
 }
