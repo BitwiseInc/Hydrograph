@@ -1,19 +1,110 @@
+/* @license
+ * MyFonts Webfont Build ID 2341569, 2012-08-09T16:00:31-0400
+ * 
+ * The fonts listed in this notice are subject to the End User License
+ * Agreement(s) entered into by the website owner. All other parties are 
+ * explicitly restricted from using the Licensed Webfonts(s).
+ * 
+ * You may obtain a valid license at the URLs below.
+ *
+ * Webfont: Proxima Nova Regular by Mark Simonson
+ * URL: http://www.myfonts.com/fonts/marksimonson/proxima-nova/regular/
+ * 
+ * Webfont: Proxima Nova Bold by Mark Simonson
+ * URL: http://www.myfonts.com/fonts/marksimonson/proxima-nova/bold/
+ * 
+ * Webfont: Proxima Nova Thin by Mark Simonson
+ * URL: http://www.myfonts.com/fonts/marksimonson/proxima-nova/thin/
+ * 
+ * Webfont: Proxima Nova Light by Mark Simonson
+ * URL: http://www.myfonts.com/fonts/marksimonson/proxima-nova/light/
+ * 
+ * Â© 2012 Bitstream Inc
+*/
+
+/* TODO: Switch the names of these files over to ProximaNova_Bold */
+ @font-face {font-family: 'ProximaNova-Bold';src: url('../fonts/23BAC1_2_0.eot');src: url('../fonts/23BAC1_2_0.eot?#iefix') format('embedded-opentype'),url('../fonts/23BAC1_2_0.woff') format('woff'),url('../fonts/23BAC1_2_0.ttf') format('truetype');}
+ 
+ @font-face {font-family: 'ProximaNova-Light';src: url('../fonts/ProximaNova_Light.eot');src: url('../fonts/ProximaNova_Light.eot?#iefix') format('embedded-opentype'),url('../fonts/ProximaNova_Light.woff') format('woff'),url('../fonts/ProximaNova_Light.ttf') format('truetype');}
+
+ @font-face {font-family: 'ProximaNova-Regular';src: url('../fonts/ProximaNova_Regular.eot');src: url('../fonts/ProximaNova_Regular.eot?#iefix') format('embedded-opentype'),url('../fonts/ProximaNova_Regular.woff') format('woff'),url('../fonts/ProximaNova_Regular.ttf') format('truetype');}
+ 
+ @font-face {font-family: 'ProximaNova-Thin';src: url('../fonts/ProximaNova_Thin.eot');src: url('../fonts/ProximaNova_Thin.eot?#iefix') format('embedded-opentype'),url('../fonts/ProximaNova_Thin.woff') format('woff'),url('../fonts/ProximaNova_Thin.ttf') format('truetype');}
+
+body {
+  padding-top: 100px;
+  font-family: 'ProximaNova-Regular', Helvetica, sans-serif;
+}
+
+.navbar-inner {
+  padding: 5px 0px;
+  background-image: none;
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+}
+
+.navbar .nav.pull-right li {
+  line-height: 40px
+}
+
+.navbar .nav.pull-right a {
+  margin-right: 40px;
+  text-decoration: none;
+  color: #ccc;
+  font-size: 13px;
+  font-family: 'ProximaNova-Bold';
+  font-weight: normal;
+  text-shadow: none;
+}
+.navbar .nav.pull-right li:last-child a {
+  margin-right: 0px;
+}
+.navbar .nav.pull-right a:hover {
+  color: #33a5c8;
+  background-color: transparent;
+}
+
+/* TODO: Need to convert these same effects for our menu
+ *
+ */
+#menu a.nav-header {
+  color: #111;
+  font-family: 'ProximaNova-Bold';
+  font-weight: normal;
+  letter-spacing: 2px;
+  margin: 6px auto;
+}
+
+#menu li a {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  color: #999;
+  text-shadow: none;
+}
+
+#menu li a:hover {
+  color: #33a5c8;
+  font-weight: bold;
+}
+
+#menu li.active a {
+  background-color: #33a5c8;
+  color: #fff;
+}
+
+div.page-header {
+  margin: 20px 0 20px;
+}
+
+.brand img {
+  width: 200px;
+}
+
 body {
   height: 100vh;
   width: 100vw;
-}
-
-.video_box {
-	margin-top: 30px;
-	display: flex;
-}
-
-.center{
-    text-align: center;
-}
-
-.section{
-		padding: 4px 4px 4px 24px;
 }
 
 .header3{
@@ -48,22 +139,18 @@ footer {
   text-align: center;
 }
 
-.cicd {
-	width: 100%;
+/* Accordion navigation menu styles
+ */
+.panel-body {
+	padding: 0px
 }
 
-.indented {
-    padding-left: 25pt;
-    padding-right: 25pt;
+.panel-body .table {
+	margin-bottom: 0px;
 }
 
-.smallindent {
-    padding-left: 10pt;
-    padding-right: 10pt;
-}
-
-.boxed {
-  border: 1px dashed black ;
-  width: 400px;
-  background: rgb(242, 242, 242);
+/*	Center High Level Arch Image
+ */
+.center{
+    text-align: center;
 }
