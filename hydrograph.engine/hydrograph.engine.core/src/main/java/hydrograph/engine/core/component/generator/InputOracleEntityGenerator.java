@@ -138,7 +138,17 @@ InputComponentGeneratorBase {
         //fetchsize
         inputRDBMSEntity.setFetchSize(inputOracleJaxb.getFetchSize()==null?null: inputOracleJaxb.getFetchSize().getValue());
         //extra url parameters
-        inputRDBMSEntity.setExtraUrlParameters(inputOracleJaxb.getExtraUrlParams()==null?null:inputOracleJaxb.getExtraUrlParams().getValue());
+
+        if(inputOracleJaxb.getExtraUrlParams()!=null){
+            if(inputOracleJaxb.getExtraUrlParams().getValue().contains(",")){
+                String correctedParams = inputOracleJaxb.getExtraUrlParams().getValue().replaceAll("\\s+","").replace(",","&");
+
+                LOG.info("using extra url params as" + correctedParams);
+                inputRDBMSEntity.setExtraUrlParameters(correctedParams);
+            }
+        }else if(inputOracleJaxb.getExtraUrlParams()==null){
+            inputRDBMSEntity.setExtraUrlParameters(null);
+        }
 
         /**END*/
     }
