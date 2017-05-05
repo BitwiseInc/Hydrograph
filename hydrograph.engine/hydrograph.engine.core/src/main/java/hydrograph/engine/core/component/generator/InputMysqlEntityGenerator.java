@@ -131,7 +131,7 @@ public class InputMysqlEntityGenerator extends
         //inputRDBMSEntity.setExtraUrlParameters(inputMysqlJaxb.getExtraUrlParams()==null?null:inputMysqlJaxb.getExtraUrlParams().getValue());
         if(inputMysqlJaxb.getExtraUrlParams()!=null){
             if(inputMysqlJaxb.getExtraUrlParams().getValue().contains(",")){
-                String correctedParams = inputMysqlJaxb.getExtraUrlParams().getValue().replace(",","&");
+                String correctedParams = inputMysqlJaxb.getExtraUrlParams().getValue().replaceAll("\\s+","").replace(",","&");
 
                 LOG.info("using extra url params as" + correctedParams);
                 inputRDBMSEntity.setExtraUrlParameters(correctedParams);
