@@ -49,7 +49,9 @@ class OutputFileAvroComponent(outputFileAvroEntity: OutputFileAvroEntity, baseCo
     val filePathToWrite = outputFileAvroEntity.getPath()
     try {
       val df = baseComponentParams.getDataFrame()
-      df.select(createSchema(outputFileAvroEntity.getFieldsList): _*).write.mode( if (outputFileAvroEntity.isOverWrite) SaveMode.Overwrite else SaveMode.Append ).format("hydrograph.engine.spark.datasource.avro").save(filePathToWrite)
+      df.select(createSchema(outputFileAvroEntity.getFieldsList): _*).write
+      .mode( if (outputFileAvroEntity.isOverWrite) SaveMode.Overwrite else SaveMode.ErrorIfExists)
+      .format("hydrograph.engine.spark.datasource.avro").save(filePathToWrite)
       LOG.debug("Created Output File Avro Component '" + outputFileAvroEntity.getComponentId + "' in Batch" + outputFileAvroEntity.getBatch
         + ", file path " + outputFileAvroEntity.getPath)
     } catch {
