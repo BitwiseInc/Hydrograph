@@ -100,7 +100,10 @@ public class ComponentEditPart extends AbstractGraphicalEditPart implements Node
 		
 		
 	}
-
+    
+	/*
+     * Refreshes the subjob container when job is load into memory.
+     */
 	private void reloadSubjobContainer() {
 		
 		IPath subJobFilePath = null;
@@ -108,9 +111,9 @@ public class ComponentEditPart extends AbstractGraphicalEditPart implements Node
 		InputStream inputStream =null;
 		FileInputStream fileInputStream=null;
 		Component subJobComponent =(Component) getModel();
-		 subJobFilePath=new Path(((String)subJobComponent.getProperties().get(Constants.JOB_PATH)));
+		subJobFilePath=new Path(((String)subJobComponent.getProperties().get(Constants.JOB_PATH)));
 		
-		 try {
+	try {
 		if (ResourcesPlugin.getWorkspace().getRoot().getFile(subJobFilePath).exists()) {
 				inputStream = ResourcesPlugin.getWorkspace().getRoot().getFile(subJobFilePath).getContents();
 			container = (Container)CanvasUtils.INSTANCE.fromXMLToObject(inputStream);
@@ -122,26 +125,20 @@ public class ComponentEditPart extends AbstractGraphicalEditPart implements Node
 				
 		subJobComponent.getSubJobContainer().put(Constants.SUBJOB_CONTAINER, container);
 				
-		for (Component component : container.getUIComponentList()){
-			/*if (Constants.INPUT_SUBJOB.equalsIgnoreCase(component.getComponentName())){
-				//input connector
-				subJobComponent.getSubJobContainer().put(Constants.INPUT_SUBJOB, component);
-			}*/
-			if(Constants.OUTPUT_SUBJOB.equalsIgnoreCase(component.getComponentName())){
-				//output connector
-				subJobComponent.getSubJobContainer().put(Constants.OUTPUT_SUBJOB, component);	
-				component.getSubJobContainer().put(Constants.SUBJOB_COMPONENT, subJobComponent);
-			}
+			for (Component component : container.getUIComponentList()){
 			
-		}
+				if(Constants.OUTPUT_SUBJOB.equalsIgnoreCase(component.getComponentName())){
+					//output connector
+					subJobComponent.getSubJobContainer().put(Constants.OUTPUT_SUBJOB, component);	
+					component.getSubJobContainer().put(Constants.SUBJOB_COMPONENT, subJobComponent);
+				}
 				
-		
-		} catch (CoreException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			}
+					
+		} catch (CoreException coreException) {
+			logger.error(coreException.getMessage());
+		} catch (FileNotFoundException fileNotFoundExpion) {
+			logger.error(fileNotFoundExpion.getMessage());
 		}
 	}
 

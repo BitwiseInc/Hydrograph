@@ -90,18 +90,14 @@ public class OperationSubJobUiConverter extends UiConverter {
 			}
 
 			Component inputSubjobComponent = SubjobUiConverterUtil.getInputSubJobConnectorReference(subJobContainer);
-			//inputSubjobComponent.getProperties().put(Constants.SUBJOB_COMPONENT, uiComponent);
 			inputSubjobComponent.getSubJobContainer().put(Constants.SUBJOB_COMPONENT, uiComponent);
 			inputSubjobComponent.getProperties().put(Constants.SCHEMA_TO_PROPAGATE,
 					new LinkedHashMap<String, ComponentsOutputSchema>());
 
-			//propertyMap.put(Constants.INPUT_SUBJOB, inputSubjobComponent);
 			uiComponent.getSubJobContainer().put(Constants.INPUT_SUBJOB, inputSubjobComponent);
 			Component outputSubjobComponent = SubjobUiConverterUtil.getOutputSubJobConnectorReference(subJobContainer);
-			//propertyMap.put(Constants.OUTPUT_SUBJOB, outputSubjobComponent);
 			uiComponent.getSubJobContainer().put(Constants.OUTPUT_SUBJOB, outputSubjobComponent);
 			
-			//outputSubjobComponent.getProperties().put(Constants.SUBJOB_COMPONENT, uiComponent);
 			outputSubjobComponent.getSubJobContainer().put(Constants.SUBJOB_COMPONENT, uiComponent);
 			
 			if (outputSubjobComponent.getProperties().get(Constants.SCHEMA_TO_PROPAGATE) != null) {

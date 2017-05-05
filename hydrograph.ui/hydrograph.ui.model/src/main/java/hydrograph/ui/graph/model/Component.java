@@ -162,19 +162,10 @@ public abstract class Component extends Model {
 	/** The properties. */
 	private Map<String, Object> properties;
 	
+	/**The subjob Container	 */
 	@XStreamOmitField
 	private Map<String,Object> subJobContainer;
 	
-	public Map<String, Object> getSubJobContainer() {
-		if(subJobContainer==null){
-			subJobContainer=new LinkedHashMap<>();
-		}
-		return subJobContainer;
-	}
-
-	public void setSubJobContainer(Map<String, Object> subJobContainer) {
-		this.subJobContainer = subJobContainer;
-	}
 	/** The parent. */
 	private Container parent;
 	
@@ -1270,6 +1261,23 @@ public abstract class Component extends Model {
 	 */
 	public void setValidityStatus(String validityStatus) {
 		this.validityStatus = validityStatus;
+	}
+	/**
+	 * 
+	 * @return subjobcontainer 
+	 */
+	public Map<String, Object> getSubJobContainer() {
+		if(subJobContainer==null){
+			subJobContainer=new LinkedHashMap<>();
+		}
+		return subJobContainer;
+	}
+    /**
+     * Sets the subjob Container
+     * @param subJobContainer
+     */
+	public void setSubJobContainer(Map<String, Object> subJobContainer) {
+		this.subJobContainer = subJobContainer;
 	}
 
 	/**

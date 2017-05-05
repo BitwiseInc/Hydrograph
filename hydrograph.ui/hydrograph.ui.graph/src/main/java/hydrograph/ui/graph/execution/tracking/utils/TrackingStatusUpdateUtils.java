@@ -254,7 +254,6 @@ public class TrackingStatusUpdateUtils {
 	
 	private boolean applyPendingStatus(Component component, ExecutionStatus executionStatus) {
 		boolean isPending = false;
-		//Container container=(Container)component.getProperties().get(Constants.SUBJOB_CONTAINER);
 		Container container=(Container)component.getSubJobContainer().get(Constants.SUBJOB_CONTAINER);
 		for (Component innerSubComponent : container.getUIComponentList()) {
 			if(!(innerSubComponent.getComponentName().equals(Messages.INPUT_SUBJOB_COMPONENT)) && 
@@ -277,7 +276,6 @@ public class TrackingStatusUpdateUtils {
 
 	private boolean applyRunningStatus(Component component, ExecutionStatus executionStatus) {
 		boolean isRunning = false;
-	//	Container container = (Container) component.getProperties().get(Constants.SUBJOB_CONTAINER);
 		Container container=(Container)component.getSubJobContainer().get(Constants.SUBJOB_CONTAINER);
 		for (Component innerSubComponent : container.getUIComponentList()) {
 			for( ComponentStatus componentStatus: executionStatus.getComponentStatus()){
@@ -297,7 +295,6 @@ public class TrackingStatusUpdateUtils {
 	private boolean applyFailStatus(Component component, ExecutionStatus executionStatus) {
 		boolean isFail = false;
 		
-		//Container container = (Container) component.getProperties().get(Constants.SUBJOB_CONTAINER);
 		Container container = (Container) component.getSubJobContainer().get(Constants.SUBJOB_CONTAINER);
 		for (Component innerSubComponent : container.getUIComponentList()) {
 			for( ComponentStatus componentStatus: executionStatus.getComponentStatus()){
@@ -316,7 +313,6 @@ public class TrackingStatusUpdateUtils {
 	
 	private boolean applySuccessStatus(Component component, ExecutionStatus executionStatus) {
 		boolean isSuccess = true;
-		//Container container = (Container) component.getProperties().get(Constants.SUBJOB_CONTAINER);
 		Container container=(Container)component.getSubJobContainer().get(Constants.SUBJOB_CONTAINER);
 		
 		boolean isSubjobComponentStatusAvailable= isSubjobAllComponentsStatusAvailable(container,executionStatus,component);

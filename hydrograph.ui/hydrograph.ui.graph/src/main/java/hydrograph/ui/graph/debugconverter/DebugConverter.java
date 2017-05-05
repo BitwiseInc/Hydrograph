@@ -180,7 +180,6 @@ public class DebugConverter {
 	private String getComponentName(Component component) {
 		Component componentPrevToOutput = null;
 		String componentName = "";
-		//Component outputSubjobComponent = (Component) component.getProperties().get(Messages.OUTPUT_SUBJOB_COMPONENT);
 		Component outputSubjobComponent = (Component) component.getSubJobContainer().get(Messages.OUTPUT_SUBJOB_COMPONENT);
 		if (outputSubjobComponent != null) {
 			for (Link link : outputSubjobComponent.getTargetConnections()) {

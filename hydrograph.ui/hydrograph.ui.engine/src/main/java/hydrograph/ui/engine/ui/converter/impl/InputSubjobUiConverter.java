@@ -91,9 +91,7 @@ public class InputSubjobUiConverter extends UiConverter {
 			}
 			Component outputSubjobComponent = SubjobUiConverterUtil.getOutputSubJobConnectorReference(subJobContainer);
 
-			//outputSubjobComponent.getProperties().put(Constants.SUBJOB_COMPONENT, uiComponent);
 			outputSubjobComponent.getSubJobContainer().put(Constants.SUBJOB_COMPONENT, uiComponent);	
-			//propertyMap.put(Constants.OUTPUT_SUBJOB, outputSubjobComponent);
 			uiComponent.getSubJobContainer().put(Constants.OUTPUT_SUBJOB, outputSubjobComponent);
 			
 			if (outputSubjobComponent.getProperties().get(Constants.SCHEMA_TO_PROPAGATE) != null) {

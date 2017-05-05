@@ -95,7 +95,6 @@ public static final SubjobUtility INSTANCE= new SubjobUtility();
 				
 				if(nextComponent instanceof SubjobComponent)
 				{	
-					//Container container=(Container)nextComponent.getProperties().get(Constants.SUBJOB_CONTAINER);
 					Container container=(Container)nextComponent.getSubJobContainer().get(Constants.SUBJOB_CONTAINER);
 					for(Component subjobComponent:container.getUIComponentList())
 					{
@@ -113,7 +112,6 @@ public static final SubjobUtility INSTANCE= new SubjobUtility();
 				}
 				else if(nextComponent instanceof OutputSubjobComponent)
 				{
-					//Component subJobComponent=(Component)nextComponent.getProperties().get(Constants.SUBJOB_COMPONENT);
 					Component subJobComponent = (Component) nextComponent.getSubJobContainer().get(Constants.SUBJOB_COMPONENT);
 					if(subJobComponent!=null)
 					SubjobUtility.INSTANCE.initializeSchemaMapForInputSubJobComponent(subJobComponent, nextComponent);
@@ -205,7 +203,6 @@ public static final SubjobUtility INSTANCE= new SubjobUtility();
 	 */
 	public boolean checkIfSubJobHasTransformOrUnionAllComponent(Component component) {
 		boolean containsTransformOrUnionAllComponent=false;
-		//Container container=(Container)component.getProperties().get(Constants.SUBJOB_CONTAINER);
 		Container container=(Container)component.getSubJobContainer().get(Constants.SUBJOB_CONTAINER);
 		
 		if(container!=null)

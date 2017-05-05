@@ -191,7 +191,6 @@ public class ViewDataUtils {
 	 * The function will use to check componentId and socketId in subjob.
 	 */
 	public void subjobParams(Map<String, SubjobDetails> componentNameAndLink, Component component, StringBuilder subjobPrefix, String sourcePort){
-		//Component outputSubjobComponent=(Component) component.getProperties().get(Messages.OUTPUT_SUBJOB_COMPONENT);
 		Component outputSubjobComponent=(Component) component.getSubJobContainer().get(Messages.OUTPUT_SUBJOB_COMPONENT);
 		String source_port = sourcePort.replace("out", "in");
 		if(outputSubjobComponent!=null){

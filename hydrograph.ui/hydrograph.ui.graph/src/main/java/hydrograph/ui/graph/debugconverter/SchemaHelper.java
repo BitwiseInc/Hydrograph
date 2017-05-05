@@ -217,7 +217,6 @@ public class SchemaHelper {
 		String componentId = "";
 		Component componentPrevToOutput = null;
 		String portNumber = null;
-		//Component outputSubjobComponent = (Component) component.getProperties().get(Messages.OUTPUT_SUBJOB_COMPONENT);
 		Component outputSubjobComponent = (Component) component.getSubJobContainer().get(Messages.OUTPUT_SUBJOB_COMPONENT);
 		if (outputSubjobComponent != null) {
 			for (Link link : outputSubjobComponent.getTargetConnections()) {
