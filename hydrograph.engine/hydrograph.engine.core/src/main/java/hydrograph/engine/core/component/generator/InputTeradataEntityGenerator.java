@@ -126,7 +126,17 @@ public class InputTeradataEntityGenerator extends
         //fetchsize
         inputRDBMSEntity.setFetchSize(inputTeradataJaxb.getFetchSize()==null?null: inputTeradataJaxb.getFetchSize().getValue());
         //extra url parameters
-        inputRDBMSEntity.setExtraUrlParameters(inputTeradataJaxb.getExtraUrlParams()==null?null:inputTeradataJaxb.getExtraUrlParams().getValue());
+        if(inputTeradataJaxb.getExtraUrlParams()!=null){
+            if(inputTeradataJaxb.getExtraUrlParams().getValue().contains(",")){
+                String correctedParams = inputTeradataJaxb.getExtraUrlParams().getValue().replaceAll("\\s+","");
+
+                LOG.info("using extra url params as" + correctedParams);
+                inputRDBMSEntity.setExtraUrlParameters(correctedParams);
+            }
+        }else if(inputTeradataJaxb.getExtraUrlParams()==null){
+            inputRDBMSEntity.setExtraUrlParameters(null);
+        }
+
 
         /**END*/
         inputRDBMSEntity.setDatabaseType("Teradata");
