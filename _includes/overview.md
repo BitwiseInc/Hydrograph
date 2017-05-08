@@ -1,0 +1,19 @@
+<div class="page-header">
+	<h1 class="landing-h1">Hydrograph - Development Accelerator </h1>
+</div>
+
+Hydrograph is a powerful ETL tool that allows developers to create complex graphs using a simple 
+drag-and-drop interface. Users build ETL graphs by using the Hydrograph UI to link together input, 
+transformation, and output components. Users can customize a variety of pre-built components or 
+contribute back to Hydrograph by developing additional inputs, outputs, and transformations. To 
+execute ETL jobs Hydrograph leverages Apache Spark as the backend engine. This allows Hydrograph to 
+handle a variety of workload sizes and provides a flexible deployment model.
+
+### Features
+- Local execution mode ensures developers can quickly verify functionality, while remote execution 
+mode provides enterprise-level performance on large volumes of data
+- Expression editor allows developers to quickly create and validate complex conditional statements
+- Execution tracking visuals enable monitoring of graph execution and help pinpoint performance 
+bottlenecks
+- Advanced debugging features provide for easy visualization of data transformations at all stages 
+of a graph

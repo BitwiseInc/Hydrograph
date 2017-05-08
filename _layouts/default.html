@@ -1,88 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    {% include head.html %}
-  </head>
-  <body>
-    <!--<a href="https://github.com/driftyco/jetstrap-docs"><img style="position: absolute; z-index: 10000; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>-->
-    <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <a href="{{ site.baseurl }}/" class="brand"><img src="{{ site.baseurl }}/assets/img/C1_OSLogo_Hydrograph_RGB_FullColor_solo.svg"></a>
-          <ul class="nav pull-right">
-            <!-- <li><a href="http://jetstrap.com/">Jetstrap</a></li> -->
-            <!-- <li><a href="http://jetstrap.com/#about">About</a></li> -->
-            <!--<li><a href="http://jetstrap.com/#love">Love</a></li>-->
-            <!-- <li><a href="http://blog.jetstrap.com/" target="_blank">Blog</a></li> -->
-            <li><a href="https://github.com/capitalone/Hydrograph/" target="_blank">Check out the code!</a></li>
-            <!-- <li style="line-height: 59px; vertical-align: middle"><a href="http://jetstrap.com/" class="orange-button">Sign up free</a></li> -->
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="container main-container">
-      <div class="row">
-        <div class="nav-container col-md-2">
-          <ul id="menu" class="nav nav-list">
-          {% include navigation.html %}
-          </ul>
-        </div>
-        <div class="content-container col-md-10">
-          {{content}}
-        </div>
-      </div>
-    </div>
+	<head>
+		{% include header.html %}
+	</head>
+	
+	<body>
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<a href="{{ site.baseurl }}/" class="brand">
+						<img src="{{ site.baseurl }}/assets/img/C1_OSLogo_Hydrograph_RGB_FullColor_solo.svg">
+					</a>
+					<ul class="nav pull-right">
+						<li>
+							<a href="https://github.com/capitalone/Hydrograph/" target="_blank">Check out the code!</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
 
-    <style>
+		<div class="container main-container">
+			<div class="row">
+				<div class="col-md-2">
+					<div class="panel-group" id="accordion">
+						<div class="panel panel-default">
+							{% include navigation.html %}
+						</div>
+					</div>
+				</div>
 
-    </style>
-    <script src="{{ site.baseurl }}/assets/js/bootstrap.js">
-    </script>
-    <script>
-      function orderNav() {
-          var list,
-              section,
-              header,
-              sections = [],
-              lists = {},
-              headers = {};
-          var navUl = document.querySelectorAll('#menu')[0],
-              navLis = document.querySelectorAll('#menu li');
-          if (!navUl) return;
-          for (var i = 0; i < navLis.length; i++) {
-              var order, li = navLis[i];
-              if (li.classList.contains('nav-header')) {
-                  section = li.textContent || li.innerText;
-                  sections.push(section);
-                  headers[section] = li;
-                  continue;
-              }
-              if (!lists[section]) {
-                  lists[section] = [];
-              }
-              order = parseFloat(li.getAttribute('data-order'))
-              lists[section].push([order, li]);
-          }
-          for (var i = 0; i < sections.length; i++) {
-              section = sections[i];
-              list = lists[section].sort(function(a, b) {
-                  return a[0] - b[0];
-              });
-              if (header = headers[section]) {
-                  navUl.appendChild(header);
-              }
-              for (var j = 0; j < list.length; j++) {
-                  navUl.appendChild(list[j][1]);
-              }
-          }
-      }
-      if (document.querySelectorAll) orderNav();
-    </script>
+				<div class="col-md-10">
+					{{content}}
+				</div>
+			</div>
+		</div>
 
-    <script>
-      $('#menu [data-section="{{page.section}}"]').addClass('active');
-    </script>
-
-    {% include footer.html %}
-  </body>
+    	{% include footer.html %}
+  	</body>
 </html>
