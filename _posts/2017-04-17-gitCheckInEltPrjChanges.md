@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Checking Changes to Existing ELT Projects in Git"
+title: "Check In Changes to Existing ELT Projects in Git"
 category: ug
 section: ""
 date: 2017-04-10 12:00:00
