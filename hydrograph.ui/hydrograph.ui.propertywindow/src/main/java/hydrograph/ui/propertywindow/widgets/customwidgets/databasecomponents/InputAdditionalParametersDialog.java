@@ -19,19 +19,27 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.fieldassist.AutoCompleteField;
+import org.eclipse.jface.fieldassist.ComboContentAdapter;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -75,14 +83,14 @@ public class InputAdditionalParametersDialog extends Dialog {
 	private Label additionalDBParametersLabel;
 	protected String selectedPartitionKey;
 	protected Map<String, String> runtimeValueMap;
-	private Button partitionKeyButton;
+	private Combo partitionKeyButton;
 	private ControlDecoration noOfPartitionControlDecoration;
 	private ControlDecoration partitionKeyUpperBoundControlDecoration;
 	private ControlDecoration partitionKeyLowerBoundControlDecoration;
 	private ControlDecoration fetchSizeControlDecoration;
 	private Text additionalParameterTextBox;
 	private ControlDecoration additionalParameterControlDecoration;
-	private ControlDecoration partitionKeyControlDecoration;
+	//private ControlDecoration partitionKeyControlDecoration;
 	private Cursor cursor;
 
 	/**
@@ -99,7 +107,7 @@ public class InputAdditionalParametersDialog extends Dialog {
 			PropertyDialogButtonBar propertyDialogButtonBar, List<String> schemaFields,
 			Map<String, Object> initialMap, Cursor cursor) {
 		super(parentShell);
-		setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.WRAP | SWT.APPLICATION_MODAL);
+		setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.WRAP | SWT.APPLICATION_MODAL | SWT.SHELL_TRIM);
 		if (StringUtils.isNotBlank(windowTitle))
 			windowLabel = windowTitle;
 		else
@@ -121,13 +129,29 @@ public class InputAdditionalParametersDialog extends Dialog {
 		container.setLayout(new GridLayout(1, false));
 		container.getShell().setText(windowLabel);
 
+		int CONST_HEIGHT = 276;
+		
+		Shell shell = container.getShell();
+		
+		shell.addControlListener(new ControlAdapter() {
+            @Override
+            public void controlResized(ControlEvent e) {
+                Rectangle rect = shell.getBounds();
+                if(rect.width != CONST_HEIGHT) {
+                    shell.setBounds(rect.x, rect.y, rect.width, CONST_HEIGHT);
+                }
+            }
+        });
+		
+		
+		
 		Composite composite = new Composite(container, SWT.NONE);
 		composite.setLayout(new GridLayout(2, false));
-		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
 		noOfPartitionsLabel = new Label(composite, SWT.NONE);
 		GridData gd_noOfPartitionsLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_noOfPartitionsLabel.widthHint = 218;
+		gd_noOfPartitionsLabel.widthHint = 180;
 		noOfPartitionsLabel.setLayoutData(gd_noOfPartitionsLabel);
 		noOfPartitionsLabel.setText(Messages.NO_OF_PARTITIONS);
 
@@ -142,27 +166,28 @@ public class InputAdditionalParametersDialog extends Dialog {
 
 		partitionKeysLabel = new Label(composite, SWT.NONE);
 		GridData gd_partitionKeysLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_partitionKeysLabel.widthHint = 218;
+		gd_partitionKeysLabel.widthHint = 180;
 		partitionKeysLabel.setLayoutData(gd_partitionKeysLabel);
 		partitionKeysLabel.setText(Messages.PARTITION_KEY);
 
-		partitionKeyButton = new Button(composite, SWT.NONE);
+		partitionKeyButton = new Combo(composite, SWT.DROP_DOWN);
+		partitionKeyButton.setItems(convertToArray(schemaFields));
 		GridData gd_partitionKeyButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		partitionKeyControlDecoration = WidgetUtility.addDecorator(partitionKeyButton,
-				Messages.PARTITION_KEY_ERROR_DECORATOR_MESSAGE);
-		partitionKeyControlDecoration.setMarginWidth(2);
-		partitionKeyControlDecoration.hide();
+		partitionKeyButton.setVisibleItemCount(11);
+		partitionKeyButton.setEnabled(false);
+		
 		gd_partitionKeyButton.widthHint = 90;
 		gd_partitionKeyButton.horizontalIndent = 10;
 		partitionKeyButton.setLayoutData(gd_partitionKeyButton);
-		partitionKeyButton.setText(Messages.EDIT_BUTTON_LABEL);
-		partitionKeyButton.setEnabled(false);
+		partitionKeyButton.select(0);
+		
+		new AutoCompleteField(partitionKeyButton, new ComboContentAdapter(), convertToArray(schemaFields));
 		
 		selectedPartitionKey = (String) additionalParameterValue.get(Constants.DB_PARTITION_KEY);
 
 		partitionKeyUpperBoundLabel = new Label(composite, SWT.NONE);
 		GridData gd_partitionKeyUpperBoundLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_partitionKeyUpperBoundLabel.widthHint = 218;
+		gd_partitionKeyUpperBoundLabel.widthHint = 180;
 		partitionKeyUpperBoundLabel.setLayoutData(gd_partitionKeyUpperBoundLabel);
 		partitionKeyUpperBoundLabel.setText(Messages.PARTITION_KEY_UPPER_BOUND);
 
@@ -178,7 +203,7 @@ public class InputAdditionalParametersDialog extends Dialog {
 
 		partitionKeyLowerBoundLabel = new Label(composite, SWT.NONE);
 		GridData gd_partitionKeyLowerBoundLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_partitionKeyLowerBoundLabel.widthHint = 218;
+		gd_partitionKeyLowerBoundLabel.widthHint = 180;
 		partitionKeyLowerBoundLabel.setLayoutData(gd_partitionKeyLowerBoundLabel);
 		partitionKeyLowerBoundLabel.setText(Messages.PARTITION_KEY_LOWER_BOUND);
 
@@ -194,7 +219,7 @@ public class InputAdditionalParametersDialog extends Dialog {
 
 		fetchSizeLabel = new Label(composite, SWT.NONE);
 		GridData gd_fetchSizeLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_fetchSizeLabel.widthHint = 218;
+		gd_fetchSizeLabel.widthHint = 180;
 		fetchSizeLabel.setLayoutData(gd_fetchSizeLabel);
 		fetchSizeLabel.setText(Messages.FETCH_SIZE);
 
@@ -210,7 +235,7 @@ public class InputAdditionalParametersDialog extends Dialog {
 
 		additionalDBParametersLabel = new Label(composite, SWT.NONE);
 		GridData gd_additionalDBParametersLabel = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_additionalDBParametersLabel.widthHint = 218;
+		gd_additionalDBParametersLabel.widthHint = 180;
 		additionalDBParametersLabel.setLayoutData(gd_additionalDBParametersLabel);
 		additionalDBParametersLabel.setText(Messages.ADDITIONAL_DB_PARAMETERS);
 
@@ -223,7 +248,7 @@ public class InputAdditionalParametersDialog extends Dialog {
 		gd_additionalParameter.horizontalIndent = 10;
 		additionalParameterTextBox.setLayoutData(gd_additionalParameter);
 
-		addSelectionListenerToPartitionKeyButton(partitionKeyButton);
+		//addSelectionListenerToPartitionKeyButton(partitionKeyButton);
 
 		addModifyListenerToNoOfPartitionTextBox(noOfPartitionsTextBox);
 		addModifyListener(partitionKeyUpperBoundTextBox);
@@ -244,6 +269,8 @@ public class InputAdditionalParametersDialog extends Dialog {
 		
 		addAdditionalParameterMapValues();
 
+		getShell().setMinimumSize(getInitialSize());
+		
 		return container;
 	}
 
@@ -287,12 +314,15 @@ public class InputAdditionalParametersDialog extends Dialog {
 					
 					if(StringUtils.isBlank(partitionKeyLowerBoundTextBox.getText())){ partitionKeyLowerBoundControlDecoration.show();}
 					if(StringUtils.isBlank(partitionKeyUpperBoundTextBox.getText())){ partitionKeyUpperBoundControlDecoration.show();}
-					if(StringUtils.isEmpty((String) additionalParameterValue.get(Constants.DB_PARTITION_KEY))){partitionKeyControlDecoration.show();}
+					if(StringUtils.isEmpty((String) additionalParameterValue.get(Constants.DB_PARTITION_KEY)))
+					{
+						 //partitionKeyControlDecoration.show();
+					}
 					
 				}else{
 					partitionKeyLowerBoundControlDecoration.hide();
 					partitionKeyUpperBoundControlDecoration.hide();
-					partitionKeyControlDecoration.hide();
+					//partitionKeyControlDecoration.hide();
 					partitionKeyButton.setEnabled(false);
 					partitionKeyLowerBoundTextBox.setEnabled(false);
 					partitionKeyUpperBoundTextBox.setEnabled(false);
@@ -310,7 +340,7 @@ public class InputAdditionalParametersDialog extends Dialog {
 					partitionKeyButton.setEnabled(false);
 					partitionKeyLowerBoundTextBox.setEnabled(false);
 					partitionKeyUpperBoundTextBox.setEnabled(false);
-					partitionKeyControlDecoration.hide();
+					//partitionKeyControlDecoration.hide();
 				}
 			}
 
@@ -336,9 +366,9 @@ public class InputAdditionalParametersDialog extends Dialog {
 				Utils.INSTANCE.addMouseMoveListener(noOfPartitionsTextBox, cursor);	
 				if (StringUtils.isNotBlank((String) additionalParameterValue.get(Constants.DB_PARTITION_KEY))) {
 					partitionKeyButton.setEnabled(true);
-					partitionKeyControlDecoration.hide();
+					//partitionKeyControlDecoration.hide();
 				} else {
-					partitionKeyControlDecoration.show();
+					//partitionKeyControlDecoration.show();
 				}
 				if (additionalParameterValue.get(Constants.NOP_LOWER_BOUND) != null 
 						&& StringUtils.isNotEmpty((String) additionalParameterValue.get(Constants.NOP_LOWER_BOUND))) {
@@ -358,7 +388,7 @@ public class InputAdditionalParametersDialog extends Dialog {
 					partitionKeyUpperBoundControlDecoration.show();
 				}
 			}else{
-				partitionKeyControlDecoration.hide();
+				//partitionKeyControlDecoration.hide();
 				partitionKeyLowerBoundControlDecoration.hide();
 				partitionKeyUpperBoundControlDecoration.hide();
 			}
@@ -379,8 +409,10 @@ public class InputAdditionalParametersDialog extends Dialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if(StringUtils.isEmpty((String) additionalParameterValue.get(Constants.DB_PARTITION_KEY))){
-					partitionKeyControlDecoration.show();
-				}else{partitionKeyControlDecoration.hide();}
+					//partitionKeyControlDecoration.show();
+				}else{
+					//partitionKeyControlDecoration.hide();
+					}
 				
 				FieldDialogForDBComponents fieldDialog = new FieldDialogForDBComponents(new Shell(),
 						propertyDialogButtonBar);
@@ -394,10 +426,10 @@ public class InputAdditionalParametersDialog extends Dialog {
 				selectedPartitionKey = fieldDialog.getResultAsCommaSeprated();
 				
 				if (StringUtils.isEmpty(selectedPartitionKey) || StringUtils.isBlank(selectedPartitionKey)) {
-					partitionKeyControlDecoration.show();
+					//partitionKeyControlDecoration.show();
 					additionalParameterValue.put(partitionKeysLabel.getText(), selectedPartitionKey);
 				} else {
-					partitionKeyControlDecoration.hide();
+					//partitionKeyControlDecoration.hide();
 					additionalParameterValue.put(partitionKeysLabel.getText(), selectedPartitionKey);
 				}
 			}
@@ -448,5 +480,14 @@ public class InputAdditionalParametersDialog extends Dialog {
 			
 		super.okPressed();
 	}
-
-}
+	
+	
+	private String[] convertToArray(List<String> items) {
+		String[] stringItemsList = new String[items.size()];
+		int index = 0;
+		for (String item : items) {
+			stringItemsList[index++] = item;
+		}
+		return stringItemsList;
+	}
+	}
