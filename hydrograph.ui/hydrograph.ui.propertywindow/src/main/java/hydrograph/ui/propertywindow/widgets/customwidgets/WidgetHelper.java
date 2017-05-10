@@ -348,9 +348,6 @@ public class WidgetHelper {
 		dropDownConfig.getItems().add(Constants.UTF_8);
 		dropDownConfig.getItems().add(Constants.US_ASCII);
 		dropDownConfig.getItems().add(Constants.ISO_8859_1);
-		dropDownConfig.getItems().add(Constants.IUTF_16BE);
-		dropDownConfig.getItems().add(Constants.UTF_16LE);
-		dropDownConfig.getItems().add(Constants.UTF_16);
 		dropDownConfig.getItems().add(Constants.PARAMETER);
 		addComboBoxListeners(dropDownConfig);
 		return dropDownConfig;
