@@ -23,6 +23,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * The Class InputTeradataEntityGenerator.
  *
@@ -126,7 +129,42 @@ public class InputTeradataEntityGenerator extends
         //fetchsize
         inputRDBMSEntity.setFetchSize(inputTeradataJaxb.getFetchSize()==null?null: inputTeradataJaxb.getFetchSize().getValue());
         //extra url parameters
-        inputRDBMSEntity.setExtraUrlParameters(inputTeradataJaxb.getExtraUrlParams()==null?null:inputTeradataJaxb.getExtraUrlParams().getValue());
+        if (inputTeradataJaxb.getExtraUrlParams() != null) {
+            String rawParam = inputTeradataJaxb.getExtraUrlParams().getValue();
+
+            Pattern regexForComma = Pattern.compile("([,]{0,1})");
+            Pattern regexForOthers = Pattern.compile("[$&:;?@#|'<>.^*()%+!]");
+            Pattern regexForRepitititons = Pattern.compile("([,]{2,})");
+
+            Matcher commaMatcher = regexForComma.matcher(rawParam);
+            Matcher otherCharMatcher = regexForOthers.matcher(rawParam);
+            Matcher doubleCharMatcher = regexForRepitititons.matcher(rawParam);
+
+
+
+            if(doubleCharMatcher.find()) {
+                throw new RuntimeException("Repeated comma found");
+            }
+            else if (otherCharMatcher.find()) {
+                throw new RuntimeException("Other delimiter found");
+            } else if (commaMatcher.find()) {
+               /*
+               * If the string happens to have a , then all the commas shall be replaced by &
+               * */
+                String correctedParams = rawParam.replaceAll("(\\s+)","");
+                LOG.info("The extraUrlParams being used as"+ correctedParams );
+                inputRDBMSEntity.setExtraUrlParameters(correctedParams);
+            }
+            else {
+                String correctedParams = rawParam.replaceAll("(\\s+)","&");
+                LOG.info("The extraUrlParams being used as "+ correctedParams);
+                inputRDBMSEntity.setExtraUrlParameters(correctedParams);
+            }
+
+        } else {
+            LOG.info("extraUrlParameters initialized with null");
+            inputRDBMSEntity.setExtraUrlParameters(null);
+        }
 
         /**END*/
         inputRDBMSEntity.setDatabaseType("Teradata");

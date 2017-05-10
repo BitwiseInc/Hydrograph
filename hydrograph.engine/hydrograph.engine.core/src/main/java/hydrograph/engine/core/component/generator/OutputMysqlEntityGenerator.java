@@ -22,6 +22,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * The Class OutputMysqlEntityGenerator.
  *
@@ -105,18 +108,43 @@ public class OutputMysqlEntityGenerator extends OutputComponentGeneratorBase {
         //for batchsize which was named to chunksize since there is batch in the ETL tool as well
         outputRDBMSEntity.setChunkSize(jaxbOutputMysql.getChunkSize()==null?null:jaxbOutputMysql.getChunkSize().getValue());
         //extra url parameters has been
-        /*outputRDBMSEntity.setExtraUrlParamters(jaxbOutputMysql.getExtraUrlParams()==null?null:jaxbOutputMysql.getExtraUrlParams().getValue());*/
-        if(jaxbOutputMysql.getExtraUrlParams()!=null){
-            if(jaxbOutputMysql.getExtraUrlParams().getValue().contains(",")){
-                String correctedParams = jaxbOutputMysql.getExtraUrlParams().getValue().replace(",","&");
 
-                LOG.info("using extra url params as" + correctedParams);
+        if (jaxbOutputMysql.getExtraUrlParams() != null) {
+            String rawParam = jaxbOutputMysql.getExtraUrlParams().getValue();
+
+            Pattern regexForComma = Pattern.compile("([,]{0,1})");
+            Pattern regexForOthers = Pattern.compile("[$&:;?@#|'<>.^*()%+!]");
+            Pattern regexForRepitititons = Pattern.compile("([,]{2,})");
+
+            Matcher commaMatcher = regexForComma.matcher(rawParam);
+            Matcher otherCharMatcher = regexForOthers.matcher(rawParam);
+            Matcher doubleCharMatcher = regexForRepitititons.matcher(rawParam);
+
+
+
+            if(doubleCharMatcher.find()) {
+                throw new RuntimeException("Repeated comma found");
+            }
+            else if (otherCharMatcher.find()) {
+                throw new RuntimeException("Other delimiter found");
+            } else if (commaMatcher.find()) {
+               /*
+               * If the string happens to have a , then all the commas shall be replaced by &
+               * */
+                String correctedParams = rawParam.replaceAll(",", "&").replaceAll("(\\s+)","");
+               LOG.info("The extraUrlParams being used as"+ correctedParams );
+               outputRDBMSEntity.setExtraUrlParamters(correctedParams);
+            }
+            else {
+                String correctedParams = rawParam.replaceAll("(\\s+)","&");
+                LOG.info("The extraUrlParams being used as "+ correctedParams);
                 outputRDBMSEntity.setExtraUrlParamters(correctedParams);
             }
-        }else if(jaxbOutputMysql.getExtraUrlParams()==null){
+
+        } else {
+            LOG.info("extraUrlParameters initialized with null");
             outputRDBMSEntity.setExtraUrlParamters(null);
         }
-
         /**end**/
     }
 
