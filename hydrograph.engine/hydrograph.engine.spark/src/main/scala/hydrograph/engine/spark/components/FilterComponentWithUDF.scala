@@ -43,8 +43,6 @@ class FilterComponentWithUDF(filterEntity: FilterEntity, componentsParams: BaseC
     val outputSchema = inputSchema
     val filterDF = componentsParams.getDataFrame()
     val sparkSession = componentsParams.getSparkSession()
-    val viewName = "FilterDF" + filterEntity.getComponentId
-    filterDF.createOrReplaceTempView(viewName)
 
     var map: Map[String, DataFrame] = Map()
     val filterSparkOperations = initializeOperationList[FilterForExpression](filterEntity.getOperationsList,
