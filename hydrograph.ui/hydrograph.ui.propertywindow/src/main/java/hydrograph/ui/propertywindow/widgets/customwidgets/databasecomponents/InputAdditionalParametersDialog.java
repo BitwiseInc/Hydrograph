@@ -27,8 +27,6 @@ import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
-import org.eclipse.swt.events.KeyAdapter;
-import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -49,6 +47,7 @@ import org.slf4j.Logger;
 
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.logging.factory.LogFactory;
+import hydrograph.ui.propertywindow.handlers.ShowHidePropertyHelpHandler;
 import hydrograph.ui.propertywindow.messages.Messages;
 import hydrograph.ui.propertywindow.propertydialog.PropertyDialogButtonBar;
 import hydrograph.ui.propertywindow.utils.Utils;
@@ -92,6 +91,7 @@ public class InputAdditionalParametersDialog extends Dialog {
 	private ControlDecoration additionalParameterControlDecoration;
 	//private ControlDecoration partitionKeyControlDecoration;
 	private Cursor cursor;
+	private boolean ShowHidePropertyHelpChecked;
 
 	/**
 	 * Create the dialog.
@@ -117,6 +117,8 @@ public class InputAdditionalParametersDialog extends Dialog {
 		this.additionalParameterValue = initialMap;
 		this.cursor = cursor;
 	}
+	
+	
 
 	/**
 	 * Create contents of the dialog.
@@ -143,8 +145,6 @@ public class InputAdditionalParametersDialog extends Dialog {
             }
         });
 		
-		
-		
 		Composite composite = new Composite(container, SWT.NONE);
 		composite.setLayout(new GridLayout(2, false));
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
@@ -154,7 +154,7 @@ public class InputAdditionalParametersDialog extends Dialog {
 		gd_noOfPartitionsLabel.widthHint = 180;
 		noOfPartitionsLabel.setLayoutData(gd_noOfPartitionsLabel);
 		noOfPartitionsLabel.setText(Messages.NO_OF_PARTITIONS);
-
+		
 		noOfPartitionsTextBox = new Text(composite, SWT.BORDER);
 		noOfPartitionControlDecoration = WidgetUtility.addDecorator(noOfPartitionsTextBox,
 				Messages.DB_NUMERIC_PARAMETERZIATION_ERROR);
@@ -169,7 +169,7 @@ public class InputAdditionalParametersDialog extends Dialog {
 		gd_partitionKeysLabel.widthHint = 180;
 		partitionKeysLabel.setLayoutData(gd_partitionKeysLabel);
 		partitionKeysLabel.setText(Messages.PARTITION_KEY);
-
+		
 		partitionKeyButton = new Combo(composite, SWT.DROP_DOWN);
 		partitionKeyButton.setItems(convertToArray(schemaFields));
 		GridData gd_partitionKeyButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -206,7 +206,7 @@ public class InputAdditionalParametersDialog extends Dialog {
 		gd_partitionKeyLowerBoundLabel.widthHint = 180;
 		partitionKeyLowerBoundLabel.setLayoutData(gd_partitionKeyLowerBoundLabel);
 		partitionKeyLowerBoundLabel.setText(Messages.PARTITION_KEY_LOWER_BOUND);
-
+		
 		partitionKeyLowerBoundTextBox = new Text(composite, SWT.BORDER);
 		partitionKeyLowerBoundControlDecoration = WidgetUtility.addDecorator(partitionKeyLowerBoundTextBox,
 				Messages.DB_NUMERIC_PARAMETERZIATION_ERROR);
@@ -222,7 +222,7 @@ public class InputAdditionalParametersDialog extends Dialog {
 		gd_fetchSizeLabel.widthHint = 180;
 		fetchSizeLabel.setLayoutData(gd_fetchSizeLabel);
 		fetchSizeLabel.setText(Messages.FETCH_SIZE);
-
+		
 		fetchSizeTextBox = new Text(composite, SWT.BORDER);
 		fetchSizeControlDecoration = WidgetUtility.addDecorator(fetchSizeTextBox,
 				Messages.FETCH_SIZE_ERROR_DECORATOR_MESSAGE);
@@ -271,7 +271,36 @@ public class InputAdditionalParametersDialog extends Dialog {
 
 		getShell().setMinimumSize(getInitialSize());
 		
+		setPropertyHelpText();
+		
 		return container;
+	}
+
+
+
+	private void setPropertyHelpText() {
+		if(ShowHidePropertyHelpHandler.getInstance() != null)
+		ShowHidePropertyHelpChecked = ShowHidePropertyHelpHandler.getInstance().isShowHidePropertyHelpChecked();
+		
+		if(ShowHidePropertyHelpChecked){
+			noOfPartitionsLabel.setToolTipText(Messages.NUMBER_OF_PARTITIONS);
+			noOfPartitionsLabel.setCursor(new Cursor(noOfPartitionsLabel.getDisplay(), SWT.CURSOR_HELP));
+			
+			partitionKeysLabel.setToolTipText(Messages.PARTITONS_KEY);
+			partitionKeysLabel.setCursor(new Cursor(partitionKeysLabel.getDisplay(), SWT.CURSOR_HELP));
+			
+			partitionKeyUpperBoundLabel.setToolTipText(Messages.UPPER_BOUND_LABEL);
+			partitionKeyUpperBoundLabel.setCursor(new Cursor(partitionKeyUpperBoundLabel.getDisplay(), SWT.CURSOR_HELP));
+			
+			partitionKeyLowerBoundLabel.setToolTipText(Messages.LOWER_BOUND_LABEL);
+			partitionKeyLowerBoundLabel.setCursor(new Cursor(partitionKeyLowerBoundLabel.getDisplay(), SWT.CURSOR_HELP));
+			
+			fetchSizeLabel.setToolTipText(Messages.FETCH_SIZE_PARAM);
+			fetchSizeLabel.setCursor(new Cursor(fetchSizeLabel.getDisplay(), SWT.CURSOR_HELP));
+			
+			additionalDBParametersLabel.setToolTipText(Messages.ADDITIONAL_DB_PARAMETER);
+			additionalDBParametersLabel.setCursor(new Cursor(additionalDBParametersLabel.getDisplay(), SWT.CURSOR_HELP));
+			}
 	}
 
 	private void addModifyListener(Text text){

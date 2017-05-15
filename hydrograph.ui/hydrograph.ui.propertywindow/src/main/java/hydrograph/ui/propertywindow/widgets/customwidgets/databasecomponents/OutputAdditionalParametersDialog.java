@@ -20,10 +20,13 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -33,6 +36,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import hydrograph.ui.common.util.Constants;
+import hydrograph.ui.propertywindow.handlers.ShowHidePropertyHelpHandler;
 import hydrograph.ui.propertywindow.messages.Messages;
 import hydrograph.ui.propertywindow.propertydialog.PropertyDialogButtonBar;
 import hydrograph.ui.propertywindow.utils.Utils;
@@ -60,6 +64,7 @@ public class OutputAdditionalParametersDialog extends Dialog {
 	private Text additionalParameterTextBox;
 	private ControlDecoration additionalParameterControlDecoration;
 	private Cursor cursor;
+	private boolean ShowHidePropertyHelpChecked;
 
 	/**
 	 * Create the dialog.
@@ -73,7 +78,7 @@ public class OutputAdditionalParametersDialog extends Dialog {
 	public OutputAdditionalParametersDialog(Shell parentShell, String windowTitle,
 			PropertyDialogButtonBar propertyDialogButtonBar, Map<String, Object> initialMap, Cursor cursor) {
 		super(parentShell);
-		setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.WRAP | SWT.APPLICATION_MODAL);
+		setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.WRAP | SWT.APPLICATION_MODAL | SWT.RESIZE);
 		if (StringUtils.isNotBlank(windowTitle))
 			windowLabel = windowTitle;
 		else
@@ -93,6 +98,21 @@ public class OutputAdditionalParametersDialog extends Dialog {
 		Composite container = (Composite) super.createDialogArea(parent);
 		container.setLayout(new GridLayout(1, false));
 		container.getShell().setText(windowLabel);
+		
+		int CONST_HEIGHT = 181;
+				
+				Shell shell = container.getShell();
+				
+				shell.addControlListener(new ControlAdapter() {
+		            @Override
+		            public void controlResized(ControlEvent e) {
+		                Rectangle rect = shell.getBounds();
+		                if(rect.width != CONST_HEIGHT) {
+		                    shell.setBounds(rect.x, rect.y, rect.width, CONST_HEIGHT);
+		                }
+		            }
+		        });
+		
 		Composite composite = new Composite(container, SWT.NONE);
 		composite.setLayout(new GridLayout(2, false));
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -134,8 +154,25 @@ public class OutputAdditionalParametersDialog extends Dialog {
 		addListenerToAdditionalParameter(additionalParameterTextBox);
 
 		addOutputAdditionalParameterValues();
+		
+		getShell().setMinimumSize(getInitialSize());
+		
+		setPropertyHelpText();
 
 		return container;
+	}
+
+	private void setPropertyHelpText() {
+		if(ShowHidePropertyHelpHandler.getInstance() != null)
+			ShowHidePropertyHelpChecked = ShowHidePropertyHelpHandler.getInstance().isShowHidePropertyHelpChecked();
+			
+			if(ShowHidePropertyHelpChecked){
+				chunkSize.setToolTipText(Messages.CHUNK_SIZE);
+				chunkSize.setCursor(new Cursor(chunkSize.getDisplay(), SWT.CURSOR_HELP));
+				
+				additionalDBParametersLabel.setToolTipText(Messages.ADDITIONAL_DB_PARAMETER);
+				additionalDBParametersLabel.setCursor(new Cursor(additionalDBParametersLabel.getDisplay(), SWT.CURSOR_HELP));
+			}
 	}
 
 	private void addModifyListener(Text text){

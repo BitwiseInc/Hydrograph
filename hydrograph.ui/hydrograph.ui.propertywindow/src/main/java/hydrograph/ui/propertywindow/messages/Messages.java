@@ -424,6 +424,13 @@ public class Messages extends NLS {
 	public static String UPPER_LOWER_BOUND_ERROR;
 	public static String ADDITIONAL_PARAMETERS_FOR_DB_LABEL;
 	
+	public static String NUMBER_OF_PARTITIONS;
+	public static String PARTITONS_KEY;
+	public static String UPPER_BOUND_LABEL;
+	public static String LOWER_BOUND_LABEL;
+	public static String FETCH_SIZE_PARAM;
+	public static String ADDITIONAL_DB_PARAMETER;
+	public static String CHUNK_SIZE;
 	
 	static {
 		// initialize resource bundle
