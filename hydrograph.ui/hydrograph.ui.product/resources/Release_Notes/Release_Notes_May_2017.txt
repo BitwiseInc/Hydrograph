@@ -14,4 +14,5 @@ Sr.No.  <GitHub Issue #>  - [fixed by]   - description
                          - 3(iii) Reduce unnecessary space between label and text box and the space above buttons.
 5. <> - [Kalyan Rajpoot] - 	Database component: Property help text should be displayed for all additional parameter fields.
 6. <> - [Kalyan Rajpoot] -  Database Component: Dropdown should be present for Partition key field under Additional Parameters window.                              
-
+7. <> - [Vibhor Tyagi] - Console Log - Tool should clear console log
+8. <> - [Vibhor Tyagi] - Confirmation message should be displayed when user close tool

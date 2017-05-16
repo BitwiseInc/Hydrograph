@@ -112,7 +112,6 @@ public void launchJobInDebug(String xmlPath, String debugXmlPath,String paramFil
 		
 		ViewDataUtils.getInstance().addViewDataJobDetails(job.getConsoleName(), job);
 		refreshProject(gefCanvas);
-		JobManager.INSTANCE.removeJob(job.getCanvasName());
 		ViewExecutionHistoryUtility.INSTANCE.addTrackingJobs(job.getConsoleName(), job);
 		TrackingDisplayUtils.INSTANCE.closeWebSocketConnection(session);
 	}

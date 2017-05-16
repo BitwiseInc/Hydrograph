@@ -86,7 +86,6 @@ public class LocalJobLauncher extends AbstractJobLauncher {
 		}
 		
 		refreshProject(gefCanvas);
-		JobManager.INSTANCE.removeJob(job.getCanvasName());
 		ViewExecutionHistoryUtility.INSTANCE.addTrackingJobs(job.getConsoleName(), job);
 		TrackingDisplayUtils.INSTANCE.closeWebSocketConnection(session);
 	}

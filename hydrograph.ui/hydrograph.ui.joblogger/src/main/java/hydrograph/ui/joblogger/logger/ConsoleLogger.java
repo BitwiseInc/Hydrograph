@@ -65,7 +65,7 @@ public class ConsoleLogger extends AbstractJobLogger{
 	 */
 	private void initConsoleStream() {
 		MessageConsole messageConsole = getMessageConsole();
-		
+		messageConsole.clearConsole();
 		messageConsoleStream=messageConsole.newMessageStream();
 		logger.debug("Created message console stream");
 		messageConsoleStream.getConsole().addPropertyChangeListener(new IPropertyChangeListener() {
