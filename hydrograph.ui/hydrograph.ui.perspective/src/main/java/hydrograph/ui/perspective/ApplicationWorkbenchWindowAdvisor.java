@@ -154,7 +154,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 				}else 
 					return false;
 				break;
-			}else{
+			}else {
 				int returCode = messageDialog();
 				if (returCode == SWT.YES) {
 					if(entry.getValue() != null){
