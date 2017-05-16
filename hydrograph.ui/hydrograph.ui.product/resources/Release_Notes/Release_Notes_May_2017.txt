@@ -8,3 +8,10 @@ Issues/Defects fixed:
 Sr.No.  <GitHub Issue #>  - [fixed by]   - description
 1. <> - [Ankit Sharma] - Removed UTF-16 from Charset drop down bar.
 2. <> - [Ankit Sharma] - Replaced unknown component with dummy component. Also,added jaxb classes of it.
+3. <> - [Kalyan Rajpoot] - Database component: Error bubble is getting displayed when user provides value of Additional DB parameters with space.
+4. <> - [Kalyan Rajpoot] - 3(i) The upper bound and lower bound text boxes’ position should be interchanged.
+                         - 3(ii) Window should be resizable and the text boxes should expand / resize as per the window.
+                         - 3(iii) Reduce unnecessary space between label and text box and the space above buttons.
+5. <> - [Kalyan Rajpoot] - 	Database component: Property help text should be displayed for all additional parameter fields.
+6. <> - [Kalyan Rajpoot] -  Database Component: Dropdown should be present for Partition key field under Additional Parameters window.                              
+
