@@ -432,6 +432,10 @@ public class Messages extends NLS {
 	public static String ADDITIONAL_DB_PARAMETER;
 	public static String CHUNK_SIZE;
 	
+	public static String LOADCONFIG_NEWTABLE;
+	public static String LOADCONFIG_INSERT;
+	public static String LOADCONFIG_REPLACE;
+	
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

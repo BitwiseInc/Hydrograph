@@ -23,6 +23,7 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -37,6 +38,7 @@ import org.eclipse.swt.widgets.Widget;
 
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.common.util.OSValidator;
+import hydrograph.ui.propertywindow.handlers.ShowHidePropertyHelpHandler;
 import hydrograph.ui.propertywindow.messages.Messages;
 import hydrograph.ui.propertywindow.propertydialog.PropertyDialogButtonBar;
 import hydrograph.ui.propertywindow.widgets.dialogs.FieldDialog;
@@ -58,6 +60,7 @@ public class LoadTypeConfigurationDialog extends Dialog {
 	private Button insertRadioButton;
 	private Button replaceRadioButton;
 	private Button[] radioButtons = new Button[]{newTableRadioButton, insertRadioButton, replaceRadioButton};
+	private boolean ShowHidePropertyHelpChecked;
 	
 	/**
 	 * Create the dialog.
@@ -199,9 +202,29 @@ public class LoadTypeConfigurationDialog extends Dialog {
 			//updateRadioButton.setEnabled(true);
 		}
 		
+		setPropertyHelpText();
 		return container;
 	}
-
+	
+	/**
+	 * Set the Property Help Text
+	 */
+	private void setPropertyHelpText() {
+		if(ShowHidePropertyHelpHandler.getInstance() != null)
+		ShowHidePropertyHelpChecked = ShowHidePropertyHelpHandler.getInstance().isShowHidePropertyHelpChecked();
+		
+		if(ShowHidePropertyHelpChecked){
+			newTableRadioButton.setToolTipText(Messages.LOADCONFIG_NEWTABLE);
+			newTableRadioButton.setCursor(new Cursor(newTableRadioButton.getDisplay(), SWT.CURSOR_HELP));
+			
+			insertRadioButton.setToolTipText(Messages.LOADCONFIG_INSERT);
+			insertRadioButton.setCursor(new Cursor(insertRadioButton.getDisplay(), SWT.CURSOR_HELP));
+			
+			replaceRadioButton.setToolTipText(Messages.LOADCONFIG_REPLACE);
+			replaceRadioButton.setCursor(new Cursor(replaceRadioButton.getDisplay(), SWT.CURSOR_HELP));
+		}
+	}
+	
 	/**
 	 * The Function will call to disable the widgets
 	 * @param textbox1

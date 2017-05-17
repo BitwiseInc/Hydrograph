@@ -78,7 +78,7 @@ public class InputAdditionalParametersDialog extends Dialog {
 	private Label additionalDBParametersLabel;
 	protected String selectedPartitionKey;
 	protected Map<String, String> runtimeValueMap;
-	private Combo partitionKeyButton;
+	private Combo partitionKeyComboBox;
 	private ControlDecoration noOfPartitionControlDecoration;
 	private ControlDecoration partitionKeyUpperBoundControlDecoration;
 	private ControlDecoration partitionKeyLowerBoundControlDecoration;
@@ -102,7 +102,7 @@ public class InputAdditionalParametersDialog extends Dialog {
 			PropertyDialogButtonBar propertyDialogButtonBar, List<String> schemaFields,
 			Map<String, Object> initialMap, Cursor cursor) {
 		super(parentShell);
-		setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.WRAP | SWT.APPLICATION_MODAL | SWT.SHELL_TRIM);
+		setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.WRAP | SWT.APPLICATION_MODAL | SWT.RESIZE);
 		if (StringUtils.isNotBlank(windowTitle))
 			windowLabel = windowTitle;
 		else
@@ -165,21 +165,24 @@ public class InputAdditionalParametersDialog extends Dialog {
 		partitionKeysLabel.setLayoutData(gd_partitionKeysLabel);
 		partitionKeysLabel.setText(Messages.PARTITION_KEY);
 		
-		partitionKeyButton = new Combo(composite, SWT.DROP_DOWN);
-		partitionKeyButton.setItems(convertToArray(schemaFields));
+		partitionKeyComboBox = new Combo(composite, SWT.DROP_DOWN);
+		partitionKeyComboBox.setItems(convertToArray(schemaFields));
 		GridData gd_partitionKeyButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		partitionKeyButton.setVisibleItemCount(11);
-		partitionKeyButton.setEnabled(false);
+		partitionKeyComboBox.setVisibleItemCount(11);
+		partitionKeyComboBox.setEnabled(false);
 		
 		gd_partitionKeyButton.widthHint = 90;
 		gd_partitionKeyButton.horizontalIndent = 10;
-		partitionKeyButton.setLayoutData(gd_partitionKeyButton);
+		partitionKeyComboBox.setLayoutData(gd_partitionKeyButton);
 		
-		new AutoCompleteField(partitionKeyButton, new ComboContentAdapter(), convertToArray(schemaFields));
+		new AutoCompleteField(partitionKeyComboBox, new ComboContentAdapter(), convertToArray(schemaFields));
 		
 		selectedPartitionKey = (String) additionalParameterValue.get(Constants.DB_PARTITION_KEY);
 		if(selectedPartitionKey != null){
-		partitionKeyButton.setText(selectedPartitionKey);
+		partitionKeyComboBox.setText(selectedPartitionKey);
+		}
+		else{
+			partitionKeyComboBox.select(0);
 		}
 		
 		partitionKeyUpperBoundLabel = new Label(composite, SWT.NONE);
@@ -329,7 +332,7 @@ public class InputAdditionalParametersDialog extends Dialog {
 
 			@Override
 			public void modifyText(ModifyEvent event) {
-				partitionKeyButton.setEnabled(true);
+				partitionKeyComboBox.setEnabled(true);
 				partitionKeyLowerBoundTextBox.setEnabled(true);
 				partitionKeyUpperBoundTextBox.setEnabled(true);
 				if (StringUtils.isNotBlank(noOfPartitionsTextBox.getText())) {
@@ -340,7 +343,7 @@ public class InputAdditionalParametersDialog extends Dialog {
 				}else{
 					partitionKeyLowerBoundControlDecoration.hide();
 					partitionKeyUpperBoundControlDecoration.hide();
-					partitionKeyButton.setEnabled(false);
+					partitionKeyComboBox.setEnabled(false);
 					partitionKeyLowerBoundTextBox.setEnabled(false);
 					partitionKeyUpperBoundTextBox.setEnabled(false);
 				}
@@ -354,7 +357,7 @@ public class InputAdditionalParametersDialog extends Dialog {
 			public void focusLost(FocusEvent e) {
 				if (StringUtils.isBlank(noOfPartitionsTextBox.getText())
 						&& StringUtils.isEmpty(noOfPartitionsTextBox.getText())) {
-					partitionKeyButton.setEnabled(false);
+					partitionKeyComboBox.setEnabled(false);
 					partitionKeyLowerBoundTextBox.setEnabled(false);
 					partitionKeyUpperBoundTextBox.setEnabled(false);
 				}
@@ -365,7 +368,7 @@ public class InputAdditionalParametersDialog extends Dialog {
 
 				if (StringUtils.isNotBlank(noOfPartitionsTextBox.getText())
 						&& StringUtils.isNotEmpty(noOfPartitionsTextBox.getText())) {
-					partitionKeyButton.setEnabled(true);
+					partitionKeyComboBox.setEnabled(true);
 					partitionKeyLowerBoundTextBox.setEnabled(true);
 					partitionKeyUpperBoundTextBox.setEnabled(true);
 				}
@@ -443,7 +446,7 @@ public class InputAdditionalParametersDialog extends Dialog {
 		additionalParameterValue= new LinkedHashMap<>();
 		if (StringUtils.isNotBlank(noOfPartitionsTextBox.getText())) {
 			additionalParameterValue.put(Constants.NUMBER_OF_PARTITIONS, noOfPartitionsTextBox.getText());
-			additionalParameterValue.put(Constants.DB_PARTITION_KEY, partitionKeyButton.getText());
+			additionalParameterValue.put(Constants.DB_PARTITION_KEY, partitionKeyComboBox.getText());
 			additionalParameterValue.put(Constants.NOP_UPPER_BOUND, partitionKeyUpperBoundTextBox.getText());
 			additionalParameterValue.put(Constants.NOP_LOWER_BOUND, partitionKeyLowerBoundTextBox.getText());
 		}else{
