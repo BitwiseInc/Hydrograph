@@ -39,6 +39,8 @@ import hydrograph.ui.graph.dialog.SaveJobFileBeforeRunDialog;
 import hydrograph.ui.graph.editor.ELTGraphicalEditor;
 import hydrograph.ui.graph.execution.tracking.preferences.JobRunPreference;
 import hydrograph.ui.graph.job.RunStopButtonCommunicator;
+import hydrograph.ui.graph.model.Component;
+import hydrograph.ui.graph.model.Container;
 import hydrograph.ui.graph.utility.SubJobUtility;
 import hydrograph.ui.graph.utility.ViewDataUtils;
 import hydrograph.ui.propertywindow.runconfig.RunConfigDialog;
@@ -92,7 +94,7 @@ public class JobHandler extends AbstractHandler {
 	 */
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		if(jobIsSaved()){
+		if(jobIsSaved() && !isDummyComponentAvailable()){
 				if(validateGraphProperties()){
 				if(confirmationFromUser()){
 					executeJob();
@@ -106,6 +108,21 @@ public class JobHandler extends AbstractHandler {
 	
 	}
 	
+	private boolean isDummyComponentAvailable() {
+		ELTGraphicalEditor editor = SubJobUtility.getCurrentEditor();
+		Container container=editor.getContainer();
+		for(Component component:container.getUIComponentList()){
+			if(StringUtils.equals(component.getComponentName(), "UnknownComponent")){
+				MessageBox messageBox=new MessageBox(Display.getCurrent().getActiveShell(),SWT.ICON_WARNING);
+				messageBox.setMessage("Cannot run job with Dummy Component");
+				messageBox.setText("Warning");
+				messageBox.open();
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private boolean jobIsSaved(){
 		ELTGraphicalEditor editor = SubJobUtility.getCurrentEditor();
 		if(editor.isDirty())

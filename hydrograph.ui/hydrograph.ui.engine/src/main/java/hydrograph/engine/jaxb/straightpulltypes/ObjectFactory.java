@@ -59,6 +59,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Dummy }
+     * 
+     */
+    public Dummy createDummy() {
+        return new Dummy();
+    }
+
+    /**
      * Create an instance of {@link UnionAll }
      * 
      */
@@ -96,6 +104,14 @@ public class ObjectFactory {
      */
     public Limit.MaxRecords createLimitMaxRecords() {
         return new Limit.MaxRecords();
+    }
+
+    /**
+     * Create an instance of {@link Dummy.Properties }
+     * 
+     */
+    public Dummy.Properties createDummyProperties() {
+        return new Dummy.Properties();
     }
 
 }

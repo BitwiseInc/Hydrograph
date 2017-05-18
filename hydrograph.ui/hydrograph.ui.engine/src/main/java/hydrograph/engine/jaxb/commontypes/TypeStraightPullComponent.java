@@ -11,7 +11,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-
 package hydrograph.engine.jaxb.commontypes;
 
 import java.util.ArrayList;
@@ -25,6 +24,7 @@ import hydrograph.engine.jaxb.limit.TypeLimitBase;
 import hydrograph.engine.jaxb.removedups.TypeRemovedupsBase;
 import hydrograph.engine.jaxb.sort.TypeSortBase;
 import hydrograph.engine.jaxb.straightpulltypes.Clone;
+import hydrograph.engine.jaxb.straightpulltypes.Dummy;
 import hydrograph.engine.jaxb.straightpulltypes.UnionAll;
 
 
@@ -56,6 +56,7 @@ import hydrograph.engine.jaxb.straightpulltypes.UnionAll;
     "runtimeProperties"
 })
 @XmlSeeAlso({
+    Dummy.class,
     UnionAll.class,
     Clone.class,
     TypeLimitBase.class,
