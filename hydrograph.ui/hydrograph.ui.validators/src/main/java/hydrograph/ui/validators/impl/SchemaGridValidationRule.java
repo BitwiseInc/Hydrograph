@@ -144,8 +144,8 @@ public class SchemaGridValidationRule implements IValidator {
 			}
 			
 			if (StringUtils.equalsIgnoreCase(DATA_TYPE_BIG_DECIMAL, gridRow.getDataTypeValue())
-					&& (StringUtils.isBlank(gridRow.getScaleTypeValue()) || StringUtils.equalsIgnoreCase(
-							SCALE_TYPE_NONE, gridRow.getScaleTypeValue()))){
+					&& ((gridRow.getScaleType() ==null) || StringUtils.equalsIgnoreCase(
+							gridRow.getScaleTypeValue(),SCALE_TYPE_NONE))){
 				errorMessage = "Scale type cannot be blank or none for Big Decimal data type";
 				return false;
 			}
