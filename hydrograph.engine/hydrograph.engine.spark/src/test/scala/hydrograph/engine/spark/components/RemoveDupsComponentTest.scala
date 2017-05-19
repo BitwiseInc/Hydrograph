@@ -122,6 +122,54 @@ class RemoveDupsComponentTest {
 
     Assert.assertEquals(rows(0), Row("1", "C2R1", "C3Rx", "C4R1"))
   }
+  
+  @Test
+  def RemoveDupsKeepsFirstNullRecordInOutput() = {
+    val df1 = new DataBuilder(Fields(List("col1", "col2", "col3", "col4")).applyTypes(List(classOf[String],
+      classOf[String], classOf[String], classOf[String])))
+      .addData(List("1","C2R1","C3Rx", "C4R1"))
+      .addData(List("null", "C2R2", "C3Rx", "C4R2"))
+      .addData(List("1", "C2R3", "C3Rx", "C4R3"))
+      .addData(List("null", "C2R5", "C3Rx", "C4R3"))
+      .addData(List("2", "C2R6", "C3Rx", "C4R3"))
+      .build()
+
+    val removeDupsEntity: RemoveDupsEntity = new RemoveDupsEntity
+    removeDupsEntity.setComponentId("dedupTest");
+
+    val keyField: KeyField = new KeyField();
+    keyField.setName("col1");
+    removeDupsEntity.setKeyFields(Array(keyField));
+    // keep just the first record. Discard remaining duplicate records
+    removeDupsEntity.setKeep("first");
+
+    val outSocketList: util.ArrayList[OutSocket] = new util.ArrayList[OutSocket]();
+    outSocketList.add(new OutSocket("out0", "out"));
+    removeDupsEntity.setOutSocketList(outSocketList);
+
+    val cp = new BaseComponentParams
+
+    cp.addinputDataFrame(df1)
+
+    val schema = Array(
+      new SchemaField("col1", "java.lang.String"),
+      new SchemaField("col2", "java.lang.String"),
+      new SchemaField("col3", "java.lang.String"),
+      new SchemaField("col4", "java.lang.String"))
+
+    cp.addSchemaFields(schema)
+
+    val removeDupsComponent: RemoveDupsComponent = new RemoveDupsComponent(removeDupsEntity, cp)
+
+    val dataFrame: Map[String, DataFrame] = removeDupsComponent.createComponent()
+
+    //val rows = dataFrame.get("out0").get.select("col1","col2","col3","col4").collect().toList
+
+    val rows = Bucket(Fields(List("col1", "col2", "col3", "col4")), dataFrame.get("out0").get).result()
+    Assert.assertEquals(3, rows.size)
+    Assert.assertEquals(rows(0), Row("1", "C2R3", "C3Rx", "C4R3"))
+//    Assert.assertEquals(rows(0), Row("1", "C2R5", "C3Rx", "C4R3"))
+  }
 
   @Test
   def RemoveDupsKeepuniqueWithOutPort() = {

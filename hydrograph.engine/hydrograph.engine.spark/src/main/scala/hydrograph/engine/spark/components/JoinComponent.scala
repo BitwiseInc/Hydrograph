@@ -226,8 +226,8 @@ class JoinComponent(joinEntity: JoinEntity, componentsParams: BaseComponentParam
 
   def createJoinKey(lhsKeys: Array[String], rhsKeys: Array[String]): Column = (lhsKeys, rhsKeys) match {
     case (l, r) if l.length != r.length => sys.error("key fields should be same")
-    case (l, r) if r.tail.length == 0   => return col(l.head) === col(r.head)
-    case (l, r)                         => return (col(l.head) === col(r.head)).&&(createJoinKey(l.tail, r.tail))
+    case (l, r) if r.tail.length == 0   => return col(l.head) <=> col(r.head)
+    case (l, r)                         => return (col(l.head) <=> col(r.head)).&&(createJoinKey(l.tail, r.tail))
   }
 
 }
