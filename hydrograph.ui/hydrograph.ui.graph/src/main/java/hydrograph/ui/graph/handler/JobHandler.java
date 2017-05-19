@@ -12,9 +12,6 @@
  *******************************************************************************/
 package hydrograph.ui.graph.handler;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
@@ -51,9 +48,6 @@ import hydrograph.ui.propertywindow.runconfig.RunConfigDialog;
  */
 public class JobHandler extends AbstractHandler {
 
-	private Map<String, String> map = new HashMap<>();
-	private List<String> list = new ArrayList<>();
-	
 	/**
 	 * Instantiates a new job handler.
 	 */
