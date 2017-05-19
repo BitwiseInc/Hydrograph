@@ -104,4 +104,17 @@
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
+	<xs:complexType name="dummy">
+		<xs:complexContent>
+			<xs:extension base="cmn:type-straight-pull-component">
+				<xs:sequence>
+					<xs:element name="properties" minOccurs="0" maxOccurs="1">
+						<xs:complexType>
+							<xs:attribute name="value" use="optional" type="xs:string" />
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
 </xs:schema>
