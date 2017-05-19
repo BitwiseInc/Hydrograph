@@ -38,6 +38,7 @@ import hydrograph.engine.jaxb.operationstypes.PartitionByExpression;
 import hydrograph.engine.jaxb.operationstypes.Transform;
 import hydrograph.engine.jaxb.outputtypes.Discard;
 import hydrograph.engine.jaxb.straightpulltypes.Clone;
+import hydrograph.engine.jaxb.straightpulltypes.Dummy;
 import hydrograph.engine.jaxb.straightpulltypes.Limit;
 import hydrograph.engine.jaxb.straightpulltypes.RemoveDups;
 import hydrograph.engine.jaxb.straightpulltypes.Sort;
@@ -262,7 +263,7 @@ public class UiConverterFactory {
 		if((PartitionByExpression.class).isAssignableFrom(typeBaseComponent.getClass())){
 			return new PartitionByExpressionUiConverter(typeBaseComponent,container);
 		}
-		if((hydrograph.engine.jaxb.commontypes.TypeUnknownComponent.class).isAssignableFrom(typeBaseComponent.getClass())){
+		if((Dummy.class).isAssignableFrom(typeBaseComponent.getClass())){
 			return new UnknownUiConverter(typeBaseComponent, container);
 		}
 		if((hydrograph.engine.jaxb.commandtypes.RunSQL.class).isAssignableFrom(typeBaseComponent.getClass())){

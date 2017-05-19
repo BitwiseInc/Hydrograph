@@ -18,10 +18,10 @@ import java.util.List;
 import org.slf4j.Logger;
 
 import hydrograph.engine.jaxb.commontypes.TypeBaseInSocket;
-import hydrograph.engine.jaxb.commontypes.TypeBaseOutSocket;
 import hydrograph.engine.jaxb.commontypes.TypeOutSocketAsInSocket;
-import hydrograph.engine.jaxb.commontypes.TypeUnknownComponent;
-import hydrograph.engine.jaxb.commontypes.TypeUnknownComponent.Properties;
+import hydrograph.engine.jaxb.commontypes.TypeStraightPullOutSocket;
+import hydrograph.engine.jaxb.straightpulltypes.Dummy;
+import hydrograph.engine.jaxb.straightpulltypes.Dummy.Properties;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.engine.converter.Converter;
 import hydrograph.ui.graph.model.Component;
@@ -34,7 +34,7 @@ public class UnknownConverter extends Converter {
 	
 	public UnknownConverter(Component component) {
 		super(component);
-		this.baseComponent = new TypeUnknownComponent();
+		this.baseComponent = new Dummy();
 		this.component = component;
 		this.properties = component.getProperties();
 	}
@@ -43,20 +43,20 @@ public class UnknownConverter extends Converter {
 	public void prepareForXML() {
 		logger.debug("Generating XML for :{}", properties.get(Constants.PARAM_NAME));
 		super.prepareForXML();
-		((TypeUnknownComponent) baseComponent).getInSocket().addAll(getInSocket());
-		((TypeUnknownComponent) baseComponent).getOutSocket().addAll(getOutSocket());
-		TypeUnknownComponent unknownComponent=(TypeUnknownComponent)baseComponent;
+		((Dummy) baseComponent).getInSocket().addAll(getInSocket());
+		((Dummy) baseComponent).getOutSocket().addAll(getOutSocket());
+		Dummy unknownComponent=(Dummy)baseComponent;
 		Properties unknownComponentProperties=new Properties();
 		unknownComponentProperties.setValue((String)properties.get("xml_properties_content"));
 		unknownComponent.setProperties(unknownComponentProperties);
 	}
 
-	protected List<TypeBaseOutSocket> getOutSocket() {
+	protected List<TypeStraightPullOutSocket> getOutSocket() {
 		logger.debug("getOutSocket - Generating TypeStraightPullOutSocket data for :{}",
 				properties.get(Constants.PARAM_NAME));
-		List<TypeBaseOutSocket> outSockectList = new ArrayList<TypeBaseOutSocket>();
+		List<TypeStraightPullOutSocket> outSockectList = new ArrayList<TypeStraightPullOutSocket>();
 		for (Link link : component.getSourceConnections()) {
-			TypeBaseOutSocket outSocket = new TypeBaseOutSocket();
+			TypeStraightPullOutSocket outSocket = new TypeStraightPullOutSocket();
 			TypeOutSocketAsInSocket outSocketAsInsocket = new TypeOutSocketAsInSocket();
 			outSocketAsInsocket.setInSocketId(Constants.FIXED_INSOCKET_ID);
 			outSocketAsInsocket.getOtherAttributes();
@@ -65,7 +65,6 @@ public class UnknownConverter extends Converter {
 			outSocket.getOtherAttributes();
 			outSockectList.add(outSocket);
 		}
-
 		return outSockectList;
 	}
 
