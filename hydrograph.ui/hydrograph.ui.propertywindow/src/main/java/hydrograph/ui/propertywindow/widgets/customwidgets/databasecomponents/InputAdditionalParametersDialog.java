@@ -185,22 +185,6 @@ public class InputAdditionalParametersDialog extends Dialog {
 			partitionKeyComboBox.select(0);
 		}
 		
-		partitionKeyUpperBoundLabel = new Label(composite, SWT.NONE);
-		GridData gd_partitionKeyUpperBoundLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_partitionKeyUpperBoundLabel.widthHint = 180;
-		partitionKeyUpperBoundLabel.setLayoutData(gd_partitionKeyUpperBoundLabel);
-		partitionKeyUpperBoundLabel.setText(Messages.PARTITION_KEY_UPPER_BOUND);
-
-		partitionKeyUpperBoundTextBox = new Text(composite, SWT.BORDER);
-		partitionKeyUpperBoundControlDecoration = WidgetUtility.addDecorator(partitionKeyUpperBoundTextBox,
-				Messages.DB_NUMERIC_PARAMETERZIATION_ERROR);
-		partitionKeyUpperBoundControlDecoration.setMarginWidth(2);
-		partitionKeyUpperBoundControlDecoration.hide();
-		GridData gd_partitionKeyUpperBoundTextBox = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		gd_partitionKeyUpperBoundTextBox.horizontalIndent = 10;
-		partitionKeyUpperBoundTextBox.setLayoutData(gd_partitionKeyUpperBoundTextBox);
-		partitionKeyUpperBoundTextBox.setEnabled(false);
-
 		partitionKeyLowerBoundLabel = new Label(composite, SWT.NONE);
 		GridData gd_partitionKeyLowerBoundLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_partitionKeyLowerBoundLabel.widthHint = 180;
@@ -216,6 +200,22 @@ public class InputAdditionalParametersDialog extends Dialog {
 		gd_partitionKeyLowerBoundTextBox.horizontalIndent = 10;
 		partitionKeyLowerBoundTextBox.setLayoutData(gd_partitionKeyLowerBoundTextBox);
 		partitionKeyLowerBoundTextBox.setEnabled(false);
+		
+		partitionKeyUpperBoundLabel = new Label(composite, SWT.NONE);
+		GridData gd_partitionKeyUpperBoundLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_partitionKeyUpperBoundLabel.widthHint = 180;
+		partitionKeyUpperBoundLabel.setLayoutData(gd_partitionKeyUpperBoundLabel);
+		partitionKeyUpperBoundLabel.setText(Messages.PARTITION_KEY_UPPER_BOUND);
+
+		partitionKeyUpperBoundTextBox = new Text(composite, SWT.BORDER);
+		partitionKeyUpperBoundControlDecoration = WidgetUtility.addDecorator(partitionKeyUpperBoundTextBox,
+				Messages.DB_NUMERIC_PARAMETERZIATION_ERROR);
+		partitionKeyUpperBoundControlDecoration.setMarginWidth(2);
+		partitionKeyUpperBoundControlDecoration.hide();
+		GridData gd_partitionKeyUpperBoundTextBox = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+		gd_partitionKeyUpperBoundTextBox.horizontalIndent = 10;
+		partitionKeyUpperBoundTextBox.setLayoutData(gd_partitionKeyUpperBoundTextBox);
+		partitionKeyUpperBoundTextBox.setEnabled(false);
 
 		fetchSizeLabel = new Label(composite, SWT.NONE);
 		GridData gd_fetchSizeLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
