@@ -119,7 +119,7 @@ public class OutputAdditionalParametersDialog extends Dialog {
 
 		chunkSize = new Label(composite, SWT.NONE);
 		GridData gd_chunkSize = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_chunkSize.widthHint = 218;
+		gd_chunkSize.widthHint = 150;
 		chunkSize.setLayoutData(gd_chunkSize);
 		chunkSize.setText(Messages.DB_CHUNK_SIZE);
 
@@ -134,7 +134,7 @@ public class OutputAdditionalParametersDialog extends Dialog {
 
 		additionalDBParametersLabel = new Label(composite, SWT.NONE);
 		GridData gd_additionalDBParametersLabel = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_additionalDBParametersLabel.widthHint = 218;
+		gd_additionalDBParametersLabel.widthHint = 150;
 		additionalDBParametersLabel.setLayoutData(gd_additionalDBParametersLabel);
 		additionalDBParametersLabel.setText(Messages.ADDITIONAL_DB_PARAMETERS);
 
