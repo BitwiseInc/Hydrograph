@@ -86,7 +86,6 @@ public class InputAdditionalParametersDialog extends Dialog {
 	private Text additionalParameterTextBox;
 	private ControlDecoration additionalParameterControlDecoration;
 	private Cursor cursor;
-	private boolean ShowHidePropertyHelpChecked;
 
 	/**
 	 * Create the dialog.
@@ -166,7 +165,7 @@ public class InputAdditionalParametersDialog extends Dialog {
 		partitionKeysLabel.setText(Messages.PARTITION_KEY);
 		
 		partitionKeyComboBox = new Combo(composite, SWT.DROP_DOWN);
-		partitionKeyComboBox.setItems(convertToArray(schemaFields));
+		partitionKeyComboBox.setItems(schemaFields.toArray(new String[schemaFields.size()]));
 		GridData gd_partitionKeyButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		partitionKeyComboBox.setVisibleItemCount(11);
 		partitionKeyComboBox.setEnabled(false);
@@ -175,10 +174,11 @@ public class InputAdditionalParametersDialog extends Dialog {
 		gd_partitionKeyButton.horizontalIndent = 10;
 		partitionKeyComboBox.setLayoutData(gd_partitionKeyButton);
 		
-		new AutoCompleteField(partitionKeyComboBox, new ComboContentAdapter(), convertToArray(schemaFields));
+		new AutoCompleteField(partitionKeyComboBox, new ComboContentAdapter(), schemaFields.toArray(new String[schemaFields.size()]));
 		
 		selectedPartitionKey = (String) additionalParameterValue.get(Constants.DB_PARTITION_KEY);
-		if(selectedPartitionKey != null){
+		
+		if(StringUtils.isNotBlank(selectedPartitionKey)){
 		partitionKeyComboBox.setText(selectedPartitionKey);
 		}
 		else{
@@ -275,10 +275,8 @@ public class InputAdditionalParametersDialog extends Dialog {
 	}
 
 	private void setPropertyHelpText() {
-		if(ShowHidePropertyHelpHandler.getInstance() != null)
-		ShowHidePropertyHelpChecked = ShowHidePropertyHelpHandler.getInstance().isShowHidePropertyHelpChecked();
-		
-		if(ShowHidePropertyHelpChecked){
+		if(ShowHidePropertyHelpHandler.getInstance() != null 
+				&& ShowHidePropertyHelpHandler.getInstance().isShowHidePropertyHelpChecked()){
 			noOfPartitionsLabel.setToolTipText(Messages.NUMBER_OF_PARTITIONS);
 			noOfPartitionsLabel.setCursor(new Cursor(noOfPartitionsLabel.getDisplay(), SWT.CURSOR_HELP));
 			
@@ -332,10 +330,10 @@ public class InputAdditionalParametersDialog extends Dialog {
 
 			@Override
 			public void modifyText(ModifyEvent event) {
+				if(StringUtils.isNotBlank(noOfPartitionsTextBox.getText())){
 				partitionKeyComboBox.setEnabled(true);
 				partitionKeyLowerBoundTextBox.setEnabled(true);
 				partitionKeyUpperBoundTextBox.setEnabled(true);
-				if (StringUtils.isNotBlank(noOfPartitionsTextBox.getText())) {
 					
 					if(StringUtils.isBlank(partitionKeyLowerBoundTextBox.getText())){ partitionKeyLowerBoundControlDecoration.show();}
 					if(StringUtils.isBlank(partitionKeyUpperBoundTextBox.getText())){ partitionKeyUpperBoundControlDecoration.show();}

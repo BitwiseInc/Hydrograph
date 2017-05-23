@@ -210,10 +210,8 @@ public class LoadTypeConfigurationDialog extends Dialog {
 	 * Set the Property Help Text
 	 */
 	private void setPropertyHelpText() {
-		if(ShowHidePropertyHelpHandler.getInstance() != null)
-		ShowHidePropertyHelpChecked = ShowHidePropertyHelpHandler.getInstance().isShowHidePropertyHelpChecked();
-		
-		if(ShowHidePropertyHelpChecked){
+		if(ShowHidePropertyHelpHandler.getInstance() != null 
+				&& ShowHidePropertyHelpHandler.getInstance().isShowHidePropertyHelpChecked()){
 			newTableRadioButton.setToolTipText(Messages.LOADCONFIG_NEWTABLE);
 			newTableRadioButton.setCursor(new Cursor(newTableRadioButton.getDisplay(), SWT.CURSOR_HELP));
 			

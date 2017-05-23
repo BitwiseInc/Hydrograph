@@ -163,10 +163,8 @@ public class OutputAdditionalParametersDialog extends Dialog {
 	}
 
 	private void setPropertyHelpText() {
-		if(ShowHidePropertyHelpHandler.getInstance() != null)
-			ShowHidePropertyHelpChecked = ShowHidePropertyHelpHandler.getInstance().isShowHidePropertyHelpChecked();
-			
-			if(ShowHidePropertyHelpChecked){
+		if(ShowHidePropertyHelpHandler.getInstance() != null 
+				&& ShowHidePropertyHelpHandler.getInstance().isShowHidePropertyHelpChecked()){
 				chunkSize.setToolTipText(Messages.CHUNK_SIZE);
 				chunkSize.setCursor(new Cursor(chunkSize.getDisplay(), SWT.CURSOR_HELP));
 				
