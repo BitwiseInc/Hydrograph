@@ -458,12 +458,4 @@ public class InputAdditionalParametersDialog extends Dialog {
 		super.okPressed();
 	}
 	
-	private String[] convertToArray(List<String> items) {
-		String[] stringItemsList = new String[items.size()];
-		int index = 0;
-		for (String item : items) {
-			stringItemsList[index++] = item;
-		}
-		return stringItemsList;
-		}
-	}
+}
