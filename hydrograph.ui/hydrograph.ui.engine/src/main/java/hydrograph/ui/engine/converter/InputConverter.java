@@ -14,6 +14,12 @@
  
 package hydrograph.ui.engine.converter;
 
+import java.io.File;
+import java.util.List;
+
+import org.eclipse.core.runtime.Path;
+import org.slf4j.Logger;
+
 import hydrograph.engine.jaxb.commontypes.TypeBaseField;
 import hydrograph.engine.jaxb.commontypes.TypeBaseRecord;
 import hydrograph.engine.jaxb.commontypes.TypeExternalSchema;
@@ -28,11 +34,7 @@ import hydrograph.ui.engine.constants.PropertyNameConstants;
 import hydrograph.ui.engine.exceptions.SchemaException;
 import hydrograph.ui.graph.model.Component;
 import hydrograph.ui.logging.factory.LogFactory;
-
-import java.util.List;
-
-import org.eclipse.core.runtime.Path;
-import org.slf4j.Logger;
+import hydrograph.ui.propertywindow.utils.Utils;
 /**
  * 
  * Converter for input type component.
@@ -66,26 +68,30 @@ public abstract class InputConverter extends Converter {
 	 * @return {@link TypeBaseRecord}
 	 * @throws SchemaException
 	 */
-	protected TypeBaseRecord getSchema(){
-		LOGGER.debug("Genrating TypeBaseRecord data for {}", properties.get(Constants.PARAM_NAME));
-		TypeBaseRecord typeBaseRecord = new TypeBaseRecord();
-		Schema schema=  (Schema) properties.get(PropertyNameConstants.SCHEMA.value());
-		if(schema!=null){
-		if(schema.getIsExternal()){
-			TypeExternalSchema typeExternalSchema=new TypeExternalSchema();
-			if(PathUtility.INSTANCE.isAbsolute(schema.getExternalSchemaPath()) 
-					|| ParameterUtil.startsWithParameter(schema.getExternalSchemaPath(), Path.SEPARATOR))
-				typeExternalSchema.setUri(schema.getExternalSchemaPath());
-			else
-				typeExternalSchema.setUri("../"+schema.getExternalSchemaPath());
-			typeBaseRecord.setName("External");
-			typeBaseRecord.getFieldOrRecordOrIncludeExternalSchema().add(typeExternalSchema);
-		}else{
-			typeBaseRecord.setName("Internal");
-			typeBaseRecord.getFieldOrRecordOrIncludeExternalSchema().addAll(getFieldOrRecord(schema.getGridRow()));	
-		}}else
-			typeBaseRecord.setName("Internal");
-		return typeBaseRecord;
+	protected TypeBaseRecord getSchema(){LOGGER.debug("Genrating TypeBaseRecord data for {}", properties.get(Constants.PARAM_NAME));
+	TypeBaseRecord typeBaseRecord = new TypeBaseRecord();
+	Schema schema=  (Schema) properties.get(PropertyNameConstants.SCHEMA.value());
+	if(schema!=null){
+	if(schema.getIsExternal()){
+		boolean isFile = new File(Utils.INSTANCE.getParamValue(schema.getExternalSchemaPath())).isFile();
+		TypeExternalSchema typeExternalSchema=new TypeExternalSchema();
+		if(PathUtility.INSTANCE.isAbsolute(schema.getExternalSchemaPath()))
+			typeExternalSchema.setUri(schema.getExternalSchemaPath());
+		else if(ParameterUtil.startsWithParameter(schema.getExternalSchemaPath(), Path.SEPARATOR) 
+				&& isFile){
+			typeExternalSchema.setUri(schema.getExternalSchemaPath());
+		}
+			
+		else
+			typeExternalSchema.setUri("../"+schema.getExternalSchemaPath());
+		typeBaseRecord.setName("External");
+		typeBaseRecord.getFieldOrRecordOrIncludeExternalSchema().add(typeExternalSchema);
+	}else{
+		typeBaseRecord.setName("Internal");
+		typeBaseRecord.getFieldOrRecordOrIncludeExternalSchema().addAll(getFieldOrRecord(schema.getGridRow()));	
+	}}else
+		typeBaseRecord.setName("Internal");
+	return typeBaseRecord;
 	}
 
 	/**

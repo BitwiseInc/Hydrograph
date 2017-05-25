@@ -220,9 +220,9 @@ public class Utils {
 					field = StringUtils.substringBetween(field, "@{", "}");
 					for (Map.Entry<String, String> entry : paramsMap.entrySet()){
 						if(StringUtils.equals(entry.getKey(), field)){
-							if(entry.getValue().endsWith("/")){
+							/*if(entry.getValue().endsWith("/")){
 								param = param == null ? entry.getValue() : param.concat(entry.getValue() + "/");
-							}
+							}*/
 							param = param == null ? entry.getValue() : param.concat(entry.getValue() + "/");
 						}
 					}
