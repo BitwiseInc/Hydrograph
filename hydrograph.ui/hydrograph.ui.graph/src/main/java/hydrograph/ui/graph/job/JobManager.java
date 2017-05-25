@@ -889,11 +889,8 @@ public class JobManager {
 	 */
 	public void killLocalJobProcess(Job job){
 		if(!job.isRemoteMode()){
-			try{
-				Process	process = Runtime.getRuntime().exec("jps -m");
-				
-				InputStream stream = process.getInputStream();
-				BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+			try(InputStream	stream = Runtime.getRuntime().exec("jps -m").getInputStream();
+					BufferedReader reader = new BufferedReader(new InputStreamReader(stream))){
 				String line = null;
 				while ((line = reader.readLine()) != null) {
 					if(line.contains(job.getUniqueJobId())){
