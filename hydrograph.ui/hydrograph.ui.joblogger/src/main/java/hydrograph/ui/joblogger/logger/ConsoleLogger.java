@@ -177,7 +177,7 @@ public class ConsoleLogger extends AbstractJobLogger{
 	 */
 	private IConsoleManager getConsoleManager() {
 		ConsolePlugin plugin = ConsolePlugin.getDefault();
-		logger.debug("Retived Console plugin object");
+		logger.debug("Retrived Console plugin object");
 		IConsoleManager conMan = plugin.getConsoleManager();
 		logger.debug("Retrived Console manager");
 		return conMan;

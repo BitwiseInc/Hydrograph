@@ -899,13 +899,12 @@ public class JobManager {
 					if(line.contains(job.getUniqueJobId())){
 						logger.debug("Trying to kill the running job on tool close for local");
 						String[] jpsOutput = line.split(" ");
-						Process killProcess = null;
 						if (OSValidator.isWindows()) {
-							killProcess = Runtime.getRuntime().exec("TASKKILL /F /PID "+ jpsOutput[0]);
+							Runtime.getRuntime().exec("TASKKILL /F /PID "+ jpsOutput[0]);
 						}else if (OSValidator.isMac()){
-							killProcess = Runtime.getRuntime().exec("bash -c kill -9 "+jpsOutput[0]);
+							Runtime.getRuntime().exec("bash -c kill -9 "+jpsOutput[0]);
 						}
-						break;
+						return;
 					}
 				}
 			}catch(IOException e){

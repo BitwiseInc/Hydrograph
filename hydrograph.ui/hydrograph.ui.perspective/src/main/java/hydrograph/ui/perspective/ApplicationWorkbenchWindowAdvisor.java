@@ -151,18 +151,19 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 				int returCode = messageDialog();
 				if (returCode == SWT.YES) {
 					JobManager.INSTANCE.killALLRemoteProcess();
-				}else 
+					return true;
+				}else {
 					return false;
-				break;
+				}
 			}else {
 				int returCode = messageDialog();
 				if (returCode == SWT.YES) {
 					if(entry.getValue() != null){
 						JobManager.INSTANCE.killLocalJobProcess(entry.getValue());
+						return true;
 					}
-				}else 
-					return false;
-				break;
+				}
+				return false;
 			}
 		}
 		return true;
