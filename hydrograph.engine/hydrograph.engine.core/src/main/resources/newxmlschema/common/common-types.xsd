@@ -319,9 +319,6 @@
 			<xs:enumeration value="UTF-8" />
 			<xs:enumeration value="US-ASCII" />
 			<xs:enumeration value="ISO-8859-1" />
-			<xs:enumeration value="UTF-16BE" />
-			<xs:enumeration value="UTF-16LE" />
-			<xs:enumeration value="UTF-16" />
 		</xs:restriction>
 	</xs:simpleType>
 

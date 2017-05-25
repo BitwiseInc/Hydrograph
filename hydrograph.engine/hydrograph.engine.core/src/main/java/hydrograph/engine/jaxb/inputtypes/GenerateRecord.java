@@ -57,17 +57,17 @@ public class GenerateRecord
 {
 
     @XmlElement(required = true)
-    protected RecordCount recordCount;
+    protected GenerateRecord.RecordCount recordCount;
 
     /**
      * Gets the value of the recordCount property.
      * 
      * @return
      *     possible object is
-     *     {@link RecordCount }
+     *     {@link GenerateRecord.RecordCount }
      *     
      */
-    public RecordCount getRecordCount() {
+    public GenerateRecord.RecordCount getRecordCount() {
         return recordCount;
     }
 
@@ -76,10 +76,10 @@ public class GenerateRecord
      * 
      * @param value
      *     allowed object is
-     *     {@link RecordCount }
+     *     {@link GenerateRecord.RecordCount }
      *     
      */
-    public void setRecordCount(RecordCount value) {
+    public void setRecordCount(GenerateRecord.RecordCount value) {
         this.recordCount = value;
     }
 

@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
+
 package hydrograph.engine.jaxb.inputtypes;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -60,7 +61,7 @@ public class Subjob
 {
 
     @XmlElement(required = true)
-    protected Path path;
+    protected Subjob.Path path;
     protected TypeProperties subjobParameter;
 
     /**
@@ -68,10 +69,10 @@ public class Subjob
      * 
      * @return
      *     possible object is
-     *     {@link Path }
+     *     {@link Subjob.Path }
      *     
      */
-    public Path getPath() {
+    public Subjob.Path getPath() {
         return path;
     }
 
@@ -80,10 +81,10 @@ public class Subjob
      * 
      * @param value
      *     allowed object is
-     *     {@link Path }
+     *     {@link Subjob.Path }
      *     
      */
-    public void setPath(Path value) {
+    public void setPath(Subjob.Path value) {
         this.path = value;
     }
 
@@ -161,5 +162,4 @@ public class Subjob
         }
 
     }
-
 }

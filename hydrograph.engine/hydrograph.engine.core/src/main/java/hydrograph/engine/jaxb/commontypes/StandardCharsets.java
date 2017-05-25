@@ -30,9 +30,6 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="UTF-8"/>
  *     &lt;enumeration value="US-ASCII"/>
  *     &lt;enumeration value="ISO-8859-1"/>
- *     &lt;enumeration value="UTF-16BE"/>
- *     &lt;enumeration value="UTF-16LE"/>
- *     &lt;enumeration value="UTF-16"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
@@ -47,13 +44,7 @@ public enum StandardCharsets {
     @XmlEnumValue("US-ASCII")
     US_ASCII("US-ASCII"),
     @XmlEnumValue("ISO-8859-1")
-    ISO_8859_1("ISO-8859-1"),
-    @XmlEnumValue("UTF-16BE")
-    UTF_16_BE("UTF-16BE"),
-    @XmlEnumValue("UTF-16LE")
-    UTF_16_LE("UTF-16LE"),
-    @XmlEnumValue("UTF-16")
-    UTF_16("UTF-16");
+    ISO_8859_1("ISO-8859-1");
     private final String value;
 
     StandardCharsets(String v) {

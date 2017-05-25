@@ -57,17 +57,17 @@ public class ParquetFile
 {
 
     @XmlElement(required = true)
-    protected Path path;
+    protected ParquetFile.Path path;
 
     /**
      * Gets the value of the path property.
      * 
      * @return
      *     possible object is
-     *     {@link Path }
+     *     {@link ParquetFile.Path }
      *     
      */
-    public Path getPath() {
+    public ParquetFile.Path getPath() {
         return path;
     }
 
@@ -76,10 +76,10 @@ public class ParquetFile
      * 
      * @param value
      *     allowed object is
-     *     {@link Path }
+     *     {@link ParquetFile.Path }
      *     
      */
-    public void setPath(Path value) {
+    public void setPath(ParquetFile.Path value) {
         this.path = value;
     }
 

@@ -83,21 +83,21 @@ public class TextFileMixedScheme
 {
 
     @XmlElement(required = true)
-    protected Path path;
+    protected TextFileMixedScheme.Path path;
     protected BooleanValueType safe;
     protected BooleanValueType strict;
-    protected Charset charset;
-    protected Quote quote;
+    protected TextFileMixedScheme.Charset charset;
+    protected TextFileMixedScheme.Quote quote;
 
     /**
      * Gets the value of the path property.
      * 
      * @return
      *     possible object is
-     *     {@link Path }
+     *     {@link TextFileMixedScheme.Path }
      *     
      */
-    public Path getPath() {
+    public TextFileMixedScheme.Path getPath() {
         return path;
     }
 
@@ -106,10 +106,10 @@ public class TextFileMixedScheme
      * 
      * @param value
      *     allowed object is
-     *     {@link Path }
+     *     {@link TextFileMixedScheme.Path }
      *     
      */
-    public void setPath(Path value) {
+    public void setPath(TextFileMixedScheme.Path value) {
         this.path = value;
     }
 
@@ -166,10 +166,10 @@ public class TextFileMixedScheme
      * 
      * @return
      *     possible object is
-     *     {@link Charset }
+     *     {@link TextFileMixedScheme.Charset }
      *     
      */
-    public Charset getCharset() {
+    public TextFileMixedScheme.Charset getCharset() {
         return charset;
     }
 
@@ -178,10 +178,10 @@ public class TextFileMixedScheme
      * 
      * @param value
      *     allowed object is
-     *     {@link Charset }
+     *     {@link TextFileMixedScheme.Charset }
      *     
      */
-    public void setCharset(Charset value) {
+    public void setCharset(TextFileMixedScheme.Charset value) {
         this.charset = value;
     }
 
@@ -190,10 +190,10 @@ public class TextFileMixedScheme
      * 
      * @return
      *     possible object is
-     *     {@link Quote }
+     *     {@link TextFileMixedScheme.Quote }
      *     
      */
-    public Quote getQuote() {
+    public TextFileMixedScheme.Quote getQuote() {
         return quote;
     }
 
@@ -202,10 +202,10 @@ public class TextFileMixedScheme
      * 
      * @param value
      *     allowed object is
-     *     {@link Quote }
+     *     {@link TextFileMixedScheme.Quote }
      *     
      */
-    public void setQuote(Quote value) {
+    public void setQuote(TextFileMixedScheme.Quote value) {
         this.quote = value;
     }
 

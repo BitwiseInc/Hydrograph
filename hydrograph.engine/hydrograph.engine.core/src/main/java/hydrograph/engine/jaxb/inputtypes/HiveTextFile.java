@@ -13,6 +13,7 @@
  ******************************************************************************/
 package hydrograph.engine.jaxb.inputtypes;
 
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -87,13 +88,13 @@ public class HiveTextFile
 
     protected HivePartitionFieldsType partitionKeys;
     protected HivePartitionFilterType partitionFilter;
-    protected Delimiter delimiter;
+    protected HiveTextFile.Delimiter delimiter;
     @XmlElement(required = true)
     protected HiveType databaseName;
     @XmlElement(required = true)
     protected HiveType tableName;
     protected HivePathType externalTablePath;
-    protected Quote quote;
+    protected HiveTextFile.Quote quote;
     protected BooleanValueType safe;
     protected BooleanValueType strict;
 
@@ -150,10 +151,10 @@ public class HiveTextFile
      * 
      * @return
      *     possible object is
-     *     {@link Delimiter }
+     *     {@link HiveTextFile.Delimiter }
      *     
      */
-    public Delimiter getDelimiter() {
+    public HiveTextFile.Delimiter getDelimiter() {
         return delimiter;
     }
 
@@ -162,10 +163,10 @@ public class HiveTextFile
      * 
      * @param value
      *     allowed object is
-     *     {@link Delimiter }
+     *     {@link HiveTextFile.Delimiter }
      *     
      */
-    public void setDelimiter(Delimiter value) {
+    public void setDelimiter(HiveTextFile.Delimiter value) {
         this.delimiter = value;
     }
 
@@ -246,10 +247,10 @@ public class HiveTextFile
      * 
      * @return
      *     possible object is
-     *     {@link Quote }
+     *     {@link HiveTextFile.Quote }
      *     
      */
-    public Quote getQuote() {
+    public HiveTextFile.Quote getQuote() {
         return quote;
     }
 
@@ -258,10 +259,10 @@ public class HiveTextFile
      * 
      * @param value
      *     allowed object is
-     *     {@link Quote }
+     *     {@link HiveTextFile.Quote }
      *     
      */
-    public void setQuote(Quote value) {
+    public void setQuote(HiveTextFile.Quote value) {
         this.quote = value;
     }
 
