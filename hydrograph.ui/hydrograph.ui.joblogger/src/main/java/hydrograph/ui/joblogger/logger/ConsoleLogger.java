@@ -65,7 +65,7 @@ public class ConsoleLogger extends AbstractJobLogger{
 	 */
 	private void initConsoleStream() {
 		MessageConsole messageConsole = getMessageConsole();
-		
+		messageConsole.clearConsole();
 		messageConsoleStream=messageConsole.newMessageStream();
 		logger.debug("Created message console stream");
 		messageConsoleStream.getConsole().addPropertyChangeListener(new IPropertyChangeListener() {
@@ -165,7 +165,7 @@ public class ConsoleLogger extends AbstractJobLogger{
 	 */
 	private IConsole[] getExistingConsoles(IConsoleManager conMan) {
 		IConsole[] existing = conMan.getConsoles();
-		logger.debug("Retrived existing consoles. Number of console - {}" , existing.length);
+		logger.debug("Retrieved existing consoles. Number of console - {}" , existing.length);
 		return existing;
 	}
 
@@ -177,9 +177,9 @@ public class ConsoleLogger extends AbstractJobLogger{
 	 */
 	private IConsoleManager getConsoleManager() {
 		ConsolePlugin plugin = ConsolePlugin.getDefault();
-		logger.debug("Retived Console plugin object");
+		logger.debug("Retrieved Console plugin object");
 		IConsoleManager conMan = plugin.getConsoleManager();
-		logger.debug("Retrived Console manager");
+		logger.debug("Retrieved Console manager");
 		return conMan;
 	}
 

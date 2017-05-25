@@ -148,19 +148,33 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 	public boolean preWindowShellClose() {
 		for (Entry<String, Job> entry : JobManager.INSTANCE.getRunningJobsMap().entrySet()) {
 			if (entry.getValue().isRemoteMode()) {
-				MessageBox box = new MessageBox(Display.getCurrent().getActiveShell(), SWT.ICON_QUESTION | SWT.YES
-						| SWT.CANCEL | SWT.NO);
-				box.setMessage(Messages.TOOL_EXT_MESSAGE);
-				box.setText(Messages.TOOL_EXIT_MESSAGE_BOX_TITLE);
-				int returCode = box.open();
+				int returCode = messageDialog();
 				if (returCode == SWT.YES) {
 					JobManager.INSTANCE.killALLRemoteProcess();
-				}else 
+					return true;
+				}else {
 					return false;
-				break;
+				}
+			}else {
+				int returCode = messageDialog();
+				if (returCode == SWT.YES) {
+					if(entry.getValue() != null){
+						JobManager.INSTANCE.killLocalJobProcess(entry.getValue());
+						return true;
+					}
+				}
+				return false;
 			}
 		}
 		return true;
+	}
+	
+	private int messageDialog() {
+		MessageBox box = new MessageBox(Display.getCurrent().getActiveShell(), SWT.ICON_QUESTION | SWT.YES
+				| SWT.CANCEL | SWT.NO);
+		box.setMessage(Messages.TOOL_EXT_MESSAGE);
+		box.setText(Messages.TOOL_EXIT_MESSAGE_BOX_TITLE);
+		return box.open();
 	}
 
 	@Override

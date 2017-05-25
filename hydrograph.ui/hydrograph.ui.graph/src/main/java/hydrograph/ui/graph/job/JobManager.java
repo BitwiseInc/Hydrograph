@@ -883,4 +883,30 @@ public class JobManager {
 		}
 	}
 
+	/**
+	 * Kill the local job on tool close for given jobId.
+	 * @param jobId
+	 */
+	public void killLocalJobProcess(Job job){
+		if(!job.isRemoteMode()){
+			try(InputStream	stream = Runtime.getRuntime().exec("jps -m").getInputStream();
+					BufferedReader reader = new BufferedReader(new InputStreamReader(stream))){
+				String line = null;
+				while ((line = reader.readLine()) != null) {
+					if(line.contains(job.getUniqueJobId())){
+						logger.debug("Trying to kill the running job on tool close for local");
+						String[] jpsOutput = line.split(" ");
+						if (OSValidator.isWindows()) {
+							Runtime.getRuntime().exec("TASKKILL /F /PID "+ jpsOutput[0]);
+						}else if (OSValidator.isMac()){
+							Runtime.getRuntime().exec("bash -c kill -9 "+jpsOutput[0]);
+						}
+						return;
+					}
+				}
+			}catch(IOException e){
+				logger.info("Fail to run kill process.");
+			}
+		}
+	}
 }
