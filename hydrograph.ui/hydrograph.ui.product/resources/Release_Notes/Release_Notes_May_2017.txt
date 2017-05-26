@@ -18,3 +18,4 @@ Sr.No.  <GitHub Issue #>  - [fixed by]   - description
 8. <> - [Vibhor Tyagi] - Confirmation message should be displayed when user close tool
 9. <> - [Kalyan Rajpoot] - Schema propagation issue in Union All Component. 
 10.<> - [Kalyan Rajpoot] - Accepting blank/null value for all datatypes other than String while evaluating the expression in Transform component.
+11. <> - [Vibhor Tyagi] - Job delete Issue
