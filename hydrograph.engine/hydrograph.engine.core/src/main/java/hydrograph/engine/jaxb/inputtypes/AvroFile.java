@@ -18,7 +18,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-
 import hydrograph.engine.jaxb.commontypes.BooleanValueType;
 import hydrograph.engine.jaxb.itfd.TypeInputFileDelimitedBase;
 
@@ -42,6 +41,8 @@ import hydrograph.engine.jaxb.itfd.TypeInputFileDelimitedBase;
  *             &lt;/complexContent>
  *           &lt;/complexType>
  *         &lt;/element>
+ *         &lt;element name="safe" type="{hydrograph/engine/jaxb/commontypes}boolean-value-type" minOccurs="0"/>
+ *         &lt;element name="strict" type="{hydrograph/engine/jaxb/commontypes}boolean-value-type" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -54,27 +55,26 @@ import hydrograph.engine.jaxb.itfd.TypeInputFileDelimitedBase;
 @XmlType(name = "avroFile", namespace = "hydrograph/engine/jaxb/inputtypes", propOrder = {
     "path",
     "safe",
-	"strict"
+    "strict"
 })
 public class AvroFile
     extends TypeInputFileDelimitedBase
 {
 
     @XmlElement(required = true)
-    protected Path path;
+    protected AvroFile.Path path;
     protected BooleanValueType safe;
     protected BooleanValueType strict;
-    
 
     /**
      * Gets the value of the path property.
      * 
      * @return
      *     possible object is
-     *     {@link Path }
+     *     {@link AvroFile.Path }
      *     
      */
-    public Path getPath() {
+    public AvroFile.Path getPath() {
         return path;
     }
 
@@ -83,10 +83,10 @@ public class AvroFile
      * 
      * @param value
      *     allowed object is
-     *     {@link Path }
+     *     {@link AvroFile.Path }
      *     
      */
-    public void setPath(Path value) {
+    public void setPath(AvroFile.Path value) {
         this.path = value;
     }
 
@@ -137,6 +137,7 @@ public class AvroFile
     public void setStrict(BooleanValueType value) {
         this.strict = value;
     }
+
 
     /**
      * <p>Java class for anonymous complex type.
@@ -189,3 +190,4 @@ public class AvroFile
     }
 
 }
+

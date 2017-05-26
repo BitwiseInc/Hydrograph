@@ -95,24 +95,24 @@ public class TextFileDelimited
 {
 
     @XmlElement(required = true)
-    protected Path path;
+    protected TextFileDelimited.Path path;
     @XmlElement(required = true)
-    protected Delimiter delimiter;
+    protected TextFileDelimited.Delimiter delimiter;
     protected BooleanValueType hasHeader;
     protected BooleanValueType safe;
     protected BooleanValueType strict;
-    protected Charset charset;
-    protected Quote quote;
+    protected TextFileDelimited.Charset charset;
+    protected TextFileDelimited.Quote quote;
 
     /**
      * Gets the value of the path property.
      * 
      * @return
      *     possible object is
-     *     {@link Path }
+     *     {@link TextFileDelimited.Path }
      *     
      */
-    public Path getPath() {
+    public TextFileDelimited.Path getPath() {
         return path;
     }
 
@@ -121,10 +121,10 @@ public class TextFileDelimited
      * 
      * @param value
      *     allowed object is
-     *     {@link Path }
+     *     {@link TextFileDelimited.Path }
      *     
      */
-    public void setPath(Path value) {
+    public void setPath(TextFileDelimited.Path value) {
         this.path = value;
     }
 
@@ -133,10 +133,10 @@ public class TextFileDelimited
      * 
      * @return
      *     possible object is
-     *     {@link Delimiter }
+     *     {@link TextFileDelimited.Delimiter }
      *     
      */
-    public Delimiter getDelimiter() {
+    public TextFileDelimited.Delimiter getDelimiter() {
         return delimiter;
     }
 
@@ -145,10 +145,10 @@ public class TextFileDelimited
      * 
      * @param value
      *     allowed object is
-     *     {@link Delimiter }
+     *     {@link TextFileDelimited.Delimiter }
      *     
      */
-    public void setDelimiter(Delimiter value) {
+    public void setDelimiter(TextFileDelimited.Delimiter value) {
         this.delimiter = value;
     }
 
@@ -229,10 +229,10 @@ public class TextFileDelimited
      * 
      * @return
      *     possible object is
-     *     {@link Charset }
+     *     {@link TextFileDelimited.Charset }
      *     
      */
-    public Charset getCharset() {
+    public TextFileDelimited.Charset getCharset() {
         return charset;
     }
 
@@ -241,10 +241,10 @@ public class TextFileDelimited
      * 
      * @param value
      *     allowed object is
-     *     {@link Charset }
+     *     {@link TextFileDelimited.Charset }
      *     
      */
-    public void setCharset(Charset value) {
+    public void setCharset(TextFileDelimited.Charset value) {
         this.charset = value;
     }
 
@@ -253,10 +253,10 @@ public class TextFileDelimited
      * 
      * @return
      *     possible object is
-     *     {@link Quote }
+     *     {@link TextFileDelimited.Quote }
      *     
      */
-    public Quote getQuote() {
+    public TextFileDelimited.Quote getQuote() {
         return quote;
     }
 
@@ -265,10 +265,10 @@ public class TextFileDelimited
      * 
      * @param value
      *     allowed object is
-     *     {@link Quote }
+     *     {@link TextFileDelimited.Quote }
      *     
      */
-    public void setQuote(Quote value) {
+    public void setQuote(TextFileDelimited.Quote value) {
         this.quote = value;
     }
 

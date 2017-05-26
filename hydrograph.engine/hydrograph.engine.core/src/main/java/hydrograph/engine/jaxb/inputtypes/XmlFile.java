@@ -22,7 +22,6 @@ import hydrograph.engine.jaxb.commontypes.BooleanValueType;
 import hydrograph.engine.jaxb.commontypes.StandardCharsets;
 import hydrograph.engine.jaxb.ifxml.TypeInputFileXmlBase;
 
-
 /**
  * <p>Java class for xmlFile complex type.
  * 
@@ -103,26 +102,26 @@ public class XmlFile
 {
 
     @XmlElement(required = true)
-    protected Path path;
+    protected XmlFile.Path path;
     @XmlElement(required = true)
-    protected AbsoluteXPath absoluteXPath;
+    protected XmlFile.AbsoluteXPath absoluteXPath;
     @XmlElement(required = true)
-    protected RootTag rootTag;
+    protected XmlFile.RootTag rootTag;
     @XmlElement(required = true)
-    protected RowTag rowTag;
+    protected XmlFile.RowTag rowTag;
     protected BooleanValueType safe;
     protected BooleanValueType strict;
-    protected Charset charset;
+    protected XmlFile.Charset charset;
 
     /**
      * Gets the value of the path property.
      * 
      * @return
      *     possible object is
-     *     {@link Path }
+     *     {@link XmlFile.Path }
      *     
      */
-    public Path getPath() {
+    public XmlFile.Path getPath() {
         return path;
     }
 
@@ -131,10 +130,10 @@ public class XmlFile
      * 
      * @param value
      *     allowed object is
-     *     {@link Path }
+     *     {@link XmlFile.Path }
      *     
      */
-    public void setPath(Path value) {
+    public void setPath(XmlFile.Path value) {
         this.path = value;
     }
 
@@ -143,10 +142,10 @@ public class XmlFile
      * 
      * @return
      *     possible object is
-     *     {@link AbsoluteXPath }
+     *     {@link XmlFile.AbsoluteXPath }
      *     
      */
-    public AbsoluteXPath getAbsoluteXPath() {
+    public XmlFile.AbsoluteXPath getAbsoluteXPath() {
         return absoluteXPath;
     }
 
@@ -155,10 +154,10 @@ public class XmlFile
      * 
      * @param value
      *     allowed object is
-     *     {@link AbsoluteXPath }
+     *     {@link XmlFile.AbsoluteXPath }
      *     
      */
-    public void setAbsoluteXPath(AbsoluteXPath value) {
+    public void setAbsoluteXPath(XmlFile.AbsoluteXPath value) {
         this.absoluteXPath = value;
     }
 
@@ -167,10 +166,10 @@ public class XmlFile
      * 
      * @return
      *     possible object is
-     *     {@link RootTag }
+     *     {@link XmlFile.RootTag }
      *     
      */
-    public RootTag getRootTag() {
+    public XmlFile.RootTag getRootTag() {
         return rootTag;
     }
 
@@ -179,10 +178,10 @@ public class XmlFile
      * 
      * @param value
      *     allowed object is
-     *     {@link RootTag }
+     *     {@link XmlFile.RootTag }
      *     
      */
-    public void setRootTag(RootTag value) {
+    public void setRootTag(XmlFile.RootTag value) {
         this.rootTag = value;
     }
 
@@ -191,10 +190,10 @@ public class XmlFile
      * 
      * @return
      *     possible object is
-     *     {@link RowTag }
+     *     {@link XmlFile.RowTag }
      *     
      */
-    public RowTag getRowTag() {
+    public XmlFile.RowTag getRowTag() {
         return rowTag;
     }
 
@@ -203,10 +202,10 @@ public class XmlFile
      * 
      * @param value
      *     allowed object is
-     *     {@link RowTag }
+     *     {@link XmlFile.RowTag }
      *     
      */
-    public void setRowTag(RowTag value) {
+    public void setRowTag(XmlFile.RowTag value) {
         this.rowTag = value;
     }
 
@@ -263,10 +262,10 @@ public class XmlFile
      * 
      * @return
      *     possible object is
-     *     {@link Charset }
+     *     {@link XmlFile.Charset }
      *     
      */
-    public Charset getCharset() {
+    public XmlFile.Charset getCharset() {
         return charset;
     }
 
@@ -275,10 +274,10 @@ public class XmlFile
      * 
      * @param value
      *     allowed object is
-     *     {@link Charset }
+     *     {@link XmlFile.Charset }
      *     
      */
-    public void setCharset(Charset value) {
+    public void setCharset(XmlFile.Charset value) {
         this.charset = value;
     }
 
