@@ -11,18 +11,21 @@
  * limitations under the License.
  *******************************************************************************/
 package hydrograph.engine.spark.components
+
 import java.util
+
+import scala.collection.JavaConversions.asScalaBuffer
+
+import org.apache.spark.sql.Column
+import org.apache.spark.sql.SaveMode
+import org.apache.spark.sql.functions.col
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 import hydrograph.engine.core.component.entity.OutputFileAvroEntity
 import hydrograph.engine.core.component.entity.elements.SchemaField
 import hydrograph.engine.spark.components.base.SparkFlow
 import hydrograph.engine.spark.components.platform.BaseComponentParams
-import hydrograph.engine.spark.datasource.avro.CustomSparkToAvro
-import org.apache.spark.sql.functions._
-import org.apache.spark.sql.{Column, SaveMode}
-import org.slf4j.{Logger, LoggerFactory}
-
-import scala.collection.JavaConversions._
 
 /**
   * The Class OutputFileAvroComponent.
@@ -34,12 +37,10 @@ class OutputFileAvroComponent(outputFileAvroEntity: OutputFileAvroEntity, baseCo
   private val LOG: Logger = LoggerFactory.getLogger(classOf[OutputFileAvroComponent])
   
    private def createSchema(fields: util.List[SchemaField]): Array[Column] = {
-    CustomSparkToAvro.setInputFieldsNumber(fields.size())
     val schema = new Array[Column](fields.size())
     fields.zipWithIndex.foreach {
       case (f, i) =>
         schema(i) = col(f.getFieldName)
-          setPrecisonScale(f)
         }
     LOG.debug("Schema created for Output File Avro Component : " + schema.mkString)
     schema
@@ -52,17 +53,17 @@ class OutputFileAvroComponent(outputFileAvroEntity: OutputFileAvroEntity, baseCo
       df.select(createSchema(outputFileAvroEntity.getFieldsList): _*).write
       .mode( if (outputFileAvroEntity.isOverWrite) SaveMode.Overwrite else SaveMode.ErrorIfExists)
       .format("hydrograph.engine.spark.datasource.avro").save(filePathToWrite)
-      LOG.debug("Created Output File Avro Component '" + outputFileAvroEntity.getComponentId + "' in Batch" + outputFileAvroEntity.getBatch
-        + ", file path " + outputFileAvroEntity.getPath)
+      LOG.info("Created Output File Avro Component "+ outputFileAvroEntity.getComponentId
+      + " in Batch "+ outputFileAvroEntity.getBatch +" with path " + outputFileAvroEntity.getPath)
+      LOG.debug("Component Id: '"+ outputFileAvroEntity.getComponentId
+      +"' in Batch: " + outputFileAvroEntity.getBatch
+      + " at Path: " + outputFileAvroEntity.getPath)
     } catch {
-      case e: Exception =>
-        LOG.error("Error in Output File Avro Component " + outputFileAvroEntity.getComponentId, e)
-        throw new RuntimeException("Error in Output File Avro Component "
-          + outputFileAvroEntity.getComponentId, e)
+      case e:Exception =>
+       LOG.error("\nException in Output File Avro Component with - \nComponent Id : ["+outputFileAvroEntity.getComponentId+"]\nComponent Name : ["+
+           outputFileAvroEntity.getComponentName+"]\nBatch : ["+ outputFileAvroEntity.getBatch+"]\nPath : ["+ outputFileAvroEntity.getPath)
+       throw new RuntimeException("\nException in Output File Avro Component with - \nComponent Id : ["+outputFileAvroEntity.getComponentId+"]\nComponent Name : ["+
+           outputFileAvroEntity.getComponentName+"]\nBatch : ["+ outputFileAvroEntity.getBatch+"]\nPath : ["+ outputFileAvroEntity.getPath)
     }
-  }
-  private def setPrecisonScale(field: SchemaField) = {
-    CustomSparkToAvro.setPrecison(field.getFieldPrecision)
-    CustomSparkToAvro.setScale(field.getFieldScale)
   }
 }

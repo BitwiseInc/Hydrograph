@@ -19,6 +19,8 @@ import hydrograph.engine.spark.components.utils.SchemaCreator
 import org.apache.spark.sql._
 import org.slf4j.{ Logger, LoggerFactory }
 import hydrograph.engine.spark.datasource.avro.CustomAvroToSpark
+import hydrograph.engine.spark.components.utils.SchemaCreator
+import org.apache.spark.sql.AnalysisException
 
 /**
  * The Class InputFileAvroComponent.
@@ -36,9 +38,11 @@ class InputFileAvroComponent(inputFileAvroEntity: InputFileAvroEntity, baseCompo
     try {
       val schemaField = SchemaCreator(inputFileAvroEntity).makeSchema()
       val sparkSession = baseComponentParams.getSparkSession()
+      val schemaCreator = SchemaCreator(inputFileAvroEntity)
       val df = sparkSession.read
         .option("safe", inputFileAvroEntity.isSafe)
         .option("strict", inputFileAvroEntity.isStrict)
+        .option("dateFormats", schemaCreator.getDateFormats)
         .schema(schemaField)
         .format("hydrograph.engine.spark.datasource.avro")
         .load(inputFileAvroEntity.getPath)
@@ -52,13 +56,19 @@ class InputFileAvroComponent(inputFileAvroEntity: InputFileAvroEntity, baseCompo
         + " at Path: " + inputFileAvroEntity.getPath)
       Map(key -> df)
     } catch {
-      case e: Exception =>
-        LOG.error("Error in Input File Avro Component " + inputFileAvroEntity.getComponentId, e)
-        throw new RuntimeException("Error in Input File Avro Component "
-          + inputFileAvroEntity.getComponentId, e)
+      case e: AnalysisException if (e.getMessage().matches("(.*)Path does not exist(.*)"))=> 
+       LOG.error("\nException in Input File Avro Component with - \nComponent Id : ["+inputFileAvroEntity.getComponentId+"]\nComponent Name : ["+
+         inputFileAvroEntity.getComponentName+"]\nBatch : ["+ inputFileAvroEntity.getBatch+"]\nPath : ["+ inputFileAvroEntity.getPath+"]\nError being: input path '"+inputFileAvroEntity.getPath+"' does not exist")
+        throw new PathNotFoundException("\nException in Input File Avro Component with - \nComponent Id : ["+inputFileAvroEntity.getComponentId+"]\nComponent Name : ["+
+           inputFileAvroEntity.getComponentName+"]\nBatch : ["+ inputFileAvroEntity.getBatch+"]\nPath : ["+ inputFileAvroEntity.getPath+"]\nError being: input path '"+inputFileAvroEntity.getPath+"' does not exist")
+      case e:Exception =>
+       LOG.error("\nException in Input File Avro Component with - \nComponent Id : ["+inputFileAvroEntity.getComponentId+"]\nComponent Name : ["+
+           inputFileAvroEntity.getComponentName+"]\nBatch : ["+ inputFileAvroEntity.getBatch+"]\nPath : ["+ inputFileAvroEntity.getPath)
+       throw new RuntimeException("\nException in Input File Avro Component with - \nComponent Id : ["+inputFileAvroEntity.getComponentId+"]\nComponent Name : ["+
+           inputFileAvroEntity.getComponentName+"]\nBatch : ["+ inputFileAvroEntity.getBatch+"]\nPath : ["+ inputFileAvroEntity.getPath)
     }
   }
   CustomAvroToSpark.setSafe(inputFileAvroEntity.isSafe())
   CustomAvroToSpark.setStrict(inputFileAvroEntity.isStrict())
 }
-    
+class PathNotFoundException(msg: String, ex: Throwable = null) extends Exception(msg, ex)

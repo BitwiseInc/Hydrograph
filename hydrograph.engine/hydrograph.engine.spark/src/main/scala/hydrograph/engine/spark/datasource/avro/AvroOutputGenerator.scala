@@ -12,37 +12,45 @@
  *******************************************************************************/
 package hydrograph.engine.spark.datasource.avro
 
-import java.io.{IOException, OutputStream}
+import java.io.IOException
+import java.io.OutputStream
 import java.math.BigDecimal
 import java.nio.ByteBuffer
+import java.sql.Timestamp
 import java.util.Date
+import java.util.HashMap
+
+import scala.collection.immutable.Map
 
 import org.apache.avro.Schema
+import org.apache.avro.SchemaBuilder
 import org.apache.avro.generic.GenericData.Record
 import org.apache.avro.generic.GenericRecord
 import org.apache.avro.mapred.AvroKey
 import org.apache.avro.mapreduce.AvroKeyOutputFormat
 import org.apache.hadoop.fs.Path
 import org.apache.hadoop.io.NullWritable
-import org.apache.hadoop.mapreduce.{RecordWriter, TaskAttemptContext, TaskAttemptID}
+import org.apache.hadoop.mapreduce.RecordWriter
+import org.apache.hadoop.mapreduce.TaskAttemptContext
+import org.apache.hadoop.mapreduce.TaskAttemptID
 import org.apache.spark.sql.Row
 import org.apache.spark.sql.execution.datasources.OutputWriter
 import org.apache.spark.sql.types._
+
 /**
-  * The Class AvroOutputGenerator.
-  *
-  * @author Bitwise
-  *
-  */
-private class AvroOutputGenerator(
+ * The Class AvroOutputGenerator.
+ *
+ * @author Bitwise
+ *
+ */
+class AvroOutputGenerator(
     path: String,
     context: TaskAttemptContext,
     schema: StructType,
     recordName: String,
-    recordNamespace: String) extends OutputWriter {
+    recordNamespace: String) extends OutputWriter  {
 
-  var schemas: Schema = null;
-  private lazy val converter = createConverterToAvro(schemas, schema, recordName, recordNamespace)
+  private lazy val converter = createConverterToAvro(schema, recordName, recordNamespace)
 
   private val recordWriter: RecordWriter[AvroKey[GenericRecord], NullWritable] =
     new AvroKeyOutputFormat[GenericRecord]() {
@@ -69,17 +77,17 @@ private class AvroOutputGenerator(
 
   override def close(): Unit = recordWriter.close(context)
 
-  private def toAvroDecimal(schema: Schema, item: Any): AnyRef = {
-    decimalToBinary(item.asInstanceOf[BigDecimal], schema);
+  private def toAvroDecimal(item: Any): AnyRef = {
+    decimalToBinary(item.asInstanceOf[BigDecimal]);
   }
 
-  private def decimalToBinary(bigDecimal: BigDecimal, schema: Schema): AnyRef = {
+  private def decimalToBinary(bigDecimal: BigDecimal): AnyRef = {
     if(bigDecimal==null){
         throw new IncompatibleSchemaException(
             s"\nBigdecimal field can't be null & must have precision & scale"+
             "\nmake sure the field given in input schema matches with the expected schema field")
     }
-    val prec = bigDecimal.precision()
+    val prec = bigDecimal.precision
     val scale = bigDecimal.scale()
     val decimalBytes = bigDecimal.setScale(scale).unscaledValue().toByteArray()
     val precToBytes = PRECISION_TO_BYTE_COUNT(prec - 1)
@@ -95,36 +103,35 @@ private class AvroOutputGenerator(
     System.arraycopy(decimalBytes, 0, tgt, precToBytes - decimalBytes.length, decimalBytes.length)
     ByteBuffer.wrap(tgt)
   }
-  val PRECISION_TO_BYTE_COUNT: Array[Int] = new Array[Int](38)
-  var prec = 1
-  while (prec <= 38) {
-    PRECISION_TO_BYTE_COUNT(prec - 1) = Math.ceil((Math.log(Math.pow(10, prec) - 1) / Math.log(2) + 1) /
-      8).toInt
-    prec += 1
+   val PRECISION_TO_BYTE_COUNT: Array[Int] = new Array[Int](38)
+   var prec = 1
+   while (prec <= 38) {
+	PRECISION_TO_BYTE_COUNT(prec - 1) = Math.ceil((Math.log(Math.pow(10, prec) - 1) / Math.log(2) + 1) /
+	  8).toInt
+	prec += 1
   }
-
-  private def createConverterToAvro(schema: Schema,
-    dataType: DataType,
-    structName: String,
-    recordNamespace: String): (Any) => Any = {
+  
+  private def createConverterToAvro(
+      dataType: DataType,
+      structName: String,
+      recordNamespace: String): (Any) => Any = {
     dataType match {
       case BinaryType => (item: Any) => item match {
         case null => null
         case bytes: Array[Byte] => ByteBuffer.wrap(bytes)
       }
       case ByteType | IntegerType | LongType |
-        FloatType | DoubleType | StringType | BooleanType => identity
-      case ShortType => (item: Any) => if (item == null) null else
-        item.asInstanceOf[Short]
+           FloatType | DoubleType | StringType | BooleanType => identity
       case _: DecimalType => (item: Any) =>
-        toAvroDecimal(schema, item.asInstanceOf[BigDecimal])
-        case TimestampType => (item: Any) =>
-        if (item == null) null else
-          item.asInstanceOf[Date].getTime
-        case DateType => (item: Any) => if (item == null) null else
+        toAvroDecimal(item.asInstanceOf[BigDecimal])
+      case TimestampType => (item: Any) =>
+        if (item == null) null else item.asInstanceOf[Timestamp].getTime
+      case DateType => (item: Any) => if (item == null) null else
         item.asInstanceOf[Date].getTime()
+      case ShortType => (item: Any) => if (item == null) null else
+          item.asInstanceOf[Short]
       case ArrayType(elementType, _) =>
-        val elementConverter = createConverterToAvro(schema, elementType, structName, recordNamespace)
+        val elementConverter = createConverterToAvro(elementType, structName, recordNamespace)
         (item: Any) => {
           if (item == null) {
             null
@@ -140,12 +147,25 @@ private class AvroOutputGenerator(
             targetArray
           }
         }
-        case structType: StructType =>
-        val precision = CustomSparkToAvro.getPrecison()
-        val scale = CustomSparkToAvro.getScale()
-        var schema: Schema = CustomSparkToAvro.generateAvroSchemaFromFieldsAndTypes(recordNamespace, structType, precision, scale)
+      case MapType(StringType, valueType, _) =>
+        val valueConverter = createConverterToAvro(valueType, structName, recordNamespace)
+        (item: Any) => {
+          if (item == null) {
+            null
+          } else {
+            val javaMap = new HashMap[String, Any]()
+            item.asInstanceOf[Map[String, Any]].foreach { case (key, value) =>
+              javaMap.put(key, valueConverter(value))
+            }
+            javaMap
+          }
+        }
+      case structType: StructType =>
+       val builder = SchemaBuilder.record(structName).namespace(recordNamespace)
+       val schema: Schema = CustomSparkToAvro.convertStructToAvro(
+       structType, builder, recordNamespace)
         val fieldConverters = structType.fields.map(field =>
-          createConverterToAvro(schema, field.dataType, field.name, recordNamespace))
+          createConverterToAvro(field.dataType, field.name, recordNamespace))
         (item: Any) => {
           if (item == null) {
             null
@@ -154,12 +174,12 @@ private class AvroOutputGenerator(
             val convertersIterator = fieldConverters.iterator
             val fieldNamesIterator = dataType.asInstanceOf[StructType].fieldNames.iterator
             val rowIterator = item.asInstanceOf[Row].toSeq.iterator
+
             while (convertersIterator.hasNext) {
               val converter = convertersIterator.next()
               record.put(fieldNamesIterator.next(), converter(rowIterator.next()))
             }
-            record
-          }
+            record          }
         }
     }
   }
