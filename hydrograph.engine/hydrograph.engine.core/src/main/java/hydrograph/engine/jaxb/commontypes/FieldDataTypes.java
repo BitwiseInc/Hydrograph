@@ -37,7 +37,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="java.lang.Boolean"/>
  *     &lt;enumeration value="java.util.Date"/>
  *     &lt;enumeration value="java.math.BigDecimal"/>
- *   &lt;/restriction>
+ *     &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
  * 

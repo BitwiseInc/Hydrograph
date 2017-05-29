@@ -137,7 +137,7 @@ case class SchemaCreator[T <: InputOutputEntityBase](inputOutputEntityBase: T) {
     case x if !x.isInstanceOf[InputFileXMLEntity] => StructType(createStructFields())
   }
 
-  def getTypeNameFromDataType(dataType: String): String = {
+   def getTypeNameFromDataType(dataType: String): String = {
     Class.forName(dataType).getSimpleName
   }
 
