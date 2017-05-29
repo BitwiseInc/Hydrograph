@@ -13,8 +13,8 @@
 package hydrograph.engine.plugin.debug;
 
 import hydrograph.engine.core.component.entity.elements.SchemaField;
-import hydrograph.engine.core.flowmanipulation.FlowManipulationContext;
-import hydrograph.engine.core.flowmanipulation.ManipulatorListener;
+import hydrograph.engine.flowmanipulation.FlowManipulationContext;
+import hydrograph.engine.flowmanipulation.ManipulatorListener;
 import hydrograph.engine.core.utilities.PropertiesHelper;
 import hydrograph.engine.core.utilities.XmlUtilities;
 import hydrograph.engine.core.xmlparser.XmlParsingUtils;

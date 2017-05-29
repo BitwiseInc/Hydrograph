@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License
  *******************************************************************************/
-package hydrograph.engine.core.flowmanipulation;
+package hydrograph.engine.flowmanipulation;
 
 import hydrograph.engine.core.core.HydrographJob;
 import hydrograph.engine.core.props.OrderedProperties;
@@ -86,7 +86,7 @@ public class FlowManipulationHandler {
 		try {
 			Class pluginClass = Class.forName(clazz);
 			Constructor constructor = pluginClass.getDeclaredConstructor();
-			ManipulatorListener inst = (ManipulatorListener) constructor.newInstance();
+			hydrograph.engine.flowmanipulation.ManipulatorListener inst = (ManipulatorListener) constructor.newInstance();
 			return inst.execute(flowManipulationContext);
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
 			throw new RuntimeException(e);

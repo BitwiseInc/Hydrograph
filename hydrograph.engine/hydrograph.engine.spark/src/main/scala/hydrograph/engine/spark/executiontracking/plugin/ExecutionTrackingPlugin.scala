@@ -12,7 +12,7 @@
   *******************************************************************************/
 package hydrograph.engine.spark.executiontracking.plugin
 
-import hydrograph.engine.core.flowmanipulation.{FlowManipulationContext, ManipulatorListener}
+import hydrograph.engine.flowmanipulation.{FlowManipulationContext, ManipulatorListener}
 import hydrograph.engine.core.utilities.SocketUtilities
 import hydrograph.engine.execution.tracking.ComponentInfo
 import hydrograph.engine.jaxb.commontypes._
