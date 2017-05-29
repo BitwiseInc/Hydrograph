@@ -12,27 +12,21 @@
  *******************************************************************************/
 package hydrograph.engine.spark.datasource.avro
 
-import java.math.BigDecimal
-import java.math.BigInteger
 import java.nio.ByteBuffer
-import java.sql.Date
-import java.sql.Timestamp
-import java.util.ArrayList
-
-import scala.annotation.meta.field
-import scala.annotation.meta.field
 import scala.collection.JavaConverters._
-
+import java.util.ArrayList
+import java.math.BigInteger
+import java.math.BigDecimal
+import java.sql.Timestamp
 import org.apache.avro.Schema
-import org.apache.avro.Schema.Field
 import org.apache.avro.Schema.Type._
+import org.apache.avro.SchemaBuilder._
 import org.apache.avro.generic.GenericData
 import org.apache.avro.generic.GenericData.Fixed
 import org.apache.avro.generic.GenericRecord
 import org.apache.spark.sql.catalyst.expressions.GenericRow
 import org.apache.spark.sql.types._
-import com.sun.glass.ui.Size
-import hydrograph.engine.core.component.entity.InputFileAvroEntity
+import java.sql.Date
 
 /**
  * The Object CustomAvroToSpark.
@@ -41,14 +35,14 @@ import hydrograph.engine.core.component.entity.InputFileAvroEntity
  *
  */
 object CustomAvroToSpark {
-
+ 
   class IncompatibleSchemaException(msg: String, ex: Throwable = null) extends Exception(msg, ex)
 
   case class SchemaType(dataType: DataType, nullable: Boolean)
   var listForStrictCheck: ArrayList[String] = null
   var isSafe: Boolean = false
   var isStrict: Boolean = true
-
+  
   def toSqlType(avroSchema: Schema): SchemaType = {
     avroSchema.getType match {
       case INT => SchemaType(IntegerType, nullable = false)
@@ -66,7 +60,20 @@ object CustomAvroToSpark {
           val schemaType = toSqlType(f.schema())
           StructField(f.name, schemaType.dataType, schemaType.nullable)
         }
+
         SchemaType(StructType(fields), nullable = false)
+
+      case ARRAY =>
+        val schemaType = toSqlType(avroSchema.getElementType)
+        SchemaType(
+          ArrayType(schemaType.dataType, containsNull = schemaType.nullable),
+          nullable = false)
+
+      case MAP =>
+        val schemaType = toSqlType(avroSchema.getValueType)
+        SchemaType(
+          MapType(StringType, schemaType.dataType, valueContainsNull = schemaType.nullable),
+          nullable = false)
 
       case UNION =>
         if (avroSchema.getTypes.asScala.exists(_.getType == NULL)) {
@@ -88,15 +95,16 @@ object CustomAvroToSpark {
             val fields = avroSchema.getTypes.asScala.zipWithIndex.map {
               case (s, i) =>
                 val schemaType = toSqlType(s)
-                // All fields are nullable because only one of them is set at a time
                 StructField(s"member$i", schemaType.dataType, nullable = true)
             }
+
             SchemaType(StructType(fields), nullable = false)
         }
+
       case other => throw new IncompatibleSchemaException(s"Unsupported type $other")
     }
   }
-
+  
   private def convertingAvroDecimalSchemaToSpark(byteBuffer: ByteBuffer, schema: Schema): BigDecimal = {
     val scale: Int = schema.getJsonProp("scale").asInt();
     val arrayValue: BigInteger = new BigInteger(byteBuffer.array())
@@ -104,35 +112,20 @@ object CustomAvroToSpark {
     finalValue
   }
 
-  /**
-   * Returns a converter function to convert row in avro format to GenericRow of catalyst.
-   *
-   * @param sourceAvroSchema Source schema before conversion inferred from avro file by passed in
-   *                       by user.
-   * @param targetSqlType Target catalyst sql type after the conversion.
-   * @return returns a converter function to convert row in avro format to GenericRow of catalyst.
-   */
-  def createConverterToSQL(
+  private[avro] def createConverterToSQL(
     sourceAvroSchema: Schema,
     targetSqlType: DataType): AnyRef => AnyRef = {
 
     def createConverter(avroSchema: Schema,
-      sqlType: DataType, path: List[String]): AnyRef => AnyRef = {
+        sqlType: DataType, path: List[String]): AnyRef => AnyRef = {
       val avroType = avroSchema.getType
       (sqlType, avroType) match {
-        case (_: DecimalType, BYTES) => (item: AnyRef) =>
-          if (item == null) {
-            null
-          } else {
-            convertingAvroDecimalSchemaToSpark(item.asInstanceOf[ByteBuffer], avroSchema)
-          }
-          case (StringType, STRING) | (StringType, ENUM) =>
+        case (StringType, STRING) | (StringType, ENUM) =>
           (item: AnyRef) => if (item == null) null else item.toString
-          // Byte arrays are reused by avro, so we have to make a copy of them.
-          case (IntegerType, INT) | (BooleanType, BOOLEAN) | (DoubleType, DOUBLE) |
-          (FloatType, FLOAT) | (LongType, LONG) =>
+        case (IntegerType, INT) | (BooleanType, BOOLEAN) | (DoubleType, DOUBLE) |
+             (FloatType, FLOAT) | (LongType, LONG) =>
           identity
-        case (TimestampType, LONG) => (item: AnyRef) => if (item == null) { null }
+          case (TimestampType, LONG) => (item: AnyRef) => if (item == null) { null }
         else {
           val timeStamp = new Timestamp(item.asInstanceOf[Long])
           timeStamp
@@ -142,6 +135,12 @@ object CustomAvroToSpark {
           val date = new Date(item.asInstanceOf[Long])
           date
         }
+		   case (_: DecimalType, BYTES) => (item: AnyRef) =>
+          if (item == null) {
+            null
+          } else {
+            convertingAvroDecimalSchemaToSpark(item.asInstanceOf[ByteBuffer], avroSchema)
+          }
         case (BinaryType, FIXED) =>
           (item: AnyRef) =>
             if (item == null) {
@@ -149,7 +148,7 @@ object CustomAvroToSpark {
             } else {
               item.asInstanceOf[Fixed].bytes().clone()
             }
-            case (BinaryType, BYTES) =>
+        case (BinaryType, BYTES) =>
           (item: AnyRef) =>
             if (item == null) {
               null
@@ -160,7 +159,7 @@ object CustomAvroToSpark {
               bytes
             }
 
-            case (struct: StructType, RECORD) =>
+        case (struct: StructType, RECORD) =>
           val length = struct.fields.length
           val converters = new Array[AnyRef => AnyRef](length)
           val avroFieldIndexes = new Array[Int](length)
@@ -188,7 +187,6 @@ object CustomAvroToSpark {
               null
             } else {
               val record = item.asInstanceOf[GenericRecord]
-
               val result = new Array[Any](length)
               var i = 0
               while (i < converters.length) {
@@ -201,7 +199,7 @@ object CustomAvroToSpark {
               new GenericRow(result)
             }
           }
-          case (arrayType: ArrayType, ARRAY) =>
+        case (arrayType: ArrayType, ARRAY) =>
           val elementConverter = createConverter(avroSchema.getElementType, arrayType.elementType,
             path)
           val allowsNull = arrayType.containsNull
@@ -219,7 +217,7 @@ object CustomAvroToSpark {
               }
             }
           }
-          case (mapType: MapType, MAP) if mapType.keyType == StringType =>
+        case (mapType: MapType, MAP) if mapType.keyType == StringType =>
           val valueConverter = createConverter(avroSchema.getValueType, mapType.valueType, path)
           val allowsNull = mapType.valueContainsNull
           (item: AnyRef) => {
@@ -236,7 +234,7 @@ object CustomAvroToSpark {
               }.toMap
             }
           }
-          case (sqlType, UNION) =>
+        case (sqlType, UNION) =>
           if (avroSchema.getTypes.asScala.exists(_.getType == NULL)) {
             val remainingUnionTypes = avroSchema.getTypes.asScala.filterNot(_.getType == NULL)
             if (remainingUnionTypes.size == 1) {
@@ -254,7 +252,7 @@ object CustomAvroToSpark {
                   case i: java.lang.Integer => new java.lang.Long(i.longValue())
                 }
               }
-              case Seq(a, b) if Set(a, b) == Set(FLOAT, DOUBLE) && sqlType == DoubleType =>
+            case Seq(a, b) if Set(a, b) == Set(FLOAT, DOUBLE) && sqlType == DoubleType =>
               (item: AnyRef) => {
                 item match {
                   case null => null
@@ -262,7 +260,7 @@ object CustomAvroToSpark {
                   case f: java.lang.Float => new java.lang.Double(f.doubleValue())
                 }
               }
-              case other =>
+            case other =>
               sqlType match {
                 case t: StructType if t.fields.length == avroSchema.getTypes.size =>
                   val fieldConverters = t.fields.zip(avroSchema.getTypes.asScala).map {
@@ -278,7 +276,7 @@ object CustomAvroToSpark {
                     converted(i) = fieldConverters(i)(item)
                     new GenericRow(converted)
                   }
-                  case _ => throw new IncompatibleSchemaException(
+                case _ => throw new IncompatibleSchemaException(
                   s"Cannot convert Avro schema to catalyst type because schema at path " +
                     s"${path.mkString(".")} is not compatible " +
                     s"(avroType = $other, sqlType = $sqlType). \n" +
@@ -289,8 +287,8 @@ object CustomAvroToSpark {
         case (left, right) =>
           if (!getSafe()) {
             throw new IncompatibleSchemaException(
-              s"\nCannot convert Avro schema to target type because schema at field " +
-                s"${path.mkString(".")} is not compatible.\n(expected = $left, got = $right)")
+            		s"\nCannot convert Avro schema to target type because schema at field " +
+                            s"${path.mkString(".")} is not compatible.\n(expected = $left, got = $right)")
           } else {
           null
           }
@@ -310,7 +308,7 @@ object CustomAvroToSpark {
           i = i + 1
         }
       throw SchemaMisMatchException("\ninput Fields :'" + listForStrictCheck
-        + "'\ndoes not match with expected\nSchema Fields :" + metaDataSchema.fieldNames.toList)
+        + "'\ndid not match with expected\nSchema Fields :" + metaDataSchema.fieldNames.toList)
       }
     }
   }
@@ -328,6 +326,5 @@ object CustomAvroToSpark {
     isSafe
   }
 }
+
 case class SchemaMisMatchException(message: String = "", cause: Throwable = null) extends RuntimeException(message, cause)
-
-
