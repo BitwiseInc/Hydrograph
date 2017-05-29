@@ -42,6 +42,7 @@ public class ViewDataUniqueIdDialog extends Dialog{
 	
 	private List<JobDetails> jobDetails;
 	private String selectedUniqueJobId;
+	private boolean okPressed;
 	private String[] titles = {"Job Id", "Time Stamp", "Execution Mode", "Job Status"};
 	private Table table;
 	private boolean okPressed;
