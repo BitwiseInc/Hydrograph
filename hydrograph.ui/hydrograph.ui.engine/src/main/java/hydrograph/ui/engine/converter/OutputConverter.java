@@ -34,7 +34,9 @@ import hydrograph.ui.engine.xpath.ComponentXpathConstants;
 import hydrograph.ui.engine.xpath.ComponentsAttributeAndValue;
 import hydrograph.ui.graph.model.Component;
 import hydrograph.ui.logging.factory.LogFactory;
+import hydrograph.ui.propertywindow.utils.Utils;
 
+import java.io.File;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -83,9 +85,12 @@ public abstract class OutputConverter extends Converter {
 		Schema schema = (Schema) properties.get(PropertyNameConstants.SCHEMA.value());
 		if (schema != null) {
 			if ( schema.getIsExternal()) {
+				boolean isFile = new File(Utils.INSTANCE.getParamValue(schema.getExternalSchemaPath())).isFile();
 				TypeExternalSchema typeExternalSchema = new TypeExternalSchema();
-				if(PathUtility.INSTANCE.isAbsolute(schema.getExternalSchemaPath())
-						|| ParameterUtil.startsWithParameter(schema.getExternalSchemaPath(), Path.SEPARATOR)){
+				if(PathUtility.INSTANCE.isAbsolute(schema.getExternalSchemaPath()))
+					typeExternalSchema.setUri(schema.getExternalSchemaPath());
+				else if(ParameterUtil.startsWithParameter(schema.getExternalSchemaPath(), Path.SEPARATOR) 
+						&& isFile){
 					typeExternalSchema.setUri(schema.getExternalSchemaPath());
 				}
 				else{
