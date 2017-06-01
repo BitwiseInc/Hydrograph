@@ -18,6 +18,9 @@ import hydrograph.engine.transformation.schema.Field;
 import hydrograph.engine.transformation.schema.Schema;
 import hydrograph.engine.transformation.userfunctions.base.GroupCombineTransformBase;
 import hydrograph.engine.transformation.userfunctions.base.ReusableRow;
+
+import java.math.BigDecimal;
+
 /**
  * The Class GroupCombineForExpression.
  *
@@ -52,7 +55,7 @@ public class GroupCombineForExpression implements GroupCombineTransformBase {
         this.bufferFieldPrecision = bufferFieldPrecision;
         try {
             expressionWrapperForUpdate.getValidationAPI().init(expressionWrapperForUpdate.getIntialValueExpression());
-            accumulatorInitialValue = (Comparable) (valueOf(bufferFieldType,expressionWrapperForUpdate.getValidationAPI().exec(new Object[]{})));
+            accumulatorInitialValue = (Comparable) (valueOf(bufferFieldType, expressionWrapperForUpdate.getValidationAPI().exec(new Object[]{})));
         } catch (Exception e) {
             throw new RuntimeException(
                     "Exception in aggregate initial value expression: "
@@ -60,12 +63,23 @@ public class GroupCombineForExpression implements GroupCombineTransformBase {
         }
     }
 
-    private Object valueOf(String className,Object value){
-        try {
-            Class clazz = Class.forName(className);
-            return clazz.cast(value);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+    private Object valueOf(String className, Object value) {
+        String stringValue = value.toString();
+        switch (className) {
+            case "java.lang.Integer":
+                return Integer.valueOf(stringValue);
+            case "java.lang.Long":
+                return Long.valueOf(stringValue);
+            case "java.lang.Double":
+                return Double.valueOf(stringValue);
+            case "java.lang.Float":
+                return Float.valueOf(stringValue);
+            case "java.lang.Short":
+                return Short.valueOf(stringValue);
+            case "java.math.BigDecimal":
+                return BigDecimal.valueOf((Double) value);
+            default:
+                return stringValue;
         }
     }
 
@@ -84,14 +98,12 @@ public class GroupCombineForExpression implements GroupCombineTransformBase {
     }
 
 
-
-
     @Override
     public Schema initBufferSchema(Schema inputSchema, Schema outputSchema) {
         Field _accumulator = new Field.Builder("_accumulator", DataType.valueOf(bufferFieldType))
                 .addFormat(bufferFieldFormat).addPrecision(bufferFieldPrecision).addScale(bufferFieldScale).build();
         Schema schema = new Schema();
-        schema.addField( _accumulator);
+        schema.addField(_accumulator);
         return schema;
     }
 
@@ -109,7 +121,10 @@ public class GroupCombineForExpression implements GroupCombineTransformBase {
         }
         tuples[i] = bufferRow.getField(0);
         try {
-            bufferRow.setField(0, (Comparable) expressionWrapperForUpdate.getValidationAPI().exec(tuples));
+            if ("Short".equals(bufferFieldType))
+                bufferRow.setField(0, ((Integer) expressionWrapperForUpdate.getValidationAPI().exec(tuples)).shortValue());
+            else
+                bufferRow.setField(0, (Comparable) expressionWrapperForUpdate.getValidationAPI().exec(tuples));
         } catch (Exception e) {
             throw new RuntimeException("Exception in aggregate expression: "
                     + expressionWrapperForUpdate.getValidationAPI().getExpr() + ".\nRow being processed: "
@@ -123,7 +138,10 @@ public class GroupCombineForExpression implements GroupCombineTransformBase {
         tuples[0] = bufferRow1.getField(0);
         tuples[1] = bufferRow2.getField(0);
         try {
-            bufferRow1.setField(0, (Comparable) expressionWrapperForMerge.getValidationAPI().exec(tuples));
+            if ("Short".equals(bufferFieldType))
+                bufferRow1.setField(0, ((Integer) expressionWrapperForMerge.getValidationAPI().exec(tuples)).shortValue());
+            else
+                bufferRow1.setField(0, (Comparable) expressionWrapperForMerge.getValidationAPI().exec(tuples));
         } catch (Exception e) {
             throw new RuntimeException("Exception in merge expression: "
                     + expressionWrapperForMerge.getValidationAPI().getExpr() + ".\nRow being processed: "

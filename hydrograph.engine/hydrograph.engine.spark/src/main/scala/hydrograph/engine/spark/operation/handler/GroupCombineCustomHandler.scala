@@ -74,7 +74,16 @@ case class GroupCombineCustomHandler(groupCombineTransform: GroupCombineTransfor
 
   def createBufferSchema(aggregatorTransformBase: GroupCombineTransformBase): StructType = {
     val inputSchema:Schema=new Schema
-    inSchema.foreach(sf=>inputSchema.addField(new Field.Builder(sf.name,getJavaDataType(sf.dataType)).build()))
+
+    inSchema.foreach(sf=> {
+      if (sf.dataType.isInstanceOf[DecimalType]) {
+        val precision = sf.dataType.asInstanceOf[DecimalType].precision
+        val scale = sf.dataType.asInstanceOf[DecimalType].scale
+        inputSchema.addField(new Field.Builder(sf.name, getJavaDataType(sf.dataType)).addPrecision(precision).addScale(scale).build())
+      } else {
+        inputSchema.addField(new Field.Builder(sf.name, getJavaDataType(sf.dataType)).build())
+      }
+    })
 
     val outputSchema:Schema=new Schema
     outSchema.foreach(sf=>outputSchema.addField(new Field.Builder(sf.name,getJavaDataType(sf.dataType)).build()))

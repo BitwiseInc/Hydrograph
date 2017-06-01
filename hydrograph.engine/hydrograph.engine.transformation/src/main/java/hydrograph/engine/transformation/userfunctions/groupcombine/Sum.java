@@ -20,7 +20,10 @@ public class Sum implements GroupCombineTransformBase {
     public Schema initBufferSchema(Schema inputSchema, Schema outputSchema) {
         DataType type = inputSchema.getSchema().values().iterator().next().getFieldType();
         String name = inputSchema.getSchema().values().iterator().next().getFieldName();
-        Field sum = new Field.Builder(name, type).build();
+        int precision = inputSchema.getSchema().values().iterator().next().getFieldPrecision();
+        int scale = inputSchema.getSchema().values().iterator().next().getFieldScale();
+        Field sum = (type == DataType.BigDecimal)? new Field.Builder(name, type).addPrecision(precision).addScale(scale).build() : new Field.Builder(name, type).build();
+
         Schema schema = new Schema();
         schema.addField(sum);
         return schema;
@@ -53,7 +56,7 @@ public class Sum implements GroupCombineTransformBase {
             else if (inputValue instanceof Long)
                 sumValue = (Long) sumValue + (Long) inputValue;
             else if (inputValue instanceof Short)
-                sumValue = (Short) sumValue + (Short) inputValue;
+                sumValue = ((Integer)((Short) sumValue + (Short) inputValue)).shortValue();
             else if (inputValue instanceof BigDecimal) {
                 BigDecimal value = new BigDecimal(inputValue.toString());
                 sumValue = ((BigDecimal) sumValue).add(value);
@@ -88,7 +91,7 @@ public class Sum implements GroupCombineTransformBase {
             else if (inputValue instanceof Long)
                 sumValue = (Long) sumValue + (Long) inputValue;
             else if (inputValue instanceof Short)
-                sumValue = (Short) sumValue + (Short) inputValue;
+                sumValue = ((Integer)((Short) sumValue + (Short) inputValue)).shortValue();
             else if (inputValue instanceof BigDecimal) {
                 BigDecimal value = new BigDecimal(inputValue.toString());
                 sumValue = ((BigDecimal) sumValue).add(value);
