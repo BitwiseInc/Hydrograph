@@ -180,11 +180,9 @@ public static final SubjobUtility INSTANCE= new SubjobUtility();
 	
 	private boolean isSameSchema(Schema previousSchema, Schema currentComponentSchema) {
 		if(	(previousSchema!=null && currentComponentSchema!=null)
-			&&  (previousSchema.getIsExternal() == currentComponentSchema.getIsExternal())
-			&& (StringUtils.equals(previousSchema.getExternalSchemaPath(), currentComponentSchema.getExternalSchemaPath()))
 			&& (previousSchema.getGridRow()!=null && currentComponentSchema.getGridRow()!=null)
 			&& (previousSchema.getGridRow().size()==currentComponentSchema.getGridRow().size())){
-			for(int index=0;index<previousSchema.getGridRow().size();index++){
+			for(int index = 0; index <previousSchema.getGridRow().size(); index++){
 				if(!SchemaPropagationHelper.INSTANCE.isGridRowEqual(previousSchema.getGridRow().get(index),
 						currentComponentSchema.getGridRow().get(index))){
 					return false;
