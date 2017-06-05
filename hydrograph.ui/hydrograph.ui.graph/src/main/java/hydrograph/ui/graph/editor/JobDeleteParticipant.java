@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.resources.IFile;
@@ -58,6 +57,7 @@ public class JobDeleteParticipant extends DeleteParticipant{
 	private boolean flag;
 	private IFile jobIFile = null;
 	private IFile xmlIFile = null;
+	public static final String Regex = "\\.\\w+";
 	private static final Logger LOGGER = LogFactory.INSTANCE.getLogger(JobDeleteParticipant.class);
 	
 	@Override
@@ -259,7 +259,8 @@ public class JobDeleteParticipant extends DeleteParticipant{
 						modifiedResource.getProject().getFolder(CustomMessages.ProjectSupport_PARAM));
 				final String fileName = ResourceChangeUtil.removeExtension(modifiedResource.getName());
 				for (IResource resource : memberList) {
-					if (Pattern.matches(fileName + Constants.EXTENSION, resource.getName())) {
+					//check particular job name exists into list for job deletion
+					if (fileName.equals(resource.getName().replaceAll(Regex, ""))) {
 						if ((StringUtils.equalsIgnoreCase(Messages.XML_EXT, resource.getFileExtension())
 								|| StringUtils.equalsIgnoreCase(Messages.PROPERTIES_EXT, resource.getFileExtension())
 								|| StringUtils.equalsIgnoreCase(Messages.JOB_EXT, resource.getFileExtension()))
