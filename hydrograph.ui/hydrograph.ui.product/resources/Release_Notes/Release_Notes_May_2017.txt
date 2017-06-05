@@ -16,3 +16,5 @@ Sr.No.  <GitHub Issue #>  - [fixed by]   - description
 6. <> - [Kalyan Rajpoot] -  Database Component: Dropdown should be present for Partition key field under Additional Parameters window.                              
 7. <> - [Vibhor Tyagi] - Console Log - Tool should clear console log
 8. <> - [Vibhor Tyagi] - Confirmation message should be displayed when user close tool
+9. <> - [Kalyan Rajpoot] - Schema propagation issue in Union All Component. 
+10.<> - [Kalyan Rajpoot] - Accepting blank/null value for all datatypes other than String while evaluating the expression in Transform component.

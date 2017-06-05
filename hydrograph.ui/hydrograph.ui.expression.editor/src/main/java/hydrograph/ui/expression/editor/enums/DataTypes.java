@@ -367,7 +367,7 @@ public enum DataTypes {
 	}
 	
 	public static Object validateInputeAndGetEquivalentObject(String inputValue,String fieldName,String dataTypeSimpleName, FixedWidthGridRow inputFieldSchema) throws InvalidDataTypeValueException{
-		if(inputValue ==null || StringUtils.equals(Constants.NULL_STRING, inputValue))
+		if(StringUtils.equals(Constants.NULL_STRING, inputValue) || StringUtils.isBlank(inputValue))
 			return null;
 		for (DataTypes dataType : DataTypes.values()) {
 			if (StringUtils.equalsIgnoreCase(dataType.dataType, dataTypeSimpleName)) {
