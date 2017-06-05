@@ -1,0 +1,9 @@
+:compileJava UP-TO-DATE
+:processResources UP-TO-DATE
+:classes UP-TO-DATE
+:jar UP-TO-DATE
+:install
+
+BUILD SUCCESSFUL
+
+Total time: 3.022 secs
