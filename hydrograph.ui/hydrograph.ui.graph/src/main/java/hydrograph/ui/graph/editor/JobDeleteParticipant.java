@@ -259,8 +259,8 @@ public class JobDeleteParticipant extends DeleteParticipant{
 						modifiedResource.getProject().getFolder(CustomMessages.ProjectSupport_PARAM));
 				final String fileName = ResourceChangeUtil.removeExtension(modifiedResource.getName());
 				for (IResource resource : memberList) {
-					if (/*Pattern.matches(fileName + Constants.EXTENSION, resource.getName())*/
-							fileName.equals(resource.getName().replaceAll(Regex, ""))) {
+					//check particular job name exists into list for job deletion
+					if (fileName.equals(resource.getName().replaceAll(Regex, ""))) {
 						if ((StringUtils.equalsIgnoreCase(Messages.XML_EXT, resource.getFileExtension())
 								|| StringUtils.equalsIgnoreCase(Messages.PROPERTIES_EXT, resource.getFileExtension())
 								|| StringUtils.equalsIgnoreCase(Messages.JOB_EXT, resource.getFileExtension()))
