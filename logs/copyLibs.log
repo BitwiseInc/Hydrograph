@@ -1,0 +1,11 @@
+Starting a Gradle Daemon, 1 stopped Daemon could not be reused, use --status for details
+:pullDataViewerDependencies UP-TO-DATE
+:pullGraphDependencies UP-TO-DATE
+:pullModelDependencies UP-TO-DATE
+:pullPropertyWindowDependencies UP-TO-DATE
+:pullServiceDependencies UP-TO-DATE
+:copyLibs NO-SOURCE
+
+BUILD SUCCESSFUL
+
+Total time: 9.279 secs

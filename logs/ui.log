@@ -1,0 +1,1221 @@
+[INFO] Scanning for projects...
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for hydrograph:hydrograph.ui.perspective:eclipse-plugin:0.0.1-SNAPSHOT
+[WARNING] 'profiles.profile[windows].plugins.plugin.(groupId:artifactId)' must be unique but found duplicate declaration of plugin org.eclipse.tycho:target-platform-configuration @ hydrograph:hydrograph.ui.parent:1.0.0-SNAPSHOT, C:\Users\UZL877\git\Hydrograph\hydrograph.ui\pom.xml, line 111, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for hydrograph:hydrograph.ui.menus:eclipse-plugin:0.0.1-SNAPSHOT
+[WARNING] 'profiles.profile[windows].plugins.plugin.(groupId:artifactId)' must be unique but found duplicate declaration of plugin org.eclipse.tycho:target-platform-configuration @ hydrograph:hydrograph.ui.parent:1.0.0-SNAPSHOT, C:\Users\UZL877\git\Hydrograph\hydrograph.ui\pom.xml, line 111, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for hydrograph:hydrograph.ui.project.structure:eclipse-test-plugin:0.0.1-SNAPSHOT
+[WARNING] 'profiles.profile[windows].plugins.plugin.(groupId:artifactId)' must be unique but found duplicate declaration of plugin org.eclipse.tycho:target-platform-configuration @ hydrograph:hydrograph.ui.parent:1.0.0-SNAPSHOT, C:\Users\UZL877\git\Hydrograph\hydrograph.ui\pom.xml, line 111, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for hydrograph:hydrograph.ui.logging:eclipse-plugin:0.0.1-SNAPSHOT
+[WARNING] 'profiles.profile[windows].plugins.plugin.(groupId:artifactId)' must be unique but found duplicate declaration of plugin org.eclipse.tycho:target-platform-configuration @ hydrograph:hydrograph.ui.parent:1.0.0-SNAPSHOT, C:\Users\UZL877\git\Hydrograph\hydrograph.ui\pom.xml, line 111, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for hydrograph:hydrograph.ui.common:eclipse-test-plugin:0.0.1-SNAPSHOT
+[WARNING] 'profiles.profile[windows].plugins.plugin.(groupId:artifactId)' must be unique but found duplicate declaration of plugin org.eclipse.tycho:target-platform-configuration @ hydrograph:hydrograph.ui.parent:1.0.0-SNAPSHOT, C:\Users\UZL877\git\Hydrograph\hydrograph.ui\pom.xml, line 111, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for hydrograph:hydrograph.ui.graph:eclipse-plugin:0.0.1-SNAPSHOT
+[WARNING] 'profiles.profile[windows].plugins.plugin.(groupId:artifactId)' must be unique but found duplicate declaration of plugin org.eclipse.tycho:target-platform-configuration @ hydrograph:hydrograph.ui.parent:1.0.0-SNAPSHOT, C:\Users\UZL877\git\Hydrograph\hydrograph.ui\pom.xml, line 111, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for hydrograph:hydrograph.ui.product:eclipse-repository:0.0.1-SNAPSHOT
+[WARNING] 'profiles.profile[windows].plugins.plugin.(groupId:artifactId)' must be unique but found duplicate declaration of plugin org.eclipse.tycho:target-platform-configuration @ hydrograph:hydrograph.ui.parent:1.0.0-SNAPSHOT, C:\Users\UZL877\git\Hydrograph\hydrograph.ui\pom.xml, line 111, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for hydrograph:hydrograph.ui.graph.figure:eclipse-plugin:0.0.1-SNAPSHOT
+[WARNING] 'profiles.profile[windows].plugins.plugin.(groupId:artifactId)' must be unique but found duplicate declaration of plugin org.eclipse.tycho:target-platform-configuration @ hydrograph:hydrograph.ui.parent:1.0.0-SNAPSHOT, C:\Users\UZL877\git\Hydrograph\hydrograph.ui\pom.xml, line 111, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for hydrograph:hydrograph.ui.propertywindow:eclipse-plugin:0.0.1-SNAPSHOT
+[WARNING] 'profiles.profile[windows].plugins.plugin.(groupId:artifactId)' must be unique but found duplicate declaration of plugin org.eclipse.tycho:target-platform-configuration @ hydrograph:hydrograph.ui.parent:1.0.0-SNAPSHOT, C:\Users\UZL877\git\Hydrograph\hydrograph.ui\pom.xml, line 111, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for hydrograph:hydrograph.ui.model:eclipse-plugin:0.0.1-SNAPSHOT
+[WARNING] 'profiles.profile[windows].plugins.plugin.(groupId:artifactId)' must be unique but found duplicate declaration of plugin org.eclipse.tycho:target-platform-configuration @ hydrograph:hydrograph.ui.parent:1.0.0-SNAPSHOT, C:\Users\UZL877\git\Hydrograph\hydrograph.ui\pom.xml, line 111, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for hydrograph:hydrograph.ui.engine:eclipse-plugin:0.0.1-SNAPSHOT
+[WARNING] 'profiles.profile[windows].plugins.plugin.(groupId:artifactId)' must be unique but found duplicate declaration of plugin org.eclipse.tycho:target-platform-configuration @ hydrograph:hydrograph.ui.parent:1.0.0-SNAPSHOT, C:\Users\UZL877\git\Hydrograph\hydrograph.ui\pom.xml, line 111, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for hydrograph:hydrograph.ui.common.datastructures:eclipse-plugin:0.0.1-SNAPSHOT
+[WARNING] 'profiles.profile[windows].plugins.plugin.(groupId:artifactId)' must be unique but found duplicate declaration of plugin org.eclipse.tycho:target-platform-configuration @ hydrograph:hydrograph.ui.parent:1.0.0-SNAPSHOT, C:\Users\UZL877\git\Hydrograph\hydrograph.ui\pom.xml, line 111, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for hydrograph:hydrograph.ui.tooltip:eclipse-plugin:0.0.1-SNAPSHOT
+[WARNING] 'profiles.profile[windows].plugins.plugin.(groupId:artifactId)' must be unique but found duplicate declaration of plugin org.eclipse.tycho:target-platform-configuration @ hydrograph:hydrograph.ui.parent:1.0.0-SNAPSHOT, C:\Users\UZL877\git\Hydrograph\hydrograph.ui\pom.xml, line 111, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for hydrograph:hydrograph.ui.common.interfaces:eclipse-plugin:0.0.1-SNAPSHOT
+[WARNING] 'profiles.profile[windows].plugins.plugin.(groupId:artifactId)' must be unique but found duplicate declaration of plugin org.eclipse.tycho:target-platform-configuration @ hydrograph:hydrograph.ui.parent:1.0.0-SNAPSHOT, C:\Users\UZL877\git\Hydrograph\hydrograph.ui\pom.xml, line 111, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for hydrograph:hydrograph.ui.parametergrid:eclipse-plugin:0.0.1-SNAPSHOT
+[WARNING] 'profiles.profile[windows].plugins.plugin.(groupId:artifactId)' must be unique but found duplicate declaration of plugin org.eclipse.tycho:target-platform-configuration @ hydrograph:hydrograph.ui.parent:1.0.0-SNAPSHOT, C:\Users\UZL877\git\Hydrograph\hydrograph.ui\pom.xml, line 111, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for hydrograph:hydrograph.ui.joblogger:eclipse-plugin:0.0.1-SNAPSHOT
+[WARNING] 'profiles.profile[windows].plugins.plugin.(groupId:artifactId)' must be unique but found duplicate declaration of plugin org.eclipse.tycho:target-platform-configuration @ hydrograph:hydrograph.ui.parent:1.0.0-SNAPSHOT, C:\Users\UZL877\git\Hydrograph\hydrograph.ui\pom.xml, line 111, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for hydrograph:hydrograph.ui.help:eclipse-plugin:0.0.1-SNAPSHOT
+[WARNING] 'profiles.profile[windows].plugins.plugin.(groupId:artifactId)' must be unique but found duplicate declaration of plugin org.eclipse.tycho:target-platform-configuration @ hydrograph:hydrograph.ui.parent:1.0.0-SNAPSHOT, C:\Users\UZL877\git\Hydrograph\hydrograph.ui\pom.xml, line 111, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for hydrograph:hydrograph.ui.platformspecificplugins:eclipse-feature:0.0.1-SNAPSHOT
+[WARNING] 'profiles.profile[windows].plugins.plugin.(groupId:artifactId)' must be unique but found duplicate declaration of plugin org.eclipse.tycho:target-platform-configuration @ hydrograph:hydrograph.ui.parent:1.0.0-SNAPSHOT, C:\Users\UZL877\git\Hydrograph\hydrograph.ui\pom.xml, line 111, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for hydrograph:hydrograph.ui.validators:eclipse-plugin:0.0.1-SNAPSHOT
+[WARNING] 'profiles.profile[windows].plugins.plugin.(groupId:artifactId)' must be unique but found duplicate declaration of plugin org.eclipse.tycho:target-platform-configuration @ hydrograph:hydrograph.ui.parent:1.0.0-SNAPSHOT, C:\Users\UZL877\git\Hydrograph\hydrograph.ui\pom.xml, line 111, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for hydrograph:hydrograph.ui.dataviewer:eclipse-plugin:0.0.1-SNAPSHOT
+[WARNING] 'profiles.profile[windows].plugins.plugin.(groupId:artifactId)' must be unique but found duplicate declaration of plugin org.eclipse.tycho:target-platform-configuration @ hydrograph:hydrograph.ui.parent:1.0.0-SNAPSHOT, C:\Users\UZL877\git\Hydrograph\hydrograph.ui\pom.xml, line 111, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for hydrograph:hydrograph.ui.communication:eclipse-plugin:0.0.1-SNAPSHOT
+[WARNING] 'profiles.profile[windows].plugins.plugin.(groupId:artifactId)' must be unique but found duplicate declaration of plugin org.eclipse.tycho:target-platform-configuration @ hydrograph:hydrograph.ui.parent:1.0.0-SNAPSHOT, C:\Users\UZL877\git\Hydrograph\hydrograph.ui\pom.xml, line 111, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for hydrograph:hydrograph.ui.expression.editor:eclipse-plugin:0.0.1-SNAPSHOT
+[WARNING] 'profiles.profile[windows].plugins.plugin.(groupId:artifactId)' must be unique but found duplicate declaration of plugin org.eclipse.tycho:target-platform-configuration @ hydrograph:hydrograph.ui.parent:1.0.0-SNAPSHOT, C:\Users\UZL877\git\Hydrograph\hydrograph.ui\pom.xml, line 111, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for hydrograph:hydrograph.ui.theme:eclipse-plugin:0.0.1-SNAPSHOT
+[WARNING] 'profiles.profile[windows].plugins.plugin.(groupId:artifactId)' must be unique but found duplicate declaration of plugin org.eclipse.tycho:target-platform-configuration @ hydrograph:hydrograph.ui.parent:1.0.0-SNAPSHOT, C:\Users\UZL877\git\Hydrograph\hydrograph.ui\pom.xml, line 111, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for hydrograph:hydrograph.ui.parent:pom:1.0.0-SNAPSHOT
+[WARNING] 'profiles.profile[windows].plugins.plugin.(groupId:artifactId)' must be unique but found duplicate declaration of plugin org.eclipse.tycho:target-platform-configuration @ line 111, column 14
+[WARNING] 
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING] 
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING] 
+[INFO] Computing target platform for MavenProject: hydrograph:hydrograph.ui.perspective:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.perspective\pom.xml
+[INFO] Fetching p2.index from http://download.eclipse.org/releases/neon/201606221000/ (0B at 0B/s)
+[INFO] Adding repository http://download.eclipse.org/releases/neon/201606221000
+[INFO] Fetching p2.index from http://download.eclipse.org/releases/neon/201609281000/ (0B at 0B/s)
+[INFO] Adding repository http://download.eclipse.org/releases/neon/201609281000
+[INFO] Fetching p2.index from http://download.eclipse.org/releases/neon/201610111000/ (0B at 0B/s)
+[INFO] Adding repository http://download.eclipse.org/releases/neon/201610111000
+[INFO] Fetching p2.index from http://download.eclipse.org/releases/neon/201612211000/ (0B at 0B/s)
+[INFO] Adding repository http://download.eclipse.org/releases/neon/201612211000
+[INFO] Adding repository http://download.eclipse.org/e4/snapshots/org.eclipse.e4.tools/latest
+[INFO] Resolving dependencies of MavenProject: hydrograph:hydrograph.ui.perspective:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.perspective\pom.xml
+[INFO] Resolving class path of MavenProject: hydrograph:hydrograph.ui.perspective:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.perspective\pom.xml
+[INFO] Computing target platform for MavenProject: hydrograph:hydrograph.ui.menus:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.menus\pom.xml
+[INFO] Resolving dependencies of MavenProject: hydrograph:hydrograph.ui.menus:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.menus\pom.xml
+[INFO] Resolving class path of MavenProject: hydrograph:hydrograph.ui.menus:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.menus\pom.xml
+[INFO] Computing target platform for MavenProject: hydrograph:hydrograph.ui.project.structure:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.project.structure\pom.xml
+[INFO] Resolving dependencies of MavenProject: hydrograph:hydrograph.ui.project.structure:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.project.structure\pom.xml
+[INFO] Resolving class path of MavenProject: hydrograph:hydrograph.ui.project.structure:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.project.structure\pom.xml
+[INFO] Computing target platform for MavenProject: hydrograph:hydrograph.ui.logging:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.logging\pom.xml
+[INFO] Resolving dependencies of MavenProject: hydrograph:hydrograph.ui.logging:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.logging\pom.xml
+[INFO] Resolving class path of MavenProject: hydrograph:hydrograph.ui.logging:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.logging\pom.xml
+[INFO] Computing target platform for MavenProject: hydrograph:hydrograph.ui.common:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common\pom.xml
+[INFO] Resolving dependencies of MavenProject: hydrograph:hydrograph.ui.common:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common\pom.xml
+[INFO] Resolving class path of MavenProject: hydrograph:hydrograph.ui.common:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common\pom.xml
+[INFO] Computing target platform for MavenProject: hydrograph:hydrograph.ui.graph:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.graph\pom.xml
+[INFO] Resolving dependencies of MavenProject: hydrograph:hydrograph.ui.graph:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.graph\pom.xml
+[INFO] Resolving class path of MavenProject: hydrograph:hydrograph.ui.graph:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.graph\pom.xml
+[INFO] Computing target platform for MavenProject: hydrograph:hydrograph.ui.product:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.product\pom.xml
+[INFO] Resolving dependencies of MavenProject: hydrograph:hydrograph.ui.product:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.product\pom.xml
+[INFO] Resolving class path of MavenProject: hydrograph:hydrograph.ui.product:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.product\pom.xml
+[INFO] Computing target platform for MavenProject: hydrograph:hydrograph.ui.graph.figure:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.graph.figure\pom.xml
+[INFO] Resolving dependencies of MavenProject: hydrograph:hydrograph.ui.graph.figure:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.graph.figure\pom.xml
+[INFO] Resolving class path of MavenProject: hydrograph:hydrograph.ui.graph.figure:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.graph.figure\pom.xml
+[INFO] Computing target platform for MavenProject: hydrograph:hydrograph.ui.propertywindow:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.propertywindow\pom.xml
+[INFO] Resolving dependencies of MavenProject: hydrograph:hydrograph.ui.propertywindow:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.propertywindow\pom.xml
+[INFO] Resolving class path of MavenProject: hydrograph:hydrograph.ui.propertywindow:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.propertywindow\pom.xml
+[INFO] Computing target platform for MavenProject: hydrograph:hydrograph.ui.model:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.model\pom.xml
+[INFO] Resolving dependencies of MavenProject: hydrograph:hydrograph.ui.model:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.model\pom.xml
+[INFO] Resolving class path of MavenProject: hydrograph:hydrograph.ui.model:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.model\pom.xml
+[INFO] Computing target platform for MavenProject: hydrograph:hydrograph.ui.engine:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.engine\pom.xml
+[INFO] Resolving dependencies of MavenProject: hydrograph:hydrograph.ui.engine:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.engine\pom.xml
+[INFO] Resolving class path of MavenProject: hydrograph:hydrograph.ui.engine:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.engine\pom.xml
+[INFO] Computing target platform for MavenProject: hydrograph:hydrograph.ui.common.datastructures:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common.datastructures\pom.xml
+[INFO] Resolving dependencies of MavenProject: hydrograph:hydrograph.ui.common.datastructures:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common.datastructures\pom.xml
+[INFO] Resolving class path of MavenProject: hydrograph:hydrograph.ui.common.datastructures:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common.datastructures\pom.xml
+[INFO] Computing target platform for MavenProject: hydrograph:hydrograph.ui.tooltip:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.tooltip\pom.xml
+[INFO] Resolving dependencies of MavenProject: hydrograph:hydrograph.ui.tooltip:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.tooltip\pom.xml
+[INFO] Resolving class path of MavenProject: hydrograph:hydrograph.ui.tooltip:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.tooltip\pom.xml
+[INFO] Computing target platform for MavenProject: hydrograph:hydrograph.ui.common.interfaces:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common.interfaces\pom.xml
+[INFO] Resolving dependencies of MavenProject: hydrograph:hydrograph.ui.common.interfaces:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common.interfaces\pom.xml
+[INFO] Resolving class path of MavenProject: hydrograph:hydrograph.ui.common.interfaces:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common.interfaces\pom.xml
+[INFO] Computing target platform for MavenProject: hydrograph:hydrograph.ui.parametergrid:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.parametergrid\pom.xml
+[INFO] Resolving dependencies of MavenProject: hydrograph:hydrograph.ui.parametergrid:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.parametergrid\pom.xml
+[INFO] Resolving class path of MavenProject: hydrograph:hydrograph.ui.parametergrid:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.parametergrid\pom.xml
+[INFO] Computing target platform for MavenProject: hydrograph:hydrograph.ui.joblogger:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.joblogger\pom.xml
+[INFO] Resolving dependencies of MavenProject: hydrograph:hydrograph.ui.joblogger:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.joblogger\pom.xml
+[INFO] Resolving class path of MavenProject: hydrograph:hydrograph.ui.joblogger:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.joblogger\pom.xml
+[INFO] Computing target platform for MavenProject: hydrograph:hydrograph.ui.help:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.help\pom.xml
+[INFO] Resolving dependencies of MavenProject: hydrograph:hydrograph.ui.help:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.help\pom.xml
+[INFO] Resolving class path of MavenProject: hydrograph:hydrograph.ui.help:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.help\pom.xml
+[INFO] Computing target platform for MavenProject: hydrograph:hydrograph.ui.platformspecificplugins:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.platformspecificplugins\pom.xml
+[INFO] Resolving dependencies of MavenProject: hydrograph:hydrograph.ui.platformspecificplugins:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.platformspecificplugins\pom.xml
+[INFO] Resolving class path of MavenProject: hydrograph:hydrograph.ui.platformspecificplugins:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.platformspecificplugins\pom.xml
+[INFO] Computing target platform for MavenProject: hydrograph:hydrograph.ui.validators:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.validators\pom.xml
+[INFO] Resolving dependencies of MavenProject: hydrograph:hydrograph.ui.validators:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.validators\pom.xml
+[INFO] Resolving class path of MavenProject: hydrograph:hydrograph.ui.validators:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.validators\pom.xml
+[INFO] Computing target platform for MavenProject: hydrograph:hydrograph.ui.dataviewer:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.dataviewer\pom.xml
+[INFO] Resolving dependencies of MavenProject: hydrograph:hydrograph.ui.dataviewer:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.dataviewer\pom.xml
+[INFO] Resolving class path of MavenProject: hydrograph:hydrograph.ui.dataviewer:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.dataviewer\pom.xml
+[INFO] Computing target platform for MavenProject: hydrograph:hydrograph.ui.communication:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.communication\pom.xml
+[INFO] Resolving dependencies of MavenProject: hydrograph:hydrograph.ui.communication:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.communication\pom.xml
+[INFO] Resolving class path of MavenProject: hydrograph:hydrograph.ui.communication:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.communication\pom.xml
+[INFO] Computing target platform for MavenProject: hydrograph:hydrograph.ui.expression.editor:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.expression.editor\pom.xml
+[INFO] Resolving dependencies of MavenProject: hydrograph:hydrograph.ui.expression.editor:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.expression.editor\pom.xml
+[INFO] Resolving class path of MavenProject: hydrograph:hydrograph.ui.expression.editor:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.expression.editor\pom.xml
+[INFO] Computing target platform for MavenProject: hydrograph:hydrograph.ui.theme:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.theme\pom.xml
+[INFO] Resolving dependencies of MavenProject: hydrograph:hydrograph.ui.theme:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.theme\pom.xml
+[INFO] Resolving class path of MavenProject: hydrograph:hydrograph.ui.theme:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.theme\pom.xml
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] hydrograph.ui.parent
+[INFO] hydrograph.ui.platformspecificplugins
+[INFO] hydrograph.ui.logging
+[INFO] hydrograph.ui.common.datastructures
+[INFO] hydrograph.ui.common
+[INFO] hydrograph.ui.communication
+[INFO] hydrograph.ui.joblogger
+[INFO] hydrograph.ui.expression.editor
+[INFO] hydrograph.ui.validators
+[INFO] hydrograph.ui.model
+[INFO] hydrograph.ui.propertywindow
+[INFO] hydrograph.ui.tooltip
+[INFO] hydrograph.ui.common.interfaces
+[INFO] hydrograph.ui.dataviewer
+[INFO] hydrograph.ui.parametergrid
+[INFO] hydrograph.ui.engine
+[INFO] hydrograph.ui.graph.figure
+[INFO] hydrograph.ui.project.structure
+[INFO] hydrograph.ui.graph
+[INFO] hydrograph.ui.perspective
+[INFO] hydrograph.ui.help
+[INFO] hydrograph.ui.menus
+[INFO] hydrograph.ui.theme
+[INFO] hydrograph.ui.product
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building hydrograph.ui.parent 1.0.0-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ hydrograph.ui.parent ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ hydrograph.ui.parent ---
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\pom.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.parent\1.0.0-SNAPSHOT\hydrograph.ui.parent-1.0.0-SNAPSHOT.pom
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building hydrograph.ui.platformspecificplugins 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ hydrograph.ui.platformspecificplugins ---
+[INFO] Deleting C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.platformspecificplugins\target
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:build-qualifier-aggregator (default-build-qualifier-aggregator) @ hydrograph.ui.platformspecificplugins ---
+[INFO] The project's OSGi version is 0.0.1.201705041413
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-id (default-validate-id) @ hydrograph.ui.platformspecificplugins ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-version (default-validate-version) @ hydrograph.ui.platformspecificplugins ---
+[INFO] 
+[INFO] --- target-platform-configuration:0.23.1:target-platform (default-target-platform) @ hydrograph.ui.platformspecificplugins ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:package-feature (default-package-feature) @ hydrograph.ui.platformspecificplugins ---
+[INFO] Building jar: C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.platformspecificplugins\target\hydrograph.ui.platformspecificplugins-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:p2-metadata-default (default-p2-metadata-default) @ hydrograph.ui.platformspecificplugins ---
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:feature-p2-metadata (default-feature-p2-metadata) @ hydrograph.ui.platformspecificplugins ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ hydrograph.ui.platformspecificplugins ---
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.platformspecificplugins\target\hydrograph.ui.platformspecificplugins-0.0.1-SNAPSHOT.jar to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.platformspecificplugins\0.0.1-SNAPSHOT\hydrograph.ui.platformspecificplugins-0.0.1-SNAPSHOT.jar
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.platformspecificplugins\pom.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.platformspecificplugins\0.0.1-SNAPSHOT\hydrograph.ui.platformspecificplugins-0.0.1-SNAPSHOT.pom
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.platformspecificplugins\target\p2content.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.platformspecificplugins\0.0.1-SNAPSHOT\hydrograph.ui.platformspecificplugins-0.0.1-SNAPSHOT-p2metadata.xml
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.platformspecificplugins\target\p2artifacts.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.platformspecificplugins\0.0.1-SNAPSHOT\hydrograph.ui.platformspecificplugins-0.0.1-SNAPSHOT-p2artifacts.xml
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:update-local-index (default-update-local-index) @ hydrograph.ui.platformspecificplugins ---
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building hydrograph.ui.logging 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ hydrograph.ui.logging ---
+[INFO] Deleting C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.logging\target
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:build-qualifier (default-build-qualifier) @ hydrograph.ui.logging ---
+[INFO] The project's OSGi version is 0.0.1.201705041413
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-id (default-validate-id) @ hydrograph.ui.logging ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-version (default-validate-version) @ hydrograph.ui.logging ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:resources (default-resources) @ hydrograph.ui.logging ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.logging\src\main\resources
+[INFO] 
+[INFO] --- tycho-compiler-plugin:0.23.1:compile (default-compile) @ hydrograph.ui.logging ---
+[INFO] Compiling 3 source files to C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.logging\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:testResources (default-testResources) @ hydrograph.ui.logging ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.logging\src\test\resources
+[INFO] 
+[INFO] --- target-platform-configuration:0.23.1:target-platform (default-target-platform) @ hydrograph.ui.logging ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:package-plugin (default-package-plugin) @ hydrograph.ui.logging ---
+[INFO] Building jar: C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.logging\target\hydrograph.ui.logging-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:p2-metadata-default (default-p2-metadata-default) @ hydrograph.ui.logging ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ hydrograph.ui.logging ---
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.logging\target\hydrograph.ui.logging-0.0.1-SNAPSHOT.jar to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.logging\0.0.1-SNAPSHOT\hydrograph.ui.logging-0.0.1-SNAPSHOT.jar
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.logging\pom.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.logging\0.0.1-SNAPSHOT\hydrograph.ui.logging-0.0.1-SNAPSHOT.pom
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.logging\target\p2content.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.logging\0.0.1-SNAPSHOT\hydrograph.ui.logging-0.0.1-SNAPSHOT-p2metadata.xml
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.logging\target\p2artifacts.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.logging\0.0.1-SNAPSHOT\hydrograph.ui.logging-0.0.1-SNAPSHOT-p2artifacts.xml
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:update-local-index (default-update-local-index) @ hydrograph.ui.logging ---
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building hydrograph.ui.common.datastructures 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ hydrograph.ui.common.datastructures ---
+[INFO] Deleting C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common.datastructures\target
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:build-qualifier (default-build-qualifier) @ hydrograph.ui.common.datastructures ---
+[INFO] The project's OSGi version is 0.0.1.201705041413
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-id (default-validate-id) @ hydrograph.ui.common.datastructures ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-version (default-validate-version) @ hydrograph.ui.common.datastructures ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:resources (default-resources) @ hydrograph.ui.common.datastructures ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common.datastructures\src\main\resources
+[INFO] 
+[INFO] --- tycho-compiler-plugin:0.23.1:compile (default-compile) @ hydrograph.ui.common.datastructures ---
+[INFO] Compiling 40 source files to C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common.datastructures\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:testResources (default-testResources) @ hydrograph.ui.common.datastructures ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common.datastructures\src\test\resources
+[INFO] 
+[INFO] --- target-platform-configuration:0.23.1:target-platform (default-target-platform) @ hydrograph.ui.common.datastructures ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:package-plugin (default-package-plugin) @ hydrograph.ui.common.datastructures ---
+[INFO] Building jar: C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common.datastructures\target\hydrograph.ui.common.datastructures-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:p2-metadata-default (default-p2-metadata-default) @ hydrograph.ui.common.datastructures ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ hydrograph.ui.common.datastructures ---
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common.datastructures\target\hydrograph.ui.common.datastructures-0.0.1-SNAPSHOT.jar to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.common.datastructures\0.0.1-SNAPSHOT\hydrograph.ui.common.datastructures-0.0.1-SNAPSHOT.jar
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common.datastructures\pom.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.common.datastructures\0.0.1-SNAPSHOT\hydrograph.ui.common.datastructures-0.0.1-SNAPSHOT.pom
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common.datastructures\target\p2content.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.common.datastructures\0.0.1-SNAPSHOT\hydrograph.ui.common.datastructures-0.0.1-SNAPSHOT-p2metadata.xml
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common.datastructures\target\p2artifacts.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.common.datastructures\0.0.1-SNAPSHOT\hydrograph.ui.common.datastructures-0.0.1-SNAPSHOT-p2artifacts.xml
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:update-local-index (default-update-local-index) @ hydrograph.ui.common.datastructures ---
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building hydrograph.ui.common 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ hydrograph.ui.common ---
+[INFO] Deleting C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common\target
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:build-qualifier (default-build-qualifier) @ hydrograph.ui.common ---
+[INFO] The project's OSGi version is 0.0.1.201705041413
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-id (default-validate-id) @ hydrograph.ui.common ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-version (default-validate-version) @ hydrograph.ui.common ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:resources (default-resources) @ hydrograph.ui.common ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common\src\main\resources
+[INFO] 
+[INFO] --- tycho-compiler-plugin:0.23.1:compile (default-compile) @ hydrograph.ui.common ---
+[INFO] Compiling 61 source files to C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:testResources (default-testResources) @ hydrograph.ui.common ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common\src\test\resources
+[INFO] 
+[INFO] --- target-platform-configuration:0.23.1:target-platform (default-target-platform) @ hydrograph.ui.common ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:package-plugin (default-package-plugin) @ hydrograph.ui.common ---
+[INFO] Building jar: C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common\target\hydrograph.ui.common-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:p2-metadata-default (default-p2-metadata-default) @ hydrograph.ui.common ---
+[INFO] 
+[INFO] --- tycho-surefire-plugin:0.23.1:test (default-test) @ hydrograph.ui.common ---
+[INFO] Expected eclipse log file: C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common\target\work\data\.metadata\.log
+[INFO] Command line:
+	[C:\Program Files\Java\jdk1.8.0_101\jre\bin\java.exe, -Dosgi.noShutdown=false, -Dosgi.os=win32, -Dosgi.ws=win32, -Dosgi.arch=x86_64, -Dosgi.clean=true, -jar, C:\Users\UZL877\.m2\repository\p2\osgi\bundle\org.eclipse.equinox.launcher\1.3.201.v20161025-1711\org.eclipse.equinox.launcher-1.3.201.v20161025-1711.jar, -data, C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common\target\work\data, -install, C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common\target\work, -configuration, C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common\target\work\configuration, -application, org.eclipse.tycho.surefire.osgibooter.headlesstest, -testproperties, C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common\target\surefire.properties]
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running hydrograph.ui.common.TestJaxb
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.031 sec - in hydrograph.ui.common.TestJaxb
+itShouldValidateXmlWithXsd(hydrograph.ui.common.TestJaxb)  Time elapsed: 0 sec
+testReadFile(hydrograph.ui.common.TestJaxb)  Time elapsed: 0 sec
+testFilteredFiles(hydrograph.ui.common.TestJaxb)  Time elapsed: 0 sec
+
+Results :
+
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] All tests passed!
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ hydrograph.ui.common ---
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common\target\hydrograph.ui.common-0.0.1-SNAPSHOT.jar to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.common\0.0.1-SNAPSHOT\hydrograph.ui.common-0.0.1-SNAPSHOT.jar
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common\pom.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.common\0.0.1-SNAPSHOT\hydrograph.ui.common-0.0.1-SNAPSHOT.pom
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common\target\p2content.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.common\0.0.1-SNAPSHOT\hydrograph.ui.common-0.0.1-SNAPSHOT-p2metadata.xml
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common\target\p2artifacts.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.common\0.0.1-SNAPSHOT\hydrograph.ui.common-0.0.1-SNAPSHOT-p2artifacts.xml
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:update-local-index (default-update-local-index) @ hydrograph.ui.common ---
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building hydrograph.ui.communication 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ hydrograph.ui.communication ---
+[INFO] Deleting C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.communication\target
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:build-qualifier (default-build-qualifier) @ hydrograph.ui.communication ---
+[INFO] The project's OSGi version is 0.0.1.201705041413
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-id (default-validate-id) @ hydrograph.ui.communication ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-version (default-validate-version) @ hydrograph.ui.communication ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:resources (default-resources) @ hydrograph.ui.communication ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.communication\src\main\resources
+[INFO] 
+[INFO] --- tycho-compiler-plugin:0.23.1:compile (default-compile) @ hydrograph.ui.communication ---
+[WARNING] The effective compiler target level 1.8 is incompatible with the following OSGi execution environments: [JavaSE-1.7 (assumes 1.7)] @ MavenProject: hydrograph:hydrograph.ui.communication:0.0.1-SNAPSHOT @ C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.communication\pom.xml
+[INFO] Compiling 8 source files to C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.communication\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:testResources (default-testResources) @ hydrograph.ui.communication ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.communication\src\test\resources
+[INFO] 
+[INFO] --- target-platform-configuration:0.23.1:target-platform (default-target-platform) @ hydrograph.ui.communication ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:package-plugin (default-package-plugin) @ hydrograph.ui.communication ---
+[INFO] Building jar: C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.communication\target\hydrograph.ui.communication-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:p2-metadata-default (default-p2-metadata-default) @ hydrograph.ui.communication ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ hydrograph.ui.communication ---
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.communication\target\hydrograph.ui.communication-0.0.1-SNAPSHOT.jar to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.communication\0.0.1-SNAPSHOT\hydrograph.ui.communication-0.0.1-SNAPSHOT.jar
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.communication\pom.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.communication\0.0.1-SNAPSHOT\hydrograph.ui.communication-0.0.1-SNAPSHOT.pom
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.communication\target\p2content.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.communication\0.0.1-SNAPSHOT\hydrograph.ui.communication-0.0.1-SNAPSHOT-p2metadata.xml
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.communication\target\p2artifacts.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.communication\0.0.1-SNAPSHOT\hydrograph.ui.communication-0.0.1-SNAPSHOT-p2artifacts.xml
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:update-local-index (default-update-local-index) @ hydrograph.ui.communication ---
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building hydrograph.ui.joblogger 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ hydrograph.ui.joblogger ---
+[INFO] Deleting C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.joblogger\target
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:build-qualifier (default-build-qualifier) @ hydrograph.ui.joblogger ---
+[INFO] The project's OSGi version is 0.0.1.201705041413
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-id (default-validate-id) @ hydrograph.ui.joblogger ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-version (default-validate-version) @ hydrograph.ui.joblogger ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:resources (default-resources) @ hydrograph.ui.joblogger ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.joblogger\src\main\resources
+[INFO] 
+[INFO] --- tycho-compiler-plugin:0.23.1:compile (default-compile) @ hydrograph.ui.joblogger ---
+[INFO] Compiling 6 source files to C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.joblogger\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:testResources (default-testResources) @ hydrograph.ui.joblogger ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.joblogger\src\test\resources
+[INFO] 
+[INFO] --- target-platform-configuration:0.23.1:target-platform (default-target-platform) @ hydrograph.ui.joblogger ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:package-plugin (default-package-plugin) @ hydrograph.ui.joblogger ---
+[INFO] Building jar: C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.joblogger\target\hydrograph.ui.joblogger-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:p2-metadata-default (default-p2-metadata-default) @ hydrograph.ui.joblogger ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ hydrograph.ui.joblogger ---
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.joblogger\target\hydrograph.ui.joblogger-0.0.1-SNAPSHOT.jar to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.joblogger\0.0.1-SNAPSHOT\hydrograph.ui.joblogger-0.0.1-SNAPSHOT.jar
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.joblogger\pom.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.joblogger\0.0.1-SNAPSHOT\hydrograph.ui.joblogger-0.0.1-SNAPSHOT.pom
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.joblogger\target\p2content.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.joblogger\0.0.1-SNAPSHOT\hydrograph.ui.joblogger-0.0.1-SNAPSHOT-p2metadata.xml
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.joblogger\target\p2artifacts.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.joblogger\0.0.1-SNAPSHOT\hydrograph.ui.joblogger-0.0.1-SNAPSHOT-p2artifacts.xml
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:update-local-index (default-update-local-index) @ hydrograph.ui.joblogger ---
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building hydrograph.ui.expression.editor 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ hydrograph.ui.expression.editor ---
+[INFO] Deleting C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.expression.editor\target
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:build-qualifier (default-build-qualifier) @ hydrograph.ui.expression.editor ---
+[INFO] The project's OSGi version is 0.0.1.201705041413
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-id (default-validate-id) @ hydrograph.ui.expression.editor ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-version (default-validate-version) @ hydrograph.ui.expression.editor ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:resources (default-resources) @ hydrograph.ui.expression.editor ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.expression.editor\src\main\resources
+[INFO] 
+[INFO] --- tycho-compiler-plugin:0.23.1:compile (default-compile) @ hydrograph.ui.expression.editor ---
+[INFO] Compiling 53 source files to C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.expression.editor\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:testResources (default-testResources) @ hydrograph.ui.expression.editor ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.expression.editor\src\test\resources
+[INFO] 
+[INFO] --- target-platform-configuration:0.23.1:target-platform (default-target-platform) @ hydrograph.ui.expression.editor ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:package-plugin (default-package-plugin) @ hydrograph.ui.expression.editor ---
+[INFO] Building jar: C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.expression.editor\target\hydrograph.ui.expression.editor-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:p2-metadata-default (default-p2-metadata-default) @ hydrograph.ui.expression.editor ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ hydrograph.ui.expression.editor ---
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.expression.editor\target\hydrograph.ui.expression.editor-0.0.1-SNAPSHOT.jar to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.expression.editor\0.0.1-SNAPSHOT\hydrograph.ui.expression.editor-0.0.1-SNAPSHOT.jar
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.expression.editor\pom.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.expression.editor\0.0.1-SNAPSHOT\hydrograph.ui.expression.editor-0.0.1-SNAPSHOT.pom
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.expression.editor\target\p2content.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.expression.editor\0.0.1-SNAPSHOT\hydrograph.ui.expression.editor-0.0.1-SNAPSHOT-p2metadata.xml
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.expression.editor\target\p2artifacts.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.expression.editor\0.0.1-SNAPSHOT\hydrograph.ui.expression.editor-0.0.1-SNAPSHOT-p2artifacts.xml
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:update-local-index (default-update-local-index) @ hydrograph.ui.expression.editor ---
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building hydrograph.ui.validators 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ hydrograph.ui.validators ---
+[INFO] Deleting C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.validators\target
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:build-qualifier (default-build-qualifier) @ hydrograph.ui.validators ---
+[INFO] The project's OSGi version is 0.0.1.201705041413
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-id (default-validate-id) @ hydrograph.ui.validators ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-version (default-validate-version) @ hydrograph.ui.validators ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:resources (default-resources) @ hydrograph.ui.validators ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.validators\src\main\resources
+[INFO] 
+[INFO] --- tycho-compiler-plugin:0.23.1:compile (default-compile) @ hydrograph.ui.validators ---
+[INFO] Compiling 29 source files to C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.validators\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:testResources (default-testResources) @ hydrograph.ui.validators ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.validators\src\test\resources
+[INFO] 
+[INFO] --- target-platform-configuration:0.23.1:target-platform (default-target-platform) @ hydrograph.ui.validators ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:package-plugin (default-package-plugin) @ hydrograph.ui.validators ---
+[INFO] Building jar: C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.validators\target\hydrograph.ui.validators-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:p2-metadata-default (default-p2-metadata-default) @ hydrograph.ui.validators ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ hydrograph.ui.validators ---
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.validators\target\hydrograph.ui.validators-0.0.1-SNAPSHOT.jar to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.validators\0.0.1-SNAPSHOT\hydrograph.ui.validators-0.0.1-SNAPSHOT.jar
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.validators\pom.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.validators\0.0.1-SNAPSHOT\hydrograph.ui.validators-0.0.1-SNAPSHOT.pom
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.validators\target\p2content.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.validators\0.0.1-SNAPSHOT\hydrograph.ui.validators-0.0.1-SNAPSHOT-p2metadata.xml
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.validators\target\p2artifacts.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.validators\0.0.1-SNAPSHOT\hydrograph.ui.validators-0.0.1-SNAPSHOT-p2artifacts.xml
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:update-local-index (default-update-local-index) @ hydrograph.ui.validators ---
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building hydrograph.ui.model 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ hydrograph.ui.model ---
+[INFO] Deleting C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.model\target
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:build-qualifier (default-build-qualifier) @ hydrograph.ui.model ---
+[INFO] The project's OSGi version is 0.0.1.201705041413
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-id (default-validate-id) @ hydrograph.ui.model ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-version (default-validate-version) @ hydrograph.ui.model ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:resources (default-resources) @ hydrograph.ui.model ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.model\src\main\resources
+[INFO] 
+[INFO] --- tycho-compiler-plugin:0.23.1:compile (default-compile) @ hydrograph.ui.model ---
+[INFO] Compiling 76 source files to C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.model\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:testResources (default-testResources) @ hydrograph.ui.model ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.model\src\test\resources
+[INFO] 
+[INFO] --- target-platform-configuration:0.23.1:target-platform (default-target-platform) @ hydrograph.ui.model ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:package-plugin (default-package-plugin) @ hydrograph.ui.model ---
+[INFO] Building jar: C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.model\target\hydrograph.ui.model-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:p2-metadata-default (default-p2-metadata-default) @ hydrograph.ui.model ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ hydrograph.ui.model ---
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.model\target\hydrograph.ui.model-0.0.1-SNAPSHOT.jar to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.model\0.0.1-SNAPSHOT\hydrograph.ui.model-0.0.1-SNAPSHOT.jar
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.model\pom.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.model\0.0.1-SNAPSHOT\hydrograph.ui.model-0.0.1-SNAPSHOT.pom
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.model\target\p2content.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.model\0.0.1-SNAPSHOT\hydrograph.ui.model-0.0.1-SNAPSHOT-p2metadata.xml
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.model\target\p2artifacts.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.model\0.0.1-SNAPSHOT\hydrograph.ui.model-0.0.1-SNAPSHOT-p2artifacts.xml
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:update-local-index (default-update-local-index) @ hydrograph.ui.model ---
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building hydrograph.ui.propertywindow 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ hydrograph.ui.propertywindow ---
+[INFO] Deleting C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.propertywindow\target
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:build-qualifier (default-build-qualifier) @ hydrograph.ui.propertywindow ---
+[INFO] The project's OSGi version is 0.0.1.201705041413
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-id (default-validate-id) @ hydrograph.ui.propertywindow ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-version (default-validate-version) @ hydrograph.ui.propertywindow ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:resources (default-resources) @ hydrograph.ui.propertywindow ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.propertywindow\src\main\resources
+[INFO] 
+[INFO] --- tycho-compiler-plugin:0.23.1:compile (default-compile) @ hydrograph.ui.propertywindow ---
+[INFO] Compiling 280 source files to C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.propertywindow\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:testResources (default-testResources) @ hydrograph.ui.propertywindow ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.propertywindow\src\test\resources
+[INFO] 
+[INFO] --- target-platform-configuration:0.23.1:target-platform (default-target-platform) @ hydrograph.ui.propertywindow ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:package-plugin (default-package-plugin) @ hydrograph.ui.propertywindow ---
+[INFO] Building jar: C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.propertywindow\target\hydrograph.ui.propertywindow-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:p2-metadata-default (default-p2-metadata-default) @ hydrograph.ui.propertywindow ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ hydrograph.ui.propertywindow ---
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.propertywindow\target\hydrograph.ui.propertywindow-0.0.1-SNAPSHOT.jar to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.propertywindow\0.0.1-SNAPSHOT\hydrograph.ui.propertywindow-0.0.1-SNAPSHOT.jar
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.propertywindow\pom.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.propertywindow\0.0.1-SNAPSHOT\hydrograph.ui.propertywindow-0.0.1-SNAPSHOT.pom
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.propertywindow\target\p2content.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.propertywindow\0.0.1-SNAPSHOT\hydrograph.ui.propertywindow-0.0.1-SNAPSHOT-p2metadata.xml
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.propertywindow\target\p2artifacts.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.propertywindow\0.0.1-SNAPSHOT\hydrograph.ui.propertywindow-0.0.1-SNAPSHOT-p2artifacts.xml
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:update-local-index (default-update-local-index) @ hydrograph.ui.propertywindow ---
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building hydrograph.ui.tooltip 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ hydrograph.ui.tooltip ---
+[INFO] Deleting C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.tooltip\target
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:build-qualifier (default-build-qualifier) @ hydrograph.ui.tooltip ---
+[INFO] The project's OSGi version is 0.0.1.201705041413
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-id (default-validate-id) @ hydrograph.ui.tooltip ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-version (default-validate-version) @ hydrograph.ui.tooltip ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:resources (default-resources) @ hydrograph.ui.tooltip ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.tooltip\src\main\resources
+[INFO] 
+[INFO] --- tycho-compiler-plugin:0.23.1:compile (default-compile) @ hydrograph.ui.tooltip ---
+[INFO] Compiling 5 source files to C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.tooltip\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:testResources (default-testResources) @ hydrograph.ui.tooltip ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.tooltip\src\test\resources
+[INFO] 
+[INFO] --- target-platform-configuration:0.23.1:target-platform (default-target-platform) @ hydrograph.ui.tooltip ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:package-plugin (default-package-plugin) @ hydrograph.ui.tooltip ---
+[INFO] Building jar: C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.tooltip\target\hydrograph.ui.tooltip-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:p2-metadata-default (default-p2-metadata-default) @ hydrograph.ui.tooltip ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ hydrograph.ui.tooltip ---
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.tooltip\target\hydrograph.ui.tooltip-0.0.1-SNAPSHOT.jar to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.tooltip\0.0.1-SNAPSHOT\hydrograph.ui.tooltip-0.0.1-SNAPSHOT.jar
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.tooltip\pom.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.tooltip\0.0.1-SNAPSHOT\hydrograph.ui.tooltip-0.0.1-SNAPSHOT.pom
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.tooltip\target\p2content.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.tooltip\0.0.1-SNAPSHOT\hydrograph.ui.tooltip-0.0.1-SNAPSHOT-p2metadata.xml
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.tooltip\target\p2artifacts.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.tooltip\0.0.1-SNAPSHOT\hydrograph.ui.tooltip-0.0.1-SNAPSHOT-p2artifacts.xml
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:update-local-index (default-update-local-index) @ hydrograph.ui.tooltip ---
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building hydrograph.ui.common.interfaces 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ hydrograph.ui.common.interfaces ---
+[INFO] Deleting C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common.interfaces\target
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:build-qualifier (default-build-qualifier) @ hydrograph.ui.common.interfaces ---
+[INFO] The project's OSGi version is 0.0.1.201705041413
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-id (default-validate-id) @ hydrograph.ui.common.interfaces ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-version (default-validate-version) @ hydrograph.ui.common.interfaces ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:resources (default-resources) @ hydrograph.ui.common.interfaces ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common.interfaces\src\main\resources
+[INFO] 
+[INFO] --- tycho-compiler-plugin:0.23.1:compile (default-compile) @ hydrograph.ui.common.interfaces ---
+[INFO] Compiling 4 source files to C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common.interfaces\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:testResources (default-testResources) @ hydrograph.ui.common.interfaces ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common.interfaces\src\test\resources
+[INFO] 
+[INFO] --- target-platform-configuration:0.23.1:target-platform (default-target-platform) @ hydrograph.ui.common.interfaces ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:package-plugin (default-package-plugin) @ hydrograph.ui.common.interfaces ---
+[INFO] Building jar: C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common.interfaces\target\hydrograph.ui.common.interfaces-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:p2-metadata-default (default-p2-metadata-default) @ hydrograph.ui.common.interfaces ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ hydrograph.ui.common.interfaces ---
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common.interfaces\target\hydrograph.ui.common.interfaces-0.0.1-SNAPSHOT.jar to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.common.interfaces\0.0.1-SNAPSHOT\hydrograph.ui.common.interfaces-0.0.1-SNAPSHOT.jar
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common.interfaces\pom.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.common.interfaces\0.0.1-SNAPSHOT\hydrograph.ui.common.interfaces-0.0.1-SNAPSHOT.pom
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common.interfaces\target\p2content.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.common.interfaces\0.0.1-SNAPSHOT\hydrograph.ui.common.interfaces-0.0.1-SNAPSHOT-p2metadata.xml
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.common.interfaces\target\p2artifacts.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.common.interfaces\0.0.1-SNAPSHOT\hydrograph.ui.common.interfaces-0.0.1-SNAPSHOT-p2artifacts.xml
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:update-local-index (default-update-local-index) @ hydrograph.ui.common.interfaces ---
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building hydrograph.ui.dataviewer 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ hydrograph.ui.dataviewer ---
+[INFO] Deleting C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.dataviewer\target
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:build-qualifier (default-build-qualifier) @ hydrograph.ui.dataviewer ---
+[INFO] The project's OSGi version is 0.0.1.201705041413
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-id (default-validate-id) @ hydrograph.ui.dataviewer ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-version (default-validate-version) @ hydrograph.ui.dataviewer ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:resources (default-resources) @ hydrograph.ui.dataviewer ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.dataviewer\src\main\resources
+[INFO] 
+[INFO] --- tycho-compiler-plugin:0.23.1:compile (default-compile) @ hydrograph.ui.dataviewer ---
+[INFO] Compiling 65 source files to C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.dataviewer\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:testResources (default-testResources) @ hydrograph.ui.dataviewer ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.dataviewer\src\test\resources
+[INFO] 
+[INFO] --- target-platform-configuration:0.23.1:target-platform (default-target-platform) @ hydrograph.ui.dataviewer ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:package-plugin (default-package-plugin) @ hydrograph.ui.dataviewer ---
+[INFO] Building jar: C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.dataviewer\target\hydrograph.ui.dataviewer-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:p2-metadata-default (default-p2-metadata-default) @ hydrograph.ui.dataviewer ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ hydrograph.ui.dataviewer ---
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.dataviewer\target\hydrograph.ui.dataviewer-0.0.1-SNAPSHOT.jar to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.dataviewer\0.0.1-SNAPSHOT\hydrograph.ui.dataviewer-0.0.1-SNAPSHOT.jar
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.dataviewer\pom.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.dataviewer\0.0.1-SNAPSHOT\hydrograph.ui.dataviewer-0.0.1-SNAPSHOT.pom
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.dataviewer\target\p2content.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.dataviewer\0.0.1-SNAPSHOT\hydrograph.ui.dataviewer-0.0.1-SNAPSHOT-p2metadata.xml
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.dataviewer\target\p2artifacts.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.dataviewer\0.0.1-SNAPSHOT\hydrograph.ui.dataviewer-0.0.1-SNAPSHOT-p2artifacts.xml
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:update-local-index (default-update-local-index) @ hydrograph.ui.dataviewer ---
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building hydrograph.ui.parametergrid 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ hydrograph.ui.parametergrid ---
+[INFO] Deleting C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.parametergrid\target
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:build-qualifier (default-build-qualifier) @ hydrograph.ui.parametergrid ---
+[INFO] The project's OSGi version is 0.0.1.201705041413
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-id (default-validate-id) @ hydrograph.ui.parametergrid ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-version (default-validate-version) @ hydrograph.ui.parametergrid ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:resources (default-resources) @ hydrograph.ui.parametergrid ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.parametergrid\src\main\resources
+[INFO] 
+[INFO] --- tycho-compiler-plugin:0.23.1:compile (default-compile) @ hydrograph.ui.parametergrid ---
+[INFO] Compiling 20 source files to C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.parametergrid\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:testResources (default-testResources) @ hydrograph.ui.parametergrid ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.parametergrid\src\test\resources
+[INFO] 
+[INFO] --- target-platform-configuration:0.23.1:target-platform (default-target-platform) @ hydrograph.ui.parametergrid ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:package-plugin (default-package-plugin) @ hydrograph.ui.parametergrid ---
+[INFO] Building jar: C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.parametergrid\target\hydrograph.ui.parametergrid-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:p2-metadata-default (default-p2-metadata-default) @ hydrograph.ui.parametergrid ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ hydrograph.ui.parametergrid ---
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.parametergrid\target\hydrograph.ui.parametergrid-0.0.1-SNAPSHOT.jar to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.parametergrid\0.0.1-SNAPSHOT\hydrograph.ui.parametergrid-0.0.1-SNAPSHOT.jar
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.parametergrid\pom.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.parametergrid\0.0.1-SNAPSHOT\hydrograph.ui.parametergrid-0.0.1-SNAPSHOT.pom
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.parametergrid\target\p2content.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.parametergrid\0.0.1-SNAPSHOT\hydrograph.ui.parametergrid-0.0.1-SNAPSHOT-p2metadata.xml
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.parametergrid\target\p2artifacts.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.parametergrid\0.0.1-SNAPSHOT\hydrograph.ui.parametergrid-0.0.1-SNAPSHOT-p2artifacts.xml
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:update-local-index (default-update-local-index) @ hydrograph.ui.parametergrid ---
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building hydrograph.ui.engine 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ hydrograph.ui.engine ---
+[INFO] Deleting C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.engine\target
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:build-qualifier (default-build-qualifier) @ hydrograph.ui.engine ---
+[INFO] The project's OSGi version is 0.0.1.201705041413
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-id (default-validate-id) @ hydrograph.ui.engine ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-version (default-validate-version) @ hydrograph.ui.engine ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:resources (default-resources) @ hydrograph.ui.engine ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.engine\src\main\resources
+[INFO] 
+[INFO] --- tycho-compiler-plugin:0.23.1:compile (default-compile) @ hydrograph.ui.engine ---
+[INFO] Compiling 551 source files to C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.engine\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:testResources (default-testResources) @ hydrograph.ui.engine ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.engine\src\test\resources
+[INFO] 
+[INFO] --- target-platform-configuration:0.23.1:target-platform (default-target-platform) @ hydrograph.ui.engine ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:package-plugin (default-package-plugin) @ hydrograph.ui.engine ---
+[INFO] Building jar: C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.engine\target\hydrograph.ui.engine-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:p2-metadata-default (default-p2-metadata-default) @ hydrograph.ui.engine ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ hydrograph.ui.engine ---
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.engine\target\hydrograph.ui.engine-0.0.1-SNAPSHOT.jar to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.engine\0.0.1-SNAPSHOT\hydrograph.ui.engine-0.0.1-SNAPSHOT.jar
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.engine\pom.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.engine\0.0.1-SNAPSHOT\hydrograph.ui.engine-0.0.1-SNAPSHOT.pom
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.engine\target\p2content.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.engine\0.0.1-SNAPSHOT\hydrograph.ui.engine-0.0.1-SNAPSHOT-p2metadata.xml
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.engine\target\p2artifacts.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.engine\0.0.1-SNAPSHOT\hydrograph.ui.engine-0.0.1-SNAPSHOT-p2artifacts.xml
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:update-local-index (default-update-local-index) @ hydrograph.ui.engine ---
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building hydrograph.ui.graph.figure 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ hydrograph.ui.graph.figure ---
+[INFO] Deleting C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.graph.figure\target
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:build-qualifier (default-build-qualifier) @ hydrograph.ui.graph.figure ---
+[INFO] The project's OSGi version is 0.0.1.201705041413
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-id (default-validate-id) @ hydrograph.ui.graph.figure ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-version (default-validate-version) @ hydrograph.ui.graph.figure ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:resources (default-resources) @ hydrograph.ui.graph.figure ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.graph.figure\src\main\resources
+[INFO] 
+[INFO] --- tycho-compiler-plugin:0.23.1:compile (default-compile) @ hydrograph.ui.graph.figure ---
+[INFO] Compiling 11 source files to C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.graph.figure\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:testResources (default-testResources) @ hydrograph.ui.graph.figure ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.graph.figure\src\test\resources
+[INFO] 
+[INFO] --- target-platform-configuration:0.23.1:target-platform (default-target-platform) @ hydrograph.ui.graph.figure ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:package-plugin (default-package-plugin) @ hydrograph.ui.graph.figure ---
+[INFO] Building jar: C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.graph.figure\target\hydrograph.ui.graph.figure-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:p2-metadata-default (default-p2-metadata-default) @ hydrograph.ui.graph.figure ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ hydrograph.ui.graph.figure ---
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.graph.figure\target\hydrograph.ui.graph.figure-0.0.1-SNAPSHOT.jar to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.graph.figure\0.0.1-SNAPSHOT\hydrograph.ui.graph.figure-0.0.1-SNAPSHOT.jar
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.graph.figure\pom.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.graph.figure\0.0.1-SNAPSHOT\hydrograph.ui.graph.figure-0.0.1-SNAPSHOT.pom
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.graph.figure\target\p2content.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.graph.figure\0.0.1-SNAPSHOT\hydrograph.ui.graph.figure-0.0.1-SNAPSHOT-p2metadata.xml
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.graph.figure\target\p2artifacts.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.graph.figure\0.0.1-SNAPSHOT\hydrograph.ui.graph.figure-0.0.1-SNAPSHOT-p2artifacts.xml
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:update-local-index (default-update-local-index) @ hydrograph.ui.graph.figure ---
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building hydrograph.ui.project.structure 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ hydrograph.ui.project.structure ---
+[INFO] Deleting C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.project.structure\target
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:build-qualifier (default-build-qualifier) @ hydrograph.ui.project.structure ---
+[INFO] The project's OSGi version is 0.0.1.201705041413
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-id (default-validate-id) @ hydrograph.ui.project.structure ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-version (default-validate-version) @ hydrograph.ui.project.structure ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:resources (default-resources) @ hydrograph.ui.project.structure ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.project.structure\src\main\resources
+[INFO] 
+[INFO] --- tycho-compiler-plugin:0.23.1:compile (default-compile) @ hydrograph.ui.project.structure ---
+[INFO] Compiling 9 source files to C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.project.structure\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:testResources (default-testResources) @ hydrograph.ui.project.structure ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.project.structure\src\test\resources
+[INFO] 
+[INFO] --- target-platform-configuration:0.23.1:target-platform (default-target-platform) @ hydrograph.ui.project.structure ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:package-plugin (default-package-plugin) @ hydrograph.ui.project.structure ---
+[INFO] Building jar: C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.project.structure\target\hydrograph.ui.project.structure-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:p2-metadata-default (default-p2-metadata-default) @ hydrograph.ui.project.structure ---
+[INFO] 
+[INFO] --- tycho-surefire-plugin:0.23.1:test (default-test) @ hydrograph.ui.project.structure ---
+[INFO] Expected eclipse log file: C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.project.structure\target\work\data\.metadata\.log
+[INFO] Command line:
+	[C:\Program Files\Java\jdk1.8.0_101\jre\bin\java.exe, -Dosgi.noShutdown=false, -Dosgi.os=win32, -Dosgi.ws=win32, -Dosgi.arch=x86_64, -Dosgi.clean=true, -jar, C:\Users\UZL877\.m2\repository\p2\osgi\bundle\org.eclipse.equinox.launcher\1.3.201.v20161025-1711\org.eclipse.equinox.launcher-1.3.201.v20161025-1711.jar, -data, C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.project.structure\target\work\data, -install, C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.project.structure\target\work, -configuration, C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.project.structure\target\work\configuration, -application, org.eclipse.tycho.surefire.osgibooter.headlesstest, -testproperties, C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.project.structure\target\surefire.properties]
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running hydrograph.ui.project.structure.TestProjectStructure
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.031 sec - in hydrograph.ui.project.structure.TestProjectStructure
+testCreateProjectWithGoodArgs(hydrograph.ui.project.structure.TestProjectStructure)  Time elapsed: 0 sec
+
+Results :
+
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] All tests passed!
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ hydrograph.ui.project.structure ---
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.project.structure\target\hydrograph.ui.project.structure-0.0.1-SNAPSHOT.jar to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.project.structure\0.0.1-SNAPSHOT\hydrograph.ui.project.structure-0.0.1-SNAPSHOT.jar
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.project.structure\pom.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.project.structure\0.0.1-SNAPSHOT\hydrograph.ui.project.structure-0.0.1-SNAPSHOT.pom
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.project.structure\target\p2content.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.project.structure\0.0.1-SNAPSHOT\hydrograph.ui.project.structure-0.0.1-SNAPSHOT-p2metadata.xml
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.project.structure\target\p2artifacts.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.project.structure\0.0.1-SNAPSHOT\hydrograph.ui.project.structure-0.0.1-SNAPSHOT-p2artifacts.xml
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:update-local-index (default-update-local-index) @ hydrograph.ui.project.structure ---
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building hydrograph.ui.graph 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ hydrograph.ui.graph ---
+[INFO] Deleting C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.graph\target
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:build-qualifier (default-build-qualifier) @ hydrograph.ui.graph ---
+[INFO] The project's OSGi version is 0.0.1.201705041413
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-id (default-validate-id) @ hydrograph.ui.graph ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-version (default-validate-version) @ hydrograph.ui.graph ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:resources (default-resources) @ hydrograph.ui.graph ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.graph\src\main\resources
+[INFO] 
+[INFO] --- tycho-compiler-plugin:0.23.1:compile (default-compile) @ hydrograph.ui.graph ---
+[INFO] Compiling 144 source files to C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.graph\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:testResources (default-testResources) @ hydrograph.ui.graph ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.graph\src\test\resources
+[INFO] 
+[INFO] --- target-platform-configuration:0.23.1:target-platform (default-target-platform) @ hydrograph.ui.graph ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:package-plugin (default-package-plugin) @ hydrograph.ui.graph ---
+[INFO] Building jar: C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.graph\target\hydrograph.ui.graph-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:p2-metadata-default (default-p2-metadata-default) @ hydrograph.ui.graph ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ hydrograph.ui.graph ---
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.graph\target\hydrograph.ui.graph-0.0.1-SNAPSHOT.jar to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.graph\0.0.1-SNAPSHOT\hydrograph.ui.graph-0.0.1-SNAPSHOT.jar
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.graph\pom.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.graph\0.0.1-SNAPSHOT\hydrograph.ui.graph-0.0.1-SNAPSHOT.pom
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.graph\target\p2content.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.graph\0.0.1-SNAPSHOT\hydrograph.ui.graph-0.0.1-SNAPSHOT-p2metadata.xml
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.graph\target\p2artifacts.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.graph\0.0.1-SNAPSHOT\hydrograph.ui.graph-0.0.1-SNAPSHOT-p2artifacts.xml
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:update-local-index (default-update-local-index) @ hydrograph.ui.graph ---
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building hydrograph.ui.perspective 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ hydrograph.ui.perspective ---
+[INFO] Deleting C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.perspective\target
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:build-qualifier (default-build-qualifier) @ hydrograph.ui.perspective ---
+[INFO] The project's OSGi version is 0.0.1.201705041413
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-id (default-validate-id) @ hydrograph.ui.perspective ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-version (default-validate-version) @ hydrograph.ui.perspective ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:resources (default-resources) @ hydrograph.ui.perspective ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.perspective\src\main\resources
+[INFO] 
+[INFO] --- tycho-compiler-plugin:0.23.1:compile (default-compile) @ hydrograph.ui.perspective ---
+[INFO] Compiling 14 source files to C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.perspective\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:testResources (default-testResources) @ hydrograph.ui.perspective ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.perspective\src\test\resources
+[INFO] 
+[INFO] --- target-platform-configuration:0.23.1:target-platform (default-target-platform) @ hydrograph.ui.perspective ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:package-plugin (default-package-plugin) @ hydrograph.ui.perspective ---
+[INFO] Building jar: C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.perspective\target\hydrograph.ui.perspective-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:p2-metadata-default (default-p2-metadata-default) @ hydrograph.ui.perspective ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ hydrograph.ui.perspective ---
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.perspective\target\hydrograph.ui.perspective-0.0.1-SNAPSHOT.jar to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.perspective\0.0.1-SNAPSHOT\hydrograph.ui.perspective-0.0.1-SNAPSHOT.jar
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.perspective\pom.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.perspective\0.0.1-SNAPSHOT\hydrograph.ui.perspective-0.0.1-SNAPSHOT.pom
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.perspective\target\p2content.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.perspective\0.0.1-SNAPSHOT\hydrograph.ui.perspective-0.0.1-SNAPSHOT-p2metadata.xml
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.perspective\target\p2artifacts.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.perspective\0.0.1-SNAPSHOT\hydrograph.ui.perspective-0.0.1-SNAPSHOT-p2artifacts.xml
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:update-local-index (default-update-local-index) @ hydrograph.ui.perspective ---
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building hydrograph.ui.help 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ hydrograph.ui.help ---
+[INFO] Deleting C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.help\target
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:build-qualifier (default-build-qualifier) @ hydrograph.ui.help ---
+[INFO] The project's OSGi version is 0.0.1.201705041413
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-id (default-validate-id) @ hydrograph.ui.help ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-version (default-validate-version) @ hydrograph.ui.help ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:resources (default-resources) @ hydrograph.ui.help ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.help\src\main\resources
+[INFO] 
+[INFO] --- tycho-compiler-plugin:0.23.1:compile (default-compile) @ hydrograph.ui.help ---
+[INFO] Compiling 7 source files to C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.help\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:testResources (default-testResources) @ hydrograph.ui.help ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.help\src\test\resources
+[INFO] 
+[INFO] --- target-platform-configuration:0.23.1:target-platform (default-target-platform) @ hydrograph.ui.help ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:package-plugin (default-package-plugin) @ hydrograph.ui.help ---
+[INFO] Building jar: C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.help\target\hydrograph.ui.help-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:p2-metadata-default (default-p2-metadata-default) @ hydrograph.ui.help ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ hydrograph.ui.help ---
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.help\target\hydrograph.ui.help-0.0.1-SNAPSHOT.jar to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.help\0.0.1-SNAPSHOT\hydrograph.ui.help-0.0.1-SNAPSHOT.jar
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.help\pom.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.help\0.0.1-SNAPSHOT\hydrograph.ui.help-0.0.1-SNAPSHOT.pom
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.help\target\p2content.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.help\0.0.1-SNAPSHOT\hydrograph.ui.help-0.0.1-SNAPSHOT-p2metadata.xml
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.help\target\p2artifacts.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.help\0.0.1-SNAPSHOT\hydrograph.ui.help-0.0.1-SNAPSHOT-p2artifacts.xml
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:update-local-index (default-update-local-index) @ hydrograph.ui.help ---
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building hydrograph.ui.menus 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ hydrograph.ui.menus ---
+[INFO] Deleting C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.menus\target
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:build-qualifier (default-build-qualifier) @ hydrograph.ui.menus ---
+[INFO] The project's OSGi version is 0.0.1.201705041413
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-id (default-validate-id) @ hydrograph.ui.menus ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-version (default-validate-version) @ hydrograph.ui.menus ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:resources (default-resources) @ hydrograph.ui.menus ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.menus\src\main\resources
+[INFO] 
+[INFO] --- tycho-compiler-plugin:0.23.1:compile (default-compile) @ hydrograph.ui.menus ---
+[INFO] Compiling 17 source files to C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.menus\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:testResources (default-testResources) @ hydrograph.ui.menus ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.menus\src\test\resources
+[INFO] 
+[INFO] --- target-platform-configuration:0.23.1:target-platform (default-target-platform) @ hydrograph.ui.menus ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:package-plugin (default-package-plugin) @ hydrograph.ui.menus ---
+[INFO] Building jar: C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.menus\target\hydrograph.ui.menus-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:p2-metadata-default (default-p2-metadata-default) @ hydrograph.ui.menus ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ hydrograph.ui.menus ---
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.menus\target\hydrograph.ui.menus-0.0.1-SNAPSHOT.jar to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.menus\0.0.1-SNAPSHOT\hydrograph.ui.menus-0.0.1-SNAPSHOT.jar
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.menus\pom.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.menus\0.0.1-SNAPSHOT\hydrograph.ui.menus-0.0.1-SNAPSHOT.pom
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.menus\target\p2content.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.menus\0.0.1-SNAPSHOT\hydrograph.ui.menus-0.0.1-SNAPSHOT-p2metadata.xml
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.menus\target\p2artifacts.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.menus\0.0.1-SNAPSHOT\hydrograph.ui.menus-0.0.1-SNAPSHOT-p2artifacts.xml
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:update-local-index (default-update-local-index) @ hydrograph.ui.menus ---
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building hydrograph.ui.theme 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ hydrograph.ui.theme ---
+[INFO] Deleting C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.theme\target
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:build-qualifier (default-build-qualifier) @ hydrograph.ui.theme ---
+[INFO] The project's OSGi version is 0.0.1.201705041413
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-id (default-validate-id) @ hydrograph.ui.theme ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:validate-version (default-validate-version) @ hydrograph.ui.theme ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:resources (default-resources) @ hydrograph.ui.theme ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.theme\src\main\resources
+[INFO] 
+[INFO] --- tycho-compiler-plugin:0.23.1:compile (default-compile) @ hydrograph.ui.theme ---
+[INFO] Compiling 1 source file to C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.theme\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:testResources (default-testResources) @ hydrograph.ui.theme ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.theme\src\test\resources
+[INFO] 
+[INFO] --- target-platform-configuration:0.23.1:target-platform (default-target-platform) @ hydrograph.ui.theme ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:package-plugin (default-package-plugin) @ hydrograph.ui.theme ---
+[INFO] Building jar: C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.theme\target\hydrograph.ui.theme-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:p2-metadata-default (default-p2-metadata-default) @ hydrograph.ui.theme ---
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ hydrograph.ui.theme ---
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.theme\target\hydrograph.ui.theme-0.0.1-SNAPSHOT.jar to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.theme\0.0.1-SNAPSHOT\hydrograph.ui.theme-0.0.1-SNAPSHOT.jar
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.theme\pom.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.theme\0.0.1-SNAPSHOT\hydrograph.ui.theme-0.0.1-SNAPSHOT.pom
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.theme\target\p2content.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.theme\0.0.1-SNAPSHOT\hydrograph.ui.theme-0.0.1-SNAPSHOT-p2metadata.xml
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.theme\target\p2artifacts.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.theme\0.0.1-SNAPSHOT\hydrograph.ui.theme-0.0.1-SNAPSHOT-p2artifacts.xml
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:update-local-index (default-update-local-index) @ hydrograph.ui.theme ---
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building hydrograph.ui.product 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ hydrograph.ui.product ---
+[INFO] Deleting C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.product\target
+[INFO] 
+[INFO] --- tycho-packaging-plugin:0.23.1:build-qualifier-aggregator (default-build-qualifier-aggregator) @ hydrograph.ui.product ---
+[INFO] The project's OSGi version is 0.0.1.201705041413
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean-1) @ hydrograph.ui.product ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ hydrograph.ui.product ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.product\src\main\resources
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:copy-resources (copy-resources-1) @ hydrograph.ui.product ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 369 resources
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:copy-resources (copy-resources-2) @ hydrograph.ui.product ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 369 resources
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:copy-resources (copy-resources-3) @ hydrograph.ui.product ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 369 resources
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:copy-resources (copy-resources-4) @ hydrograph.ui.product ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 369 resources
+[INFO] 
+[INFO] --- target-platform-configuration:0.23.1:target-platform (default-target-platform) @ hydrograph.ui.product ---
+[INFO] 
+[INFO] --- tycho-p2-publisher-plugin:0.23.1:publish-products (default-publish-products) @ hydrograph.ui.product ---
+[INFO] 
+[INFO] --- tycho-p2-publisher-plugin:0.23.1:publish-categories (default-publish-categories) @ hydrograph.ui.product ---
+[INFO] 
+[INFO] --- tycho-p2-publisher-plugin:0.23.1:attach-artifacts (default-attach-artifacts) @ hydrograph.ui.product ---
+[INFO] 
+[INFO] --- tycho-p2-repository-plugin:0.23.1:assemble-repository (default-assemble-repository) @ hydrograph.ui.product ---
+[INFO] 
+[INFO] --- tycho-p2-repository-plugin:0.23.1:archive-repository (default-archive-repository) @ hydrograph.ui.product ---
+[INFO] Building zip: C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.product\target\hydrograph.ui.product-0.0.1-SNAPSHOT.zip
+[INFO] 
+[INFO] --- tycho-p2-director-plugin:0.23.1:materialize-products (materialize-products) @ hydrograph.ui.product ---
+[INFO] Installing product hydrograph.ui.perspective.ID for environment win32/win32/x86_64 to C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.product\target\products\hydrograph.ui.perspective.ID\win32\win32\x86_64
+Installing hydrograph.ui.perspective.ID 0.0.1.
+Operation completed in 27335 ms.
+[INFO] Installing product hydrograph.ui.perspective.ID for environment win32/win32/x86 to C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.product\target\products\hydrograph.ui.perspective.ID\win32\win32\x86
+Installing hydrograph.ui.perspective.ID 0.0.1.
+Operation completed in 31498 ms.
+[INFO] Installing product hydrograph.ui.perspective.ID for environment linux/gtk/x86_64 to C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.product\target\products\hydrograph.ui.perspective.ID\linux\gtk\x86_64
+Installing hydrograph.ui.perspective.ID 0.0.1.
+Operation completed in 38027 ms.
+[INFO] Installing product hydrograph.ui.perspective.ID for environment macosx/cocoa/x86_64 to C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.product\target\products\hydrograph.ui.perspective.ID\macosx\cocoa\x86_64\Hydrograph.app
+Installing hydrograph.ui.perspective.ID 0.0.1.
+Operation completed in 27732 ms.
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:copy-resources (copy-resources-6) @ hydrograph.ui.product ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- tycho-p2-director-plugin:0.23.1:archive-products (archive-products) @ hydrograph.ui.product ---
+[INFO] Building zip: C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.product\target\products\hydrograph.ui.perspective.ID-win32.win32.x86_64.zip
+[INFO] Building zip: C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.product\target\products\hydrograph.ui.perspective.ID-win32.win32.x86.zip
+[INFO] Building zip: C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.product\target\products\hydrograph.ui.perspective.ID-linux.gtk.x86_64.zip
+[INFO] Building zip: C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.product\target\products\hydrograph.ui.perspective.ID-macosx.cocoa.x86_64.zip
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ hydrograph.ui.product ---
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.product\target\hydrograph.ui.product-0.0.1-SNAPSHOT.zip to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.product\0.0.1-SNAPSHOT\hydrograph.ui.product-0.0.1-SNAPSHOT.zip
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.product\pom.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.product\0.0.1-SNAPSHOT\hydrograph.ui.product-0.0.1-SNAPSHOT.pom
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.product\target\p2artifacts.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.product\0.0.1-SNAPSHOT\hydrograph.ui.product-0.0.1-SNAPSHOT-p2artifacts.xml
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.product\target\extraArtifacts\hydrograph.ui.perspective.ID.executable.win32.win32.x86_64.zip to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.product\0.0.1-SNAPSHOT\hydrograph.ui.product-0.0.1-SNAPSHOT-hydrograph.ui.perspective.ID.executable.win32.win32.x86_64.zip
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.product\target\extraArtifacts\hydrograph.ui.perspective.ID.executable.cocoa.macosx.x86_64.zip to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.product\0.0.1-SNAPSHOT\hydrograph.ui.product-0.0.1-SNAPSHOT-hydrograph.ui.perspective.ID.executable.cocoa.macosx.x86_64.zip
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.product\target\extraArtifacts\hydrograph.ui.perspective.ID.executable.gtk.linux.x86_64.zip to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.product\0.0.1-SNAPSHOT\hydrograph.ui.product-0.0.1-SNAPSHOT-hydrograph.ui.perspective.ID.executable.gtk.linux.x86_64.zip
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.product\target\p2content.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.product\0.0.1-SNAPSHOT\hydrograph.ui.product-0.0.1-SNAPSHOT-p2metadata.xml
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.product\target\extraArtifacts\hydrograph.ui.perspective.ID.executable.win32.win32.x86.zip to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.product\0.0.1-SNAPSHOT\hydrograph.ui.product-0.0.1-SNAPSHOT-hydrograph.ui.perspective.ID.executable.win32.win32.x86.zip
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.product\target\products\hydrograph.ui.perspective.ID-win32.win32.x86_64.zip to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.product\0.0.1-SNAPSHOT\hydrograph.ui.product-0.0.1-SNAPSHOT-win32.win32.x86_64.zip
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.product\target\products\hydrograph.ui.perspective.ID-win32.win32.x86.zip to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.product\0.0.1-SNAPSHOT\hydrograph.ui.product-0.0.1-SNAPSHOT-win32.win32.x86.zip
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.product\target\products\hydrograph.ui.perspective.ID-linux.gtk.x86_64.zip to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.product\0.0.1-SNAPSHOT\hydrograph.ui.product-0.0.1-SNAPSHOT-linux.gtk.x86_64.zip
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.ui\hydrograph.ui.product\target\products\hydrograph.ui.perspective.ID-macosx.cocoa.x86_64.zip to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.ui.product\0.0.1-SNAPSHOT\hydrograph.ui.product-0.0.1-SNAPSHOT-macosx.cocoa.x86_64.zip
+[INFO] 
+[INFO] --- tycho-p2-plugin:0.23.1:update-local-index (default-update-local-index) @ hydrograph.ui.product ---
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO] 
+[INFO] hydrograph.ui.parent ............................... SUCCESS [  0.279 s]
+[INFO] hydrograph.ui.platformspecificplugins .............. SUCCESS [  0.671 s]
+[INFO] hydrograph.ui.logging .............................. SUCCESS [  1.816 s]
+[INFO] hydrograph.ui.common.datastructures ................ SUCCESS [  1.515 s]
+[INFO] hydrograph.ui.common ............................... SUCCESS [ 19.905 s]
+[INFO] hydrograph.ui.communication ........................ SUCCESS [  1.021 s]
+[INFO] hydrograph.ui.joblogger ............................ SUCCESS [  0.983 s]
+[INFO] hydrograph.ui.expression.editor .................... SUCCESS [  3.349 s]
+[INFO] hydrograph.ui.validators ........................... SUCCESS [  1.250 s]
+[INFO] hydrograph.ui.model ................................ SUCCESS [  2.181 s]
+[INFO] hydrograph.ui.propertywindow ....................... SUCCESS [ 12.955 s]
+[INFO] hydrograph.ui.tooltip .............................. SUCCESS [  1.094 s]
+[INFO] hydrograph.ui.common.interfaces .................... SUCCESS [  1.033 s]
+[INFO] hydrograph.ui.dataviewer ........................... SUCCESS [  4.179 s]
+[INFO] hydrograph.ui.parametergrid ........................ SUCCESS [  2.376 s]
+[INFO] hydrograph.ui.engine ............................... SUCCESS [ 12.603 s]
+[INFO] hydrograph.ui.graph.figure ......................... SUCCESS [  1.435 s]
+[INFO] hydrograph.ui.project.structure .................... SUCCESS [ 27.418 s]
+[INFO] hydrograph.ui.graph ................................ SUCCESS [  5.750 s]
+[INFO] hydrograph.ui.perspective .......................... SUCCESS [  1.988 s]
+[INFO] hydrograph.ui.help ................................. SUCCESS [  6.579 s]
+[INFO] hydrograph.ui.menus ................................ SUCCESS [  2.515 s]
+[INFO] hydrograph.ui.theme ................................ SUCCESS [  1.032 s]
+[INFO] hydrograph.ui.product .............................. SUCCESS [07:23 min]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 10:43 min
+[INFO] Finished at: 2017-05-04T10:23:06-04:00
+[INFO] Final Memory: 216M/1606M
+[INFO] ------------------------------------------------------------------------

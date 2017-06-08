@@ -1,0 +1,57 @@
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building hydrograph.server.execution.tracking.server 1.0.13
+[INFO] ------------------------------------------------------------------------
+Downloading: http://repository.jboss.org/nexus/content/groups/public/joda-time/joda-time/maven-metadata.xml
+Downloading: http://nexus.kdc.capitalone.com/nexus/content/groups/Eval/joda-time/joda-time/maven-metadata.xml
+Downloading: https://repository.apache.org/content/repositories/snapshots/joda-time/joda-time/maven-metadata.xml
+Downloading: http://redshift-maven-repository.s3-website-us-east-1.amazonaws.com/release/joda-time/joda-time/maven-metadata.xml
+228/228 B   1/2 KB   228/228 B   2/2 KB   228/228 B                                             Downloaded: http://nexus.kdc.capitalone.com/nexus/content/groups/Eval/joda-time/joda-time/maven-metadata.xml (2 KB at 2.6 KB/sec)
+                     Downloaded: http://repository.jboss.org/nexus/content/groups/public/joda-time/joda-time/maven-metadata.xml (228 B at 0.4 KB/sec)
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ hydrograph.server.execution.tracking.server ---
+[INFO] Deleting C:\Users\UZL877\git\Hydrograph\hydrograph.server\hydrograph.server.execution.tracking\target
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ hydrograph.server.execution.tracking.server ---
+[WARNING] Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ hydrograph.server.execution.tracking.server ---
+[INFO] Changes detected - recompiling the module!
+[WARNING] File encoding has not been set, using platform encoding Cp1252, i.e. build is platform dependent!
+[INFO] Compiling 9 source files to C:\Users\UZL877\git\Hydrograph\hydrograph.server\hydrograph.server.execution.tracking\target\classes
+[WARNING] /C:/Users/UZL877/git/Hydrograph/hydrograph.server/hydrograph.server.execution.tracking/src/main/java/hydrograph/server/execution/tracking/utils/ExecutionTrackingLogger.java: Some input files use unchecked or unsafe operations.
+[WARNING] /C:/Users/UZL877/git/Hydrograph/hydrograph.server/hydrograph.server.execution.tracking/src/main/java/hydrograph/server/execution/tracking/utils/ExecutionTrackingLogger.java: Recompile with -Xlint:unchecked for details.
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ hydrograph.server.execution.tracking.server ---
+[WARNING] Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory C:\Users\UZL877\git\Hydrograph\hydrograph.server\hydrograph.server.execution.tracking\src\test\resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.1:testCompile (default-testCompile) @ hydrograph.server.execution.tracking.server ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ hydrograph.server.execution.tracking.server ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ hydrograph.server.execution.tracking.server ---
+[INFO] Building jar: C:\Users\UZL877\git\Hydrograph\hydrograph.server\hydrograph.server.execution.tracking\target\hydrograph.server.execution.tracking.server-1.0.13.jar
+[INFO] 
+[INFO] --- maven-assembly-plugin:2.4.1:single (make-assembly) @ hydrograph.server.execution.tracking.server ---
+[INFO] artifact joda-time:joda-time: checking for updates from nexus
+[INFO] artifact joda-time:joda-time: checking for updates from Redshift
+[INFO] artifact joda-time:joda-time: checking for updates from apache.snapshots.https
+[INFO] artifact joda-time:joda-time: checking for updates from repository.jboss.org
+[INFO] Building jar: C:\Users\UZL877\git\Hydrograph\hydrograph.server\hydrograph.server.execution.tracking\target\hydrograph.server.execution.tracking.server-1.0.13-jar-with-dependencies.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ hydrograph.server.execution.tracking.server ---
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.server\hydrograph.server.execution.tracking\target\hydrograph.server.execution.tracking.server-1.0.13.jar to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.server.execution.tracking.server\1.0.13\hydrograph.server.execution.tracking.server-1.0.13.jar
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.server\hydrograph.server.execution.tracking\pom.xml to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.server.execution.tracking.server\1.0.13\hydrograph.server.execution.tracking.server-1.0.13.pom
+[INFO] Installing C:\Users\UZL877\git\Hydrograph\hydrograph.server\hydrograph.server.execution.tracking\target\hydrograph.server.execution.tracking.server-1.0.13-jar-with-dependencies.jar to C:\Users\UZL877\.m2\repository\hydrograph\hydrograph.server.execution.tracking.server\1.0.13\hydrograph.server.execution.tracking.server-1.0.13-jar-with-dependencies.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 21.250 s
+[INFO] Finished at: 2017-05-04T10:12:20-04:00
+[INFO] Final Memory: 68M/712M
+[INFO] ------------------------------------------------------------------------

@@ -43,7 +43,7 @@ public class ParquetHiveTest {
 		for (String arg : otherArgs) {
 			argsString = argsString + " " + arg;
 		}
-		System.out.println("After processing arguments are:" + argsString);
+		System.out.println("After processing arguments are:      " + argsString);
 		Properties properties = new Properties();
 		properties.putAll(conf.getValByRegex(".*"));
 		DateType dt = new DateType("yyyy-MM-dd");

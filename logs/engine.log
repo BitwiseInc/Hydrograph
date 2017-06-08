@@ -1,0 +1,74 @@
+[buildinfo] Not using buildInfo properties file for this build.
+:compileJava NO-SOURCE
+:processResources NO-SOURCE
+:classes UP-TO-DATE
+:hydrograph.engine.core:compileJava UP-TO-DATE
+:hydrograph.engine.core:processResources UP-TO-DATE
+:hydrograph.engine.core:classes UP-TO-DATE
+:hydrograph.engine.core:jar UP-TO-DATE
+:hydrograph.engine.transformation:compileJava UP-TO-DATE
+:hydrograph.engine.transformation:processResources NO-SOURCE
+:hydrograph.engine.transformation:classes UP-TO-DATE
+:hydrograph.engine.transformation:jar UP-TO-DATE
+:hydrograph.engine.expression:compileJava NO-SOURCE
+:hydrograph.engine.expression:compileScala UP-TO-DATE
+:hydrograph.engine.expression:processResources UP-TO-DATE
+:hydrograph.engine.expression:classes UP-TO-DATE
+:hydrograph.engine.expression:jar UP-TO-DATE
+:hydrograph.engine.spark:compileJava NO-SOURCE
+:hydrograph.engine.spark:compileScala UP-TO-DATE
+:hydrograph.engine.spark:processResources UP-TO-DATE
+:hydrograph.engine.spark:classes UP-TO-DATE
+:hydrograph.engine.spark:jar UP-TO-DATE
+:hydrograph.engine.command-line:compileJava UP-TO-DATE
+:hydrograph.engine.command-line:processResources NO-SOURCE
+:hydrograph.engine.command-line:classes UP-TO-DATE
+:hydrograph.engine.command-line:jar UP-TO-DATE
+:hydrograph.engine.plugin:compileJava UP-TO-DATE
+:hydrograph.engine.plugin:processResources UP-TO-DATE
+:hydrograph.engine.plugin:classes UP-TO-DATE
+:hydrograph.engine.plugin:jar UP-TO-DATE
+:jar UP-TO-DATE
+:install
+:hydrograph.engine.command-line:sourcesJar UP-TO-DATE
+:hydrograph.engine.command-line:compileTestJava UP-TO-DATE
+:hydrograph.engine.command-line:processTestResources NO-SOURCE
+:hydrograph.engine.command-line:testClasses UP-TO-DATE
+:hydrograph.engine.command-line:testJar UP-TO-DATE
+:hydrograph.engine.command-line:install
+:hydrograph.engine.core:sourcesJar UP-TO-DATE
+:hydrograph.engine.core:compileTestJava UP-TO-DATE
+:hydrograph.engine.core:processTestResources NO-SOURCE
+:hydrograph.engine.core:testClasses UP-TO-DATE
+:hydrograph.engine.core:testJar UP-TO-DATE
+:hydrograph.engine.core:install
+:hydrograph.engine.expression:sourcesJar UP-TO-DATE
+:hydrograph.engine.expression:compileTestJava UP-TO-DATE
+:hydrograph.engine.expression:compileTestScala NO-SOURCE
+:hydrograph.engine.expression:processTestResources NO-SOURCE
+:hydrograph.engine.expression:testClasses UP-TO-DATE
+:hydrograph.engine.expression:testJar UP-TO-DATE
+:hydrograph.engine.expression:install
+:hydrograph.engine.plugin:sourcesJar UP-TO-DATE
+:hydrograph.engine.plugin:compileTestJava NO-SOURCE
+:hydrograph.engine.plugin:processTestResources NO-SOURCE
+:hydrograph.engine.plugin:testClasses UP-TO-DATE
+:hydrograph.engine.plugin:testJar UP-TO-DATE
+:hydrograph.engine.plugin:install
+:hydrograph.engine.spark:sourcesJar UP-TO-DATE
+:hydrograph.engine.spark:compileTestJava NO-SOURCE
+:hydrograph.engine.spark:compileTestScala UP-TO-DATE
+:hydrograph.engine.spark:processTestResources NO-SOURCE
+:hydrograph.engine.spark:testClasses UP-TO-DATE
+:hydrograph.engine.spark:testJar UP-TO-DATE
+:hydrograph.engine.spark:install
+:hydrograph.engine.transformation:sourcesJar UP-TO-DATE
+:hydrograph.engine.transformation:compileTestJava UP-TO-DATE
+:hydrograph.engine.transformation:processTestResources NO-SOURCE
+:hydrograph.engine.transformation:testClasses UP-TO-DATE
+:hydrograph.engine.transformation:testJar UP-TO-DATE
+:hydrograph.engine.transformation:install
+
+BUILD SUCCESSFUL
+
+Total time: 11.789 secs
