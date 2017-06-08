@@ -52,8 +52,8 @@ class RemoveDupsComponent(removeDupsEntity: RemoveDupsEntity, componentsParams: 
       val sortedDf = repartitionedDf.sortWithinPartitions(populateSortKeys(primaryKeys ++ secondaryKeys): _*)
       val outDf = sortedDf.mapPartitions(itr => {
         def compare(row: Row, previousRow: Row): Boolean = {
-          keyFieldsIndexArray.forall(i => row(i).equals(previousRow(i))
-          )
+      keyFieldsIndexArray.forall(i => ((row(i) == null && previousRow(i)==null) || (row(i)!=null && row(i).equals(previousRow(i))))
+      )
         }
         var firstRowFlag: Boolean = true
         var previousRow: Row = null
@@ -108,7 +108,7 @@ class RemoveDupsComponent(removeDupsEntity: RemoveDupsEntity, componentsParams: 
       if (isUnusedRequired) {
         val unUsedDf = sortedDf.mapPartitions(itr => {
           def compare(row: Row, previousRow: Row): Boolean = {
-              keyFieldsIndexArray.forall(i => row(i).equals(previousRow(i))
+      keyFieldsIndexArray.forall(i => ((row(i) == null && previousRow(i)==null) || (row(i)!=null && row(i).equals(previousRow(i))))
               )
           }
           var firstRowFlag: Boolean = true

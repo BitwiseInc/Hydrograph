@@ -16,51 +16,40 @@
 		 xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
 		 xmlns:op="hydrograph/engine/jaxb/operationstypes"
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../elt-core/src/main/resources/newxmlschema/main/main.xsd  ">
+		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd">
 
-<!-- 	<runtimeProperties>
-		<property name="cascading.planner.stats.path" value="testData/output/JoinDelimitedComponentsStats/plannerStats" />
-		<property name="cascading.planner.plan.path" value="testData\output\JoinDelimitedComponentsStats\plannerPlan" />
-		<property name="cascading.planner.plan.transforms.path"
-			value="testData\output\JoinDelimitedComponentsStats\plannerTransformPath" />
-	</runtimeProperties>
- -->
 	<inputs id="input1" batch="0" xsi:type="it:textFileDelimited">
 		<outSocket id="out0">
 			<schema name="outSchema">
-				<field name="id1" type="java.lang.String" />
-				<field name="name1" type="java.lang.String" />
-				<!-- <field name="city1" type="java.lang.String" /> -->
+				<field name="id1" type="java.lang.Integer" />
 			</schema>
 		</outSocket>
-		<path uri="testData/Input/dep.txt" />
+		<path uri="testData/Input/i1.txt" />
 		<delimiter value="," />
-		<hasHeader value="true" />
+		<hasHeader value="false" />
 		<charset value="ISO-8859-1" />
 	</inputs>
 
 	<inputs id="input2" batch="0" xsi:type="it:textFileDelimited">
 		<outSocket id="out0">
 			<schema name="outSchema">
-				<field name="id" type="java.lang.String" />
-				<field name="fn" type="java.lang.String" />
+				<field name="id2" type="java.lang.Integer" />
 			</schema>
 		</outSocket>
-		<path uri="testData/Input/Copy_of_dep.txt" />
+		<path uri="testData/Input/i2.txt" />
 		<delimiter value="," />
-		<hasHeader value="true" />
+		<hasHeader value="false" />
 	</inputs>
 
 <inputs id="input3" batch="0" xsi:type="it:textFileDelimited">
 		<outSocket id="out0">
 			<schema name="outSchema">
-				<field name="id11" type="java.lang.String" />
-				<field name="fn11" type="java.lang.String" />
+				<field name="id3" type="java.lang.Integer" />
 			</schema>
 		</outSocket>
-		<path uri="testData/Input/dep1.txt" />
+		<path uri="testData/Input/i3.txt" />
 		<delimiter value="," />
-		<hasHeader value="true" />
+		<hasHeader value="false" />
 	</inputs>
 	
 	<operations id="join" xsi:type="op:join">
@@ -69,59 +58,54 @@
 		<inSocket fromComponentId="input3" fromSocketId="out0" id="in2" />
 		<outSocket id="out0" type="out">
 			<!-- <passThroughField name="*" inSocketId="in0" /> -->
-			<mapField sourceName="id1" name="newid" inSocketId="in0" />
-			<mapField sourceName="name1" name="newname" inSocketId="in0" />
-			<!-- <mapField sourceName="city1" name="newcity" inSocketId="in0" /> -->
-			<mapField sourceName="id" name="newid1" inSocketId="in1" />
-			<mapField sourceName="fn" name="newname1" inSocketId="in1" />
-			<mapField sourceName="id11" name="newid2" inSocketId="in2" />
-			<mapField sourceName="fn11" name="newname2" inSocketId="in2" />
-		</outSocket>
-		<outSocket id="unused1" type="unused">
-			<copyOfInsocket inSocketId="in0" />
+			<mapField sourceName="id1" name="id1" inSocketId="in0" />
+			<mapField sourceName="id2" name="id2" inSocketId="in1" />
+			<mapField sourceName="id3" name="id3" inSocketId="in2" />			 
 		</outSocket>
 		<outSocket id="unused0" type="unused">
+			<copyOfInsocket inSocketId="in0" />
+		</outSocket>
+		<outSocket id="unused1" type="unused">
 			<copyOfInsocket inSocketId="in1" />
+		</outSocket>
+		<outSocket id="unused2" type="unused">
+			<copyOfInsocket inSocketId="in2" />
 		</outSocket>
 		<keys inSocketId="in0" recordRequired="true">
 			<field name="id1" />
 		</keys>
-		<keys inSocketId="in1" recordRequired="false">
-			<field name="id" />
+		<keys inSocketId="in1" recordRequired="true">
+			<field name="id2" />
 		</keys>
-		<keys inSocketId="in2" recordRequired="false">
-			<field name="id11" />
+		<keys inSocketId="in2" recordRequired="true">
+			<field name="id3" />
 		</keys>
 	</operations>
 
 	<outputs id="output1" xsi:type="ot:textFileDelimited">
 		<inSocket fromComponentId="join" fromSocketId="out0" id="in0">
 			<schema name="outSchema">
-				<field name="newid" type="java.lang.String" />
-				<field name="newname" type="java.lang.String" />
-				<field name="newid1" type="java.lang.String" />
-				<field name="newname1" type="java.lang.String" />
-				<field name="newid2" type="java.lang.String" />
-				<field name="newname2" type="java.lang.String" />
+				<field name="id1" type="java.lang.Integer" />
+				<field name="id2" type="java.lang.Integer" />
+				<field name="id3" type="java.lang.Integer" />
 			</schema>
 		</inSocket>
-		<path uri="testData/output/JoinDelimitedComponents/out" />
+		<path uri="testData/Output/JoinExample/out" />
 		<delimiter value="," />
-		<hasHeader value="true" />
+		<hasHeader value="false" />
 		<charset value="ISO-8859-1" />
 	</outputs>
 
-	<outputs id="output2" xsi:type="ot:textFileDelimited">
+    <outputs id="output2" xsi:type="ot:textFileDelimited">
 		<inSocket fromComponentId="join" fromSocketId="unused0"
 			fromSocketType="unused" id="in0">
 			<schema name="outSchema">
-				<field name="id" type="java.lang.String" />
-				<field name="fn" type="java.lang.String" />
+				<field name="id1" type="java.lang.Integer" />
 			</schema>
 		</inSocket>
-		<path uri="testData/output/JoinDelimitedComponents/unused0" />
+		<path uri="testData/Output/JoinExample/unused0" />
 		<delimiter value="," />
-		<hasHeader value="true" />
+		<hasHeader value="false" />
 		<charset value="ISO-8859-1" />
 	</outputs>
 	
@@ -129,13 +113,25 @@
 		<inSocket fromComponentId="join" fromSocketId="unused1"
 			fromSocketType="unused" id="in0">
 			<schema name="outSchema">
-				<field name="id1" type="java.lang.String" />
-				<field name="name1" type="java.lang.String" />
+				<field name="id2" type="java.lang.Integer" />
 			</schema>
 		</inSocket>
-		<path uri="testData/output/JoinDelimitedComponents/unused1" />
+		<path uri="testData/Output/JoinExample/unused1" />
 		<delimiter value="," />
-		<hasHeader value="true" />
+		<hasHeader value="false" />
+		<charset value="ISO-8859-1" />
+	</outputs>
+	
+	<outputs id="output4" xsi:type="ot:textFileDelimited">
+		<inSocket fromComponentId="join" fromSocketId="unused2"
+			fromSocketType="unused" id="in0">
+			<schema name="outSchema">
+				<field name="id3" type="java.lang.Integer" />
+			</schema>
+		</inSocket>
+		<path uri="testData/Output/JoinExample/unused3" />
+		<delimiter value="," />
+		<hasHeader value="false" />
 		<charset value="ISO-8859-1" />
 	</outputs>
 

@@ -26,16 +26,16 @@
 				<field name="gender" absoluteOrRelativeXPath="gender" type="java.lang.String" />
 				<field name="dept_id" absoluteOrRelativeXPath="dept_id" type="java.lang.Integer" />
 				<field name="salary" absoluteOrRelativeXPath="salary" type="java.lang.Double" />
-				<field name="work" absoluteOrRelativeXPath="email/work" type="java.lang.String" />
-				<field name="personal" absoluteOrRelativeXPath="email/personal" type="java.lang.String" />
+				<field name="email-work" absoluteOrRelativeXPath="email/work" type="java.lang.String" />
+				<field name="emal-personal" absoluteOrRelativeXPath="email/personal" type="java.lang.String" />
 				<field name="state" absoluteOrRelativeXPath="address/state" type="java.lang.String" />
 				<field name="city" absoluteOrRelativeXPath="address/city" type="java.lang.String" />
 				<field name="zip" absoluteOrRelativeXPath="address/zip" type="java.lang.String" />
-				<field name="work" absoluteOrRelativeXPath="phone/work" type="java.lang.String" />
-				<field name="home" absoluteOrRelativeXPath="phone/home" type="java.lang.String" />
+				<field name="phone-work" absoluteOrRelativeXPath="phone/work" type="java.lang.String" />
+				<field name="phone-home" absoluteOrRelativeXPath="phone/home" type="java.lang.String" />
 			</schema>
 		</outSocket>
-		<path uri="testData\Input\xmlInput.xml" />
+		<path uri="testData/Input/xmlInput.xml" />
 		<absoluteXPath value="dataset/record" />
 		<rootTag value="dataset" />
 		<rowTag value="record" />
@@ -51,38 +51,15 @@
 				<field name="gender" absoluteOrRelativeXPath="gender" type="java.lang.String" />
 				<field name="dept_id" absoluteOrRelativeXPath="dept_id" type="java.lang.Integer" />
 				<field name="salary" absoluteOrRelativeXPath="salary" type="java.lang.Double" />
-				<!--<field name="work" absoluteOrRelativeXPath="work" type="java.lang.String" />-->
-				<!--<field name="personal" absoluteOrRelativeXPath="personal" type="java.lang.String" />-->
-				<field name="email" absoluteOrRelativeXPath="work" type="java.lang.String" />
-				<field name="address" absoluteOrRelativeXPath="address/state" type="java.lang.String" />
-				<field name="phone" absoluteOrRelativeXPath="phone/home" type="java.lang.String" />
+				<field name="email-work" absoluteOrRelativeXPath="work" type="java.lang.String" />
+				<field name="state" absoluteOrRelativeXPath="address/state" type="java.lang.String" />
+				<field name="phone-home" absoluteOrRelativeXPath="phone/home" type="java.lang.String" />
 			</schema>
 		</inSocket>
-		<path uri="testData/output/xmlOutput" />
+		<path uri="testData/Output/xmlOutput" />
 		<absoluteXPath value="dataset/record" />
 		<rootTag value="dataset" />
 		<rowTag value="record" />
 		<charset value="UTF-8" />
 	</outputs>
-
-	<!--<outputs id="output1" xsi:type="ot:textFileDelimited">
-		<inSocket  fromComponentId="input1" fromSocketId="out0" id="in0">
-			<schema name="xmlSchema">
-				<field name="id"  type="java.lang.Integer" />
-				<field name="first_name"  type="java.lang.String" />
-				<field name="last_name"  type="java.lang.String" />
-				<field name="gender"  type="java.lang.String" />
-				<field name="dept_id"  type="java.lang.Integer" />
-				<field name="salary"  type="java.lang.Double" />
-				<field name="work"  type="java.lang.String" />
-				<field name="personal"  type="java.lang.String" />
-			</schema>
-		</inSocket>
-		<overWrite value="true"/>
-		<path uri="testData\Output\XMLComponentsOp" />
-		<delimiter value="," />
-		<hasHeader value="false" />
-		<charset value="ISO-8859-1" />
-	</outputs>-->
-
 </p:graph>

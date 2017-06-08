@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License
+ -->
+
+<p:graph xmlns:p="hydrograph/engine/jaxb/main" xmlns:it="hydrograph/engine/jaxb/inputtypes"
+         xmlns:ot="hydrograph/engine/jaxb/outputtypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         name="FixedWidthInputDelimitedOutput"
+         xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd">
+
+    <inputs id="input1" batch="0" xsi:type="it:textFileFixedWidth">
+        <outSocket id="out0">
+            <schema name="klk">
+                <field name="aa" type="java.lang.Integer" length="2"/>
+                <field name="bb" type="java.lang.Boolean" length="4"/>
+                <field name="cc" type="java.lang.Long" length="6"/>
+                <field name="dd" type="java.lang.Float" length="5"/>
+                <field name="ee" type="java.lang.Integer" length="2"/>
+                <field name="gg" type="java.lang.String" length="6"/>
+                <field name="ff" type="java.lang.Double" length="5"/>
+                <field name="jj" type="java.math.BigDecimal" scale="2"
+                       precision="10" scaleType="explicit" length="5"/>
+            </schema>
+        </outSocket>
+        <path uri="testData/Input/fixedwidth"/>
+        <safe value="true"/>
+        <strict value="false"/>
+        <charset value="ISO-8859-1"/>
+    </inputs>
+
+    <outputs id="OFDelimited_01" batch="0" xsi:type="ot:textFileDelimited">
+        <inSocket fromComponentId="input1" fromSocketId="out0" id="in0"
+                  type="in">
+            <schema name="schema2">
+                <!--<field name="VSD" type="java.lang.Float"/>-->
+                <field name="aa" type="java.lang.Integer"/>
+                <field name="bb" type="java.lang.Boolean"/>
+                <field name="cc" type="java.lang.Long"/>
+                <field name="dd" type="java.lang.Float"/>
+                <field name="ee" type="java.lang.Integer"/>
+                <field name="gg" type="java.lang.String"/>
+                <field name="ff" type="java.lang.Double"/>
+                <field name="jj" type="java.math.BigDecimal" scale="2"
+                       precision="10" scaleType="explicit"/>
+            </schema>
+        </inSocket>
+        <path uri="testData/Output/FixedWidthInputDelimitedOutput"/>
+        <delimiter value=","/>
+        <hasHeader value="false"/>
+        <safe value="false"/>
+        <strict value="true"/>
+        <charset value="UTF-8"/>
+    </outputs>
+</p:graph>

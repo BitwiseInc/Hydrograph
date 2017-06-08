@@ -22,6 +22,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * The Class OutputMysqlEntityGenerator.
  *
@@ -77,7 +80,6 @@ public class OutputMysqlEntityGenerator extends OutputComponentGeneratorBase {
 
         outputRDBMSEntity.setPort(jaxbOutputMysql.getPort() == null ? Constants.DEFAULT_MYSQL_PORT : jaxbOutputMysql.getPort().getValue().intValue());
         outputRDBMSEntity.setJdbcDriver(jaxbOutputMysql.getJdbcDriver() == null ? null : jaxbOutputMysql.getJdbcDriver().getValue());
-        outputRDBMSEntity.setChunkSize(jaxbOutputMysql.getChunkSize() == null ? Constants.DEFAULT_CHUNKSIZE : jaxbOutputMysql.getChunkSize().getValue().intValue());
         outputRDBMSEntity.setDatabaseType("Mysql");
 
         if (jaxbOutputMysql.getLoadType().getNewTable() != null)
@@ -102,6 +104,48 @@ public class OutputMysqlEntityGenerator extends OutputComponentGeneratorBase {
                 .extractRuntimeProperties(jaxbOutputMysql.getRuntimeProperties()));
 /*		outputRDBMSEntity.setRuntimeProperties(OutputEntityUtils
                 .extractRuntimeProperties(jaxbOutputMysql.getRuntimeProperties()));*/
+/**New fields added since the project was open-sourced*/
+        //for batchsize which was named to chunksize since there is batch in the ETL tool as well
+        outputRDBMSEntity.setChunkSize(jaxbOutputMysql.getChunkSize()==null?null:jaxbOutputMysql.getChunkSize().getValue());
+        //extra url parameters has been
+
+        if (jaxbOutputMysql.getExtraUrlParams() != null) {
+            String rawParam = jaxbOutputMysql.getExtraUrlParams().getValue();
+
+            Pattern regexForComma = Pattern.compile("([,]{0,1})");
+            Pattern regexForOthers = Pattern.compile("[$&:;?@#|'<>.^*()%+!]");
+            Pattern regexForRepitititons = Pattern.compile("([,]{2,})");
+
+            Matcher commaMatcher = regexForComma.matcher(rawParam);
+            Matcher otherCharMatcher = regexForOthers.matcher(rawParam);
+            Matcher doubleCharMatcher = regexForRepitititons.matcher(rawParam);
+
+
+
+            if(doubleCharMatcher.find()) {
+                throw new RuntimeException("Repeated comma found");
+            }
+            else if (otherCharMatcher.find()) {
+                throw new RuntimeException("Other delimiter found");
+            } else if (commaMatcher.find()) {
+               /*
+               * If the string happens to have a , then all the commas shall be replaced by &
+               * */
+                String correctedParams = rawParam.replaceAll(",", "&").replaceAll("(\\s+)","");
+               LOG.info("The extraUrlParams being used as"+ correctedParams );
+               outputRDBMSEntity.setExtraUrlParamters(correctedParams);
+            }
+            else {
+                String correctedParams = rawParam.replaceAll("(\\s+)","&");
+                LOG.info("The extraUrlParams being used as "+ correctedParams);
+                outputRDBMSEntity.setExtraUrlParamters(correctedParams);
+            }
+
+        } else {
+            LOG.info("extraUrlParameters initialized with null");
+            outputRDBMSEntity.setExtraUrlParamters(null);
+        }
+        /**end**/
     }
 
     @Override

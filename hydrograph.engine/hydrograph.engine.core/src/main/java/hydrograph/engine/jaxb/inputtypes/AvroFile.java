@@ -11,12 +11,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-
 package hydrograph.engine.jaxb.inputtypes;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+import hydrograph.engine.jaxb.commontypes.BooleanValueType;
 import hydrograph.engine.jaxb.itfd.TypeInputFileDelimitedBase;
-
-import javax.xml.bind.annotation.*;
 
 
 /**
@@ -38,6 +41,8 @@ import javax.xml.bind.annotation.*;
  *             &lt;/complexContent>
  *           &lt;/complexType>
  *         &lt;/element>
+ *         &lt;element name="safe" type="{hydrograph/engine/jaxb/commontypes}boolean-value-type" minOccurs="0"/>
+ *         &lt;element name="strict" type="{hydrograph/engine/jaxb/commontypes}boolean-value-type" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -48,7 +53,9 @@ import javax.xml.bind.annotation.*;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "avroFile", namespace = "hydrograph/engine/jaxb/inputtypes", propOrder = {
-    "path"
+    "path",
+    "safe",
+    "strict"
 })
 public class AvroFile
     extends TypeInputFileDelimitedBase
@@ -56,6 +63,8 @@ public class AvroFile
 
     @XmlElement(required = true)
     protected AvroFile.Path path;
+    protected BooleanValueType safe;
+    protected BooleanValueType strict;
 
     /**
      * Gets the value of the path property.
@@ -79,6 +88,54 @@ public class AvroFile
      */
     public void setPath(AvroFile.Path value) {
         this.path = value;
+    }
+
+    /**
+     * Gets the value of the safe property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BooleanValueType }
+     *     
+     */
+    public BooleanValueType getSafe() {
+        return safe;
+    }
+
+    /**
+     * Sets the value of the safe property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BooleanValueType }
+     *     
+     */
+    public void setSafe(BooleanValueType value) {
+        this.safe = value;
+    }
+
+    /**
+     * Gets the value of the strict property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BooleanValueType }
+     *     
+     */
+    public BooleanValueType getStrict() {
+        return strict;
+    }
+
+    /**
+     * Sets the value of the strict property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BooleanValueType }
+     *     
+     */
+    public void setStrict(BooleanValueType value) {
+        this.strict = value;
     }
 
 
@@ -133,3 +190,4 @@ public class AvroFile
     }
 
 }
+

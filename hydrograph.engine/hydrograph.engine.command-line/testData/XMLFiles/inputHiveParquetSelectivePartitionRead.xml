@@ -12,10 +12,10 @@
     limitations under the License
  -->
 
-<p:graph name="inputFileHiveTextTimeStamp" xmlns:p="hydrograph/engine/jaxb/main"
+<p:graph name="InputHiveParquetSelectivePartitionRead" xmlns:p="hydrograph/engine/jaxb/main"
 		 xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../elt-core/src/main/resources/newxmlschema/main/main.xsd ">
+		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd ">
 
 	<inputs id="parquetHiveInput" batch="0" xsi:type="it:parquetHiveFile">
 		<outSocket id="out0">
@@ -48,8 +48,8 @@
 				</partitionColumn>
 			</partitionColumn>
 		</partitionFilter>
-		<databaseName value="bitwise" />
-		<tableName value="countrywiseHiveParquet" />
+		<databaseName value="@{databaseName}" />
+		<tableName value="@{tableName}" />
 	</inputs>
 
 	<outputs id="OFDelimited_01" batch="0" xsi:type="ot:textFileDelimited">
@@ -62,7 +62,7 @@
 				<field name="f_string4" type="java.lang.String" />
 			</schema>
 		</inSocket>
-		<path uri="testData/Output/hiveSelectivePartitionRead_HiveParquet" />
+		<path uri="testData/Output/HiveSelectivePartitionRead_HiveParquet" />
 		<delimiter value="," />
 		<hasHeader value="false" />
 		<safe value="false" />

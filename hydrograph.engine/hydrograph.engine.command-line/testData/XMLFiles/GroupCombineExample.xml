@@ -71,7 +71,7 @@
                 <field name="ecDateofIssue" type="java.util.Date" format="yyyy/MM/dd" />
             </schema>
         </outSocket>
-        <path uri="testData\Input\FiftyFields\100Records.txt" />
+        <path uri="testData/Input/FiftyFields/100Records.txt" />
         <delimiter value="," />
         <hasHeader value="false" />
     </inputs>
@@ -90,6 +90,8 @@
         <outSocket id="out0">
             <passThroughField name="ecDateofIssue" inSocketId="in0" />
             <passThroughField name="tf_passportNumber_revoke" inSocketId="in0" />
+            <passThroughField name="monthofApplying" inSocketId="in0" />
+            <passThroughField name="maritalStatus" inSocketId="in0" />
             <mapField sourceName="checkPassportRefused" name="checkPassportRefused_new" inSocketId="in0"/>
             <operationField name="count" operationId="monthofapplying" />
         </outSocket>
@@ -112,7 +114,7 @@
             </schema>
         </inSocket>
         <overWrite value="true" />
-        <path uri="testData\Output\GroupCombineExample" />
+        <path uri="testData/Output/GroupCombineExample" />
         <delimiter value="," />
         <hasHeader value="true" />
         <charset value="ISO-8859-1" />

@@ -12,11 +12,11 @@
     limitations under the License
  -->
 
-<p:graph name="AggregateExample" xmlns:it="hydrograph/engine/jaxb/inputtypes"
+<p:graph name="TransformPerformanceCheck" xmlns:it="hydrograph/engine/jaxb/inputtypes"
 		 xmlns:ot="hydrograph/engine/jaxb/outputtypes"
 		 xmlns:op="hydrograph/engine/jaxb/operationstypes"
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="hydrograph/engine/jaxb/main"
-		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../elt-core/src/main/resources/newxmlschema/main/main.xsd  ">
+		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd  ">
 
 	<inputs id="input1" batch="0" xsi:type="it:textFileDelimited">
 		<outSocket id="out0">
@@ -28,8 +28,7 @@
 			</schema>
 		</outSocket>
 
-		<path
-			uri="C:/PushpenderG/DART/POC/hydrograph_spark/testfiles/input/aggregateInputFile.txt" />
+		<path uri="testData/Input/aggregateInputFile.txt" />
 		<delimiter value="," />
 		<hasHeader value="false" />
 		<charset value="ISO-8859-1" />
@@ -43,28 +42,27 @@
 				<field name="name" inSocketId="in0" />
 			</inputFields>
 			<outputFields>
-				<field name="name_length" type="java.lang.Integer" />
+				<field name="new_name" type="java.lang.String" />
 			</outputFields>
 		</operation>
 		<outSocket id="out0">
 			<passThroughField name="id" inSocketId="in0" />
-			<operationField name="name_length" operationId="opt1" />
+			<operationField name="new_name" operationId="opt1" />
 			<passThroughField name="city" inSocketId="in0" />
 			<passThroughField name="number" inSocketId="in0" />
 		</outSocket>
 	</operations>
 
-
 	<outputs id="output1" xsi:type="ot:textFileDelimited" batch="0">
 		<inSocket fromComponentId="reformat" fromSocketId="out0" id="in0">
 			<schema name="outSchema">
 				<field name="id" type="java.lang.Long" />
-				<field name="name_length" type="java.lang.Integer" />
+				<field name="new_name" type="java.lang.String" />
 				<field name="city" type="java.lang.String" />
 				<field name="number" type="java.lang.Long" />
 			</schema>
 		</inSocket>
-		<path uri="testData\output\transformperformance" />
+		<path uri="testData/Output/Transformperformance" />
 		<delimiter value="," />
 		<hasHeader value="true" />
 		<charset value="ISO-8859-1" />

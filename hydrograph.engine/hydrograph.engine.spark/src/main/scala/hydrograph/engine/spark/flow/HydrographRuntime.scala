@@ -45,7 +45,8 @@ class HydrographRuntime extends HydrographRuntimeService {
   private val EXECUTION_TRACKING: String = "hydrograph.execution.tracking"
   private val LOG: Logger = LoggerFactory.getLogger(classOf[HydrographRuntime])
   private var flowManipulationContext: FlowManipulationContext = null;
-  private var flows: mutable.LinkedHashSet[SparkFlow] = null
+  //  private var flows: mutable.LinkedHashSet[SparkFlow] = null
+  private var flowBuilder:FlowBuilder = null
   var executionTrackingListener : ExecutionTrackingListener = null
   var hydrographListener : HydrographCommandListener = new CommandComponentsDefaultPlugin
 
@@ -79,7 +80,7 @@ class HydrographRuntime extends HydrographRuntimeService {
 
     val flowManipulationHandler = new FlowManipulationHandler
 
-   val  updatedHydrographJob=flowManipulationHandler.execute(flowManipulationContext)
+    val  updatedHydrographJob=flowManipulationHandler.execute(flowManipulationContext)
 
     val adapterFactory = AdapterFactory(updatedHydrographJob.getJAXBObject)
 
@@ -94,22 +95,22 @@ class HydrographRuntime extends HydrographRuntimeService {
 
 
 
-        val EXECUTION_TRACKING = "hydrograph.execution.tracking";
+    val EXECUTION_TRACKING = "hydrograph.execution.tracking";
 
-//        val oproperties = OrderedPropertiesHelper.getOrderedProperties("RegisterPlugin.properties")
-//        val executionTrackingPluginName = oproperties.getProperty(EXECUTION_TRACKING)
-//        val trackingInstance = Class.forName(executionTrackingPluginName).newInstance()
-//        executionTrackingListener = trackingInstance.asInstanceOf[ExecutionTrackingPlugin]
-//        executionTrackingListener.addListener(runtimeContext)
+ //        val oproperties = OrderedPropertiesHelper.getOrderedProperties("RegisterPlugin.properties")
+ //        val executionTrackingPluginName = oproperties.getProperty(EXECUTION_TRACKING)
+ //        val trackingInstance = Class.forName(executionTrackingPluginName).newInstance()
+ //        executionTrackingListener = trackingInstance.asInstanceOf[ExecutionTrackingPlugin]
+ //        executionTrackingListener.addListener(runtimeContext)
 
 
-        if (getExecutionTrackingClass(EXECUTION_TRACKING) != null) {
-          /*var */executionTrackingListener = classLoader(getExecutionTrackingClass(EXECUTION_TRACKING)).asInstanceOf[ExecutionTrackingListener]
-          val trackingInstance = Class.forName(getExecutionTrackingClass(EXECUTION_TRACKING)).newInstance()
-          executionTrackingListener = trackingInstance.asInstanceOf[ExecutionTrackingPlugin]
-          executionTrackingListener.addListener(runtimeContext)
-          hydrographListener = trackingInstance.asInstanceOf[ExecutionTrackingPlugin]
-        }
+    if (getExecutionTrackingClass(EXECUTION_TRACKING) != null) {
+      /*var */executionTrackingListener = classLoader(getExecutionTrackingClass(EXECUTION_TRACKING)).asInstanceOf[ExecutionTrackingListener]
+      val trackingInstance = Class.forName(getExecutionTrackingClass(EXECUTION_TRACKING)).newInstance()
+      executionTrackingListener = trackingInstance.asInstanceOf[ExecutionTrackingPlugin]
+      executionTrackingListener.addListener(runtimeContext)
+      hydrographListener = trackingInstance.asInstanceOf[ExecutionTrackingPlugin]
+    }
 
   }
 
@@ -129,7 +130,7 @@ class HydrographRuntime extends HydrographRuntimeService {
 
   override def prepareToExecute(): Unit = {
     LOG.info("Building spark flows")
-      flows = FlowBuilder(RuntimeContext.instance).buildFlow()
+    flowBuilder = FlowBuilder(RuntimeContext.instance, hydrographListener)
     LOG.info("Spark flows built successfully")
   }
 
@@ -138,31 +139,33 @@ class HydrographRuntime extends HydrographRuntimeService {
       LOG.info(CommandLineOptionsProcessor.OPTION_NO_EXECUTION + " option is provided so skipping execution")
       return
     }*/
-    for (sparkFlow <- flows) {
-      try{
-        hydrographListener.start(sparkFlow)
-        //        HydrographFlowPlugin.getComps()
-        sparkFlow.execute()
-        hydrographListener.end(sparkFlow)
-       /* for(accumulator <- sparkFlow.getAccumulatorOnFlow()){
-          accumulator.reset()
-        }*/
+    /*for (sparkFlow <- flows) {
+        try{
+          hydrographListener.start(sparkFlow)
+          //        HydrographFlowPlugin.getComps()
+          sparkFlow.execute()
+          hydrographListener.end(sparkFlow)
+          /* for(accumulator <- sparkFlow.getAccumulatorOnFlow()){
+             accumulator.reset()
+           }*/
+        }
+        catch{case e: Exception => {
+          hydrographListener.failComponentsOfFlow(sparkFlow)
+          //                executionTrackingListener.getStatus().asScala.foreach(println)
+          throw e
+        }
       }
-      catch{case e: Exception => {
-        hydrographListener.failComponentsOfFlow(sparkFlow)
-//                executionTrackingListener.getStatus().asScala.foreach(println)
-        throw e
-      }
-      }
-    }
+    }*/
+
+    flowBuilder.buildAndExecuteFlows()
     //    RuntimeContext.instance.sparkSession.sparkContext.longAccumulator
     RuntimeContext.instance.sparkSession.stop()
-//        executionTrackingListener.getStatus().asScala.foreach(println)
+    //        executionTrackingListener.getStatus().asScala.foreach(println)
   }
 
   override def getExecutionStatus: AnyRef = {
     if (executionTrackingListener != null)
-    return executionTrackingListener.getStatus()
+      return executionTrackingListener.getStatus()
     return null
   }
 
@@ -177,7 +180,7 @@ class HydrographRuntime extends HydrographRuntimeService {
           LOG.info("Deleting temp path:" + tmpPath)
           try {
             fileSystem = FileSystem.get(RuntimeContext.instance.sparkSession.sparkContext.hadoopConfiguration)
-//            fileSystem.delete(fullPath, true)
+            //            fileSystem.delete(fullPath, true)
           }
           catch {
             case exception: NullPointerException => {
@@ -229,19 +232,19 @@ class HydrographRuntime extends HydrographRuntimeService {
           val pattern: Regex = "(.*)\\((.*)\\)".r
           val matchIterator = pattern.findAllIn(property.getValue.toString)
           if (matchIterator.hasNext) {
-          while (matchIterator.hasNext) {
-            matchIterator.group(1) match {
-              case x if (x.endsWith("OrElse")) => {
-                val arrayOfParams: Array[String] = matchIterator.group(2).split(",")
-                configProperties.set(property.getKey.toString.trim, sys.env.getOrElse(arrayOfParams(0).trim.replaceAll("\"", ""), arrayOfParams(1).trim.replaceAll("\"", "")).trim)
+            while (matchIterator.hasNext) {
+              matchIterator.group(1) match {
+                case x if (x.endsWith("OrElse")) => {
+                  val arrayOfParams: Array[String] = matchIterator.group(2).split(",")
+                  configProperties.set(property.getKey.toString.trim, sys.env.getOrElse(arrayOfParams(0).trim.replaceAll("\"", ""), arrayOfParams(1).trim.replaceAll("\"", "")).trim)
+                }
+                case y if (y.endsWith("get")) => {
+                  configProperties.set(property.getKey.toString.trim, sys.env.get(matchIterator.group(2).replaceAll("\"", "")).get.trim)
+                }
               }
-              case y if (y.endsWith("get")) => {
-                configProperties.set(property.getKey.toString.trim, sys.env.get(matchIterator.group(2).replaceAll("\"", "")).get.trim)
-              }
+              matchIterator.next()
             }
-            matchIterator.next()
           }
-        }
           else{
             configProperties.set(property.getKey.toString.trim, property.getValue.toString.trim)
           }
@@ -283,17 +286,17 @@ class HydrographRuntime extends HydrographRuntimeService {
   }
 
 
-    def getExecutionTrackingClass(executionTrackingKey: String): String = {
-      var properties: OrderedProperties = new OrderedProperties
-      try {
-        properties = OrderedPropertiesHelper.getOrderedProperties("RegisterPlugin.properties")
-      }
-      catch {
-
-        case e: IOException => {
-          throw new RuntimeException("Error reading the properties file: RegisterPlugin.properties" , e)
-        }
-      }
-       properties.getProperty(executionTrackingKey)
+  def getExecutionTrackingClass(executionTrackingKey: String): String = {
+    var properties: OrderedProperties = new OrderedProperties
+    try {
+      properties = OrderedPropertiesHelper.getOrderedProperties("RegisterPlugin.properties")
     }
+    catch {
+
+      case e: IOException => {
+        throw new RuntimeException("Error reading the properties file: RegisterPlugin.properties" , e)
+      }
+    }
+    properties.getProperty(executionTrackingKey)
+  }
 }

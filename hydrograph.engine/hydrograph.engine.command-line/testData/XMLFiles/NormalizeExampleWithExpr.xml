@@ -12,7 +12,7 @@
     limitations under the License
  -->
 
-<p:graph name="NormalizeExample" xmlns:p="hydrograph/engine/jaxb/main"
+<p:graph name="NormalizeExampleWithExpr" xmlns:p="hydrograph/engine/jaxb/main"
 		 xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
 		 xmlns:op="hydrograph/engine/jaxb/operationstypes"
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -26,7 +26,7 @@
 				<field name="Rewards" type="java.lang.String" />
 			</schema>
 		</outSocket>
-		<path uri="testData\Input\delimitedInputFileForExpr" />
+		<path uri="testData/Input/delimitedInputFileForExpr" />
 		<delimiter value="|" />
 		<hasHeader value="false" />
 		<safe value="true" />
@@ -83,7 +83,7 @@
 				<field name="RewardCategory" type="java.lang.String" />
 			</schema>
 		</inSocket>
-		<path uri="testData/Output/NormalizeOp1" />
+		<path uri="testData/Output/NormalizeExampleWithExpr" />
 		<delimiter value="," />
 		<hasHeader value="true" />
 		<charset value="ISO-8859-1" />

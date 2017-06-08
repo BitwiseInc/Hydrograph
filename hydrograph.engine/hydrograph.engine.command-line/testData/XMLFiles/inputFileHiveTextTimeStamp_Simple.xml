@@ -12,12 +12,10 @@
     limitations under the License
  -->
 
-<p:graph name="inputFileHiveTextTimeStamp" xmlns:p="hydrograph/engine/jaxb/main"
+<p:graph name="InputFileHiveTextTimeStamp" xmlns:p="hydrograph/engine/jaxb/main"
 		 xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../elt-core/src/main/resources/newxmlschema/main/main.xsd ">
-
-
+		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd ">
 
 	<inputs id="hive_text" batch="0" xsi:type="it:hiveTextFile">
 		<outSocket id="out0">
@@ -47,8 +45,8 @@
 			<field name="f_bigdecimal" />
 		</partitionKeys>
 		<delimiter value="," />
-		<databaseName value="devl_fraud" />
-		<tableName value="T8" />
+		<databaseName value="@{databaseName}" />
+		<tableName value="@{tableName}" />
 	</inputs>
 
 
@@ -77,7 +75,7 @@
 					precision="10" scaleType="explicit" />
 			</schema>
 		</inSocket>
-		<path uri="testData/Output/HiveTextOutput" />
+		<path uri="testData/Output/HiveTextTimeStampOutput" />
 
 		<delimiter value="," />
 		<hasHeader value="false" />

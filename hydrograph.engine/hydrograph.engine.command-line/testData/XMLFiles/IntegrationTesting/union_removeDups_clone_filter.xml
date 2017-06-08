@@ -14,7 +14,7 @@
 
 <p:graph name="JoinExample" xmlns:p="hydrograph/engine/jaxb/main"
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../../elt-core/src/main/resources/newxmlschema/main/main.xsd  ">
+		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd  ">
 
 
 	<operations xmlns:ns4="hydrograph/engine/jaxb/operationstypes"
@@ -22,7 +22,7 @@
 		batch="1" xsi:type="ns4:filter">
 		<inSocket fromComponentId="Clone_01" fromSocketId="out0" id="in0"
 			type="in" />
-		<operation class="hydrograph.engine.core.userfuntions.Filter"
+		<operation class="hydrograph.engine.transformation.userfunctions.filter.FilterForXML"
 			id="opt">
 			<inputFields>
 				<field inSocketId="in0" name="fname" />

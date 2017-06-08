@@ -32,6 +32,7 @@ import org.apache.spark.sql.types._
 import org.slf4j.{Logger, LoggerFactory}
 
 import scala.util.control.NonFatal
+
 /**
   * The Object CSVRelation.
   *
@@ -40,11 +41,12 @@ import scala.util.control.NonFatal
   */
 object CSVRelation {
   private val LOG: Logger = LoggerFactory.getLogger(CSVRelation.getClass.getCanonicalName)
+
   def univocityTokenizer(
-      file: RDD[String],
-      header: Seq[String],
-      firstLine: String,
-      params: CSVOptions): RDD[Array[String]] = {
+                          file: RDD[String],
+                          header: Seq[String],
+                          firstLine: String,
+                          params: CSVOptions): RDD[Array[String]] = {
     // If header is set, make sure firstLine is materialized before sending to executors.
     file.mapPartitions { iter =>
       new BulkCsvReader(
@@ -55,18 +57,18 @@ object CSVRelation {
   }
 
   /**
-   * Returns a function that parses a single CSV record (in the form of an array of strings in which
-   * each element represents a column) and turns it into either one resulting row or no row (if the
-   * the record is malformed).
-   *
-   * The 2nd argument in the returned function represents the total number of malformed rows
-   * observed so far.
-   */
+    * Returns a function that parses a single CSV record (in the form of an array of strings in which
+    * each element represents a column) and turns it into either one resulting row or no row (if the
+    * the record is malformed).
+    *
+    * The 2nd argument in the returned function represents the total number of malformed rows
+    * observed so far.
+    */
   // This is pretty convoluted and we should probably rewrite the entire CSV parsing soon.
   def csvParser(
-      schema: StructType,
-      requiredColumns: Array[String],
-      params: CSVOptions): (Array[String], Int) => Option[InternalRow] = {
+                 schema: StructType,
+                 requiredColumns: Array[String],
+                 params: CSVOptions): (Array[String], Int) => Option[InternalRow] = {
     val schemaFields = schema.fields
     val requiredFields = StructType(requiredColumns.map(schema(_))).fields
     val safeRequiredFields = if (params.dropMalformed) {
@@ -93,12 +95,13 @@ object CSVRelation {
         if (numMalformedRows == params.maxMalformedLogPerPartition - 1) {
           LOG.warn(
             s"More than ${params.maxMalformedLogPerPartition} malformed records have been " +
-            "found on this partition. Malformed records from now on will not be logged.")
+              "found on this partition. Malformed records from now on will not be logged.")
         }
         None
       } else if (params.failFast && schemaFields.length != tokens.length) {
-        throw new RuntimeException(s"Malformed line in FAILFAST mode: " +
-          s"${tokens.mkString(params.delimiter.toString)}")
+        throw new RuntimeException(s"Malformed line found in strict mode: '" +
+          s"${tokens.mkString(params.delimiter.toString)}" + "'.Number of fields specified in schema is "
+          + schemaFields.length + " and number of fields in line is " + tokens.length)
       } else {
         val indexSafeTokens = if (params.permissive && schemaFields.length > tokens.length) {
           tokens ++ new Array[String](schemaFields.length - tokens.length)
@@ -108,24 +111,48 @@ object CSVRelation {
           tokens
         }
         try {
-          var index: Int = 0
-          var subIndex: Int = 0
+
+          def getSafeMessage(value: Any, i: Int): String = {
+            try
+              return "field " + schemaFields.apply(i).name + " cannot be coerced from : " + value + " to: " + schema.apply(i).dataType
+
+            catch {
+              case throwable: Throwable => {
+                return "field pos " + i + " cannot be coerced from: " + value + ", pos has no corresponding field name or coercion type"
+              }
+            }
+          }
+
+          var index = 0
+          var subIndex = 0
           while (subIndex < safeRequiredIndices.length) {
             index = safeRequiredIndices(subIndex)
             val field = schemaFields(index)
             // It anyway needs to try to parse since it decides if this row is malformed
             // or not after trying to cast in `DROPMALFORMED` mode even if the casted
             // value is not stored in the row.
-            val value = CSVTypeCast.castTo(
-              indexSafeTokens(index),
-              field.dataType,
-              field.nullable,
-              params.dateFormat(index),
-              params)
-            if (subIndex < requiredSize) {
-              row(subIndex) = value
+            var value: Any = ""
+            try {
+              value = CSVTypeCast.castTo(
+                indexSafeTokens(index),
+                field.dataType,
+                field.nullable,
+                params.dateFormat(index),
+                params)
+
+              if (subIndex < requiredSize) row(subIndex) = value
+              subIndex = subIndex + 1
+            } catch {
+              case NonFatal(e) => if (params.isSafe) {
+                if (subIndex < requiredSize) {
+                  row(subIndex) = null
+                }
+                subIndex = subIndex + 1
+              } else {
+                LOG.error(getSafeMessage(indexSafeTokens(index), index) + "\n Line being parsed => " + s"${tokens.mkString(params.delimiter.toString)}")
+                throw new RuntimeException(getSafeMessage(indexSafeTokens(index), index) + "\n Line being parsed => " + s"${tokens.mkString(params.delimiter.toString)}", e)
+              }
             }
-            subIndex = subIndex + 1
           }
           Some(row)
         } catch {
@@ -137,7 +164,7 @@ object CSVRelation {
             if (numMalformedRows == params.maxMalformedLogPerPartition - 1) {
               LOG.warn(
                 s"More than ${params.maxMalformedLogPerPartition} malformed records have been " +
-                "found on this partition. Malformed records from now on will not be logged.")
+                  "found on this partition. Malformed records from now on will not be logged.")
             }
             None
         }
@@ -145,9 +172,10 @@ object CSVRelation {
     }
   }
 
+
   // Skips the header line of each file if the `header` option is set to true.
   def dropHeaderLine(
-      file: PartitionedFile, lines: Iterator[String], csvOptions: CSVOptions): Unit = {
+                      file: PartitionedFile, lines: Iterator[String], csvOptions: CSVOptions): Unit = {
     // TODO What if the first partitioned file consists of only comments and empty lines?
     if (csvOptions.headerFlag && file.start == 0) {
       val nonEmptyLines = if (csvOptions.isCommentSet) {
@@ -166,28 +194,26 @@ object CSVRelation {
 
 private class CSVOutputWriterFactory(params: CSVOptions) extends OutputWriterFactory {
   override def newInstance(
-      path: String,
-      bucketId: Option[Int],
-      dataSchema: StructType,
-      context: TaskAttemptContext): OutputWriter = {
+                            path: String,
+                            bucketId: Option[Int],
+                            dataSchema: StructType,
+                            context: TaskAttemptContext): OutputWriter = {
     if (bucketId.isDefined) sys.error("csv doesn't support bucketing")
     new CsvOutputWriter(path, dataSchema, context, params)
   }
 }
 
 private class CsvOutputWriter(
-    path: String,
-    dataSchema: StructType,
-    context: TaskAttemptContext,
-    params: CSVOptions) extends OutputWriter {
-
-  // create the Generator without separator inserted between 2 records
-  private[this] val text = new Text()
+                               path: String,
+                               dataSchema: StructType,
+                               context: TaskAttemptContext,
+                               params: CSVOptions) extends OutputWriter {
 
   // A `ValueConverter` is responsible for converting a value of an `InternalRow` to `String`.
   // When the value is null, this converter should not be called.
   private type ValueConverter = (InternalRow, Int) => String
-
+  // create the Generator without separator inserted between 2 records
+  private[this] val text = new Text()
   // `ValueConverter`s for all values in the fields of the schema
   private val valueConverters: Array[ValueConverter] =
     dataSchema.map(_.dataType).map(makeConverter).toArray
@@ -205,8 +231,18 @@ private class CsvOutputWriter(
   }
 
   private val FLUSH_BATCH_SIZE = 1024L
-  private var records: Long = 0L
   private val csvWriter = new LineCsvWriter(params, dataSchema.fieldNames.toSeq)
+  private var records: Long = 0L
+
+  override def write(row: Row): Unit = throw new UnsupportedOperationException("call writeInternal")
+
+  override def writeInternal(row: InternalRow): Unit = {
+    csvWriter.writeRow(rowToString(row), records == 0L && params.headerFlag)
+    records += 1
+    if (records % FLUSH_BATCH_SIZE == 0) {
+      flush()
+    }
+  }
 
   private def rowToString(row: InternalRow): Seq[String] = {
     var i = 0
@@ -222,30 +258,9 @@ private class CsvOutputWriter(
     values
   }
 
-  private def makeConverter(dataType: DataType): ValueConverter = dataType match {
-    case DateType =>
-      (row: InternalRow, ordinal: Int) =>
-        params.dateFormat(ordinal).format(DateTimeUtils.toJavaDate(row.getInt(ordinal)))
-
-    case TimestampType =>
-      (row: InternalRow, ordinal: Int) =>
-        params.dateFormat(ordinal).format(DateTimeUtils.toJavaTimestamp(row.getLong(ordinal)))
-
-//    case udt: UserDefinedType[_] => makeConverter(udt.sqlType)
-
-    case dt: DataType =>
-      (row: InternalRow, ordinal: Int) =>
-        row.get(ordinal, dt).toString
-  }
-
-  override def write(row: Row): Unit = throw new UnsupportedOperationException("call writeInternal")
-
-  override def writeInternal(row: InternalRow): Unit = {
-    csvWriter.writeRow(rowToString(row), records == 0L && params.headerFlag)
-    records += 1
-    if (records % FLUSH_BATCH_SIZE == 0) {
-      flush()
-    }
+  override def close(): Unit = {
+    flush()
+    recordWriter.close(context)
   }
 
   private def flush(): Unit = {
@@ -256,8 +271,19 @@ private class CsvOutputWriter(
     }
   }
 
-  override def close(): Unit = {
-    flush()
-    recordWriter.close(context)
+  private def makeConverter(dataType: DataType): ValueConverter = dataType match {
+    case DateType =>
+      (row: InternalRow, ordinal: Int) =>
+        params.dateFormat(ordinal).format(DateTimeUtils.toJavaDate(row.getInt(ordinal)))
+
+    case TimestampType =>
+      (row: InternalRow, ordinal: Int) =>
+        params.dateFormat(ordinal).format(DateTimeUtils.toJavaTimestamp(row.getLong(ordinal)))
+
+    //    case udt: UserDefinedType[_] => makeConverter(udt.sqlType)
+
+    case dt: DataType =>
+      (row: InternalRow, ordinal: Int) =>
+        row.get(ordinal, dt).toString
   }
 }

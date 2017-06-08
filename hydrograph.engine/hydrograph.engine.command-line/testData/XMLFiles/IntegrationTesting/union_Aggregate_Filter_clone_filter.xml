@@ -14,7 +14,7 @@
 
 <p:graph name="JoinExample" xmlns:p="hydrograph/engine/jaxb/main"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../../elt-core/src/main/resources/newxmlschema/main/main.xsd  ">
+         xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd  ">
 
 <inputs xmlns:ns4="hydrograph/engine/jaxb/inputtypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="IFDelimited_01" batch="1" xsi:type="ns4:textFileDelimited">
         <outSocket xmlns:ns5="hydrograph/engine/jaxb/itfd" id="out0" type="out" xsi:type="ns5:type-input-delimited-out-socket">
@@ -94,7 +94,7 @@
     </straightPulls>
     <operations xmlns:ns4="hydrograph/engine/jaxb/operationstypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Filter_02" batch="1" xsi:type="ns4:filter">
         <inSocket fromComponentId="Clone_03" fromSocketId="out1" id="in0" type="in"/>
-        <operation class="hydrograph.engine.core.userfuntions.Filter" id="opt">
+        <operation class="hydrograph.engine.transformation.userfunctions.filter.FilterForXML" id="opt">
             <inputFields>
                 <field inSocketId="in0" name="fname"/>
             </inputFields>

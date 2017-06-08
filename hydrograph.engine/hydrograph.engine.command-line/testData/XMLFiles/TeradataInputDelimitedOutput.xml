@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License
+ -->
+
+<p:graph xmlns:p="hydrograph/engine/jaxb/main" xmlns:it="hydrograph/engine/jaxb/inputtypes"
+         xmlns:ot="hydrograph/engine/jaxb/outputtypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         name="TeradataInputDelimitedOutput"
+         xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd  ">
+
+    <inputs id="teradata" batch="0" xsi:type="it:teradata">
+        <outSocket id="out0">
+            <schema name="schema1">
+                <field name="a" type="java.lang.Short" />
+                <field name="b" type="java.lang.Boolean" />
+                <field name="c" type="java.lang.Long" />
+                <field name="d" type="java.lang.Float" />
+                <field name="e" type="java.lang.Integer" />
+                <field name="f" type="java.lang.String" />
+                <field name="g" type="java.lang.Double" />
+                <field name="h" type="java.util.Date" format="yyyy-MM-dd"/>
+                <field name="i" type="java.util.Date" format="yyyy-MM-dd HH:mm:ss" />
+                <field name="j" type="java.math.BigDecimal"  scale="2"
+                       precision="10" scaleType="explicit" />
+            </schema>
+        </outSocket>
+        <databaseName value="@{databaseName}"/>
+        <hostName value="@{hostName}"/>
+        <port value="@{port}"/>
+        <jdbcDriver value="TeraJDBC4"/>
+        <tableName value="@{tableName}"/>
+        <!--<interface value="DEFAULT"/>-->
+        <exportOptions value="@{exportOptions}"/>
+        <username value="@{username}"/>
+        <password value="@{password}"/>
+    </inputs>
+
+    <outputs id="OFDelimited_01" batch="0" xsi:type="ot:textFileDelimited">
+        <inSocket fromComponentId="teradata" fromSocketId="out0" id="in0"
+                  type="in">
+            <schema name="schema2">
+                <field name="e" type="java.lang.Integer" />
+                <field name="i" type="java.util.Date" format="yyyy-MM-dd HH:mm:ss" />
+                <field name="b" type="java.lang.Integer" />
+                <field name="f" type="java.lang.String" />
+                <field name="h" type="java.util.Date" format="yyyy-MM-dd"/>
+            </schema>
+        </inSocket>
+        <path uri="testData/Output/teradataOutput1"/>
+        <delimiter value=","/>
+        <hasHeader value="false"/>
+        <safe value="false"/>
+        <strict value="true"/>
+        <charset value="UTF-8"/>
+    </outputs>
+
+</p:graph>

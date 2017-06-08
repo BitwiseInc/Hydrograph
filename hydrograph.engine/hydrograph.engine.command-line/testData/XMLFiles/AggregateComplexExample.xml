@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2016 Capital One Services, LLC and Bitwise, Inc. Licensed
+	under the Apache License, Version 2.0 (the"License"); you may not use this
+	file except in compliance with the License. You may obtain a copy of the
+	License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by
+	applicable law or agreed to in writing, software distributed under the License
+	is distributed on an"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+	KIND, either express or implied. See the License for the specific language
+	governing permissions and limitations under the License. -->
+
+<p:graph name="AggregateComplexExample" xmlns:p="hydrograph/engine/jaxb/main"
+         xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
+         xmlns:op="hydrograph/engine/jaxb/operationstypes"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd ">
+
+	<inputs id="input"  xsi:type="it:textFileDelimited">
+		<outSocket id="out0">
+			<schema name="internal">
+				<field name="applyingFor" type="java.lang.String" />
+				<field name="apptype" type="java.lang.String" />
+				<field name="bookletType" type="java.lang.String" />
+				<field name="givennameapplicant" type="java.lang.String" />
+				<field name="surnameapplicant" type="java.lang.String" />
+				<field name="gender" type="java.lang.String" />
+				<field name="alias" type="java.lang.Boolean" />
+				<field name="checkPrevName" type="java.lang.Boolean" />
+				<field name="dt_dob" type="java.util.Date" format="yyyy/MM/dd" />
+				<field name="validityRequired" type="java.lang.Boolean" />
+				<field name="checkPOBOutsideIndia" type="java.lang.Boolean" />
+				<field name="POB" type="java.lang.String" />
+				<field name="country" type="java.lang.String" />
+				<field name="state" type="java.lang.String" />
+				<field name="stateProvince" type="java.lang.String" />
+				<field name="maritalStatus" type="java.lang.String" />
+				<field name="citizenshipOfIndiaBy" type="java.lang.String" />
+				<field name="PAN" type="java.lang.Long" />
+				<field name="voteId" type="java.lang.Long" />
+				<field name="employmentType" type="java.lang.String" />
+				<field name="organizationName" type="java.lang.String" />
+				<field name="parentSpouseGovtEmp" type="java.lang.Boolean" />
+				<field name="educationalQualification" type="java.lang.String" />
+				<field name="nonECR" type="java.lang.Boolean" />
+				<field name="aadhaarNumber" type="java.lang.Long" />
+				<field name="fatherGuardianFilePassportNumber" type="java.math.BigDecimal"
+					   scale="3" scaleType="explicit" precision="7" />
+				<field name="fatherGuardiannationalityNotIndian" type="java.lang.Boolean" />
+				<field name="motherGuardianFilePassportNumber" type="java.lang.Long" />
+				<field name="motherGuardiannationalityNotIndian" type="java.lang.Boolean" />
+				<field name="checkTempVisit" type="java.lang.Boolean" />
+				<field name="residingSinceMonth" type="java.lang.String" />
+				<field name="residingSinceYear" type="java.lang.Integer" />
+				<field name="statePresentAdd" type="java.lang.String" />
+				<field name="pin" type="java.lang.Long" />
+				<field name="mobileNumber" type="java.lang.Long" />
+				<field name="telephoneNumber" type="java.lang.Long" />
+				<field name="checkDiplomaaticOfficial" type="java.lang.Boolean" />
+				<field name="tf_DiplOfficialpassportNumber" type="java.lang.Long" />
+				<field name="dDissueDate" type="java.util.Date" format="yyyy/MM/dd HH:mm:ss" />
+				<field name="dDExpiryDate" type="java.util.Date" format="yyyy/MM/dd HH:mm:ss" />
+				<field name="checkappliedPP" type="java.lang.Boolean" />
+				<field name="fileNumber" type="java.math.BigDecimal" scale="5"
+					   scaleType="explicit" precision="9" />
+				<field name="monthofApplying" type="java.lang.String" />
+				<field name="yearofApplying" type="java.lang.Integer" />
+				<field name="checkCriminal" type="java.lang.Boolean" />
+				<field name="checkOffence5years" type="java.lang.Boolean" />
+				<field name="checkPassportRefused" type="java.lang.Boolean" />
+				<field name="checkImpoundedRevoked" type="java.lang.Boolean" />
+				<field name="tf_passportNumber_revoke" type="java.lang.Long" />
+				<field name="ecDateofIssue" type="java.util.Date" format="yyyy/MM/dd" />
+			</schema>
+		</outSocket>
+		<path uri="testData/Input/Input3.txt"/>
+		<delimiter value="," />
+		<hasHeader value="false" />
+	</inputs>
+
+	<operations id="aggregate" xsi:type="op:aggregate">
+		<inSocket fromComponentId="input" fromSocketId="out0" id="in0" />
+		<operation id="monthofapplying"
+				   class="hydrograph.engine.transformation.userfunctions.aggregate.Count">
+			<inputFields>
+				<field name="yearofApplying" inSocketId="in0" />
+			</inputFields>
+			<outputFields>
+				<field name="sum" type="java.lang.Long" />
+				<field name="count" type="java.lang.Long" />
+			</outputFields>
+		</operation> 
+		<outSocket id="out0">
+			<passThroughField name="ecDateofIssue" inSocketId="in0" />
+			<passThroughField name="tf_passportNumber_revoke" inSocketId="in0" />
+			<passThroughField name="monthofApplying" inSocketId="in0" />
+			<passThroughField name="maritalStatus" inSocketId="in0" />
+			<mapField sourceName="checkPassportRefused" name="checkPassportRefused_new" inSocketId="in0"/>
+			<operationField name="sum" operationId="monthofapplying" />
+			<operationField name="count" operationId="monthofapplying" />
+		</outSocket>
+		<primaryKeys>
+			<field name="monthofApplying" />
+			<field name="maritalStatus" />
+		</primaryKeys>
+	</operations>
+
+	<outputs id="output1" xsi:type="ot:textFileDelimited">
+		<inSocket fromComponentId="aggregate" fromSocketId="out0" id="in0"
+				  type="in">
+			<schema name="internal">
+				<field name="monthofApplying" type="java.lang.String" />
+				<field name="maritalStatus" type="java.lang.String" />
+				<field name="count" type="java.lang.Long" />
+				<field name="sum" type="java.lang.Long" />
+				<field name="tf_passportNumber_revoke" type="java.lang.Long" />
+				<field name="ecDateofIssue" type="java.util.Date" format="yyyy/MM/dd" />
+				<field name="checkPassportRefused_new" type="java.lang.Boolean" />
+			</schema>
+		</inSocket>
+		<overWrite value="true" />
+		<path uri="testData/Output/AggregateComplexOutput" />
+		<delimiter value="," />
+		<hasHeader value="true" />
+		<charset value="ISO-8859-1" />
+	</outputs>
+
+</p:graph>

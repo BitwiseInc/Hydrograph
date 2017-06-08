@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License
+ -->
+
+<p:graph name="NormalizeMetaPivotExample" xmlns:p="hydrograph/engine/jaxb/main"
+		 xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
+		 xmlns:op="hydrograph/engine/jaxb/operationstypes"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd">
+
+	<inputs id="input1" batch="0" xsi:type="it:textFileDelimited">
+		<outSocket id="out0">
+			<schema name="outSchema">
+				<field name="account_no" type="java.lang.String" />
+				<field name="names" type="java.lang.String" />
+				<field name="transaction_type" type="java.lang.String" />
+				<field name="total_amount" type="java.lang.String"  />
+				<field name="total_count" type="java.lang.String"  />
+			</schema>
+		</outSocket>
+		<path uri="testData/Input/normalize_input.txt" />
+		<delimiter value="," />
+		<hasHeader value="false" />
+		<safe value="true" />
+		<charset value="ISO-8859-1" />
+	</inputs>
+
+	<operations id="normalize" xsi:type="op:normalize">
+		<inSocket fromComponentId="input1" fromSocketId="out0" id="in0" />
+		<operation id="opt1" class="hydrograph.engine.transformation.userfunctions.normalize.MetaPivot">
+			<inputFields>
+				<field name="account_no" inSocketId="in0" />
+				<field name="names" inSocketId="in0" />
+				<field name="transaction_type" inSocketId="in0" />
+				<field name="total_amount" inSocketId="in0" />
+				<field name="total_count" inSocketId="in0" />
+			</inputFields>
+
+			<outputFields>
+				<field name="field_name" type="java.lang.String" />
+				<field name="field_value" type="java.lang.String" />
+			</outputFields>
+
+		</operation>
+		<outSocket id="out0">
+			<operationField name="field_name" operationId="opt1" />
+			<operationField name="field_value" operationId="opt1" />
+		</outSocket>
+	</operations>
+
+	<outputs id="output1" xsi:type="ot:textFileDelimited">
+		<inSocket fromComponentId="normalize" fromSocketId="out0" id="in0">
+			<schema name="outSchema">
+				<field name="field_name" type="java.lang.String" />
+				<field name="field_value" type="java.lang.String" />
+			</schema>
+		</inSocket>
+		<path uri="testData/Output/NormalizeMetaPivot" />
+		<delimiter value="," />
+		<hasHeader value="true" />
+		<charset value="ISO-8859-1" />
+	</outputs>
+	
+</p:graph>

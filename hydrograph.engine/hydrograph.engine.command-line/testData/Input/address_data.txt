@@ -1,0 +1,101 @@
+City|Address|Region		
+Berlin|479-6656 Primis Road|BE		
+Kano|9403 Orci. Street|Kano		
+Meppel|2147 Vitae Street|Dr		
+Aparecida de Goiânia|668-6234 Cras Ave|Goiás		
+Berlin|P.O. Box 958	 5745 Aliquam Rd.|BE	
+Saint-Georges|Ap #127-505 Eros. Rd.|Quebec		
+Punitaqui|5968 Et Rd.|Coquimbo		
+Vienna|P.O. Box 283	 7901 Odio. Street|Vienna	
+Belo Horizonte|520-7572 Dolor Road|MG		
+Malbaie|P.O. Box 814	 3744 Velit. Ave|QC	
+Rezé|P.O. Box 474	 7090 Integer Rd.|PA	
+Bellefontaine|P.O. Box 826	 3525 Velit Rd.|LX	
+Warszawa|637-4358 Vel Rd.|Mazowieckie		
+Ashburton|837 Neque Rd.|South Island		
+Ñuñoa|818-4553 Curae; Avenue|RM		
+Quesada|4288 Augue Rd.|Alajuela		
+Nicoya|874-6178 Pede	 Avenue|G	
+Naihati|5578 Sit Avenue|West Bengal		
+Vienna|P.O. Box 563	 8232 Velit. St.|Wie	
+Liverpool|534-6443 Lorem Rd.|NSW		
+Matagami|649 At Av.|Quebec		
+Andacollo|P.O. Box 987	 1237 Lobortis Road|Coquimbo	
+Patarrá|P.O. Box 785	 1383 Aenean Avenue|San José	
+Queanbeyan|P.O. Box 977	 2231 Sem	 Road|NSW
+Turnhout|625 Enim. Av.|AN		
+Wrocław|1008 Purus	 St.|Dolnośląskie	
+Barrie|P.O. Box 127	 2785 Lacus St.|Ontario	
+Torres del Paine|Ap #800-1103 Ullamcorper Ave|XII		
+Arzano|P.O. Box 322	 6665 Nunc. Street|CAM	
+Sirsa|986-822 Nec Street|Haryana		
+Matamata|P.O. Box 803	 9414 Nulla Avenue|North Island	
+Sambalpur|Ap #678-1183 Semper	 Avenue|Odisha	
+Belfast|781-4538 Tellus St.|Ulster		
+Lo Barnechea|916-3624 Accumsan Street|RM		
+Gbongan|Ap #440-4224 Non Rd.|Osun		
+Dublin|469-5664 Cursus	 Avenue|L	
+Des Moines|Ap #985-4900 Nec	 Road|Iowa	
+Idaho Falls|P.O. Box 608	 3162 Malesuada St.|ID	
+Temuka|935-3754 Nec St.|South Island		
+Queanbeyan|Ap #506-1649 Tellus Ave|NSW		
+Tarnów|Ap #516-477 Nisi St.|MP		
+İslahiye|Ap #234-5966 Imperdiet Rd.|Gaz		
+Poznań|Ap #481-146 Pellentesque St.|WP		
+Reyhanlı|Ap #650-3253 Urna. Avenue|Hat		
+Vienna|633-7477 Nunc St.|Wie		
+Olathe|498-8805 At Street|Kansas		
+Township of Minden Hills|Ap #872-7660 Amet Rd.|ON		
+Elversele|P.O. Box 249	 6170 Vivamus Avenue|OV	
+Padre Hurtado|Ap #853-6756 Nisi. Rd.|RM		
+Hastings|902-8212 Neque St.|North Island		
+Getafe|903-4788 Ridiculus St.|Madrid		
+Sete Lagoas|P.O. Box 583	 2481 Est. Road|Minas Gerais	
+Bergerac|586-2353 Quam Ave|AQ		
+Belfast|8280 Praesent Road|Ulster		
+São Gonçalo|334-9534 Vel Street|RJ		
+Dalbeattie|562-391 A	 St.|Kirkcudbrightshire	
+Karacabey|2548 Dui Street|Bur		
+Courbevoie|4805 Metus Avenue|IL		
+Patarrá|248-9151 Id St.|SJ		
+Cockburn|P.O. Box 764	 954 Eleifend. St.|Western Australia	
+Gravataí|266-4304 Mattis St.|Rio Grande do Sul		
+Palma de Mallorca|1579 Tellus St.|BA		
+Berlin|P.O. Box 904	 9913 Nec Road|BE	
+Gespeg|7899 Rutrum Road|Quebec		
+Darıca|5760 Amet Avenue|Koc		
+Modakeke|963-9289 Rutrum Road|OS		
+Mersin|376-7393 Blandit Rd.|Mer		
+Belfast|8209 In	 Ave|U	
+Launceston|Ap #564-6600 Leo. St.|Tasmania		
+Lidingo|274-9193 Non	 Rd.|Stockholms län	
+Istanbul|P.O. Box 285	 9082 Euismod St.|Ist	
+Starachowice|253-3063 Scelerisque Ave|Swiętokrzyskie		
+LaSalle|P.O. Box 141	 1156 Montes	 Road|Ontario
+Wrocław|Ap #751-7098 Mollis Ave|DS		
+Owensboro|504-2503 Fringilla Rd.|KY		
+Kapiti|Ap #213-3864 Nec	 Rd.|NI	
+Flushing|P.O. Box 301	 3976 A Rd.|Zeeland	
+Hamburg|Ap #790-8643 Mi Av.|HH		
+Nîmes|415-5927 Dapibus Ave|LA		
+Paris|Ap #743-6193 Libero. Street|IL		
+Wollongong|897-1262 Magnis Rd.|NSW		
+Vinci|P.O. Box 505	 4985 Mollis Rd.|Toscana	
+Port Harcourt|7099 Pede. Av.|Rivers		
+Beypazarı|487-1803 Dui St.|Ankara		
+Starachowice|3849 Commodo St.|SK		
+Tirúa|Ap #456-2255 Accumsan Street|Biobío		
+Ketchikan|Ap #287-7440 Ornare	 St.|AK	
+Kawartha Lakes|Ap #524-4014 Nulla Rd.|Ontario		
+Conchalí|Ap #584-5672 Diam Rd.|RM		
+Ahmedabad|745-5176 Urna Road|Gujarat		
+Teruel|P.O. Box 199	 3680 Faucibus. Street|AR	
+Neder-Over-Heembeek|P.O. Box 229	 6554 Molestie St.|Brussels Hoofdstedelijk Gewest	
+Cefalà Diana|P.O. Box 494	 7006 Adipiscing Street|SIC	
+Pettineo|P.O. Box 744	 1058 Diam. Av.|SIC	
+Macklin|Ap #187-6294 Vulputate Av.|Saskatchewan		
+Lidköping|771-4732 Massa. Road|O		
+Badalona|347-8555 Congue St.|CA		
+Wichita|Ap #779-1386 Et	 Ave|Kansas	
+Caplan|Ap #255-6044 Mauris St.|QC		
+Gaya|253-9911 Urna	 Ave|Bihar	

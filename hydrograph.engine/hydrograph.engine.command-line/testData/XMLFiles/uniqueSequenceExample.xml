@@ -12,7 +12,7 @@
     limitations under the License
  -->
 
-<p:graph name="uniqueSequenceExample" xmlns:p="hydrograph/engine/jaxb/main"
+<p:graph name="UniqueSequenceExample" xmlns:p="hydrograph/engine/jaxb/main"
 		 xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
 		 xmlns:op="hydrograph/engine/jaxb/operationstypes"
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -21,14 +21,13 @@
 
 	<inputs id="input1" batch="0" xsi:type="it:generateRecord">
 		<outSocket id="out0">
-			<schema name="timepass">
+			<schema name="outSchema">
 				<field name="f1" type="java.lang.String" length="5" />
 				<field name="f2" type="java.lang.Integer" rangeFrom="100" rangeTo="111" />
 				<field name="f3" type="java.lang.String" length="5" />
 				<field name="f4" type="java.lang.String" length="5" />
 				<field name="f5" type="java.lang.String" length="5" />
 				<field name="f6" type="java.lang.String" length="5" />
-
 			</schema>
 		</outSocket>
 		<runtimeProperties>

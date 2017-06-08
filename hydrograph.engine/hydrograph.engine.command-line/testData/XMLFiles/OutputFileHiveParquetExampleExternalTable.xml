@@ -15,7 +15,7 @@
 <p:graph xmlns:p="hydrograph/engine/jaxb/main" xmlns:it="hydrograph/engine/jaxb/inputtypes"
 		 xmlns:ot="hydrograph/engine/jaxb/outputtypes"
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../elt-core/src/main/resources/newxmlschema/main/main.xsd"
+		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd"
 		 name="OutputFileHiveParquetExampleExternalTable">
 
 	<inputs id="IFDelimited_01" batch="1" xsi:type="it:textFileDelimited">
@@ -50,7 +50,7 @@
 		<databaseName value="d1External" />
 		<tableName value="t1ExternalTable" />
 		<!-- Create externalTablePath folder hierarchy before running this xml -->
-		<externalTablePath uri="/HiveParquet" />
+		<externalTablePath uri="C:/HiveParquet" />
 	</outputs>
 </p:graph>
 	

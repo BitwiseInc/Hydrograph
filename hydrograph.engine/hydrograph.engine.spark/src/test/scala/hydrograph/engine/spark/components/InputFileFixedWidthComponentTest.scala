@@ -37,7 +37,7 @@ class InputFileFixedWidthComponentTest {
 
     //given
 
-    val inputPathCase: String = "testData/inputFiles/fixed.txt"
+    val inputPathCase: String = "./../hydrograph.engine.command-line//testData/Input/fixed.txt"
 
     val sf1 = new SchemaField("ID", "java.lang.Integer");
     val sf2 = new SchemaField("Name", "java.lang.String");
@@ -91,7 +91,7 @@ class InputFileFixedWidthComponentTest {
   def itShouldThrowExceptionForIncorrectDataTypeWhenSafeFalse(): Unit = {
 
     //given
-    val inputPathCase: String = "testData/inputFiles/fixed.txt"
+    val inputPathCase: String = "./../hydrograph.engine.command-line//testData/Input/fixed.txt"
 
     val sf1 = new SchemaField("ID", "java.lang.Integer");
     val sf2 = new SchemaField("Name", "java.lang.Integer");
@@ -145,7 +145,7 @@ class InputFileFixedWidthComponentTest {
   def itShouldThrowExceptionForMalformedRowWhenStrictTrue(): Unit = {
 
     //given
-    val inputPathCase: String = "testData/inputFiles/fixed.txt"
+    val inputPathCase: String = "./../hydrograph.engine.command-line//testData/Input/fixed.txt"
 
     val sf1 = new SchemaField("ID", "java.lang.Integer");
     val sf2 = new SchemaField("Name", "java.lang.String");
@@ -200,7 +200,7 @@ class InputFileFixedWidthComponentTest {
   def itShouldNotThrowExceptionForMalformedRowWhenStrictFalse(): Unit = {
 
     //given
-    val inputPathCase: String = "testData/inputFiles/fixed.txt"
+    val inputPathCase: String = "./../hydrograph.engine.command-line//testData/Input/fixed.txt"
 
     val sf1 = new SchemaField("ID", "java.lang.Integer");
     val sf2 = new SchemaField("Name", "java.lang.String");

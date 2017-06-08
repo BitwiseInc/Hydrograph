@@ -11,16 +11,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-
 package hydrograph.engine.jaxb.ioracle;
 
 import javax.xml.bind.annotation.XmlRegistry;
 
 
 /**
- * The Class ObjectFactory .
- *
- * @author Bitwise
+ * This object contains factory methods for each 
+ * Java content interface and Java element interface 
+ * generated in the hydrograph.engine.jaxb.ioracle package. 
+ * <p>An ObjectFactory allows you to programatically 
+ * construct new instances of the Java representation 
+ * for XML content. The Java representation of XML 
+ * content can consist of schema derived interfaces 
+ * and classes representing the binding of schema 
+ * type definitions, element declarations and model 
+ * groups.  Factory methods for each of these are 
+ * provided in this class.
+ * 
  */
 @XmlRegistry
 public class ObjectFactory {
@@ -31,6 +39,14 @@ public class ObjectFactory {
      * 
      */
     public ObjectFactory() {
+    }
+
+    /**
+     * Create an instance of {@link TypePartitionsChoice }
+     * 
+     */
+    public TypePartitionsChoice createTypePartitionsChoice() {
+        return new TypePartitionsChoice();
     }
 
     /**

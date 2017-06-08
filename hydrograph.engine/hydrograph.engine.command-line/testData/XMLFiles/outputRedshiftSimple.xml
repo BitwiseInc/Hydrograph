@@ -12,12 +12,12 @@
     limitations under the License
  -->
 
-<p:graph name="Redshift OUTPUT EXAMPLE" xmlns:p="hydrograph/engine/jaxb/main"
+<p:graph name="OutputRedshiftSimple" xmlns:p="hydrograph/engine/jaxb/main"
 		 xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd  ">
 
-	<inputs id="input1" phase="0" xsi:type="it:textFileDelimited">
+	<inputs id="input1" batch="0" xsi:type="it:textFileDelimited">
 		<outSocket id="out0">
 			<schema name="outSchema">
 				<field name="num" type="java.lang.Integer" />
@@ -30,8 +30,7 @@
 		<hasHeader value="false" />
 	</inputs>
 
-
-	<outputs id="out Redshift" phase="0" xsi:type="ot:redshift">
+	<outputs id="out Redshift" batch="0" xsi:type="ot:redshift">
 		<inSocket fromComponentId="input1" fromSocketId="out0" id="in0">
 			<schema name="schema1">
 				<field name="num" type="java.lang.Integer" />
@@ -39,26 +38,22 @@
 				<field name="upr" type="java.lang.String" />
 			</schema>
 		</inSocket>
-		<databaseName value="dev" />
-		<tableName value="testing1" />
-		<username value="kishorb" />
-		<password value="1qaz2wsxK#" />
-		<jdbcurl value="jdbc:redshift://redshift-demo.coz8kmgqksna.us-west-2.redshift.amazonaws.com:5439" />
-		<loadType>
-			<newTable>
-				<primaryKeys>
-					<field name="num" />
-				</primaryKeys> 
-			</newTable>  
-<!-- 			<truncateLoad/> -->
-<!-- 		  <Insert/>   -->
-<!-- 			<update> -->
-<!-- 				<updateByKeys> -->
-<!-- 					<field name="num" />	 -->
-<!-- 				</updateByKeys> -->
-<!--  			</update>  -->
-		</loadType>
-		<batchSize value="1"/>
+		 <databaseName value="@{databaseName}"/>
+        <hostName value="@{hostName}"/>
+        <!-- <port value="@{port}"/> -->
+        <jdbcDriver value="@{jdbcDriver}"/>
+        <tableName value="@{tableName}"/>
+        <userName value="@{userName}"/>
+        <password value="@{password}"/>
+        <loadType>
+            <newTable>
+                <primaryKeys>
+                    <field name="aa"/>
+                </primaryKeys>
+            </newTable>
+            <!--<truncateLoad/>-->
+            <!--<Insert/>-->
+        </loadType>      
 	</outputs>
 </p:graph>
 	

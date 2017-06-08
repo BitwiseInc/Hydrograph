@@ -56,6 +56,9 @@ public class InputFileAvroEntityGenerator extends
 				+ jaxbAvroFile.getId());
 		inputFileAvroEntity.setComponentId(jaxbAvroFile.getId());
 		inputFileAvroEntity.setPath(jaxbAvroFile.getPath().getUri());
+		inputFileAvroEntity.setSafe(jaxbAvroFile.getSafe() != null ? jaxbAvroFile.getSafe().isValue() : false);
+		inputFileAvroEntity
+				.setStrict(jaxbAvroFile.getStrict() != null ? jaxbAvroFile.getStrict().isValue() : true);
 		inputFileAvroEntity
 				.setFieldsList(InputEntityUtils
 						.extractInputFields(jaxbAvroFile.getOutSocket()

@@ -16,7 +16,7 @@
 		 xmlns:it="hydrograph/engine/jaxb/inputtypes" xmlns:ot="hydrograph/engine/jaxb/outputtypes"
 		 xmlns:op="hydrograph/engine/jaxb/operationstypes"
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../elt-core/src/main/java/newxmlschema/main/main.xsd  ">
+		 xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd   ">
 	<runtimeProperties>
 		<property name="mapreduce.job.reduces" value="12" />
 		<property name="dfs.replication" value="2" />
@@ -29,7 +29,7 @@
 				<field name="f2" type="java.math.BigDecimal" scale="2"
 					scaleType="explicit" />
 				<field name="f3" type="java.util.Date" format="yyyy-MM-dd" />
-				<field name="f4" type="java.lang.Integer" />
+				<field name="f4" type="java.lang.Long" />
 				<field name="f5" type="java.lang.String" />
 				<field name="f6" type="java.lang.String" />
 				<field name="f7" type="java.lang.String" />
@@ -39,7 +39,7 @@
 				<field name="f11" type="java.lang.String" />
 				<field name="f12" type="java.lang.String" />
 				<field name="f13" type="java.util.Date" format="yyyy-MM-dd" />
-				<field name="f14" type="java.lang.Integer" />
+				<field name="f14" type="java.lang.Long" />
 				<field name="f15" type="java.lang.String" />
 				<field name="f16" type="java.lang.String" />
 				<field name="f17" type="java.lang.String" />
@@ -49,7 +49,7 @@
 				<field name="f21" type="java.lang.String" />
 				<field name="f22" type="java.lang.String" />
 				<field name="f23" type="java.util.Date" format="yyyy-MM-dd" />
-				<field name="f24" type="java.lang.Integer" />
+				<field name="f24" type="java.lang.Long" />
 				<field name="f25" type="java.lang.String" />
 				<field name="f26" type="java.lang.String" />
 				<field name="f27" type="java.lang.String" />
@@ -59,7 +59,7 @@
 				<field name="f31" type="java.lang.String" />
 				<field name="f32" type="java.lang.String" />
 				<field name="f33" type="java.util.Date" format="yyyy-MM-dd" />
-				<field name="f34" type="java.lang.Integer" />
+				<field name="f34" type="java.lang.Long" />
 				<field name="f35" type="java.lang.String" />
 				<field name="f36" type="java.lang.String" />
 				<field name="f37" type="java.lang.String" />
@@ -69,7 +69,7 @@
 				<field name="f41" type="java.lang.String" />
 				<field name="f42" type="java.lang.String" />
 				<field name="f43" type="java.util.Date" format="yyyy-MM-dd" />
-				<field name="f44" type="java.lang.Integer" />
+				<field name="f44" type="java.lang.Long" />
 				<field name="f45" type="java.lang.String" />
 				<field name="f46" type="java.lang.String" />
 				<field name="f47" type="java.lang.String" />
@@ -79,7 +79,7 @@
 				<field name="f51" type="java.lang.String" />
 				<field name="f52" type="java.lang.String" />
 				<field name="f53" type="java.lang.String" />
-				<field name="f54" type="java.lang.Integer" />
+				<field name="f54" type="java.lang.Long" />
 				<field name="f55" type="java.lang.String" />
 				<field name="f56" type="java.lang.String" />
 				<field name="f57" type="java.lang.String" />
@@ -104,7 +104,7 @@
 				<field name="f3" inSocketId="in0" />
 			</inputFields>
 			<outputFields>
-				<field name="count_date" type="java.lang.Integer" />
+				<field name="count_date" type="java.lang.Long" />
 			</outputFields>
 		
 		</operation>
@@ -114,7 +114,7 @@
 				<field name="f4" inSocketId="in0" />
 			</inputFields>
 			<outputFields>
-				<field name="new_sum" type="java.lang.Integer" />
+				<field name="new_sum" type="java.lang.Long" />
 			</outputFields>
 			
 		</operation>
@@ -198,7 +198,7 @@
 				<field name="f2" type="java.math.BigDecimal" scale="2"
 					scaleType="explicit" />
 				<field name="f3" type="java.util.Date" format="yyyy-MM-dd" />
-				<field name="f4" type="java.lang.Integer" />
+				<field name="f4" type="java.lang.Long" />
 				<field name="f5" type="java.lang.String" />
 				<field name="f6" type="java.lang.String" />
 				<field name="f7" type="java.lang.String" />
@@ -208,7 +208,7 @@
 				<field name="f11" type="java.lang.String" />
 				<field name="f12" type="java.lang.String" />
 				<field name="f13" type="java.util.Date" format="yyyy-MM-dd" />
-				<field name="f14" type="java.lang.Integer" />
+				<field name="f14" type="java.lang.Long" />
 				<field name="f15" type="java.lang.String" />
 				<field name="f16" type="java.lang.String" />
 				<field name="f17" type="java.lang.String" />
@@ -218,7 +218,7 @@
 				<field name="f21" type="java.lang.String" />
 				<field name="f22" type="java.lang.String" />
 				<field name="f23" type="java.util.Date" format="yyyy-MM-dd" />
-				<field name="f24" type="java.lang.Integer" />
+				<field name="f24" type="java.lang.Long" />
 				<field name="f25" type="java.lang.String" />
 				<field name="f26" type="java.lang.String" />
 				<field name="f27" type="java.lang.String" />
@@ -228,7 +228,7 @@
 				<field name="f31" type="java.lang.String" />
 				<field name="f32" type="java.lang.String" />
 				<field name="f33" type="java.util.Date" format="yyyy-MM-dd" />
-				<field name="f34" type="java.lang.Integer" />
+				<field name="f34" type="java.lang.Long" />
 				<field name="f35" type="java.lang.String" />
 				<field name="f36" type="java.lang.String" />
 				<field name="f37" type="java.lang.String" />
@@ -238,7 +238,7 @@
 				<field name="f41" type="java.lang.String" />
 				<field name="f42" type="java.lang.String" />
 				<field name="f43" type="java.util.Date" format="yyyy-MM-dd" />
-				<field name="f44" type="java.lang.Integer" />
+				<field name="f44" type="java.lang.Long" />
 				<field name="f45" type="java.lang.String" />
 				<field name="f46" type="java.lang.String" />
 				<field name="f47" type="java.lang.String" />
@@ -248,21 +248,20 @@
 				<field name="f51" type="java.lang.String" />
 				<field name="f52" type="java.lang.String" />
 				<field name="f53" type="java.lang.String" />
-				<field name="f54" type="java.lang.Integer" />
+				<field name="f54" type="java.lang.Long" />
 				<field name="f55" type="java.lang.String" />
 				<field name="f56" type="java.lang.String" />
 				<field name="f57" type="java.lang.String" />
 				<field name="f58" type="java.lang.String" />
 				<field name="f59" type="java.lang.String" />
 				<field name="f60" type="java.lang.String" />
-				<field name="new_sum" type="java.lang.Integer" />
-				<field name="count_date" type="java.lang.Integer" />
+				<field name="new_sum" type="java.lang.Long" />
+				<field name="count_date" type="java.lang.Long" />
 			</schema>
 		</inSocket>
-		<path uri="PerformacneOutput/TransformTest" />
+		<path uri="testData/Output/CumulateTransformTestOutput" />
 		<delimiter value="," />
 		<hasHeader value="true" />
-
 
 	</outputs>
 

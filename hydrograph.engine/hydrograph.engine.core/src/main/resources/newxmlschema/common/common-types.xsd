@@ -190,23 +190,6 @@
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
-	<xs:complexType name="type-unknown-component">
-		<xs:complexContent>
-			<xs:extension base="type-base-component">
-				<xs:sequence>
-					<xs:element name="inSocket" type="type-base-inSocket"
-						minOccurs="0" maxOccurs="unbounded" />
-					<xs:element name="outSocket" type="type-base-outSocket"
-						minOccurs="0" maxOccurs="unbounded" />
-					<xs:element name="properties" minOccurs="0" maxOccurs="1">
-						<xs:complexType>
-							<xs:attribute name="value" use="optional" type="xs:string" />
-						</xs:complexType>
-					</xs:element>
-				</xs:sequence>
-			</xs:extension>
-		</xs:complexContent>
-	</xs:complexType>
 
 	<!--*******************base component ends********************** -->
 
@@ -336,9 +319,6 @@
 			<xs:enumeration value="UTF-8" />
 			<xs:enumeration value="US-ASCII" />
 			<xs:enumeration value="ISO-8859-1" />
-			<xs:enumeration value="UTF-16BE" />
-			<xs:enumeration value="UTF-16LE" />
-			<xs:enumeration value="UTF-16" />
 		</xs:restriction>
 	</xs:simpleType>
 

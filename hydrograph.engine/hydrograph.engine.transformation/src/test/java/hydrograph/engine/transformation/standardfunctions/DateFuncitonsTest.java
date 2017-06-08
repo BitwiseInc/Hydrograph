@@ -398,11 +398,28 @@ public class DateFuncitonsTest {
     }
 
     @Test
-    public void itShouldValidatedDateCompare() throws ParseException{
+    public void itShouldValidateDateCompare() throws ParseException{
         Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse("2016-01-01");
         Date date2 = new SimpleDateFormat("yyyy-MM-dd").parse("2017-01-01");
         Date earlierDate = DateFunctions.dateCompare(date1, date2);
         Assert.assertEquals(earlierDate,date1);
         Assert.assertNotEquals(earlierDate,date2);
+    }
+
+    @Test
+    public void itShouldValidateToDate(){
+	    long timeInMillisecs = 1212341241L;
+	    Date date1=null;
+	    try {
+            date1 = new SimpleDateFormat("yyyy-MM-dd").parse("2016-01-01");
+        }
+        catch(ParseException parseException){
+            parseException.printStackTrace();
+        }
+	    Assert.assertEquals(new Date(timeInMillisecs), DateFunctions.toDate(timeInMillisecs));
+        Assert.assertNull(DateFunctions.toDate(null));
+	    Assert.assertEquals(date1,DateFunctions.toDate(2016,01,01));
+	    Assert.assertNull(DateFunctions.toDate(null,12,30));
+
     }
 }
