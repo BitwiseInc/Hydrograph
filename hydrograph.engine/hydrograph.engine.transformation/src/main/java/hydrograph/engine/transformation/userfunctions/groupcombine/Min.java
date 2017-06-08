@@ -16,9 +16,14 @@ public class Min implements GroupCombineTransformBase {
     @Override
     public Schema initBufferSchema(Schema inputSchema, Schema outputSchema) {
         DataType type = inputSchema.getSchema().values().iterator().next().getFieldType();
-        Field max = new Field.Builder("min", type).build();
+        String name = inputSchema.getSchema().values().iterator().next().getFieldName();
+        int precision = inputSchema.getSchema().values().iterator().next().getFieldPrecision();
+        int scale = inputSchema.getSchema().values().iterator().next().getFieldScale();
+
+        Field min = (type == DataType.BigDecimal)? new Field.Builder(name, type).addPrecision(precision).addScale(scale).build() : new Field.Builder(name, type).build();
+
         Schema schema = new Schema();
-        schema.addField(max);
+        schema.addField(min);
         return schema;
     }
 

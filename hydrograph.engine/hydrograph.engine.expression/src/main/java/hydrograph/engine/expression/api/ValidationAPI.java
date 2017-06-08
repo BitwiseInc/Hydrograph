@@ -283,6 +283,8 @@ public class ValidationAPI implements Serializable {
 	private Class getType(String className){
 		if(className.equalsIgnoreCase("string"))
 			return String.class;
+        else if(className.equalsIgnoreCase("Short"))
+            return Short.class;
 		else if(className.equalsIgnoreCase("Integer"))
 				return Integer.class;
 		else if(className.equalsIgnoreCase("Long"))
