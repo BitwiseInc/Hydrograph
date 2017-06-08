@@ -103,7 +103,7 @@ dependencies {
 
     //Following are the URL�s to download the jars for RedShift:
     //Redshift: https://s3.amazonaws.com/redshift-downloads/drivers/RedshiftJDBC42-1.2.1.1001.jar
-    compileOnly group: 'com.amazon.redshift', name: 'redshift-jdbc42', version: '1.2.1.1001'
+    compile group: 'com.amazon.redshift', name: 'redshift-jdbc42', version: '1.2.1.1001'
 
     //Following are the URL�s to download the jars for Teradata:
     //Teradata: http://downloads.teradata.com/download/connectivity/jdbc-driver
