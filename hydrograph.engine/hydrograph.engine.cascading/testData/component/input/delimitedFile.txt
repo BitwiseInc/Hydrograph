@@ -1,4 +1,0 @@
-name,surname,city,val,date
-aaa,bbb,ccc,12345.6,25-05-1989
-ddd,eee,fff,12345.6,25-05-1989
-ggg,hhh,iii,12345.6,25-05-1989

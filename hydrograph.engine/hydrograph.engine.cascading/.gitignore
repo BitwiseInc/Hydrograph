@@ -1,7 +1,0 @@
-/bin/
-/.classpath
-/.project
-/.settings/
-/build/
-**output**
-/hydrograph.engine.cascading.iml
