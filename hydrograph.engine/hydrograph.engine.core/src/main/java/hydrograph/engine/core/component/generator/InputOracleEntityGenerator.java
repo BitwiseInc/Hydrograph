@@ -84,8 +84,10 @@ public class InputOracleEntityGenerator extends
         inputRDBMSEntity.setDriverType(inputOracleJaxb.getDriverType().getValue());
         if (inputOracleJaxb.getSchemaName() != null) {
             inputRDBMSEntity.setSchemaName(inputOracleJaxb.getSchemaName().getValue());
-            inputRDBMSEntity.setTableName(
-                    inputOracleJaxb.getSchemaName().getValue() + "." + inputOracleJaxb.getTableName().getValue());
+            if(inputOracleJaxb.getSelectQuery() == null) {
+                inputRDBMSEntity.setTableName(
+                        inputOracleJaxb.getSchemaName().getValue() + "." + inputOracleJaxb.getTableName().getValue());
+            }
         } else {
             inputRDBMSEntity.setSchemaName(null);
         }
