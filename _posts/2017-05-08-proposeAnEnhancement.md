@@ -75,5 +75,5 @@ the scope of the enhancement and the design proposed by the team who submitted t
 After both the Hydrograph core team and the team who submitted the issue are satisfied with the 
 proposed design, feature set, and implementation, development work begins, and the Hydrograph
 project board is used to measure progress, much like a Kanban board is used on an agile team. 
-For more information on the project board uses in Hydrograph see TODO: LINK TO PROJECT BOARD. 
+For more information see the [Project Board Overview](project-board-overview).
 
