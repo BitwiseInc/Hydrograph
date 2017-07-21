@@ -138,7 +138,7 @@ public class SubJobOpenAction extends SelectionAction{
 											subjobComponent.setContinuousSchemaPropogationAllow(false);
 										}	
 										
-										subjobComponent.getProperties().put(Constants.SUBJOB_CONTAINER, container);
+										subjobComponent.getSubJobContainer().put(Constants.SUBJOB_CONTAINER, container);
 									}
 									((ComponentEditPart) obj).refresh();
 								} else

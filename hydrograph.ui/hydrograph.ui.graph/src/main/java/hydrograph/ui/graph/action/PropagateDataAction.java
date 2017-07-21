@@ -138,7 +138,7 @@ public class PropagateDataAction extends SelectionAction {
 			}
 			else if(component instanceof SubjobComponent)
 			{
-			Container container=(Container)component.getProperties().get(Constants.SUBJOB_CONTAINER);
+			Container container=(Container)component.getSubJobContainer().get(Constants.SUBJOB_CONTAINER);
 			for(Component componentIterator:container.getUIComponentList())
 			{
 				if(componentIterator instanceof InputSubjobComponent)

@@ -151,7 +151,7 @@ public class PropogateWidget extends AbstractWidget{
 						}
 						else if(getComponent() instanceof SubjobComponent)
 						{
-							Container container=(Container)getComponent().getProperties().get(Constants.SUBJOB_CONTAINER);
+							Container container=(Container)getComponent().getSubJobContainer().get(Constants.SUBJOB_CONTAINER);
 							for(Component component:container.getUIComponentList())
 							{
 								if(component instanceof InputSubjobComponent)
