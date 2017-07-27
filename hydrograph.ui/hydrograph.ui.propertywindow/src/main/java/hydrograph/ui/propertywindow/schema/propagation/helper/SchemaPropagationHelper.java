@@ -111,7 +111,7 @@ public class SchemaPropagationHelper {
 		}
 		else 
 		{	
-		Schema previousComponentSchema=(Schema)link.getSource().getProperties().get(Constants.SCHEMA);
+		Schema previousComponentSchema=SchemaPropagation.INSTANCE.getSchema(link);
 		if (previousComponentSchema != null)
 		basicSchemaGridRows=SchemaSyncUtility.INSTANCE.
 		convertGridRowsSchemaToBasicSchemaGridRows(previousComponentSchema.getGridRow());
