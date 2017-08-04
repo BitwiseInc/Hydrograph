@@ -145,10 +145,16 @@ public class ValidateExpressionToolButton extends Button {
 	}
 
 
-	public static String getExpressionText(String expressionStyledText) {
-		String resolvedExpressionText=Utils.INSTANCE.getParamValueForRunSql(expressionStyledText);
+	/**
+	 * Returns expression-text after resolving its parameters
+	 * 
+	 * @param expressionText
+	 * @return
+	 */
+	public static String getExpressionText(String expressionText) {
+		String resolvedExpressionText=Utils.INSTANCE.getParamValueForRunSql(expressionText);
 		if(StringUtils.equalsIgnoreCase(resolvedExpressionText,Utils.PARAMETER_NOT_FOUND) ){
-			resolvedExpressionText=expressionStyledText;
+			resolvedExpressionText=expressionText;
 		}
 		return resolvedExpressionText;
 	}
