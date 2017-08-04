@@ -13,9 +13,9 @@
 
 package hydrograph.ui.propertywindow.validators;
 
+import hydrograph.ui.common.property.util.Utils;
 import hydrograph.ui.graph.model.Component;
 import hydrograph.ui.propertywindow.messages.Messages;
-import hydrograph.ui.propertywindow.utils.Utils;
 
 /**
  * 

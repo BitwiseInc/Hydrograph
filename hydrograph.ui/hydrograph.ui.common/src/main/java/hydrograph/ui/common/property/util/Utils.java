@@ -11,7 +11,7 @@
  * limitations under the License.
  *******************************************************************************/
 
-package hydrograph.ui.propertywindow.utils;
+package hydrograph.ui.common.property.util;
 
 import java.io.File;
 import java.io.IOException;
@@ -56,7 +56,6 @@ import hydrograph.ui.datastructure.property.LookupMapProperty;
 import hydrograph.ui.datastructure.property.LookupMappingGrid;
 import hydrograph.ui.datastructure.property.Schema;
 import hydrograph.ui.datastructure.property.mapping.TransformMapping;
-import hydrograph.ui.propertywindow.messages.Messages;
 
 /**
  * 
@@ -67,7 +66,7 @@ import hydrograph.ui.propertywindow.messages.Messages;
  */
 public class Utils {
 	
-	private static final String PARAMETER_NOT_FOUND = Messages.PARAMETER_NOT_FOUND;
+	public static final String PARAMETER_NOT_FOUND = "Parameter is not Found!";
 	public static final String OPERATION = "operation";
 	public static final String LOOKUP_MAP = "hash_join_map";
 	public static final String JOIN_MAP = "join_mapping";

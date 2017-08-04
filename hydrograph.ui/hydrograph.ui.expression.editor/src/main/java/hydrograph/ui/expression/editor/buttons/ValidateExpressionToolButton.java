@@ -13,6 +13,7 @@
 
 package hydrograph.ui.expression.editor.buttons;
 
+import hydrograph.ui.common.property.util.Utils;
 import hydrograph.ui.common.util.ConfigFileReader;
 import hydrograph.ui.common.util.OSValidator;
 import hydrograph.ui.expression.editor.Constants;
@@ -104,7 +105,7 @@ public class ValidateExpressionToolButton extends Button {
 	public static DiagnosticCollector<JavaFileObject> compileExpresion(String expressionStyledText,Map<String, Class<?>> fieldMap,String componentName)
 			throws JavaModelException, InvocationTargetException, ClassNotFoundException, MalformedURLException,IllegalAccessException, IllegalArgumentException {
 		LOGGER.debug("Compiling expression using Java-Compiler");
-		String expressiontext=expressionStyledText;
+		String expressiontext=getExpressionText(expressionStyledText);
 		DiagnosticCollector<JavaFileObject> diagnostics = null;
 		Object[] returObj=getBuildPathForMethodInvocation() ;
 		List<URL> urlList=(List<URL>) returObj[0];
@@ -143,6 +144,14 @@ public class ValidateExpressionToolButton extends Button {
 		return diagnostics;
 	}
 
+
+	public static String getExpressionText(String expressionStyledText) {
+		String resolvedExpressionText=Utils.INSTANCE.getParamValueForRunSql(expressionStyledText);
+		if(StringUtils.equalsIgnoreCase(resolvedExpressionText,Utils.PARAMETER_NOT_FOUND) ){
+			resolvedExpressionText=expressionStyledText;
+		}
+		return resolvedExpressionText;
+	}
 
 	public static String getAbsolutePathForJars(IPath iPath) {
 		String absolutePath = iPath.toString();

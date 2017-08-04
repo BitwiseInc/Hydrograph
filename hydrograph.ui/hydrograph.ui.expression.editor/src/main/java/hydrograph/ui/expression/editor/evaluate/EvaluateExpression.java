@@ -84,6 +84,7 @@ public class EvaluateExpression {
 		LOGGER.debug("Evaluating expression from jar");
 		String output = null;
 		Object[] returnObj;
+		expression=ValidateExpressionToolButton.getExpressionText(expression);
 		URLClassLoader child =null;
 		try {
 		returnObj = ValidateExpressionToolButton.getBuildPathForMethodInvocation();
