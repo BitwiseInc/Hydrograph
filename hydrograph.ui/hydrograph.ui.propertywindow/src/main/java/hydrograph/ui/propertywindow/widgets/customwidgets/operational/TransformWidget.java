@@ -21,11 +21,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 import hydrograph.ui.common.property.util.Utils;
 import hydrograph.ui.common.util.Constants;
@@ -578,9 +580,59 @@ public class TransformWidget extends AbstractWidget {
 		}
 		return portCount;
 	}
+	
+	/**
+	 * @param schema
+	 * @param component
+	 * @param mapping
+	 */
+	private void validateTransformSchemaOnOkClick(Schema schema, Component component){
+		if(schema != null && component != null && component != null){
+			List<GridRow> gridRows = null;
+			List<GridRow> currentSchemaGridRowList = null;
+			List<GridRow> temp = new LinkedList<>();
+			Schema currentCompSchema = (Schema)component.getProperties().get(Constants.SCHEMA_PROPERTY_NAME);
+			if(currentCompSchema!=null){
+				currentSchemaGridRowList = currentCompSchema.getGridRow();
+			}
+					
+			List<Link> links = component.getInputLinks();
+			for(Link link : links){
+				Schema inputLinkSchema = (Schema) link.getSource().getProperties().get(Constants.SCHEMA_PROPERTY_NAME);
+				if(inputLinkSchema!=null){
+					gridRows = inputLinkSchema.getGridRow();
+				}
+			}
+			
+			if(gridRows != null){
+				for(int index=0;index < gridRows.size() - 1;index++){
+					if(currentCompSchema!=null && gridRows !=null){
+						if(StringUtils.equals(gridRows.get(index).getFieldName(),currentSchemaGridRowList.get(index).getFieldName())){
+							temp.add(currentSchemaGridRowList.get(index));
+						}
+					}
+				}
+			}
+			
+			for(int index = 0; index<temp.size() - 1; index++){
+				if(StringUtils.equals(gridRows.get(index).getFieldName(),temp.get(index).getFieldName())
+						&& StringUtils.equalsIgnoreCase(gridRows.get(index).getDataType().toString(), 
+								temp.get(index).getDataType().toString())){
+					continue;
+				}else{
+					MessageDialog dialog = new MessageDialog(new Shell(),
+							Constants.SYNC_WARNING, null,"Schema fields is not match with input schema.", MessageDialog.CONFIRM,
+							new String[] {"OK"}, 0);
+					dialog.open();
+					break;
+				}
+			}
+		}
+	}
 
 	@Override
 	public boolean isWidgetValid() {
+		validateTransformSchemaOnOkClick(getSchemaForInternalPropagation(), getComponent());
 		return validateAgainstValidationRule(transformMapping);
 	}
 
