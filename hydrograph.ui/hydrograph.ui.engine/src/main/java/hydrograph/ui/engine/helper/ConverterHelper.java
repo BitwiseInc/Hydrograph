@@ -180,7 +180,7 @@ public class ConverterHelper {
     	
      return typeExpressionOutputFields;
     }
-	private TypeProperties getOperationProperties(List<NameValueProperty> nameValueProperties) {
+	public TypeProperties getOperationProperties(List<NameValueProperty> nameValueProperties) {
 		TypeProperties properties=null;
 		if(!nameValueProperties.isEmpty()){
 			properties = new TypeProperties();

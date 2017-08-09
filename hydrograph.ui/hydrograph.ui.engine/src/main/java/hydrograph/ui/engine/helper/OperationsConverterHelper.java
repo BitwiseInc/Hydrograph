@@ -88,6 +88,9 @@ public class OperationsConverterHelper {
 			typeTransformExpression.setId(OPERATION_ID);
 			
 			typeTransformExpression.setExpr(operationClassProperty.getExpressionEditorData().getExpression());
+			//Added the below line for passing the properties for Filter operation
+			typeTransformExpression.setProperties(converterHelper.getOperationProperties(operationClassProperty.getNameValuePropertyList()));
+			
 			operationList.add(typeTransformExpression);
 		   
 			
@@ -102,6 +105,8 @@ public class OperationsConverterHelper {
 		
 			operation.setClazz(((OperationClassProperty) properties.get(PropertyNameConstants.OPERATION_CLASS.value()))
 					.getOperationClassPath());
+			//Added the below line for passing the properties for Filter operation
+			operation.setProperties(converterHelper.getOperationProperties(operationClassProperty.getNameValuePropertyList()));
 		operationList.add(operation);
 		}
 		return operationList;
