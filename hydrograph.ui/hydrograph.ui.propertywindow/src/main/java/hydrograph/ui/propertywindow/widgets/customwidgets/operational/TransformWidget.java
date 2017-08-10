@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 
+import hydrograph.ui.common.property.util.Utils;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.common.util.OSValidator;
 import hydrograph.ui.common.util.ParameterUtil;
@@ -166,6 +167,7 @@ public class TransformWidget extends AbstractWidget {
 
 			}
 		});
+		Utils.INSTANCE.loadProperties();
 		propagateOuputFieldsToSchemaTabFromTransformWidget();
 	}
   
