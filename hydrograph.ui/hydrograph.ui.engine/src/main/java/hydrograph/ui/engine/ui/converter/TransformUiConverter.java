@@ -346,7 +346,7 @@ public abstract class TransformUiConverter extends UiConverter {
 		return operationClassName;
 	}
 
-	private List<NameValueProperty> getProperties(Object item)
+	protected List<NameValueProperty> getProperties(Object item)
 	{
 		
 		
