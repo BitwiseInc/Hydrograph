@@ -14,20 +14,18 @@
 
 package hydrograph.ui.common.util;
 
-import hydrograph.ui.datastructure.property.FilterProperties;
-import hydrograph.ui.datastructure.property.mapping.MappingSheetRow;
-import hydrograph.ui.datastructure.property.mapping.TransformMapping;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+
+import hydrograph.ui.datastructure.property.FilterProperties;
+import hydrograph.ui.datastructure.property.mapping.MappingSheetRow;
+import hydrograph.ui.datastructure.property.mapping.TransformMapping;
 
 /**
  * @author Bitwise

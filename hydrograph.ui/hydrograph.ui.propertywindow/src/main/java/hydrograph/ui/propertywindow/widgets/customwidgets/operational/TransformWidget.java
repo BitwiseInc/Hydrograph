@@ -74,6 +74,7 @@ public class TransformWidget extends AbstractWidget {
 	private TransformMapping transformMapping;
 	private List<AbstractWidget> widgets;
 	private List<FilterProperties> outputList;
+	private boolean verifySchemaVidate = true;
 	/**
 	 * Instantiates a new ELT operation class widget.
 	 * 
@@ -548,9 +549,13 @@ public class TransformWidget extends AbstractWidget {
 	}
 
 	@Override
+	public boolean canClosePropertyDialog() {
+		return validateTransformSchemaOnOkClick(getSchemaForInternalPropagation(), getComponent());
+	}
+	
+	@Override
 	public LinkedHashMap<String, Object> getProperties() {
 		property.put(propertyName, transformMapping);
-
 		return property;
 	}
 
@@ -586,7 +591,7 @@ public class TransformWidget extends AbstractWidget {
 	 * @param component
 	 * @param mapping
 	 */
-	private void validateTransformSchemaOnOkClick(Schema schema, Component component){
+	private boolean validateTransformSchemaOnOkClick(Schema schema, Component component){
 		if(schema != null && component != null && component != null){
 			List<GridRow> gridRows = null;
 			List<GridRow> currentSchemaGridRowList = null;
@@ -604,39 +609,55 @@ public class TransformWidget extends AbstractWidget {
 				}
 			}
 			
-			if(gridRows != null){
-				for(int index=0;index < gridRows.size() - 1;index++){
-					if(currentCompSchema!=null && gridRows !=null){
-						if(StringUtils.equals(gridRows.get(index).getFieldName(),currentSchemaGridRowList.get(index).getFieldName())){
+			if(gridRows != null && currentCompSchema!=null){
+				for(int index=0;index <= currentSchemaGridRowList.size() - 1;index++){
+					for(GridRow gridRow : gridRows){
+						if(StringUtils.equals(gridRow.getFieldName(), currentSchemaGridRowList.get(index).getFieldName())){
 							temp.add(currentSchemaGridRowList.get(index));
 						}
 					}
 				}
 			}
-			
-			for(int index = 0; index<temp.size() - 1; index++){
-				if(StringUtils.equals(gridRows.get(index).getFieldName(),temp.get(index).getFieldName())
-						&& StringUtils.equalsIgnoreCase(gridRows.get(index).getDataType().toString(), 
-								temp.get(index).getDataType().toString())){
-					continue;
-				}else{
-					MessageDialog dialog = new MessageDialog(new Shell(),
-							Constants.SYNC_WARNING, null,"Schema fields is not match with input schema.", MessageDialog.CONFIRM,
-							new String[] {"OK"}, 0);
-					dialog.open();
-					break;
+			return compareSchemaFields(gridRows, temp);
+		}
+		return false;
+	}
+	
+	@Override
+	public boolean verifySchemaFile() {
+		return verifySchemaVidate;
+	}
+	
+	/** 
+	 * @param inputLinkSchema
+	 * @param currentCompSchema
+	 */
+	private boolean compareSchemaFields(List<GridRow> inputLinkSchema, List<GridRow> currentCompSchema){
+		for(int index = 0; index < currentCompSchema.size() - 1; index++){
+			for(GridRow gridRow : inputLinkSchema){
+				if(StringUtils.equals(gridRow.getFieldName(), currentCompSchema.get(index).getFieldName())){
+					if(!StringUtils.equals(gridRow.getDataTypeValue(), currentCompSchema.get(index).getDataTypeValue())){
+						MessageDialog dialog = new MessageDialog(new Shell(),
+								"Warning", null,"Output Schema is updated,Do you want to continue with changes?", MessageDialog.CONFIRM,
+								new String[] {"Yes", "No"}, 0);
+						int dialogResult =dialog.open();
+						if(dialogResult == 0){
+							return true;
+						}else{
+							return false;
+						}
+					}
 				}
 			}
 		}
+		return true;
 	}
+	
 
 	@Override
 	public boolean isWidgetValid() {
-		validateTransformSchemaOnOkClick(getSchemaForInternalPropagation(), getComponent());
 		return validateAgainstValidationRule(transformMapping);
 	}
-
-	
 
 	@Override
 	public void addModifyListener(Property property,  ArrayList<AbstractWidget> widgetList) {
