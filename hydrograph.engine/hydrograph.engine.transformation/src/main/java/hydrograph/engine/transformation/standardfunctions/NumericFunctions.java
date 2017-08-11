@@ -642,12 +642,17 @@ public class NumericFunctions {
      * @throws ParseException if the specified string {@code inputValue}
      *                        cannot be parsed.
      */
-    public static BigDecimal toBigdecimal(String inputValue, int scale) throws ParseException {
+    public static BigDecimal toBigdecimal(String inputValue, int scale) {
         if (inputValue == null)
             return null;
         DecimalFormat decimalFormat = new DecimalFormat();
         decimalFormat.setParseBigDecimal(true);
-        return ((BigDecimal) decimalFormat.parse(inputValue)).setScale(scale, BigDecimal.ROUND_DOWN);
+        try {
+            return ((BigDecimal) decimalFormat.parse(inputValue)).setScale(scale, BigDecimal.ROUND_DOWN);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**

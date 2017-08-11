@@ -218,13 +218,19 @@ public class DateFunctions {
 	 *             if the date value passed in {@code inputDateInStringFormat}
 	 *             does not match the {@code dateFormat}
 	 */
-	public static Date getDateFromString(String inputDateInStringFormat, String dateFormat) throws ParseException {
+	public static Date getDateFromString(String inputDateInStringFormat, String dateFormat)
+	{
 		if (inputDateInStringFormat == null || dateFormat == null)
 			return null;
 
 		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
 		sdf.setLenient(false);
-		Date date = sdf.parse(inputDateInStringFormat);
+		Date date = null;
+		try {
+			date = sdf.parse(inputDateInStringFormat);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		return date;
 	}
 
