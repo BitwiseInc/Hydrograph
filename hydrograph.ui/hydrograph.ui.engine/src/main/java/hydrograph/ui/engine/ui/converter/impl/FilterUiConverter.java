@@ -76,8 +76,9 @@ public class FilterUiConverter extends TransformUiConverter{
 		    {	
 		    	TypeTransformOperation transformOperation=(TypeTransformOperation) filter.getOperationOrExpression().get(0);
 		    	clazz=transformOperation.getClazz();
-		    ExpressionEditorData expressionEditorData=new ExpressionEditorData("",uiComponent.getComponentName());	
+		    ExpressionEditorData expressionEditorData=new ExpressionEditorData("",uiComponent.getComponentName());
 			operationClassProperty=new OperationClassProperty(getOperationClassName(clazz),clazz, ParameterUtil.isParameter(clazz),false,expressionEditorData);
+			 operationClassProperty.setNameValuePropertyList(getProperties(transformOperation.getProperties()));
 		    }
 		    else if(filter.getOperationOrExpression().get(0) instanceof TypeTransformExpression)
 		    {
@@ -85,6 +86,7 @@ public class FilterUiConverter extends TransformUiConverter{
 		     ExpressionEditorData expressionEditorData=getExpressionEditorData(typeTransformExpression);
 		     
 		     operationClassProperty=new OperationClassProperty(null,null, false,true,expressionEditorData);
+		     operationClassProperty.setNameValuePropertyList(getProperties(typeTransformExpression.getProperties()));
 		    }
 		}
 		return operationClassProperty;
