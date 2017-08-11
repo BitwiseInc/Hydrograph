@@ -20,6 +20,7 @@ import java.util.TreeMap;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.gef.ui.actions.SelectionAction;
+import org.eclipse.swt.SWT;
 import org.eclipse.ui.IWorkbenchPart;
 
 import hydrograph.ui.common.util.Constants;
@@ -32,8 +33,10 @@ import hydrograph.ui.graph.model.Container;
 import hydrograph.ui.graph.model.Link;
 import hydrograph.ui.graph.model.components.InputSubjobComponent;
 import hydrograph.ui.graph.model.components.SubjobComponent;
+import hydrograph.ui.propertywindow.messages.Messages;
 import hydrograph.ui.propertywindow.widgets.utility.SchemaSyncUtility;
 import hydrograph.ui.propertywindow.widgets.utility.SubjobUtility;
+import hydrograph.ui.propertywindow.widgets.utility.WidgetUtility;
 
 /**
  * add propagate action on right-click of component
@@ -102,6 +105,7 @@ public class PropagateDataAction extends SelectionAction {
 					component.getProperties().put(Constants.IS_UNION_ALL_COMPONENT_SYNC,Constants.FALSE);
 					((ComponentEditPart)component.getComponentEditPart()).getFigure().repaint();
 					shouldsetContinuousSchemaPropagationFlagForNextConnectedComponents=false;
+					WidgetUtility.createMessageBox(Messages.INPUTS_SCHEMA_ARE_NOT_IN_SYNC, Constants.ERROR,SWT.ICON_ERROR|SWT.OK);
 					break;
 					}
 					else
@@ -160,8 +164,8 @@ public class PropagateDataAction extends SelectionAction {
 			}
 			oldSchemaMap.put(link.getTargetTerminal(), previousComponentSchema);	
 		}
-		component.getProperties().put(Constants.PREVIOUS_COMPONENT_OLD_SCHEMA, oldSchemaMap);
-		component.setContinuousSchemaPropogationAllow(true);
+		//component.getProperties().put(Constants.PREVIOUS_COMPONENT_OLD_SCHEMA, oldSchemaMap);
+		//component.setContinuousSchemaPropogationAllow(true);
 		if(shouldsetContinuousSchemaPropagationFlagForNextConnectedComponents)
 		{
 			SubjobUtility.INSTANCE.setFlagForContinuousSchemaPropogation(component);
