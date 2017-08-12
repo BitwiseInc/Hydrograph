@@ -54,6 +54,7 @@ class FilterComponentWithUDF(filterEntity: FilterEntity, componentsParams: BaseC
       filterClass match {
         case expression: FilterForExpression => expression.setValidationAPI(filterSparkOperations.validatioinAPI)
           expression.callPrepare(filterSparkOperations.fieldName, filterSparkOperations.fieldType)
+        case f: FilterBase => f.prepare(filterSparkOperations.operationEntity.getOperationProperties, filterSparkOperations.operationEntity.getOperationInputFields)
         case _ =>
       }
     } catch {
