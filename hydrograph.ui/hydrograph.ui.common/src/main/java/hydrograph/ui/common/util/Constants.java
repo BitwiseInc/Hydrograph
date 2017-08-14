@@ -388,5 +388,6 @@ public class Constants {
 	public static final String DB_PARTITION_KEY="partitionKey";
 	public static final String ADDITIONAL_PARAMETERS_FOR_DB ="additionalDBParameters";
 	
+	public static final String PARAM_FOLDER="param";
 }
 
