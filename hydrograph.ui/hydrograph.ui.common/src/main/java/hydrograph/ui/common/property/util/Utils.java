@@ -29,6 +29,7 @@ import java.util.Properties;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.core.internal.resources.Folder;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -193,9 +194,9 @@ public class Utils {
 			IFile file = input.getFile();
 			IProject activeProject = file.getProject();
 			final File globalparamFilesPath = new File(activeProject.getLocation().toString() + "/" + "globalparam");
-			final File localParamFilePath = new File(activeProject.getLocation().toString() + "/" + "param");
+			final File localParamFilePath = new File(activeProject.getLocation().toString() + "/" + Constants.PARAM_FOLDER);
 			File[] files = (File[]) ArrayUtils.addAll(listFilesForFolder(globalparamFilesPath),
-					listFilesForFolder(localParamFilePath));
+					getJobsPropertyFile(localParamFilePath,file));
 			if (files != null) {
 				paramNameList = Arrays.asList(files);
 				getParamMap(paramNameList);
@@ -436,7 +437,15 @@ public class Utils {
 	
 	 private File[]  listFilesForFolder(final File folder) {
 			File[] listofFiles = folder.listFiles();
-			
 			return listofFiles;
-			}				
+			}
+	 
+	private File[] getJobsPropertyFile(File folder, IFile jobFile) {
+		File[] files = new File[1];
+		String paramFileName = jobFile.getFullPath().removeFileExtension().addFileExtension(Constants.PROPERTIES).toFile().getName();
+		IFile paramFile= jobFile.getProject().getFolder(Constants.PARAM_FOLDER).getFile(paramFileName);
+		files[0]=paramFile.getFullPath().toFile();
+		return files;
+	}
+	 
 }
