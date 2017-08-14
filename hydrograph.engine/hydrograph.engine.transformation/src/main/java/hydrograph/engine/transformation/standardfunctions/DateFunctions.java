@@ -746,8 +746,8 @@ public class DateFunctions {
         if((date1==null)||(date2==null))
             return null;
 
-        LocalDateTime localDateTime1 = LocalDateTime.ofInstant(date1.toInstant(), ZoneId.systemDefault());
-        LocalDateTime localDateTime2 = LocalDateTime.ofInstant(date2.toInstant(), ZoneId.systemDefault());
+        LocalDateTime localDateTime1 = LocalDateTime.ofInstant(new Date(date1.getTime()).toInstant(), ZoneId.systemDefault());
+        LocalDateTime localDateTime2 = LocalDateTime.ofInstant(new Date(date2.getTime()).toInstant(), ZoneId.systemDefault());
 
         return (localDateTime1.isBefore(localDateTime2)) ? date1 : date2;
     }

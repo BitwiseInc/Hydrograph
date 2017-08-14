@@ -241,7 +241,7 @@ public class NumericFunctions {
     public static Double toDouble(Float inputValue) {
         if (inputValue == null)
             return null;
-        return new Double(inputValue);
+        return Double.parseDouble(convertComparableObjectToString(inputValue));
     }
 
     /**
