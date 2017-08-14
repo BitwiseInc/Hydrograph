@@ -17,12 +17,14 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  hydrograph.ui.logging,
  org.eclipse.core.resources,
- org.eclipse.e4.ui.workbench.renderers.swt;bundle-version="0.14.0"
+ org.eclipse.e4.ui.workbench.renderers.swt;bundle-version="0.14.0",
+ org.eclipse.ui.ide
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: hydrograph.ui.common.component.config,
  hydrograph.ui.common.component.policyconfig,
  hydrograph.ui.common.debug.service,
+ hydrograph.ui.common.property.util,
  hydrograph.ui.common.schema,
  hydrograph.ui.common.swt.customwidget,
  hydrograph.ui.common.util,
