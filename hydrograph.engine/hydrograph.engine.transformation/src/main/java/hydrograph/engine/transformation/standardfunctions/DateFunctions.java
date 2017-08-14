@@ -33,277 +33,285 @@ import java.util.Date;
  */
 public class DateFunctions {
 
-	/**
-	 * Returns number of days since 1st January 1900
-	 * 
-	 * @return number of days since 1st January 1900
-	 */
-	public static <T> Integer today() {
-		int date = 0;
-		try {
-			SimpleDateFormat formatter = new SimpleDateFormat("dd MM yyyy");
-			Date d1 = formatter.parse("1 01 1900");
-			Date d2 = new Date();
-			int DateFraction = (1000 * 60 * 60 * 24);
-			date = (int) ((d2.getTime() - d1.getTime()) / DateFraction);
-		} catch (Exception e) {
-			// since we are parsing static date value, parse function will never
-			// throw exception
-		}
-		return date;
-	}
+    /**
+     * Returns number of days since 1st January 1900
+     *
+     * @return number of days since 1st January 1900
+     */
+    public static <T> Integer today() {
+        int date = 0;
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("dd MM yyyy");
+            Date d1 = formatter.parse("1 01 1900");
+            Date d2 = new Date();
+            int DateFraction = (1000 * 60 * 60 * 24);
+            date = (int) ((d2.getTime() - d1.getTime()) / DateFraction);
+        } catch (Exception e) {
+            // since we are parsing static date value, parse function will never
+            // throw exception
+        }
+        return date;
+    }
 
-	/**
-	 * Returns current date and time in yyyyMMddHmmssS format
-	 * 
-	 * @return current date and time in yyyyMMddHmmssS format
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T> T now() {
-		return (T) now("yyyyMMddHmmssS");
-	}
+    /**
+     * Returns current date and time in yyyyMMddHmmssS format
+     *
+     * @return current date and time in yyyyMMddHmmssS format
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> T now() {
+        return (T) now("yyyyMMddHmmssS");
+    }
 
-	/**
-	 * Returns current date and time in the required format
-	 * 
-	 * @param dateFormat the format for the date
-	 * @return current date and time in the required format
-	 */
-	public static String now(String dateFormat) {
-		DateFormat sdf = new SimpleDateFormat(dateFormat);
-		Date date = new Date();
-		return sdf.format(date);
-	}
+    /**
+     * Returns current date and time in the required format
+     *
+     * @param dateFormat the format for the date
+     * @return current date and time in the required format
+     */
+    public static String now(String dateFormat) {
+        DateFormat sdf = new SimpleDateFormat(dateFormat);
+        Date date = new Date();
+        return sdf.format(date);
+    }
 
-	/**
-	 * Formats and converts a date value into string representation in the
-	 * desired new date format
-	 * 
-	 * @param inputValue
-	 *            the date value in old format
-	 * @param oldFormat
-	 *            the date format of the date passed in {@code inputValue}
-	 * @param newFormat
-	 *            the desired date format
-	 * @return string representation of date in new date format
-	 *         <p>
-	 *         the method returns null if any parameter is null
-	 * @deprecated This method is deprecated, Use
-	 *             {@link DateFunctions#dateFormatter(String inputValue, String oldFormat, String newFormat)}
-	 *             instead
-	 * @throws ParseException
-	 *             if the date value passed in {@code inputValue} does not match
-	 *             the {@code oldFormat}
-	 */
-	@Deprecated
-	public static <T> String dateFormatter(T inputValue, String oldFormat, String newFormat) throws ParseException {
-		if (inputValue == null || oldFormat == null || newFormat == null)
-			return null;
+    /**
+     * Formats and converts a date value into string representation in the
+     * desired new date format
+     *
+     * @param inputValue
+     *            the date value in old format
+     * @param oldFormat
+     *            the date format of the date passed in {@code inputValue}
+     * @param newFormat
+     *            the desired date format
+     * @return string representation of date in new date format
+     *         <p>
+     *         the method returns null if any parameter is null
+     * @deprecated This method is deprecated, Use
+     *             {@link DateFunctions#dateFormatter(String inputValue, String oldFormat, String newFormat)}
+     *             instead
+     * @throws ParseException
+     *             if the date value passed in {@code inputValue} does not match
+     *             the {@code oldFormat}
+     */
+    @Deprecated
+    public static <T> String dateFormatter(T inputValue, String oldFormat, String newFormat) {
+        if (inputValue == null || oldFormat == null || newFormat == null)
+            return null;
+        String newDateString = null;
+        try {
+            String oldDateString = String.valueOf(StandardFunctionHelper.convertComparableObjectToString(inputValue));
+            SimpleDateFormat sdf = new SimpleDateFormat(oldFormat);
+            sdf.setLenient(false);
+            Date date = null;
+            date = sdf.parse(oldDateString);
+            sdf.applyPattern(newFormat);
+            newDateString = sdf.format(date);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        return newDateString;
+    }
 
-		String oldDateString = String.valueOf(StandardFunctionHelper.convertComparableObjectToString(inputValue));
-		String newDateString = null;
+    /**
+     * Formats and converts a date value into string representation in the
+     * desired new date format
+     *
+     * @param inputValue
+     *            the date value in old format
+     * @param oldFormat
+     *            the date format of the date passed in {@code inputValue}
+     * @param newFormat
+     *            the desired date format
+     * @return string representation of date in new date format
+     *         <p>
+     *         the method returns null if any parameter is null
+     * @throws ParseException
+     *             if the date value passed in {@code inputValue} does not match
+     *             the {@code oldFormat}
+     */
+    public static String dateFormatter(String inputValue, String oldFormat, String newFormat) {
+        if (inputValue == null || oldFormat == null || newFormat == null)
+            return null;
+        String newDateString = null;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat(oldFormat);
+            sdf.setLenient(false);
+            Date date = null;
 
-		SimpleDateFormat sdf = new SimpleDateFormat(oldFormat);
-		sdf.setLenient(false);
-		Date date = null;
-		date = sdf.parse(oldDateString);
-		sdf.applyPattern(newFormat);
-		newDateString = sdf.format(date);
+            date = sdf.parse(inputValue);
 
-		return newDateString;
-	}
+            sdf.applyPattern(newFormat);
+            newDateString = sdf.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return newDateString;
+    }
 
-	/**
-	 * Formats and converts a date value into string representation in the
-	 * desired new date format
-	 * 
-	 * @param inputValue
-	 *            the date value in old format
-	 * @param oldFormat
-	 *            the date format of the date passed in {@code inputValue}
-	 * @param newFormat
-	 *            the desired date format
-	 * @return string representation of date in new date format
-	 *         <p>
-	 *         the method returns null if any parameter is null
-	 * @throws ParseException
-	 *             if the date value passed in {@code inputValue} does not match
-	 *             the {@code oldFormat}
-	 */
-	public static String dateFormatter(String inputValue, String oldFormat, String newFormat) throws ParseException {
-		if (inputValue == null || oldFormat == null || newFormat == null)
-			return null;
-		String newDateString = null;
-
-		SimpleDateFormat sdf = new SimpleDateFormat(oldFormat);
-		sdf.setLenient(false);
-		Date date = null;
-		date = sdf.parse(inputValue);
-		sdf.applyPattern(newFormat);
-		newDateString = sdf.format(date);
-
-		return newDateString;
-	}
-
-	/**
-	 * Formats and converts a date value into string representation in the
-	 * desired new date format
-	 * 
-	 * @param inputValue
-	 *            the date value in old format
-	 * @param oldFormat
-	 *            the date format of the date passed in {@code inputValue}
-	 * @param newFormat
-	 *            the desired date format
-	 * @return string representation of date in new date format
-	 *         <p>
-	 *         the method returns null if any parameter is null
-	 * @throws ParseException
-	 *             if the date value passed in {@code inputValue} does not match
-	 *             the {@code oldFormat}
-	 */
-	public static String dateFormatter(Date inputValue, String oldFormat, String newFormat) throws ParseException {
-		if (inputValue == null || oldFormat == null || newFormat == null)
-			return null;
+    /**
+     * Formats and converts a date value into string representation in the
+     * desired new date format
+     *
+     * @param inputValue
+     *            the date value in old format
+     * @param oldFormat
+     *            the date format of the date passed in {@code inputValue}
+     * @param newFormat
+     *            the desired date format
+     * @return string representation of date in new date format
+     *         <p>
+     *         the method returns null if any parameter is null
+     * @throws ParseException
+     *             if the date value passed in {@code inputValue} does not match
+     *             the {@code oldFormat}
+     */
+    public static String dateFormatter(Date inputValue, String oldFormat, String newFormat)  {
+        if (inputValue == null || oldFormat == null || newFormat == null)
+            return null;
 
         String newDateString = null;
         SimpleDateFormat sdf = new SimpleDateFormat(newFormat);
         sdf.setLenient(false);
         newDateString = sdf.format(inputValue);
 
-		return newDateString;
-	}
+        return newDateString;
+    }
 
-	/**
-	 * Returns a date object from a string date value
-	 * 
-	 * @param inputDateInStringFormat
-	 *            the date value in string
-	 * @param dateFormat
-	 *            the date format of the date value passed in
-	 *            {@code inputDateInStringFormat}
-	 * @return a date object of the corresponding date value
-	 *         <p>
-	 *         the method returns null if any parameter is null
-	 * @deprecated This method is deprecated, Use
-	 *             {@link DateFunctions#getDateFromString(String inputDateInStringFormat, String dateFormat)}
-	 *             instead
-	 * @throws ParseException
-	 *             if the date value passed in {@code inputDateInStringFormat}
-	 *             does not match the {@code dateFormat}
-	 */
-	@Deprecated
-	public static <T> Date getDateFromString(T inputDateInStringFormat, String dateFormat) throws ParseException {
-		if (inputDateInStringFormat == null || dateFormat == null)
-			return null;
+    /**
+     * Returns a date object from a string date value
+     *
+     * @param inputDateInStringFormat
+     *            the date value in string
+     * @param dateFormat
+     *            the date format of the date value passed in
+     *            {@code inputDateInStringFormat}
+     * @return a date object of the corresponding date value
+     *         <p>
+     *         the method returns null if any parameter is null
+     * @deprecated This method is deprecated, Use
+     *             {@link DateFunctions#getDateFromString(String inputDateInStringFormat, String dateFormat)}
+     *             instead
+     * @throws ParseException
+     *             if the date value passed in {@code inputDateInStringFormat}
+     *             does not match the {@code dateFormat}
+     */
+    @Deprecated
+    public static <T> Date getDateFromString(T inputDateInStringFormat, String dateFormat) throws ParseException {
+        if (inputDateInStringFormat == null || dateFormat == null)
+            return null;
 
-		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
-		sdf.setLenient(false);
-		Date date = sdf.parse((String) inputDateInStringFormat);
-		return date;
-	}
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+        sdf.setLenient(false);
+        Date date = sdf.parse((String) inputDateInStringFormat);
+        return date;
+    }
 
-	/**
-	 * Returns a date object from a string date value
-	 * 
-	 * @param inputDateInStringFormat
-	 *            the date value in string
-	 * @param dateFormat
-	 *            the date format of the date value passed in
-	 *            {@code inputDateInStringFormat}
-	 * @return a date object of the corresponding date value
-	 *         <p>
-	 *         the method returns null if any parameter is null
-	 * @throws ParseException
-	 *             if the date value passed in {@code inputDateInStringFormat}
-	 *             does not match the {@code dateFormat}
-	 */
-	public static Date getDateFromString(String inputDateInStringFormat, String dateFormat) throws ParseException {
-		if (inputDateInStringFormat == null || dateFormat == null)
-			return null;
+    /**
+     * Returns a date object from a string date value
+     *
+     * @param inputDateInStringFormat
+     *            the date value in string
+     * @param dateFormat
+     *            the date format of the date value passed in
+     *            {@code inputDateInStringFormat}
+     * @return a date object of the corresponding date value
+     *         <p>
+     *         the method returns null if any parameter is null
+     * @throws ParseException
+     *             if the date value passed in {@code inputDateInStringFormat}
+     *             does not match the {@code dateFormat}
+     */
+    public static Date getDateFromString(String inputDateInStringFormat, String dateFormat){
+        if (inputDateInStringFormat == null || dateFormat == null)
+            return null;
 
-		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
-		sdf.setLenient(false);
-		Date date = sdf.parse(inputDateInStringFormat);
-		return date;
-	}
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+        sdf.setLenient(false);
+        Date date = null;
+        try {
+            date = sdf.parse(inputDateInStringFormat);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        return date;
+    }
 
-	/**
-	 * Returns a string value of the date
-	 * 
-	 * @param inputDate
-	 *            the date to fetch the string value
-	 * @param dateFormat
-	 *            the date format of the date value passed in {@code inputDate}
-	 * @return a string value of the date
-	 *         <p>
-	 *         the method returns null if any parameter is null
-	 * 
-	 * @throws ParseException
-	 *             if the date value passed in {@code inputDate} does not match
-	 *             the {@code dateFormat}
-	 */
-	public static <T> String getStringDateFromDateObject(T inputDate, String dateFormat) throws ParseException {
-		if (inputDate == null || dateFormat == null)
-			return null;
+    /**
+     * Returns a string value of the date
+     *
+     * @param inputDate
+     *            the date to fetch the string value
+     * @param dateFormat
+     *            the date format of the date value passed in {@code inputDate}
+     * @return a string value of the date
+     *         <p>
+     *         the method returns null if any parameter is null
+     *
+     * @throws ParseException
+     *             if the date value passed in {@code inputDate} does not match
+     *             the {@code dateFormat}
+     */
+    public static <T> String getStringDateFromDateObject(T inputDate, String dateFormat) {
+        if (inputDate == null || dateFormat == null)
+            return null;
 
-		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
-		sdf.setLenient(false);
-		String stringDate = sdf.format(inputDate);
-		return stringDate;
-	}
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+        sdf.setLenient(false);
+        String stringDate = sdf.format(inputDate);
+        return stringDate;
+    }
 
-	/**
-	 * Returns a string value of the date
-	 * 
-	 * @param inputDate
-	 *            the date to fetch the string value
-	 * @param dateFormat
-	 *            the date format of the date value passed in {@code inputDate}
-	 * @return a string value of the date
-	 *         <p>
-	 *         the method returns null if any parameter is null
-	 * @throws ParseException
-	 *             if the date value passed in {@code inputDate} does not match
-	 *             the {@code dateFormat}
-	 */
-	public static String getStringDateFromDateObject(Date inputDate, String dateFormat) throws ParseException {
-		if (inputDate == null || dateFormat == null)
-			return null;
+    /**
+     * Returns a string value of the date
+     *
+     * @param inputDate
+     *            the date to fetch the string value
+     * @param dateFormat
+     *            the date format of the date value passed in {@code inputDate}
+     * @return a string value of the date
+     *         <p>
+     *         the method returns null if any parameter is null
+     * @throws ParseException
+     *             if the date value passed in {@code inputDate} does not match
+     *             the {@code dateFormat}
+     */
+    public static String getStringDateFromDateObject(Date inputDate, String dateFormat)  {
+        if (inputDate == null || dateFormat == null)
+            return null;
 
-		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
-		sdf.setLenient(false);
-		String stringDate = sdf.format(inputDate);
-		return stringDate;
-	}
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+        sdf.setLenient(false);
+        String stringDate = sdf.format(inputDate);
+        return stringDate;
+    }
 
-	/**
-	 * Validates the string date value to the format specified
-	 * 
-	 * @param inputDate
-	 *            the date value in string to be validated
-	 * @param dateFormat
-	 *            the date format to validate the string value against
-	 * @return <b>{@code true}</b> if the date value passed in {@code inputDate}
-	 *         matches the date format passed in {@code dateFormat}
-	 *         <p>
-	 *         <b>{@code false}</b> if the date value passed in
-	 *         {@code inputDate} does not match the date format passed in
-	 *         {@code dateFormat}
-	 */
-	public static boolean validateStringDate(String inputDate, String dateFormat) {
-		if (dateFormat != null && !dateFormat.equals("") && inputDate != null && !inputDate.equals("")) {
-			SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
-			sdf.setLenient(false);
-			try {
-				sdf.parse(inputDate);
-				return true;
-			} catch (ParseException e) {
-				return false;
-			}
-		}
-		return false;
-	}
+    /**
+     * Validates the string date value to the format specified
+     *
+     * @param inputDate  the date value in string to be validated
+     * @param dateFormat the date format to validate the string value against
+     * @return <b>{@code true}</b> if the date value passed in {@code inputDate}
+     *         matches the date format passed in {@code dateFormat}
+     *         <p>
+     *         <b>{@code false}</b> if the date value passed in
+     *         {@code inputDate} does not match the date format passed in
+     *         {@code dateFormat}
+     */
+    public static boolean validateStringDate(String inputDate, String dateFormat) {
+        if (dateFormat != null && !dateFormat.equals("") && inputDate != null && !inputDate.equals("")) {
+            SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+            sdf.setLenient(false);
+            try {
+                sdf.parse(inputDate);
+                return true;
+            } catch (ParseException e) {
+                return false;
+            }
+        }
+        return false;
+    }
 
     /**
      * Returns an integer value which holds the day value retrieved from {@code date} parameter
@@ -424,10 +432,15 @@ public class DateFunctions {
      * @param fromDate the date from which the difference is to be calculated
      * @param toDate   the date to which the difference is to be calculated
      * @return the difference of days between {@code fromDate} to {@code toDate}
+     * if either of {@code fromDate} or {@code toDate} are null return null
      */
     public static Integer getDayDifference(Date fromDate, Date toDate) {
-        LocalDateTime firstDate = LocalDateTime.ofInstant(fromDate.toInstant(), ZoneId.systemDefault());
-        LocalDateTime secondDate = LocalDateTime.ofInstant(toDate.toInstant(), ZoneId.systemDefault());
+        if (fromDate == null || toDate == null)
+            return null;
+        Date localFromDate = new Date(fromDate.getTime());
+        Date localToDate = new Date(toDate.getTime());
+        LocalDateTime firstDate = LocalDateTime.ofInstant(localFromDate.toInstant(), ZoneId.systemDefault());
+        LocalDateTime secondDate = LocalDateTime.ofInstant(localToDate.toInstant(), ZoneId.systemDefault());
         long daysLong = Math.abs(ChronoUnit.DAYS.between(firstDate, secondDate));
         return (int) daysLong;
     }
@@ -438,10 +451,17 @@ public class DateFunctions {
      * @param fromDate the date from which the difference is to be calculated
      * @param toDate   the date to which the difference is to be calculated
      * @return the difference of months between {@code fromDate} and {@code toDate}
+     * if either of {@code fromDate} or {@code toDate} are null return null
      */
     public static Integer getMonthDifference(Date fromDate, Date toDate) {
-        LocalDateTime firstDate = LocalDateTime.ofInstant(fromDate.toInstant(), ZoneId.systemDefault());
-        LocalDateTime secondDate = LocalDateTime.ofInstant(toDate.toInstant(), ZoneId.systemDefault());
+
+        if (fromDate == null || toDate == null)
+            return null;
+        Date localFromDate = new Date(fromDate.getTime());
+        Date localToDate = new Date(toDate.getTime());
+
+        LocalDateTime firstDate = LocalDateTime.ofInstant(localFromDate.toInstant(), ZoneId.systemDefault());
+        LocalDateTime secondDate = LocalDateTime.ofInstant(localToDate.toInstant(), ZoneId.systemDefault());
         long months = Math.abs(ChronoUnit.MONTHS.between(firstDate, secondDate));
         return (int) months;
     }
@@ -452,10 +472,17 @@ public class DateFunctions {
      * @param fromDate the date from which the difference is to be calculated
      * @param toDate   the date to which the difference is to be calculated
      * @return difference of years between {@code fromDate} and {@code toDate}
+     * if either of {@code fromDate} or {@code toDate} are null return null
      */
     public static Integer getYearDifference(Date fromDate, Date toDate) {
-        LocalDateTime firstDate = LocalDateTime.ofInstant(fromDate.toInstant(), ZoneId.systemDefault());
-        LocalDateTime secondDate = LocalDateTime.ofInstant(toDate.toInstant(), ZoneId.systemDefault());
+
+        if (fromDate == null || toDate == null)
+            return null;
+        Date localFromDate = new Date(fromDate.getTime());
+        Date localToDate = new Date(toDate.getTime());
+
+        LocalDateTime firstDate = LocalDateTime.ofInstant(localFromDate.toInstant(), ZoneId.systemDefault());
+        LocalDateTime secondDate = LocalDateTime.ofInstant(localToDate.toInstant(), ZoneId.systemDefault());
         long years = Math.abs(ChronoUnit.YEARS.between(firstDate, secondDate));
         return (int) (long) years;
     }
@@ -471,7 +498,8 @@ public class DateFunctions {
     public static Date addDaysToDate(Date date, int days) {
         if(date == null)
             return null;
-        LocalDateTime ldt = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+        Date local = new Date(date.getTime());
+        LocalDateTime ldt = LocalDateTime.ofInstant(local.toInstant(), ZoneId.systemDefault());
         Date newDate = Date.from(ldt.plusDays((long) days).atZone(ZoneId.systemDefault()).toInstant());
         return newDate;
     }
@@ -624,9 +652,13 @@ public class DateFunctions {
      * @param date       the date to which weeks are to be added
      * @param weeks weeks to be added to given {@code date}
      * @return date after adding {@code weeks} to {@code date}
+     * if {@code date} is null then return null
      */
     public static Date addWeeksToDate(Date date, int weeks) {
-        LocalDateTime localDateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+        if (date == null)
+            return null;
+        Date localDate = new Date(date.getTime());
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(localDate.toInstant(), ZoneId.systemDefault());
         Date newDate = Date.from(localDateTime.plusWeeks((long) weeks).atZone(ZoneId.systemDefault()).toInstant());
         return newDate;
     }
@@ -637,9 +669,13 @@ public class DateFunctions {
      * @param date        the date to which months are to be added
      * @param months months to be added to given {@code date}
      * @return date after adding {@code months} to {@code date}
+     * if {@code date} is null return null
      */
     public static Date addMonthsToDate(Date date, int months) {
-        LocalDateTime localDateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+        if (date == null)
+            return null;
+        Date localDate = new Date(date.getTime());
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(localDate.toInstant(), ZoneId.systemDefault());
         Date newDate = Date.from(localDateTime.plusMonths((long) months).atZone(ZoneId.systemDefault()).toInstant());
         return newDate;
     }
@@ -650,9 +686,15 @@ public class DateFunctions {
      * @param date       the date to which months are to be added
      * @param years years to be added to given {@code date}
      * @return date after adding  years to it
+     * if {@code date} is null return null
      */
     public static Date addYearsToDate(Date date, int years) {
-        LocalDateTime localDateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+
+        if (date == null)
+            return null;
+        Date localDate = new Date(date.getTime());
+
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(localDate.toInstant(), ZoneId.systemDefault());
         Date newDate = Date.from(localDateTime.plusYears((long) years).atZone(ZoneId.systemDefault()).toInstant());
         return newDate;
     }
@@ -715,25 +757,26 @@ public class DateFunctions {
      *
      * @param timeInMillisecs input date in milliseconds
      * @return returns date value for time in milliseconds
-	 * returns null if {@code timeInMillisecs} is null
+     * returns null if {@code timeInMillisecs} is null
      */
     public static Date toDate(Long timeInMillisecs) {
 
-    	if(timeInMillisecs==null)
-    		return null;
+        if(timeInMillisecs==null)
+            return null;
 
         return new Date(timeInMillisecs);
     }
 
     /**
      * Returns the date for {@code year},{@code month} and {@code day}
-     * @param year input year of date
+     *
+     * @param year  input year of date
      * @param month input month of date
-     * @param day input day of date
-     * @retrun returns date for give {@code year},(@code month} and {@day}
-	 *   return null if either of {@code year}, {@code month} or {@code day} are null
+     * @param day   input day of date
      * @throws DateTimeException if the value of any field is out of range,
-     *  or if the day-of-month is invalid for the month-year
+     *                           or if the day-of-month is invalid for the month-year
+     * @retrun returns date for give {@code year},(@code month} and {@day}
+     * return null if either of {@code year}, {@code month} or {@code day} are null
      */
     public static Date toDate(Integer year, Integer month,Integer day) throws DateTimeException {
 

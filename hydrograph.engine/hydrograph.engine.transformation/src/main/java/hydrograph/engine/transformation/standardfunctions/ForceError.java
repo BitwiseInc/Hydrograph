@@ -26,7 +26,7 @@ public class ForceError {
 	 * @param errorMessage
 	 *            the error message to log
 	 */
-	public static void raiseError(String errorMessage) {
+	public static <T> T raiseError(String errorMessage) {
 		errorMessage = "Error raised due to force_error condition." + "\n"
 				+ errorMessage;
 		throw new RuntimeException(errorMessage);

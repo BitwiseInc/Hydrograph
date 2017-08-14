@@ -41,14 +41,9 @@ public class DateFuncitonsTest {
 	@Test
 	public void itShouldFormatTheDateFromString() {
 		String actual = null;
-		try {
-			actual = DateFunctions.dateFormatter("20150512", "yyyyMMdd",
-					"dd-MM-yyyy");
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String expectedDt = "12-05-2015";
+        actual = DateFunctions.dateFormatter("20150512", "yyyyMMdd",
+                "dd-MM-yyyy");
+        String expectedDt = "12-05-2015";
 
 		Assert.assertEquals(expectedDt, actual);
 	}
@@ -56,14 +51,9 @@ public class DateFuncitonsTest {
 	@Test
 	public void itShouldFormatTheDateFromDecimal() {
 		String actual = null;
-		try {
-			actual = DateFunctions.dateFormatter(20150512, "yyyyMMdd",
-					"yyyy-MM-dd");
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String expectedDt = "2015-05-12";
+        actual = DateFunctions.dateFormatter(20150512, "yyyyMMdd",
+                "yyyy-MM-dd");
+        String expectedDt = "2015-05-12";
 
 		Assert.assertEquals(expectedDt, actual);
 	}
@@ -71,14 +61,9 @@ public class DateFuncitonsTest {
 	@Test
 	public void itShouldFormatTheDateFromString1() {
 		String actual = null;
-		try {
-			actual = DateFunctions.dateFormatter("2015/05/12", "yyyy/MM/dd",
-					"dd-MM-yyyy");
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String expectedDt = "12-05-2015";
+        actual = DateFunctions.dateFormatter("2015/05/12", "yyyy/MM/dd",
+                "dd-MM-yyyy");
+        String expectedDt = "12-05-2015";
 
 		Assert.assertEquals(expectedDt, actual);
 	}

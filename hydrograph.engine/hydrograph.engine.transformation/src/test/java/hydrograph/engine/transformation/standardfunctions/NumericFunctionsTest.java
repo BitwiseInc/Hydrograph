@@ -16,7 +16,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.math.BigDecimal;
-import java.text.ParseException;
 
 /**
  * The Class NumericFunctionsTest.
@@ -109,16 +108,12 @@ public class NumericFunctionsTest {
         Float float1 = new Float(2421.123);
         Double double1 = new Double(12.2345);
         char[] charArray = {'1', '2', '.', '5'};
-        try {
-            Assert.assertEquals(new BigDecimal(12.39).setScale(2, BigDecimal.ROUND_DOWN), NumericFunctions.toBigdecimal("12.39", 2));
-            Assert.assertEquals(new BigDecimal(integer1), NumericFunctions.toBigdecimal(integer1));
-            Assert.assertEquals(new BigDecimal(long1), NumericFunctions.toBigdecimal(long1));
-            Assert.assertEquals(new BigDecimal(float1), NumericFunctions.toBigdecimal(float1));
-            Assert.assertEquals(new BigDecimal(double1).setScale(4, BigDecimal.ROUND_DOWN), NumericFunctions.toBigdecimal(double1));
-            Assert.assertEquals(new BigDecimal(12.5).setScale(1, BigDecimal.ROUND_DOWN), NumericFunctions.toBigdecimal(charArray, 1));
-        } catch (ParseException parseException) {
-            parseException.printStackTrace();
-        }
+        Assert.assertEquals(new BigDecimal(12.39).setScale(2, BigDecimal.ROUND_DOWN), NumericFunctions.toBigdecimal("12.39", 2));
+        Assert.assertEquals(new BigDecimal(integer1), NumericFunctions.toBigdecimal(integer1));
+        Assert.assertEquals(new BigDecimal(long1), NumericFunctions.toBigdecimal(long1));
+        Assert.assertEquals(new BigDecimal(float1), NumericFunctions.toBigdecimal(float1));
+        Assert.assertEquals(new BigDecimal(double1).setScale(4, BigDecimal.ROUND_DOWN), NumericFunctions.toBigdecimal(double1));
+        Assert.assertEquals(new BigDecimal(12.5).setScale(1, BigDecimal.ROUND_DOWN), NumericFunctions.toBigdecimal(charArray, 1));
     }
 
     @Test
