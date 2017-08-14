@@ -118,6 +118,8 @@ import hydrograph.ui.datastructure.property.MixedSchemeGridRow;
 import hydrograph.ui.datastructure.property.NameValueProperty;
 import hydrograph.ui.datastructure.property.Schema;
 import hydrograph.ui.datastructure.property.XPathGridRow;
+import hydrograph.ui.datastructure.property.mapping.MappingSheetRow;
+import hydrograph.ui.datastructure.property.mapping.TransformMapping;
 import hydrograph.ui.graph.model.Link;
 import hydrograph.ui.graph.schema.propagation.SchemaPropagation;
 import hydrograph.ui.logging.factory.LogFactory;
@@ -972,9 +974,12 @@ public abstract class ELTSchemaGridWidget extends AbstractWidget {
 		 if(!getComponent().getCategory().equalsIgnoreCase(Constants.TRANSFORM_DISPLAYNAME)){
 			 schemaGridRowList.clear();
 		 }
-		 tableViewer.refresh();
+			
+		 boolean isUpdate = getCompareSchemaWithInputLink();
 		if (!isAnyUpdateAvailableformPulledSchema(getSchemaForInternalPropagation())) {
-			showMessage();
+			if(!isUpdate){
+				showMessage();
+			}
 		} else {
 			syncInternallyPropagatedSchema();
 			showHideErrorSymbol(applySchemaValidationRule());
@@ -983,6 +988,88 @@ public abstract class ELTSchemaGridWidget extends AbstractWidget {
 
 			propertyDialogButtonBar.enableApplyButton(true);
 		}
+	 }
+	 
+	 /**
+	  * compare schema with input link for transform mapping
+	 * @return
+	 */
+	private boolean getCompareSchemaWithInputLink(){
+		 boolean isUpdate = false;
+		 List<GridRow> tempSchema = new ArrayList<>();
+		 if(schemaGridRowList !=null){
+			 tempSchema.addAll(schemaGridRowList);
+		 }
+		 List<GridRow> gridRows = null;
+		 
+		 //get linked component schema
+		 if(getComponent().getInputLinks() != null){
+			 List<Link> links = getComponent().getInputLinks();
+			 for(Link link : links){
+				 Schema inputLinkSchema = (Schema) link.getSource().getProperties().get(Constants.SCHEMA_PROPERTY_NAME);
+				 if(inputLinkSchema!=null){
+					 gridRows = inputLinkSchema.getGridRow();
+				 }
+			 }
+		 }
+		if(getComponent().getCategory().equalsIgnoreCase(Constants.TRANSFORM_DISPLAYNAME)){
+			TransformMapping transformMapping = (TransformMapping) getComponent().getProperties().get("operation");
+			if(transformMapping != null && transformMapping.getMapAndPassthroughField() != null){
+				List<NameValueProperty> nameValueProperties = transformMapping.getMapAndPassthroughField();
+				List<MappingSheetRow> mappingSheetRows = transformMapping.getMappingSheetRows();
+				
+				///get mappassthrough field and compare with schema tab schema
+				if(nameValueProperties != null && gridRows != null){
+					for(int index=0;index <= nameValueProperties.size() - 1;index++){
+						for(GridRow inputGridRow : gridRows){
+							if(StringUtils.equals(inputGridRow.getFieldName(), nameValueProperties.get(index).getPropertyName())){
+								for(GridRow schemaGridRow : tempSchema){
+									if(StringUtils.equals(schemaGridRow.getFieldName(), nameValueProperties.get(index).getPropertyValue())){
+										if(!StringUtils.equals(schemaGridRow.getDataTypeValue(), inputGridRow.getDataTypeValue())){
+											BasicSchemaGridRow basicSchemaGridRow = getBasicSchemaFieldValues(inputGridRow);
+											schemaGridRowList.remove(basicSchemaGridRow);
+											schemaGridRowList.add(basicSchemaGridRow);
+											isUpdate = true;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				ELTGridDetails eLTDetails = (ELTGridDetails) helper.get(HelperType.SCHEMA_GRID);
+				eLTDetails.setGrids(schemaGridRowList);
+				tableViewer.setInput(schemaGridRowList);
+				tableViewer.refresh();
+			}
+		}
+		return isUpdate;
+	 }
+	 
+	 private BasicSchemaGridRow getBasicSchemaFieldValues(GridRow inputGridRow){
+		 BasicSchemaGridRow tempschemaGrid = new BasicSchemaGridRow();
+			tempschemaGrid.setDataType(inputGridRow.getDataType());
+			tempschemaGrid.setDateFormat(inputGridRow.getDateFormat());
+			tempschemaGrid.setFieldName(inputGridRow.getFieldName());
+			tempschemaGrid.setScale(inputGridRow.getScale());
+			tempschemaGrid.setDataTypeValue(inputGridRow.getDataTypeValue());
+			tempschemaGrid.setScaleType(inputGridRow.getScaleType());
+			tempschemaGrid.setScaleTypeValue(inputGridRow.getScaleTypeValue());
+			tempschemaGrid.setPrecision(inputGridRow.getPrecision());
+			tempschemaGrid.setDescription(inputGridRow.getDescription());
+		return tempschemaGrid;
+	 }
+	 
+	 private boolean updateTransformSchemaOnPull(GridRow inputGridRow, String fieldName){
+		 boolean isFieldUpdate = false;
+		 for(GridRow schemaGridRow : schemaGridRowList){
+			 if(!StringUtils.equals(schemaGridRow.getFieldName(), fieldName)){
+				 schemaGridRow.setDataType(inputGridRow.getDataType());
+				 schemaGridRow.setDataTypeValue(inputGridRow.getDataTypeValue());
+				 isFieldUpdate = true;
+			 }
+		 }
+		 return isFieldUpdate;
 	 }
 
 	 // Adds the browse button

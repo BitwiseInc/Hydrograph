@@ -24,7 +24,6 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTError;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -39,7 +38,6 @@ import hydrograph.ui.common.util.ComponentCacheUtil;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.common.util.ImagePathConstant;
 import hydrograph.ui.common.util.OSValidator;
-import hydrograph.ui.common.util.XMLConfigUtil;
 import hydrograph.ui.graph.model.Component;
 import hydrograph.ui.graph.model.components.SubjobComponent;
 import hydrograph.ui.graph.schema.propagation.SchemaData;
@@ -261,6 +259,7 @@ public class PropertyDialog extends Dialog implements IOperationClassDialog{
 		okButton.setFocus();
 		boolean windowValidityStaus = Boolean.TRUE;
 		boolean verifiedSchema = Boolean.TRUE;
+		boolean isWindowClose = true;
 		for (AbstractWidget customWidget : propertyDialogBuilder.getELTWidgetList()) {
 			LinkedHashMap<String, Object> properties= customWidget.getProperties();
 			if (properties != null) {
@@ -273,6 +272,8 @@ public class PropertyDialog extends Dialog implements IOperationClassDialog{
 				} else{
 					savePropertiesInComponentModel(customWidget,properties);
 				}
+				if(isWindowClose)
+				isWindowClose = customWidget.canClosePropertyDialog();
 			}
 		}
 		if (applyButton.isEnabled())
@@ -285,7 +286,7 @@ public class PropertyDialog extends Dialog implements IOperationClassDialog{
 		updateComponentValidityStatus();
 
 		okPressed = true;
-		if (verifiedSchema){
+		if (verifiedSchema && isWindowClose){
 			super.okPressed();
 		}
 		if(component.isContinuousSchemaPropogationAllow()&& !(component instanceof SubjobComponent))

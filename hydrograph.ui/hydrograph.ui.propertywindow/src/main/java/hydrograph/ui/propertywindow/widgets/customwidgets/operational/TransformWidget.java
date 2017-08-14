@@ -21,11 +21,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 import hydrograph.ui.common.property.util.Utils;
 import hydrograph.ui.common.util.Constants;
@@ -72,6 +74,7 @@ public class TransformWidget extends AbstractWidget {
 	private TransformMapping transformMapping;
 	private List<AbstractWidget> widgets;
 	private List<FilterProperties> outputList;
+	private boolean verifySchemaVidate = true;
 	/**
 	 * Instantiates a new ELT operation class widget.
 	 * 
@@ -546,9 +549,13 @@ public class TransformWidget extends AbstractWidget {
 	}
 
 	@Override
+	public boolean canClosePropertyDialog() {
+		return validateTransformSchemaOnOkClick(getSchemaForInternalPropagation(), getComponent());
+	}
+	
+	@Override
 	public LinkedHashMap<String, Object> getProperties() {
 		property.put(propertyName, transformMapping);
-
 		return property;
 	}
 
@@ -578,13 +585,79 @@ public class TransformWidget extends AbstractWidget {
 		}
 		return portCount;
 	}
+	
+	/**
+	 * @param schema
+	 * @param component
+	 * @param mapping
+	 */
+	private boolean validateTransformSchemaOnOkClick(Schema schema, Component component){
+		if(schema != null && component != null && component != null){
+			List<GridRow> gridRows = null;
+			List<GridRow> currentSchemaGridRowList = null;
+			List<GridRow> temp = new LinkedList<>();
+			Schema currentCompSchema = (Schema)component.getProperties().get(Constants.SCHEMA_PROPERTY_NAME);
+			if(currentCompSchema!=null){
+				currentSchemaGridRowList = currentCompSchema.getGridRow();
+			}
+					
+			List<Link> links = component.getInputLinks();
+			for(Link link : links){
+				Schema inputLinkSchema = (Schema) link.getSource().getProperties().get(Constants.SCHEMA_PROPERTY_NAME);
+				if(inputLinkSchema!=null){
+					gridRows = inputLinkSchema.getGridRow();
+				}
+			}
+			
+			if(gridRows != null && currentCompSchema!=null){
+				for(int index=0;index <= currentSchemaGridRowList.size() - 1;index++){
+					for(GridRow gridRow : gridRows){
+						if(StringUtils.equals(gridRow.getFieldName(), currentSchemaGridRowList.get(index).getFieldName())){
+							temp.add(currentSchemaGridRowList.get(index));
+						}
+					}
+				}
+			}
+			return compareSchemaFields(gridRows, temp);
+		}
+		return false;
+	}
+	
+	@Override
+	public boolean verifySchemaFile() {
+		return verifySchemaVidate;
+	}
+	
+	/** 
+	 * @param inputLinkSchema
+	 * @param currentCompSchema
+	 */
+	private boolean compareSchemaFields(List<GridRow> inputLinkSchema, List<GridRow> currentCompSchema){
+		for(int index = 0; index < currentCompSchema.size() - 1; index++){
+			for(GridRow gridRow : inputLinkSchema){
+				if(StringUtils.equals(gridRow.getFieldName(), currentCompSchema.get(index).getFieldName())){
+					if(!StringUtils.equals(gridRow.getDataTypeValue(), currentCompSchema.get(index).getDataTypeValue())){
+						MessageDialog dialog = new MessageDialog(new Shell(),
+								"Warning", null,"Output Schema is updated,Do you want to continue with changes?", MessageDialog.CONFIRM,
+								new String[] {"Yes", "No"}, 0);
+						int dialogResult =dialog.open();
+						if(dialogResult == 0){
+							return true;
+						}else{
+							return false;
+						}
+					}
+				}
+			}
+		}
+		return true;
+	}
+	
 
 	@Override
 	public boolean isWidgetValid() {
 		return validateAgainstValidationRule(transformMapping);
 	}
-
-	
 
 	@Override
 	public void addModifyListener(Property property,  ArrayList<AbstractWidget> widgetList) {

@@ -22,6 +22,8 @@ import hydrograph.ui.datastructure.property.NameValueProperty;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -168,12 +170,15 @@ public class TransformMapping implements IDataStructure{
 		this.expressionEditorData = expressionEditorData;
 	}
 
+	
 	@Override
 	public Object clone() {
 		TransformMapping atMapping = new TransformMapping();
-		atMapping.getInputFields().addAll(this.inputFields);
-		atMapping.getMapAndPassthroughField().addAll(this.mapAndPassthroughField);
-		atMapping.getOutputFieldList().addAll(this.outputFieldList);
+		List<FilterProperties> outputFieldList=atMapping.getOutputFieldList();
+		for(InputField inputField:this.inputFields){
+			atMapping.getInputFields().add(((InputField)inputField.clone()));
+		}
+		addMapAndPassThroughFieldToClonedObject(atMapping, outputFieldList);
 		atMapping.setExpression(this.isExpression);
 		if(this.expressionEditorData!=null)
 		atMapping.setExpressionEditorData(this.expressionEditorData.clone());
@@ -181,15 +186,62 @@ public class TransformMapping implements IDataStructure{
 			if (this.mappingSheetRows != null)
 				atMapping.getMappingSheetRows().add((MappingSheetRow) mappingSheetRow.clone());
 		}
-
+		addOperationsOrExpressionFieldToClonedOutputList(atMapping, outputFieldList);
+		addParameterFieldToClonedOutputListIfPresent(outputFieldList);
+		arrangeOutputFieldInSameSequenceAsBefore(outputFieldList);
 		return atMapping;
+	}
+
+	private void addOperationsOrExpressionFieldToClonedOutputList(TransformMapping atMapping,
+			List<FilterProperties> outputFieldList) {
+		for(MappingSheetRow mappingSheetRow:atMapping.getMappingSheetRows()){
+			if(mappingSheetRow.isActive()){
+				for(FilterProperties filterProperties:mappingSheetRow.getOutputList()){
+					outputFieldList.add(filterProperties);
+				}
+			}
+		}
+	}
+
+	private void addMapAndPassThroughFieldToClonedObject(TransformMapping atMapping,
+			List<FilterProperties> outputFieldList) {
+		for(NameValueProperty nameValueProperty:this.mapAndPassthroughField){
+			NameValueProperty clonedNameValueProperty=nameValueProperty.clone();
+			atMapping.getMapAndPassthroughField().add(clonedNameValueProperty);
+			clonedNameValueProperty.getFilterProperty().setPropertyname(clonedNameValueProperty.getPropertyValue());
+			outputFieldList.add(clonedNameValueProperty.getFilterProperty());
+		}
+	}
+	
+	private void addParameterFieldToClonedOutputListIfPresent(List<FilterProperties> clonedOutputFieldList) {
+		for(FilterProperties filterProperties:outputFieldList){
+			if(isParameter(filterProperties.getPropertyname())){
+				clonedOutputFieldList.add(filterProperties);
+			}
+		}
+	}
+
+	private void arrangeOutputFieldInSameSequenceAsBefore(List<FilterProperties> clonedOutputFieldList) {
+		List<FilterProperties> tempList=new ArrayList<>(clonedOutputFieldList);
+		
+		for(FilterProperties filterProperties:tempList){
+			if(outputFieldList.contains(filterProperties)){
+			clonedOutputFieldList.set(outputFieldList.indexOf(filterProperties), filterProperties);	
+			}
+		}
 	}
 	
 	
+	private static boolean isParameter(String input) {
+		if (input != null) {
+			Matcher matchs = Pattern.compile("^[\\@]{1}[\\{]{1}[\\s\\S]+[\\}]{1}").matcher(input);
+			if (matchs.matches()) {
+				return true;
+			}
+		}
+		return false;
+	}
 
-	
-
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

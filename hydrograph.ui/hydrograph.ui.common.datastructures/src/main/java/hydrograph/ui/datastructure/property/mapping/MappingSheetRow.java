@@ -463,8 +463,9 @@ public class MappingSheetRow implements IDataStructure {
 		boolean isOperationClass=this.isExpression;
 		String operationId=this.operationId;
 		String operationClassFullPath=this.operationClassFullPath;
-		inputFieldList.addAll(this.inputFieldList);
-		outputList.addAll(this.outputList);
+		cloneInputOutputList(inputFieldList,this.inputFieldList);
+		cloneInputOutputList(outputList,this.outputList);
+		
 		String accumulator=this.accumulator;
 		String comboDataType = this.comboDataType;
 		if(this.nameValuePropertyList!=null)
@@ -498,6 +499,12 @@ public class MappingSheetRow implements IDataStructure {
 				nameValuePropertyList,isClassParamter,wholeOperationParameterValue,isWholeOperationParameter,operationClassFullPath,
 				isOperationClass,null,null,isActive);	
 		return mappingSheetRow;
+	}
+    
+	private void cloneInputOutputList(List<FilterProperties> cloneInputFieldList,List<FilterProperties> oldInputFieldList) {
+		for(FilterProperties filterProperties:oldInputFieldList){
+			cloneInputFieldList.add(filterProperties.clone());
+		}
 	}
 	
 	/* (non-Javadoc)

@@ -370,7 +370,7 @@ public abstract class TransformUiConverter extends UiConverter {
 			{
 				NameValueProperty nameValueProperty=new NameValueProperty();
 				nameValueProperty.setPropertyName(property.getName());
-				nameValueProperty.setPropertyValue(getValueForPropertyTag(property.getName()));
+				nameValueProperty.setPropertyValue(property.getValue());
 				nameValueProperties.add(nameValueProperty);
 			}	
 		}	

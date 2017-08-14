@@ -371,6 +371,13 @@ public abstract class AbstractWidget {
 		return true;
 	}
 	
+	/**
+	 * @return
+	 */
+	public boolean canClosePropertyDialog(){
+		return true;
+	}
+	
 	public void showHideErrorSymbol(List<AbstractWidget> widgetList)
 	{
 		boolean isErrorPresent=false;
