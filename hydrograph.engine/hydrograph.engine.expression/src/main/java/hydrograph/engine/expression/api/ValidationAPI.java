@@ -299,7 +299,7 @@ public class ValidationAPI implements Serializable {
 			return Object.class;
 		else if(className.contains("decimal") || className.contains("BigDecimal") )
 			return BigDecimal.class;
-		return String.class;
+		return Object.class;
 
 	}
 

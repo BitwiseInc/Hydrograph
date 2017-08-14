@@ -209,7 +209,105 @@ public class NumericFunctions {
         return r.nextInt(n1);
     }
 
+
+    /**
+     * @Deprecated Method
+     * Converts {@code inputValue} to Double value
+     *
+     * @param inputValue comparable to be converted to Double
+     * @return converted value of {@code inputValue} to Double
+     * if {@code inputValue} is null return null
+     *
+     * Recommended to use:
+     *          Double toDouble(Float inputValue)
+     *          Double toDouble(Integer inputValue)
+     *          Double toDouble(Long inputValue)
+     *          Double toDouble(Short inputValue)
+     *          Double toDouble(BigDecimal inputValue)
+     *          Double toDouble(String inputValue)
+     *
+     */
     public static <T> Double getDoubleFromComparable(T inputValue) {
+        return Double.parseDouble(convertComparableObjectToString(inputValue));
+    }
+
+    /**
+     * Converts {@code inputValue} to Double value
+     *
+     * @param inputValue to be converted to Double
+     * @return converted value of {@code inputValue} to Double
+     * if {@code inputValue} is null return null
+     */
+    public static Double toDouble(Float inputValue) {
+        if (inputValue == null)
+            return null;
+        return new Double(inputValue);
+    }
+
+    /**
+     * Converts {@code inputValue} to Double value
+     *
+     * @param inputValue to be converted to Double
+     * @return converted value of {@code inputValue} to Double
+     * if {@code inputValue} is null return null
+     */
+    public static Double toDouble(Integer inputValue) {
+        if (inputValue == null)
+            return null;
+        return new Double(inputValue);
+    }
+
+
+    /**
+     * Converts {@code inputValue} to Double value
+     *
+     * @param inputValue to be converted to Double
+     * @return converted value of {@code inputValue} to Double
+     * if {@code inputValue} is null return null
+     */
+    public static Double toDouble(String inputValue) {
+        if (inputValue == null)
+            return null;
+        return Double.parseDouble(inputValue);
+    }
+
+    /**
+     * Converts {@code inputValue} to Double value
+     *
+     * @param inputValue to be converted to Double
+     * @return converted value of {@code inputValue} to Double
+     * if {@code inputValue} is null return null
+     */
+    public static Double toDouble(Long inputValue) {
+        if (inputValue == null)
+            return null;
+        return new Double(inputValue);
+    }
+
+    /**
+     * Converts {@code inputValue} to Double value
+     *
+     * @param inputValue to be converted to Double
+     * @return converted value of {@code inputValue} to Double
+     * if {@code inputValue} is null return null
+     */
+    public static Double toDouble(Short inputValue) {
+        if (inputValue == null)
+            return null;
+        return new Double(inputValue);
+    }
+
+
+    /**
+     * Converts {@code inputValue} to Double value
+     *
+     * @param inputValue to be converted to Double
+     * @return converted value of {@code inputValue} to Double
+     * if {@code inputValue} is null return null
+     */
+    public static Double toDouble(BigDecimal inputValue) {
+        if (inputValue == null)
+            return null;
         return Double.parseDouble(convertComparableObjectToString(inputValue));
     }
 
@@ -721,6 +819,7 @@ public class NumericFunctions {
      * @throws ParseException if the specified string {@code inputValue}
      *                        cannot be parsed.
      */
+    @Deprecated
     public static BigDecimal toBigdecimal(char[] inputValue, int scale) throws ParseException {
         if (inputValue == null)
             return null;
