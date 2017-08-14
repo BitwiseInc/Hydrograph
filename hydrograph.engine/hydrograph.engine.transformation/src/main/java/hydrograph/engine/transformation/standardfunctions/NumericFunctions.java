@@ -650,10 +650,9 @@ public class NumericFunctions {
      * @param inputValue inputValue string to be converted to integer
      * @return converted value of {@code inputValue} to integer
      * if {@code inputValue} is null return null
-     * @throws NumberFormatException if the string does not contain a
-     *                               parsable integer.
+     *
      */
-    public static Integer toInteger(String inputValue) throws NumberFormatException {
+    public static Integer toInteger(String inputValue)  {
         if (inputValue == null)
             return null;
 
@@ -666,10 +665,9 @@ public class NumericFunctions {
      * @param inputValue string to be converted to float
      * @return converted value of {@code inputValue} to float
      * if {@code inputValue} is null return null
-     * @throws NumberFormatException if the string does not contain a
-     *                               parsable integer.
+     *
      */
-    public static Float toFloat(String inputValue) throws NumberFormatException {
+    public static Float toFloat(String inputValue)  {
         if (inputValue == null)
             return null;
 
@@ -820,7 +818,7 @@ public class NumericFunctions {
      *                        cannot be parsed.
      */
     @Deprecated
-    public static BigDecimal toBigdecimal(char[] inputValue, int scale) throws ParseException {
+    public static BigDecimal toBigdecimal(char[] inputValue, int scale)  {
         if (inputValue == null)
             return null;
 
