@@ -15,6 +15,8 @@ package hydrograph.ui.engine.converter.impl;
 
 import java.util.List;
 
+import javax.xml.bind.JAXBElement;
+
 import org.slf4j.Logger;
 
 import hydrograph.engine.jaxb.commontypes.TypeBaseInSocket;
@@ -49,7 +51,7 @@ public class FilterConverter extends TransformConverter {
 		logger.debug("Generating XML for :{}", properties.get(Constants.PARAM_NAME));
 		super.prepareForXML();
 		TypeOperationsComponent typeOperationsComponent = (TypeOperationsComponent) baseComponent;
-		typeOperationsComponent.getOperationOrExpression().addAll(getOperations());
+		typeOperationsComponent.getOperationOrExpressionOrIncludeExternalOperation().addAll(getOperations());
 	}
 
 	@Override
@@ -58,8 +60,8 @@ public class FilterConverter extends TransformConverter {
 	}
 
 	@Override
-	protected List<Object> getOperations() {
-		return operationConverterHelper.getOperations(this.ID);
+	protected List<JAXBElement<?>>  getOperations() {
+		return operationConverterHelper.getFilterOperations(this.ID);
 	}
 
 	@Override

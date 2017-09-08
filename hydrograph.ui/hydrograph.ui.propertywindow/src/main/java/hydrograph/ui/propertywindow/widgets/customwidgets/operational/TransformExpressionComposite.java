@@ -30,10 +30,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.common.util.ImagePathConstant;
 import hydrograph.ui.common.util.OSValidator;
 import hydrograph.ui.datastructure.property.ComponentsOutputSchema;
 import hydrograph.ui.datastructure.property.FixedWidthGridRow;
+import hydrograph.ui.datastructure.property.GridRow;
+import hydrograph.ui.datastructure.property.Schema;
 import hydrograph.ui.datastructure.property.mapping.MappingSheetRow;
 import hydrograph.ui.expression.editor.launcher.LaunchExpressionEditor;
 import hydrograph.ui.graph.model.Component;
@@ -52,12 +55,19 @@ public class TransformExpressionComposite extends AbstractExpressionComposite {
   public TransformExpressionComposite(Composite parent, int style, final MappingSheetRow mappingSheetRow,
 			final Component component, WidgetConfig widgetConfig) {
 		super(parent, style);
-		setLayout(new GridLayout(3, false));
+		setLayout(new GridLayout(1, true));
+		
 		configurationForTransformWidget = (OperationClassConfig) widgetConfig;
 
 		this.mappingSheetRow = mappingSheetRow;
 		this.component = component;
-		Composite selectColumnComposite = new Composite(this, SWT.NONE);
+		Composite mainComposite=new Composite(this, SWT.NONE);
+		mainComposite.setLayout(new GridLayout(3, false));
+		mainComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		
+		
+		
+		Composite selectColumnComposite = new Composite(mainComposite, SWT.NONE);
 		selectColumnComposite.setLayout(new GridLayout(1, false));
 		GridData gd_selectColumnComposite = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		
@@ -88,7 +98,8 @@ public class TransformExpressionComposite extends AbstractExpressionComposite {
 		table.setHeaderVisible(true);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		table.setVisible(true);
-		Composite composite = new Composite(this, SWT.NONE);
+		
+		Composite composite = new Composite(mainComposite, SWT.NONE);
 		composite.setLayout(new GridLayout(4, false));
 		GridData gd_composite = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		
@@ -98,7 +109,7 @@ public class TransformExpressionComposite extends AbstractExpressionComposite {
 		new Label(composite, SWT.NONE);
 
 		lblNewLabel_1 = new Label(composite, SWT.NONE);
-		lblNewLabel_1.setText("Switch to");
+		lblNewLabel_1.setText(Messages.SWITCH_TO);
 
 		Composite radioButtonComposite = new Composite(composite, SWT.NONE);
 		GridLayout radioButtonCompositeLayout = new GridLayout(2, false);
@@ -106,10 +117,10 @@ public class TransformExpressionComposite extends AbstractExpressionComposite {
 		radioButtonComposite.setLayout(radioButtonCompositeLayout);
 		radioButtonComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		switchToExpressionButton = new Button(radioButtonComposite, SWT.RADIO);
-		switchToExpressionButton.setText("Expression");
+		switchToExpressionButton.setText(Messages.EXPRESSION);
 
 		switchToClassButton = new Button(radioButtonComposite, SWT.RADIO);
-		switchToClassButton.setText("Class");
+		switchToClassButton.setText(Messages.CLASS);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
@@ -126,7 +137,7 @@ public class TransformExpressionComposite extends AbstractExpressionComposite {
 		gd_lblExpression.minimumWidth = 70;
 		gd_lblExpression.heightHint = 15;
 		lblExpression.setLayoutData(gd_lblExpression);
-		lblExpression.setText("Expression Id");
+		lblExpression.setText(Messages.EXPRESSION_ID);
 
 		GridData gd_composite_1, gd_composite_2, gd_browseButton;
 		expressionIdTextBox = new Text(composite, SWT.BORDER);
@@ -194,7 +205,7 @@ public class TransformExpressionComposite extends AbstractExpressionComposite {
 		GridData gd_lblNewLabel = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1);
 		gd_lblNewLabel.minimumWidth = 50;
 		lblNewLabel.setLayoutData(gd_lblNewLabel);
-		lblNewLabel.setText("Expression");
+		lblNewLabel.setText(Messages.EXPRESSION);
 
 		expressionTextBox = new Text(composite, SWT.BORDER);
 		expressionTextBox.setEditable(false);
@@ -208,7 +219,7 @@ public class TransformExpressionComposite extends AbstractExpressionComposite {
 		GridData gd_lblParameter = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1);
 		gd_lblParameter.minimumWidth = 50;
 		lblParameter.setLayoutData(gd_lblParameter);
-		lblParameter.setText("Parameter");
+		lblParameter.setText(Messages.PARAMETER);
 
 		parameterTextBox = new Text(composite, SWT.BORDER);
 		parameterTextBox.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -225,7 +236,7 @@ public class TransformExpressionComposite extends AbstractExpressionComposite {
 
 		if (mappingSheetRow.getWholeOperationParameterValue() != null)
 			parameterTextBox.setText(mappingSheetRow.getWholeOperationParameterValue());
-		Composite composite_4 = new Composite(this, SWT.NONE);
+		Composite composite_4 = new Composite(mainComposite, SWT.NONE);
 		composite_4.setLayout(new GridLayout(1, false));
 		GridData gd_composite_4 = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
 		gd_composite_4.widthHint = 159;
@@ -238,7 +249,7 @@ public class TransformExpressionComposite extends AbstractExpressionComposite {
 		GridData gd_lblOutputField = new GridData(SWT.CENTER, SWT.BOTTOM, false, false, 1, 1);
 		gd_lblOutputField.heightHint = 29;
 		lblOutputField.setLayoutData(gd_lblOutputField);
-		lblOutputField.setText("Output Field");
+		lblOutputField.setText(Messages.OUTPUT_FIELDS);
 
 		outputFieldTextBox = new Text(composite_4, SWT.BORDER);
 		GridData gd_outputFieldTextBox = new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1);
@@ -266,14 +277,14 @@ public class TransformExpressionComposite extends AbstractExpressionComposite {
 		
 		setAllWidgetsOnIsParamButton(btnIsParam);
 		disabledWidgetsifWholeExpressionIsParameter(btnIsParam, mappingSheetRow.isWholeOperationParameter());
+		createExternalExpressionComposite();
 	}
-  
   
     @Override
 	protected void checkSubclass() {
 	}
 
-	private List<FixedWidthGridRow> getInputSchema(Component component) {
+	public static List<FixedWidthGridRow> getInputSchema(Component component) {
 		List<FixedWidthGridRow> fixedWidthGridRows = new ArrayList<>();
 		for (Link link : component.getTargetConnections()) {
 			ComponentsOutputSchema componentsOutputSchema = SchemaPropagation.INSTANCE.getComponentsOutputSchema(link);
@@ -283,5 +294,16 @@ public class TransformExpressionComposite extends AbstractExpressionComposite {
 			break;
 		}
 		return fixedWidthGridRows;
+	}
+
+	public static List<GridRow> getInputSchemaOfCurrentComponent(Component component) {
+		List<GridRow>  schemaFields=new ArrayList<>();
+		Schema schema=(Schema) component.getProperties().get(Constants.SCHEMA);
+		if(schema!=null && schema.getGridRow()!=null && !schema.getGridRow().isEmpty()){
+			for(GridRow gridRow:schema.getGridRow()){
+				schemaFields.add(gridRow.clone());
+			}
+		}
+		return schemaFields;
 	}
 }

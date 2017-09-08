@@ -79,6 +79,13 @@ public class OperationClassProperty implements IDataStructure{
 		this.expressionEditor=expressionEditorData;
 	}
 	
+	
+	public OperationClassProperty(String operationClassPath, List<NameValueProperty> nameValuePropertyList, String simpleClassName) {
+		this.operationClassPath = operationClassPath;
+		this.nameValuePropertyList=nameValuePropertyList;
+		this.comboBoxValue=simpleClassName;
+	}
+	
 	/**
 	 * 
 	 * returns combobox value from Opeartion class widget

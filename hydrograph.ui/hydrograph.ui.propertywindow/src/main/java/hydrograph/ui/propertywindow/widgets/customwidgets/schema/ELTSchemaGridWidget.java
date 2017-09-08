@@ -72,6 +72,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -108,6 +109,7 @@ import hydrograph.ui.common.util.CustomColorRegistry;
 import hydrograph.ui.common.util.ImagePathConstant;
 import hydrograph.ui.common.util.OSValidator;
 import hydrograph.ui.common.util.ParameterUtil;
+import hydrograph.ui.common.util.SchemaFieldUtil;
 import hydrograph.ui.datastructure.property.BasicSchemaGridRow;
 import hydrograph.ui.datastructure.property.ComponentsOutputSchema;
 import hydrograph.ui.datastructure.property.FilterProperties;
@@ -120,6 +122,7 @@ import hydrograph.ui.datastructure.property.Schema;
 import hydrograph.ui.datastructure.property.XPathGridRow;
 import hydrograph.ui.datastructure.property.mapping.MappingSheetRow;
 import hydrograph.ui.datastructure.property.mapping.TransformMapping;
+import hydrograph.ui.graph.model.Component;
 import hydrograph.ui.graph.model.Link;
 import hydrograph.ui.graph.schema.propagation.SchemaPropagation;
 import hydrograph.ui.logging.factory.LogFactory;
@@ -134,6 +137,7 @@ import hydrograph.ui.propertywindow.propertydialog.PropertyDialogButtonBar;
 import hydrograph.ui.propertywindow.schema.propagation.helper.SchemaPropagationHelper;
 import hydrograph.ui.propertywindow.widgets.customwidgets.AbstractWidget;
 import hydrograph.ui.propertywindow.widgets.customwidgets.config.SchemaConfig;
+import hydrograph.ui.propertywindow.widgets.dialogs.GenericImportExportFileDialog;
 import hydrograph.ui.propertywindow.widgets.gridwidgets.basic.AbstractELTWidget;
 import hydrograph.ui.propertywindow.widgets.gridwidgets.basic.ELTDefaultButton;
 import hydrograph.ui.propertywindow.widgets.gridwidgets.basic.ELTDefaultLable;
@@ -165,10 +169,14 @@ import hydrograph.ui.propertywindow.widgets.utility.WidgetUtility;
  */
 public abstract class ELTSchemaGridWidget extends AbstractWidget {
 
-	private static final String COULD_NOT_LOCATE_THE_EXTERNAL_SCHEMA_FILE_PATH = "Could not locate the external schema file path";
+	private static final String COULD_NOT_LOCATE_THE_EXTERNAL_SCHEMA_FILE_PATH = "Could not locate the external file path";
 	private static Logger logger = LogFactory.INSTANCE.getLogger(ELTSchemaGridWidget.class);
 	//private ColumnLayoutData compositeOfOutsideTable;
 	private GridData compositeOfOutsideTable;
+	private static final String IMPORT_SCHEMA_FILE_EXTENSION_FILTER = "*.xml;*.schema";
+	private static final String IMPORT_SCHEMA_FILE_EXTENSION_NAME = "Schema File (*.xml;*.schema)";
+	private static final String EXPORT_XML_FILE_EXTENSION_FILTER = "*.xml";
+	private static final String EXPORT_SCHEMA_FILE_EXTENSION_FILTER = "*.schema";
 	public static final String FIELDNAME = Messages.FIELDNAME;
 	public static final String DATEFORMAT = Messages.DATEFORMAT;
 	public static final String DATATYPE = Messages.DATATYPE;
@@ -185,7 +193,7 @@ public abstract class ELTSchemaGridWidget extends AbstractWidget {
 	public static final String DEFAULT_VALUE =Messages.DEFAULT_VALUE;
 	public static final String SCHEMA_TAB ="Schema";
 	public static final String OPERATION ="operation";
-	public static final String NO_SCHEMA_NAME = "The file name of schema is not given";
+	public static final String NO_SCHEMA_NAME = "The file name is not given";
 	public static final String SCHEMA_FILE_EXTENSION = ".schema";
 	public static final String XML_FILE_EXTENSION = ".xml";
 	private static final int tableHeight=340;
@@ -217,7 +225,6 @@ public abstract class ELTSchemaGridWidget extends AbstractWidget {
 	protected Map<String, Integer> columns = getPropertiesToShow();
 	protected final String[] PROPS =  populateColumns();
 	private Cursor cursor;
-	private String finalParamPath;
 
 	String[] populateColumns(){	
 		String[] cols = new String[columns.size()];
@@ -232,7 +239,7 @@ public abstract class ELTSchemaGridWidget extends AbstractWidget {
 	private String propertyName;
 	private ListenerHelper helper;
 
-	private ELTDefaultButton addButton , deleteButton,upButton, downButton;
+	private ELTDefaultButton addButton , deleteButton,upButton, downButton, importSchemaButton, exportSchemaButton;
 	private Button browseButton, importButton, exportButton;
 
 	private MenuItem copyMenuItem, pasteMenuItem;
@@ -422,7 +429,7 @@ public abstract class ELTSchemaGridWidget extends AbstractWidget {
 
 	 private boolean verifyExtSchemaSync(List<GridRow> schemaInGrid) {
 		 List<GridRow> schemasFromFile = new ArrayList<GridRow>();
-		 File schemaFile=getPath();
+		 File schemaFile=getPath(extSchemaPathText,SCHEMA_FILE_EXTENSION, true, SCHEMA_FILE_EXTENSION,XML_FILE_EXTENSION);
 		 if (schemaFile == null){
 			 return false;
 		 }
@@ -590,8 +597,8 @@ public abstract class ELTSchemaGridWidget extends AbstractWidget {
 			 gridRow.setScale("");
 
 		 if(temp.getScaleType()!=null){
-			 gridRow.setScaleType(GridWidgetCommonBuilder.getScaleTypeByValue(temp.getScaleType().value()));	
-			 gridRow.setScaleTypeValue(GridWidgetCommonBuilder.getScaleTypeValue()[GridWidgetCommonBuilder.getScaleTypeByValue(temp.getScaleType().value())]);
+			 gridRow.setScaleType(SchemaFieldUtil.INSTANCE.getScaleTypeByValue(temp.getScaleType().value()));	
+			 gridRow.setScaleTypeValue(GridWidgetCommonBuilder.getScaleTypeValue()[SchemaFieldUtil.INSTANCE.getScaleTypeByValue(temp.getScaleType().value())]);
 		 }else{
 			 gridRow.setScaleType(GridWidgetCommonBuilder.getScaleTypeByValue(Messages.SCALE_TYPE_NONE));
 			 gridRow.setScaleTypeValue(GridWidgetCommonBuilder.getScaleTypeValue()[Integer.valueOf(Constants.DEFAULT_INDEX_VALUE_FOR_COMBOBOX)]);
@@ -713,15 +720,27 @@ public abstract class ELTSchemaGridWidget extends AbstractWidget {
 			 buttonSubGroup.attachWidget(defaultLable);
 		 }
 
-		 if(SchemaSyncUtility.INSTANCE.isSchemaSyncAllow(getComponent().getComponentName())){
-			 buttonSubGroup.numberOfBasicWidgets(7);
-			 buttonSubGroup.getContainerControl().setLayout(getButtonCompositeLayout(6, 0, 0));
-			 ELTDefaultLable defaultLable1 = new ELTDefaultLable("");
-			 defaultLable1.lableWidth(0);
-			 buttonSubGroup.attachWidget(defaultLable1);
-			 ELTDefaultLable defaultLable = new ELTDefaultLable("");
-			 buttonSubGroup.attachWidget(defaultLable);
-		 }
+		if (SchemaSyncUtility.INSTANCE.isSchemaSyncAllow(getComponent().getComponentName())) {
+			buttonSubGroup.numberOfBasicWidgets(7);
+			buttonSubGroup.getContainerControl().setLayout(getButtonCompositeLayout(6, 0, 0));
+
+			if ((StringUtils.equalsIgnoreCase(getComponent().getComponentName(), Constants.AGGREGATE))
+					|| (StringUtils.equalsIgnoreCase(getComponent().getComponentName(), Constants.CUMULATE))
+					|| (StringUtils.equalsIgnoreCase(getComponent().getComponentName(), Constants.GROUP_COMBINE))
+					|| (StringUtils.equalsIgnoreCase(getComponent().getComponentName(), Constants.NORMALIZE))
+					|| (StringUtils.equalsIgnoreCase(getComponent().getComponentName(), Constants.TRANSFORM))) {
+				addImportSchemaButton(buttonSubGroup);
+				addExportSchemaButton(buttonSubGroup);
+				
+			} else {
+				ELTDefaultLable defaultLable1 = new ELTDefaultLable("");
+				defaultLable1.lableWidth(0);
+				buttonSubGroup.attachWidget(defaultLable1);
+				ELTDefaultLable defaultLable = new ELTDefaultLable("");
+				buttonSubGroup.attachWidget(defaultLable);
+			}
+		}
+		 
 		 if(!(StringUtils.equalsIgnoreCase(getComponent().getCategory(), Constants.OUTPUT))&&!(SchemaSyncUtility.INSTANCE.isSchemaSyncAllow(getComponent().getComponentName()))){
 			 buttonSubGroup.numberOfBasicWidgets(7);
 			 buttonSubGroup.getContainerControl().setLayout(getButtonCompositeLayout(6, 0, 0));
@@ -732,12 +751,11 @@ public abstract class ELTSchemaGridWidget extends AbstractWidget {
 			 defaultLable1.lableWidth(0);
 			 buttonSubGroup.attachWidget(defaultLable1);
 		 }
-
+		 
 		 addAddButton(buttonSubGroup);
 		 addDeleteButton(buttonSubGroup);
 		 addUpButton(buttonSubGroup);
 		 addDownButton(buttonSubGroup);
-
 		 return buttonSubGroup;
 	 }
 	 
@@ -1173,9 +1191,10 @@ public abstract class ELTSchemaGridWidget extends AbstractWidget {
 	    	populateWidgetExternalSchema();
 	 }
 		
-		private File getPath(){
+		public static File getPath(Text extSchemaPathText, String defaultExtension, boolean showErrorMessage, String... fileExtensions){
 			 File schemaFile=null;
 			 String schemaPath =null;
+			 String finalParamPath=null;
 			 IEditorInput input = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor().getEditorInput();
 
 			 if(input instanceof IFileEditorInput){
@@ -1189,26 +1208,31 @@ public abstract class ELTSchemaGridWidget extends AbstractWidget {
 				    		}
 						
 						if(finalParamPath.endsWith("/")){
+							if(showErrorMessage){
 							WidgetUtility.createMessageBox(NO_SCHEMA_NAME,"Error",SWT.ICON_ERROR|SWT.OK);
 							 logger.error(NO_SCHEMA_NAME);
+							}
 							 return null;
 						}
 						else {
-							if(!(finalParamPath.endsWith(SCHEMA_FILE_EXTENSION)) && !(finalParamPath.endsWith(XML_FILE_EXTENSION))){
-							schemaPath = finalParamPath.concat(SCHEMA_FILE_EXTENSION);
-						 }else{
-							schemaPath = finalParamPath;
-						 }
+							schemaPath = getFilePath(defaultExtension, finalParamPath, fileExtensions);
 						}
 					  
 				 }
 			else {
 				if (extSchemaPathText.getText().endsWith("/")) {
+					if(showErrorMessage){
 					WidgetUtility.createMessageBox(NO_SCHEMA_NAME, "Error",
 							SWT.ICON_ERROR | SWT.OK);
 					logger.error(NO_SCHEMA_NAME);
+					}
 					return null;
 				}else{
+					if(!checkEndsWith(extSchemaPathText.getText(), fileExtensions))
+					{
+							String textBoxPathWithExtension=extSchemaPathText.getText().concat(defaultExtension);
+							extSchemaPathText.setText(textBoxPathWithExtension);
+					}
 					schemaPath = extSchemaPathText.getText();
 				}
 			}
@@ -1220,33 +1244,22 @@ public abstract class ELTSchemaGridWidget extends AbstractWidget {
 					 }
 					 catch(IllegalArgumentException e)
 					 {
+						 if(showErrorMessage){
 						 WidgetUtility.createMessageBox(COULD_NOT_LOCATE_THE_EXTERNAL_SCHEMA_FILE_PATH,"Error",SWT.ICON_ERROR|SWT.OK);
 						 logger.error(COULD_NOT_LOCATE_THE_EXTERNAL_SCHEMA_FILE_PATH,e);
+						 }
 						 return null;
 					 }	
 					 if(relativePath!=null){
-						 if(!(relativePath.toOSString().endsWith(SCHEMA_FILE_EXTENSION)) && !(relativePath.toOSString().endsWith(XML_FILE_EXTENSION))){
-							 schemaFile = new File(relativePath.toOSString().concat(SCHEMA_FILE_EXTENSION));
-						 }
-						 else{
-							 schemaFile = new File(relativePath.toOSString());
-						 }
+							 schemaFile = new File(getFilePath(defaultExtension, relativePath.toOSString(),fileExtensions));
 					 }
 					 else{
-						 if(!(schemaPath.endsWith(SCHEMA_FILE_EXTENSION)) && !(schemaPath.endsWith(XML_FILE_EXTENSION))){
-							 schemaFile = new File(schemaPath.concat(SCHEMA_FILE_EXTENSION));
-						 }else{
-							 schemaFile = new File(schemaPath);
-						 }
+						 schemaFile = new File(getFilePath(defaultExtension, schemaPath,fileExtensions));
 					 }
 				 }
 				 else
 				 {	
-					 if(!(schemaPath.endsWith(SCHEMA_FILE_EXTENSION)) && !(schemaPath.endsWith(XML_FILE_EXTENSION))){
-						 schemaFile = new File(schemaPath.concat(SCHEMA_FILE_EXTENSION));
-					 }else{
-						 schemaFile = new File(schemaPath);
-					 }
+					 schemaFile = new File(getFilePath(defaultExtension, schemaPath,fileExtensions));
 				 }
 			 }
 			 else{
@@ -1263,21 +1276,135 @@ public abstract class ELTSchemaGridWidget extends AbstractWidget {
 					  schemaPath = extSchemaPathText.getText();
 				 }
 				 if(!new File(schemaPath).isAbsolute()){
+					if(showErrorMessage){
 					 Status status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, 
 							 "Existing job is not saved. In order to use relative path save the job", null);
 					 StatusManager.getManager().handle(status, StatusManager.BLOCK);
+					 }
 					 return schemaFile;
 				 }
 				 else {
-					 if(!(schemaPath.endsWith(SCHEMA_FILE_EXTENSION)) && !(schemaPath.endsWith(XML_FILE_EXTENSION))){
-						 schemaFile = new File(schemaPath.concat(SCHEMA_FILE_EXTENSION));
-					 }else{
-						 schemaFile = new File(schemaPath);
-					 }
+					 schemaFile=new File(getFilePath(defaultExtension, schemaPath, fileExtensions));
 				 }
 			 }
 			 return schemaFile;
 		 }
+		
+		
+		public static File getPath(String extSchemaPathText, String defaultExtension, boolean showErrorMessage, String... fileExtensions){
+			 File schemaFile=null;
+			 String schemaPath =null;
+			 String finalParamPath=null;
+			 IEditorInput input = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor().getEditorInput();
+
+			 if(input instanceof IFileEditorInput){
+				 
+				 if(ParameterUtil.containsParameter(extSchemaPathText, '/')){
+					 String paramValue = Utils.INSTANCE.getParamValue(extSchemaPathText);
+					 finalParamPath = Utils.INSTANCE.getParamFilePath(extSchemaPathText, paramValue);
+						while(ParameterUtil.containsParameter(finalParamPath, '/')){
+							paramValue = Utils.INSTANCE.getParamValue(extSchemaPathText);
+					    	finalParamPath = Utils.INSTANCE.getParamFilePath(extSchemaPathText, paramValue);
+				    		}
+						
+						if(finalParamPath.endsWith("/")){
+							if(showErrorMessage){
+							WidgetUtility.createMessageBox(NO_SCHEMA_NAME,"Error",SWT.ICON_ERROR|SWT.OK);
+							 logger.error(NO_SCHEMA_NAME);
+							}
+							 return null;
+						}
+						else {
+							schemaPath = getFilePath(defaultExtension, finalParamPath, fileExtensions);
+						}
+					  
+				 }
+			else {
+				if (extSchemaPathText.endsWith("/")) {
+					if(showErrorMessage){
+					WidgetUtility.createMessageBox(NO_SCHEMA_NAME, "Error",
+							SWT.ICON_ERROR | SWT.OK);
+					logger.error(NO_SCHEMA_NAME);
+					}
+					return null;
+				}else{
+					if(!checkEndsWith(extSchemaPathText, fileExtensions))
+					{
+						extSchemaPathText=extSchemaPathText.concat(defaultExtension);
+					}
+					schemaPath = extSchemaPathText;
+				}
+			}
+				 if(!StringUtils.isEmpty(schemaPath) && !ParameterUtil.containsParameter(schemaPath, Path.SEPARATOR) &&!new File(schemaPath).isAbsolute()){
+					 IWorkspace workspace = ResourcesPlugin.getWorkspace();
+					 IPath relativePath=null;
+					 try{
+						 relativePath=workspace.getRoot().getFile(new Path(schemaPath)).getLocation();
+					 }
+					 catch(IllegalArgumentException e)
+					 {
+						 if(showErrorMessage){
+						 WidgetUtility.createMessageBox(COULD_NOT_LOCATE_THE_EXTERNAL_SCHEMA_FILE_PATH,"Error",SWT.ICON_ERROR|SWT.OK);
+						 logger.error(COULD_NOT_LOCATE_THE_EXTERNAL_SCHEMA_FILE_PATH,e);
+						 }
+						 return null;
+					 }	
+					 if(relativePath!=null){
+							 schemaFile = new File(getFilePath(defaultExtension, relativePath.toOSString(),fileExtensions));
+					 }
+					 else{
+						 schemaFile = new File(getFilePath(defaultExtension, schemaPath,fileExtensions));
+					 }
+				 }
+				 else
+				 {	
+					 schemaFile = new File(getFilePath(defaultExtension, schemaPath,fileExtensions));
+				 }
+			 }
+			 else{
+				 if(ParameterUtil.containsParameter(extSchemaPathText, '/')){
+					 String paramValue = Utils.INSTANCE.getParamValue(extSchemaPathText);
+					 finalParamPath = Utils.INSTANCE.getParamFilePath(extSchemaPathText, paramValue);
+						while(ParameterUtil.containsParameter(finalParamPath, '/')){
+							paramValue = Utils.INSTANCE.getParamValue(extSchemaPathText);
+					    	finalParamPath = Utils.INSTANCE.getParamFilePath(extSchemaPathText, paramValue);
+				    		}
+					  schemaPath = finalParamPath;
+				 }
+				 else{
+					  schemaPath = extSchemaPathText;
+				 }
+				 if(!new File(schemaPath).isAbsolute()){
+					if(showErrorMessage){
+					 Status status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, 
+							 "Existing job is not saved. In order to use relative path save the job", null);
+					 StatusManager.getManager().handle(status, StatusManager.BLOCK);
+					 }
+					 return schemaFile;
+				 }
+				 else {
+					 schemaFile=new File(getFilePath(defaultExtension, schemaPath, fileExtensions));
+				 }
+			 }
+			 return schemaFile;
+		 }
+
+	private static String getFilePath(String defaultExtension, String finalParamPath, String[] fileExtensions) {
+		if (!checkEndsWith(finalParamPath, fileExtensions)) {
+			return finalParamPath.concat(defaultExtension);
+		} else {
+			return finalParamPath;
+		}
+	}
+
+	private static boolean checkEndsWith(String finalParamPath, String[] fileExtensions) {
+		for(String extension:fileExtensions){
+			if(StringUtils.endsWithIgnoreCase(finalParamPath, extension)){
+				return true;
+			}
+		}
+		return false;
+	}
 
 	 private void addImportExportButtons(Composite containerControl) {
 		 ELTDefaultSubgroupComposite importExportComposite = new ELTDefaultSubgroupComposite(containerControl);
@@ -1296,29 +1423,13 @@ public abstract class ELTSchemaGridWidget extends AbstractWidget {
 		 importButton.addSelectionListener(new SelectionAdapter() {
 			 @Override
 			 public void widgetSelected(SelectionEvent e) {
-				 File schemaFile=getPath();
+				 File schemaFile=getPath(extSchemaPathText,SCHEMA_FILE_EXTENSION,true, SCHEMA_FILE_EXTENSION,XML_FILE_EXTENSION);
 				 if (schemaFile == null){
 					 return;
 				 }
-				 List<GridRow> schemaGridRowListToImport = new ArrayList<GridRow>();;
-
-				 tableViewer.setInput(schemaGridRowListToImport);
-				 tableViewer.refresh();
-				 
-				
-				 GridRowLoader gridRowLoader = new GridRowLoader(gridRowType, schemaFile);
-
-				 schemaGridRowListToImport = gridRowLoader.importGridRowsFromXML(helper);
-
-				 if(schemaGridRowListToImport!=null){
-
-					 tableViewer.setInput(schemaGridRowList);
-					 tableViewer.refresh();
-					 enableDisableButtons(schemaGridRowListToImport.size());
-					 GridRowLoader.showMessageBox(Messages.IMPORTED_SCHEMA,"Information",SWT.ICON_INFORMATION);
-					 showHideErrorSymbol(applySchemaValidationRule());
-				 }
+				 loadSchemaIntoTable(schemaFile);
 			 }
+
 		 });
 
 		 AbstractELTWidget exportButtonWidget = new ELTDefaultButton(Messages.EXPORT_XML).grabExcessHorizontalSpace(false);
@@ -1346,13 +1457,37 @@ public abstract class ELTSchemaGridWidget extends AbstractWidget {
 		 });
 	 }
 	 private void exportSchemaToXmlFile() {
-		 File schemaFile=getPath();
+		 File schemaFile=getPath(extSchemaPathText,SCHEMA_FILE_EXTENSION, true, SCHEMA_FILE_EXTENSION,XML_FILE_EXTENSION);
 		 if (schemaFile == null){
 			 return;
 		 }
-		 GridRowLoader gridRowLoader = new GridRowLoader(gridRowType, schemaFile);
-		 gridRowLoader.exportXMLfromGridRows(schemaGridRowList);
+		 exportSchema(schemaFile);
 	 }
+
+	private void exportSchema(File schemaFile) {
+		GridRowLoader gridRowLoader = new GridRowLoader(gridRowType, schemaFile);
+		gridRowLoader.exportXMLfromGridRows(schemaGridRowList);
+	}
+	 
+	private void loadSchemaIntoTable(File schemaFile) {
+		List<GridRow> schemaGridRowListToImport = new ArrayList<GridRow>();
+
+		tableViewer.setInput(schemaGridRowListToImport);
+		tableViewer.refresh();
+
+		GridRowLoader gridRowLoader = new GridRowLoader(gridRowType, schemaFile);
+
+		schemaGridRowListToImport = gridRowLoader.importGridRowsFromXML(helper);
+
+		if (schemaGridRowListToImport != null) {
+
+			tableViewer.setInput(schemaGridRowList);
+			tableViewer.refresh();
+			enableDisableButtons(schemaGridRowListToImport.size());
+			GridRowLoader.showMessageBox(Messages.IMPORTED_SCHEMA, "Information", SWT.ICON_INFORMATION);
+			showHideErrorSymbol(applySchemaValidationRule());
+		}
+	}
 
 	 // Adds the Radio buttons
 	 private void createSchemaTypesSection(Composite containerControl) {
@@ -1803,6 +1938,87 @@ public abstract class ELTSchemaGridWidget extends AbstractWidget {
 
 		 tableViewer.getTable().setMenu(menu);
 	 }
+	 
+	private void addImportSchemaButton(ELTSchemaSubgroupComposite buttonSubGroup) {
+
+		importSchemaButton = new ELTDefaultButton("");
+		SchemaButtonsSyncUtility.INSTANCE.buttonSize(importSchemaButton, macButtonWidth, macButtonHeight,
+				windowButtonWidth, windowButtonHeight);
+		buttonSubGroup.attachWidget(importSchemaButton);
+		importSchemaButton.setImage(ImagePathConstant.IMPORT_SCHEMA_BUTTON);
+		importSchemaButton.setToolTipText(Messages.IMPORT_SCHEMA_KEY_SHORTCUT_TOOLTIP);
+		Button importButton = (Button) importSchemaButton.getSWTWidgetControl();
+		importButton.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseDown(MouseEvent e) {
+				importSchema(importButton);
+			}
+		});
+	}
+	
+
+	private void importSchema(Button importButton) {
+		GenericImportExportFileDialog importFileDialog = new GenericImportExportFileDialog(
+				importButton.getShell(), SWT.OPEN);
+		importFileDialog.setFileName(StringUtils.EMPTY);
+		importFileDialog.setTitle(Messages.IMPORT_SCHEMA_DIALOG_TITLE);
+		importFileDialog.setFilterNames(new String[] { IMPORT_SCHEMA_FILE_EXTENSION_NAME });
+		importFileDialog.setFilterExtensions(new String[] { IMPORT_SCHEMA_FILE_EXTENSION_FILTER });
+
+		String filePath = importFileDialog.open();
+		if (StringUtils.isNotBlank(filePath)) {
+			
+			 File schemaFile = new File(filePath);
+			 if (schemaFile == null || !schemaFile.exists()){
+				 return;
+			 }
+			 loadSchemaIntoTable(schemaFile);
+			 setSchemaUpdated(true);
+			 propertyDialogButtonBar.enableApplyButton(true);
+		}
+	}
+
+	private void addExportSchemaButton(ELTSchemaSubgroupComposite buttonSubGroup) {
+
+		exportSchemaButton = new ELTDefaultButton("");
+		SchemaButtonsSyncUtility.INSTANCE.buttonSize(exportSchemaButton, macButtonWidth, macButtonHeight,
+				windowButtonWidth, windowButtonHeight);
+		buttonSubGroup.attachWidget(exportSchemaButton);
+		exportSchemaButton.setImage(ImagePathConstant.EXPORT_SCHEMA_BUTTON);
+		exportSchemaButton.setToolTipText(Messages.EXPORT_SCHEMA_KEY_SHORTCUT_TOOLTIP);
+		Button exportButton = (Button) exportSchemaButton.getSWTWidgetControl();
+		exportButton.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseDown(MouseEvent e) {
+				exportSchemaIntoFile(exportButton);
+			}
+		});
+	}
+	
+	private void exportSchemaIntoFile(Button exportButton) {
+		GenericImportExportFileDialog exportFileDialog = new GenericImportExportFileDialog(
+				exportButton.getShell(), SWT.SAVE);
+		exportFileDialog.setTitle(Messages.EXPORT_SCHEMA_DIALOG_TITLE);
+		exportFileDialog.setFilterExtensions(new String[] { EXPORT_XML_FILE_EXTENSION_FILTER, EXPORT_SCHEMA_FILE_EXTENSION_FILTER });
+
+		String filePath = exportFileDialog.open();
+		if (StringUtils.isNotBlank(filePath)) {
+
+			File schemaFile = new File(filePath);
+			if (schemaFile != null) {
+				if (!isSchemaValid) {
+					if (WidgetUtility.createMessageBox(Messages.SCHEMA_IS_INVALID_DO_YOU_WISH_TO_CONTINUE,
+							Messages.EXPORT_SCHEMA, SWT.ICON_QUESTION | SWT.YES | SWT.NO) == SWT.YES) {
+						exportSchema(schemaFile);
+					}
+				} else {
+					exportSchema(schemaFile);
+				}
+			}
+		}
+	}
 
 	 private void addAddButton(ELTSchemaSubgroupComposite buttonSubGroup) {
 
@@ -1908,29 +2124,49 @@ public abstract class ELTSchemaGridWidget extends AbstractWidget {
 		 Schema schema = getSchemaForInternalPropagation();
 
 		 {
-			 if(!SchemaSyncUtility.INSTANCE.isSchemaSyncAllow( getComponent().getComponentName())){
+			  if(!SchemaSyncUtility.INSTANCE.isSchemaSyncAllow( getComponent().getComponentName())){
 
-				 if (schema.getGridRow().size() != 0) {
-					 table.clearAll();
-					 if (!schema.getIsExternal()) {
-						 if (tableViewer != null) {
-							 schemaGridRowList = new ArrayList<>(schema.getGridRow());
-							 ELTGridDetails eLTDetails= (ELTGridDetails) helper.get(HelperType.SCHEMA_GRID);
-							 eLTDetails.setGrids(schemaGridRowList); 
-							 tableViewer.setInput(schemaGridRowList);
-							 tableViewer.refresh();
-							 external = false;
-							 toggleSchema(false);
-						 }
-					 }
-				 }
+				 updateSchemaTableViewer(schema);
 			 }
+		 }
+		 if(refreshIfSetAllPassthroughForTransformIsChecked(getComponent())){
+			 updateSchemaTableViewer(schema);
 		 }
 		 showHideErrorSymbol(isWidgetValid());
 		 SchemaRowValidation.INSTANCE.highlightInvalidRowWithRedColor(null, null,table,componentType);
 	 }
 
-	 public boolean isTransformSchemaType() {
+	private void updateSchemaTableViewer(Schema schema) {
+		if (schema.getGridRow().size() != 0) {
+			 table.clearAll();
+			 if (!schema.getIsExternal()) {
+				 if (tableViewer != null) {
+					 schemaGridRowList = new ArrayList<>(schema.getGridRow());
+					 ELTGridDetails eLTDetails= (ELTGridDetails) helper.get(HelperType.SCHEMA_GRID);
+					 eLTDetails.setGrids(schemaGridRowList); 
+					 tableViewer.setInput(schemaGridRowList);
+					 tableViewer.refresh();
+					 external = false;
+					 toggleSchema(false);
+				 }
+			 }
+		 }
+	}
+
+	 private boolean refreshIfSetAllPassthroughForTransformIsChecked(Component component) {
+		 String componentName=component.getComponentName();
+		 TransformMapping transformMapping=(TransformMapping)component.getProperties().get(Constants.OPERATION);
+          if(transformMapping!=null && ( StringUtils.equalsIgnoreCase(Constants.TRANSFORM, componentName) || 
+   			   StringUtils.equalsIgnoreCase(Constants.AGGREGATE, componentName) ||
+   			   StringUtils.equalsIgnoreCase(Constants.NORMALIZE, componentName) ||
+   			   StringUtils.equalsIgnoreCase(Constants.GROUP_COMBINE, componentName) ||
+   			   StringUtils.equalsIgnoreCase(Constants.CUMULATE, componentName))){
+        	  return transformMapping.isAllInputFieldsArePassthrough();
+          }
+          return false;
+	}
+
+	public boolean isTransformSchemaType() {
 		 return transformSchemaType;
 	 }
 
@@ -2144,21 +2380,7 @@ if(deleteButton!=null)
 
 		 {
 			 if(!SchemaSyncUtility.INSTANCE.isSchemaSyncAllow( getComponent().getComponentName())){
-
-				 if (schema.getGridRow().size() != 0){
-					 table.clearAll();
-					 if (!schema.getIsExternal()){
-						 if (tableViewer != null){
-							 schemaGridRowList = new ArrayList<>(schema.getGridRow());
-							 ELTGridDetails eLTDetails= (ELTGridDetails) helper.get(HelperType.SCHEMA_GRID);
-							 eLTDetails.setGrids(schemaGridRowList); 
-							 tableViewer.setInput(schemaGridRowList);
-							 tableViewer.refresh();
-							 external = false;
-							 toggleSchema(false);
-						 }
-					 }
-				 }
+				 updateSchemaTableViewer(schema);
 			 }
 		 }
 		 SchemaRowValidation.INSTANCE.highlightInvalidRowWithRedColor(null, null,table,componentType);

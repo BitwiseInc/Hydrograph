@@ -21,6 +21,7 @@ import org.slf4j.Logger;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.logging.factory.LogFactory;
 import hydrograph.ui.propertywindow.filemixedschema.ELTMixedSchemeWidget;
+import hydrograph.ui.propertywindow.filter.FilterLogicWidget;
 import hydrograph.ui.propertywindow.fixedwidthschema.ELTFixedWidget;
 import hydrograph.ui.propertywindow.fixedwidthschema.TransformSchemaWidget;
 import hydrograph.ui.propertywindow.ftp.AuthenticationWidget;
@@ -207,7 +208,8 @@ public class WidgetFactory {
 		EXCEL_FORMATTING_WIDGET(ExcelFormattingWidget.class,WidgetHelper.INSTANCE.getRunTimeWidgetConfig(Messages.LABEL_EXCEL_FORMATTING,Messages.EXCEL_FORMATTING_WINDOW_LABEL)),
 		EXCEL_FILE_PATH_WIDGET(ELTFilePathWidget.class,WidgetHelper.INSTANCE.getExcelFilePathWidgetConfig(Messages.FILE_PATH_LABEL)),
 		EXCEL_FILE_NAME_WIDGET(ExcelFileNameWidget.class,WidgetHelper.INSTANCE.getExcelFileNameWidgetConfig()),
-		SORT_EXCEL_COLUMNS_KEYS_WIDGET(SecondaryColumnKeysWidget.class,WidgetHelper.INSTANCE.getSortExcelColumnWidgetConfig());
+		SORT_EXCEL_COLUMNS_KEYS_WIDGET(SecondaryColumnKeysWidget.class,WidgetHelper.INSTANCE.getSortExcelColumnWidgetConfig()),
+		FILTER_LOGIC(FilterLogicWidget.class);
 		
               
 		private Class<?> clazz = null;

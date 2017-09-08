@@ -13,27 +13,6 @@
 
 package hydrograph.ui.engine.ui.converter.impl;
 
-import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
-import hydrograph.engine.jaxb.commontypes.TypeBaseInSocket;
-import hydrograph.engine.jaxb.commontypes.TypeOutputComponent;
-import hydrograph.engine.jaxb.outputtypes.Subjob;
-import hydrograph.ui.common.util.Constants;
-import hydrograph.ui.datastructure.property.ComponentsOutputSchema;
-import hydrograph.ui.engine.exceptions.EngineException;
-import hydrograph.ui.engine.ui.constants.UIComponentsConstants;
-import hydrograph.ui.engine.ui.converter.LinkingData;
-import hydrograph.ui.engine.ui.converter.UiConverter;
-import hydrograph.ui.engine.ui.exceptions.ComponentNotFoundException;
-import hydrograph.ui.engine.ui.util.SubjobUiConverterUtil;
-import hydrograph.ui.engine.ui.util.UiConverterUtil;
-import hydrograph.ui.graph.model.Component;
-import hydrograph.ui.graph.model.Container;
-import hydrograph.ui.graph.model.components.InputSubjobComponent;
-import hydrograph.ui.graph.model.components.OutputSubjobComponent;
-import hydrograph.ui.graph.model.components.SubjobComponent;
-import hydrograph.ui.logging.factory.LogFactory;
-import hydrograph.ui.propertywindow.widgets.utility.SubjobUtility;
-
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -43,7 +22,6 @@ import java.util.Map;
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -51,6 +29,24 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.slf4j.Logger;
 import org.xml.sax.SAXException;
+
+import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
+import hydrograph.engine.jaxb.commontypes.TypeBaseInSocket;
+import hydrograph.engine.jaxb.commontypes.TypeOutputComponent;
+import hydrograph.engine.jaxb.outputtypes.Subjob;
+import hydrograph.ui.common.util.Constants;
+import hydrograph.ui.datastructure.property.ComponentsOutputSchema;
+import hydrograph.ui.engine.exceptions.EngineException;
+import hydrograph.ui.engine.ui.converter.LinkingData;
+import hydrograph.ui.engine.ui.converter.UiConverter;
+import hydrograph.ui.engine.ui.exceptions.ComponentNotFoundException;
+import hydrograph.ui.engine.ui.util.SubjobUiConverterUtil;
+import hydrograph.ui.engine.ui.util.UiConverterUtil;
+import hydrograph.ui.graph.model.Component;
+import hydrograph.ui.graph.model.Container;
+import hydrograph.ui.graph.model.components.SubjobComponent;
+import hydrograph.ui.logging.factory.LogFactory;
+import hydrograph.ui.propertywindow.widgets.utility.SubjobUtility;
 
 /**
  * Converter to convert jaxb subjob object of output type into subjob component
@@ -95,8 +91,9 @@ public class OutputSubjobUiConverter extends UiConverter {
 			}
 
 			Component inputSubjobComponent = SubjobUiConverterUtil.getInputSubJobConnectorReference(subJobContainer);
-			propertyMap.put(Constants.INPUT_SUBJOB, inputSubjobComponent);
-			inputSubjobComponent.getProperties().put(Constants.SUBJOB_COMPONENT, uiComponent);
+			uiComponent.getSubJobContainer().put(Constants.INPUT_SUBJOB, inputSubjobComponent);
+			inputSubjobComponent.getSubJobContainer().put(Constants.SUBJOB_COMPONENT, uiComponent);
+			
 			if (inputSubjobComponent.getProperties().get(Constants.SCHEMA_TO_PROPAGATE) != null) {
 				inputSubjobComponent.getProperties().put(Constants.SCHEMA_TO_PROPAGATE,
 						inputSubjobComponent.getProperties().get(Constants.SCHEMA_TO_PROPAGATE));
@@ -115,6 +112,7 @@ public class OutputSubjobUiConverter extends UiConverter {
 		}
 		propertyMap.put(Constants.RUNTIME_PROPERTY_NAME, getRuntimeProperties());
 		getInPort((TypeOutputComponent) typeBaseComponent);
+		
 		SubjobUiConverterUtil.setUiComponentProperties(uiComponent, container, currentRepository, name_suffix,
 				componentName, propertyMap);
 		SubjobUtility.INSTANCE.showOrHideErrorSymbolOnComponent(subJobContainer,uiComponent);

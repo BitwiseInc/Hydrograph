@@ -29,10 +29,10 @@ import org.eclipse.core.runtime.Platform;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
-import hydrograph.ui.common.Messages;
 import hydrograph.ui.common.component.config.Component;
 import hydrograph.ui.common.component.config.Config;
 import hydrograph.ui.common.component.config.ObjectFactory;
+import hydrograph.ui.common.message.Messages;
 import hydrograph.ui.common.util.XMLConfigUtil;
 
 

@@ -12,7 +12,7 @@
  *******************************************************************************/
 
  
-package hydrograph.ui.common;
+package hydrograph.ui.common.message;
 
 import org.eclipse.osgi.util.NLS;
 
@@ -28,6 +28,13 @@ public class Messages extends NLS {
 	public static String XMLConfigUtil_COMPONENTCONFIG_XSD_PATH;
 	public static String XMLConfigUtil_POLICYCONFIG_XSD_PATH;
 	public static String XMLConfigUtil_POLICY;
+	public static String EXTERNAL_OPERATION_CONFIG_XSD_PATH;
+	public static String EXTERNAL_EXPRESSION_CONFIG_XSD_PATH;
+	public static String IMPORT_XML_FORMAT_ERROR;
+	public static String SCALE_TYPE_NONE;
+	public static String EXTERNAL_MAPPING_FIELDS_CONFIG_XSD_PATH;
+	public static String DATATYPELIST;
+	public static String SCALETYPELIST;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

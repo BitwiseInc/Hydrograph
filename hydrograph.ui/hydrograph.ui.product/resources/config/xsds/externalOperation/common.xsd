@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc. Licensed 
+	under the Apache License, Version 2.0 (the "License"); you may not use this 
+	file except in compliance with the License. You may obtain a copy of the 
+	License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by 
+	applicable law or agreed to in writing, software distributed under the License 
+	is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY 
+	KIND, either express or implied. See the License for the specific language 
+	governing permissions and limitations under the License. -->
+
+
+<xs:schema xmlns="hydrograph/ui/external/common"
+	targetNamespace="hydrograph/ui/external/common" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:shm="hydrograph/ui/graph/schema" elementFormDefault="unqualified">
+
+	<xs:import schemaLocation="../Schema.xsd" namespace="hydrograph/ui/graph/schema" />
+
+	<xs:complexType name="operation-output-fields">
+		<xs:sequence>
+			<xs:element name="field" type="shm:Field" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	
+	<xs:complexType name="expression-output-fields">
+		<xs:sequence>
+			<xs:element name="field" type="shm:Field" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="input-fields">
+		<xs:sequence>
+			<xs:element name="field" type="input-field" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="input-field">
+		<xs:attribute name="name" type="xs:string" use="required" />
+		<xs:attribute name="inSocketId" type="xs:string" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="properties">
+		<xs:sequence maxOccurs="unbounded" minOccurs="1">
+			<xs:element name="property">
+				<xs:complexType>
+					<xs:attribute name="name" type="xs:string" use="required" />
+					<xs:attribute name="value" type="xs:string" use="required" />
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

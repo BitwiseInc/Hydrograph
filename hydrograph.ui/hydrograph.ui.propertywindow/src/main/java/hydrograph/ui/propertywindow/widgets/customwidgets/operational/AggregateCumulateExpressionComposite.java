@@ -37,6 +37,7 @@ import org.eclipse.swt.widgets.Text;
 
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.common.util.CustomColorRegistry;
+import hydrograph.ui.common.util.ExternalOperationExpressionUtil;
 import hydrograph.ui.common.util.ImagePathConstant;
 import hydrograph.ui.common.util.OSValidator;
 import hydrograph.ui.datastructure.expression.ExpressionEditorData;
@@ -51,6 +52,8 @@ import hydrograph.ui.graph.schema.propagation.SchemaPropagation;
 import hydrograph.ui.propertywindow.messages.Messages;
 import hydrograph.ui.propertywindow.widgets.customwidgets.config.OperationClassConfig;
 import hydrograph.ui.propertywindow.widgets.customwidgets.config.WidgetConfig;
+import hydrograph.ui.propertywindow.widgets.customwidgets.operational.external.ExpresssionOperationImportExportComposite;
+import hydrograph.ui.propertywindow.widgets.customwidgets.operational.external.ImportExportType;
 import hydrograph.ui.propertywindow.widgets.listeners.ELTVerifyTextListener;
 import hydrograph.ui.propertywindow.widgets.listeners.ListenerHelper;
 import hydrograph.ui.propertywindow.widgets.listeners.ListenerHelper.HelperType;
@@ -71,15 +74,21 @@ public class AggregateCumulateExpressionComposite extends AbstractExpressionComp
 	public AggregateCumulateExpressionComposite(Composite parent, int style, final MappingSheetRow mappingSheetRow,
 			final Component component, WidgetConfig widgetConfig) {
 		super(parent, style);
-		setLayout(new GridLayout(3, false));
+		setLayout(new GridLayout(1, true));
 		configurationForTransformWidget = (OperationClassConfig) widgetConfig;
 
 		this.mappingSheetRow = mappingSheetRow;
 		this.component = component;
-		Composite selectColumnComposite = new Composite(this, SWT.NONE);
+		Composite mainComposite=new Composite(this, SWT.NONE);
+		mainComposite.setLayout(new GridLayout(3, false));
+		mainComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		
+		
+		
+		Composite selectColumnComposite = new Composite(mainComposite, SWT.NONE);
 		selectColumnComposite.setLayout(new GridLayout(1, false));
 		GridData gd_selectColumnComposite = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_selectColumnComposite.heightHint = 285;
+		gd_selectColumnComposite.heightHint = 275;
 		gd_selectColumnComposite.widthHint = 159;
 		selectColumnComposite.setLayoutData(gd_selectColumnComposite);
 
@@ -102,10 +111,11 @@ public class AggregateCumulateExpressionComposite extends AbstractExpressionComp
 		table.setHeaderVisible(true);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		table.setVisible(true);
-		Composite composite = new Composite(this, SWT.NONE);
+		
+		Composite composite = new Composite(mainComposite, SWT.NONE);
 		composite.setLayout(new GridLayout(4, false));
 		GridData gd_composite = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		gd_composite.heightHint = 285;
+		gd_composite.heightHint = 275;
 		gd_composite.widthHint = 184;
 		composite.setLayoutData(gd_composite);
 		new Label(composite, SWT.NONE);
@@ -342,7 +352,7 @@ public class AggregateCumulateExpressionComposite extends AbstractExpressionComp
 
 		if (mappingSheetRow.getWholeOperationParameterValue() != null)
 			parameterTextBox.setText(mappingSheetRow.getWholeOperationParameterValue());
-		Composite composite_4 = new Composite(this, SWT.NONE);
+		Composite composite_4 = new Composite(mainComposite, SWT.NONE);
 		composite_4.setLayout(new GridLayout(1, false));
 		GridData gd_composite_4 = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
 		gd_composite_4.widthHint = 159;
@@ -381,7 +391,11 @@ public class AggregateCumulateExpressionComposite extends AbstractExpressionComp
 		setAllWidgetsOnIsParamButtonForAggregateCumulate(btnIsParam);
 		disabledWidgetsifWholeExpressionIsParameterForAggregateCumulate(btnIsParam,
 				mappingSheetRow.isWholeOperationParameter());
+		
+		createExternalExpressionComposite();
 	}
+
+	
 
 	/**
 	 * Add DataTypes to the combo
@@ -426,7 +440,18 @@ public class AggregateCumulateExpressionComposite extends AbstractExpressionComp
 		isParam.setData(Messages.ISPARAM_ACCUMULATOR, isParamAccumulator);
 		super.setAllWidgetsOnIsParamButton(isParam);
 	}
-
+    
+	protected void refreshExpressionComposite(MappingSheetRow mappingSheetRow) {
+		comboDataTypes.setText(mappingSheetRow.getComboDataType());
+		if(mappingSheetRow.getAccumulator()==null){
+			mappingSheetRow.setAccumulator("");
+		}
+		textAccumulator.setText(mappingSheetRow.getAccumulator());
+		isParamAccumulator.setEnabled(mappingSheetRow.isAccumulatorParameter());
+		super.refreshExpressionComposite(mappingSheetRow);
+	}
+	
+	
 	@Override
 	protected void checkSubclass() {
 	}

@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -26,16 +27,20 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 
 import hydrograph.ui.common.util.Constants;
+import hydrograph.ui.common.util.ExternalOperationExpressionUtil;
 import hydrograph.ui.datastructure.expression.ExpressionEditorData;
 import hydrograph.ui.datastructure.property.FilterProperties;
 import hydrograph.ui.datastructure.property.FixedWidthGridRow;
 import hydrograph.ui.datastructure.property.GridRow;
 import hydrograph.ui.datastructure.property.Schema;
 import hydrograph.ui.datastructure.property.mapping.MappingSheetRow;
+import hydrograph.ui.datastructure.property.mapping.TransformMapping;
 import hydrograph.ui.expression.editor.util.FieldDataTypeMap;
 import hydrograph.ui.graph.model.Component;
 import hydrograph.ui.graph.model.Link;
 import hydrograph.ui.propertywindow.widgets.customwidgets.config.OperationClassConfig;
+import hydrograph.ui.propertywindow.widgets.customwidgets.operational.external.ExpresssionOperationImportExportComposite;
+import hydrograph.ui.propertywindow.widgets.customwidgets.operational.external.ImportExportType;
 import hydrograph.ui.propertywindow.widgets.utility.SchemaSyncUtility;
 
 /**
@@ -69,7 +74,40 @@ public abstract class AbstractExpressionComposite extends Composite {
 	protected Combo comboDataTypes;
 	protected boolean isTransForm;
 	protected Button isParamAccumulator;
+	protected TransformDialog transformDialog;
+	protected TransformMapping transformMapping;
 	
+	
+	
+	
+	/**
+	 * @return the transformDialog
+	 */
+	public TransformDialog getTransformDialog() {
+		return transformDialog;
+	}
+
+	/**
+	 * @param transformDialog the transformDialog to set
+	 */
+	public void setTransformDialog(TransformDialog transformDialog) {
+		this.transformDialog = transformDialog;
+	}
+
+	/**
+	 * @return the transformMapping
+	 */
+	public TransformMapping getTransformMapping() {
+		return transformMapping;
+	}
+
+	/**
+	 * @param transformMapping the transformMapping to set
+	 */
+	public void setTransformMapping(TransformMapping transformMapping) {
+		this.transformMapping = transformMapping;
+	}
+
 	public Button getIsParamAccumulator() {
 		return isParamAccumulator;
 	}
@@ -242,5 +280,52 @@ public abstract class AbstractExpressionComposite extends Composite {
 		}
 
 		return mappingSheetRow.getMergeExpressionDataForGroupCombine();
+	}
+	
+	protected void createExternalExpressionComposite() {
+		ExpresssionOperationImportExportComposite importExportComposite = new ExpresssionOperationImportExportComposite(
+				this, SWT.NONE, ImportExportType.EXPRESSION, mappingSheetRow.getExternalExpresion()){
+
+					@Override
+					protected void exportButtonSelection(Button widget) {
+						ExternalOperationExpressionUtil.INSTANCE.exportExpression(getFile(), mappingSheetRow, true, TransformExpressionComposite.getInputSchemaOfCurrentComponent(component));
+						transformDialog.showHideValidationMessage();
+					}
+
+					@Override
+					protected void importButtonSelection(Button widget) {
+						ExternalOperationExpressionUtil.INSTANCE.importExpression(getFile(), mappingSheetRow, true,transformMapping,component.getComponentName());
+						outputFieldTextBox.setText(mappingSheetRow.getOutputList().get(0).getPropertyname());
+						refreshExpressionComposite(mappingSheetRow);
+					}
+
+					@Override
+					protected void interalRadioButtonSelection(Button widget) {
+						transformDialog.showHideValidationMessage();
+						setEnableParameterCompo(true);
+					}
+
+					@Override
+					protected void externalRadioButtonSelection(Button widget) {
+						transformDialog.showHideValidationMessage();
+						setEnableParameterCompo(false);
+					}
+					
+					private void setEnableParameterCompo(boolean isEnable) {
+						parameterTextBox.setEnabled(isEnable);
+						btnIsParam.setEnabled(isEnable);
+					}
+		};
+	}
+	
+	protected void refreshExpressionComposite(MappingSheetRow mappingSheetRow) {
+		tableViewer.refresh();
+		if(mappingSheetRow.getExpressionEditorData()!=null){
+			expressionTextBox.setText(mappingSheetRow.getExpressionEditorData().getExpression());
+			expressionIdTextBox.setText(mappingSheetRow.getOperationID());
+		}
+		outputFieldTextBox.setText(mappingSheetRow.getOutputList().get(0).getPropertyname());
+		transformDialog.refreshOutputTable();
+		transformDialog.showHideValidationMessage();
 	}
 }

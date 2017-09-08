@@ -260,7 +260,7 @@ public class JobManager {
 	 * @param runConfigDialog the run config dialog
 	 */
 	public void executeJob(final Job job, String uniqueJobId,RunConfigDialog runConfigDialog) {
-		List<String> externalSchemaFiles;
+		List<String> externalFiles;
 		List<String> subJobList;
 		enableRunJob(false);
 		final DefaultGEFCanvas gefCanvas = CanvasUtils.INSTANCE.getComponentCanvas();
@@ -302,10 +302,10 @@ public class JobManager {
 		job.setRemoteMode(runConfigDialog.isRemoteMode());
 		
 		if(runConfigDialog.isRemoteMode()){
-			externalSchemaFiles=JobScpAndProcessUtility.INSTANCE.getExternalSchemaList();
+			externalFiles=JobScpAndProcessUtility.INSTANCE.getExternalFilesList();
 			subJobList=JobScpAndProcessUtility.INSTANCE.getSubJobList();
 		}else{
-			externalSchemaFiles=Collections.EMPTY_LIST;
+			externalFiles=Collections.EMPTY_LIST;
 			subJobList=Collections.EMPTY_LIST;
 		}
 		
@@ -322,7 +322,7 @@ public class JobManager {
 		}
 		addExecutionDetails(job);
 		
-		launchJob(job, gefCanvas, parameterGrid, xmlPath,getUserFunctionsPropertertyFile() ,externalSchemaFiles,subJobList);
+		launchJob(job, gefCanvas, parameterGrid, xmlPath,getUserFunctionsPropertertyFile() ,externalFiles,subJobList);
 	}
 
 	/**
@@ -398,7 +398,7 @@ public class JobManager {
 		job.setHost(job.getIpAddress());
 
 		if(isRemote){
-			externalSchemaFiles=JobScpAndProcessUtility.INSTANCE.getExternalSchemaList();
+			externalSchemaFiles=JobScpAndProcessUtility.INSTANCE.getExternalFilesList();
 			subJobList=JobScpAndProcessUtility.INSTANCE.getSubJobList();
 		}else{
 			externalSchemaFiles=Collections.EMPTY_LIST;
@@ -423,18 +423,18 @@ public class JobManager {
 	 * @param parameterGrid the parameter grid
 	 * @param xmlPath the xml path
 	 * @param userFunctionsPropertertyFile the user functions properterty file
-	 * @param externalSchemaFiles the external schema files
+	 * @param externalFiles the external schema files
 	 * @param subJobList the sub job list
 	 */
 	private void launchJob(final Job job, final DefaultGEFCanvas gefCanvas, final MultiParameterFileDialog parameterGrid,
-			final String xmlPath,final String userFunctionsPropertertyFile,final List<String> externalSchemaFiles,final List<String> subJobList) {
+			final String xmlPath,final String userFunctionsPropertertyFile,final List<String> externalFiles,final List<String> subJobList) {
 		if (job.isRemoteMode()) {
 			job.setExecutionTrack(isExecutionTrackingOn());
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
 					AbstractJobLauncher jobLauncher = new RemoteJobLauncher();
-					jobLauncher.launchJob(xmlPath, parameterGrid.getParameterFilesForExecution(),userFunctionsPropertertyFile ,job, gefCanvas,externalSchemaFiles,subJobList);
+					jobLauncher.launchJob(xmlPath, parameterGrid.getParameterFilesForExecution(),userFunctionsPropertertyFile ,job, gefCanvas,externalFiles,subJobList);
 				}
 			}).start();
 		} else {
@@ -445,7 +445,7 @@ public class JobManager {
 				public void run() {
 					job.setExecutionTrack(isExecutionTrackingOn());
 					AbstractJobLauncher jobLauncher = new LocalJobLauncher();
-					jobLauncher.launchJob(xmlPath, parameterGrid.getParameterFilesForExecution(), userFunctionsPropertertyFile ,job, gefCanvas,externalSchemaFiles,subJobList);
+					jobLauncher.launchJob(xmlPath, parameterGrid.getParameterFilesForExecution(), userFunctionsPropertertyFile ,job, gefCanvas,externalFiles,subJobList);
 				}
 			}).start();
 		}

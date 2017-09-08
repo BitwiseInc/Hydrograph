@@ -147,7 +147,7 @@
 			<enumeration value="EXCEL_FILE_PATH_WIDGET" />
 			<enumeration value="EXCEL_FILE_NAME_WIDGET" />
 			<enumeration value="SORT_EXCEL_COLUMNS_KEYS_WIDGET" />
-			
+			<enumeration value="FILTER_LOGIC" />
 		</restriction>
 	</simpleType>
 
@@ -427,6 +427,13 @@
 				<annotation>
 					<appinfo>
 						<jaxb:typesafeEnumMember name="WorksheetNameValidationRule" />
+					</appinfo>
+				</annotation>
+			</enumeration>
+			<enumeration value="FILTER_DATA_VALIDATION">
+				<annotation>
+					<appinfo>
+						<jaxb:typesafeEnumMember name="FilterDataValidation" />
 					</appinfo>
 				</annotation>
 			</enumeration>

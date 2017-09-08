@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
+import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 
 import org.apache.commons.lang.StringUtils;
@@ -32,6 +33,7 @@ import hydrograph.engine.jaxb.commontypes.TypeBaseField;
 import hydrograph.engine.jaxb.commontypes.TypeBaseInSocket;
 import hydrograph.engine.jaxb.commontypes.TypeExpressionField;
 import hydrograph.engine.jaxb.commontypes.TypeExpressionOutputFields;
+import hydrograph.engine.jaxb.commontypes.TypeExternalSchema;
 import hydrograph.engine.jaxb.commontypes.TypeInputField;
 import hydrograph.engine.jaxb.commontypes.TypeMapField;
 import hydrograph.engine.jaxb.commontypes.TypeOperationField;
@@ -55,6 +57,7 @@ import hydrograph.ui.datastructure.property.LookupMappingGrid;
 import hydrograph.ui.datastructure.property.MixedSchemeGridRow;
 import hydrograph.ui.datastructure.property.NameValueProperty;
 import hydrograph.ui.datastructure.property.Schema;
+import hydrograph.ui.datastructure.property.mapping.ExternalWidgetData;
 import hydrograph.ui.datastructure.property.mapping.MappingSheetRow;
 import hydrograph.ui.datastructure.property.mapping.TransformMapping;
 import hydrograph.ui.engine.xpath.ComponentXpath;
@@ -83,9 +86,9 @@ public class ConverterHelper {
 		this.componentName = (String) properties.get(Constants.PARAM_NAME);
 	}
 
-	public List<Object> getOperationsOrExpression(TransformMapping transformPropertyGrid, List<BasicSchemaGridRow> schemaGridRows) {
+	public List<JAXBElement<?>> getOperationsOrExpression(TransformMapping transformPropertyGrid, List<BasicSchemaGridRow> schemaGridRows) {
 		logger.debug("Generating TypeTransformOperation data :{}", properties.get(Constants.PARAM_NAME));
-		List<Object> operationList = new ArrayList<>();
+		List<JAXBElement<?>> operationList = new ArrayList<JAXBElement<?>>();
 		if (transformPropertyGrid != null) {
 			List<MappingSheetRow> mappingsheetRowList = TransformMappingFeatureUtility.INSTANCE.
 					getActiveMappingSheetRow(transformPropertyGrid.getMappingSheetRows());
@@ -94,13 +97,28 @@ public class ConverterHelper {
 			if (mappingsheetRowList != null) {
 				int OperationID = 0;
 				for (MappingSheetRow mappingsheetRow : mappingsheetRowList) {
-					if(!mappingsheetRow.isWholeOperationParameter()){
-						Object operation = getOperationOrExpression(mappingsheetRow,OperationID,schemaGridRows);
-						if( operation != null){
+					if (!mappingsheetRow.isWholeOperationParameter()) {
+						if (mappingsheetRow.isActive()) {
+							if (mappingsheetRow.isExpression()) {
+								if (mappingsheetRow.getExternalExpresion().isExternal()) {
+									addExternalJaxbExpression(operationList, mappingsheetRow);
+									continue;
+								}
+							} else {
+								if (mappingsheetRow.getExternalOperation().isExternal()) {
+									addExternalJaxbOperation(operationList, mappingsheetRow);
+									continue;
+								}
+							}
+						}
+						JAXBElement<?> operation = getOperationOrExpression(mappingsheetRow, OperationID,
+								schemaGridRows);
+						if (operation != null) {
 							operationList.add(operation);
 							OperationID++;
 						}
-					}else{
+
+					} else {
 						addWholeOperationParam(mappingsheetRow);
 					}
 				}
@@ -109,6 +127,46 @@ public class ConverterHelper {
 		return operationList;
 	}
 
+	private void addExternalJaxbOperation(List<JAXBElement<?>> operationList, MappingSheetRow mappingsheetRow) {
+		TypeExternalSchema typeExternalSchema = new TypeExternalSchema();
+		typeExternalSchema.setUri("../"+mappingsheetRow.getExternalOperation().getFilePath());
+		JAXBElement<TypeExternalSchema> externalOperation = new JAXBElement<TypeExternalSchema>(
+				new QName("includeExternalOperation"), TypeExternalSchema.class,
+				typeExternalSchema);
+		operationList.add(externalOperation);
+	}
+
+	private void addExternalJaxbExpression(List<JAXBElement<?>> operationList, MappingSheetRow mappingsheetRow) {
+		TypeExternalSchema typeExternalSchema = new TypeExternalSchema();
+		typeExternalSchema.setUri("../"+mappingsheetRow.getExternalExpresion().getFilePath());
+		JAXBElement<TypeExternalSchema> externalExpression = new JAXBElement<TypeExternalSchema>(
+				new QName("includeExternalExpression"), TypeExternalSchema.class,
+				typeExternalSchema);
+		operationList.add(externalExpression);
+	}
+
+	public void addExternalJaxbExpression(List<JAXBElement<?>> operationList,
+			ExternalWidgetData externalExpressionData) {
+		if (externalExpressionData != null) {
+			TypeExternalSchema typeExternalSchema = new TypeExternalSchema();
+			typeExternalSchema.setUri("../" + externalExpressionData.getFilePath());
+			JAXBElement<TypeExternalSchema> externalExpression = new JAXBElement<TypeExternalSchema>(
+					new QName("includeExternalExpression"), TypeExternalSchema.class, typeExternalSchema);
+			operationList.add(externalExpression);
+		}
+	}
+	
+	public void addExternalJaxbOperation(List<JAXBElement<?>> operationList,
+			ExternalWidgetData externalExpressionData) {
+		if (externalExpressionData != null) {
+			TypeExternalSchema typeExternalSchema = new TypeExternalSchema();
+			typeExternalSchema.setUri("../" + externalExpressionData.getFilePath());
+			JAXBElement<TypeExternalSchema> externalExpression = new JAXBElement<TypeExternalSchema>(
+					new QName("includeExternalOperation"), TypeExternalSchema.class, typeExternalSchema);
+			operationList.add(externalExpression);
+		}
+	}
+	
 	private List<MappingSheetRow> filterMappigSheetRowList(List<MappingSheetRow> mappingSheetRows,TransformMapping transformMapping) {
 		List<MappingSheetRow> filterSheetRowList=new ArrayList<>();
  		for(MappingSheetRow mappingSheetRow:mappingSheetRows)
@@ -120,46 +178,45 @@ public class ConverterHelper {
  		return filterSheetRowList;
 	}
 
-	private Object getOperationOrExpression(MappingSheetRow mappingSheetRow, int operationID, List<BasicSchemaGridRow> schemaGridRows) {
-		if(mappingSheetRow != null){
-            if(!mappingSheetRow.isExpression())
-            {
-			TypeTransformOperation operation = new TypeTransformOperation();			
-			operation.setId(mappingSheetRow.getOperationID());
-			operation.setInputFields(getOperationInputFields(mappingSheetRow));				
-			operation.setProperties(getOperationProperties(mappingSheetRow.getNameValueProperty()));
-			operation.setOutputFields(getOperationOutputFields(mappingSheetRow,schemaGridRows));
-			if(StringUtils.isNotBlank(mappingSheetRow.getOperationClassPath()))
-			{
-			operation.setClazz(mappingSheetRow.getOperationClassPath());
+	private JAXBElement<?> getOperationOrExpression(MappingSheetRow mappingSheetRow, int operationID, List<BasicSchemaGridRow> schemaGridRows) {
+		if (mappingSheetRow != null) {
+			if (!mappingSheetRow.isExpression()) {
+				
+				TypeTransformOperation operation = new TypeTransformOperation();
+				operation.setId(mappingSheetRow.getOperationID());
+				operation.setInputFields(getOperationInputFields(mappingSheetRow));
+				operation.setProperties(getOperationProperties(mappingSheetRow.getNameValueProperty()));
+				operation.setOutputFields(getOperationOutputFields(mappingSheetRow, schemaGridRows));
+				if (StringUtils.isNotBlank(mappingSheetRow.getOperationClassPath())) {
+					operation.setClazz(mappingSheetRow.getOperationClassPath());
+				}
+				JAXBElement<TypeTransformOperation> jaxbElement =  new JAXBElement( 
+			            new QName("operation"), TypeTransformOperation.class,operation);
+				return jaxbElement;
+			} else {
+				TypeTransformExpression expression = new TypeTransformExpression();
+				expression.setId(mappingSheetRow.getOperationID());
+				expression.setInputFields(getExpressionInputFields(mappingSheetRow));
+				expression.setProperties(getOperationProperties(mappingSheetRow.getNameValueProperty()));
+				expression.setOutputFields(getExpressionOutputField(mappingSheetRow, schemaGridRows));
+				if (Constants.AGGREGATE.equalsIgnoreCase(component.getComponentName())
+						|| Constants.CUMULATE.equalsIgnoreCase(component.getComponentName())) {
+					expression.setAccumulatorInitalValue(mappingSheetRow.getAccumulator());
+				} else if (Constants.GROUP_COMBINE.equalsIgnoreCase(component.getComponentName())) {
+					expression.setAccumulatorInitalValue(mappingSheetRow.getAccumulator());
+					if (StringUtils
+							.isNotBlank(mappingSheetRow.getMergeExpressionDataForGroupCombine().getExpression())) {
+						expression
+								.setMergeExpr(mappingSheetRow.getMergeExpressionDataForGroupCombine().getExpression());
+					}
+				}
+				if (StringUtils.isNotBlank(mappingSheetRow.getExpressionEditorData().getExpression())) {
+					expression.setExpr(mappingSheetRow.getExpressionEditorData().getExpression());
+				}
+				JAXBElement<TypeTransformExpression> jaxbElement =  new JAXBElement( 
+			            new QName("expression"), TypeTransformExpression.class,expression);
+				return jaxbElement;
 			}
-			return operation;
-            }
-            else
-            {
-            TypeTransformExpression expression=new TypeTransformExpression();
-            expression.setId(mappingSheetRow.getOperationID());
-            expression.setInputFields(getExpressionInputFields(mappingSheetRow));
-            expression.setProperties(getOperationProperties(mappingSheetRow.getNameValueProperty()));
-            expression.setOutputFields(getExpressionOutputField(mappingSheetRow,schemaGridRows));
-            if(Constants.AGGREGATE.equalsIgnoreCase(component.getComponentName())
-              ||Constants.CUMULATE.equalsIgnoreCase(component.getComponentName())
-              )
-            {	
-            expression.setAccumulatorInitalValue(mappingSheetRow.getAccumulator());
-            }
-            else if(Constants.GROUP_COMBINE.equalsIgnoreCase(component.getComponentName())){
-            	 expression.setAccumulatorInitalValue(mappingSheetRow.getAccumulator());
-            	 if(StringUtils.isNotBlank(mappingSheetRow.getMergeExpressionDataForGroupCombine().getExpression())){
-            		 expression.setMergeExpr(mappingSheetRow.getMergeExpressionDataForGroupCombine().getExpression());
-            	 }
-            }
-            if(StringUtils.isNotBlank(mappingSheetRow.getExpressionEditorData().getExpression()))
-            {
-            	expression.setExpr(mappingSheetRow.getExpressionEditorData().getExpression());
-            }
-            return expression;
-            }	
 		}
 		return null;
 	}
@@ -331,16 +388,27 @@ public class ConverterHelper {
 
 	private void syncOutSocketWithSchemaTabList(List<TypeOperationsOutSocket> outSocketList){
 		Schema componenetSchema = (Schema)component.getProperties().get(Constants.SCHEMA_PROPERTY_NAME);
+		TransformMapping transformMapping=(TransformMapping)component.getProperties().get(Constants.OPERATION);
 		if(outSocketList.size()==0 || componenetSchema==null){
 			return;
 		}
 		List<Object> fields = outSocketList.get(0).getPassThroughFieldOrOperationFieldOrExpressionField();
+		if(fields.size() > 0 && fields.get(0) instanceof TypeExternalSchema){
+			return;
+		}
 		List<Object> newFieldList = new LinkedList<>();
 		
 		for(int index=0;index<componenetSchema.getGridRow().size();index++){
 			newFieldList.add(getField(componenetSchema.getGridRow().get(index).getFieldName(),fields));
 		}
 		
+		if(transformMapping!=null && transformMapping.isAllInputFieldsArePassthrough()){
+			TypeInputField typeInputField=new TypeInputField();
+			typeInputField.setInSocketId(Constants.FIXED_INSOCKET_ID);
+			typeInputField.setName("*");
+			newFieldList.add(typeInputField);
+			
+		}
 		outSocketList.get(0).getPassThroughFieldOrOperationFieldOrExpressionField().clear();
 		outSocketList.get(0).getPassThroughFieldOrOperationFieldOrExpressionField().addAll(newFieldList);
 	}
@@ -369,7 +437,11 @@ public class ConverterHelper {
 					fieldToReturn = field;
 					break;
 				}
+			}else if(field instanceof TypeExternalSchema){
+				fieldToReturn = ((TypeExternalSchema)field).getUri();
+				break;
 			}
+			
 		}
 
 		return fieldToReturn;
@@ -377,17 +449,28 @@ public class ConverterHelper {
 
 	private void setOutSocketProperties(TypeOperationsOutSocket outSocket, TransformMapping transformMapping,
 			List<BasicSchemaGridRow> gridRows, Link link) {
-
-		TypeOutSocketAsInSocket outSocketAsInsocket = new TypeOutSocketAsInSocket();
+		
+		
 		outSocket.setId(link.getSourceTerminal());
-		outSocketAsInsocket.setInSocketId(link.getTargetTerminal());
 		outSocket.setType(link.getSource().getPort(link.getSourceTerminal()).getPortType());
-		outSocket.getPassThroughFieldOrOperationFieldOrExpressionField().addAll(addPassThroughFields(transformMapping,gridRows));
+	
+		if(transformMapping!=null && transformMapping.getExternalOutputFieldsData().isExternal()){
+			TypeExternalSchema exter=new TypeExternalSchema();
+			exter.setUri("../"+transformMapping.getExternalOutputFieldsData().getFilePath());
+			outSocket.getPassThroughFieldOrOperationFieldOrExpressionField().add(exter);
+			return;
+		}
+		
+		if(transformMapping!=null && !transformMapping.isAllInputFieldsArePassthrough()){
+			outSocket.getPassThroughFieldOrOperationFieldOrExpressionField().addAll(addPassThroughFields(transformMapping,gridRows));
+		}
 		outSocket.getPassThroughFieldOrOperationFieldOrExpressionField().addAll(addMapFields(transformMapping,gridRows));
 		outSocket.getPassThroughFieldOrOperationFieldOrExpressionField().addAll(addOperationOrExpressionFields(transformMapping,gridRows));
 		addMapFieldParams(transformMapping);
 		addOutputFieldParams(transformMapping);
-		if (outSocket.getPassThroughFieldOrOperationFieldOrExpressionField().isEmpty()) {
+		if (outSocket.getPassThroughFieldOrOperationFieldOrExpressionField().isEmpty()&& (transformMapping !=null && !transformMapping.isAllInputFieldsArePassthrough())) {
+			TypeOutSocketAsInSocket outSocketAsInsocket = new TypeOutSocketAsInSocket();
+			outSocketAsInsocket.setInSocketId(link.getTargetTerminal());
 			outSocket.setCopyOfInsocket(outSocketAsInsocket);
 
 		}
@@ -399,11 +482,10 @@ public class ConverterHelper {
 				for (NameValueProperty nameValueProperty : transformMapping.getMapAndPassthroughField()) {
 					if (nameValueProperty.getPropertyName().trim().equals(nameValueProperty.getPropertyValue().trim())
 							&& !(ParameterUtil.isParameter(nameValueProperty.getPropertyName().trim()))) {
-
 						TypeInputField typeInputField = new TypeInputField();
 						typeInputField.setInSocketId(Constants.FIXED_INSOCKET_ID);
 						typeInputField.setName(nameValueProperty.getPropertyName().trim());
-						typeOperationFieldsList.add(typeInputField);	
+						typeOperationFieldsList.add(typeInputField);
 					}
 
 				}

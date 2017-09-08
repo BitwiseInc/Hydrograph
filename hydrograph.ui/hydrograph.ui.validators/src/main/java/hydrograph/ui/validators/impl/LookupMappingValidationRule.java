@@ -56,10 +56,11 @@ public class LookupMappingValidationRule implements IValidator{
 		List<List<FilterProperties>> lookupInputProperties = lookupMappingGrid.getLookupInputProperties();
 		List<LookupMapProperty> lookupMapProperties = lookupMappingGrid.getLookupMapProperties();
 		if(isJobImported)
-		{	
+		{
+		lookupInputProperties.clear();
 		for(Entry< String,List<FixedWidthGridRow>> inputRow :inputSchemaMap.entrySet()){
 			List<FilterProperties> filterPropertiesList = new ArrayList<FilterProperties>(); 
-			
+
 			for(FixedWidthGridRow row : inputRow.getValue()){
 				FilterProperties filterProperties = new FilterProperties();
 				filterProperties.setPropertyname(row.getFieldName());

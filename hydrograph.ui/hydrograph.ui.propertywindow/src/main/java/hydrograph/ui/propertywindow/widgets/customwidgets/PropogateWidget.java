@@ -55,6 +55,7 @@ import hydrograph.ui.propertywindow.widgets.gridwidgets.basic.ELTDefaultButton;
 import hydrograph.ui.propertywindow.widgets.gridwidgets.basic.ELTDefaultLable;
 import hydrograph.ui.propertywindow.widgets.gridwidgets.container.AbstractELTContainerWidget;
 import hydrograph.ui.propertywindow.widgets.gridwidgets.container.ELTDefaultSubgroupComposite;
+import hydrograph.ui.propertywindow.widgets.utility.OutputRecordCountUtility;
 import hydrograph.ui.propertywindow.widgets.utility.SchemaSyncUtility;
 import hydrograph.ui.propertywindow.widgets.utility.SubjobUtility;
 import hydrograph.ui.propertywindow.widgets.utility.WidgetUtility;
@@ -151,7 +152,7 @@ public class PropogateWidget extends AbstractWidget{
 						}
 						else if(getComponent() instanceof SubjobComponent)
 						{
-							Container container=(Container)getComponent().getProperties().get(Constants.SUBJOB_CONTAINER);
+							Container container=(Container)getComponent().getSubJobContainer().get(Constants.SUBJOB_CONTAINER);
 							for(Component component:container.getUIComponentList())
 							{
 								if(component instanceof InputSubjobComponent)
@@ -185,8 +186,12 @@ public class PropogateWidget extends AbstractWidget{
 									transformMapping.getInputFields().add(inputField);
 								}
 							}
-							shouldsetContinuousSchemaPropagationFlagForNextConnectedComponents=false;
-							getComponent().setContinuousSchemaPropogationAllow(true);
+							
+							if(transformMapping.isAllInputFieldsArePassthrough()){
+								OutputRecordCountUtility.INSTANCE.addPassThroughFieldsToSchema(transformMapping, getComponent(), getSchemaForInternalPropagation());
+							}else{
+								shouldsetContinuousSchemaPropagationFlagForNextConnectedComponents=false;
+							}
 						 
 						}
 						else if(StringUtils.equalsIgnoreCase(getComponent().getComponentName(),Constants.JOIN))

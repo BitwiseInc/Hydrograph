@@ -15,6 +15,9 @@
 package hydrograph.ui.validators.utils;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -139,11 +142,36 @@ private IJavaProject createJavaProjectThroughActiveEditor() {
 }
 
 	public void putOutputFieldsInTransformMapping(TransformMapping transformMapping) {
+		transformMapping.getOutputFieldList().clear();
 		for (MappingSheetRow mappingSheetRow : transformMapping.getMappingSheetRows()) {
 			transformMapping.getOutputFieldList().addAll(mappingSheetRow.getOutputList());
 		}
-		for (NameValueProperty nameValueProperty : transformMapping.getMapAndPassthroughField()) {
-			transformMapping.getOutputFieldList().add(nameValueProperty.getFilterProperty());
-		}
+		if(!transformMapping.getMapAndPassthroughField().isEmpty()&&
+	 			transformMapping.getMapAndPassthroughField().get(0).getFilterProperty()==null)
+	 	{
+	 		backwardJobComapatabilityCode(transformMapping);	
+	 	}else{
+	 		for (NameValueProperty nameValueProperty : transformMapping.getMapAndPassthroughField()) {
+	 			if(!transformMapping.getOutputFieldList().contains(nameValueProperty.getFilterProperty())) {
+	 				transformMapping.getOutputFieldList().add(nameValueProperty.getFilterProperty());
+	 			}
+	 		}
+	 	}
 	}
+	
+	private void backwardJobComapatabilityCode(TransformMapping transformMapping)
+    {
+    		List<NameValueProperty> tempNameValuePropertyList=new ArrayList<>();
+    		for(NameValueProperty nameValueProperty:transformMapping.getMapAndPassthroughField())
+    		{
+    			NameValueProperty newNameValueProperty=new NameValueProperty();
+    			newNameValueProperty.setPropertyName(nameValueProperty.getPropertyName());
+    			newNameValueProperty.setPropertyValue(nameValueProperty.getPropertyValue());
+    			newNameValueProperty.getFilterProperty().setPropertyname(nameValueProperty.getPropertyValue());
+    			tempNameValuePropertyList.add(newNameValueProperty);
+    			transformMapping.getOutputFieldList().add(newNameValueProperty.getFilterProperty());
+    		}	
+    		transformMapping.getMapAndPassthroughField().clear();
+    		transformMapping.getMapAndPassthroughField().addAll(tempNameValuePropertyList);
+    }
 }

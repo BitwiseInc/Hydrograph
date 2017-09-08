@@ -13,23 +13,25 @@
 
 package hydrograph.ui.engine.ui.converter.impl;
 
-import hydrograph.ui.common.util.ParameterUtil;
-import hydrograph.ui.datastructure.expression.ExpressionEditorData;
-import hydrograph.ui.datastructure.property.OperationClassProperty;
-import hydrograph.ui.engine.constants.PropertyNameConstants;
-import hydrograph.ui.engine.ui.constants.UIComponentsConstants;
-import hydrograph.ui.engine.ui.converter.TransformUiConverter;
-import hydrograph.ui.graph.model.Container;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+
+import javax.xml.bind.JAXBElement;
 
 import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.engine.jaxb.commontypes.TypeInputField;
 import hydrograph.engine.jaxb.commontypes.TypeTransformExpression;
 import hydrograph.engine.jaxb.commontypes.TypeTransformOperation;
 import hydrograph.engine.jaxb.operationstypes.Filter;
+import hydrograph.ui.common.datastructure.filter.ExpressionData;
+import hydrograph.ui.common.datastructure.filter.FilterLogicDataStructure;
+import hydrograph.ui.common.datastructure.filter.OperationClassData;
+import hydrograph.ui.datastructure.expression.ExpressionEditorData;
+import hydrograph.ui.engine.constants.PropertyNameConstants;
+import hydrograph.ui.engine.ui.constants.UIComponentsConstants;
+import hydrograph.ui.engine.ui.converter.TransformUiConverter;
+import hydrograph.ui.graph.model.Container;
 /**
  * The class FilterUiConverter
  * 
@@ -67,40 +69,46 @@ public class FilterUiConverter extends TransformUiConverter{
 		
 	}
 
-	private OperationClassProperty getOperationClassOrExpression() {
-		OperationClassProperty operationClassProperty=null;
+	private FilterLogicDataStructure getOperationClassOrExpression() {
+		FilterLogicDataStructure filterLogicDataStructure =new FilterLogicDataStructure(uiComponent.getComponentName());
 		String clazz=null;
-		if(filter.getOperationOrExpression()!=null && filter.getOperationOrExpression().size()!=0){
+		if(filter.getOperationOrExpressionOrIncludeExternalOperation()!=null && filter.getOperationOrExpressionOrIncludeExternalOperation().size()!=0){
 		
-		    if(filter.getOperationOrExpression().get(0) instanceof TypeTransformOperation)
+		    if(filter.getOperationOrExpressionOrIncludeExternalOperation().get(0).getValue() instanceof TypeTransformOperation)
 		    {	
-		    	TypeTransformOperation transformOperation=(TypeTransformOperation) filter.getOperationOrExpression().get(0);
+		    	TypeTransformOperation transformOperation=(TypeTransformOperation) filter.getOperationOrExpressionOrIncludeExternalOperation().get(0).getValue();
 		    	clazz=transformOperation.getClazz();
-		    ExpressionEditorData expressionEditorData=new ExpressionEditorData("",uiComponent.getComponentName());
-			operationClassProperty=new OperationClassProperty(getOperationClassName(clazz),clazz, ParameterUtil.isParameter(clazz),false,expressionEditorData);
-			 operationClassProperty.setNameValuePropertyList(getProperties(transformOperation));
+			 filterLogicDataStructure.setOperation(true);
+			 OperationClassData operationClassData = new OperationClassData();
+			 operationClassData.setQualifiedOperationClassName(getOperationClassName(clazz));
+			 filterLogicDataStructure.setOperationClassData(operationClassData);
+			 
 		    }
-		    else if(filter.getOperationOrExpression().get(0) instanceof TypeTransformExpression)
+		    else if(filter.getOperationOrExpressionOrIncludeExternalOperation().get(0).getValue() instanceof TypeTransformExpression)
 		    {
-		     TypeTransformExpression typeTransformExpression=(TypeTransformExpression)filter.getOperationOrExpression().get(0);
+		     TypeTransformExpression typeTransformExpression=(TypeTransformExpression)filter.getOperationOrExpressionOrIncludeExternalOperation().get(0).getValue();
 		     ExpressionEditorData expressionEditorData=getExpressionEditorData(typeTransformExpression);
 		     
-		     operationClassProperty=new OperationClassProperty(null,null, false,true,expressionEditorData);
-		     operationClassProperty.setNameValuePropertyList(getProperties(typeTransformExpression));
+		     ExpressionData expressionData = new ExpressionData(uiComponent.getComponentName());
+			 expressionData.setExpressionEditorData(expressionEditorData);
+			 for(TypeInputField inputField : typeTransformExpression.getInputFields().getField()){
+				 expressionData.getInputFields().add( inputField.getName());
+			 }
+			 filterLogicDataStructure.setExpressionEditorData(expressionData);
 		    }
 		}
-		return operationClassProperty;
+		return filterLogicDataStructure;
 	}
 
 
 	private List<String> getOperationFileds() {
 		List<String> componentOperationFileds=new ArrayList<>();;
 		
-			for(Object object:filter.getOperationOrExpression())
+			for(Object object:filter.getOperationOrExpressionOrIncludeExternalOperation())
 			{
-			 if(object instanceof TypeTransformOperation)
+			 if(((JAXBElement)object).getValue() instanceof TypeTransformOperation)
 			 {
-				TypeTransformOperation transformOperation=(TypeTransformOperation) object;
+				TypeTransformOperation transformOperation=(TypeTransformOperation) ((JAXBElement)object).getValue();
 				if(transformOperation.getInputFields()!=null)
 				{
 					

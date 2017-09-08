@@ -78,41 +78,41 @@ public class PartitionByExpressionUiConverter extends TransformUiConverter {
 
 	private OperationClassProperty getOperationClassOrExpression() {
 		OperationClassProperty operationClassProperty = null;
-		String clazz = null;
-		if (partitionByExpression.getOperationOrExpression() != null
-				&& partitionByExpression.getOperationOrExpression().size() != 0) {
-			if (partitionByExpression.getOperationOrExpression().get(0) instanceof TypeTransformOperation) {
-				TypeTransformOperation transformOperation = (TypeTransformOperation) partitionByExpression
-						.getOperationOrExpression().get(0);
-				clazz = transformOperation.getClazz();
-				ExpressionEditorData expressionEditorData = new ExpressionEditorData("",
-						uiComponent.getComponentName());
-				operationClassProperty = new OperationClassProperty(getOperationClassName(clazz), clazz,
-						ParameterUtil.isParameter(clazz), false, expressionEditorData);
-			} else if (partitionByExpression.getOperationOrExpression().get(0) instanceof TypeTransformExpression) {
-				TypeTransformExpression typeTransformExpression = (TypeTransformExpression) partitionByExpression
-						.getOperationOrExpression().get(0);
-				ExpressionEditorData expressionEditorData = getExpressionEditorData(typeTransformExpression);
-
-				operationClassProperty = new OperationClassProperty(null, null, false, true, expressionEditorData);
-			}
-		}
+//		String clazz = null;
+//		if (partitionByExpression.getOperationOrExpression() != null
+//				&& partitionByExpression.getOperationOrExpression().size() != 0) {
+//			if (partitionByExpression.getOperationOrExpression().get(0) instanceof TypeTransformOperation) {
+//				TypeTransformOperation transformOperation = (TypeTransformOperation) partitionByExpression
+//						.getOperationOrExpression().get(0);
+//				clazz = transformOperation.getClazz();
+//				ExpressionEditorData expressionEditorData = new ExpressionEditorData("",
+//						uiComponent.getComponentName());
+//				operationClassProperty = new OperationClassProperty(getOperationClassName(clazz), clazz,
+//						ParameterUtil.isParameter(clazz), false, expressionEditorData);
+//			} else if (partitionByExpression.getOperationOrExpression().get(0) instanceof TypeTransformExpression) {
+//				TypeTransformExpression typeTransformExpression = (TypeTransformExpression) partitionByExpression
+//						.getOperationOrExpression().get(0);
+//				ExpressionEditorData expressionEditorData = getExpressionEditorData(typeTransformExpression);
+//
+//				operationClassProperty = new OperationClassProperty(null, null, false, true, expressionEditorData);
+//			}
+//		}
 		return operationClassProperty;
 	}
 
 	private List<String> getOperationFields() {
 		List<String> componentOperationFields = new ArrayList<>();
-		for (Object object : partitionByExpression.getOperationOrExpression()) {
-			if (object instanceof TypeTransformOperation) {
-				TypeTransformOperation transformOperation = (TypeTransformOperation) object;
-				if (transformOperation.getInputFields() != null) {
-
-					for (TypeInputField inputFileds : transformOperation.getInputFields().getField()) {
-						componentOperationFields.add(inputFileds.getName());
-					}
-				}
-			}
-		}
+//		for (Object object : partitionByExpression.getOperationOrExpression()) {
+//			if (object instanceof TypeTransformOperation) {
+//				TypeTransformOperation transformOperation = (TypeTransformOperation) object;
+//				if (transformOperation.getInputFields() != null) {
+//
+//					for (TypeInputField inputFileds : transformOperation.getInputFields().getField()) {
+//						componentOperationFields.add(inputFileds.getName());
+//					}
+//				}
+//			}
+//		}
 		return componentOperationFields;
 	}
 

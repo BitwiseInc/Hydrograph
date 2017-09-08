@@ -24,6 +24,9 @@ import hydrograph.ui.logging.factory.LogFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.JAXBElement;
+import javax.xml.namespace.QName;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 
@@ -63,26 +66,28 @@ public class UniqueSequenceConverter extends TransformConverter {
 	public void prepareForXML() {
 		logger.debug("Generating XML for :{}", properties.get(Constants.PARAM_NAME));
 		super.prepareForXML();
-		List<Object> operationsList = null;
+		List<JAXBElement<?>> operationsList = null;
 		GenerateSequence generateSequence = (GenerateSequence) baseComponent;
 		operationsList = getOperations();
 		if (operationsList != null)
-			generateSequence.getOperationOrExpression().addAll(operationsList);
+			generateSequence.getOperationOrExpressionOrIncludeExternalOperation().addAll(operationsList);
 	}
 
 	/* *
 	 * This method creates operation field in target XML under UniqueSequence component.
 	 */
 	@Override
-	protected List<Object> getOperations() {
+	protected List<JAXBElement<?>> getOperations() {
 		logger.debug("Generating TypeTransformOperation data :{}", properties.get(Constants.PARAM_NAME));
-		List<Object> operationList = null;
+		List<JAXBElement<?>> operationList = null;
 		if (StringUtils.isNotBlank(newFieldName)) {
 			operationList = new ArrayList<>();
 			TypeTransformOperation operation = new TypeTransformOperation();
 			operation.setId(defaultOperationId);
 			operation.setOutputFields(getOutPutFields());
-			operationList.add(operation);
+			JAXBElement<TypeTransformOperation> jaxbElement =  new JAXBElement( 
+		            new QName("operation"), TypeTransformOperation.class,operation);
+			operationList.add(jaxbElement);
 		}
 		return operationList;
 	}

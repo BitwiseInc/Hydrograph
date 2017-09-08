@@ -68,18 +68,11 @@
 			<tns:validator>INTEGER_VALIDATOR</tns:validator>
 		</tns:property>
 
-		<tns:property dataType="string" name="OPERATION_CLASS"
-			renderer="PARTITION_BY_EXP_OPERATIONAL_CLASS_WIDGET" type="USER" group="GENERAL"
+		<tns:property dataType="string" name="filterLogic" renderer="FILTER_LOGIC" type="USER" group="GENERAL"
 			subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="LINK"
 			usage="REQUIRED"
 			propertyHelpText="Specify java class for performing the partitioning.#Specify expression for performing the partitioning.">
-			<tns:validator>CLASS_NAME_VALIDATOR</tns:validator>
-		</tns:property>
-
-		<tns:property dataType="string" name="operation_fields"
-			renderer="FILTER_PROPERTY_WIDGET" type="USER" group="GENERAL"
-			subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="LIST"
-			usage="OPTIONAL" propertyHelpText="Fields used within java class for partition operation.">
+			<tns:validator>FILTER_DATA_VALIDATION</tns:validator>
 		</tns:property>
 
 		<tns:property dataType="string" name="runtime_properties"

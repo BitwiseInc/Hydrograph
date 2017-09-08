@@ -538,7 +538,7 @@ public class SchemaSyncUtility {
 		List<NameValueProperty> outputFileds = new ArrayList<>();
 			for (GridRow gridRow : schemaGridRowList) {
 				NameValueProperty nameValueProperty = new NameValueProperty();
-				nameValueProperty.setPropertyName("");
+				nameValueProperty.setPropertyName(gridRow.getFieldName());
 				nameValueProperty.setPropertyValue(gridRow.getFieldName());
 				nameValueProperty.getFilterProperty().setPropertyname(gridRow.getFieldName());
 				outputFileds.add(nameValueProperty);

@@ -63,6 +63,7 @@ import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.common.util.CustomColorRegistry;
 import hydrograph.ui.common.util.ImagePathConstant;
 import hydrograph.ui.common.util.OSValidator;
+import hydrograph.ui.common.util.ParameterUtil;
 import hydrograph.ui.common.util.XMLConfigUtil;
 import hydrograph.ui.datastructure.property.NameValueProperty;
 import hydrograph.ui.datastructure.property.OperationClassProperty;
@@ -141,6 +142,30 @@ public class ELTOperationClassDialog extends Dialog implements IOperationClassDi
 		this.propertyDialogButtonBar = propertyDialogButtonBar;
 		opeartionClassDialogButtonBar = new PropertyDialogButtonBar(parentShell);
 		widget = new ELTSWTWidgets();
+		reconfigureDataStructure(operationClassProperty);
+	}
+
+	private void reconfigureDataStructure(OperationClassProperty operationClassProperty) {
+		Operations operations = XMLConfigUtil.INSTANCE.getComponent(componentName).getOperations();
+		List<TypeInfo> typeInfos = operations.getStdOperation();
+		boolean isNameExits = false;
+		if (typeInfos != null) {
+			for (TypeInfo info : operations.getStdOperation()) {
+				if (StringUtils.equalsIgnoreCase(info.getName(), operationClassProperty.getComboBoxValue())) {
+					isNameExits = true;
+					break;
+				}
+			}
+		}
+		if (!isNameExits) {
+			operationClassProperty.setComboBoxValue(Messages.CUSTOM);
+		}
+		if(StringUtils.isBlank(operationClassProperty.getOperationClassFullPath())){
+			operationClassProperty.setOperationClassFullPath("");
+		}
+		if (ParameterUtil.isParameter(operationClassProperty.getOperationClassPath())) {
+			operationClassProperty.setParameter(true);
+		}
 	}
 
 	/**

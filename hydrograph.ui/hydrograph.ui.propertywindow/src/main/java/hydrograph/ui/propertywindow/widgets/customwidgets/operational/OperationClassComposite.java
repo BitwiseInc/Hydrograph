@@ -30,13 +30,17 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 
 import hydrograph.ui.common.util.Constants;
+import hydrograph.ui.common.util.ExternalOperationExpressionUtil;
 import hydrograph.ui.common.util.ImagePathConstant;
 import hydrograph.ui.common.util.OSValidator;
 import hydrograph.ui.datastructure.property.mapping.MappingSheetRow;
+import hydrograph.ui.datastructure.property.mapping.TransformMapping;
 import hydrograph.ui.graph.model.Component;
 import hydrograph.ui.propertywindow.messages.Messages;
 import hydrograph.ui.propertywindow.widgets.customwidgets.config.OperationClassConfig;
 import hydrograph.ui.propertywindow.widgets.customwidgets.config.WidgetConfig;
+import hydrograph.ui.propertywindow.widgets.customwidgets.operational.external.ExpresssionOperationImportExportComposite;
+import hydrograph.ui.propertywindow.widgets.customwidgets.operational.external.ImportExportType;
 
 public class OperationClassComposite extends Composite {
 
@@ -65,15 +69,27 @@ public class OperationClassComposite extends Composite {
 	private OperationClassConfig configurationForTransformWidget;
 	private boolean isAggregateOrCumulate;
 	private boolean isTransForm;
+	private Composite mainComposite;
+	private Component component;
+	private TransformMapping transformMapping;
+	private TransformDialog transformDialog;
 	
 	/**
 	 * Create the composite.
 	 * @param parent
 	 * @param style
 	 */
-	public OperationClassComposite(Composite parent, int style,final MappingSheetRow mappingSheetRow,Component component,WidgetConfig widgetConfig) {
+	public OperationClassComposite(TransformDialog transformDialog,Composite parent, int style,final MappingSheetRow mappingSheetRow,Component component,WidgetConfig widgetConfig
+			,TransformMapping transformMapping) {
 		super(parent, style);
-		setLayout(new GridLayout(3, false));
+		setLayout(new GridLayout(1, false));
+		this.component=component;
+		this.transformDialog=transformDialog;
+		mainComposite = new Composite(this, SWT.NONE);
+		mainComposite.setLayout(new GridLayout(3, false));
+		mainComposite.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true,1,1));
+		this.transformMapping=transformMapping;
+		
 		configurationForTransformWidget = (OperationClassConfig) widgetConfig;
 		if (StringUtils.equalsIgnoreCase(Constants.AGGREGATE, configurationForTransformWidget.getComponentName())
 				|| StringUtils.equalsIgnoreCase(Constants.CUMULATE,configurationForTransformWidget.getComponentName())
@@ -90,7 +106,7 @@ public class OperationClassComposite extends Composite {
 		}
 		
 		createOperationInputTable();
-		Composite composite = new Composite(this, SWT.NONE);
+		Composite composite = new Composite(mainComposite, SWT.NONE);
 		composite.setLayout(new GridLayout(4, false));
 		GridData gd_composite = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		gd_composite.heightHint = 191;
@@ -224,9 +240,58 @@ public class OperationClassComposite extends Composite {
 		if (mappingSheetRow.getOperationClassPath() != null){
 			operationTextBox.setText(mappingSheetRow.getOperationClassPath());
 			}
+		
+		createExternalOperationComposite(mappingSheetRow);
 	}
     
-	
+	private void createExternalOperationComposite(MappingSheetRow mappingSheetRow) {
+		ExpresssionOperationImportExportComposite importExportComposite = new ExpresssionOperationImportExportComposite(
+				this, SWT.NONE, ImportExportType.OPERATION, mappingSheetRow.getExternalOperation()) {
+
+			@Override
+			protected void exportButtonSelection(Button widget) {
+				ExternalOperationExpressionUtil.INSTANCE.exportOperation(getFile(), mappingSheetRow, true, TransformExpressionComposite.getInputSchemaOfCurrentComponent(component));
+				transformDialog.showHideValidationMessage();
+			}
+
+			@Override
+			protected void importButtonSelection(Button widget) {
+				ExternalOperationExpressionUtil.INSTANCE.importOperation(getFile(), mappingSheetRow, true
+						,transformMapping,component.getComponentName());
+				refreshOperationComposite(mappingSheetRow);
+			
+			}
+
+			@Override
+			protected void interalRadioButtonSelection(Button widget) {
+				transformDialog.showHideValidationMessage();
+				setEnableParameterCompo(true);
+				
+			}
+
+			@Override
+			protected void externalRadioButtonSelection(Button widget) {
+				transformDialog.showHideValidationMessage();
+				setEnableParameterCompo(false);
+				
+			}
+
+			private void setEnableParameterCompo(boolean isEnable) {
+				parameterTextBox.setEnabled(isEnable);
+				btnIsParam.setEnabled(isEnable);
+			}
+
+		};
+	}
+
+	private void refreshOperationComposite(MappingSheetRow mappingSheetRow) {
+		outputTableViewer.refresh();
+		inputTableViewer.refresh();
+		operationIdTextBox.setText(mappingSheetRow.getOperationID());
+		operationTextBox.setText(mappingSheetRow.getOperationClassPath());
+		transformDialog.refreshOutputTable();
+		transformDialog.showHideValidationMessage();
+	}
 
 	private void disabledWidgetsifWholeOperationIsParameter(Button isParam,boolean isWholeOperationParameter) 
 	{
@@ -276,7 +341,7 @@ public class OperationClassComposite extends Composite {
 	}
 	
 	private void createOperationInputTable() {
-		Composite operationInputFieldComposite = new Composite(this, SWT.NONE);
+		Composite operationInputFieldComposite = new Composite(mainComposite, SWT.NONE);
 		operationInputFieldComposite.setLayout(new GridLayout(1, false));
 		GridData gridDataOperationInputFieldComposite = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gridDataOperationInputFieldComposite.heightHint = 200;
@@ -309,7 +374,7 @@ public class OperationClassComposite extends Composite {
 	}
 
 	private void createOperationOutputFieldTable() {
-		Composite operationOutputFieldComposite = new Composite(this, SWT.NONE);
+		Composite operationOutputFieldComposite = new Composite(mainComposite, SWT.NONE);
 		operationOutputFieldComposite.setLayout(new GridLayout(1, false));
 		GridData gridDataOperationOutputFieldComposite = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gridDataOperationOutputFieldComposite.heightHint = 200;

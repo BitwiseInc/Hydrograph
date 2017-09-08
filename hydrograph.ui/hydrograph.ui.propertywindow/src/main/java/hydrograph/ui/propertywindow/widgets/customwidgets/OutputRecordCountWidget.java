@@ -93,32 +93,16 @@ public class OutputRecordCountWidget extends AbstractWidget{
 		label_normalize.attachWidget(compositeForNormalizeEditButtton);
 		expressionRadioButton.setData(String.valueOf(data_key), label_normalize.getSWTWidgetControl());
 		
-		TransformMapping transformMappingPopulatedFromTooTipAction=
-       		 (TransformMapping) getComponent().getTooltipInformation().get(Constants.OPERATION).getPropertyValue();
-		 if(transformMappingPopulatedFromTooTipAction!=null)
-		 {	 
-		 transformMapping.setAddPassThroughFields(transformMappingPopulatedFromTooTipAction.isAddPassThroughFields());
-		 }
 		ELTDefaultButton eltDefaultButton = new ELTDefaultButton(Constants.EDIT).grabExcessHorizontalSpace(false);
 		if(OSValidator.isMac())
 		{
 			eltDefaultButton.buttonWidth(120);
 		}
 		eltDefaultButton.attachWidget(compositeForNormalizeEditButtton);
-		if(getComponent().isContinuousSchemaPropogationAllow())
-		{
-		OutputRecordCountUtility.INSTANCE.getPropagatedSchema(transformMapping,getComponent());
-		}
-		if(transformMapping.isAddPassThroughFields())
-		{	
-		OutputRecordCountUtility.INSTANCE.addPassThroughFields(transformMapping);
-		}
-		SchemaSyncUtility.INSTANCE.unionFilter(transformMapping.getOutputFieldList(), outputList);
-		OutputRecordCountUtility.INSTANCE.populateMappingOutputFieldIfTargetXmlImported(transformMapping,getComponent());
 		addSelectionListenerToEditButton(eltDefaultButton);
-		OutputRecordCountUtility.INSTANCE.propagateOuputFieldsToSchemaTabFromTransformWidget(
-				transformMapping,getSchemaForInternalPropagation(),getComponent(),outputList,getOperationFieldList()
-				);
+		SchemaSyncUtility.INSTANCE.unionFilter(transformMapping.getOutputFieldList(), outputList);
+		OutputRecordCountUtility.INSTANCE.propagateOuputFieldsToSchemaTabFromTransformWidget(transformMapping,
+				getSchemaForInternalPropagation(),getComponent(),outputList);	 
 	}
 
 	private void addSelectionListenerToEditButton(ELTDefaultButton eltDefaultButton) {
@@ -140,7 +124,7 @@ public class OutputRecordCountWidget extends AbstractWidget{
 				if(transformDialog.isOkPressed())
                	{
 					OutputRecordCountUtility.INSTANCE.propagateOuputFieldsToSchemaTabFromTransformWidget(
-							transformMapping,getSchemaForInternalPropagation(),getComponent(),outputList,getOperationFieldList()
+							transformMapping,getSchemaForInternalPropagation(),getComponent(),outputList
 							);
 					SchemaSyncUtility.INSTANCE.autoSyncSchema(getSchemaForInternalPropagation(), getComponent(), widgets);
 					showHideErrorSymbol(widgets);
@@ -344,7 +328,7 @@ public class OutputRecordCountWidget extends AbstractWidget{
 				SchemaSyncUtility.INSTANCE.unionFilter(transformMapping.getOutputFieldList(), 
 						outputList);
 				OutputRecordCountUtility.INSTANCE.propagateOuputFieldsToSchemaTabFromTransformWidget(
-						transformMapping,getSchemaForInternalPropagation(),getComponent(),outputList,getOperationFieldList()
+						transformMapping,getSchemaForInternalPropagation(),getComponent(),outputList
 						);
 	 		}
 		});
@@ -368,7 +352,7 @@ public class OutputRecordCountWidget extends AbstractWidget{
 				SchemaSyncUtility.INSTANCE.unionFilter(transformMapping.getOutputFieldList(), 
 						outputList);
 				OutputRecordCountUtility.INSTANCE.propagateOuputFieldsToSchemaTabFromTransformWidget(
-						transformMapping,getSchemaForInternalPropagation(),getComponent(),outputList,getOperationFieldList()
+						transformMapping,getSchemaForInternalPropagation(),getComponent(),outputList
 						);
 			}
         });

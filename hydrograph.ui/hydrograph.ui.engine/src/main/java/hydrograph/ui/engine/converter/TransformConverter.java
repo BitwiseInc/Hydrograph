@@ -17,6 +17,8 @@ import hydrograph.ui.graph.model.Component;
 
 import java.util.List;
 
+import javax.xml.bind.JAXBElement;
+
 import hydrograph.engine.jaxb.commontypes.TypeBaseInSocket;
 import hydrograph.engine.jaxb.commontypes.TypeOperationsComponent;
 import hydrograph.engine.jaxb.commontypes.TypeOperationsOutSocket;
@@ -52,7 +54,7 @@ public abstract class TransformConverter extends Converter {
 	 * Returns {@link List} of classes of type {@link TypeTransformOperation} 
 	 * @return {@link List}
 	 */
-	protected abstract List<Object> getOperations();
+	protected abstract List<JAXBElement<?>> getOperations();
 	public abstract List<TypeBaseInSocket> getInSocket();
 	
 }

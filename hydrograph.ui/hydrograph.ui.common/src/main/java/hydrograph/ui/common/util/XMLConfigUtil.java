@@ -15,12 +15,12 @@
 package hydrograph.ui.common.util;
 
 import hydrograph.ui.common.Activator;
-import hydrograph.ui.common.Messages;
 import hydrograph.ui.common.component.config.Component;
 import hydrograph.ui.common.component.config.Config;
 import hydrograph.ui.common.component.config.Policy;
 import hydrograph.ui.common.component.policyconfig.CategoryPolicies;
 import hydrograph.ui.common.component.policyconfig.PolicyConfig;
+import hydrograph.ui.common.message.Messages;
 import hydrograph.ui.logging.factory.LogFactory;
 
 import java.io.File;

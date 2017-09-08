@@ -168,6 +168,10 @@ public class FilterOperationClassUtility  {
 		{
 			browseSchemaSelectionDialog(filterExtension, fileName);
 		}
+		if(Extensions.XML.toString().equalsIgnoreCase(filterExtension))
+		{
+			browseXMLSelectionDialog(filterExtension, fileName);
+		}
 		
 	}
 	/**
@@ -200,6 +204,34 @@ public class FilterOperationClassUtility  {
 		}
 	}
 	
+	/**
+	 * @param filterExtension
+	 * @param fileName
+	 * Open the dialog to browse .xml file for expression, operation or outputfields
+	 */
+	private void browseXMLSelectionDialog(String filterExtension, Text fileName) {
+		String externalSchemaTextBoxValue = "";
+		ExternalSchemaFileSelectionDialog dialog = new ExternalSchemaFileSelectionDialog("Project",
+				"Select Input File (.xml)",  new String[]{filterExtension,Extensions.XML.toString()}, this);
+		if (dialog.open() == IDialogConstants.OK_ID) {
+			String file = fileNameTextBoxValue;
+			IResource resource = (IResource) dialog.getFirstResult();
+			String path[] = resource.getFullPath().toString().split("/");
+			if (file.isEmpty()) {
+				for (int i = 1; i < path.length; i++) {
+					externalSchemaTextBoxValue = externalSchemaTextBoxValue + path[i] + "/";
+				}
+			} else {
+				for (int i = 1; i < path.length; i++) {
+					if (!path[i].endsWith(".xml")) {
+						externalSchemaTextBoxValue = externalSchemaTextBoxValue + path[i] + "/";
+					}
+				}
+				externalSchemaTextBoxValue = externalSchemaTextBoxValue + file;
+			}
+			fileName.setText(externalSchemaTextBoxValue);
+		}
+	}
 	/**
 	 * Open selection dialog for Java files, File selection restricted to ".java" extension.
 	 * @param filterExtension

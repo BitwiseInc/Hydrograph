@@ -38,19 +38,19 @@ import hydrograph.ui.common.util.OSValidator;
 import hydrograph.ui.common.util.PreferenceConstants;
 import hydrograph.ui.communication.debugservice.DebugServiceClient;
 import hydrograph.ui.dataviewer.utilities.Utils;
+import hydrograph.ui.dataviewer.window.DebugDataViewer;
 import hydrograph.ui.graph.Messages;
 import hydrograph.ui.graph.controller.ComponentEditPart;
+import hydrograph.ui.graph.controller.ContainerEditPart;
 import hydrograph.ui.graph.controller.PortEditPart;
 import hydrograph.ui.graph.editor.ELTGraphicalEditor;
 import hydrograph.ui.graph.execution.tracking.datastructure.SubjobDetails;
 import hydrograph.ui.graph.job.Job;
 import hydrograph.ui.graph.model.Component;
-import hydrograph.ui.graph.model.Link;
-import hydrograph.ui.logging.factory.LogFactory;
 import hydrograph.ui.graph.model.Container;
-import hydrograph.ui.graph.controller.ContainerEditPart;
+import hydrograph.ui.graph.model.Link;
 import hydrograph.ui.graph.model.components.SubjobComponent;
-import hydrograph.ui.dataviewer.window.DebugDataViewer;
+import hydrograph.ui.logging.factory.LogFactory;
 
 /**
  * View Data Utils
@@ -89,7 +89,7 @@ public class ViewDataUtils {
 	 */
 	public void purgeViewDataFiles(Map<String, List<Job>> viewDataJobMap){
 		for(Entry<String, List<Job>> entry : viewDataJobMap.entrySet()){
-			List<Job> value =  (List<Job>) entry.getValue();
+			List<Job> value =  entry.getValue();
 	        for(Job job : value){
 	        	deleteBasePathDebugFiles(job);
 	        	deleteSchemaAndDataViewerFiles(job.getUniqueJobId());
@@ -120,7 +120,7 @@ public class ViewDataUtils {
 		GraphicalViewer graphicalViewer = (GraphicalViewer) ((GraphicalEditor) editor).getAdapter(GraphicalViewer.class);
 
 		for (Iterator<EditPart> iterator = graphicalViewer.getEditPartRegistry().values().iterator(); iterator.hasNext();) {
-			EditPart editPart = (EditPart) iterator.next();
+			EditPart editPart = iterator.next();
 			if (editPart instanceof ComponentEditPart) {
 				Component comp = ((ComponentEditPart) editPart).getCastedModel();
 				if (comp.equals(selectedComponent)) {
@@ -191,7 +191,7 @@ public class ViewDataUtils {
 	 * The function will use to check componentId and socketId in subjob.
 	 */
 	public void subjobParams(Map<String, SubjobDetails> componentNameAndLink, Component component, StringBuilder subjobPrefix, String sourcePort){
-		Component outputSubjobComponent=(Component) component.getProperties().get(Messages.OUTPUT_SUBJOB_COMPONENT);
+		Component outputSubjobComponent=(Component) component.getSubJobContainer().get(Messages.OUTPUT_SUBJOB_COMPONENT);
 		String source_port = sourcePort.replace("out", "in");
 		if(outputSubjobComponent!=null){
 			for(Link link:outputSubjobComponent.getTargetConnections()){

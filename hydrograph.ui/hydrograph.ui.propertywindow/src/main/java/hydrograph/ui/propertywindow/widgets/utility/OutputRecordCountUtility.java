@@ -486,13 +486,12 @@ public class OutputRecordCountUtility {
 	 * propagate output fields of mapping window to schema widget
 	 */
 	public void propagateOuputFieldsToSchemaTabFromTransformWidget(TransformMapping transformMapping,Schema schema,Component component,
-			List<FilterProperties> outputList,List<String> operationFieldListOfString) 
+			List<FilterProperties> outputList) 
 	{
     	if (transformMapping == null || transformMapping.getMappingSheetRows() == null){
 			return;
     	}
     	schema.getGridRow().clear();
-    	operationFieldListOfString.clear();
         List<String> finalPassThroughFields=new LinkedList<String>();
 		Map<String, String> finalMapFields=new LinkedHashMap<String, String>();
         List<FilterProperties> operationFieldList=new LinkedList<FilterProperties>();
@@ -508,9 +507,6 @@ public class OutputRecordCountUtility {
         addPassthroughFieldsToSchema(passThroughFields,schema,component);
 		addMapFieldsToSchema(mapFields,schema,component);
         addPassthroughFieldsAndMappingFieldsToComponentOuputSchema(finalMapFields, finalPassThroughFields,component);
-		for(FilterProperties f:operationFieldList){	
-			operationFieldListOfString.add(f.getPropertyname());
-		}
 		if(!outputList.isEmpty())
 		{
 		 List<GridRow> sortedList=new ArrayList<>();
@@ -542,8 +538,9 @@ public class OutputRecordCountUtility {
 	 * 
 	 * add pass through fields to mapping output field
 	 */
-	public void addPassThroughFields(TransformMapping transformMapping)
+	public void addPassThroughFieldsToSchema(TransformMapping transformMapping,Component component,Schema schema)
 	{
+		List<FilterProperties> outputList=new ArrayList<>();
 		List<InputField> inputFieldList=transformMapping.getInputFields();	
 		for(InputField inputField:inputFieldList)
 		{
@@ -559,7 +556,8 @@ public class OutputRecordCountUtility {
 			}
 		
 	     }
-	   transformMapping.setAddPassThroughFields(false);
+		SchemaSyncUtility.INSTANCE.unionFilter(transformMapping.getOutputFieldList(),outputList);	
+		propagateOuputFieldsToSchemaTabFromTransformWidget(transformMapping, schema, component, outputList);
 	   
 	}
 	

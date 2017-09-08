@@ -52,7 +52,7 @@ public class LocalJobLauncher extends AbstractJobLauncher {
 	private static final String JOB_FAILED="JOB FAILED";
 
 	@Override
-	public void launchJob(String xmlPath, String paramFile,String userFunctionsPropertyFile, Job job, DefaultGEFCanvas gefCanvas,List<String> externalSchemaFiles,List<String> subJobList) {
+	public void launchJob(String xmlPath, String paramFile,String userFunctionsPropertyFile, Job job, DefaultGEFCanvas gefCanvas,List<String> externalFiles,List<String> subJobList) {
 		Session session=null;
 
 		if(isExecutionTrackingOn()){

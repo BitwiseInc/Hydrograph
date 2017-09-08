@@ -68,7 +68,7 @@ public class DebugRemoteJobLauncher extends AbstractJobLauncher{
 	 * @param paramFile
 	 * @param job
 	 * @param gefCanvas
-	 * @param externalSchemaFiles list required to move external schema files on remote server
+	 * @param externalFiles list required to move external files on remote server
 	 * @param subJobList list required to move sub job xml to remote server.
 	 * 
 	 * 
@@ -76,7 +76,7 @@ public class DebugRemoteJobLauncher extends AbstractJobLauncher{
 	@Override
 	public void launchJobInDebug(String xmlPath, String debugXmlPath,
 			 String paramFile,String userFunctionsPropertyFile, Job job,
-			DefaultGEFCanvas gefCanvas,List<String> externalSchemaFiles,List<String> subJobList) {
+			DefaultGEFCanvas gefCanvas,List<String> externalFiles,List<String> subJobList) {
 
 		Session session=null;
 		if(isExecutionTrackingOn()){
@@ -96,7 +96,7 @@ public class DebugRemoteJobLauncher extends AbstractJobLauncher{
 		job.setJobStatus(JobStatus.RUNNING);
 		
 		
-		gradleCommand = JobScpAndProcessUtility.INSTANCE.getCreateDirectoryCommand(job,paramFile,xmlPath,projectName,externalSchemaFiles,subJobList);
+		gradleCommand = JobScpAndProcessUtility.INSTANCE.getCreateDirectoryCommand(job,paramFile,xmlPath,projectName,externalFiles,subJobList);
 		enableLockedResources(gefCanvas);
 		JobLogger joblogger = initJobLogger(gefCanvas,job.getUniqueJobId());
 		executeCommand(job, project, gradleCommand, gefCanvas,joblogger);
@@ -117,7 +117,7 @@ public class DebugRemoteJobLauncher extends AbstractJobLauncher{
 		
 		/*
 		 * Created list having relative and absolute # separated path, 
-		 * the path is split in gradle script,Using absolute path we move the schema file to relative path directory of remote server   
+		 * the path is split in gradle script,Using absolute path we move the external file to relative path directory of remote server   
 		 */
 		if(!subJobList.isEmpty()){
 		List<String> subJobFullPath = new ArrayList<>();
@@ -142,14 +142,14 @@ public class DebugRemoteJobLauncher extends AbstractJobLauncher{
 		
 		/*
 		 * Created list having relative and absolute # separated path, 
-		 * the path is split in gradle script using, absolute path we move the schema file to relative path (directory created using create directory command on remote server)   
+		 * the path is split in gradle script using, absolute path we move the external file to relative path (directory created using create directory command on remote server)   
 		 */
-		if(!externalSchemaFiles.isEmpty()){
-			List<String> schemaFilesFullPath = new ArrayList<>();
-			for (String schemaFile : externalSchemaFiles) {
-				schemaFilesFullPath.add(schemaFile+"#"+JobManager.getAbsolutePathFromFile(new Path(schemaFile)));
+		if(!externalFiles.isEmpty()){
+			List<String> externalFilesFullPath = new ArrayList<>();
+			for (String externalFile : externalFiles) {
+				externalFilesFullPath.add(externalFile+"#"+JobManager.getAbsolutePathFromFile(new Path(externalFile)));
 			}
-			gradleCommand = JobScpAndProcessUtility.INSTANCE.getSchemaScpCommand(schemaFilesFullPath,job);
+			gradleCommand = JobScpAndProcessUtility.INSTANCE.getExternalFilesScpCommand(externalFilesFullPath,job);
 		
 			executeCommand(job, project, gradleCommand, gefCanvas,joblogger);
 			if (JobStatus.FAILED.equals(job.getJobStatus())) {

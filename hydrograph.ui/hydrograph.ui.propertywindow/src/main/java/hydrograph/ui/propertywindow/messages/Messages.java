@@ -277,8 +277,13 @@ public class Messages extends NLS {
 	public static String DELETE_KEY_SHORTCUT_TOOLTIP;
 	public static String MOVE_UP_KEY_SHORTCUT_TOOLTIP;
 	public static String MOVE_DOWN_KEY_SHORTCUT_TOOLTIP;
+	public static String IMPORT_SCHEMA_KEY_SHORTCUT_TOOLTIP;
+	public static String EXPORT_SCHEMA_KEY_SHORTCUT_TOOLTIP;
 	public static String EXTRACT_FROM_METASTORE;
 	public static String EXTRACT;
+	
+	public static String IMPORT_SCHEMA_DIALOG_TITLE;
+	public static String EXPORT_SCHEMA_DIALOG_TITLE;
 
 	public static String CONNECTION_NOT_ESTABLISHED;
 	public static String HOST_NAME_BLANK_ERROR;

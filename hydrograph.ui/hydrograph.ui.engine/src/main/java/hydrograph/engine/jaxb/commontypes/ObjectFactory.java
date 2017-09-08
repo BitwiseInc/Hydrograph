@@ -1,5 +1,5 @@
 
-/*******************************************************************************
+/*
  * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -10,11 +10,14 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- ******************************************************************************/
+ */
 
 package hydrograph.engine.jaxb.commontypes;
 
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
+import javax.xml.namespace.QName;
 
 
 /**
@@ -34,6 +37,10 @@ import javax.xml.bind.annotation.XmlRegistry;
 @XmlRegistry
 public class ObjectFactory {
 
+    private final static QName _TypeOperationsComponentExpression_QNAME = new QName("", "expression");
+    private final static QName _TypeOperationsComponentIncludeExternalExpression_QNAME = new QName("", "includeExternalExpression");
+    private final static QName _TypeOperationsComponentOperation_QNAME = new QName("", "operation");
+    private final static QName _TypeOperationsComponentIncludeExternalOperation_QNAME = new QName("", "includeExternalOperation");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: hydrograph.engine.jaxb.commontypes
@@ -304,6 +311,42 @@ public class ObjectFactory {
      */
     public TypeProperties.Property createTypePropertiesProperty() {
         return new TypeProperties.Property();
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link TypeTransformExpression }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "expression", scope = TypeOperationsComponent.class)
+    public JAXBElement<TypeTransformExpression> createTypeOperationsComponentExpression(TypeTransformExpression value) {
+        return new JAXBElement<TypeTransformExpression>(_TypeOperationsComponentExpression_QNAME, TypeTransformExpression.class, TypeOperationsComponent.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link TypeExternalSchema }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "includeExternalExpression", scope = TypeOperationsComponent.class)
+    public JAXBElement<TypeExternalSchema> createTypeOperationsComponentIncludeExternalExpression(TypeExternalSchema value) {
+        return new JAXBElement<TypeExternalSchema>(_TypeOperationsComponentIncludeExternalExpression_QNAME, TypeExternalSchema.class, TypeOperationsComponent.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link TypeTransformOperation }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "operation", scope = TypeOperationsComponent.class)
+    public JAXBElement<TypeTransformOperation> createTypeOperationsComponentOperation(TypeTransformOperation value) {
+        return new JAXBElement<TypeTransformOperation>(_TypeOperationsComponentOperation_QNAME, TypeTransformOperation.class, TypeOperationsComponent.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link TypeExternalSchema }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "includeExternalOperation", scope = TypeOperationsComponent.class)
+    public JAXBElement<TypeExternalSchema> createTypeOperationsComponentIncludeExternalOperation(TypeExternalSchema value) {
+        return new JAXBElement<TypeExternalSchema>(_TypeOperationsComponentIncludeExternalOperation_QNAME, TypeExternalSchema.class, TypeOperationsComponent.class, value);
     }
 
 }

@@ -38,6 +38,7 @@ public class CustomMessages extends NLS {
 	public static String ProjectSupport_CONFIG_FOLDER;
 	public static String GradleNature_ID;
 	public static String ProjectSupport_Settings;
+	public static String ProjectSupport_EXTERNALTRANSFORMFILES;
 	public static String CustomWizard_WINDOW_TITLE;
 	
 	static {

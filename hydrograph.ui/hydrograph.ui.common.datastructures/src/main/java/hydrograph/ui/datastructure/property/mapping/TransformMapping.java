@@ -41,9 +41,18 @@ public class TransformMapping implements IDataStructure{
 	private boolean addPassThroughFields;
 	private boolean isExpression;
 	private ExpressionEditorData expressionEditorData;
+	private boolean isAllInputFieldsArePassthrough;
+	private ExternalWidgetData externalOutputFieldsData;
 	
-	public boolean isExpression() {
-		return isExpression;
+	public ExternalWidgetData getExternalOutputFieldsData() {
+		return externalOutputFieldsData;
+	}
+
+	public void setExternalOutputFieldsData(ExternalWidgetData externalOutputFieldsData) {
+		this.externalOutputFieldsData = externalOutputFieldsData;
+	}
+
+	public boolean isExpression() {		return isExpression;
 	}
 
 	public void setExpression(boolean isExpression) {
@@ -58,6 +67,7 @@ public class TransformMapping implements IDataStructure{
 		mappingSheetRows = new LinkedList<>();
 		mapAndPassthroughField=new ArrayList<>();
 		outputFieldList=new ArrayList<>();
+		externalOutputFieldsData=new ExternalWidgetData(false, null);
 	}
 
 	/**
@@ -124,7 +134,7 @@ public class TransformMapping implements IDataStructure{
 		this.mappingSheetRows = mappingSheetRows;
 		this.mapAndPassthroughField=nameValueProperties;
 		this.outputFieldList=outputFieldList;
-		
+		this.externalOutputFieldsData=new ExternalWidgetData(false, null);
 	}
 	
 	/**
@@ -170,7 +180,20 @@ public class TransformMapping implements IDataStructure{
 		this.expressionEditorData = expressionEditorData;
 	}
 
-	
+	/**
+	 * @return the isAllInputFieldsArePassthrough
+	 */
+	public boolean isAllInputFieldsArePassthrough() {
+		return isAllInputFieldsArePassthrough;
+	}
+
+	/**
+	 * @param isAllInputFieldsArePassthrough the isAllInputFieldsArePassthrough to set
+	 */
+	public void setAllInputFieldsArePassthrough(boolean isAllInputFieldsArePassthrough) {
+		this.isAllInputFieldsArePassthrough = isAllInputFieldsArePassthrough;
+	}
+
 	@Override
 	public Object clone() {
 		TransformMapping atMapping = new TransformMapping();
@@ -189,6 +212,13 @@ public class TransformMapping implements IDataStructure{
 		addOperationsOrExpressionFieldToClonedOutputList(atMapping, outputFieldList);
 		addParameterFieldToClonedOutputListIfPresent(outputFieldList);
 		arrangeOutputFieldInSameSequenceAsBefore(outputFieldList);
+		atMapping.setAllInputFieldsArePassthrough(this.isAllInputFieldsArePassthrough);
+
+		if (externalOutputFieldsData == null) {
+			externalOutputFieldsData = new ExternalWidgetData(false, null);
+		} else {
+			atMapping.externalOutputFieldsData = (ExternalWidgetData) externalOutputFieldsData.clone();
+		}
 		return atMapping;
 	}
 
@@ -282,6 +312,17 @@ public class TransformMapping implements IDataStructure{
 				return false;
 		} else if (!outputFieldList.equals(other.outputFieldList))
 			return false;
+		if(!isAllInputFieldsArePassthrough==other.isAllInputFieldsArePassthrough){
+			return false;
+		}
+		
+		if (this.externalOutputFieldsData == null) {
+			if (other.externalOutputFieldsData != null)
+				return false;
+		} else if (!this.externalOutputFieldsData.equals(other.externalOutputFieldsData)) {
+			return false;
+		}
+		
 		return true;
 	}
 
@@ -290,4 +331,17 @@ public class TransformMapping implements IDataStructure{
 		return "ATMapping [inputFields=" + inputFields + ", mappingSheetRows="
 				+ mappingSheetRows + "]";
 	}
+	
+	public boolean clear(){
+		if(mappingSheetRows!=null)mappingSheetRows.clear();
+		if(mapAndPassthroughField!=null)mapAndPassthroughField.clear();
+		if(outputFieldList!=null)outputFieldList.clear();
+		addPassThroughFields=false;
+		isExpression=false;
+		isAllInputFieldsArePassthrough=false;
+		if(expressionEditorData!=null)expressionEditorData.clear();
+		return false;
+	}
+	
 }
+

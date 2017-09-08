@@ -90,21 +90,27 @@ public class TransformMappingValidationRule implements IValidator{
 			{
 				if(!mappingSheetRow.isExpression())
 				{	
-				if(StringUtils.isBlank(mappingSheetRow.getOperationClassPath()))
-				{
+					if(StringUtils.isBlank(mappingSheetRow.getOperationClassPath()))
+					{
 					 errorMessage = propertyName + "Operation class is blank in"+" "+mappingSheetRow.getOperationID();		
 					 return false;
-				}
-				else if(
+					}
+					else if(
 						!mappingSheetRow.isClassParameter()
 						&&!mappingSheetRow.isWholeOperationParameter()
 						//&&StringUtils.equalsIgnoreCase(mappingSheetRow.getComboBoxValue(),"Custom")
 						&&!(ValidatorUtility.INSTANCE.isClassFilePresentOnBuildPath(mappingSheetRow.getOperationClassPath()))
 						)
-				   {
+					{
 					   errorMessage = "Operation class is not present for"+" "+mappingSheetRow.getOperationID();
 					   return false;
-				   }	
+					}else if(mappingSheetRow.getExternalOperation()!=null && mappingSheetRow.getExternalOperation().isExternal())
+					{
+						if(StringUtils.isBlank(mappingSheetRow.getExternalOperation().getFilePath())){
+							errorMessage = "External path is blank for"+" "+mappingSheetRow.getOperationID();
+							return false;
+						}
+					}
 				}
 				else if(mappingSheetRow.isExpression())
 				{
@@ -116,11 +122,17 @@ public class TransformMappingValidationRule implements IValidator{
 						 errorMessage = propertyName + "Expression is blank in"+" "+mappingSheetRow.getOperationID();		
 						 return false;
 					}
-					
 					if(!expressionEditorData.isValid())
 					{
 						errorMessage = expressionEditorData.getErrorMessage();
 						return false;
+					}
+					if(mappingSheetRow.getExternalExpresion()!=null && mappingSheetRow.getExternalExpresion().isExternal())
+					{
+						if(StringUtils.isBlank(mappingSheetRow.getExternalExpresion().getFilePath())){
+							errorMessage = "External path is blank for"+" "+mappingSheetRow.getOperationID();
+							return false;
+						}
 					}
 					
 				}	
@@ -136,7 +148,7 @@ public class TransformMappingValidationRule implements IValidator{
 			    		 errorMessage = propertyName + "Property value is Blank";		
 						 return false;
 			    	}	
-			    }	
+			    }
 			   
 			}
 			Set<String> duplicateOperationIdSet=new HashSet<String>();
@@ -187,7 +199,16 @@ public class TransformMappingValidationRule implements IValidator{
 			 return false;
 			
 		}
-		
+		return checkIfExternalOutputPathIsBlank(transformMapping);
+	}
+
+	private boolean checkIfExternalOutputPathIsBlank(TransformMapping transformMapping) {
+		if(transformMapping.getExternalOutputFieldsData()!=null && transformMapping.getExternalOutputFieldsData().isExternal()){
+			if(StringUtils.isBlank(transformMapping.getExternalOutputFieldsData().getFilePath())){
+				errorMessage = "External path is blank for output fields";
+				return false;
+			}
+		}
 		return true;
 	}
 

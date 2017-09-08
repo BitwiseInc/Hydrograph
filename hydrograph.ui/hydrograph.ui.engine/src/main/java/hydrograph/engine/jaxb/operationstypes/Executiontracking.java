@@ -1,5 +1,5 @@
 
-/*******************************************************************************
+/*
  * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -10,7 +10,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- ******************************************************************************/
+ */
 
 package hydrograph.engine.jaxb.operationstypes;
 
@@ -34,6 +34,8 @@ import hydrograph.engine.jaxb.commontypes.TypeOperationsComponent;
  *         &lt;choice>
  *           &lt;element name="operation" type="{hydrograph/engine/jaxb/executiontracking}type-executiontracking-operation"/>
  *           &lt;element name="expression" type="{hydrograph/engine/jaxb/commontypes}type-transform-expression"/>
+ *           &lt;element name="includeExternalOperation" type="{hydrograph/engine/jaxb/commontypes}type-external-schema"/>
+ *           &lt;element name="includeExternalExpression" type="{hydrograph/engine/jaxb/commontypes}type-external-schema"/>
  *         &lt;/choice>
  *         &lt;element name="outSocket" type="{hydrograph/engine/jaxb/executiontracking}type-executiontracking-out-socket" maxOccurs="2"/>
  *         &lt;element name="runtimeProperties" type="{hydrograph/engine/jaxb/commontypes}type-properties" minOccurs="0"/>

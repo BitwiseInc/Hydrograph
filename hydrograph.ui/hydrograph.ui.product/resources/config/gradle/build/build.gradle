@@ -359,7 +359,7 @@ executeDebugLocal.onlyIf {
 task createDirectories() {
 	 doLast{
          	println "createDirectories: Creating directories on remote server"
- 			def  command="mkdir -p " +properties.remoteDirectory+"/{"+jobXML+","+moveJar+","+moveParameterFile+","+moveExternalSchemaFiles+","+moveSubJobFiles+","+moveResourceFile+"}"
+ 			def  command="mkdir -p " +properties.remoteDirectory+"/{"+jobXML+","+moveJar+","+moveParameterFile+","+moveExternalFiles+","+moveSubJobFiles+","+moveResourceFile+"}"
  			println "Command to create directories on remote server:" + command
 			sshToRemoteServer(host,username,password,command,keyfile,usepassword)
 			
@@ -479,17 +479,17 @@ scpParameterFile.onlyIf {
 
 /*
 -------------------------------------------------------------------------------------------------
-                        Securely transfer external schema files to remote server  
+                        Securely transfer external files to remote server  
 -------------------------------------------------------------------------------------------------
 */
-task scpSchemaFiles() {
+task scpExternalFiles() {
 		    doLast {
-			    println "scpSchemaFiles: Transferring external schema files to $host"
+			    println "scpExternalFiles: Transferring external files to $host"
 			    
-			    def files=externalSchemaFiles;
-				def schemaFiles = files.split(",");
+			    def files=externalFiles;
+				def externalFiles = files.split(",");
 				def sampleMap = [:]
-				schemaFiles.each {
+				externalFiles.each {
 					def fileValue = "${it}"
 					def singleFile = fileValue.split("#");
 					sampleMap.put(singleFile[0],singleFile[1])
@@ -501,13 +501,13 @@ task scpSchemaFiles() {
 		    } 
 }
  
-scpSchemaFiles.onlyIf {
+scpExternalFiles.onlyIf {
     project.hasProperty('host')
     project.hasProperty('username')
     project.hasProperty('password')
 	project.hasProperty('keyfile')
 	project.hasProperty('usepassword')
-    project.hasProperty('externalSchemaFiles')
+    project.hasProperty('externalFiles')
     !project.hasProperty('localjob');
 
 }
@@ -521,9 +521,9 @@ task scpSubJobFiles() {
 			    println "scpSubJobFiles: Transferring subjob files to $host"
 			    
 			    def files=subJobFiles;
-				def schemaFiles = files.split(",");
+				def externalFiles = files.split(",");
 				def sampleMap = [:]
-				schemaFiles.each {
+				externalFiles.each {
 					def fileValue = "${it}"
 					def singleFile = fileValue.split("#");
 					sampleMap.put(singleFile[0],singleFile[1])
@@ -534,7 +534,7 @@ task scpSubJobFiles() {
 		      }
 		    } 
 }
-scpSchemaFiles.onlyIf {
+scpExternalFiles.onlyIf {
     project.hasProperty('host')
     project.hasProperty('username')
     project.hasProperty('password')

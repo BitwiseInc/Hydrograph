@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -37,13 +38,18 @@ import org.eclipse.gef.ui.parts.GraphicalEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.PlatformUI;
 import org.slf4j.Logger;
 
+import ch.qos.logback.classic.pattern.Util;
 import hydrograph.ui.common.interfaces.parametergrid.DefaultGEFCanvas;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.common.util.OSValidator;
+import hydrograph.ui.common.util.ParameterUtil;
 import hydrograph.ui.datastructure.property.Schema;
+import hydrograph.ui.datastructure.property.mapping.ExternalWidgetData;
+import hydrograph.ui.datastructure.property.mapping.TransformMapping;
 import hydrograph.ui.graph.Messages;
 import hydrograph.ui.graph.controller.ComponentEditPart;
 import hydrograph.ui.graph.editor.ELTGraphicalEditor;
@@ -60,6 +66,7 @@ import hydrograph.ui.graph.model.Component;
 import hydrograph.ui.graph.model.Container;
 import hydrograph.ui.joblogger.JobLogger;
 import hydrograph.ui.logging.factory.LogFactory;
+import hydrograph.ui.propertywindow.widgets.customwidgets.schema.ELTSchemaGridWidget;
 /**
  * 
  * JobScpAndProcessUtility use to create gradle command and process builder.
@@ -212,27 +219,27 @@ public class JobScpAndProcessUtility {
 	}
 	
 	/**
-	 * Give command that move all external schema file to remote server on created directory same as project relative path.  
-	 * @param externalSchemaFiles
+	 * Give command that move all external files to remote server on created directory same as project relative path.  
+	 * @param externalFiles
 	 * @param job
-	 * @return String Command to scp external schema files.
+	 * @return String Command to scp external files.
 	 */
-	public String getSchemaScpCommand(List<String> externalSchemaFiles,Job job) {
+	public String getExternalFilesScpCommand(List<String> externalFiles,Job job) {
 		StringBuffer command = new StringBuffer();
-		String externalSchema =  StringUtils.join(externalSchemaFiles, ",");
-		command.append(GradleCommandConstants.GCMD_SCP_SCHEMA_FILES).append(GradleCommandConstants.GPARAM_HOST).append(job.getHost())
+		String externalfiles =  StringUtils.join(externalFiles, ",");
+		command.append(GradleCommandConstants.GCMD_SCP_EXTERNAL_FILES).append(GradleCommandConstants.GPARAM_HOST).append(job.getHost())
 		.append(GradleCommandConstants.GPARAM_USERNAME).append(job.getUsername())
 		.append(GradleCommandConstants.GPARAM_PASSWORD).append(job.getPassword())
 		.append(GradleCommandConstants.GPARAM_PASSKEY).append(job.getKeyFile())
 		.append(GradleCommandConstants.GPARAM_USE_PASSWORD).append(job.isUsePassword())
-		.append(GradleCommandConstants.GPARAM_MOVE_SCHEMA).append("\"").append(externalSchema).append("\"");
+		.append(GradleCommandConstants.GPARAM_MOVE_FILES).append("\"").append(externalfiles).append("\"");
 		return command.toString();
 	}
 	
 	
 	/**
 	 * 
-	 * @param externalSchemaFiles
+	 * @param externalFiles
 	 * @param job
 	 * @return
 	 */
@@ -255,16 +262,16 @@ public class JobScpAndProcessUtility {
 	 * @param paramFile 
 	 * @param xmlPath
 	 * @param project
-	 * @param externalSchemaFiles
+	 * @param externalFiles
 	 * @return String (Command)
 	 */
-	public  String getCreateDirectoryCommand(Job job,String paramFile,String  xmlPath,String project,List<String> externalSchemaFiles,List<String> subJobList) {
+	public  String getCreateDirectoryCommand(Job job,String paramFile,String  xmlPath,String project,List<String> externalFiles,List<String> subJobList) {
 		xmlPath = getDirectoryPath(xmlPath);
 		//Get comma separated files from list.
-		String schemaFiles="";
+		String external_Files="";
 		String subJobFiles="";
-		if(!externalSchemaFiles.isEmpty())
-			schemaFiles = getCommaSeparatedDirectories(externalSchemaFiles);
+		if(!externalFiles.isEmpty())
+			external_Files = getCommaSeparatedDirectories(externalFiles);
 		
 		if(!subJobList.isEmpty()) 
 			subJobFiles = getCommaSeparatedDirectories(subJobList);
@@ -277,7 +284,7 @@ public class JobScpAndProcessUtility {
 		.append(GradleCommandConstants.GPARAM_JOB_XML).append(xmlPath)
 		.append(GradleCommandConstants.GPARAM_MOVE_PARAM_FILE).append(project).append("/")
 		.append(GradleCommandConstants.REMOTE_FIXED_DIRECTORY_PARAM)
-		.append(GradleCommandConstants.GPARAM_MOVE_SCHEMA_FILES).append(schemaFiles)
+		.append(GradleCommandConstants.GPARAM_MOVE_EXTERNAL_FILES).append(external_Files)
 		.append(GradleCommandConstants.GPARAM_MOVE_SUBJOB_FILES).append(subJobFiles)
 		.append(GradleCommandConstants.GPARAM_MOVE_JAR).append(project).append("/")
 		.append(GradleCommandConstants.REMOTE_FIXED_DIRECTORY_LIB).append(GradleCommandConstants.GPARAM_RESOUCES_FILES)
@@ -337,9 +344,9 @@ public class JobScpAndProcessUtility {
 	 */
 	private String getCommaSeparatedDirectories(List<String> fileList ){
 		List<String> directories = new ArrayList<>();
-		for (String schemaFile : fileList) {
-					schemaFile=getDirectoryPath(schemaFile);
-					directories.add(schemaFile);
+		for (String externalFile : fileList) {
+					externalFile=getDirectoryPath(externalFile);
+					directories.add(externalFile);
 			}
 		
 		String files=StringUtils.join(directories, ",");
@@ -347,12 +354,15 @@ public class JobScpAndProcessUtility {
 	}
 	
 	/**
-	 * Collect all external schema files from active editor, also check for subjob and nested subjob. 
-	 * @return list of external schema files.
+	 * Collect all external external files from active editor, also check for subjob and nested subjob. 
+	 * @return list of external files.
 	 */
-	public List<String> getExternalSchemaList() {
-		List<String> externalSchemaPathList=new ArrayList<>();	
+	public List<String> getExternalFilesList() {
+		List<String> externalFilesPathList=new ArrayList<>();	
 		ELTGraphicalEditor editor = (ELTGraphicalEditor)PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+		List<String> tranformComponentList = Arrays.asList(Constants.TRANSFORM,Constants.AGGREGATE,Constants.NORMALIZE,Constants.
+				CUMULATE,Constants.GROUP_COMBINE);
+		String finalParamPath=null;
 		if (editor != null && editor instanceof ELTGraphicalEditor) {
 			GraphicalViewer graphicalViewer = (GraphicalViewer) ((GraphicalEditor) editor)
 					.getAdapter(GraphicalViewer.class);
@@ -360,18 +370,64 @@ public class JobScpAndProcessUtility {
 				EditPart editPart = ite.next();
 				if (editPart instanceof ComponentEditPart) {
 					Component component = ((ComponentEditPart) editPart).getCastedModel();
+					addExternalTransformFiles(externalFilesPathList, component,tranformComponentList);
 					Schema  schema = (Schema) component.getProperties().get(Constants.SCHEMA_PROPERTY_NAME);
 					if(schema!=null && schema.getIsExternal()){
-						externalSchemaPathList.add(schema.getExternalSchemaPath());
+						externalFilesPathList.add(getParamValue(schema.getExternalSchemaPath()));
 					}
-					if(Constants.SUBJOB_COMPONENT.equals(component.getComponentName())){
-						  String subJobPath=(String) component.getProperties().get(Constants.PATH_PROPERTY_NAME);
-						  checkSubJobForExternalSchema(externalSchemaPathList, subJobPath); 
-						}
+					if (Constants.SUBJOB_COMPONENT.equals(component.getComponentName())) {
+						String subJobPath = (String) component.getProperties().get(Constants.PATH_PROPERTY_NAME);
+						checkSubJobForExternalFiles(externalFilesPathList, subJobPath, tranformComponentList);
+					}
 				}
 			}
 		}
-		return externalSchemaPathList;
+		return externalFilesPathList;
+	}
+	
+	
+	private String getParamValue(String paramName) {
+		String finalParamPath = null;
+		if (ParameterUtil.containsParameter(paramName, '/')) {
+			String paramValue = hydrograph.ui.common.property.util.Utils.INSTANCE.getParamValue(paramName);
+			finalParamPath = hydrograph.ui.common.property.util.Utils.INSTANCE.getParamFilePath(paramName, paramValue);
+			while (ParameterUtil.containsParameter(finalParamPath, '/')) {
+				paramValue = hydrograph.ui.common.property.util.Utils.INSTANCE.getParamValue(paramName);
+				finalParamPath = hydrograph.ui.common.property.util.Utils.INSTANCE.getParamFilePath(paramName, paramValue);
+			}
+		}
+		
+		if(finalParamPath == null)
+			finalParamPath = paramName;
+		return finalParamPath;
+	}
+
+	/**
+	 * @param externalFilePathList
+	 * @param component
+	 * @param tranformComponentList
+	 * 
+	 * Adds the external files used in transform components
+	 */
+	private void addExternalTransformFiles(List<String> externalFilePathList, Component component, List<String> tranformComponentList) {
+		if (tranformComponentList.stream().anyMatch(component.getComponentName()::equalsIgnoreCase)) {
+			TransformMapping transformMapping = (TransformMapping) component.getProperties().get(Constants.OPERATION);
+			ExternalWidgetData externaWidgetData = transformMapping.getExternalOutputFieldsData();
+			if (externaWidgetData.isExternal()) {
+				externalFilePathList.add(externaWidgetData.getFilePath());
+			}
+			transformMapping.getMappingSheetRows().stream().filter(e->e.isActive()).forEach(mappingSheetRow -> {
+				if(mappingSheetRow.isExpression()){
+					if(mappingSheetRow.getExternalExpresion().isExternal()){
+						externalFilePathList.add(getParamValue(mappingSheetRow.getExternalExpresion().getFilePath()));
+					}
+				}else{
+					if(mappingSheetRow.getExternalOperation().isExternal()){
+						externalFilePathList.add(getParamValue(mappingSheetRow.getExternalOperation().getFilePath()));
+					}
+				}
+			});
+		}
 	}
 	
 	/**
@@ -424,11 +480,12 @@ public class JobScpAndProcessUtility {
 	}
 	
 	/**
-	 * Check nested subjob to collect external schema files.
-	 * @param externalSchemaPathList
+	 * Check nested subjob to collect external files.
+	 * @param externalFilesPathList
 	 * @param subJobPath
+	 * @param tranformComponentList 
 	 */
-	private void checkSubJobForExternalSchema(List<String> externalSchemaPathList,String subJobPath) {
+	private void checkSubJobForExternalFiles(List<String> externalFilesPathList,String subJobPath, List<String> tranformComponentList) {
 		Object obj=null;
 		try {
 			obj = CanvasUtils.INSTANCE.fromXMLToObject(new FileInputStream(new File(JobManager.getAbsolutePathFromFile(new Path(subJobPath)))));
@@ -438,13 +495,14 @@ public class JobScpAndProcessUtility {
 		if(obj!=null && obj instanceof Container){
 		  Container container = (Container) obj;
 		  for (Component component : container.getUIComponentList()){
+			  addExternalTransformFiles(externalFilesPathList, component, tranformComponentList);
 			  	Schema  schema = (Schema) component.getProperties().get(Constants.SCHEMA_PROPERTY_NAME);
 				if(schema!=null && schema.getIsExternal()){
-					externalSchemaPathList.add(schema.getExternalSchemaPath());
+					externalFilesPathList.add(schema.getExternalSchemaPath());
 				}
 				if(Constants.SUBJOB_COMPONENT.equals(component.getComponentName())){
 					  String subJob=(String) component.getProperties().get(Constants.PATH_PROPERTY_NAME);
-					  checkSubJobForExternalSchema(externalSchemaPathList, subJob);
+					  checkSubJobForExternalFiles(externalFilesPathList, subJob,tranformComponentList);
 				}
 		  	}
 		}

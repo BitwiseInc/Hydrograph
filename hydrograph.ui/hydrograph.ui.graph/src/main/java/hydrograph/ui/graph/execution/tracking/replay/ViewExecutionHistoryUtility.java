@@ -192,7 +192,7 @@ public class ViewExecutionHistoryUtility {
 	 * The function will use to check componentId and componentName in subjob.
 	 */
 	public void subjobParams(Map<String, String> componentNameAndLink, Component subjobComponent, StringBuilder subjobPrefix, boolean isParent){
-		Container container = (Container) subjobComponent.getProperties().get(Constants.SUBJOB_CONTAINER);
+		Container container=(Container)subjobComponent.getSubJobContainer().get(Constants.SUBJOB_CONTAINER);
 		for(Object object:container.getChildren()){
 			Component component=(Component) object;
 			if( !(component.getComponentName().equals(Messages.INPUT_SUBJOB_COMPONENT)) && 

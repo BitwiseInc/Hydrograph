@@ -13,6 +13,7 @@
 
 package hydrograph.ui.graph.model.components;
 
+import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.graph.model.categories.InputCategory;
 
 
@@ -38,6 +39,11 @@ public class IFileMixedScheme extends InputCategory{
 	@Override
 	public String getConverter() {
 		return "hydrograph.ui.engine.converter.impl.InputFileMixedSchemeConverter";
+	}
+	
+	@Override
+	public String getGridRowType() {
+		return Constants.MIXEDSCHEMA_GRID_ROW;
 	}
 
 }

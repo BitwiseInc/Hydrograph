@@ -14,6 +14,7 @@
  
 package hydrograph.ui.propertywindow.widgets.utility;
 
+import hydrograph.ui.common.util.SchemaFieldUtil;
 import hydrograph.ui.propertywindow.custom.celleditor.CustomComboBoxCellEditor;
 import hydrograph.ui.propertywindow.messages.Messages;
 
@@ -156,16 +157,7 @@ public abstract class GridWidgetCommonBuilder {
 	}
 
 	public static Integer getDataTypeByValue(String value) {
-			int i;
-			String schemaList = Messages.DATATYPELIST;
-			String[] dataTypeList = schemaList.split(",");
-			for (i=0;i<dataTypeList.length;i++) {
-				String[] data = dataTypeList[i].split("#");
-					if(value.equalsIgnoreCase(data[1]))
-						return i;
-			}
-		
-			return 0;
+			return SchemaFieldUtil.INSTANCE.getDataTypeByValue(value);
 	}
 
 	public static void setScaleTypeKeyValue() {
@@ -194,17 +186,8 @@ public abstract class GridWidgetCommonBuilder {
 	}
 	
 	public static Integer getScaleTypeByValue(String value) {
-		int i;
-		String schemaList = Messages.SCALETYPELIST;
-		String[] scaleTypeList = schemaList.split(",");
-		for (i=0;i<scaleTypeList.length;i++) {
-			String[] data = scaleTypeList[i].split("#");
-				if(value.equalsIgnoreCase(data[1]))
-					return i;
-		}
-	
-		return 0;
-}
+		return SchemaFieldUtil.INSTANCE.getDataTypeByValue(value);
+	}
 	
 	public static String[] getDataTypeValue() {
 		if(dataTypeValue!=null){
