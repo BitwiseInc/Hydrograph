@@ -21,15 +21,18 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.fieldassist.ControlDecoration;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 import org.slf4j.Logger;
 
+import hydrograph.ui.common.property.util.Utils;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.logging.factory.LogFactory;
 import hydrograph.ui.propertywindow.datastructures.ComboBoxParameter;
@@ -70,6 +73,8 @@ public class DropDownWidget extends AbstractWidget{
 	private ControlDecoration txtDecorator;
 	private DropDownConfig dropDownConfig;
 	private List<AbstractWidget> widgetList;
+
+	private Cursor cursor;
 	
 	/**
 	 * Instantiates a new ELT safe widget.
@@ -101,6 +106,8 @@ public class DropDownWidget extends AbstractWidget{
 		ELTDefaultSubgroupComposite eltSuDefaultSubgroupComposite = new ELTDefaultSubgroupComposite(container.getContainerControl());
 		eltSuDefaultSubgroupComposite.createContainerWidget();
 		
+		Utils.INSTANCE.loadProperties();
+		this.cursor = container.getContainerControl().getDisplay().getSystemCursor(SWT.CURSOR_HAND);
 		AbstractELTWidget defaultLabel = new ELTDefaultLable(dropDownConfig.getName());
 		eltSuDefaultSubgroupComposite.attachWidget(defaultLabel);
 		setPropertyHelpWidget((Control) defaultLabel.getSWTWidgetControl());
@@ -135,7 +142,6 @@ public class DropDownWidget extends AbstractWidget{
 					logger.error("Failed in attaching listeners to {}, {}", dropDownConfig.getName(), exception);
 				}
 		}
-		
 		addComboSelectionListner();
 		 populateWidget();
 	}
@@ -166,6 +172,7 @@ public class DropDownWidget extends AbstractWidget{
 					text.setVisible(true);
 					if (StringUtils.isNotEmpty(properties)){
 						text.setText(properties);
+						Utils.INSTANCE.addMouseMoveListener(text, cursor);
 						txtDecorator.hide();
 					}
 					else{
@@ -232,6 +239,7 @@ public class DropDownWidget extends AbstractWidget{
 			   @Override
 			   public void modifyText(ModifyEvent e) {
 				   showHideErrorSymbol(widgetList);
+				   Utils.INSTANCE.addMouseMoveListener(text, cursor);
 			   }
 		   });
 	   }
