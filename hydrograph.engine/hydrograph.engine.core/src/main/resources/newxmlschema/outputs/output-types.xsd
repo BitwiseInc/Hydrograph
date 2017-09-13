@@ -21,7 +21,7 @@
            xmlns:ofsubjob="hydrograph/engine/jaxb/ofsubjob"
            xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:omysql="hydrograph/engine/jaxb/omysql"
-           xmlns:excel="hydrograph/engine/jaxb/exceltype"
+           xmlns:ofexcel="hydrograph/engine/jaxb/ofexcel"
            xmlns:oredshift="hydrograph/engine/jaxb/oredshift"
            xmlns:osparkredshift="hydrograph/engine/jaxb/osparkredshift"
            xmlns:ooracle="hydrograph/engine/jaxb/ooracle"
@@ -64,14 +64,14 @@
                namespace="hydrograph/engine/jaxb/oteradata"/>
 
     <xs:import schemaLocation="./excel-output-type/output-excel-types.xsd"
-               namespace="hydrograph/engine/jaxb/exceltype"/>
+               namespace="hydrograph/engine/jaxb/ofexcel"/>
 
 
     <xs:import
             schemaLocation="./xml-file/output-file-xml-types.xsd"
-            namespace="hydrograph/engine/jaxb/ofxml" />
+            namespace="hydrograph/engine/jaxb/ofxml"/>
     <xs:import schemaLocation="./jdbcupdate-type/output-jdbcupdate-types.xsd"
-               namespace="hydrograph/engine/jaxb/ojdbcupdate" />
+               namespace="hydrograph/engine/jaxb/ojdbcupdate"/>
 
     <xs:complexType name="avroFile">
         <xs:complexContent>
@@ -126,40 +126,44 @@
 
     <xs:complexType name="excelFile">
         <xs:complexContent>
-            <xs:extension base="excel:type-file-excel-base">
+            <xs:extension base="ofexcel:type-output-file-excel-base">
                 <xs:sequence>
-                    <xs:element name="sourcePath">
+                    <xs:element name="path">
                         <xs:complexType>
                             <xs:attribute name="uri" type="xs:string" use="required"/>
                         </xs:complexType>
                     </xs:element>
-                    <xs:element name="targetPath">
+                    <xs:element name="fileExtension" minOccurs="0">
                         <xs:complexType>
-                            <xs:attribute name="uri" type="xs:string" use="required"/>
+                            <xs:attribute name="value" type="cmn:excel-file-type" use="required"/>
                         </xs:complexType>
                     </xs:element>
-                    <xs:element name="delimiter">
+                    <xs:element name="worksheetName" minOccurs="0" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:attribute name="name" type="xs:string" use="required"/>
+                    </xs:complexType>
+                    </xs:element>
+                    <xs:element name="stripLeadingQuote" type="ofexcel:boolean-attribute" minOccurs="0"  maxOccurs="1"/>
+                    <xs:element name="autoColumnSize" type="ofexcel:boolean-attribute" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="cellFormat" minOccurs="0" maxOccurs="1">
                         <xs:complexType>
-                            <xs:attribute name="value" type="xs:string" use="required"/>
+                            <xs:sequence>
+                                <xs:element name="header" type="ofexcel:field-format" maxOccurs="1"/>
+                                <xs:element name="data" type="ofexcel:field-format" maxOccurs="1"/>
+                            </xs:sequence>
                         </xs:complexType>
                     </xs:element>
-                    <xs:element name="overWrite" type="cmn:type-true-false"
-								minOccurs="1" maxOccurs="1" />
-                    <xs:element name="templateExcelPath">
+                    <xs:element name="writeMode" minOccurs="0" maxOccurs="1">
                         <xs:complexType>
-                            <xs:attribute name="uri" type="xs:string" use="optional"/>
+                            <xs:attribute name="value" type="cmn:standard-write-mode" use="required"/>
                         </xs:complexType>
                     </xs:element>
-                    
-                    <xs:element name="stripLeadingQuote" type="cmn:type-true-false" minOccurs="1" maxOccurs="1"/>
-                    <xs:element name="autoColumnSize" type="cmn:type-true-false" minOccurs="1" maxOccurs="1"/>
-                    <xs:element name="abortOnError" type="cmn:type-true-false" minOccurs="1" maxOccurs="1"/>
-                    <xs:element name="charset" minOccurs="0">
+                    <xs:element name="charset" minOccurs="0" maxOccurs="1">
                         <xs:complexType>
-                            <xs:attribute name="value" type="cmn:standard-charsets"
-                                          use="required"/>
+                            <xs:attribute name="value" type="cmn:standard-charsets" use="required"/>
                         </xs:complexType>
                     </xs:element>
+                    <xs:element name="abortOnError" type="ofexcel:boolean-attribute" minOccurs="0" maxOccurs="1"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -497,32 +501,32 @@
                 <xs:sequence>
                     <xs:element name="path">
                         <xs:complexType>
-                            <xs:attribute name="uri" type="xs:string" use="required" />
+                            <xs:attribute name="uri" type="xs:string" use="required"/>
                         </xs:complexType>
                     </xs:element>
                     <xs:element name="absoluteXPath">
                         <xs:complexType>
-                            <xs:attribute name="value" type="xs:string" use="required" />
+                            <xs:attribute name="value" type="xs:string" use="required"/>
                         </xs:complexType>
                     </xs:element>
                     <xs:element name="rootTag">
                         <xs:complexType>
-                            <xs:attribute name="value" type="xs:string" use="required" />
+                            <xs:attribute name="value" type="xs:string" use="required"/>
                         </xs:complexType>
                     </xs:element>
                     <xs:element name="rowTag">
                         <xs:complexType>
-                            <xs:attribute name="value" type="xs:string" use="required" />
+                            <xs:attribute name="value" type="xs:string" use="required"/>
                         </xs:complexType>
                     </xs:element>
                     <xs:element name="safe" type="cmn:boolean-value-type"
-                                minOccurs="0" />
+                                minOccurs="0"/>
                     <xs:element name="strict" type="cmn:boolean-value-type"
-                                minOccurs="0" />
+                                minOccurs="0"/>
                     <xs:element name="charset" minOccurs="0">
                         <xs:complexType>
                             <xs:attribute name="value" type="cmn:standard-charsets"
-                                          use="required" />
+                                          use="required"/>
                         </xs:complexType>
                     </xs:element>
                 </xs:sequence>
@@ -535,19 +539,19 @@
             <xs:extension base="ojdbcupdate:type-output-jdbcupdate-base">
                 <xs:sequence>
                     <xs:element name="url" type="cmn:element-value-string-type"
-                                minOccurs="1" maxOccurs="1" />
+                                minOccurs="1" maxOccurs="1"/>
                     <xs:element name="jdbcDriverClass" type="cmn:element-value-string-type"
-                                minOccurs="1" maxOccurs="1" />
+                                minOccurs="1" maxOccurs="1"/>
                     <xs:element name="tableName" type="cmn:element-value-string-type"
-                                minOccurs="1" maxOccurs="1" />
+                                minOccurs="1" maxOccurs="1"/>
                     <xs:element name="batchSize" type="cmn:element-value-integer-type"
-                                minOccurs="0" maxOccurs="1" />
+                                minOccurs="0" maxOccurs="1"/>
                     <xs:element name="userName" type="cmn:element-value-string-type"
-                                minOccurs="0" maxOccurs="1" />
+                                minOccurs="0" maxOccurs="1"/>
                     <xs:element name="password" type="cmn:element-value-string-type"
-                                minOccurs="0" maxOccurs="1" />
+                                minOccurs="0" maxOccurs="1"/>
                     <xs:element name="update" type="ojdbcupdate:type-update-keys"
-                                minOccurs="1" maxOccurs="1" />
+                                minOccurs="1" maxOccurs="1"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
