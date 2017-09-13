@@ -251,35 +251,43 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ExcelFile.SourcePath }
+     * Create an instance of {@link ExcelFile.Path }
      * 
      */
-    public ExcelFile.SourcePath createExcelFileSourcePath() {
-        return new ExcelFile.SourcePath();
+    public ExcelFile.Path createExcelFilePath() {
+        return new ExcelFile.Path();
     }
 
     /**
-     * Create an instance of {@link ExcelFile.TargetPath }
+     * Create an instance of {@link ExcelFile.FileExtension }
      * 
      */
-    public ExcelFile.TargetPath createExcelFileTargetPath() {
-        return new ExcelFile.TargetPath();
+    public ExcelFile.FileExtension createExcelFileFileExtension() {
+        return new ExcelFile.FileExtension();
     }
 
     /**
-     * Create an instance of {@link ExcelFile.Delimiter }
+     * Create an instance of {@link ExcelFile.WorksheetName }
      * 
      */
-    public ExcelFile.Delimiter createExcelFileDelimiter() {
-        return new ExcelFile.Delimiter();
+    public ExcelFile.WorksheetName createExcelFileWorksheetName() {
+        return new ExcelFile.WorksheetName();
     }
 
     /**
-     * Create an instance of {@link ExcelFile.TemplateExcelPath }
+     * Create an instance of {@link ExcelFile.CellFormat }
      * 
      */
-    public ExcelFile.TemplateExcelPath createExcelFileTemplateExcelPath() {
-        return new ExcelFile.TemplateExcelPath();
+    public ExcelFile.CellFormat createExcelFileCellFormat() {
+        return new ExcelFile.CellFormat();
+    }
+
+    /**
+     * Create an instance of {@link ExcelFile.WriteMode }
+     * 
+     */
+    public ExcelFile.WriteMode createExcelFileWriteMode() {
+        return new ExcelFile.WriteMode();
     }
 
     /**
