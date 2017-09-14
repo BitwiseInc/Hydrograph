@@ -1,17 +1,4 @@
 
-/*******************************************************************************
- * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- ******************************************************************************/
-
 package hydrograph.engine.jaxb.commontypes;
 
 import javax.xml.bind.annotation.XmlEnum;
@@ -30,9 +17,6 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="UTF-8"/>
  *     &lt;enumeration value="US-ASCII"/>
  *     &lt;enumeration value="ISO-8859-1"/>
- *     &lt;enumeration value="UTF-16BE"/>
- *     &lt;enumeration value="UTF-16LE"/>
- *     &lt;enumeration value="UTF-16"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
@@ -47,13 +31,7 @@ public enum StandardCharsets {
     @XmlEnumValue("US-ASCII")
     US_ASCII("US-ASCII"),
     @XmlEnumValue("ISO-8859-1")
-    ISO_8859_1("ISO-8859-1"),
-    @XmlEnumValue("UTF-16BE")
-    UTF_16_BE("UTF-16BE"),
-    @XmlEnumValue("UTF-16LE")
-    UTF_16_LE("UTF-16LE"),
-    @XmlEnumValue("UTF-16")
-    UTF_16("UTF-16");
+    ISO_8859_1("ISO-8859-1");
     private final String value;
 
     StandardCharsets(String v) {
