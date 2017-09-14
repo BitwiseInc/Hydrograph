@@ -23,7 +23,7 @@ repositories {
     }
 	 /* Add links of Nexus/Artifactory in order to resolve the dependencies */
      maven {
-        url ''
+        url 'http://10.20.16.32:9091/artifactory/hydrograph-spark-github'
     }
 }
    
