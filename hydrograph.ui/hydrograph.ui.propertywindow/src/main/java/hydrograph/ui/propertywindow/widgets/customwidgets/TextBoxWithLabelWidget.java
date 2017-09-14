@@ -146,6 +146,10 @@ public class TextBoxWithLabelWidget extends AbstractWidget{
 		populateWidget();
 		logger.trace("Finished {} textbox creation", textBoxConfig.getName());
 	}
+	
+	private void validteHost(){
+		
+	}
 
 	protected void attachListeners(AbstractELTWidget textBoxWidget) {
 		ListenerHelper helper = prepareListenerHelper();

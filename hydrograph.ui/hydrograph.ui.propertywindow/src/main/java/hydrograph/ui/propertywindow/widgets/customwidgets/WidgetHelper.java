@@ -601,4 +601,55 @@ public class WidgetHelper {
 		textBoxConfig.setGrabExcessSpace(true);
 		return textBoxConfig;
 	}
+	
+	/**
+	 * Configuration to customize text box as Project Id
+	 */
+	public WidgetConfig getNumbericValueWidgetConfig(String fieldName){
+		TextBoxWithLableConfig textBoxConfig = new TextBoxWithLableConfig();
+		textBoxConfig.setName(fieldName);
+		textBoxConfig.setGrabExcessSpace(true);
+		addTextBoxListeners(textBoxConfig);
+		textBoxConfig.getListeners().add(Listners.VERIFY_NUMERIC_AND_PARAMETER_FOR_DB_COMPONENTS);
+		textBoxConfig.setWidgetWidth(78);
+		return textBoxConfig;
+	}
+	
+	/**
+	 * Configuration to customize dropdown as protocol property 
+	 */
+	public WidgetConfig getProtocolWidgetConfig(){
+		DropDownConfig dropDownConfig = new DropDownConfig();
+		dropDownConfig.setName("Protocol");
+		dropDownConfig.getItems().add("FTP");
+		dropDownConfig.getItems().add("SFTP");
+		dropDownConfig.getItems().add("AWS S3 HTTPS");
+		addComboBoxListeners(dropDownConfig);
+		return dropDownConfig;
+	}
+	
+	/**
+	 * Configuration to customize dropdown as ftp error property 
+	 */
+	public WidgetConfig getFailOnErrorWidgetConfig(){
+		DropDownConfig dropDownConfig = new DropDownConfig();
+		dropDownConfig.setName("Fail On Error");
+		dropDownConfig.getItems().add(Constants.TRUE);
+		dropDownConfig.getItems().add(Constants.FALSE);
+		addComboBoxListeners(dropDownConfig);
+		return dropDownConfig;
+	}
+	
+	/**
+	 * Configuration to customize dropdown as encoding error property 
+	 */
+	public WidgetConfig getEncodingWidgetConfig(){
+		DropDownConfig dropDownConfig = new DropDownConfig();
+		dropDownConfig.setName("Encoding");
+		dropDownConfig.getItems().add(Constants.UTF_8);
+		dropDownConfig.getItems().add(Constants.ISO_8859_1);
+		dropDownConfig.getItems().add(Constants.PARAMETER);
+		addComboBoxListeners(dropDownConfig);
+		return dropDownConfig;
+	}
 }

@@ -56,7 +56,7 @@ public class ELTSelectionListener implements IELTListener {
 		Listener listener = new Listener() {
 			@Override
 			public void handleEvent(Event event) {
-				if (((Combo) widgetList[0]).getText().equals("Parameter")) {
+				if (((Combo) widgetList[0]).getText().equals("Parameter") || ((Combo) widgetList[0]).getText().equals("Others")) {
 					((Text) widgetList[1]).setVisible(true);
 					((Text) widgetList[1]).setFocus();
 					txtDecorator.hide();

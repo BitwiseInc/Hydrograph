@@ -48,6 +48,7 @@ import hydrograph.ui.engine.ui.converter.impl.CloneUiConverter;
 import hydrograph.ui.engine.ui.converter.impl.CommandSubjobUiConverter;
 import hydrograph.ui.engine.ui.converter.impl.CumulateUiConverter;
 import hydrograph.ui.engine.ui.converter.impl.DiscardUiConverter;
+import hydrograph.ui.engine.ui.converter.impl.FTPConverterUi;
 import hydrograph.ui.engine.ui.converter.impl.FilterUiConverter;
 import hydrograph.ui.engine.ui.converter.impl.GenerateRecordsUiConverter;
 import hydrograph.ui.engine.ui.converter.impl.GroupCombineUiConverter;
@@ -88,6 +89,8 @@ import hydrograph.ui.engine.ui.converter.impl.PartitionByExpressionUiConverter;
 import hydrograph.ui.engine.ui.converter.impl.RemoveDupsUiConverter;
 import hydrograph.ui.engine.ui.converter.impl.RunProgramUiConverter;
 import hydrograph.ui.engine.ui.converter.impl.RunSQLUiConverter;
+import hydrograph.ui.engine.ui.converter.impl.S3FileTransferUiConverter;
+import hydrograph.ui.engine.ui.converter.impl.SFTPUiConverter;
 import hydrograph.ui.engine.ui.converter.impl.SortUiConverter;
 import hydrograph.ui.engine.ui.converter.impl.TransformComponentUiConverter;
 import hydrograph.ui.engine.ui.converter.impl.UnionAllUiConverter;
@@ -278,6 +281,15 @@ public class UiConverterFactory {
 		}
 		if((hydrograph.engine.jaxb.inputtypes.Sparkredshift.class).isAssignableFrom(typeBaseComponent.getClass())){
 			return new InputSparkRedshiftUiConverter(typeBaseComponent, container);
+		}
+		if((hydrograph.engine.jaxb.commandtypes.FTP.class).isAssignableFrom(typeBaseComponent.getClass())){
+			return new FTPConverterUi(typeBaseComponent, container);
+		}
+		if((hydrograph.engine.jaxb.commandtypes.SFTP.class).isAssignableFrom(typeBaseComponent.getClass())){
+			return new SFTPUiConverter(typeBaseComponent, container);
+		}
+		if((hydrograph.engine.jaxb.commandtypes.S3FileTransfer.class).isAssignableFrom(typeBaseComponent.getClass())){
+			return new S3FileTransferUiConverter(typeBaseComponent, container);
 		}
 		return new UnknownUiConverter(typeBaseComponent,container);
 	}

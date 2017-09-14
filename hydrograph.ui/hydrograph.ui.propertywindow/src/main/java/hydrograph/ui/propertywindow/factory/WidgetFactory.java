@@ -23,6 +23,8 @@ import hydrograph.ui.logging.factory.LogFactory;
 import hydrograph.ui.propertywindow.filemixedschema.ELTMixedSchemeWidget;
 import hydrograph.ui.propertywindow.fixedwidthschema.ELTFixedWidget;
 import hydrograph.ui.propertywindow.fixedwidthschema.TransformSchemaWidget;
+import hydrograph.ui.propertywindow.ftp.AuthenticationWidget;
+import hydrograph.ui.propertywindow.ftp.OperationConfigWidget;
 import hydrograph.ui.propertywindow.generaterecords.schema.GenerateRecordsGridWidget;
 import hydrograph.ui.propertywindow.messages.Messages;
 import hydrograph.ui.propertywindow.property.ComponentConfigrationProperty;
@@ -182,7 +184,18 @@ public class WidgetFactory {
 		RUNPROGRAM_TEXT_WIDGET (RunComponentWidget.class),
 		OUTPUT_RECORD_COUNT_WIDGET(OutputRecordCountWidget.class,WidgetHelper.INSTANCE.getOperationClassForTransformWidgetConfig(Constants.NORMALIZE,Constants.NORMALIZE_DISPLAYNAME, Constants.NORMALIZE_WINDOW_TITLE)),
 		RUN_SQL_QUERY_WIDGET(RunSQLQueryWidget.class),
-		DATABASE_LIST_WIDGET(DropDownWidget.class, WidgetHelper.INSTANCE.getDatabaseListWidgetConfig());
+		DATABASE_LIST_WIDGET(DropDownWidget.class, WidgetHelper.INSTANCE.getDatabaseListWidgetConfig()),
+		
+		FTP_PROTOCOL_WIDGET(DropDownWidget.class, WidgetHelper.INSTANCE.getProtocolWidgetConfig()),
+		FTP_AUTHENTICATION_WIDGET(AuthenticationWidget.class, WidgetHelper.INSTANCE
+				.getRunTimeWidgetConfig("Authentication", "Authentication Editor")),
+		FTP_CONNECTION_TIME_OUT_WIDGET(TextBoxWithLabelWidget.class, WidgetHelper.INSTANCE
+				.getNumbericValueWidgetConfig("Connection\nTime-Out\n(milllisecond)")),
+		FTP_NO_OF_RETRIES_WIDGET(TextBoxWithLabelWidget.class, WidgetHelper.INSTANCE.getNumbericValueWidgetConfig("Number of \nRetries")),
+		FTP_OPERATION_CONFIG_WIDGET(OperationConfigWidget.class, WidgetHelper.INSTANCE
+				.getRunTimeWidgetConfig("Operation\nConfiguration", "Operation Config")),
+		FTP_ENCODING_WIDGET(DropDownWidget.class, WidgetHelper.INSTANCE.getEncodingWidgetConfig()),
+		FAIL_ON_ERROR_WIDGET(DropDownWidget.class, WidgetHelper.INSTANCE.getFailOnErrorWidgetConfig());
 		
               
 		private Class<?> clazz = null;
