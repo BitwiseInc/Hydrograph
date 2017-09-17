@@ -46,6 +46,7 @@ import org.slf4j.Logger;
 import hydrograph.ui.common.property.util.Utils;
 import hydrograph.ui.datastructure.property.FTPAuthOperationDetails;
 import hydrograph.ui.logging.factory.LogFactory;
+import hydrograph.ui.propertywindow.handlers.ShowHidePropertyHelpHandler;
 import hydrograph.ui.propertywindow.messages.Messages;
 import hydrograph.ui.propertywindow.propertydialog.PropertyDialogButtonBar;
 import hydrograph.ui.propertywindow.widgets.utility.WidgetUtility;
@@ -113,6 +114,7 @@ public class FTPAuthenticEditorDialog extends Dialog{
 		
 		FTPWidgetUtility ftpWidgetUtility = new FTPWidgetUtility();
 		Label partitionKeysLabel = (Label) ftpWidgetUtility.createLabel(composite, "Authentication Mode");
+		setPropertyHelpText(partitionKeysLabel, "Used to select authentication mode");
 		authenticationModeCombo = (Combo) ftpWidgetUtility.CreateCombo(composite, optionList);
 		
 		
@@ -136,6 +138,16 @@ public class FTPAuthenticEditorDialog extends Dialog{
 		return container;
 	}
 	
+	
+	private void setPropertyHelpText(Label label, String message) {
+		if(ShowHidePropertyHelpHandler.getInstance() != null 
+				&& ShowHidePropertyHelpHandler.getInstance().isShowHidePropertyHelpChecked()){
+			label.setToolTipText(message);
+			label.setCursor(new Cursor(label.getDisplay(), SWT.CURSOR_HELP));
+		}
+		
+	}
+
 	private void addModifyListener(Text text){
 		if(text != null && !text.isDisposed()){
 			text.addModifyListener(new ModifyListener() {
@@ -165,8 +177,10 @@ public class FTPAuthenticEditorDialog extends Dialog{
 				stackLayout.topControl = basicAuthComposite;
 				FTPAuthOperationDetails authOperationDetails = map.getValue();
 				text1.setText(authOperationDetails.getField1());
+				Utils.INSTANCE.addMouseMoveListener(text1, cursor);
 				if(text2 != null){
 					text2.setText(authOperationDetails.getField2());
+					Utils.INSTANCE.addMouseMoveListener(text2, cursor);
 				}
 			}else if(StringUtils.equalsIgnoreCase(ComboText2, map.getKey())){
 				authenticationModeCombo.select(1);
@@ -175,6 +189,7 @@ public class FTPAuthenticEditorDialog extends Dialog{
 				FTPAuthOperationDetails authOperationDetails = map.getValue();
 				if(text2 != null){
 					text2.setText(authOperationDetails.getField2());
+					Utils.INSTANCE.addMouseMoveListener(text2, cursor);
 				}
 			}
 		}
@@ -190,20 +205,18 @@ public class FTPAuthenticEditorDialog extends Dialog{
 			public void widgetSelected(SelectionEvent e) {
 				if(authenticationModeCombo.getSelectionIndex() == 1){
 					disposeComposite(basicAuthComposite);
-					//if(keyFileComposite == null || keyFileComposite.isDisposed()){
-						keyFileComposite = (Composite) addIdKeyComposite(stackComposite);
-					//}
+					keyFileComposite = (Composite) addIdKeyComposite(stackComposite);
 					updateWidgetsValue(text1, text2);
 					stackLayout.topControl = keyFileComposite;
 					refereshComposite(stackComposite);
 				}else{
-					disposeComposite(keyFileComposite);
-					//if(basicAuthComposite == null || basicAuthComposite.isDisposed()){
+					if(optionList.length >1){
+						disposeComposite(keyFileComposite);
 						basicAuthComposite = (Composite) addBasicAuthenticationComposite(stackComposite);
-					//}
-					updateWidgetsValue(text1, text2);
-					stackLayout.topControl = basicAuthComposite;
-					refereshComposite(stackComposite);
+						updateWidgetsValue(text1, text2);
+						stackLayout.topControl = basicAuthComposite;
+						refereshComposite(stackComposite);
+					}
 				}
 				stackComposite.layout();
 			}
@@ -256,10 +269,13 @@ public class FTPAuthenticEditorDialog extends Dialog{
 		}
 		
 		FTPWidgetUtility ftpWidgetUtility = new FTPWidgetUtility();
-		ftpWidgetUtility.createLabel(basicAuthComposite, label1Text);
+		Label label1 = (Label) ftpWidgetUtility.createLabel(basicAuthComposite, label1Text);
+		setPropertyHelpText(label1, "Used to provide the value for authentication");
 		text1 = (Text) ftpWidgetUtility.createText(basicAuthComposite, "", SWT.BORDER);
+		Utils.INSTANCE.addMouseMoveListener(text1, cursor);	
 		
-		ftpWidgetUtility.createLabel(basicAuthComposite, label2Text);
+		Label label2 = (Label) ftpWidgetUtility.createLabel(basicAuthComposite, label2Text);
+		setPropertyHelpText(label2, "Used to provide the value for authentication");
 		text2 = (Text) ftpWidgetUtility.createText(basicAuthComposite, "", textStyle);
 		
 		text1ControlDecoration = WidgetUtility.addDecorator(text1,Messages.EMPTYFIELDMESSAGE);
@@ -300,8 +316,10 @@ public class FTPAuthenticEditorDialog extends Dialog{
 		}
 		
 		Label privateKeyLbl = (Label) ftpWidgetUtility.createLabel(keyFileComposite, label2Text);
+		setPropertyHelpText(privateKeyLbl, "Used to provide the value for authentication");
 		privateKeyLbl.setCursor(new Cursor(privateKeyLbl.getDisplay(), SWT.CURSOR_HELP));
 		text2 = (Text) ftpWidgetUtility.createText(keyFileComposite, "", SWT.BORDER);
+		Utils.INSTANCE.addMouseMoveListener(text2, cursor);
 		Button keyFileBrwsBtn = new Button(keyFileComposite, SWT.NONE);
 		keyFileBrwsBtn.setText("...");
 		

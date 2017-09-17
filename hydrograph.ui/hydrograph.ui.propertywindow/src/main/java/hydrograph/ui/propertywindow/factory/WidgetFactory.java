@@ -25,6 +25,7 @@ import hydrograph.ui.propertywindow.fixedwidthschema.ELTFixedWidget;
 import hydrograph.ui.propertywindow.fixedwidthschema.TransformSchemaWidget;
 import hydrograph.ui.propertywindow.ftp.AuthenticationWidget;
 import hydrograph.ui.propertywindow.ftp.OperationConfigWidget;
+import hydrograph.ui.propertywindow.ftp.ProtocolWidget;
 import hydrograph.ui.propertywindow.generaterecords.schema.GenerateRecordsGridWidget;
 import hydrograph.ui.propertywindow.messages.Messages;
 import hydrograph.ui.propertywindow.property.ComponentConfigrationProperty;
@@ -195,7 +196,8 @@ public class WidgetFactory {
 		FTP_OPERATION_CONFIG_WIDGET(OperationConfigWidget.class, WidgetHelper.INSTANCE
 				.getRunTimeWidgetConfig("Operation\nConfiguration", "Operation Config")),
 		FTP_ENCODING_WIDGET(DropDownWidget.class, WidgetHelper.INSTANCE.getEncodingWidgetConfig()),
-		FAIL_ON_ERROR_WIDGET(DropDownWidget.class, WidgetHelper.INSTANCE.getFailOnErrorWidgetConfig());
+		FAIL_ON_ERROR_WIDGET(DropDownWidget.class, WidgetHelper.INSTANCE.getFailOnErrorWidgetConfig()),
+		FTP_PROTOCOL_SELECTION_WIDGET(ProtocolWidget.class, WidgetHelper.INSTANCE.getProtocolSelectWidgetConfig());
 		
               
 		private Class<?> clazz = null;

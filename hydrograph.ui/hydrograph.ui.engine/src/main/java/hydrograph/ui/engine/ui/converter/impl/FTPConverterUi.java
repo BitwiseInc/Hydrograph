@@ -23,6 +23,7 @@ import hydrograph.engine.jaxb.commandtypes.FileOperationChoice;
 import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.datastructure.property.FTPAuthOperationDetails;
+import hydrograph.ui.datastructure.property.FTPProtocolDetails;
 import hydrograph.ui.engine.constants.PropertyNameConstants;
 import hydrograph.ui.engine.ui.converter.CommandUiConverter;
 import hydrograph.ui.graph.model.Container;
@@ -50,17 +51,26 @@ public class FTPConverterUi extends CommandUiConverter{
 	public void prepareUIXML() {
 		LOGGER.debug("Fetching COMMAND-Properties for -{}", componentName);
 		super.prepareUIXML();
+		String port;
 		FTP ftp = (FTP) typeBaseComponent;
 		container.getComponentNextNameSuffixes().put(name_suffix, 0);
 		container.getComponentNames().add(ftp.getId());
 		
 		propertyMap.put(Constants.BATCH, ftp.getBatch());
-		propertyMap.put("protocol", "FTP");
-		setValueInPropertyMap("host_Name",
-				ftp.getHostName() == null ? "" : ftp.getHostName());
+		
+		setValueInPropertyMap("host_Name", ftp.getHostName() == null ? "" : ftp.getHostName());
+		setValueInPropertyMap("port_No", ftp.getPortNo() == null ? "" : ftp.getPortNo());
 
-		setValueInPropertyMap("port_No",
-				ftp.getPortNo() == null ? "" : ftp.getPortNo());
+		if(ftp.getPortNo() != null){
+			port = ftp.getPortNo()+"";
+		}else{
+			port = "";
+		}
+		
+		FTPProtocolDetails ftpProtocolDetails = new FTPProtocolDetails("FTP", ftp.getHostName(), port);
+		propertyMap.put("protocolSelection", ftpProtocolDetails);
+		
+		
 		
 		Map<String, FTPAuthOperationDetails> authDetails = new HashMap<String, FTPAuthOperationDetails>();
 		setValueInPropertyMap("user_Name", ftp.getUserName() == null ? "" : ftp.getUserName());

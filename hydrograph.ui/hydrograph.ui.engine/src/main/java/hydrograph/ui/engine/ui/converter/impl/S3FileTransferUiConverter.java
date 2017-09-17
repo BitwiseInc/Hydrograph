@@ -11,6 +11,7 @@ import hydrograph.engine.jaxb.commandtypes.S3FileTransfer;
 import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.datastructure.property.FTPAuthOperationDetails;
+import hydrograph.ui.datastructure.property.FTPProtocolDetails;
 import hydrograph.ui.engine.ui.converter.CommandUiConverter;
 import hydrograph.ui.graph.model.Container;
 import hydrograph.ui.graph.model.components.FTPComponent;
@@ -39,7 +40,8 @@ public class S3FileTransferUiConverter extends CommandUiConverter{
 		
 		propertyMap.put(Constants.BATCH, S3FileTransfer.getBatch());
 		
-		propertyMap.put("protocol", "AWS S3 HTTPS");
+		FTPProtocolDetails ftpProtocolDetails = new FTPProtocolDetails("AWS S3 HTTPS", null, null);
+		propertyMap.put("protocolSelection", ftpProtocolDetails);
 		
 		setValueInPropertyMap("accessKeyID",S3FileTransfer.getAccessKeyID() == null ? "" : S3FileTransfer.getAccessKeyID());
 		setValueInPropertyMap("secretAccessKey",S3FileTransfer.getSecretAccessKey() == null ? "" : S3FileTransfer.getSecretAccessKey());

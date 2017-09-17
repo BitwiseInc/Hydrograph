@@ -35,6 +35,7 @@ import hydrograph.ui.common.property.util.Utils;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.datastructure.property.FTPAuthOperationDetails;
 import hydrograph.ui.logging.factory.LogFactory;
+import hydrograph.ui.propertywindow.handlers.ShowHidePropertyHelpHandler;
 import hydrograph.ui.propertywindow.messages.Messages;
 import hydrograph.ui.propertywindow.propertydialog.PropertyDialogButtonBar;
 import hydrograph.ui.propertywindow.widgets.utility.WidgetUtility;
@@ -107,6 +108,7 @@ public class FTPOperationConfigDialog extends Dialog{
 		
 		FTPWidgetUtility ftpWidgetUtility = new FTPWidgetUtility();
 		Label operationLabel = (Label) ftpWidgetUtility.createLabel(composite, "Operation");
+		setPropertyHelpText(operationLabel, "Used to select the Operation");
 		authenticationModeCombo = (Combo) ftpWidgetUtility.CreateCombo(composite, optionList);
 		
 		
@@ -130,6 +132,15 @@ public class FTPOperationConfigDialog extends Dialog{
 		populateWidget();
 		
 		return container;
+	}
+	
+	private void setPropertyHelpText(Label label, String message) {
+		if(ShowHidePropertyHelpHandler.getInstance() != null 
+				&& ShowHidePropertyHelpHandler.getInstance().isShowHidePropertyHelpChecked()){
+			label.setToolTipText(message);
+			label.setCursor(new Cursor(label.getDisplay(), SWT.CURSOR_HELP));
+		}
+		
 	}
 	
 	private void addModifyListener(Text text){
@@ -191,6 +202,7 @@ public class FTPOperationConfigDialog extends Dialog{
 				}else{
 					overWriteLabel.setEnabled(true);
 					overwriteCombo.setEnabled(true);
+					setPropertyHelpText(overWriteLabel, "Used to select OverWrite value");
 					if(StringUtils.equalsIgnoreCase(protocol, "AWS S3 HTTPS")){
 						updateWidgetsValue(text1, text2, text3, text4);
 					}else{
@@ -216,17 +228,20 @@ public class FTPOperationConfigDialog extends Dialog{
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
 		FTPWidgetUtility ftpWidgetUtility = new FTPWidgetUtility();
-		ftpWidgetUtility.createLabel(composite, "Local Path");
+		Label pathLbl = (Label) ftpWidgetUtility.createLabel(composite, "Local Path");
+		setPropertyHelpText(pathLbl, "Used to provide local path");
 		text1 = (Text) ftpWidgetUtility.createText(composite, "", SWT.BORDER);
 		Button localPathBrwsBtn = new Button(composite, SWT.NONE);
 		localPathBrwsBtn.setText("...");
 		selectionListener(localPathBrwsBtn, text1);
 		
-		ftpWidgetUtility.createLabel(composite, "Remote Path");
+		Label remoteLbl = (Label) ftpWidgetUtility.createLabel(composite, "Remote Path");
+		setPropertyHelpText(remoteLbl, "Used to provide remote path");
 		text2 = (Text) ftpWidgetUtility.createText(composite, "", SWT.BORDER);
 		new Button(composite, SWT.NONE).setVisible(false);
 		
 		overWriteLabel = (Label) ftpWidgetUtility.createLabel(composite, "Write Mode");
+		setPropertyHelpText(overWriteLabel, "Used to select OverWrite value");
 		overwriteCombo = (Combo) ftpWidgetUtility.CreateCombo(composite, new String[]{"--Select--", "Overwrite If Exists", "Fail If Exists"});
 		
 		if(text1ControlDecoration == null){
@@ -249,25 +264,30 @@ public class FTPOperationConfigDialog extends Dialog{
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
 		FTPWidgetUtility ftpWidgetUtility = new FTPWidgetUtility();
-		ftpWidgetUtility.createLabel(composite, "Local Path");
+		Label localLbl = (Label) ftpWidgetUtility.createLabel(composite, "Local Path");
+		setPropertyHelpText(localLbl, "Used to provide local path");
 		text1 = (Text) ftpWidgetUtility.createText(composite, "", SWT.BORDER);
 		Button localPathBrwsBtn = new Button(composite, SWT.NONE);
 		localPathBrwsBtn.setText("...");
 		selectionListener(localPathBrwsBtn, text1);
 		
-		ftpWidgetUtility.createLabel(composite, "S3 Bucket");
+		Label bucket = (Label) ftpWidgetUtility.createLabel(composite, "S3 Bucket");
+		setPropertyHelpText(bucket, "Used to provide Bucket Value");
 		text2 = (Text) ftpWidgetUtility.createText(composite, "", SWT.BORDER);
 		new Button(composite, SWT.NONE).setVisible(false);
 		
-		ftpWidgetUtility.createLabel(composite, "S3 File Path");
+		Label filepathLbl = (Label) ftpWidgetUtility.createLabel(composite, "S3 File Path");
+		setPropertyHelpText(filepathLbl, "Used to provide File Path");
 		text3 = (Text) ftpWidgetUtility.createText(composite, "", SWT.BORDER);
 		new Button(composite, SWT.NONE).setVisible(false);
 		
-		ftpWidgetUtility.createLabel(composite, "AWS Region");
+		Label regionLbl = (Label) ftpWidgetUtility.createLabel(composite, "AWS Region");
+		setPropertyHelpText(regionLbl, "Used to provide AWS Region");
 		text4 = (Text) ftpWidgetUtility.createText(composite, "", SWT.BORDER);
 		new Button(composite, SWT.NONE).setVisible(false);
 		
 		overWriteLabel = (Label) ftpWidgetUtility.createLabel(composite, "Write Mode");
+		setPropertyHelpText(overWriteLabel, "Used to select OverWrite value");
 		overwriteCombo = (Combo) ftpWidgetUtility.CreateCombo(composite, new String[]{"--Select--", "Overwrite If Exists", "Fail If Exists"});
 		overWriteLabel.setEnabled(true);
 		overwriteCombo.setEnabled(true);

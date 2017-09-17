@@ -30,23 +30,12 @@
 			group="GENERAL" subGroup="DETAILS" showAsTooltip="TRUE" tooltipDataType="TEXT"
 			usage="REQUIRED" propertyHelpText="Displays Name provided by the user"/>
 			
-		<tns:property dataType="string" name="protocol" value="FTP" renderer="FTP_PROTOCOL_WIDGET"
+		<tns:property dataType="string" name="protocolSelection" value="" renderer="FTP_PROTOCOL_SELECTION_WIDGET"
 			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="FALSE" tooltipDataType="NONE"
-			usage="OPTIONAL" propertyHelpText="User needs to select the option to tranfer files">
-		</tns:property>	
-			
-		<tns:property dataType="string" name="host_Name" value="" renderer="HOST_NAME_WIDGET"
-			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"
-			usage="REQUIRED" propertyHelpText="Displays the Database Host Name provided by the user">
-			<tns:validator>NON_BLANK_STRING_VALIDATOR</tns:validator>
+			usage="REQUIRED" propertyHelpText="Displays the protocol selection value and widgets">
+			<tns:validator>FTP_PROTOCOL_SELECTION_VALIDATOR</tns:validator>
 		</tns:property>
 			
-		<tns:property dataType="string" name="port_No" value="21" renderer="PORT_WIDGET"
-			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"
-			usage="REQUIRED" propertyHelpText="Displays the Database Port provided by the user">
-			<tns:validator>PORT_VALIDATOR</tns:validator>
-		</tns:property>	
-		
 		<tns:property dataType="string" name="authentication" value="" renderer="FTP_AUTHENTICATION_WIDGET"
 			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="FALSE" tooltipDataType="NONE"
 			usage="REQUIRED" propertyHelpText="Used to provide authentication parameters to connect server for file transfer">
@@ -56,13 +45,13 @@
 		<tns:property dataType="string" name="timeOut" value="" renderer="FTP_CONNECTION_TIME_OUT_WIDGET"
 			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"
 			usage="REQUIRED" propertyHelpText="Displays the connection time out provided by the user">
-			<tns:validator>INTEGER_VALIDATOR</tns:validator>
+			<tns:validator>INTEGER_OR_PARAMETER_VALIDATOR</tns:validator>
 		</tns:property>
 		
 		<tns:property dataType="string" name="retryAttempt" value="" renderer="FTP_NO_OF_RETRIES_WIDGET"
 			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"
 			usage="REQUIRED" propertyHelpText="Displays the No of Retries provided by the user">
-			<tns:validator>INTEGER_VALIDATOR</tns:validator>
+			<tns:validator>INTEGER_OR_PARAMETER_VALIDATOR</tns:validator>
 		</tns:property>
 		
 		<tns:property dataType="string" name="operation" value="" renderer="FTP_OPERATION_CONFIG_WIDGET"
@@ -80,6 +69,7 @@
 		<tns:property dataType="string" name="failOnError" value="True" renderer="FAIL_ON_ERROR_WIDGET"
 			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="FALSE" tooltipDataType="NONE"
 			usage="OPTIONAL" propertyHelpText="When True, Job need to pass">
+			
 		</tns:property>	
 		
 		<tns:property dataType="string" name="batch" value="0" renderer="BATCH_WIDGET" type="USER"

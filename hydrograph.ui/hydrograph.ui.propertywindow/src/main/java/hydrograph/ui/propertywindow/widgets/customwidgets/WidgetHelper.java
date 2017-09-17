@@ -645,11 +645,18 @@ public class WidgetHelper {
 	 */
 	public WidgetConfig getEncodingWidgetConfig(){
 		DropDownConfig dropDownConfig = new DropDownConfig();
-		dropDownConfig.setName("Encoding");
+		dropDownConfig.setName("Character Set");
 		dropDownConfig.getItems().add(Constants.UTF_8);
 		dropDownConfig.getItems().add(Constants.ISO_8859_1);
 		dropDownConfig.getItems().add(Constants.PARAMETER);
 		addComboBoxListeners(dropDownConfig);
 		return dropDownConfig;
+	}
+	
+	public WidgetConfig getProtocolSelectWidgetConfig() {
+		TextBoxWithLableConfig textBoxWithLableConfig = new TextBoxWithLableConfig();
+		textBoxWithLableConfig.setGrabExcessSpace(true);
+		//addTextBoxListeners(textBoxWithLableConfig);
+		return textBoxWithLableConfig;
 	}
 }

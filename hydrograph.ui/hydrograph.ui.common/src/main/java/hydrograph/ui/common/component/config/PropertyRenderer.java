@@ -112,6 +112,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="FTP_OPERATION_CONFIG_WIDGET"/>
  *     &lt;enumeration value="FTP_ENCODING_WIDGET"/>
  *     &lt;enumeration value="FAIL_ON_ERROR_WIDGET"/>
+ *     &lt;enumeration value="FTP_PROTOCOL_SELECTION_WIDGET"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
@@ -211,7 +212,8 @@ public enum PropertyRenderer {
     FTP_NO_OF_RETRIES_WIDGET,
     FTP_OPERATION_CONFIG_WIDGET,
     FTP_ENCODING_WIDGET,
-    FAIL_ON_ERROR_WIDGET;
+    FAIL_ON_ERROR_WIDGET,
+    FTP_PROTOCOL_SELECTION_WIDGET;
 
     public String value() {
         return name();

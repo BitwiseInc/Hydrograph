@@ -11,6 +11,7 @@ import hydrograph.engine.jaxb.commandtypes.SFTP;
 import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.datastructure.property.FTPAuthOperationDetails;
+import hydrograph.ui.datastructure.property.FTPProtocolDetails;
 import hydrograph.ui.engine.constants.PropertyNameConstants;
 import hydrograph.ui.engine.ui.converter.CommandUiConverter;
 import hydrograph.ui.graph.model.Container;
@@ -34,19 +35,25 @@ public class SFTPUiConverter extends CommandUiConverter{
 		super.prepareUIXML();
 		LOGGER.debug("Fetching COMMAND-Properties for -{}", componentName);
 		super.prepareUIXML();
+		String port;
 		SFTP sftp = (SFTP) typeBaseComponent;
 		container.getComponentNextNameSuffixes().put(name_suffix, 0);
 		container.getComponentNames().add(sftp.getId());
 		
 		propertyMap.put(Constants.BATCH, sftp.getBatch());
 		
-		propertyMap.put("protocol", "SFTP");
+		setValueInPropertyMap("host_Name", sftp.getHostName() == null ? "" : sftp.getHostName());
+		setValueInPropertyMap("port_No", sftp.getPortNo() == null ? "" : sftp.getPortNo());
 		
-		setValueInPropertyMap("host_Name",
-				sftp.getHostName() == null ? "" : sftp.getHostName());
-
-		setValueInPropertyMap("port_No",
-				sftp.getPortNo() == null ? "" : sftp.getPortNo());
+		if(sftp.getPortNo() != null){
+			port = sftp.getPortNo()+"";
+		}else{
+			port = "";
+		}
+		
+		FTPProtocolDetails ftpProtocolDetails = new FTPProtocolDetails("SFTP", sftp.getHostName(), port);
+		propertyMap.put("protocolSelection", ftpProtocolDetails);
+		
 		
 		Map<String, FTPAuthOperationDetails> authDetails = new HashMap<String, FTPAuthOperationDetails>();
 		setValueInPropertyMap("user_Name", sftp.getUserName() == null ? "" : sftp.getUserName());

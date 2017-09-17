@@ -17,6 +17,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.widgets.Control;
@@ -26,6 +27,7 @@ import org.slf4j.Logger;
 import hydrograph.ui.common.property.util.Utils;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.datastructure.property.FTPAuthOperationDetails;
+import hydrograph.ui.datastructure.property.FTPProtocolDetails;
 import hydrograph.ui.logging.factory.LogFactory;
 import hydrograph.ui.propertywindow.factory.ListenerFactory;
 import hydrograph.ui.propertywindow.property.ComponentConfigrationProperty;
@@ -54,7 +56,7 @@ public class AuthenticationWidget extends AbstractWidget{
 	private Map<String, FTPAuthOperationDetails> initialMap;
 	private ArrayList<AbstractWidget> widgets;
 	private LinkedHashMap<String, Object> tempPropertyMap;
-	private static String tmpProtocolValue;
+	private String tmpProtocolValue;
 
 	public AuthenticationWidget(ComponentConfigrationProperty componentConfigProp,
 			ComponentMiscellaneousProperties componentMiscProps, PropertyDialogButtonBar propDialogButtonBar) {
@@ -107,20 +109,22 @@ public class AuthenticationWidget extends AbstractWidget{
 		
 		String protocolText = null;
 		for(AbstractWidget widget : widgets){
-			if(widget.getPropertyName().equals("protocol")){
-				String protocolValue = (String) widget.getProperties().get("protocol");
-				if(protocolValue.equals("FTP")){
-					optionList = new String[]{"Basic Auth"};
-					protocolText = protocolValue;
-				}else if(protocolValue.equals("SFTP")){
-					optionList = new String[]{"Basic Auth", "User Id & Key"};
-					protocolText = protocolValue;
-				}else if(protocolValue.equals("AWS S3 HTTPS")){
-					optionList = new String[]{"AWS S3 Access Key", "AWS S3 Property File"};
-					protocolText = protocolValue;
-				}
-				if(tmpProtocolValue == null){
-					tmpProtocolValue = (String) widget.getProperties().get("protocol");
+			if(widget.getPropertyName().equals("protocolSelection")){
+				FTPProtocolDetails protocolDetails = (FTPProtocolDetails) widget.getProperties().get("protocolSelection");
+				if(protocolDetails!= null){
+					if(StringUtils.equalsIgnoreCase(protocolDetails.getProtocol(), "FTP")){
+						optionList = new String[]{"Basic Auth"};
+						protocolText = protocolDetails.getProtocol();
+					}else if(StringUtils.equalsIgnoreCase(protocolDetails.getProtocol(), "SFTP")){
+						optionList = new String[]{"Basic Auth", "User Id and Key"};
+						protocolText = protocolDetails.getProtocol();
+					}else if(StringUtils.equalsIgnoreCase(protocolDetails.getProtocol(), "AWS S3 HTTPS")){
+						optionList = new String[]{"AWS S3 Access Key", "AWS S3 Property File"};
+						protocolText = protocolDetails.getProtocol();
+					}
+					if(tmpProtocolValue == null){
+						tmpProtocolValue = protocolDetails.getProtocol();
+					}
 				}
 			}
 		}
@@ -145,16 +149,20 @@ public class AuthenticationWidget extends AbstractWidget{
 	}
 	
 	private boolean isAnyUpdate(Map<String, FTPAuthOperationDetails> oldMap, Map<String, FTPAuthOperationDetails> newMap) {
-		for(Entry< String , FTPAuthOperationDetails> entry : oldMap.entrySet()){
-			FTPAuthOperationDetails str = newMap.get(entry.getKey());
-			FTPAuthOperationDetails str2 = entry.getValue();
-			if(str != null && str2!= null){
-				if(!str.equals(str2)){
-					return true;
+		if(!oldMap.isEmpty()){
+			for(Entry< String , FTPAuthOperationDetails> entry : oldMap.entrySet()){
+				FTPAuthOperationDetails str = newMap.get(entry.getKey());
+				FTPAuthOperationDetails str2 = entry.getValue();
+				if(str != null && str2!= null){
+					if(!str.equals(str2)){
+						return true;
+					}
+				}else{
+					propertyDialogButtonBar.enableApplyButton(true);
 				}
-			}else{
-				propertyDialogButtonBar.enableApplyButton(true);
 			}
+		}else{
+			return true;
 		}
 		return false;
 	}

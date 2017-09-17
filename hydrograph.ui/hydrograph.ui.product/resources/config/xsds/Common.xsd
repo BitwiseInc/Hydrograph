@@ -137,6 +137,7 @@
 			<enumeration value="FTP_OPERATION_CONFIG_WIDGET" />
 			<enumeration value="FTP_ENCODING_WIDGET" />
 			<enumeration value="FAIL_ON_ERROR_WIDGET" />
+			<enumeration value="FTP_PROTOCOL_SELECTION_WIDGET" />
 		</restriction>
 	</simpleType>
 
@@ -395,6 +396,13 @@
 				<annotation>
 					<appinfo>
 						<jaxb:typesafeEnumMember name="FTPOperationParamValidator" />
+					</appinfo>
+				</annotation>
+			</enumeration>
+			<enumeration value="FTP_PROTOCOL_SELECTION_VALIDATOR">
+				<annotation>
+					<appinfo>
+						<jaxb:typesafeEnumMember name="FTPProtocolSelectionValidator" />
 					</appinfo>
 				</annotation>
 			</enumeration>

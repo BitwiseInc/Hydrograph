@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
 import org.slf4j.Logger;
 
 import hydrograph.engine.jaxb.commandtypes.FileOperationChoice;
@@ -14,6 +15,7 @@ import hydrograph.engine.jaxb.commontypes.BooleanValueType;
 import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.datastructure.property.FTPAuthOperationDetails;
+import hydrograph.ui.datastructure.property.FTPProtocolDetails;
 import hydrograph.ui.engine.constants.PropertyNameConstants;
 import hydrograph.ui.engine.helper.ConverterHelper;
 import hydrograph.ui.engine.util.FTPUtil;
@@ -39,16 +41,19 @@ public class SFTPConvertorHelper{
 		componentId=component.getComponentId();
 		
 		SFTP sftp = (SFTP) typeBaseComponent;
-		if(StringUtils.isNotBlank((String) properties.get("host_Name"))){
-			sftp.setHostName(String.valueOf(properties.get("host_Name")));
+		
+		FTPProtocolDetails protocolDetails = (FTPProtocolDetails) properties.get("protocolSelection");
+		if(protocolDetails != null){
+			if(protocolDetails.getHost() != null){
+				sftp.setHostName(protocolDetails.getHost());
+			}
+			if(protocolDetails.getPort() != null){
+				int port = NumberUtils.toInt(protocolDetails.getPort(), 21);
+				sftp.setPortNo(port);
+			}
 		}
 		
 		addAuthenticationDetails(sftp);
-		
-		BigInteger portValue =FTPUtil.INSTANCE.getPortValue("port_No", componentId, properties);
-		if(portValue != null){
-			sftp.setPortNo(portValue.intValue());
-		}
 		
 		BigInteger connectionTimeOut = FTPUtil.INSTANCE.getPortValue("timeOut", componentId, properties);
 		if(connectionTimeOut != null){

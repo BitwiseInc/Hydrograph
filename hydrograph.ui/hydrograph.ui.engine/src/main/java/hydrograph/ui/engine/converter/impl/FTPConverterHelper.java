@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
 import org.slf4j.Logger;
 
 import hydrograph.engine.jaxb.commandtypes.FTP;
@@ -14,6 +15,7 @@ import hydrograph.engine.jaxb.commontypes.BooleanValueType;
 import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.datastructure.property.FTPAuthOperationDetails;
+import hydrograph.ui.datastructure.property.FTPProtocolDetails;
 import hydrograph.ui.engine.helper.ConverterHelper;
 import hydrograph.ui.engine.util.FTPUtil;
 import hydrograph.ui.graph.model.Component;
@@ -33,19 +35,21 @@ public class FTPConverterHelper{
 
 	public void prepareForXML(TypeBaseComponent typeBaseComponent) {
 		logger.debug("Generating XML for :{}",	properties.get(Constants.PARAM_NAME));
-		//String componentName = (String) properties.get(Constants.PARAM_NAME);
 		typeBaseComponent.setId(component.getComponentId());
 		FTP ftp = (FTP) typeBaseComponent;
 		String componentId = component.getComponentId();
 		componentId=component.getComponentId();
 		
-		if(StringUtils.isNotBlank((String) properties.get("host_Name"))){
-			ftp.setHostName(String.valueOf(properties.get("host_Name")));
-		}
 		
-		BigInteger portValue = FTPUtil.INSTANCE.getPortValue("port_No", componentId, properties);
-		if(portValue != null){
-			ftp.setPortNo(portValue.intValue());
+		FTPProtocolDetails protocolDetails = (FTPProtocolDetails) properties.get("protocolSelection");
+		if(protocolDetails != null){
+			if(protocolDetails.getHost() != null){
+				ftp.setHostName(protocolDetails.getHost());
+			}
+			if(protocolDetails.getPort() != null){
+				int port = NumberUtils.toInt(protocolDetails.getPort(), 21);
+				ftp.setPortNo(port);
+			}
 		}
 		
 		//authenticate

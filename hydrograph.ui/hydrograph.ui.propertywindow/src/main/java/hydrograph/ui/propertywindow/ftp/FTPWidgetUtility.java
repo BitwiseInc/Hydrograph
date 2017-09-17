@@ -106,7 +106,7 @@ public class FTPWidgetUtility {
 		ListenerHelper helper = new ListenerHelper();
 		helper.put(HelperType.CONTROL_DECORATION, controlDecoration);
 		text.addListener(SWT.Modify, alphaNumbericTextListener.getListener(propertyDialogButtonBar, helper, text));
-		Utils.INSTANCE.addMouseMoveListener(text, cursor);	
+		//Utils.INSTANCE.addMouseMoveListener(text, cursor);	
 	}
 	
 	/**
