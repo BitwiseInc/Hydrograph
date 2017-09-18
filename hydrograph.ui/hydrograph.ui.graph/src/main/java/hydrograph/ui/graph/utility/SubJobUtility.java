@@ -602,6 +602,7 @@ public class SubJobUtility {
 			
 			for(Object object:container.getChildren()){
 				Component component=(Component) object;
+				if(object instanceof Component){
 				if( !(component.getComponentName().equals(Messages.INPUT_SUBJOB_COMPONENT)) && 
 						!(component.getComponentName().equals(Messages.OUTPUT_SUBJOB_COMPONENT))){
 					if(Constants.SUBJOB_COMPONENT.equals(component.getComponentName())){
@@ -615,6 +616,7 @@ public class SubJobUtility {
 							subJobComponent.getTooltipInformation().put(Constants.SUBJOB_TOOLTIP_INFO, information);
 						}
 					}
+				}
 				}
 			}
 		}
