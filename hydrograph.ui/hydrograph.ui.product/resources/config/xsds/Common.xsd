@@ -406,6 +406,13 @@
 					</appinfo>
 				</annotation>
 			</enumeration>
+			<enumeration value="FTP_BOOLEAN_VALIDATOR">
+				<annotation>
+					<appinfo>
+						<jaxb:typesafeEnumMember name="FTPBooleanValidation" />
+					</appinfo>
+				</annotation>
+			</enumeration>
 		</restriction>
 	</simpleType>
 </schema>

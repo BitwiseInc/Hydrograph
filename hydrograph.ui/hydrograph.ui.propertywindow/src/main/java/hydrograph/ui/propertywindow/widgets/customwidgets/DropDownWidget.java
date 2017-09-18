@@ -88,7 +88,12 @@ public class DropDownWidget extends AbstractWidget{
 		super(componentConfigProp, componentMiscProps, propDialogButtonBar);
 
 		this.propertyName = componentConfigProp.getPropertyName();
-		this.properties =  (String) componentConfigProp.getPropertyValue(); 
+		if(componentConfigProp.getPropertyValue() instanceof String){
+			this.properties =  (String) componentConfigProp.getPropertyValue(); 
+		}else if(componentConfigProp.getPropertyValue() instanceof Boolean){
+			boolean value = (boolean) componentConfigProp.getPropertyValue();
+			this.properties =  value+""; 
+		}
 		
 	}
 	

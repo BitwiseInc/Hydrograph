@@ -27,8 +27,6 @@ import hydrograph.ui.propertywindow.property.ComponentMiscellaneousProperties;
 import hydrograph.ui.propertywindow.property.Property;
 import hydrograph.ui.propertywindow.propertydialog.PropertyDialogButtonBar;
 import hydrograph.ui.propertywindow.widgets.customwidgets.AbstractWidget;
-import hydrograph.ui.propertywindow.widgets.customwidgets.config.TextBoxWithLableConfig;
-import hydrograph.ui.propertywindow.widgets.customwidgets.config.WidgetConfig;
 import hydrograph.ui.propertywindow.widgets.gridwidgets.basic.AbstractELTWidget;
 import hydrograph.ui.propertywindow.widgets.gridwidgets.basic.ELTDefaultCombo;
 import hydrograph.ui.propertywindow.widgets.gridwidgets.basic.ELTDefaultLable;
@@ -44,7 +42,6 @@ public class ProtocolWidget extends AbstractWidget{
 	private String propertyName;
 	private Cursor cursor;
 	private FTPProtocolDetails ftpProtocolDetails;
-	private TextBoxWithLableConfig textBoxConfig;
 	private ArrayList<AbstractWidget> widgets;
 	private LinkedHashMap<String, Object> tempPropertyMap;
 	private Combo combo;
@@ -121,7 +118,7 @@ public class ProtocolWidget extends AbstractWidget{
 			e.printStackTrace();
 		}
 		
-		//validateHost(portwidget);
+		//`(portwidget);
 		
 		selectionListener();
 		addModifyListener(hostText);
@@ -143,7 +140,14 @@ public class ProtocolWidget extends AbstractWidget{
 					portText.setEnabled(false);
 					hostText.setBackground(CustomColorRegistry.INSTANCE.getColorFromRegistry( 255, 255, 255));
 					portText.setBackground(CustomColorRegistry.INSTANCE.getColorFromRegistry( 255, 255, 255));
+				}else if(combo.getSelectionIndex() == 1){
+					hostText.setText("");
+					portText.setText("");
+					hostText.setEnabled(true);
+					portText.setEnabled(true);
 				}else{
+					hostText.setText("");
+					portText.setText("");
 					hostDecorator.show();
 					portDecorator.show();
 					hostText.setEnabled(true);
@@ -152,6 +156,7 @@ public class ProtocolWidget extends AbstractWidget{
 					portText.setBackground(CustomColorRegistry.INSTANCE.getColorFromRegistry( 255, 255, 204));
 				}
 				showHideErrorSymbol(widgets);
+				propertyDialogButtonBar.enableApplyButton(true);
 			}
 		});
 	}
@@ -217,7 +222,7 @@ public class ProtocolWidget extends AbstractWidget{
 			textBoxWidget.attachListener(Listners.EVENT_CHANGE.getListener(), propertyDialogButtonBar, null,
 					textBoxWidget.getSWTWidgetControl());
 		} catch (Exception exception) {
-			logger.error("Failed in attaching listeners to {}, {}", textBoxConfig.getName(), exception);
+			logger.error("Failed in attaching listeners to {}, {}", exception);
 		}
 	}
 	
@@ -230,7 +235,7 @@ public class ProtocolWidget extends AbstractWidget{
 	private AbstractELTWidget createWidgetTextbox(String labelName, ELTDefaultSubgroupComposite compositeWithStack, String text) {
 
 		AbstractELTWidget textboxWgt = new ELTDefaultTextBox()
-				.grabExcessHorizontalSpace(textBoxConfig.getGrabExcessSpace()).defaultText(text);
+				.grabExcessHorizontalSpace(true).defaultText(text);
 		compositeWithStack.attachWidget(textboxWgt);
 		Text textbox = ((Text) textboxWgt.getSWTWidgetControl());
 		
@@ -253,19 +258,13 @@ public class ProtocolWidget extends AbstractWidget{
 		};
 	}
 	
-	/**
-	 * Sets the data structure used for TextBoxes
-	 */
-	@Override
-	public void setWidgetConfig(WidgetConfig widgetConfig) {
-		textBoxConfig = (TextBoxWithLableConfig) widgetConfig;
-	}
 
 	@Override
 	public LinkedHashMap<String, Object> getProperties() {
 		tempPropertyMap = new LinkedHashMap<>();
 		FTPProtocolDetails ftpProtocolDetails = new FTPProtocolDetails(combo.getText(), hostText.getText(), portText.getText());
 		tempPropertyMap.put(this.propertyName, ftpProtocolDetails);
+		showHideErrorSymbol(widgets);
 		return tempPropertyMap;
 	}
 

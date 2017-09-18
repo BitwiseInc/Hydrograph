@@ -69,7 +69,7 @@
 		<tns:property dataType="string" name="failOnError" value="True" renderer="FAIL_ON_ERROR_WIDGET"
 			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="FALSE" tooltipDataType="NONE"
 			usage="OPTIONAL" propertyHelpText="When True, Job need to pass">
-			
+			<tns:validator>BOOLEAN_OR_PARAMETER_VALIDATOR</tns:validator>
 		</tns:property>	
 		
 		<tns:property dataType="string" name="batch" value="0" renderer="BATCH_WIDGET" type="USER"

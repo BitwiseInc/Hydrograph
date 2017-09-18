@@ -23,25 +23,30 @@ public class FTPProtocolConverter extends CommandConverter{
 	@Override
 	public void prepareForXML() {
 		//super.prepareForXML();
-		FTPProtocolDetails protocolDetails = (FTPProtocolDetails) properties.get("protocolSelection");
-		if(protocolDetails == null){
-			return;
-		}
-		if(StringUtils.equalsIgnoreCase(protocolDetails.getProtocol(), "FTP")){
+		FTPProtocolDetails protocolDetails;
+		if(properties.get("protocolSelection").equals("")){
 			this.baseComponent = new FTP();
 			baseComponent.setBatch((String) properties.get(Constants.PARAM_BATCH));
 			FTPConverterHelper converter = new FTPConverterHelper(component);
 			converter.prepareForXML(baseComponent);
-		}else if(StringUtils.equalsIgnoreCase(protocolDetails.getProtocol(), "SFTP")){
-			this.baseComponent = new SFTP();
-			baseComponent.setBatch((String) properties.get(Constants.PARAM_BATCH));
-			SFTPConvertorHelper convertor = new SFTPConvertorHelper(component);
-			convertor.prepareForXML(baseComponent);
-		}else if(StringUtils.equalsIgnoreCase(protocolDetails.getProtocol(), "AWS S3 HTTPS")){
-			this.baseComponent = new S3FileTransfer();
-			baseComponent.setBatch((String) properties.get(Constants.PARAM_BATCH));
-			S3FileTransferConverterHelper fileTransferConverter = new S3FileTransferConverterHelper(component);
-			fileTransferConverter.prepareForXML(baseComponent);
+		}else{
+			protocolDetails = (FTPProtocolDetails) properties.get("protocolSelection");
+			if(StringUtils.equalsIgnoreCase(protocolDetails.getProtocol(), "FTP")){
+				this.baseComponent = new FTP();
+				baseComponent.setBatch((String) properties.get(Constants.PARAM_BATCH));
+				FTPConverterHelper converter = new FTPConverterHelper(component);
+				converter.prepareForXML(baseComponent);
+			}else if(StringUtils.equalsIgnoreCase(protocolDetails.getProtocol(), "SFTP")){
+				this.baseComponent = new SFTP();
+				baseComponent.setBatch((String) properties.get(Constants.PARAM_BATCH));
+				SFTPConvertorHelper convertor = new SFTPConvertorHelper(component);
+				convertor.prepareForXML(baseComponent);
+			}else if(StringUtils.equalsIgnoreCase(protocolDetails.getProtocol(), "AWS S3 HTTPS")){
+				this.baseComponent = new S3FileTransfer();
+				baseComponent.setBatch((String) properties.get(Constants.PARAM_BATCH));
+				S3FileTransferConverterHelper fileTransferConverter = new S3FileTransferConverterHelper(component);
+				fileTransferConverter.prepareForXML(baseComponent);
+			}
 		}
 	}
 

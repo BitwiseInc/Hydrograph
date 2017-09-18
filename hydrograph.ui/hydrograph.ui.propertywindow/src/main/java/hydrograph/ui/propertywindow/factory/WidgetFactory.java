@@ -197,7 +197,7 @@ public class WidgetFactory {
 				.getRunTimeWidgetConfig("Operation\nConfiguration", "Operation Config")),
 		FTP_ENCODING_WIDGET(DropDownWidget.class, WidgetHelper.INSTANCE.getEncodingWidgetConfig()),
 		FAIL_ON_ERROR_WIDGET(DropDownWidget.class, WidgetHelper.INSTANCE.getFailOnErrorWidgetConfig()),
-		FTP_PROTOCOL_SELECTION_WIDGET(ProtocolWidget.class, WidgetHelper.INSTANCE.getProtocolSelectWidgetConfig());
+		FTP_PROTOCOL_SELECTION_WIDGET(ProtocolWidget.class);
 		
               
 		private Class<?> clazz = null;

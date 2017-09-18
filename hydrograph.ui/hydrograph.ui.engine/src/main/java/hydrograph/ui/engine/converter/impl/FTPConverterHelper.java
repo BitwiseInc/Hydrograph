@@ -41,14 +41,16 @@ public class FTPConverterHelper{
 		componentId=component.getComponentId();
 		
 		
-		FTPProtocolDetails protocolDetails = (FTPProtocolDetails) properties.get("protocolSelection");
-		if(protocolDetails != null){
-			if(protocolDetails.getHost() != null){
-				ftp.setHostName(protocolDetails.getHost());
-			}
-			if(protocolDetails.getPort() != null){
-				int port = NumberUtils.toInt(protocolDetails.getPort(), 21);
-				ftp.setPortNo(port);
+		if(!properties.get("protocolSelection").equals("")){
+			FTPProtocolDetails protocolDetails = (FTPProtocolDetails) properties.get("protocolSelection");
+			if(protocolDetails != null){
+				if(protocolDetails.getHost() != null){
+					ftp.setHostName(protocolDetails.getHost());
+				}
+				if(protocolDetails.getPort() != null){
+					int port = NumberUtils.toInt(protocolDetails.getPort(), 21);
+					ftp.setPortNo(port);
+				}
 			}
 		}
 		
@@ -82,14 +84,16 @@ public class FTPConverterHelper{
 	 * @param ftp
 	 */
 	private void addAuthenticationDetails(FTP ftp){
-		Map<String, FTPAuthOperationDetails> authDetails = (Map<String, FTPAuthOperationDetails>) properties.get("authentication");
-		FTPAuthOperationDetails authenticationDetails = null;
-		if(authDetails != null && !authDetails.isEmpty()){
-			for(Map.Entry<String, FTPAuthOperationDetails> map : authDetails.entrySet()){
-				authenticationDetails = map.getValue();
+		if(!properties.get("authentication").equals("")){
+			Map<String, FTPAuthOperationDetails> authDetails = (Map<String, FTPAuthOperationDetails>) properties.get("authentication");
+			FTPAuthOperationDetails authenticationDetails = null;
+			if(authDetails != null && !authDetails.isEmpty()){
+				for(Map.Entry<String, FTPAuthOperationDetails> map : authDetails.entrySet()){
+					authenticationDetails = map.getValue();
+				}
+				ftp.setUserName(authenticationDetails.getField1());
+				ftp.setPassword(authenticationDetails.getField2());
 			}
-			ftp.setUserName(authenticationDetails.getField1());
-			ftp.setPassword(authenticationDetails.getField2());
 		}
 	}
 	
@@ -98,24 +102,26 @@ public class FTPConverterHelper{
 	 * @param ftp
 	 */
 	private void addFtpOperationDetails(FTP ftp){
-		Map<String, FTPAuthOperationDetails> fileOperationDetaildetails =  (Map<String, FTPAuthOperationDetails>) properties.get("operation");
-		FileOperationChoice fileOperationChoice = new FileOperationChoice();
-		FTPAuthOperationDetails authOperationDetails = null;
-		if(fileOperationDetaildetails!=null && !fileOperationDetaildetails.isEmpty()){
-			for(Map.Entry<String, FTPAuthOperationDetails> map : fileOperationDetaildetails.entrySet()){
-				authOperationDetails = map.getValue();
-				if(StringUtils.equalsIgnoreCase(map.getKey(), "Get Files")){
-					fileOperationChoice.setDownload(map.getKey());
-					ftp.setInputFilePath(authOperationDetails.getField2());
-					ftp.setOutputFilePath(authOperationDetails.getField1());
-				}else{
-					fileOperationChoice.setUpload(map.getKey());
-					ftp.setInputFilePath(authOperationDetails.getField1());
-					ftp.setOutputFilePath(authOperationDetails.getField2());
+		if(!properties.get("operation").equals("")){
+			Map<String, FTPAuthOperationDetails> fileOperationDetaildetails =  (Map<String, FTPAuthOperationDetails>) properties.get("operation");
+			FileOperationChoice fileOperationChoice = new FileOperationChoice();
+			FTPAuthOperationDetails authOperationDetails = null;
+			if(fileOperationDetaildetails!=null && !fileOperationDetaildetails.isEmpty()){
+				for(Map.Entry<String, FTPAuthOperationDetails> map : fileOperationDetaildetails.entrySet()){
+					authOperationDetails = map.getValue();
+					if(StringUtils.equalsIgnoreCase(map.getKey(), "Get Files")){
+						fileOperationChoice.setDownload(map.getKey());
+						ftp.setInputFilePath(authOperationDetails.getField2());
+						ftp.setOutputFilePath(authOperationDetails.getField1());
+					}else{
+						fileOperationChoice.setUpload(map.getKey());
+						ftp.setInputFilePath(authOperationDetails.getField1());
+						ftp.setOutputFilePath(authOperationDetails.getField2());
+					}
 				}
+				ftp.setFileOperation(fileOperationChoice);
+				ftp.setOverwritemode(authOperationDetails.getField5());
 			}
-			ftp.setFileOperation(fileOperationChoice);
-			ftp.setOverwritemode(authOperationDetails.getField5());
 		}
 	}
 	

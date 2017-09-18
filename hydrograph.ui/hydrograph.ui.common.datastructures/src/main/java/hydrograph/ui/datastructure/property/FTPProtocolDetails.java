@@ -18,7 +18,7 @@ package hydrograph.ui.datastructure.property;
  *
  */
 public class FTPProtocolDetails {
-	private String protocol;
+	private String protocol = "FTP";
 	private String host;
 	private String port;
 

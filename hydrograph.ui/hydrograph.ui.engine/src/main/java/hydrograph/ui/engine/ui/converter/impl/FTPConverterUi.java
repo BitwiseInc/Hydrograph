@@ -96,10 +96,12 @@ public class FTPConverterUi extends CommandUiConverter{
 		FTPAuthOperationDetails authOperationDetails  = new FTPAuthOperationDetails(ftp.getInputFilePath(), 
 				ftp.getOutputFilePath(), "", "",ftp.getOverwritemode());
 		FileOperationChoice operationChoice = ftp.getFileOperation();
-		if(operationChoice.getDownload() != null){
-			operationDetails.put(operationChoice.getDownload().toString(), authOperationDetails);
-		}else{
-			operationDetails.put(operationChoice.getUpload().toString(), authOperationDetails);
+		if(operationChoice != null){
+			if(operationChoice.getDownload() != null){
+				operationDetails.put(operationChoice.getDownload().toString(), authOperationDetails);
+			}else{
+				operationDetails.put(operationChoice.getUpload().toString(), authOperationDetails);
+			}
 		}
 		
 		propertyMap.put("operation", operationDetails);

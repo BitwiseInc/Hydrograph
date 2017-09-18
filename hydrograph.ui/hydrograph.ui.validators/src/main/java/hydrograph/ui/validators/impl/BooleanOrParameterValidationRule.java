@@ -38,7 +38,13 @@ public class BooleanOrParameterValidationRule implements IValidator {
 
 	@Override
 	public boolean validate(Object object, String propertyName,Map<String,List<FixedWidthGridRow>> inputSchemaMap,boolean isJobImported){
-		String value = (String) object;
+		String value = null;
+		if(object instanceof String){
+			value = (String) object;
+		}else if(object instanceof Boolean){
+			boolean bol = (boolean)object;
+			value = bol+"";
+		}
 		if(StringUtils.isNotBlank(value)){
 			Matcher matcher=Pattern.compile(Constants.REGEX).matcher(value);
 			if((matcher.matches()||Boolean.TRUE.toString().equalsIgnoreCase(value) || Boolean.FALSE.toString().equalsIgnoreCase(value))){
