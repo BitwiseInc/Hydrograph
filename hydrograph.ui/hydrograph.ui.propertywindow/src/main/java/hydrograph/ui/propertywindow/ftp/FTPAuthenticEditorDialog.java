@@ -70,8 +70,8 @@ public class FTPAuthenticEditorDialog extends Dialog{
 	private Map<String, FTPAuthOperationDetails> authOperationSelectionMap;
 	private Text text1;
 	private Text text2;
-	private ControlDecoration text1ControlDecoration;
-	private ControlDecoration text2ControlDecoration;
+	//private ControlDecoration text1ControlDecoration;
+	//private ControlDecoration text2ControlDecoration;
 	
 	
 
@@ -221,7 +221,8 @@ public class FTPAuthenticEditorDialog extends Dialog{
 						refereshComposite(stackComposite);
 					}
 				}
-				stackComposite.layout();
+				
+				refreshUI();
 			}
 		});
 	}
@@ -282,8 +283,8 @@ public class FTPAuthenticEditorDialog extends Dialog{
 		text2 = (Text) ftpWidgetUtility.createText(basicAuthComposite, "", textStyle);
 		Utils.INSTANCE.addMouseMoveListener(text2, cursor);	
 		
-		text1ControlDecoration = WidgetUtility.addDecorator(text1,Messages.EMPTYFIELDMESSAGE);
-		text2ControlDecoration = WidgetUtility.addDecorator(text2,Messages.EMPTYFIELDMESSAGE);
+		ControlDecoration text1ControlDecoration = WidgetUtility.addDecorator(text1,Messages.EMPTYFIELDMESSAGE);
+		ControlDecoration text2ControlDecoration = WidgetUtility.addDecorator(text2,Messages.EMPTYFIELDMESSAGE);
 		
 		FTPWidgetUtility widgetUtility = new FTPWidgetUtility();
 		widgetUtility.validateWidgetText(text1, propertyDialogButtonBar, cursor, text1ControlDecoration);
@@ -328,11 +329,11 @@ public class FTPAuthenticEditorDialog extends Dialog{
 		
 		selectionListener(keyFileBrwsBtn, text2);
 		
-		text2ControlDecoration = WidgetUtility.addDecorator(text2,Messages.EMPTYFIELDMESSAGE);
+		ControlDecoration text2ControlDecoration = WidgetUtility.addDecorator(text2,Messages.EMPTYFIELDMESSAGE);
 		
 		FTPWidgetUtility widgetUtility = new FTPWidgetUtility();
 		if(text1 != null && !text1.isDisposed()){
-			text1ControlDecoration = WidgetUtility.addDecorator(text1,Messages.EMPTYFIELDMESSAGE);
+			ControlDecoration text1ControlDecoration = WidgetUtility.addDecorator(text1,Messages.EMPTYFIELDMESSAGE);
 			widgetUtility.validateWidgetText(text1, propertyDialogButtonBar, cursor, text1ControlDecoration);
 		}
 		widgetUtility.validateEmptyWidgetText(text2, propertyDialogButtonBar, cursor, text2ControlDecoration);
@@ -410,7 +411,10 @@ public class FTPAuthenticEditorDialog extends Dialog{
 	}
 	
 	
-	
+	private void refreshUI(){
+		this.getShell().setSize(this.getShell().getSize().x-1, this.getShell().getSize().y-1);
+		this.getShell().setSize(this.getShell().getSize().x+1, this.getShell().getSize().y+1);
+	}
 	
 
 }
