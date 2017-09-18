@@ -32,7 +32,6 @@ import org.eclipse.swt.widgets.Widget;
 import org.slf4j.Logger;
 
 import hydrograph.ui.common.property.util.Utils;
-import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.datastructure.property.FTPAuthOperationDetails;
 import hydrograph.ui.logging.factory.LogFactory;
 import hydrograph.ui.propertywindow.handlers.ShowHidePropertyHelpHandler;
@@ -55,8 +54,6 @@ public class FTPOperationConfigDialog extends Dialog{
 	private Map<String, FTPAuthOperationDetails> authOperationSelectionMap;
 	private ControlDecoration text1ControlDecoration;
 	private ControlDecoration text2ControlDecoration;
-	private Composite putFileComposite1;
-	private Composite putFileComposite2;
 	private Label overWriteLabel;
 	private String protocol;
 	private int COMPOSITE_CONST_HEIGHT=0;
@@ -173,10 +170,10 @@ public class FTPOperationConfigDialog extends Dialog{
 				overwriteCombo.setEnabled(false);
 			}
 			if(StringUtils.equalsIgnoreCase(authOperationDetails.getField5(), "Overwrite If Exists")){
-				overwriteCombo.select(1);
+				overwriteCombo.select(0);
 			}else if(StringUtils.equalsIgnoreCase(authOperationDetails.getField5(), "Fail If Exists")){
-				overwriteCombo.select(2);
-			}else{overwriteCombo.select(0);}
+				overwriteCombo.select(1);
+			}
 		}
 	}
 
@@ -242,7 +239,7 @@ public class FTPOperationConfigDialog extends Dialog{
 		
 		overWriteLabel = (Label) ftpWidgetUtility.createLabel(composite, "Write Mode");
 		setPropertyHelpText(overWriteLabel, "Used to select OverWrite value");
-		overwriteCombo = (Combo) ftpWidgetUtility.CreateCombo(composite, new String[]{"--Select--", "Overwrite If Exists", "Fail If Exists"});
+		overwriteCombo = (Combo) ftpWidgetUtility.CreateCombo(composite, new String[]{"Overwrite If Exists", "Fail If Exists"});
 		
 		if(text1ControlDecoration == null){
 			text1ControlDecoration = WidgetUtility.addDecorator(text1,Messages.EMPTYFIELDMESSAGE);
@@ -288,7 +285,7 @@ public class FTPOperationConfigDialog extends Dialog{
 		
 		overWriteLabel = (Label) ftpWidgetUtility.createLabel(composite, "Write Mode");
 		setPropertyHelpText(overWriteLabel, "Used to select OverWrite value");
-		overwriteCombo = (Combo) ftpWidgetUtility.CreateCombo(composite, new String[]{"--Select--", "Overwrite If Exists", "Fail If Exists"});
+		overwriteCombo = (Combo) ftpWidgetUtility.CreateCombo(composite, new String[]{"Overwrite If Exists", "Fail If Exists"});
 		overWriteLabel.setEnabled(true);
 		overwriteCombo.setEnabled(true);
 		

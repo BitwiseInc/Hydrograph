@@ -113,6 +113,7 @@ public class FTPConverterHelper{
 						fileOperationChoice.setDownload(map.getKey());
 						ftp.setInputFilePath(authOperationDetails.getField2());
 						ftp.setOutputFilePath(authOperationDetails.getField1());
+						ftp.setOverwritemode(authOperationDetails.getField5());
 					}else{
 						fileOperationChoice.setUpload(map.getKey());
 						ftp.setInputFilePath(authOperationDetails.getField1());
@@ -120,7 +121,6 @@ public class FTPConverterHelper{
 					}
 				}
 				ftp.setFileOperation(fileOperationChoice);
-				ftp.setOverwritemode(authOperationDetails.getField5());
 			}
 		}
 	}
