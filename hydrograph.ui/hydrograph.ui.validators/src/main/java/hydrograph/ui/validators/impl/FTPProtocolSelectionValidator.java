@@ -30,12 +30,14 @@ public class FTPProtocolSelectionValidator implements IValidator{
 		if(object instanceof FTPProtocolDetails){
 			if(object != null && !object.equals("")){
 				protocolDetails = (FTPProtocolDetails) object;
-				if(protocolDetails.getHost() != null && protocolDetails.getPort() != null){
-					if(StringUtils.isBlank(protocolDetails.getHost())){
-						return false;
-					}
-					if(!validatePort(protocolDetails.getPort(), "Port")){
-						return false;
+				if(!StringUtils.equalsIgnoreCase(protocolDetails.getProtocol(), "AWS S3 HTTPS")){
+					if(protocolDetails.getHost() != null && protocolDetails.getPort() != null){
+						if(StringUtils.isBlank(protocolDetails.getHost())){
+							return false;
+						}
+						if(!validatePort(protocolDetails.getPort(), "Port")){
+							return false;
+						}
 					}
 				}
 			}

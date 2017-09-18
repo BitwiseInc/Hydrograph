@@ -161,25 +161,6 @@ public class ProtocolWidget extends AbstractWidget{
 		});
 	}
 	
-	private void validateHost(AbstractELTWidget portwidget){
-		if(hostText.isEnabled()){
-			hostText.addModifyListener(new ModifyListener() {
-				@Override
-				public void modifyText(ModifyEvent event) {
-					if(hostText.getText().isEmpty()){
-						hostDecorator.show();
-						hostText.setBackground(CustomColorRegistry.INSTANCE.getColorFromRegistry( 255, 255, 204));
-						showHideErrorSymbol(true);
-					}else{
-						showHideErrorSymbol(false);
-						hostDecorator.hide();
-						hostText.setBackground(CustomColorRegistry.INSTANCE.getColorFromRegistry( 255, 255, 255));
-					}
-					propertyDialogButtonBar.enableApplyButton(true);
-				}
-			});
-		}
-	}
 	
 	private void addModifyListener(Text text){
 		if(text != null && !text.isDisposed()){
@@ -258,7 +239,6 @@ public class ProtocolWidget extends AbstractWidget{
 		};
 	}
 	
-
 	@Override
 	public LinkedHashMap<String, Object> getProperties() {
 		tempPropertyMap = new LinkedHashMap<>();
@@ -270,15 +250,15 @@ public class ProtocolWidget extends AbstractWidget{
 
 	@Override
 	public boolean isWidgetValid() {
+		FTPProtocolDetails ftpProtocolDetails = new FTPProtocolDetails(combo.getText(), hostText.getText(), portText.getText());
 		return validateAgainstValidationRule(ftpProtocolDetails);
 	}
 
 	@Override
 	public void addModifyListener(Property property, ArrayList<AbstractWidget> widgetList) {
 		widgets = widgetList;
-		showHideErrorSymbol(widgetList);
-		attachTextModifyListner(widgetList);
-		attachTextModifyListner(widgetList);
+		hostText.addModifyListener(attachTextModifyListner(widgetList));
+		portText.addModifyListener(attachTextModifyListner(widgetList));
 	}
 
 }
