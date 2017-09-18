@@ -12,6 +12,7 @@ import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.datastructure.property.FTPAuthOperationDetails;
 import hydrograph.ui.datastructure.property.FTPProtocolDetails;
+import hydrograph.ui.engine.constants.PropertyNameConstants;
 import hydrograph.ui.engine.ui.converter.CommandUiConverter;
 import hydrograph.ui.graph.model.Container;
 import hydrograph.ui.graph.model.components.FTPComponent;
@@ -40,41 +41,41 @@ public class S3FileTransferUiConverter extends CommandUiConverter{
 		
 		propertyMap.put(Constants.BATCH, S3FileTransfer.getBatch());
 		
-		FTPProtocolDetails ftpProtocolDetails = new FTPProtocolDetails("AWS S3 HTTPS", null, null);
-		propertyMap.put("protocolSelection", ftpProtocolDetails);
+		FTPProtocolDetails ftpProtocolDetails = new FTPProtocolDetails(Constants.AWS_S3, null, null);
+		propertyMap.put(Constants.PROTOCOL_SELECTION, ftpProtocolDetails);
 		
-		setValueInPropertyMap("accessKeyID",S3FileTransfer.getAccessKeyID() == null ? "" : S3FileTransfer.getAccessKeyID());
-		setValueInPropertyMap("secretAccessKey",S3FileTransfer.getSecretAccessKey() == null ? "" : S3FileTransfer.getSecretAccessKey());
-		setValueInPropertyMap("crediationalPropertiesFile",S3FileTransfer.getCrediationalPropertiesFile() == null ? "" 
+		setValueInPropertyMap(PropertyNameConstants.FTP_ACCESS_KEY.value(),S3FileTransfer.getAccessKeyID() == null ? "" : S3FileTransfer.getAccessKeyID());
+		setValueInPropertyMap(PropertyNameConstants.FTP_SECRET_ACCESS_KEY.value(),S3FileTransfer.getSecretAccessKey() == null ? "" : S3FileTransfer.getSecretAccessKey());
+		setValueInPropertyMap(PropertyNameConstants.FTP_PROP_FILE.value(),S3FileTransfer.getCrediationalPropertiesFile() == null ? "" 
 				: S3FileTransfer.getCrediationalPropertiesFile());
 		
 		Map<String, FTPAuthOperationDetails> authDetails = new HashMap<String, FTPAuthOperationDetails>();
 		if(S3FileTransfer.getSecretAccessKey() != null || S3FileTransfer.getAccessKeyID() != null){
 			FTPAuthOperationDetails authDetailsValue = new FTPAuthOperationDetails(S3FileTransfer.getAccessKeyID(), S3FileTransfer.getSecretAccessKey(), 
 					S3FileTransfer.getCrediationalPropertiesFile(), "", "");
-			authDetails.put("AWS S3 Access Key", authDetailsValue);
+			authDetails.put(Constants.AWS_S3_KEY, authDetailsValue);
 		}else{
 			FTPAuthOperationDetails authDetailsValue = new FTPAuthOperationDetails("", S3FileTransfer.getCrediationalPropertiesFile(), 
 					"", "", "");
-			authDetails.put("AWS S3 Property File", authDetailsValue);
+			authDetails.put(Constants.AWS_S3_PROP_FILE, authDetailsValue);
 		}
 		//authentication
-		propertyMap.put("authentication", authDetails);
+		propertyMap.put(PropertyNameConstants.FTP_AUTH.value(), authDetails);
 		
-		setValueInPropertyMap("timeOut",
+		setValueInPropertyMap(PropertyNameConstants.TIME_OUT.value(),
 				S3FileTransfer.getTimeOut() == null ? "" : S3FileTransfer.getTimeOut().intValue());
-		setValueInPropertyMap("retryAttempt",
+		setValueInPropertyMap(PropertyNameConstants.RETRY_ATTEMPT.value(),
 				S3FileTransfer.getRetryAttempt() == null ? "" : S3FileTransfer.getRetryAttempt().intValue());
 		
-		setValueInPropertyMap("localPath",S3FileTransfer.getLocalPath() == null ? "" : S3FileTransfer.getLocalPath());
-		setValueInPropertyMap("bucketName",S3FileTransfer.getBucketName() == null ? "" : S3FileTransfer.getBucketName());
-		setValueInPropertyMap("folder_name_in_bucket",S3FileTransfer.getFolderNameInBucket() == null ? "" : S3FileTransfer.getFolderNameInBucket());
-		setValueInPropertyMap("region",S3FileTransfer.getRegion() == null ? "" : S3FileTransfer.getRegion());
+		setValueInPropertyMap(PropertyNameConstants.FTP_LOCAL_PATH.value(),S3FileTransfer.getLocalPath() == null ? "" : S3FileTransfer.getLocalPath());
+		setValueInPropertyMap(PropertyNameConstants.FTP_BUCKET.value(),S3FileTransfer.getBucketName() == null ? "" : S3FileTransfer.getBucketName());
+		setValueInPropertyMap(PropertyNameConstants.FTP_FOLDER_NAME.value(),S3FileTransfer.getFolderNameInBucket() == null ? "" : S3FileTransfer.getFolderNameInBucket());
+		setValueInPropertyMap(PropertyNameConstants.FTP_REGION.value(),S3FileTransfer.getRegion() == null ? "" : S3FileTransfer.getRegion());
 		
 		Map<String, FTPAuthOperationDetails> operationDetails = new HashMap<String, FTPAuthOperationDetails>();
 		
 		FTPAuthOperationDetails authOperationDetails;
-		if(!S3FileTransfer.getOverwritemode().contains("Select")){
+		if(S3FileTransfer.getOverwritemode()!=null){
 			authOperationDetails  = new FTPAuthOperationDetails(S3FileTransfer.getLocalPath(), S3FileTransfer.getBucketName(), 
 					S3FileTransfer.getFolderNameInBucket(), S3FileTransfer.getRegion(), S3FileTransfer.getOverwritemode());
 		}else{
@@ -89,13 +90,13 @@ public class S3FileTransferUiConverter extends CommandUiConverter{
 			operationDetails.put(operationChoice.getUpload().toString(), authOperationDetails);
 		}
 		//operation
-		propertyMap.put("operation", operationDetails);
+		propertyMap.put(PropertyNameConstants.FTP_OPERATION.value(), operationDetails);
 		
-		propertyMap.put("encoding", S3FileTransfer.getEncoding().getValue().value());
-		propertyMap.put("failOnError", S3FileTransfer.isFailOnError());
+		propertyMap.put(PropertyNameConstants.ENCODING.value(), S3FileTransfer.getEncoding().getValue().value());
+		propertyMap.put(PropertyNameConstants.FAIL_ON_ERROR.value(), S3FileTransfer.isFailOnError());
 		
 		uiComponent.setProperties(propertyMap);
-		uiComponent.setType("S3FileTransfer");
+		uiComponent.setType(Constants.S3FILETRANSFER);
 	}
 	
 	private void setValueInPropertyMap(String propertyName,Object value){

@@ -1,3 +1,15 @@
+/*******************************************************************************
+ * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *******************************************************************************/
 package hydrograph.ui.propertywindow.ftp;
 
 import java.util.ArrayList;
@@ -30,6 +42,11 @@ import hydrograph.ui.propertywindow.widgets.gridwidgets.container.AbstractELTCon
 import hydrograph.ui.propertywindow.widgets.gridwidgets.container.ELTDefaultSubgroupComposite;
 import hydrograph.ui.propertywindow.widgets.listeners.ListenerHelper;
 
+/**
+ * The Class OperationConfigWidget used to create widget
+ * @author Bitwise
+ *
+ */
 public class OperationConfigWidget extends AbstractWidget{
 	private static final Logger logger = LogFactory.INSTANCE.getLogger(OperationConfigWidget.class);
 	private String propertyName;
@@ -89,15 +106,15 @@ public class OperationConfigWidget extends AbstractWidget{
 		initialMap = new LinkedHashMap<>(initialMap);
 		String protocoltext = null;
 		for(AbstractWidget widget : widgets){
-			if(widget.getPropertyName().equals("protocolSelection")){
-				FTPProtocolDetails protocolDetails = (FTPProtocolDetails) widget.getProperties().get("protocolSelection");
+			if(widget.getPropertyName().equals(Constants.PROTOCOL_SELECTION)){
+				FTPProtocolDetails protocolDetails = (FTPProtocolDetails) widget.getProperties().get(Constants.PROTOCOL_SELECTION);
 				if(protocolDetails!= null){
-					if(StringUtils.equalsIgnoreCase(protocolDetails.getProtocol(), "AWS S3 HTTPS")){
+					if(StringUtils.equalsIgnoreCase(protocolDetails.getProtocol(), Constants.AWS_S3)){
 						protocoltext = protocolDetails.getProtocol();
-						optionList = new String[]{"Get Files with AWS S3", "Put Files with AWS S3"};
+						optionList = new String[]{Constants.GET_FILE_S3, Constants.PUT_FILE_S3};
 					}else{
 						protocoltext = protocolDetails.getProtocol();
-						optionList = new String[]{"Get Files", "Put Files"};
+						optionList = new String[]{Constants.GET_FILE, Constants.PUT_FILE};
 					}
 					if(tmpProtocolValue == null){
 						tmpProtocolValue = protocolDetails.getProtocol();

@@ -12,12 +12,14 @@
  ******************************************************************************/
 package hydrograph.ui.datastructure.property;
 
+import hydrograph.ui.common.cloneableinterface.IDataStructure;
+
 /**
  * The Class FTPProtocolDetails persists FTP protocol details
  * @author Bitwise
  *
  */
-public class FTPProtocolDetails {
+public class FTPProtocolDetails implements IDataStructure{
 	private String protocol = "FTP";
 	private String host;
 	private String port;
@@ -79,7 +81,14 @@ public class FTPProtocolDetails {
 		result = prime * result + ((protocol == null) ? 0 : protocol.hashCode());
 		return result;
 	}
-
+	
+	@Override
+	public FTPProtocolDetails clone() {
+		FTPProtocolDetails ftpProtocolDetails = new FTPProtocolDetails(getProtocol(), 
+				getHost(), getPort());
+		return ftpProtocolDetails;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

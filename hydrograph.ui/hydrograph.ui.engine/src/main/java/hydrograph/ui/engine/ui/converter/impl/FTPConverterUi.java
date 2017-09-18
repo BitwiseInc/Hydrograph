@@ -58,8 +58,8 @@ public class FTPConverterUi extends CommandUiConverter{
 		
 		propertyMap.put(Constants.BATCH, ftp.getBatch());
 		
-		setValueInPropertyMap("host_Name", ftp.getHostName() == null ? "" : ftp.getHostName());
-		setValueInPropertyMap("port_No", ftp.getPortNo() == null ? "" : ftp.getPortNo());
+		setValueInPropertyMap(PropertyNameConstants.FTP_HOST.value(), ftp.getHostName() == null ? "" : ftp.getHostName());
+		setValueInPropertyMap(PropertyNameConstants.FTP_PORT.value(), ftp.getPortNo() == null ? "" : ftp.getPortNo());
 
 		if(ftp.getPortNo() != null){
 			port = ftp.getPortNo()+"";
@@ -67,29 +67,29 @@ public class FTPConverterUi extends CommandUiConverter{
 			port = "";
 		}
 		
-		FTPProtocolDetails ftpProtocolDetails = new FTPProtocolDetails("FTP", ftp.getHostName(), port);
-		propertyMap.put("protocolSelection", ftpProtocolDetails);
+		FTPProtocolDetails ftpProtocolDetails = new FTPProtocolDetails(Constants.FTP, ftp.getHostName(), port);
+		propertyMap.put(Constants.PROTOCOL_SELECTION, ftpProtocolDetails);
 		
 		
 		
 		Map<String, FTPAuthOperationDetails> authDetails = new HashMap<String, FTPAuthOperationDetails>();
-		setValueInPropertyMap("user_Name", ftp.getUserName() == null ? "" : ftp.getUserName());
+		setValueInPropertyMap(PropertyNameConstants.FTP_USER_NAME.value(), ftp.getUserName() == null ? "" : ftp.getUserName());
 		setValueInPropertyMap(PropertyNameConstants.PASSWORD.value(),
 				
 				ftp.getPassword() == null ? "" : ftp.getPassword());
 		FTPAuthOperationDetails authDetailsValue = new FTPAuthOperationDetails(ftp.getUserName(), ftp.getPassword(), "", "", "");
 		if(ftp.getPassword() != null){
-			authDetails.put("Basic Auth", authDetailsValue);
+			authDetails.put(Constants.STAND_AUTH, authDetailsValue);
 		}else{
-			authDetails.put("User Id & Key", authDetailsValue);
+			authDetails.put("User ID and Key", authDetailsValue);
 		}
 		
 		//authentication
-		propertyMap.put("authentication", authDetails);
+		propertyMap.put(PropertyNameConstants.FTP_AUTH.value(), authDetails);
 		
-		setValueInPropertyMap("timeOut",
+		setValueInPropertyMap(PropertyNameConstants.TIME_OUT.value(),
 				ftp.getTimeOut() == null ? "" : ftp.getTimeOut().intValue());
-		setValueInPropertyMap("retryAttempt",
+		setValueInPropertyMap(PropertyNameConstants.RETRY_ATTEMPT.value(),
 				ftp.getRetryAttempt() == null ? "" : ftp.getRetryAttempt().intValue());
 		
 		Map<String, FTPAuthOperationDetails> operationDetails = new HashMap<String, FTPAuthOperationDetails>();
@@ -104,13 +104,13 @@ public class FTPConverterUi extends CommandUiConverter{
 			}
 		}
 		
-		propertyMap.put("operation", operationDetails);
+		propertyMap.put(PropertyNameConstants.FTP_OPERATION.value(), operationDetails);
 		
-		propertyMap.put("encoding", ftp.getEncoding().getValue().value());
-		propertyMap.put("failOnError", ftp.isFailOnError());
+		propertyMap.put(PropertyNameConstants.ENCODING.value(), ftp.getEncoding().getValue().value());
+		propertyMap.put(PropertyNameConstants.FAIL_ON_ERROR.value(), ftp.isFailOnError());
 		
 		uiComponent.setProperties(propertyMap);
-		uiComponent.setType("FTP");
+		uiComponent.setType(Constants.FTP);
 	}
 	
 	private void setValueInPropertyMap(String propertyName,Object value){

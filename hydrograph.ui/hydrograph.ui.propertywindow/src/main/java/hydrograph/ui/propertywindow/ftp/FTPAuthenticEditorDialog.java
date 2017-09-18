@@ -44,6 +44,7 @@ import org.eclipse.swt.widgets.Widget;
 import org.slf4j.Logger;
 
 import hydrograph.ui.common.property.util.Utils;
+import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.datastructure.property.FTPAuthOperationDetails;
 import hydrograph.ui.logging.factory.LogFactory;
 import hydrograph.ui.propertywindow.handlers.ShowHidePropertyHelpHandler;
@@ -114,15 +115,15 @@ public class FTPAuthenticEditorDialog extends Dialog{
 		
 		FTPWidgetUtility ftpWidgetUtility = new FTPWidgetUtility();
 		Label partitionKeysLabel = (Label) ftpWidgetUtility.createLabel(composite, "Authentication Mode");
-		setPropertyHelpText(partitionKeysLabel, "Used to select authentication mode");
+		setPropertyHelpText(partitionKeysLabel, "User needs to provide credentials to connect to the ftp server");
 		authenticationModeCombo = (Combo) ftpWidgetUtility.CreateCombo(composite, optionList);
 		
 		
-		Composite composite2 = new Composite(container, SWT.BORDER);
+		Composite composite2 = new Composite(container, SWT.NONE);
 		composite2.setLayout(new GridLayout(1, false));
 		composite2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
-		Composite stackComposite = new Composite(composite2, SWT.BORDER);
+		Composite stackComposite = new Composite(composite2, SWT.NONE);
 		StackLayout layout = new StackLayout();
 		stackComposite.setLayout(layout);
 		stackComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -166,8 +167,8 @@ public class FTPAuthenticEditorDialog extends Dialog{
 			comboText1 = "AWS S3 Access Key";
 			ComboText2 = "AWS S3 Property File";
 		}else{
-			comboText1 = "Basic Auth";
-			ComboText2 = "User Id & Key";
+			comboText1 = Constants.STAND_AUTH;
+			ComboText2 = "User ID and Key";
 		}
 		for(Map.Entry<String, FTPAuthOperationDetails> map : authOperationSelectionMap.entrySet()){
 			authenticationModeCombo.setText(map.getKey());
@@ -187,10 +188,12 @@ public class FTPAuthenticEditorDialog extends Dialog{
 				keyFileComposite = (Composite) addIdKeyComposite(stackComposite);
 				stackLayout.topControl = keyFileComposite;
 				FTPAuthOperationDetails authOperationDetails = map.getValue();
-				if(text2 != null){
-					text2.setText(authOperationDetails.getField2());
-					Utils.INSTANCE.addMouseMoveListener(text2, cursor);
+				if(text1 != null && authOperationDetails.getField1()!=null){
+					text1.setText(authOperationDetails.getField1());
+					Utils.INSTANCE.addMouseMoveListener(text1, cursor);
 				}
+				text2.setText(authOperationDetails.getField2());
+				Utils.INSTANCE.addMouseMoveListener(text2, cursor);
 			}
 		}
 	}
@@ -277,6 +280,7 @@ public class FTPAuthenticEditorDialog extends Dialog{
 		Label label2 = (Label) ftpWidgetUtility.createLabel(basicAuthComposite, label2Text);
 		setPropertyHelpText(label2, "Used to provide the value for authentication");
 		text2 = (Text) ftpWidgetUtility.createText(basicAuthComposite, "", textStyle);
+		Utils.INSTANCE.addMouseMoveListener(text2, cursor);	
 		
 		text1ControlDecoration = WidgetUtility.addDecorator(text1,Messages.EMPTYFIELDMESSAGE);
 		text2ControlDecoration = WidgetUtility.addDecorator(text2,Messages.EMPTYFIELDMESSAGE);
@@ -284,6 +288,9 @@ public class FTPAuthenticEditorDialog extends Dialog{
 		FTPWidgetUtility widgetUtility = new FTPWidgetUtility();
 		widgetUtility.validateWidgetText(text1, propertyDialogButtonBar, cursor, text1ControlDecoration);
 		widgetUtility.validateEmptyWidgetText(text2, propertyDialogButtonBar, cursor, text2ControlDecoration);
+		
+		addModifyListener(text1);
+		addModifyListener(text2);
 		
 		return basicAuthComposite;
 	}
@@ -302,10 +309,6 @@ public class FTPAuthenticEditorDialog extends Dialog{
 			Label userIdLbl = (Label) ftpWidgetUtility.createLabel(keyFileComposite, "User ID");
 			text1 = (Text) ftpWidgetUtility.createText(keyFileComposite, "", SWT.BORDER);
 			new Button(keyFileComposite, SWT.NONE).setVisible(false);
-		}
-		if(text1ControlDecoration != null){
-			text1ControlDecoration.hide();
-			text1ControlDecoration.dispose();
 		}
 		
 		String label2Text = null;
@@ -333,6 +336,11 @@ public class FTPAuthenticEditorDialog extends Dialog{
 			widgetUtility.validateWidgetText(text1, propertyDialogButtonBar, cursor, text1ControlDecoration);
 		}
 		widgetUtility.validateEmptyWidgetText(text2, propertyDialogButtonBar, cursor, text2ControlDecoration);
+		
+		if(text1!=null){
+			addModifyListener(text1);
+		}
+		addModifyListener(text2);
 		
 		return keyFileComposite;
 	}

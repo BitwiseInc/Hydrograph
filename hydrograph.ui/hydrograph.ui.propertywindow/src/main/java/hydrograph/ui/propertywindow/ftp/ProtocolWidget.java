@@ -1,3 +1,15 @@
+/*******************************************************************************
+ * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *******************************************************************************/
 package hydrograph.ui.propertywindow.ftp;
 
 import java.util.ArrayList;
@@ -5,14 +17,17 @@ import java.util.LinkedHashMap;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.fieldassist.ControlDecoration;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.slf4j.Logger;
 
@@ -21,6 +36,7 @@ import hydrograph.ui.common.util.CustomColorRegistry;
 import hydrograph.ui.datastructure.property.FTPProtocolDetails;
 import hydrograph.ui.logging.factory.LogFactory;
 import hydrograph.ui.propertywindow.factory.ListenerFactory.Listners;
+import hydrograph.ui.propertywindow.handlers.ShowHidePropertyHelpHandler;
 import hydrograph.ui.propertywindow.messages.Messages;
 import hydrograph.ui.propertywindow.property.ComponentConfigrationProperty;
 import hydrograph.ui.propertywindow.property.ComponentMiscellaneousProperties;
@@ -37,6 +53,11 @@ import hydrograph.ui.propertywindow.widgets.listeners.ListenerHelper;
 import hydrograph.ui.propertywindow.widgets.listeners.ListenerHelper.HelperType;
 import hydrograph.ui.propertywindow.widgets.utility.WidgetUtility;
 
+/**
+ * The Class ProtocolWidget to create protocol widgets
+ * @author Bitwise
+ *
+ */
 public class ProtocolWidget extends AbstractWidget{
 	private static final Logger logger = LogFactory.INSTANCE.getLogger(ProtocolWidget.class);
 	private String propertyName;
@@ -71,7 +92,8 @@ public class ProtocolWidget extends AbstractWidget{
 		
 		ELTDefaultLable protocolLbl = new ELTDefaultLable("Protocol");
 		eltSuDefaultSubgroupComposite.attachWidget(protocolLbl);
-		setPropertyHelpWidget((Control) protocolLbl.getSWTWidgetControl());
+		Label protocolLblText = (Label)protocolLbl.getSWTWidgetControl();
+		setPropertyHelpText(protocolLblText, "User needs to select the Protocol for file transfer");
 		
 		AbstractELTWidget comboWidget = new ELTDefaultCombo().defaultText(new String[]{"FTP", "SFTP", "AWS S3 HTTPS"})
 				.grabExcessHorizontalSpace(false);
@@ -84,7 +106,8 @@ public class ProtocolWidget extends AbstractWidget{
 		
 		ELTDefaultLable hostLbl = new ELTDefaultLable("Host");
 		eltSuDefaultSubgroupComposite.attachWidget(hostLbl);
-		setPropertyHelpWidget((Control) hostLbl.getSWTWidgetControl());
+		Label hostLblText = (Label)hostLbl.getSWTWidgetControl();
+		setPropertyHelpText(hostLblText, " Displays the Host or Server name");
 		
 		AbstractELTWidget hostwidget = createWidgetTextbox("Host", eltSuDefaultSubgroupComposite, "");
 		hostText = (Text) hostwidget.getSWTWidgetControl();
@@ -98,7 +121,8 @@ public class ProtocolWidget extends AbstractWidget{
 		
 		ELTDefaultLable portLbl = new ELTDefaultLable("Port");
 		eltSuDefaultSubgroupComposite.attachWidget(portLbl);
-		setPropertyHelpWidget((Control) portLbl.getSWTWidgetControl());
+		Label portLblText = (Label)portLbl.getSWTWidgetControl();
+		setPropertyHelpText(portLblText, "Displays the Port selected for file transfer");
 		
 		AbstractELTWidget portwidget = createWidgetTextbox("Port", eltSuDefaultSubgroupComposite, "");
 		portText = (Text) portwidget.getSWTWidgetControl();
@@ -118,8 +142,6 @@ public class ProtocolWidget extends AbstractWidget{
 			e.printStackTrace();
 		}
 		
-		//`(portwidget);
-		
 		selectionListener();
 		addModifyListener(hostText);
 		addModifyListener(portText);
@@ -127,38 +149,46 @@ public class ProtocolWidget extends AbstractWidget{
 		populateWidgets();
 	}
 	
+	private void setPropertyHelpText(Label label, String message) {
+		if(ShowHidePropertyHelpHandler.getInstance() != null 
+				&& ShowHidePropertyHelpHandler.getInstance().isShowHidePropertyHelpChecked()){
+			label.setToolTipText(message);
+			label.setCursor(new Cursor(label.getDisplay(), SWT.CURSOR_HELP));
+		}
+		
+	}
+	
 	private void selectionListener(){
 		combo.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent event) {
 				if(combo.getSelectionIndex() == 2){
-					hostText.setText("");
-					portText.setText("");
-					hostDecorator.hide();
-					portDecorator.hide();
-					hostText.setEnabled(false);
-					portText.setEnabled(false);
-					hostText.setBackground(CustomColorRegistry.INSTANCE.getColorFromRegistry( 255, 255, 255));
-					portText.setBackground(CustomColorRegistry.INSTANCE.getColorFromRegistry( 255, 255, 255));
+					validateTextWidget(hostText, false, hostDecorator, CustomColorRegistry.INSTANCE.getColorFromRegistry( 255, 255, 255));
+					validateTextWidget(portText, false, portDecorator, CustomColorRegistry.INSTANCE.getColorFromRegistry( 255, 255, 255));
 				}else if(combo.getSelectionIndex() == 1){
 					hostText.setText("");
 					portText.setText("");
 					hostText.setEnabled(true);
 					portText.setEnabled(true);
 				}else{
-					hostText.setText("");
-					portText.setText("");
+					validateTextWidget(hostText, true, null, CustomColorRegistry.INSTANCE.getColorFromRegistry( 255, 255, 204));
+					validateTextWidget(portText, true, null, CustomColorRegistry.INSTANCE.getColorFromRegistry( 255, 255, 204));
 					hostDecorator.show();
 					portDecorator.show();
-					hostText.setEnabled(true);
-					portText.setEnabled(true);
-					hostText.setBackground(CustomColorRegistry.INSTANCE.getColorFromRegistry( 255, 255, 204));
-					portText.setBackground(CustomColorRegistry.INSTANCE.getColorFromRegistry( 255, 255, 204));
 				}
 				showHideErrorSymbol(widgets);
 				propertyDialogButtonBar.enableApplyButton(true);
 			}
 		});
+	}
+	
+	private void validateTextWidget(Text text, boolean isEnable, ControlDecoration controlDecoration, Color color){
+		text.setText("");
+		text.setEnabled(isEnable);
+		if(!isEnable){
+			controlDecoration.hide();
+		}
+		text.setBackground(color);
 	}
 	
 	
@@ -229,7 +259,6 @@ public class ProtocolWidget extends AbstractWidget{
 	
 	private ModifyListener attachTextModifyListner(final ArrayList<AbstractWidget> widgetList) {
 		return new ModifyListener() {
-
 			@Override
 			public void modifyText(ModifyEvent event) {
 				Utils.INSTANCE.addMouseMoveListener(hostText, cursor);

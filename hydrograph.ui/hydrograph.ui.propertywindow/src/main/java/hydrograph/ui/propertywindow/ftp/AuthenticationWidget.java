@@ -113,10 +113,10 @@ public class AuthenticationWidget extends AbstractWidget{
 				FTPProtocolDetails protocolDetails = (FTPProtocolDetails) widget.getProperties().get("protocolSelection");
 				if(protocolDetails!= null){
 					if(StringUtils.equalsIgnoreCase(protocolDetails.getProtocol(), "FTP")){
-						optionList = new String[]{"Basic Auth"};
+						optionList = new String[]{Constants.STAND_AUTH};
 						protocolText = protocolDetails.getProtocol();
 					}else if(StringUtils.equalsIgnoreCase(protocolDetails.getProtocol(), "SFTP")){
-						optionList = new String[]{"Basic Auth", "User Id and Key"};
+						optionList = new String[]{Constants.STAND_AUTH, "User ID and Key"};
 						protocolText = protocolDetails.getProtocol();
 					}else if(StringUtils.equalsIgnoreCase(protocolDetails.getProtocol(), "AWS S3 HTTPS")){
 						optionList = new String[]{"AWS S3 Access Key", "AWS S3 Property File"};

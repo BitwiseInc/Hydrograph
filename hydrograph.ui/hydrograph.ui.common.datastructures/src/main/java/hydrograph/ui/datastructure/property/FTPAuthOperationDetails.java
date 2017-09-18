@@ -12,12 +12,14 @@
  ******************************************************************************/
 package hydrograph.ui.datastructure.property;
 
+import hydrograph.ui.common.cloneableinterface.IDataStructure;
+
 /**
  * The Class FTPAuthOperationDetails holds FTP operation details
  * @author bitwise
  *
  */
-public class FTPAuthOperationDetails{
+public class FTPAuthOperationDetails implements IDataStructure{
 	private String field1;
  	private String field2;
  	private String field3;
@@ -115,6 +117,13 @@ public class FTPAuthOperationDetails{
 		result = prime * result + ((field4 == null) ? 0 : field4.hashCode());
 		result = prime * result + ((field5 == null) ? 0 : field5.hashCode());
 		return result;
+	}
+	
+	@Override
+	public FTPAuthOperationDetails clone() {
+		FTPAuthOperationDetails details = new FTPAuthOperationDetails(getField1(), 
+				getField2(), getField3(), getField4(), getField5());
+		return details;
 	}
 
 

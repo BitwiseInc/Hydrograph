@@ -1,3 +1,15 @@
+/*******************************************************************************
+ * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *******************************************************************************/
 package hydrograph.ui.engine.converter.impl;
 
 import java.math.BigInteger;
@@ -14,11 +26,17 @@ import hydrograph.engine.jaxb.commontypes.BooleanValueType;
 import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.datastructure.property.FTPAuthOperationDetails;
+import hydrograph.ui.engine.constants.PropertyNameConstants;
 import hydrograph.ui.engine.helper.ConverterHelper;
 import hydrograph.ui.engine.util.FTPUtil;
 import hydrograph.ui.graph.model.Component;
 import hydrograph.ui.logging.factory.LogFactory;
 
+/**
+ * The Class S3FileTransferConverterHelper to convert for S3 protocol
+ * @author Bitwise
+ *
+ */
 public class S3FileTransferConverterHelper{
 	public static final Logger logger = LogFactory.INSTANCE.getLogger(S3FileTransferConverterHelper.class);
 	private Component component;
@@ -42,12 +60,12 @@ public class S3FileTransferConverterHelper{
 		
 		addAuthenticationDetails(s3FileTransfer);
 		
-		BigInteger connectionTimeOut = FTPUtil.INSTANCE.getPortValue("timeOut", componentId, properties);
+		BigInteger connectionTimeOut = FTPUtil.INSTANCE.getPortValue(PropertyNameConstants.TIME_OUT.value(), componentId, properties);
 		if(connectionTimeOut != null){
 			s3FileTransfer.setTimeOut(connectionTimeOut.intValue());
 		}
 		
-		BigInteger noOfRetries = FTPUtil.INSTANCE.getPortValue("retryAttempt", componentId, properties);
+		BigInteger noOfRetries = FTPUtil.INSTANCE.getPortValue(PropertyNameConstants.RETRY_ATTEMPT.value(), componentId, properties);
 		if(noOfRetries != null){
 			s3FileTransfer.setRetryAttempt(noOfRetries.intValue());
 		}
@@ -56,9 +74,10 @@ public class S3FileTransferConverterHelper{
 		addSFtpOperationDetails(s3FileTransfer);
 		
 		Encoding encoding = new Encoding();
-		encoding.setValue(FTPUtil.INSTANCE.getCharset("encoding", component.getComponentName(), properties));
+		encoding.setValue(FTPUtil.INSTANCE.getCharset(PropertyNameConstants.ENCODING.value(), component.getComponentName(), properties));
 		s3FileTransfer.setEncoding(encoding);
-		BooleanValueType failOnError = FTPUtil.INSTANCE.getBoolean("failOnError", component.getComponentName(), properties);
+		BooleanValueType failOnError = FTPUtil.INSTANCE.getBoolean(PropertyNameConstants.FAIL_ON_ERROR.value(), 
+				component.getComponentName(), properties);
 		s3FileTransfer.setFailOnError(failOnError.isValue());
 	}
 	
@@ -67,12 +86,13 @@ public class S3FileTransferConverterHelper{
 	 * @param ftp
 	 */
 	private void addAuthenticationDetails(S3FileTransfer s3FileTransfer){
-		Map<String, FTPAuthOperationDetails> authDetails = (Map<String, FTPAuthOperationDetails>) properties.get("authentication");
+		Map<String, FTPAuthOperationDetails> authDetails = (Map<String, FTPAuthOperationDetails>) properties
+				.get(PropertyNameConstants.FTP_AUTH.value());
 		FTPAuthOperationDetails authenticationDetails = null;
 		if(authDetails != null && !authDetails.isEmpty()){
 			for(Map.Entry<String, FTPAuthOperationDetails> map : authDetails.entrySet()){
 				authenticationDetails = map.getValue();
-				if(StringUtils.equalsIgnoreCase(map.getKey(), "AWS S3 Access Key")){
+				if(StringUtils.equalsIgnoreCase(map.getKey(), Constants.AWS_S3_KEY)){
 					if(StringUtils.isNotBlank(authenticationDetails.getField1())){
 						s3FileTransfer.setAccessKeyID(authenticationDetails.getField1());
 					}
@@ -93,12 +113,13 @@ public class S3FileTransferConverterHelper{
 	 * @param ftp
 	 */
 	private void addSFtpOperationDetails(S3FileTransfer s3FileTransfer){
-		Map<String, FTPAuthOperationDetails> fileOperationDetaildetails =  (Map<String, FTPAuthOperationDetails>) properties.get("operation");
+		Map<String, FTPAuthOperationDetails> fileOperationDetaildetails =  (Map<String, FTPAuthOperationDetails>) properties
+				.get(PropertyNameConstants.FTP_OPERATION.value());
 		FileOperationChoice fileOperationChoice = new FileOperationChoice();
 		FTPAuthOperationDetails authOperationDetails = null;
 		if(fileOperationDetaildetails!=null && !fileOperationDetaildetails.isEmpty()){
 			for(Map.Entry<String, FTPAuthOperationDetails> map : fileOperationDetaildetails.entrySet()){
-				if(map.getKey().contains("Get Files")){
+				if(map.getKey().contains(Constants.GET_FILE)){
 					fileOperationChoice.setDownload(map.getKey());
 					authOperationDetails = map.getValue();
 					s3FileTransfer.setOverwritemode(authOperationDetails.getField5());

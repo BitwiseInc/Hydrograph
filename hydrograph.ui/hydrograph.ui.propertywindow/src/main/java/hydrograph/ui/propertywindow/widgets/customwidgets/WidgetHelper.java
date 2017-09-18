@@ -609,7 +609,8 @@ public class WidgetHelper {
 		TextBoxWithLableConfig textBoxConfig = new TextBoxWithLableConfig();
 		textBoxConfig.setName(fieldName);
 		textBoxConfig.setGrabExcessSpace(true);
-		addTextBoxListeners(textBoxConfig);
+		//addTextBoxListeners(textBoxConfig);
+		textBoxConfig.getListeners().add(Listners.MODIFY);
 		textBoxConfig.getListeners().add(Listners.VERIFY_NUMERIC_AND_PARAMETER_FOR_DB_COMPONENTS);
 		textBoxConfig.setWidgetWidth(78);
 		return textBoxConfig;

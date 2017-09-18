@@ -38,7 +38,7 @@
 			
 		<tns:property dataType="string" name="authentication" value="" renderer="FTP_AUTHENTICATION_WIDGET"
 			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="FALSE" tooltipDataType="NONE"
-			usage="REQUIRED" propertyHelpText="Used to provide authentication parameters to connect server for file transfer">
+			usage="REQUIRED" propertyHelpText="User needs to provide credentials to connect to the ftp server">
 			<tns:validator>FTP_AUTHENTICATION_VALIDATOR</tns:validator>
 		</tns:property>
 		
@@ -68,7 +68,7 @@
 		
 		<tns:property dataType="string" name="failOnError" value="True" renderer="FAIL_ON_ERROR_WIDGET"
 			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="FALSE" tooltipDataType="NONE"
-			usage="OPTIONAL" propertyHelpText="When True, Job need to pass">
+			usage="OPTIONAL" propertyHelpText="When set to True, the job needs to pass">
 			<tns:validator>BOOLEAN_OR_PARAMETER_VALIDATOR</tns:validator>
 		</tns:property>	
 		

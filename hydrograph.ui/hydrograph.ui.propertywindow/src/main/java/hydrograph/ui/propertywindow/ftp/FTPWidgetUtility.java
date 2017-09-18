@@ -22,7 +22,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Widget;
 
-import hydrograph.ui.common.property.util.Utils;
 import hydrograph.ui.common.util.CustomColorRegistry;
 import hydrograph.ui.propertywindow.propertydialog.PropertyDialogButtonBar;
 import hydrograph.ui.propertywindow.widgets.listeners.ELTModifyListener;
@@ -31,6 +30,7 @@ import hydrograph.ui.propertywindow.widgets.listeners.ListenerHelper.HelperType;
 import hydrograph.ui.propertywindow.widgets.listeners.ModifyAlphaNumbericTextListener;
 
 /**
+ * The Class FTPWidgetUtility
  * @author bitwise
  *
  */
