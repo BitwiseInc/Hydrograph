@@ -336,6 +336,9 @@
       <toc
             file="xml/Components/Command/runSql.xml">
       </toc>
+      <toc
+            file="xml/Components/Command/ftp.xml">
+      </toc>
    </extension>
    <extension
          point="org.eclipse.help.index">

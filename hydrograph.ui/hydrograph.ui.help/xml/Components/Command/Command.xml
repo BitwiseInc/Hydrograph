@@ -23,6 +23,10 @@
 	      <anchor id="Run_Sql"/>
 	      <link toc="xml/Components/Command/runSql.xml"/>
 	   </topic>
+	   <topic href="html/Components/Command/FTP.html" label="FTP">
+	      <anchor id="FTP"/>
+	      <link toc="xml/Components/Command/ftp.xml"/>
+	   </topic>
   </toc>
    
    
