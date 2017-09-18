@@ -124,13 +124,19 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 	
 	private void serviceInitiator(Properties properties) throws IOException{
 		if(OSValidator.isWindows()){		
-			String command = "java -cp " + getInstallationConfigPath().trim() + ";"+Platform.getInstallLocation().getURL().getPath()+properties.getProperty(SERVICE_JAR) + " " +properties.getProperty(DRIVER_CLASS);
+			//Updated the java classpath to include the dependent jars
+			String command = "java -cp " + getInstallationConfigPath().trim() + ";"+ Platform.getInstallLocation().getURL().getPath()+ "config/service/*;"
+							+ Platform.getInstallLocation().getURL().getPath()+properties.getProperty(SERVICE_JAR) 
+							+ " " +properties.getProperty(DRIVER_CLASS);
 			ProcessBuilder builder = new ProcessBuilder(new String[]{"cmd", "/c", command});
 			builder.start();
 		}
 		else if(OSValidator.isMac()){
 			logger.debug("On Mac Operating System....");
-			String command="java -cp " + getInstallationConfigPath().trim() + ":" +Platform.getInstallLocation().getURL().getPath()+ properties.getProperty(SERVICE_JAR) + " " +properties.getProperty(DRIVER_CLASS);
+			//Updated the java classpath to include the dependent jars
+			String command="java -cp " + getInstallationConfigPath().trim() + ":" + 
+							Platform.getInstallLocation().getURL().getPath()+ properties.getProperty(SERVICE_JAR) + ":" 
+					+ Platform.getInstallLocation().getURL().getPath()+ "config/service/*" + " " +properties.getProperty(DRIVER_CLASS);
 			logger.debug("command{}", command);
             ProcessBuilder builder = new ProcessBuilder(new String[]{"bash", "-c", command});
             builder.start();
