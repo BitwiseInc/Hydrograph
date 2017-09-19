@@ -111,7 +111,13 @@ dependencies {
     compile group: 'com.ibatis', name: 'ibatis2-common', version: '2.1.7.597'
     compile group: 'com.amazon.redshift', name: 'redshift-jdbc42', version: '1.2.1.1001'
 
-    compile group: 'com.amazonaws', name: 'aws-java-sdk', version: '1.11.18'
+    compile group: 'com.amazonaws', name: 'aws-java-sdk', version: '1.11.188'
 
-    compile group: 'com.databricks', name: 'spark-redshift_2.11', version: '2.0.1'
+   compile group: 'com.databricks', name: 'spark-redshift_2.11', version: '2.0.1'
+    //compile group: 'org.apache.hadoop', name: 'hadoop-core', version: '0.20.2'
+
+compile group:'com.jcraft',name:'jsch',version:'0.1.54'
+compile group:'commons-net',name:'commons-net',version:'3.3'
+
 }
+
