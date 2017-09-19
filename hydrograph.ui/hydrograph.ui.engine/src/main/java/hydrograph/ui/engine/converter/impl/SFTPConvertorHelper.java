@@ -104,13 +104,16 @@ public class SFTPConvertorHelper{
 		if(authDetails != null && !authDetails.isEmpty()){
 			for(Map.Entry<String, FTPAuthOperationDetails> map : authDetails.entrySet()){
 				authenticationDetails = map.getValue();
-			}
-			sftp.setUserName(authenticationDetails.getField1());
-			if(authenticationDetails.getField2() != null && StringUtils.isNotBlank(authenticationDetails.getField2())){
-				sftp.setPassword(authenticationDetails.getField2());
-			}
-			if(authenticationDetails.getField3() != null && StringUtils.isNotBlank(authenticationDetails.getField3())){
-				sftp.setPrivateKeyPath(authenticationDetails.getField3());
+				if(StringUtils.equalsIgnoreCase(map.getKey(), "User ID and Key")){
+					if(authenticationDetails.getField2() != null && StringUtils.isNotBlank(authenticationDetails.getField2())){
+						sftp.setPrivateKeyPath(authenticationDetails.getField2());
+					}
+				}else{
+					if(authenticationDetails.getField2() != null && StringUtils.isNotBlank(authenticationDetails.getField2())){
+						sftp.setPassword(authenticationDetails.getField2());
+					}
+				}
+				sftp.setUserName(authenticationDetails.getField1());
 			}
 		}
 	}
