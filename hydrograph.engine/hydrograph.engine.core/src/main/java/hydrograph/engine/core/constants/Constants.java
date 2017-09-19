@@ -54,6 +54,8 @@ public class Constants {
     public static final String TERADATA_PWD="PASSWORD";
 
     public static final int DEFAULT_DB_BATCHSIZE = 1000;
+    public static final int DEFAULT_FTP_PORT=21;
+    public static final int DEFAULT_SFTP_PORT=22;
 
     public static final String REDSHIFT_DRIVER_NAME = "com.amazon.redshift.jdbc42.Driver";
     /**
