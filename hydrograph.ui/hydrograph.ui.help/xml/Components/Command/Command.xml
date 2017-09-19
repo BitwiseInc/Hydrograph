@@ -15,14 +15,15 @@
  
 <?NLS TYPE="org.eclipse.help.toc"?>
 <toc label="Input" link_to="xml/Components.xml#Command"> 
-		<topic href="html/Components/Command/Run_Program.html" label="Run Program">
+		<topic href="html/Components/command/Run_Program.html" label="Run Program">
 	      <anchor id="Run_Program"/>
 	   </topic>
-	   <topic href="html/Components/Command/Run_Sql.html" label="Run Sql">
+	   <topic href="html/Components/command/Run_Sql.html" label="Run Sql">
 	      <anchor id="Run_Sql"/>
 	   </topic>
-	   <topic label="FTP" href="html/Components/Command/FTP.html">
+	   <topic label="FTP" href="html/Components/command/FTP.html">
 	      <anchor id="Ftp"/>
+	      <link toc="xml/Components/Command/ftp.xml"/>
 	   </topic>
   </toc>
    
