@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ ******************************************************************************/
+
 package hydrograph.engine.spark.datasource.utils;
 
 import com.jcraft.jsch.*;
@@ -28,11 +41,11 @@ import org.apache.log4j.*;
 
 
 /**
- * Created by damodharraop on 8/1/2017.
+ * Created for SFTPUtil on 8/1/2017.
  */
 public class SFTPUtil {
+    public Boolean done=false;
     static final org.apache.log4j.Logger log= org.apache.log4j.Logger.getLogger(SFTPUtil.class.getName());
-    public static byte[] MAGIC = { 'P', 'K', 0x3, 0x4 };
     public void upload(RunFileTransferEntity runFileTransferEntity) {
         log.debug("Start SFTPUtil upload");
         JSch jsch = new JSch();
@@ -45,9 +58,10 @@ public class SFTPUtil {
         int i;
         File filecheck=new File(runFileTransferEntity.getInputFilePath());
         if(runFileTransferEntity.getFailOnError())
-        if(!(filecheck.isFile()||filecheck.isDirectory())&&!(runFileTransferEntity.getInputFilePath().contains("hdfs://"))){
-         throw new SFTPUtilException("Invalid input filepath");
-        }
+            if(!(filecheck.isFile()||filecheck.isDirectory())&&!(runFileTransferEntity.getInputFilePath().contains("hdfs://"))){
+                log.error("invalid input file path,Please provide valid file path");
+                throw new SFTPUtilException("Invalid input file path");
+            }
 
         if(runFileTransferEntity.getRetryAttempt()==0)
             retryAttempt=1;
@@ -57,10 +71,13 @@ public class SFTPUtil {
         for (i = 0; i < retryAttempt; i++) {
 
             try {
-
+                log.info("connection attempt: "+(i+1));
                 if (runFileTransferEntity.getPrivateKeyPath() != null) {
                     jsch.addIdentity(runFileTransferEntity.getPrivateKeyPath());
                 }
+                log.debug("connection details: " +
+                        "/n"+
+                        "Username: "+runFileTransferEntity.getUserName()+"/n"+"HostName "+runFileTransferEntity.getHostName()+"/n"+"Portno"+runFileTransferEntity.getPortNo());
                 session = jsch.getSession(runFileTransferEntity.getUserName(), runFileTransferEntity.getHostName(), runFileTransferEntity.getPortNo());
                 session.setConfig("PreferredAuthentications",
                         "publickey,keyboard-interactive,password");
@@ -69,6 +86,7 @@ public class SFTPUtil {
                     session.setPassword(runFileTransferEntity.getPassword());
                 }
                 if (runFileTransferEntity.getTimeOut() > 0) {
+
                     session.setTimeout(runFileTransferEntity.getTimeOut());
                 }
 
@@ -80,10 +98,11 @@ public class SFTPUtil {
                 sftpChannel.cd(runFileTransferEntity.getOutFilePath().replaceAll(Matcher.quoteReplacement("\\"), "/"));
 
                 if(runFileTransferEntity.getInputFilePath().contains("hdfs://")){
+                    log.debug("in hdfs file system transfer");
                     String inputPath= runFileTransferEntity.getInputFilePath();
                     File f= new File("/tmp");
                     if(!f.exists())
-                    f.mkdir();
+                        f.mkdir();
                     String s1= inputPath.substring(7,inputPath.length());
                     String s2=s1.substring(0,s1.indexOf("/"));
                     Configuration conf = new Configuration();
@@ -95,7 +114,7 @@ public class SFTPUtil {
 
                     File dir = new File(hdfspath);
                     if(hdfsFileSystem.isDirectory(new Path(hdfspath))) {
-
+                        log.debug("in hdfs file system folder path");
                         InputStream is= null;
                         OutputStream os=null;
                         String localDirectory=hdfspath.substring(hdfspath.lastIndexOf("/")+1);
@@ -131,7 +150,7 @@ public class SFTPUtil {
                                 if(files.isFile())
                                     if(files.isFile()) {
 
-                                        sftpChannel.put(new FileInputStream(files), files.getName());
+                                        sftpChannel.put(new BufferedInputStream(new FileInputStream(files)) , files.getName());
 
                                     }
 
@@ -140,7 +159,8 @@ public class SFTPUtil {
                         }
 
                         catch(IOException e){
-                            e.printStackTrace();
+                            log.error("error while transferring file",e);
+                            throw new SFTPUtilException(e);
                         }
                         finally{
                             IOUtils.closeStream(is);
@@ -155,13 +175,14 @@ public class SFTPUtil {
 
                     }
                     else{
+                        log.debug("File transfer in normal mode");
                         Path hdfs = new Path(hdfspath);
                         hdfsFileSystem.copyToLocalFile(false, hdfs, local);
                         int index = inputPath.replaceAll(Matcher.quoteReplacement("\\"), "/").lastIndexOf('/');
                         String file_name = runFileTransferEntity.getInputFilePath().substring(index + 1);
-                         fin = new FileInputStream("/tmp/" + file_name);
+                        fin = new FileInputStream("/tmp/" + file_name);
                         sftpChannel.cd(runFileTransferEntity.getOutFilePath().replaceAll(Matcher.quoteReplacement("\\"), "/"));
-                        sftpChannel.put(fin, file_name);
+                        sftpChannel.put(new BufferedInputStream(fin), file_name);
                         i = i + 1;
                         fin.close();
                     }
@@ -170,10 +191,10 @@ public class SFTPUtil {
                 else {
                     java.nio.file.Path file = new File(runFileTransferEntity.getInputFilePath()).toPath();
                     if(Files.isDirectory(file)) {
-
+                        log.debug("Folder transfer in SFTP");
                         File f=new File(file.toAbsolutePath().toString());
                         String folderName = new File(runFileTransferEntity.getInputFilePath()).getName();
-                       sftpChannel.cd(runFileTransferEntity.getOutFilePath().replaceAll(Matcher.quoteReplacement("\\"), "/"));
+                        sftpChannel.cd(runFileTransferEntity.getOutFilePath().replaceAll(Matcher.quoteReplacement("\\"), "/"));
                         try {
 
 
@@ -181,6 +202,7 @@ public class SFTPUtil {
                             sftpChannel.cd( folderName );
                         }
                         catch ( SftpException e ) {
+                            log.error("changing the directory but the folde location not found,so create a new directory");
                             sftpChannel.cd(runFileTransferEntity.getOutFilePath().replaceAll(Matcher.quoteReplacement("\\"), "/"));
                             sftpChannel.mkdir( folderName );
                             sftpChannel.cd( folderName );
@@ -189,7 +211,7 @@ public class SFTPUtil {
                         for(File files: f.listFiles()){
 
                             if(files.isFile())
-                            sftpChannel.put( new FileInputStream(files), files.getName());
+                                sftpChannel.put( new BufferedInputStream(new FileInputStream(files)), files.getName());
 
 
                         }
@@ -201,68 +223,53 @@ public class SFTPUtil {
                     else{
                         int index = runFileTransferEntity.getInputFilePath().replaceAll(Matcher.quoteReplacement("\\"), "/").lastIndexOf('/');
                         String file_name = runFileTransferEntity.getInputFilePath().substring(index + 1);
-                         fin = new FileInputStream(runFileTransferEntity.getInputFilePath());
+                        fin = new FileInputStream(runFileTransferEntity.getInputFilePath());
                         sftpChannel.cd(runFileTransferEntity.getOutFilePath().replaceAll(Matcher.quoteReplacement("\\"), "/"));
-                            sftpChannel.put(fin, file_name);
-                            fin.close();
+                        sftpChannel.put(new BufferedInputStream(fin), file_name);
+                        fin.close();
                     }
                 }
             }
             catch (JSchException e) {
                 if (e.getMessage().compareTo("Auth fail") == 0) {
+                    log.error("authentication error,please provide valid details",e);
                     if(runFileTransferEntity.getFailOnError())
                         throw new SFTPUtilException(e.getMessage());
                 }
                 else
                 {
+                    log.error("error while transfering the file and retrying ",e);
                     try {
                         Thread.sleep(runFileTransferEntity.getRetryAfterDuration());
                     } catch (Exception e1) {
-
+                        log.error("sleep duration for re attemp exception",e1);
                     }
                     continue;
                 }
 
             } catch (Exception e) {
+                log.error("Error while transfering the file",e);
                 try {
                     Thread.sleep(runFileTransferEntity.getRetryAfterDuration());
                 } catch (Exception e1) {
-
+                    log.error("exception while sleep thread",e);
                 }
                 continue;
             }
             finally {
                 try{
-                    if(zip!=null)
-                   zip.close();
                     if(fin!=null)
                         fin.close();
                 }
                 catch(IOException ioe){
-
+                    log.error("error while closing input stream ");
                 }
             }
 
+            done=true;
             break;
 
         }
-
-
-        if (i == runFileTransferEntity.getRetryAttempt()) {
-
-            if (sftpChannel != null) {
-                sftpChannel.disconnect();
-            }
-            if (channel != null) {
-                channel.disconnect();
-            }
-            if (session != null) {
-                session.disconnect();
-            }
-            if(runFileTransferEntity.getFailOnError())
-                throw new SFTPUtilException("File transfer failed");
-        }
-
 
         if (sftpChannel != null) {
             sftpChannel.disconnect();
@@ -273,7 +280,12 @@ public class SFTPUtil {
         if (session != null) {
             session.disconnect();
         }
-
+        if(runFileTransferEntity.getFailOnError()&& !done){
+            log.error("File transfer failed");
+            throw new SFTPUtilException("File transfer failed");
+        } else if(!done) {
+            log.error("File transfer failed but mentioned fail on error as false");
+        }
         log.debug("Fininished SFTPUtil upload");
     }
 
@@ -282,9 +294,10 @@ public class SFTPUtil {
 
         File filecheck = new File(runFileTransferEntity.getOutFilePath());
         if(runFileTransferEntity.getFailOnError())
-        if (!(filecheck.exists() && filecheck.isDirectory())&&!(runFileTransferEntity.getOutFilePath().contains("hdfs://"))) {
-            throw new SFTPUtilException("invalid outputpath");
-        }
+            if (!(filecheck.exists() && filecheck.isDirectory())&&!(runFileTransferEntity.getOutFilePath().contains("hdfs://"))) {
+                log.error("invalid output path,Please provide valid path ");
+                throw new SFTPUtilException("invalid outputpath");
+            }
         boolean fail_if_exist=false;
         JSch jsch = new JSch();
         Session session = null;
@@ -297,11 +310,14 @@ public class SFTPUtil {
         else
             retryAttempt=runFileTransferEntity.getRetryAttempt();
         for (i = 0; i < retryAttempt; i++) {
-
+            log.info("connection attempt: "+(i+1));
             try {
                 if (runFileTransferEntity.getPrivateKeyPath() != null) {
                     jsch.addIdentity(runFileTransferEntity.getPrivateKeyPath());
                 }
+                log.debug("connection details: " +
+                        "/n"+
+                        "Username: "+runFileTransferEntity.getUserName()+"/n"+"HostName "+runFileTransferEntity.getHostName()+"/n"+"Portno"+runFileTransferEntity.getPortNo());
                 session = jsch.getSession(runFileTransferEntity.getUserName(), runFileTransferEntity.getHostName(), runFileTransferEntity.getPortNo());
                 session.setConfig("PreferredAuthentications",
                         "publickey,keyboard-interactive,password");
@@ -320,12 +336,13 @@ public class SFTPUtil {
                 sftpChannel.setFilenameEncoding(runFileTransferEntity.getEncoding());
                 if(runFileTransferEntity.getOutFilePath().contains("hdfs://"))
                 {
+                    log.debug("HDFS file transferring");
                     String outputPath= runFileTransferEntity.getOutFilePath();
                     String s1= outputPath.substring(7,outputPath.length());
                     String s2=s1.substring(0,s1.indexOf("/"));
                     File f= new File("/tmp");
                     if(!f.exists())
-                    f.mkdir();
+                        f.mkdir();
 
                     int index = runFileTransferEntity.getInputFilePath().replaceAll(Matcher.quoteReplacement("\\"), "/").lastIndexOf('/');
                     String file_name = runFileTransferEntity.getInputFilePath().substring(index + 1);
@@ -336,18 +353,19 @@ public class SFTPUtil {
                     File isfile=new File(runFileTransferEntity.getOutFilePath()+File.separatorChar + file_name);
                     if(runFileTransferEntity.getOverwrite().equalsIgnoreCase("Overwrite If Exists")){
                         FileOutputStream  fout = new FileOutputStream("/tmp/"+file_name);
-                        sftpChannel.get(file_name, fout);
+                        sftpChannel.get(file_name, new BufferedOutputStream(fout) );
                         fout.close();
 
                     }
                     else {
                         if ((isfile.exists() && !isfile.isDirectory())) {
                             FileOutputStream  fout = new FileOutputStream("/tmp/"+file_name);
-                            sftpChannel.get(file_name, fout);
+                            sftpChannel.get(file_name, new BufferedOutputStream(fout));
                             fout.close();
                         }
                         else{
                             fail_if_exist=true;
+                            log.debug("File already exist");
                             throw new SFTPUtilException("file already exist");
                         }
 
@@ -357,6 +375,7 @@ public class SFTPUtil {
 
                 }
                 else {
+                    log.debug("File transfer in normal");
                     int index = runFileTransferEntity.getInputFilePath().replaceAll(Matcher.quoteReplacement("\\"), "/").lastIndexOf('/');
                     String file_name = runFileTransferEntity.getInputFilePath().substring(index + 1);
                     String file_loc = runFileTransferEntity.getInputFilePath().substring(0, index);
@@ -366,18 +385,19 @@ public class SFTPUtil {
                     File isfile=new File(runFileTransferEntity.getOutFilePath() +File.separatorChar+ file_name);
                     if(runFileTransferEntity.getOverwrite().equalsIgnoreCase("Overwrite If Exists")){
                         FileOutputStream fout = new FileOutputStream(runFileTransferEntity.getOutFilePath()+ File.separatorChar+ file_name);
-                        sftpChannel.get(file_name, fout);
+                        sftpChannel.get(file_name, new BufferedOutputStream(fout));
                         fout.close();
 
                     }
                     else {
                         if (!(isfile.exists() && !isfile.isDirectory())) {
                             FileOutputStream fout = new FileOutputStream(runFileTransferEntity.getOutFilePath() +File.separatorChar+ file_name);
-                            sftpChannel.get(file_name, fout);
+                            sftpChannel.get(file_name, new BufferedOutputStream(fout));
                             fout.close();
                         }
                         else{
                             fail_if_exist=true;
+                            log.debug("file alreay exist");
                             throw new SFTPUtilException("File Already exist");
                         }
 
@@ -389,55 +409,43 @@ public class SFTPUtil {
             }
             catch (JSchException e) {
                 if (e.getMessage().compareTo("Auth fail") == 0) {
+                    log.error("authentication error,please provide valid details");
                     if(runFileTransferEntity.getFailOnError())
                         throw new SFTPUtilException(e.getMessage());
 
                 }
+                log.error("JSCH api exception",e);
 
                 {
                     try {
                         Thread.sleep(runFileTransferEntity.getRetryAfterDuration());
                     } catch (Exception e1) {
-
+                        log.error("error in sleep duration of thread");
                     }
                     continue;
                 }
 
             } catch (Exception e) {
+                log.error("error while transferring the file",e);
                 if (fail_if_exist){
-                    throw new SFTPUtilException("File already exist");
+                    log.error("File already exists");
+                    throw new SFTPUtilException("File already exists");
                 }
                 try {
                     Thread.sleep(runFileTransferEntity.getRetryAfterDuration());
                 } catch (Exception e1) {
-
+                    log.error("sleep duration exception",e1);
                 }
                 continue;
             }
             catch (Error e){
+                log.error("fatal error ",e);
                 throw new SFTPUtilException(e);
             }
-
+            done=true;
             break;
 
         }
-
-
-        if (i == runFileTransferEntity.getRetryAttempt()) {
-
-            if (sftpChannel != null) {
-                sftpChannel.disconnect();
-            }
-            if (channel != null) {
-                channel.disconnect();
-            }
-            if (session != null) {
-                session.disconnect();
-            }
-            if(runFileTransferEntity.getFailOnError())
-                throw new SFTPUtilException("File transfer failed");
-        }
-
 
         if (sftpChannel != null) {
             sftpChannel.disconnect();
@@ -448,7 +456,12 @@ public class SFTPUtil {
         if (session != null) {
             session.disconnect();
         }
-
+        if(runFileTransferEntity.getFailOnError()&& !done){
+            log.error("File transfer failed");
+            throw new SFTPUtilException("File transfer failed");
+        } else if(!done) {
+            log.error("File transfer failed but mentioned fail on error as false");
+        }
         log.debug("Fininished SFTPUtil download");
     }
 

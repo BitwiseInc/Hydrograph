@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ ******************************************************************************/
+
 package hydrograph.engine.spark.datasource.utils;
 
 import com.amazonaws.AmazonServiceException;
@@ -8,9 +21,14 @@ import com.amazonaws.auth.PropertiesCredentials;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.*;
+
+
 import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.Upload;
+import com.esotericsoftware.minlog.Log;
 import hydrograph.engine.core.component.entity.RunFileTransferEntity;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import org.apache.commons.io.FileUtils;
@@ -33,24 +51,29 @@ import java.util.zip.ZipInputStream;
 
 
 /**
- * Created by damodharraop on 9/7/2017.
+ * Created for  AWSS3Util on 9/7/2017.
  */
 public class AWSS3Util {
     static final Logger log=Logger.getLogger(AWSS3Util.class.getName());
-    public static byte[] MAGIC = { 'P', 'K', 0x3, 0x4 };
-
+    boolean done;
     public void upload(RunFileTransferEntity runFileTransferEntity) {
         log.debug("Start AWSS3Util upload");
         int retryAttempt = 0;
         int i;
+
         java.nio.file.Path inputfile = new File(runFileTransferEntity.getLocalPath()).toPath();
         String keyName=inputfile.getFileName().toString();
+        log.info("keyName is: "+keyName);
+        log.info("bucket name is:"+runFileTransferEntity.getBucketName());
+        log.info("Folder Name is"+runFileTransferEntity.getFolder_name_in_bucket());
+
         String amazonFileUploadLocationOriginal=null;
         FileInputStream stream=null;
         File filecheck=new File(runFileTransferEntity.getLocalPath());
         if(runFileTransferEntity.getFailOnError())
         if(!(filecheck.isFile()||filecheck.isDirectory())&&!(runFileTransferEntity.getLocalPath().contains("hdfs://"))){
-            throw new AWSUtilException("invalid localpath");
+            Log.error("Invalid local path.Please provide valid path");
+            throw new AWSUtilException("Invalid local path");
         }
 
         if (runFileTransferEntity.getRetryAttempt() == 0)
@@ -60,7 +83,7 @@ public class AWSS3Util {
 
 
         for (i = 0; i < retryAttempt; i++) {
-            log.info("AWSS3Util Upload Connection Attempt: " + (i + 1));
+            log.info("connection attempt: "+(i+1));
             try {
                 AmazonS3 s3Client = null;
                 ClientConfiguration clientConf = new ClientConfiguration();
@@ -78,17 +101,10 @@ public class AWSS3Util {
 
                 String s3folderName=null;
                 String filepath =  runFileTransferEntity.getFolder_name_in_bucket();
+                log.debug("file path name"+filepath);
+                s3folderName=filepath;
 
-                if(filepath.lastIndexOf("/")!=-1) {
-                    s3folderName=filepath.substring(0, filepath.lastIndexOf("/"));
-
-                }
-                else{
-                    if(filepath.lastIndexOf(".")==-1){
-                        s3folderName=filepath;
-                    }
-                }
-                if(s3folderName!=null) {
+                if(s3folderName!=null&&!s3folderName.trim().equals("")) {
                     amazonFileUploadLocationOriginal = runFileTransferEntity.getBucketName() + "/" + s3folderName;
                 }
                 else{
@@ -99,6 +115,7 @@ public class AWSS3Util {
            File f=new File(runFileTransferEntity.getLocalPath());
 
             if(runFileTransferEntity.getLocalPath().contains("hdfs://")){
+                log.debug("Provided HDFS local path ");
                 String inputPath= runFileTransferEntity.getLocalPath();
                 String s1= inputPath.substring(7,inputPath.length());
                 String s2=s1.substring(0,s1.indexOf("/"));
@@ -143,8 +160,7 @@ public class AWSS3Util {
                         for(File files: dirs.listFiles()){
 
                             if(files.isFile()) {
-                                PutObjectRequest putObjectRequest = new PutObjectRequest(amazonFileUploadLocationOriginal + "/" + folderName, files.getName(), new FileInputStream(files), objectMetadata);
-                                PutObjectResult result = s3Client.putObject(putObjectRequest);
+                                s3Client.putObject(new PutObjectRequest(amazonFileUploadLocationOriginal + "/" + folderName, files.getName(),files));
                             }
 
 
@@ -152,7 +168,7 @@ public class AWSS3Util {
                     }
 
                     catch(IOException e){
-                        e.printStackTrace();
+                        Log.error("IOException occured while transfering the file",e);
                     }
                     finally{
                         org.apache.hadoop.io.IOUtils.closeStream(is);
@@ -169,8 +185,9 @@ public class AWSS3Util {
                 else {
                     hdfsFileSystem.copyToLocalFile(false, hdfs, local);
                     stream = new FileInputStream("/tmp/" + f.getName());
+                    File S3file=new File("/tmp/" + f.getName());
 
-                    PutObjectRequest putObjectRequest = new PutObjectRequest(amazonFileUploadLocationOriginal, keyName, stream, objectMetadata);
+                    PutObjectRequest putObjectRequest = new PutObjectRequest(amazonFileUploadLocationOriginal, keyName, file);
                     PutObjectResult result = s3Client.putObject(putObjectRequest);
                 }
                 }else {
@@ -186,7 +203,7 @@ public class AWSS3Util {
                     for(File files: fileloc.listFiles()){
 
                         if(files.isFile()) {
-                            PutObjectRequest putObjectRequest = new PutObjectRequest(amazonFileUploadLocationOriginal + "/" + folderName, files.getName(), new FileInputStream(files), objectMetadata);
+                            PutObjectRequest putObjectRequest = new PutObjectRequest(amazonFileUploadLocationOriginal + "/" + folderName, files.getName(), files);
 
 
                             PutObjectResult result = s3Client.putObject(putObjectRequest);
@@ -198,17 +215,19 @@ public class AWSS3Util {
                 }
                 else {
                     PutObjectRequest putObjectRequest=null;
-
+                        File file=new File(runFileTransferEntity.getLocalPath());
                     stream = new FileInputStream(runFileTransferEntity.getLocalPath());
-                         putObjectRequest = new PutObjectRequest(amazonFileUploadLocationOriginal, keyName, stream, objectMetadata);
+                         putObjectRequest = new PutObjectRequest(amazonFileUploadLocationOriginal, keyName, file);
                     PutObjectResult result = s3Client.putObject(putObjectRequest);
                 }
             }
+
         }
 
             catch (AmazonServiceException e) {
                 if (e.getStatusCode() == 403 || e.getStatusCode() == 404) {
                     if(runFileTransferEntity.getFailOnError())
+                        Log.error("Incorrect details provided.Please provide valid details",e);
                     throw new AWSUtilException("Incorrect details provided");
 
                 }
@@ -217,24 +236,32 @@ public class AWSS3Util {
                     try {
                         Thread.sleep(runFileTransferEntity.getRetryAfterDuration());
                     } catch (Exception e1) {
-                        e.printStackTrace();
+                        Log.error("Exception occured while sleeping the thread");
                     }
                     continue;
                 }
 
             } catch (Exception e) {
+                log.error("error while transferring file",e);
                 try {
                     Thread.sleep(runFileTransferEntity.getRetryAfterDuration());
                 } catch (Exception e1) {
-
+                    Log.error("Exception occured while sleeping the thread");
                 }
                 continue;
             }
             catch(Error err){
+                Log.error("Error occured while uploading the file",err);
                 throw new AWSUtilException(err);
             }
-
+            done=true;
             break;
+        }
+        if(runFileTransferEntity.getFailOnError()&& !done){
+            log.error("File transfer failed");
+            throw new AWSUtilException("File transfer failed");
+        } else if(!done) {
+            log.error("File transfer failed but mentioned fail on error as false");
         }
         if (i == runFileTransferEntity.getRetryAttempt()) {
             if(runFileTransferEntity.getFailOnError())
@@ -250,7 +277,7 @@ public class AWSS3Util {
         File filecheck = new File(runFileTransferEntity.getLocalPath());
         if(runFileTransferEntity.getFailOnError())
         if (!(filecheck.exists() && filecheck.isDirectory())&&!(runFileTransferEntity.getLocalPath().contains("hdfs://"))) {
-            throw new AWSUtilException("Invalid localpath");
+            throw new AWSUtilException("Invalid local path");
         }
         boolean fail_if_exist=false;
         int retryAttempt = 0;
@@ -262,7 +289,7 @@ public class AWSS3Util {
         else
             retryAttempt = runFileTransferEntity.getRetryAttempt();
         for (i = 0; i < retryAttempt; i++) {
-
+            log.info("connection attempt: "+(i+1));
             try {
 
                 AmazonS3 s3Client = null;
@@ -288,13 +315,13 @@ public class AWSS3Util {
 
                 }
                 else{
-                    if(filepath.lastIndexOf(".")==-1){
-                        s3folderName=filepath;
-                    }
-                    else{
+
                         keyName=filepath;
-                    }
+
                 }
+                log.debug("keyName is: "+keyName);
+                log.debug("bucket name is:"+runFileTransferEntity.getBucketName());
+                log.debug("Folder Name is"+runFileTransferEntity.getFolder_name_in_bucket());
                 if(s3folderName!=null) {
                     amazonFileUploadLocationOriginal = runFileTransferEntity.getBucketName() + "/" + s3folderName;
                 }
@@ -320,16 +347,17 @@ public class AWSS3Util {
                     File fexist=new File(runFileTransferEntity.getLocalPath()+File.separatorChar + keyName);
                     if(runFileTransferEntity.getOverwrite().trim().equalsIgnoreCase("Overwrite If Exists")){
                         S3ObjectInputStream objectContent = object.getObjectContent();
-                        IOUtils.copy(objectContent, new FileOutputStream("/tmp/" + keyName));
+                        IOUtils.copyLarge(objectContent, new FileOutputStream("/tmp/" + keyName));
                     }
                     else {
                         if (!(fexist.exists() && !fexist.isDirectory())) {
                             S3ObjectInputStream objectContent = object.getObjectContent();
-                            IOUtils.copy(objectContent, new FileOutputStream(runFileTransferEntity.getLocalPath()+File.separatorChar + keyName));
+                            IOUtils.copyLarge(objectContent, new FileOutputStream(runFileTransferEntity.getLocalPath()+File.separatorChar + keyName));
                         }
                         else{
                             fail_if_exist=true;
-                            throw new AWSUtilException("file already exist");
+                            Log.error("File already exists");
+                            throw new AWSUtilException("File already exists");
                         }
                     }
 
@@ -357,17 +385,18 @@ public class AWSS3Util {
                     File fexist=new File(runFileTransferEntity.getLocalPath()+File.separatorChar + keyName);
                     if(runFileTransferEntity.getOverwrite().trim().equalsIgnoreCase("Overwrite If Exists")){
                         S3ObjectInputStream objectContent = object.getObjectContent();
-                        IOUtils.copy(objectContent, new FileOutputStream(runFileTransferEntity.getLocalPath() +File.separatorChar+ keyName));
+                        IOUtils.copyLarge(objectContent,new FileOutputStream(runFileTransferEntity.getLocalPath() +File.separatorChar+ keyName));
                     }
 
                     else {
                         if (!(fexist.exists() && !fexist.isDirectory())) {
                             S3ObjectInputStream objectContent = object.getObjectContent();
-                            IOUtils.copy(objectContent, new FileOutputStream(runFileTransferEntity.getLocalPath() +File.separatorChar+keyName));
+                            IOUtils.copyLarge(objectContent,new FileOutputStream(runFileTransferEntity.getLocalPath() +File.separatorChar+keyName));
                         }
                         else{
                             fail_if_exist=true;
-                            throw new AWSUtilException("file already exist");
+                            Log.error("File already exists");
+                            throw new AWSUtilException("File already exists");
                         }
                     }
 
@@ -375,9 +404,16 @@ public class AWSS3Util {
             }
 
             catch (AmazonServiceException e) {
+                log.error("Amazon Service Exception",e);
                 if (e.getStatusCode() == 403 || e.getStatusCode() == 404) {
-                    if(runFileTransferEntity.getFailOnError())
-                    throw new AWSUtilException("Incorrect details provided");
+                    if(runFileTransferEntity.getFailOnError()) {
+                        Log.error("Incorrect details provided.Please provide correct details", e);
+                        throw new AWSUtilException("Incorrect details provided");
+                    }
+                    else
+                    {
+                        Log.error("Unknown amezon exception occured", e);
+                    }
 
                 }
 
@@ -385,32 +421,43 @@ public class AWSS3Util {
                     try {
                         Thread.sleep(runFileTransferEntity.getRetryAfterDuration());
                     } catch (Exception e1) {
-                        e.printStackTrace();
+                       Log.error("Exception occured while sleeping the thread");
                     }
                     continue;
                 }
 
             }
             catch (Error e){
+                Log.error("Error occured while sleeping the thread");
                 throw new AWSUtilException(e);
             }
             catch (Exception e) {
+                log.error("error while transfering file",e);
                 try {
                     Thread.sleep(runFileTransferEntity.getRetryAfterDuration());
                 } catch (Exception e1) {
 
                 }
                 catch (Error err){
+                    Log.error("Error occured while downloading");
                     throw new AWSUtilException(err);
                 }
                 continue;
             }
-
+            done=true;
             break;
         }
+
+        if(runFileTransferEntity.getFailOnError()&& !done){
+            log.error("File transfer failed");
+            throw new AWSUtilException("File transfer failed");
+        } else if(!done) {
+            log.error("File transfer failed but mentioned fail on error as false");
+        }
         if (i == runFileTransferEntity.getRetryAttempt()) {
-            if(runFileTransferEntity.getFailOnError())
-          throw new AWSUtilException("File transfer failed");
+            if(runFileTransferEntity.getFailOnError()) {
+                throw new AWSUtilException("File transfer failed");
+            }
         }
         log.debug("Finished AWSS3Util download");
     }

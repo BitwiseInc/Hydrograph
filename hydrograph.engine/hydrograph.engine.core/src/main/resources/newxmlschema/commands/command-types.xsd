@@ -155,10 +155,10 @@
                                           use="required" />
                         </xs:complexType>
                     </xs:element>
-					<xs:element name="port_No" type="xs:int" minOccurs="0"/>
-					<xs:element name="timeOut" type="xs:int" minOccurs="0"/>
-					<xs:element name="retryAfterDuration" type="xs:int" minOccurs="0"/>
-					<xs:element name="retryAttempt" type="xs:int" minOccurs="0"/>
+					<xs:element name="port_No" type="cmn:element-value-integer-type" minOccurs="0"/>
+					<xs:element name="timeOut" type="cmn:element-value-integer-type" minOccurs="0"/>
+					<xs:element name="retryAfterDuration" type="cmn:element-value-integer-type" minOccurs="0"/>
+					<xs:element name="retryAttempt" type="cmn:element-value-integer-type" minOccurs="0"/>
                     <xs:element name="failOnError" type="xs:boolean" minOccurs="0"/>
                     <xs:element name="overwritemode" type="xs:string" minOccurs="0"/>
 				</xs:sequence>
@@ -186,7 +186,7 @@
             <xs:element name="localPath"  type="xs:string"/>
             <xs:element name="bucketName"  type="xs:string"/>
             <xs:element name="keyName"  type="xs:string" minOccurs="0"/>
-            <xs:element name="folder_name_in_bucket"  type="xs:string"/>
+            <xs:element name="folder_name_in_bucket"  type="xs:string" minOccurs="0"/>
             <xs:element name="FileOperation" type="file-operation-choice" minOccurs="1"  />
             <xs:element name="encoding" minOccurs="0">
                 <xs:complexType>
@@ -194,9 +194,9 @@
                                   use="required" />
                 </xs:complexType>
             </xs:element>
-            <xs:element name="timeOut" type="xs:int" minOccurs="0"/>
-            <xs:element name="retryAfterDuration" type="xs:int" minOccurs="0"/>
-            <xs:element name="retryAttempt" type="xs:int" minOccurs="0"/>
+            <xs:element name="timeOut" type="cmn:element-value-integer-type" minOccurs="0"/>
+            <xs:element name="retryAfterDuration" type="cmn:element-value-integer-type" minOccurs="0"/>
+            <xs:element name="retryAttempt" type="cmn:element-value-integer-type" minOccurs="0"/>
             <xs:element name="failOnError" type="xs:boolean" minOccurs="0"/>
             <xs:element name="overwritemode" type="xs:string" minOccurs="0"/>
         </xs:sequence>
