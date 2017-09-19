@@ -12,7 +12,7 @@
  
  <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="FTP" link_to="xml\Components\command\ftp.xml#FTP"> 
+<toc label="FTP" link_to="xml\Components\command\Command.xml#FTP"> 
 	<topic label="Properties"  href="html/Components/command/FTP_Properties.html"> 
 		<topic href="html/Components/command/FTP_Properties.html#general_properties" label="General Properties"/>
 	    <topic href="html/Components/command/FTP_Properties.html#details" label="Details"/>
