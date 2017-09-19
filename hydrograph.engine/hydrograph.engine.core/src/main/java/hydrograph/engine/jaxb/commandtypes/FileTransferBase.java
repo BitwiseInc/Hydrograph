@@ -78,7 +78,6 @@ import hydrograph.engine.jaxb.commontypes.TypeCommandComponent;
     "overwritemode"
 })
 @XmlSeeAlso({
-    FTPS.class,
     FTP.class,
     SFTP.class
 })

@@ -99,14 +99,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link FTPS }
-     * 
-     */
-    public FTPS createFTPS() {
-        return new FTPS();
-    }
-
-    /**
      * Create an instance of {@link FileOperationChoice }
      * 
      */

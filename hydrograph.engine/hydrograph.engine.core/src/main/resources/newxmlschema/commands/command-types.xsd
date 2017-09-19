@@ -215,25 +215,6 @@
 		</xs:complexContent>
 	</xs:complexType>
 
-	<xs:complexType name="FTPS">
-		<xs:complexContent>
-			<xs:extension base="FileTransferBase">
-				<xs:sequence>
-					<xs:element name="password" type="xs:string"/>
-					<xs:element name="encryptionMethod">
-						<xs:simpleType>
-							<xs:restriction base="xs:string">
-								<xs:enumeration value="SSL"/>
-								<xs:enumeration value="TLS"/>
-							</xs:restriction>
-						</xs:simpleType>
-					</xs:element>
-				</xs:sequence>
-			</xs:extension>
-		</xs:complexContent>
-	</xs:complexType>
-
-
 	<xs:complexType name="SFTP">
 		<xs:complexContent>
 			<xs:extension base="FileTransferBase">
