@@ -187,12 +187,11 @@ public class WidgetFactory {
 		RUN_SQL_QUERY_WIDGET(RunSQLQueryWidget.class),
 		DATABASE_LIST_WIDGET(DropDownWidget.class, WidgetHelper.INSTANCE.getDatabaseListWidgetConfig()),
 		
-		FTP_PROTOCOL_WIDGET(DropDownWidget.class, WidgetHelper.INSTANCE.getProtocolWidgetConfig()),
 		FTP_AUTHENTICATION_WIDGET(AuthenticationWidget.class, WidgetHelper.INSTANCE
 				.getRunTimeWidgetConfig("Authentication", "Authentication Editor")),
-		FTP_CONNECTION_TIME_OUT_WIDGET(TextBoxWithLabelWidget.class, WidgetHelper.INSTANCE
+		FTP_CONNECTION_TIME_OUT_WIDGET(PortWidget.class, WidgetHelper.INSTANCE
 				.getNumbericValueWidgetConfig("Connection\nTime-Out\n(milllisecond)")),
-		FTP_NO_OF_RETRIES_WIDGET(TextBoxWithLabelWidget.class, WidgetHelper.INSTANCE.getNumbericValueWidgetConfig("Number of \nRetries")),
+		FTP_NO_OF_RETRIES_WIDGET(PortWidget.class, WidgetHelper.INSTANCE.getNumbericValueWidgetConfig("Number of \nRetries")),
 		FTP_OPERATION_CONFIG_WIDGET(OperationConfigWidget.class, WidgetHelper.INSTANCE
 				.getRunTimeWidgetConfig("Operation\nConfiguration", "Operation Config")),
 		FTP_ENCODING_WIDGET(DropDownWidget.class, WidgetHelper.INSTANCE.getEncodingWidgetConfig()),

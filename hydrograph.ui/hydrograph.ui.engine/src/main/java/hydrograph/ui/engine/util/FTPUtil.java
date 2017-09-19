@@ -22,7 +22,6 @@ import hydrograph.engine.jaxb.commontypes.BooleanValueType;
 import hydrograph.engine.jaxb.commontypes.StandardCharsets;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.common.util.ParameterUtil;
-import hydrograph.ui.engine.constants.PropertyNameConstants;
 import hydrograph.ui.engine.xpath.ComponentXpath;
 import hydrograph.ui.engine.xpath.ComponentXpathConstants;
 import hydrograph.ui.engine.xpath.ComponentsAttributeAndValue;

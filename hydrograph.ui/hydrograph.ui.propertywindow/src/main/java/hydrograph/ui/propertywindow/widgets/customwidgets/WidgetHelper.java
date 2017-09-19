@@ -609,24 +609,10 @@ public class WidgetHelper {
 		TextBoxWithLableConfig textBoxConfig = new TextBoxWithLableConfig();
 		textBoxConfig.setName(fieldName);
 		textBoxConfig.setGrabExcessSpace(true);
-		//addTextBoxListeners(textBoxConfig);
-		textBoxConfig.getListeners().add(Listners.MODIFY);
+		textBoxConfig.getListeners().add(Listners.EVENT_CHANGE);
 		textBoxConfig.getListeners().add(Listners.VERIFY_NUMERIC_AND_PARAMETER_FOR_DB_COMPONENTS);
 		textBoxConfig.setWidgetWidth(78);
 		return textBoxConfig;
-	}
-	
-	/**
-	 * Configuration to customize dropdown as protocol property 
-	 */
-	public WidgetConfig getProtocolWidgetConfig(){
-		DropDownConfig dropDownConfig = new DropDownConfig();
-		dropDownConfig.setName("Protocol");
-		dropDownConfig.getItems().add("FTP");
-		dropDownConfig.getItems().add("SFTP");
-		dropDownConfig.getItems().add("AWS S3 HTTPS");
-		addComboBoxListeners(dropDownConfig);
-		return dropDownConfig;
 	}
 	
 	/**
@@ -634,7 +620,7 @@ public class WidgetHelper {
 	 */
 	public WidgetConfig getFailOnErrorWidgetConfig(){
 		DropDownConfig dropDownConfig = new DropDownConfig();
-		dropDownConfig.setName("Fail On Error");
+		dropDownConfig.setName(Messages.FAIL_ON_ERROR);
 		dropDownConfig.getItems().add(Constants.TRUE);
 		dropDownConfig.getItems().add(Constants.FALSE);
 		addComboBoxListeners(dropDownConfig);
@@ -646,7 +632,7 @@ public class WidgetHelper {
 	 */
 	public WidgetConfig getEncodingWidgetConfig(){
 		DropDownConfig dropDownConfig = new DropDownConfig();
-		dropDownConfig.setName("Character Set");
+		dropDownConfig.setName(Messages.LABEL_CHARACTER_SET);
 		dropDownConfig.getItems().add(Constants.UTF_8);
 		dropDownConfig.getItems().add(Constants.ISO_8859_1);
 		dropDownConfig.getItems().add(Constants.PARAMETER);
@@ -657,7 +643,6 @@ public class WidgetHelper {
 	public WidgetConfig getProtocolSelectWidgetConfig() {
 		TextBoxWithLableConfig textBoxWithLableConfig = new TextBoxWithLableConfig();
 		textBoxWithLableConfig.setGrabExcessSpace(true);
-		//addTextBoxListeners(textBoxWithLableConfig);
 		return textBoxWithLableConfig;
 	}
 }

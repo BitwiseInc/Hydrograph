@@ -42,7 +42,6 @@ public class FTPAuthenticationValidator implements IValidator{
 	public boolean validate(Object object, String propertyName, Map<String, List<FixedWidthGridRow>> inputSchemaMap,
 			boolean isJobFileImported) {
 		Map<String, FTPAuthOperationDetails> additionalParam = null;
-		boolean matchS3 = false;
 		if(object != null && Map.class.isAssignableFrom(object.getClass())){
 				additionalParam = (Map<String, FTPAuthOperationDetails>) object;
 				if (!additionalParam.isEmpty()) {
@@ -80,8 +79,6 @@ public class FTPAuthenticationValidator implements IValidator{
 		
 		return true;
 	}
-	
-	
 
 	@Override
 	public String getErrorMessage() {

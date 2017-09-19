@@ -455,6 +455,7 @@ public class Messages extends NLS {
 	public static String FAIL_IF_EXISTS;
 	public static String AUTH_EDITOR;
 	public static String OPERATION_CONFIG;
+	public static String FAIL_ON_ERROR;
 	
 	
 	

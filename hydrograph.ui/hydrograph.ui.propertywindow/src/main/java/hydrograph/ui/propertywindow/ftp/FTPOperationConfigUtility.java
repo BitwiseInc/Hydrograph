@@ -21,7 +21,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 /**
@@ -54,14 +53,14 @@ public class FTPOperationConfigUtility {
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
 		FTPWidgetUtility ftpWidgetUtility = new FTPWidgetUtility();
-		Label localPathLbl = (Label) ftpWidgetUtility.createLabel(composite, "Local Path");
+		ftpWidgetUtility.createLabel(composite, "Local Path");
 		Text localPathTxt = (Text) ftpWidgetUtility.createText(composite, "", SWT.BORDER);
 		Button localPathBrwsBtn = new Button(composite, SWT.NONE);
 		localPathBrwsBtn.setText("...");
 		selectionListener(localPathBrwsBtn, localPathTxt);
 		
-		Label fileNameLbl = (Label) ftpWidgetUtility.createLabel(composite, "File Name");
-		Text fileNameTxt = (Text) ftpWidgetUtility.createText(composite, "", SWT.BORDER);
+		ftpWidgetUtility.createLabel(composite, "File Name");
+		ftpWidgetUtility.createText(composite, "", SWT.BORDER);
 		
 		
 		return composite;

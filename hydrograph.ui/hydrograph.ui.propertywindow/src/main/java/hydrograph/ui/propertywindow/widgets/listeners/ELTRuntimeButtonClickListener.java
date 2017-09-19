@@ -50,7 +50,6 @@ public class ELTRuntimeButtonClickListener implements IELTListener {
 		Listener listener = new Listener() {
 			public void handleEvent(Event event) {
 				if (event.type == SWT.Selection) {
-					//((ELTRuntimePropertiesWidget)helpers.object).newWindowLauncher();
 					if(helpers.object instanceof ELTRuntimePropertiesWidget)
 						((ELTRuntimePropertiesWidget)helpers.object).newWindowLauncher();
 					else if(helpers.object instanceof SecondaryColumnKeysWidget) 

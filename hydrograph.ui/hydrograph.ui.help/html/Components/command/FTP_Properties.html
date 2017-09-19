@@ -24,7 +24,7 @@
 		<a name="general_properties"></a><span class="header-2">General Properties</span>
 	</p>
 
-	<p><img alt="" src="../../images/" /></p>
+	<p><img alt="" src="../../images/ftp_general_value.png" /></p>
 
 	<p>
 		<a name="details"></a><span class="header-2">Details</span>
@@ -38,22 +38,72 @@
 		<a name="configuration"></a><span class="header-2">Configuration</span> 
 	</p>
 <ul>
-	<li><span><b>Protocol</b>  - .</span></li>
-	<li><span><b>Host</b> - . </span></li>
-	<li><span><b>Port</b> - Port simply accepts a numeric number starting from 0 to maximum 65535. By default this is 1521.</span></li>
-	<li><span><b>Authentication</b> - .</span></li>
-	<li><span><b>Connection Time-Out</b> - .</span></li>
-	<li><span><b>Number of Retries</b> - </span></li>
-	<li><span><b>Operation Configuration</b> - .</span></li>
-	<li><span><b>Character Set</b> - .</span></li>
-	<li><span><b>Fail On Error</b> - .</span></li>
+	<li><span><b>Protocol</b>  - Contains a drop-down of Protocols. Used to define file transfer protocols. Drop down lists values like : FTP, SFTP, AWS S3 HTTPS.</span></li>
+	<li><span><b>Host Name</b> - Host Name used to specify the Host server IP address or localhost name. This field should be mandatory to user for FTP and SFTP Protocol.</span></li>
+	<li><span><b>Port</b> - Port simply accepts a numeric number starting from 0 to maximum 65535.</span></li>
+	<li><span><b>Authentication</b> - User needs to provide credentials to connect to the ftp server.</span></li>
+<ul>
+	<ul>If user select protocol : FTP</ul>
+	<li><span><b>Authentication Mode</b> - Authentication Mode has One options -
+	<ul><span><b>Standard Authentication</b> - It has two fields - </ul>
+	<ul><b>User ID</b> - User is required to specify the User name to login to Teradata Database.</ul>
+	<ul><b>Password</b> - Password used to specify the password.</ul>
+	</span></li>
+	<ul>If user select protocol : SFTP</ul>
+	<li><span><b>Authentication Mode</b> - Authentication Mode has two options -
+	<ul><span><b>Standard Authentication</b></ul>
+	<p><img alt="" src="../../images/ftp_auth_error.png" /></p>
+	<ul><span><b>USER ID and Key</b></ul>
+	<p><img alt="" src="../../images/auth_sftp_key.png" /></p>
+	
+	<ul>If user select protocol : AWS S3 HTTPS</ul>
+	<li><span><b>Authentication Mode</b> - Authentication Mode has two options -
+	<ul><span><b>AWS S3 Access Key</b></ul>
+	<p><img alt="" src="../../images/s3_auth_access.png" /></p>
+	<ul><span><b>AWS S3 Property File</b></ul>
+	<p><img alt="" src="../../images/s3_prop_file.png"/></p>
+</ul>
+
+	<li><span><b>Connection Time-Out</b> - It defines the connection time out in milliseconds.</span></li>
+	<li><span><b>Number of Retries</b> - It defines the no of tries to establish the connection.</span></li>
+	<li><span><b>Operation Configuration</b> - User needs to provide the operation for download or upload the file.</span></li>
+	
+	<li><span><b>Operation</b> - Operation has two options -
+	<ul><b>Get Files</b> - User is required to download the file from server to local.</ul>
+	<ul><b>Put Files</b> - User is required to upload the file from local to server.</ul>
+	<p><img alt="" src="../../images/sftp_get_png.PNG" /></p>
+	<p><img alt="" src="../../images/sftp_put_operation.png" /></p>
+	<ul>If user select protocol : AWS S3 HTTPS</ul>
+	<p><img alt="" src="../../images/s3_get_operation.png" /></p>
+	<p><img alt="" src="../../images/s3_put_operation.png"/></p>
+	
+	
+	<li><span><b>Character Set</b> - Contains a drop-down of character encoding values. Used simply to denote the encoding system that will be used while creating the Output file to denote characters of data. Drop down lists values like : UTF8, US-ASCII, ISO-8859-1 etc.</span></li>
+	<li><span><b>Fail On Error</b> - This property accepts Boolean values True and False. The Fail property when True, If user need to fail the component. When False, If user need to pass the component on job execution.</span></li>
 	<li><span><b>Batch</b> - Batch simply accepts a numeric number starting from 0 to maximum 99 and signifies the batch this component will execute in. By default this is 0.</span></li>
 </ul>
 
 	<p>
 		<a name="validations"></a><span class="header-2">Validations</span>
 	</p>
-
-
+	
+	<p>
+		<span>The FTP components applies validations to the mandatory fields. Upon placing the
+			FTP component on job canvas for the first time (from component palette), the component shows up a warning icon as
+			mandatory properties are not provided.</span>
+	</p>
+	<img alt="" src="../../images/ftp_warning_icon.png"/>
+	
+	<p>
+		<span>The properties window also displays error icon on mandatory fields if it has an incorrect value. The error icon
+			is displayed on the tab as well, if any of the field within the tab has some error.</span>
+	</p>
+	<img alt="" src="../../images/ftp_general_error.png"/>
+	<p>
+		<span>If the properties window has some error even after user visit's it once, then the warning icon on the FTP 
+			component on the job canvas changes to error icon. This error icon is removed only when all the mandatory fields are supplied
+			with correct values.</span>
+	</p>
+	<img alt="" src="../../images/ftp_error_icon.png"/>
 </body>
 </html>

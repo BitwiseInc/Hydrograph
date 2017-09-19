@@ -39,7 +39,6 @@ public class FTPProtocolConverter extends CommandConverter{
 	
 	@Override
 	public void prepareForXML() {
-		//super.prepareForXML();
 		FTPProtocolDetails protocolDetails;
 		if(properties.get(Constants.PROTOCOL_SELECTION).equals("")){
 			this.baseComponent = new FTP();

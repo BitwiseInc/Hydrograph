@@ -11,7 +11,6 @@
  * limitations under the License.
  *******************************************************************************/
 
- 
 package hydrograph.ui.validators.impl;
 
 import hydrograph.ui.common.util.Constants;
@@ -24,6 +23,11 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 
+/**
+ * The Class BooleanOrParameterValidationRule used to validate boolean values and parameter values
+ * @author Bitwise
+ *
+ */
 public class BooleanOrParameterValidationRule implements IValidator {
 	private String errorMessage;
 	

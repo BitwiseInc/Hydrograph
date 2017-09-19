@@ -13,10 +13,10 @@
  <?NLS TYPE="org.eclipse.help.toc"?>
 
 <toc label="FTP" link_to="xml\Components\command\ftp.xml#FTP"> 
-	<topic label="Properties"  href="html/Components/command/"> 
-		<topic href="html/Components/command/#general_properties" label="General Properties"/>
-	    <topic href="html/Components/command/#details" label="Details"/>
-	    <topic href="html/Components/command/#configuration" label="Configuration"/>
-	    <topic href="html/Components/command/#validations" label="Validations"/>
+	<topic label="Properties"  href="html/Components/command/FTP_Properties.html"> 
+		<topic href="html/Components/command/FTP_Properties.html#general_properties" label="General Properties"/>
+	    <topic href="html/Components/command/FTP_Properties.html#details" label="Details"/>
+	    <topic href="html/Components/command/FTP_Properties.html#configuration" label="Configuration"/>
+	    <topic href="html/Components/command/FTP_Properties.html#validations" label="Validations"/>
     </topic>
 </toc>

@@ -70,8 +70,6 @@ public class FTPAuthenticEditorDialog extends Dialog{
 	private Map<String, FTPAuthOperationDetails> authOperationSelectionMap;
 	private Text text1;
 	private Text text2;
-	//private ControlDecoration text1ControlDecoration;
-	//private ControlDecoration text2ControlDecoration;
 	
 	
 
@@ -92,6 +90,7 @@ public class FTPAuthenticEditorDialog extends Dialog{
 	
 	@Override
 	protected Control createDialogArea(Composite parent) {
+		logger.debug("authentication editor dialog created");
 		Composite container = (Composite) super.createDialogArea(parent);
 		container.setLayout(new GridLayout(1, false));
 		container.getShell().setText(windowLabel);

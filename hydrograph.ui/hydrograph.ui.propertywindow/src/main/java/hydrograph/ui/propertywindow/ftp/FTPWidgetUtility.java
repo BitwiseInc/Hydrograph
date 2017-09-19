@@ -100,13 +100,11 @@ public class FTPWidgetUtility {
 	 */
 	public void validateWidgetText(Text text, PropertyDialogButtonBar propertyDialogButtonBar, Cursor cursor,
 			ControlDecoration controlDecoration) {
-		//ControlDecoration controlDecoration = WidgetUtility.addDecorator(text, Messages.FIELDNAME_NOT_ALPHANUMERIC_ERROR);
 		controlDecoration.setMarginWidth(2);
 		ModifyAlphaNumbericTextListener alphaNumbericTextListener = new ModifyAlphaNumbericTextListener();
 		ListenerHelper helper = new ListenerHelper();
 		helper.put(HelperType.CONTROL_DECORATION, controlDecoration);
 		text.addListener(SWT.Modify, alphaNumbericTextListener.getListener(propertyDialogButtonBar, helper, text));
-		//Utils.INSTANCE.addMouseMoveListener(text, cursor);	
 	}
 	
 	/**
@@ -116,7 +114,6 @@ public class FTPWidgetUtility {
 	 */
 	public void validateEmptyWidgetText(Text text, PropertyDialogButtonBar propertyDialogButtonBar, Cursor cursor, 
 			ControlDecoration controlDecoration){
-		//ControlDecoration controlDecoration = WidgetUtility.addDecorator(text, Messages.EMPTYFIELDMESSAGE);
 		controlDecoration.setMarginWidth(2);
 		ELTModifyListener eltModifyListener = new ELTModifyListener();
 		ListenerHelper helper = new ListenerHelper();

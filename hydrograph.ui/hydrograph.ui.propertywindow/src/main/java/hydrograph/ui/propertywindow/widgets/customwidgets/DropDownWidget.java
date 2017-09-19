@@ -18,7 +18,6 @@ package hydrograph.ui.propertywindow.widgets.customwidgets;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.fieldassist.ControlDecoration;
@@ -32,7 +31,6 @@ import org.eclipse.swt.widgets.Text;
 import org.slf4j.Logger;
 
 import hydrograph.ui.common.util.Constants;
-import hydrograph.ui.datastructure.property.FTPAuthOperationDetails;
 import hydrograph.ui.logging.factory.LogFactory;
 import hydrograph.ui.propertywindow.datastructures.ComboBoxParameter;
 import hydrograph.ui.propertywindow.factory.ListenerFactory.Listners;

@@ -68,15 +68,6 @@ public class FTPOperationParamValidator implements IValidator{
 								errorMessage = propertyName + " can not be blank";
 								return false;
 							}
-							
-							/*if(validateText(details.getField2(), propertyName) && validateText(details.getField3(), propertyName)
-									&& validateText(details.getField4(), propertyName)){
-								return true;
-							}else{
-								errorMessage = propertyName + " is mandatory";
-								return false;
-							}*/
-							
 						}else {
 							if(details.getField1() == null || details.getField1().isEmpty()){
 								errorMessage = propertyName + " can not be blank";
@@ -96,25 +87,5 @@ public class FTPOperationParamValidator implements IValidator{
 	@Override
 	public String getErrorMessage() {
 		return errorMessage;
-	}
-
-	private boolean validateText(String text, String propertyName){
-		if (StringUtils.isNotBlank(text)) {
-			Matcher matchs = Pattern.compile(Constants.REGEX).matcher(text);
-			return validateNumericField(text, propertyName, errorMessage, matchs);
-		}
-		return false;
-	}
-	
-	
-	private boolean validateNumericField(String value, String propertyName, String errorMessage, Matcher matchs){
-		boolean isValid = false;
-		if(matchs.matches()||ParameterUtil.isParameter(value)){
-			isValid =  true;
-		}else{
-			isValid = false;
-			errorMessage = propertyName + " is mandatory";
-		}
-		return isValid;
 	}
 }

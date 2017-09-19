@@ -63,7 +63,7 @@ public class FTPAuthenticEditorUtility {
 		text1 = userIdTextBox;
 		
 		ftpWidgetUtility.createLabel(basicAuthComposite, "Password");
-		Text passText = (Text) ftpWidgetUtility.createText(basicAuthComposite, "", SWT.PASSWORD|SWT.BORDER);
+		ftpWidgetUtility.createText(basicAuthComposite, "", SWT.PASSWORD|SWT.BORDER);
 		
 		return basicAuthComposite;
 	}
@@ -79,7 +79,7 @@ public class FTPAuthenticEditorUtility {
 		
 		FTPWidgetUtility ftpWidgetUtility = new FTPWidgetUtility();
 		ftpWidgetUtility.createLabel(keyFileComposite, "User ID");
-		Text idText = (Text) ftpWidgetUtility.createText(keyFileComposite, "", SWT.BORDER);
+		ftpWidgetUtility.createText(keyFileComposite, "", SWT.BORDER);
 		Button keyFileBrwsBtn1 = new Button(keyFileComposite, SWT.NONE);
 		keyFileBrwsBtn1.setVisible(false);
 		
@@ -104,11 +104,11 @@ public class FTPAuthenticEditorUtility {
 		
 		FTPWidgetUtility ftpWidgetUtility = new FTPWidgetUtility();
 		ftpWidgetUtility.createLabel(basicAuthKeyComposite, "User ID");
-		Text idText = (Text) ftpWidgetUtility.createText(basicAuthKeyComposite, "", SWT.BORDER);
+		ftpWidgetUtility.createText(basicAuthKeyComposite, "", SWT.BORDER);
 		new Button(basicAuthKeyComposite, SWT.NONE).setVisible(false);
 		
 		ftpWidgetUtility.createLabel(basicAuthKeyComposite, "Password");
-		Text passText = (Text) ftpWidgetUtility.createText(basicAuthKeyComposite, "", SWT.PASSWORD|SWT.BORDER);
+		ftpWidgetUtility.createText(basicAuthKeyComposite, "", SWT.PASSWORD|SWT.BORDER);
 		new Button(basicAuthKeyComposite, SWT.NONE).setVisible(false);
 		
 		ftpWidgetUtility.createLabel(basicAuthKeyComposite, "Public/Private Key");
