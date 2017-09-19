@@ -65,6 +65,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 	// View Data config properties
 	private static final String DRIVER_CLASS = "DRIVER_CLASS";
 	public static final String SERVICE_JAR = "SERVICE_JAR";
+	public static final String SERVICE_DEPENDENCIES = "SERVICE_DEPENDENCIES";
 	public static final String PORT_NUMBER = "PORT_NO";
 	/**
 	 * Instantiates a new application workbench window advisor.
@@ -124,13 +125,21 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 	
 	private void serviceInitiator(Properties properties) throws IOException{
 		if(OSValidator.isWindows()){		
-			String command = "java -cp " + getInstallationConfigPath().trim() + ";"+Platform.getInstallLocation().getURL().getPath()+properties.getProperty(SERVICE_JAR) + " " +properties.getProperty(DRIVER_CLASS);
+			//Updated the java classpath to include the dependent jars
+			String command = "java -cp " + getInstallationConfigPath().trim() + ";"
+							+ Platform.getInstallLocation().getURL().getPath() + properties.getProperty(SERVICE_DEPENDENCIES)+ ";"
+							+ Platform.getInstallLocation().getURL().getPath() + properties.getProperty(SERVICE_JAR) 
+							+ " " + properties.getProperty(DRIVER_CLASS);
 			ProcessBuilder builder = new ProcessBuilder(new String[]{"cmd", "/c", command});
 			builder.start();
 		}
 		else if(OSValidator.isMac()){
 			logger.debug("On Mac Operating System....");
-			String command="java -cp " + getInstallationConfigPath().trim() + ":" +Platform.getInstallLocation().getURL().getPath()+ properties.getProperty(SERVICE_JAR) + " " +properties.getProperty(DRIVER_CLASS);
+			//Updated the java classpath to include the dependent jars
+			String command="java -cp " + getInstallationConfigPath().trim() + ":" 
+							+ Platform.getInstallLocation().getURL().getPath() + properties.getProperty(SERVICE_JAR) + ":" 
+							+ Platform.getInstallLocation().getURL().getPath() + properties.getProperty(SERVICE_DEPENDENCIES)
+							+ " " + properties.getProperty(DRIVER_CLASS);
 			logger.debug("command{}", command);
             ProcessBuilder builder = new ProcessBuilder(new String[]{"bash", "-c", command});
             builder.start();
