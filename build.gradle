@@ -23,7 +23,7 @@ repositories {
     }
 	 /* Add links of Nexus/Artifactory in order to resolve the dependencies */
      maven {
-        url 'http://10.20.16.32:9091/artifactory/hydrograph-spark-github'
+        url ''
     }
 }
    
@@ -52,7 +52,7 @@ dependencies {
 	
 	hgService group: 'commons-collections', name: 'commons-collections', version: '3.2.2'
 	hgService group: 'org.antlr', name: 'antlr4-runtime', version: '4.5.1'
-	//hgService group: 'cascading', name: 'lingual-hadoop2-mr1', version: '1.2.1', classifier:'jdbc'
+	hgService group: 'cascading', name: 'lingual-hadoop2-mr1', version: '1.2.1', classifier:'jdbc'
   	hgService group: 'com.sparkjava', name: 'spark-core', version: '2.5.1'
 	hgService group: 'javax.websocket', name: 'javax.websocket-api', version: '1.1' 
 	hgService( group: 'org.apache.hadoop', name: 'hadoop-minicluster', version: hadoopVersion){
