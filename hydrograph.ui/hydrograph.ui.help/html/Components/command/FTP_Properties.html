@@ -18,7 +18,8 @@
 
 <body>
 <p><span class="header-1">FTP Properties</span></p>
-<p><span><b>Properties</b>&nbsp;for the FTP component can be viewed by Double click component on canvas. The properties contain a &#39;General&#39; tab. Common and mandatory properties are present in the General tab. </span></span></p>
+<p><span><b>Properties</b>&nbsp;can be viewed by double-clicking on component or selecting 'Properties' option from component 
+right-click option list. The properties contain a &#39;General&#39; tab. Common and mandatory properties are present in the General tab. </span></span></p>
 
 	<p>
 		<a name="general_properties"></a><span class="header-2">General Properties</span>
@@ -38,39 +39,39 @@
 		<a name="configuration"></a><span class="header-2">Configuration</span> 
 	</p>
 <ul>
-	<li><span><b>Protocol</b>  - Contains a drop-down of Protocols. Used to define file transfer protocols. Drop down lists values like : FTP, SFTP, AWS S3 HTTPS.</span></li>
-	<li><span><b>Host Name</b> - Host Name used to specify the Host server IP address or localhost name. This field should be mandatory to user for FTP and SFTP Protocol.</span></li>
-	<li><span><b>Port</b> - Port simply accepts a numeric number starting from 0 to maximum 65535.</span></li>
-	<li><span><b>Authentication</b> - User needs to provide credentials to connect to the ftp server.</span></li>
+	<li><span><b>Protocol</b>  - Provides drop-down to select the appropriate file transfer protocol from available list like FTP, SFTP, AWS S3 HTTPS.</span></li>
+	<li><span><b>Host</b> - Required to specify IP address or host name of server. Required property, if user opts for FTP or SFTP protocol.</span></li>
+	<li><span><b>Port</b> - Port simply accepts a numeric number starting from 0 to maximum 65535. Required property, if user opts for FTP or SFTP protocol.</span></li>
+	<li><span><b>Authentication</b> - User needs to provide connection details to establish the connection with appropriate server. Authentication editor displays different 
+	modes of authentication based on protocol selection.</span></li>
 <ul>
-	<ul>If user select protocol : FTP</ul>
-	<li><span><b>Authentication Mode</b> - Authentication Mode has One options -
-	<ul><span><b>Standard Authentication</b> - It has two fields - </ul>
-	<ul><b>User ID</b> - User is required to specify the User name to login to Teradata Database.</ul>
-	<ul><b>Password</b> - Password used to specify the password.</ul>
+	
+	<ul>For FTP protocol, authentication editor provides 'Standard Authentication' mode, which contains textbox to accept User ID and Password.</ul>
 	</span></li>
-	<ul>If user select protocol : SFTP</ul>
-	<li><span><b>Authentication Mode</b> - Authentication Mode has two options -
-	<ul><span><b>Standard Authentication</b></ul>
+	<ul>For SFTP protocol, authentication editor provides two i.e. 'Standard Authentication' and 'User ID and Key' authentication mode. 
+	In case of 'User ID and Key' authentication mode, user needs to specify the User ID and Private Key to create a connection. </ul>
 	<p><img alt="" src="../../images/ftp_auth_error.png" /></p>
 	<ul><span><b>USER ID and Key</b></ul>
 	<p><img alt="" src="../../images/auth_sftp_key.png" /></p>
 	
-	<ul>If user select protocol : AWS S3 HTTPS</ul>
-	<li><span><b>Authentication Mode</b> - Authentication Mode has two options -
-	<ul><span><b>AWS S3 Access Key</b></ul>
+	<ul>For AWS S3 HTTPS protocol, authentication editor provides two i.e. 'AWS S3 Access Key' and 'AWS S3 Property File' authentication configuration mode.</ul>
 	<p><img alt="" src="../../images/s3_auth_access.png" /></p>
 	<ul><span><b>AWS S3 Property File</b></ul>
 	<p><img alt="" src="../../images/s3_prop_file.png"/></p>
 </ul>
 
 	<li><span><b>Connection Time-Out</b> - It defines the connection time out in milliseconds.</span></li>
-	<li><span><b>Number of Retries</b> - It defines the no of tries to establish the connection.</span></li>
-	<li><span><b>Operation Configuration</b> - User needs to provide the operation for download or upload the file.</span></li>
+	<li><span><b>Number of Retries</b> - It defines the number of tries to establish the connection.</span></li>
+	<li><span><b>Operation Configuration</b> - User can use Operation Config to provide the operation details.</span></li>
 	
-	<li><span><b>Operation</b> - Operation has two options -
-	<ul><b>Get Files</b> - User is required to download the file from server to local.</ul>
-	<ul><b>Put Files</b> - User is required to upload the file from local to server.</ul>
+	<li><span><b>Operation</b> - Provides options to select the required file transfer operation -
+	<ul><b>Get Files</b> - Required to download the file from remote location to local path.</ul>
+	<ul><b>Put Files</b> - Required to upload the file from local to remote path.</ul>
+	<ul><b>Write Mode</b> - Write Mode provides two options i.e. 'Overwrite If Exists' and 'Fail If Exists'. User can select 'Overwrite If Exists' option to overwrite the file at the time of Get Files operation, if exists. On the other side, user can opt for 'Fail If Exists' option to fail the operation in case same file is already available at given local path.</ul>
+	<ul>User need to specify following values to Get or Put Files From/To AWS S3.</ul>
+	<ul><b>S3 Bucket</b> - Specifies AWS S3 bucket name </ul>
+	<ul><b>S3 File Path</b> - Specifies AWS S3 file path for operation</ul>
+	<ul><b>AWS Region</b> - Specifies AWS S3 region</ul>
 	<p><img alt="" src="../../images/sftp_get_png.PNG" /></p>
 	<p><img alt="" src="../../images/sftp_put_operation.png" /></p>
 	<ul>If user select protocol : AWS S3 HTTPS</ul>
@@ -78,8 +79,8 @@
 	<p><img alt="" src="../../images/s3_put_operation.png"/></p>
 	
 	
-	<li><span><b>Character Set</b> - Contains a drop-down of character encoding values. Used simply to denote the encoding system that will be used while creating the Output file to denote characters of data. Drop down lists values like : UTF8, US-ASCII, ISO-8859-1 etc.</span></li>
-	<li><span><b>Fail On Error</b> - This property accepts Boolean values True and False. The Fail property when True, If user need to fail the component. When False, If user need to pass the component on job execution.</span></li>
+	<li><span><b>Character Set</b> - Character Set provides drop-down to select encoding values from available list. Options are - UTF8, US-ASCII, ISO-8859-1 etc.</span></li>
+	<li><span><b>Fail On Error</b> - This property accepts Boolean values i.e. True and False. When 'True', component will fail the job in case any error occurs in FTP component operation. When set to 'False', control will be passed to immediate next component in case of success or failure in component operation.</span></li>
 	<li><span><b>Batch</b> - Batch simply accepts a numeric number starting from 0 to maximum 99 and signifies the batch this component will execute in. By default this is 0.</span></li>
 </ul>
 

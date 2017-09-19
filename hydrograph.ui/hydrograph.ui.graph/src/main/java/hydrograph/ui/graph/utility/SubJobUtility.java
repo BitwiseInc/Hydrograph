@@ -601,22 +601,22 @@ public class SubJobUtility {
 			isVersionChanged = updateVersionOfSubjob(subJobComponent);
 			
 			for(Object object:container.getChildren()){
-				Component component=(Component) object;
 				if(object instanceof Component){
-				if( !(component.getComponentName().equals(Messages.INPUT_SUBJOB_COMPONENT)) && 
-						!(component.getComponentName().equals(Messages.OUTPUT_SUBJOB_COMPONENT))){
-					if(Constants.SUBJOB_COMPONENT.equals(component.getComponentName())){
-						isVersionChanged = updateSubjobVersionForRefresh(component);
-					}
-					
-					if(isVersionChanged){
-						subJobComponent.getProperties().put(Component.Props.VALIDITY_STATUS.getValue(), Constants.UPDATE_AVAILABLE);
-						PropertyToolTipInformation information = createPropertyToolTipInformation(Messages.SUBJOB_REFRESH_INFO, Constants.SHOW_TOOLTIP);
-						if(subJobComponent.getTooltipInformation() != null){
-							subJobComponent.getTooltipInformation().put(Constants.SUBJOB_TOOLTIP_INFO, information);
+					Component component=(Component) object;
+					if( !(component.getComponentName().equals(Messages.INPUT_SUBJOB_COMPONENT)) && 
+							!(component.getComponentName().equals(Messages.OUTPUT_SUBJOB_COMPONENT))){
+						if(Constants.SUBJOB_COMPONENT.equals(component.getComponentName())){
+							isVersionChanged = updateSubjobVersionForRefresh(component);
+						}
+						
+						if(isVersionChanged){
+							subJobComponent.getProperties().put(Component.Props.VALIDITY_STATUS.getValue(), Constants.UPDATE_AVAILABLE);
+							PropertyToolTipInformation information = createPropertyToolTipInformation(Messages.SUBJOB_REFRESH_INFO, Constants.SHOW_TOOLTIP);
+							if(subJobComponent.getTooltipInformation() != null){
+								subJobComponent.getTooltipInformation().put(Constants.SUBJOB_TOOLTIP_INFO, information);
+							}
 						}
 					}
-				}
 				}
 			}
 		}
