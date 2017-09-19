@@ -13,7 +13,7 @@
  
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="Run SQL" link_to="xml\Components\command\Command.xml#Run_Sql"> 
+<toc label="Run SQL" link_to="xml\Components\Command\Command.xml#Run_Sql"> 
 	<topic label="Properties"  href="html/Components/command/Run_SQL_Properties.html"> 
 		<topic href="html/Components/command/Run_SQL_Properties.html#general_properties" label="General Properties"/>
 	    <topic href="html/Components/command/Run_SQL_Properties.html#details" label="Details"/>

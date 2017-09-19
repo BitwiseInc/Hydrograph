@@ -17,15 +17,12 @@
 <toc label="Input" link_to="xml/Components.xml#Command"> 
 		<topic href="html/Components/Command/Run_Program.html" label="Run Program">
 	      <anchor id="Run_Program"/>
-	      <link toc="xml/Components/Command/runProgram.xml"/>
 	   </topic>
 	   <topic href="html/Components/Command/Run_Sql.html" label="Run Sql">
 	      <anchor id="Run_Sql"/>
-	      <link toc="xml/Components/Command/runSql.xml"/>
 	   </topic>
 	   <topic label="FTP" href="html/Components/Command/FTP.html">
 	      <anchor id="Ftp"/>
-	      <link toc="xml/Components/Command/ftp.xml"/>
 	   </topic>
   </toc>
    

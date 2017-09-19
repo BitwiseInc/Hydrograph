@@ -13,7 +13,7 @@
  
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="Run Program" link_to="xml\Components\command\Command.xml#Run_Program"> 
+<toc label="Run Program" link_to="xml\Components\Command\Command.xml#Run_Program"> 
 	<topic label="Properties"  href="html/Components/command/Run_Program_Properties.html"> 
 		<topic href="html/Components/command/Run_Program_Properties.html#general_properties" label="General Properties"/>
 	    <topic href="html/Components/command/Run_Program_Properties.html#details" label="Details"/>
