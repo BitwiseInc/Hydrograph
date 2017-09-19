@@ -86,7 +86,12 @@ public class DropDownWidget extends AbstractWidget{
 		super(componentConfigProp, componentMiscProps, propDialogButtonBar);
 
 		this.propertyName = componentConfigProp.getPropertyName();
-		this.properties =  (String) componentConfigProp.getPropertyValue(); 
+		if(componentConfigProp.getPropertyValue() instanceof String){
+			this.properties =  (String) componentConfigProp.getPropertyValue(); 
+		}else if(componentConfigProp.getPropertyValue() instanceof Boolean){
+			boolean value = (boolean) componentConfigProp.getPropertyValue();
+			this.properties =  value+""; 
+		}
 		
 	}
 	
@@ -141,11 +146,22 @@ public class DropDownWidget extends AbstractWidget{
 			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				clearFTPWidgetsMap();
 				showHideErrorSymbol(widgetList);
 			}
 			
 		});
 		return true;
+	}
+	
+	private void clearFTPWidgetsMap(){
+		for(AbstractWidget widget : widgetList){
+			if(widget.getPropertyName().equals("authentication")){
+				property.put("authentication", null);
+			}else if(widget.getPropertyName().equals("operation")){
+				property.put("operation", null);
+			}
+		}
 	}
 
 	private void populateWidget(){	

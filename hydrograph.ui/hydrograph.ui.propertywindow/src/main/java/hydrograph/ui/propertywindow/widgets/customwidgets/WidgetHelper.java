@@ -601,4 +601,48 @@ public class WidgetHelper {
 		textBoxConfig.setGrabExcessSpace(true);
 		return textBoxConfig;
 	}
+	
+	/**
+	 * Configuration to customize text box as Project Id
+	 */
+	public WidgetConfig getNumbericValueWidgetConfig(String fieldName){
+		TextBoxWithLableConfig textBoxConfig = new TextBoxWithLableConfig();
+		textBoxConfig.setName(fieldName);
+		textBoxConfig.setGrabExcessSpace(true);
+		textBoxConfig.getListeners().add(Listners.EVENT_CHANGE);
+		textBoxConfig.getListeners().add(Listners.VERIFY_NUMERIC_AND_PARAMETER_FOR_DB_COMPONENTS);
+		textBoxConfig.setWidgetWidth(78);
+		return textBoxConfig;
+	}
+	
+	/**
+	 * Configuration to customize dropdown as ftp error property 
+	 */
+	public WidgetConfig getFailOnErrorWidgetConfig(){
+		DropDownConfig dropDownConfig = new DropDownConfig();
+		dropDownConfig.setName(Messages.FAIL_ON_ERROR);
+		dropDownConfig.getItems().add(Constants.TRUE);
+		dropDownConfig.getItems().add(Constants.FALSE);
+		addComboBoxListeners(dropDownConfig);
+		return dropDownConfig;
+	}
+	
+	/**
+	 * Configuration to customize dropdown as encoding error property 
+	 */
+	public WidgetConfig getEncodingWidgetConfig(){
+		DropDownConfig dropDownConfig = new DropDownConfig();
+		dropDownConfig.setName(Messages.LABEL_CHARACTER_SET);
+		dropDownConfig.getItems().add(Constants.UTF_8);
+		dropDownConfig.getItems().add(Constants.ISO_8859_1);
+		dropDownConfig.getItems().add(Constants.PARAMETER);
+		addComboBoxListeners(dropDownConfig);
+		return dropDownConfig;
+	}
+	
+	public WidgetConfig getProtocolSelectWidgetConfig() {
+		TextBoxWithLableConfig textBoxWithLableConfig = new TextBoxWithLableConfig();
+		textBoxWithLableConfig.setGrabExcessSpace(true);
+		return textBoxWithLableConfig;
+	}
 }

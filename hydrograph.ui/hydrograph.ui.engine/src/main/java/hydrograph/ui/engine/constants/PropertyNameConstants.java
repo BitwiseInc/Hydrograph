@@ -71,7 +71,24 @@ public enum PropertyNameConstants {
 		UPPER_BOUND("upperBound"),
 		FETCH_SIZE("fetchSize"),
 		ADDITIONAL_DB_PARAM("extraUrlParams"),
-		CHUNK_SIZE("chunkSize");
+		CHUNK_SIZE("chunkSize"),
+		TIME_OUT("timeOut"),
+		RETRY_ATTEMPT("retryAttempt"),
+		ENCODING("encoding"),
+		FAIL_ON_ERROR("failOnError"),
+		PROTOCOL_SELECTION("protocolSelection"),
+		FTP_AUTH("authentication"),
+		FTP_OPERATION("operation"),
+		FTP_HOST("host_Name"),
+		FTP_PORT("port_No"),
+		FTP_USER_NAME("user_Name"),
+		FTP_ACCESS_KEY("accessKeyID"),
+		FTP_SECRET_ACCESS_KEY("secretAccessKey"),
+		FTP_PROP_FILE("crediationalPropertiesFile"),
+		FTP_LOCAL_PATH("localPath"),
+		FTP_BUCKET("bucketName"),
+		FTP_FOLDER_NAME("folder_name_in_bucket"),
+		FTP_REGION("region");
 	
 	
 		private final String value;

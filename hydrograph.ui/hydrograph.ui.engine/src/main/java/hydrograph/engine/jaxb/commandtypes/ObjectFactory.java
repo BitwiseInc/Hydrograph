@@ -1,16 +1,16 @@
 
-/*******************************************************************************
- * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- ******************************************************************************/
+/*
+ *  Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ *  * Licensed under the Apache License, Version 2.0 (the "License");
+ *  * you may not use this file except in compliance with the License.
+ *  * You may obtain a copy of the License at
+ *  * http://www.apache.org/licenses/LICENSE-2.0
+ *  * Unless required by applicable law or agreed to in writing, software
+ *  * distributed under the License is distributed on an "AS IS" BASIS,
+ *  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  * See the License for the specific language governing permissions and
+ *  * limitations under the License.
+ */
 
 package hydrograph.engine.jaxb.commandtypes;
 
@@ -75,6 +75,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link S3FileTransfer }
+     * 
+     */
+    public S3FileTransfer createS3FileTransfer() {
+        return new S3FileTransfer();
+    }
+
+    /**
      * Create an instance of {@link FtpIn }
      * 
      */
@@ -88,6 +96,38 @@ public class ObjectFactory {
      */
     public Subjob createSubjob() {
         return new Subjob();
+    }
+
+    /**
+     * Create an instance of {@link FTPS }
+     * 
+     */
+    public FTPS createFTPS() {
+        return new FTPS();
+    }
+
+    /**
+     * Create an instance of {@link FileOperationChoice }
+     * 
+     */
+    public FileOperationChoice createFileOperationChoice() {
+        return new FileOperationChoice();
+    }
+
+    /**
+     * Create an instance of {@link FTP }
+     * 
+     */
+    public FTP createFTP() {
+        return new FTP();
+    }
+
+    /**
+     * Create an instance of {@link SFTP }
+     * 
+     */
+    public SFTP createSFTP() {
+        return new SFTP();
     }
 
     /**
@@ -176,6 +216,22 @@ public class ObjectFactory {
      */
     public RunProgram.Command createRunProgramCommand() {
         return new RunProgram.Command();
+    }
+
+    /**
+     * Create an instance of {@link hydrograph.engine.jaxb.commandtypes.FileTransferBase.Encoding }
+     * 
+     */
+    public hydrograph.engine.jaxb.commandtypes.FileTransferBase.Encoding createFileTransferBaseEncoding() {
+        return new hydrograph.engine.jaxb.commandtypes.FileTransferBase.Encoding();
+    }
+
+    /**
+     * Create an instance of {@link S3FileTransfer.Encoding }
+     * 
+     */
+    public S3FileTransfer.Encoding createS3FileTransferEncoding() {
+        return new S3FileTransfer.Encoding();
     }
 
     /**

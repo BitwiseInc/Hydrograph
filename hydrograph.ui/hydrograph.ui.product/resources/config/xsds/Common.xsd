@@ -130,6 +130,14 @@
 			<enumeration value="GROUP_COMBINE_WIDGET" />
 			<enumeration value="INPUT_ADDITIONAL_PARAMETERS_WIDGET" />
 			<enumeration value="OUTPUT_ADDITIONAL_PARAMETERS_WIDGET" />
+			<enumeration value="FTP_PROTOCOL_WIDGET" />
+			<enumeration value="FTP_AUTHENTICATION_WIDGET" />
+			<enumeration value="FTP_CONNECTION_TIME_OUT_WIDGET" />
+			<enumeration value="FTP_NO_OF_RETRIES_WIDGET" />
+			<enumeration value="FTP_OPERATION_CONFIG_WIDGET" />
+			<enumeration value="FTP_ENCODING_WIDGET" />
+			<enumeration value="FAIL_ON_ERROR_WIDGET" />
+			<enumeration value="FTP_PROTOCOL_SELECTION_WIDGET" />
 		</restriction>
 	</simpleType>
 
@@ -374,6 +382,34 @@
 				<annotation>
 					<appinfo>
 						<jaxb:typesafeEnumMember name="AdditionalParamDBValidationRule" />
+					</appinfo>
+				</annotation>
+			</enumeration>
+			<enumeration value="FTP_AUTHENTICATION_VALIDATOR">
+				<annotation>
+					<appinfo>
+						<jaxb:typesafeEnumMember name="FTPAuthenticationValidator" />
+					</appinfo>
+				</annotation>
+			</enumeration>
+			<enumeration value="FTP_OPERATION_VALIDATOR">
+				<annotation>
+					<appinfo>
+						<jaxb:typesafeEnumMember name="FTPOperationParamValidator" />
+					</appinfo>
+				</annotation>
+			</enumeration>
+			<enumeration value="FTP_PROTOCOL_SELECTION_VALIDATOR">
+				<annotation>
+					<appinfo>
+						<jaxb:typesafeEnumMember name="FTPProtocolSelectionValidator" />
+					</appinfo>
+				</annotation>
+			</enumeration>
+			<enumeration value="FTP_BOOLEAN_VALIDATOR">
+				<annotation>
+					<appinfo>
+						<jaxb:typesafeEnumMember name="FTPBooleanValidation" />
 					</appinfo>
 				</annotation>
 			</enumeration>

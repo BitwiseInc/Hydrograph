@@ -436,6 +436,29 @@ public class Messages extends NLS {
 	public static String LOADCONFIG_INSERT;
 	public static String LOADCONFIG_REPLACE;
 	
+	public static String FTP_AUTH_MODE;
+	public static String ACCESS_KEY_ID;
+	public static String AWS_S3_ACCESS_KEY;
+	public static String BASIC_AUTH;
+	public static String USER_ID_KEY;
+	public static String USER_ID;
+	public static String PROPERTY_FILE;
+	public static String PRIVATE_KEY;
+	public static String OPERATION;
+	public static String LOCAL_PATH;
+	public static String REMOTE_PATH;
+	public static String WRITE_MODE;
+	public static String S3_BUCKET;
+	public static String S3_FILE_PATH;
+	public static String AWS_REGION;
+	public static String OVERWRITE_IF_EXISTS;
+	public static String FAIL_IF_EXISTS;
+	public static String AUTH_EDITOR;
+	public static String OPERATION_CONFIG;
+	public static String FAIL_ON_ERROR;
+	
+	
+	
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

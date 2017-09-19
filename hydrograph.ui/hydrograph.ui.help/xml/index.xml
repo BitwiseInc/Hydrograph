@@ -66,6 +66,11 @@
 		<topic href="/hydrograph.ui.help/html/Components/Unique_Sequence_Properties.html"/>
     </entry>
     
+    <entry keyword="FTP">
+        <topic href="/hydrograph.ui.help/html/Components/FTP.html"/>
+		<topic href="/hydrograph.ui.help/html/Components/FTP_Properties.html"/>
+    </entry>
+    
       <entry keyword="Lookup">
         <topic href="/hydrograph.ui.help/html/Components/Lookup.html"/>
 		<topic href="/hydrograph.ui.help/html/Components/Lookup_Properties.html"/>

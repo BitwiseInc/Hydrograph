@@ -1,0 +1,110 @@
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+ 
+ <!doctype html>
+<html>
+<head>
+	<title>FTP Properties</title>
+	<link rel="stylesheet" type="text/css" href="../../css/style.css">
+</head>
+
+<body>
+<p><span class="header-1">FTP Properties</span></p>
+<p><span><b>Properties</b>&nbsp;can be viewed by double-clicking on component or selecting 'Properties' option from component 
+right-click option list. The properties contain a &#39;General&#39; tab. Common and mandatory properties are present in the General tab. </span></span></p>
+
+	<p>
+		<a name="general_properties"></a><span class="header-2">General Properties</span>
+	</p>
+
+	<p><img alt="" src="../../images/ftp_general_value.png" /></p>
+
+	<p>
+		<a name="details"></a><span class="header-2">Details</span>
+	</p>
+<ul>
+	<li><span><b>Name</b> - The Name field will specify the name of the component as desired by the user.</span></li>
+	<li><span><b>ID</b> - ID field will specify unique id for every component. </span></li>
+	<li><span><b>Type </b> - Type further categorizes the component to detailed operation that it intends to perform. Here it is of type command FTP.</span></li>
+</ul>
+	<p>
+		<a name="configuration"></a><span class="header-2">Configuration</span> 
+	</p>
+<ul>
+	<li><span><b>Protocol</b>  - Provides drop-down to select the appropriate file transfer protocol from available list like FTP, SFTP, AWS S3 HTTPS.</span></li>
+	<li><span><b>Host</b> - Required to specify IP address or host name of server. Required property, if user opts for FTP or SFTP protocol.</span></li>
+	<li><span><b>Port</b> - Port simply accepts a numeric number starting from 0 to maximum 65535. Required property, if user opts for FTP or SFTP protocol.</span></li>
+	<li><span><b>Authentication</b> - User needs to provide connection details to establish the connection with appropriate server. Authentication editor displays different 
+	modes of authentication based on protocol selection.</span></li>
+<ul>
+	
+	<ul>For FTP protocol, authentication editor provides 'Standard Authentication' mode, which contains textbox to accept User ID and Password.</ul>
+	</span></li>
+	<ul>For SFTP protocol, authentication editor provides two i.e. 'Standard Authentication' and 'User ID and Key' authentication mode. 
+	In case of 'User ID and Key' authentication mode, user needs to specify the User ID and Private Key to create a connection. </ul>
+	<p><img alt="" src="../../images/ftp_auth_error.png" /></p>
+	<ul><span><b>USER ID and Key</b></ul>
+	<p><img alt="" src="../../images/auth_sftp_key.png" /></p>
+	
+	<ul>For AWS S3 HTTPS protocol, authentication editor provides two i.e. 'AWS S3 Access Key' and 'AWS S3 Property File' authentication configuration mode.</ul>
+	<p><img alt="" src="../../images/s3_auth_access.png" /></p>
+	<ul><span><b>AWS S3 Property File</b></ul>
+	<p><img alt="" src="../../images/s3_prop_file.png"/></p>
+</ul>
+
+	<li><span><b>Connection Time-Out</b> - It defines the connection time out in milliseconds.</span></li>
+	<li><span><b>Number of Retries</b> - It defines the number of tries to establish the connection.</span></li>
+	<li><span><b>Operation Configuration</b> - User can use Operation Config to provide the operation details.</span></li>
+	
+	<li><span><b>Operation</b> - Provides options to select the required file transfer operation -
+	<ul><b>Get Files</b> - Required to download the file from remote location to local path.</ul>
+	<ul><b>Put Files</b> - Required to upload the file from local to remote path.</ul>
+	<ul><b>Write Mode</b> - Write Mode provides two options i.e. 'Overwrite If Exists' and 'Fail If Exists'. User can select 'Overwrite If Exists' option to overwrite the file at the time of Get Files operation, if exists. On the other side, user can opt for 'Fail If Exists' option to fail the operation in case same file is already available at given local path.</ul>
+	<ul>User need to specify following values to Get or Put Files From/To AWS S3.</ul>
+	<ul><b>S3 Bucket</b> - Specifies AWS S3 bucket name </ul>
+	<ul><b>S3 File Path</b> - Specifies AWS S3 file path for operation</ul>
+	<ul><b>AWS Region</b> - Specifies AWS S3 region</ul>
+	<p><img alt="" src="../../images/sftp_get_png.PNG" /></p>
+	<p><img alt="" src="../../images/sftp_put_operation.png" /></p>
+	<ul>If user select protocol : AWS S3 HTTPS</ul>
+	<p><img alt="" src="../../images/s3_get_operation.png" /></p>
+	<p><img alt="" src="../../images/s3_put_operation.png"/></p>
+	
+	
+	<li><span><b>Character Set</b> - Character Set provides drop-down to select encoding values from available list. Options are - UTF8, US-ASCII, ISO-8859-1 etc.</span></li>
+	<li><span><b>Fail On Error</b> - This property accepts Boolean values i.e. True and False. When 'True', component will fail the job in case any error occurs in FTP component operation. When set to 'False', control will be passed to immediate next component in case of success or failure in component operation.</span></li>
+	<li><span><b>Batch</b> - Batch simply accepts a numeric number starting from 0 to maximum 99 and signifies the batch this component will execute in. By default this is 0.</span></li>
+</ul>
+
+	<p>
+		<a name="validations"></a><span class="header-2">Validations</span>
+	</p>
+	
+	<p>
+		<span>The FTP components applies validations to the mandatory fields. Upon placing the
+			FTP component on job canvas for the first time (from component palette), the component shows up a warning icon as
+			mandatory properties are not provided.</span>
+	</p>
+	<img alt="" src="../../images/ftp_warning_icon.png"/>
+	
+	<p>
+		<span>The properties window also displays error icon on mandatory fields if it has an incorrect value. The error icon
+			is displayed on the tab as well, if any of the field within the tab has some error.</span>
+	</p>
+	<img alt="" src="../../images/ftp_general_error.png"/>
+	<p>
+		<span>If the properties window has some error even after user visit's it once, then the warning icon on the FTP 
+			component on the job canvas changes to error icon. This error icon is removed only when all the mandatory fields are supplied
+			with correct values.</span>
+	</p>
+	<img alt="" src="../../images/ftp_error_icon.png"/>
+</body>
+</html>

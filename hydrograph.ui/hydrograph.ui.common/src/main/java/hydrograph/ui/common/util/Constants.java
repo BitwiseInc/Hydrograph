@@ -388,6 +388,22 @@ public class Constants {
 	public static final String DB_PARTITION_KEY="partitionKey";
 	public static final String ADDITIONAL_PARAMETERS_FOR_DB ="additionalDBParameters";
 	
+	public static final String FTP="FTP";
+	public static final String SFTP="SFTP";
+	public static final String AWS_S3="AWS S3 HTTPS";
+	public static final String STAND_AUTH="Standard Authentication";
+	public static final String USER_ID_KEY="User ID and Key";
+	public static final String AWS_S3_KEY="AWS S3 Access Key";
+	public static final String AWS_S3_PROP_FILE="AWS S3 Property File";
+	public static final String PROTOCOL_SELECTION="protocolSelection";
+	public static final String GET_FILE="Get Files";
+	public static final String PUT_FILE="Put Files";
+	public static final String GET_FILE_S3="Get Files with AWS S3";
+	public static final String PUT_FILE_S3="Put Files with AWS S3";
+	public static final String S3FILETRANSFER="S3FileTransfer";
+	
+	
+	
 	public static final String PARAM_FOLDER="param";
 }
 

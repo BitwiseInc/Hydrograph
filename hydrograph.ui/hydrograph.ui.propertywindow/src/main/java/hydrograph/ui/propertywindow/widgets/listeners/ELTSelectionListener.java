@@ -14,10 +14,6 @@
  
 package hydrograph.ui.propertywindow.widgets.listeners;
 
-import hydrograph.ui.propertywindow.messages.Messages;
-import hydrograph.ui.propertywindow.propertydialog.PropertyDialogButtonBar;
-import hydrograph.ui.propertywindow.widgets.listeners.ListenerHelper.HelperType;
-
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Combo;
@@ -25,6 +21,9 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Widget;
+
+import hydrograph.ui.propertywindow.propertydialog.PropertyDialogButtonBar;
+import hydrograph.ui.propertywindow.widgets.listeners.ListenerHelper.HelperType;
 
 
 /**
@@ -56,7 +55,7 @@ public class ELTSelectionListener implements IELTListener {
 		Listener listener = new Listener() {
 			@Override
 			public void handleEvent(Event event) {
-				if (((Combo) widgetList[0]).getText().equals("Parameter")) {
+				if (((Combo) widgetList[0]).getText().equals("Parameter") || ((Combo) widgetList[0]).getText().equals("Others")) {
 					((Text) widgetList[1]).setVisible(true);
 					((Text) widgetList[1]).setFocus();
 					txtDecorator.hide();

@@ -19,6 +19,8 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Widget;
 
+import hydrograph.ui.propertywindow.ftp.AuthenticationWidget;
+import hydrograph.ui.propertywindow.ftp.OperationConfigWidget;
 import hydrograph.ui.propertywindow.propertydialog.PropertyDialogButtonBar;
 import hydrograph.ui.propertywindow.widgets.customwidgets.databasecomponents.InputAdditionalParametersWidget;
 import hydrograph.ui.propertywindow.widgets.customwidgets.databasecomponents.LoadTypeConfigurationWidget;
@@ -48,7 +50,6 @@ public class ELTRuntimeButtonClickListener implements IELTListener {
 		Listener listener = new Listener() {
 			public void handleEvent(Event event) {
 				if (event.type == SWT.Selection) {
-					//((ELTRuntimePropertiesWidget)helpers.object).newWindowLauncher();
 					if(helpers.object instanceof ELTRuntimePropertiesWidget)
 						((ELTRuntimePropertiesWidget)helpers.object).newWindowLauncher();
 					else if(helpers.object instanceof SecondaryColumnKeysWidget) 
@@ -59,6 +60,10 @@ public class ELTRuntimeButtonClickListener implements IELTListener {
 						((InputAdditionalParametersWidget)helpers.object).newWindowLauncher();
 					else if(helpers.object instanceof OutputAdditionalParametersWidget) 
 						((OutputAdditionalParametersWidget)helpers.object).newWindowLauncher();
+					else if(helpers.object instanceof AuthenticationWidget)
+						((AuthenticationWidget)helpers.object).newWindowLauncher();
+					else if(helpers.object instanceof OperationConfigWidget)
+						((OperationConfigWidget)helpers.object).newWindowLauncher();
 				}
 
 			}
