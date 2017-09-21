@@ -23,6 +23,7 @@ import hydrograph.engine.jaxb.commandtypes.FileOperationChoice;
 import hydrograph.engine.jaxb.commandtypes.S3FileTransfer;
 import hydrograph.engine.jaxb.commandtypes.S3FileTransfer.Encoding;
 import hydrograph.engine.jaxb.commontypes.BooleanValueType;
+import hydrograph.engine.jaxb.commontypes.ElementValueIntegerType;
 import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.datastructure.property.FTPAuthOperationDetails;
@@ -61,14 +62,14 @@ public class S3FileTransferConverterHelper{
 		addAuthenticationDetails(s3FileTransfer);
 		
 		BigInteger connectionTimeOut = FTPUtil.INSTANCE.getPortValue(PropertyNameConstants.TIME_OUT.value(), componentId, properties);
-		if(connectionTimeOut != null){
-			s3FileTransfer.setTimeOut(connectionTimeOut.intValue());
-		}
+		ElementValueIntegerType timeout = new ElementValueIntegerType();
+		timeout.setValue(connectionTimeOut);
+		s3FileTransfer.setTimeOut(timeout);
 		
 		BigInteger noOfRetries = FTPUtil.INSTANCE.getPortValue(PropertyNameConstants.RETRY_ATTEMPT.value(), componentId, properties);
-		if(noOfRetries != null){
-			s3FileTransfer.setRetryAttempt(noOfRetries.intValue());
-		}
+		ElementValueIntegerType retries = new ElementValueIntegerType();
+		retries.setValue(noOfRetries);
+		s3FileTransfer.setRetryAttempt(retries);
 		
 		//operation
 		addSFtpOperationDetails(s3FileTransfer);

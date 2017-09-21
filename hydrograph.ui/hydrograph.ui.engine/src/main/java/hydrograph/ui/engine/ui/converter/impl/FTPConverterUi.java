@@ -12,10 +12,12 @@
  *******************************************************************************/
 package hydrograph.ui.engine.ui.converter.impl;
 
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 
 import hydrograph.engine.jaxb.commandtypes.FTP;
@@ -51,7 +53,7 @@ public class FTPConverterUi extends CommandUiConverter{
 	public void prepareUIXML() {
 		LOGGER.debug("Fetching COMMAND-Properties for -{}", componentName);
 		super.prepareUIXML();
-		String port;
+		String port="";
 		FTP ftp = (FTP) typeBaseComponent;
 		container.getComponentNextNameSuffixes().put(name_suffix, 0);
 		container.getComponentNames().add(ftp.getId());
@@ -59,12 +61,13 @@ public class FTPConverterUi extends CommandUiConverter{
 		propertyMap.put(Constants.BATCH, ftp.getBatch());
 		
 		setValueInPropertyMap(PropertyNameConstants.FTP_HOST.value(), ftp.getHostName() == null ? "" : ftp.getHostName());
-		setValueInPropertyMap(PropertyNameConstants.FTP_PORT.value(), ftp.getPortNo() == null ? "" : ftp.getPortNo());
 
 		if(ftp.getPortNo() != null){
-			port = ftp.getPortNo()+"";
-		}else{
-			port = "";
+			if(StringUtils.isNotBlank(getValue(PropertyNameConstants.FTP_PORT.value()))){
+				port=getValue(PropertyNameConstants.FTP_PORT.value());
+			}else if(ftp.getPortNo()!=null && ftp.getPortNo().getValue()!=null ){
+				port=String.valueOf(ftp.getPortNo().getValue());
+			}
 		}
 		
 		FTPProtocolDetails ftpProtocolDetails = new FTPProtocolDetails(Constants.FTP, ftp.getHostName(), port);
@@ -87,10 +90,22 @@ public class FTPConverterUi extends CommandUiConverter{
 		//authentication
 		propertyMap.put(PropertyNameConstants.FTP_AUTH.value(), authDetails);
 		
-		setValueInPropertyMap(PropertyNameConstants.TIME_OUT.value(),
-				ftp.getTimeOut() == null ? "" : ftp.getTimeOut().intValue());
-		setValueInPropertyMap(PropertyNameConstants.RETRY_ATTEMPT.value(),
-				ftp.getRetryAttempt() == null ? "" : ftp.getRetryAttempt().intValue());
+		try {
+			BigInteger timeOut = ftp.getTimeOut().getValue();
+			setValueInPropertyMap(PropertyNameConstants.TIME_OUT.value(),
+					ftp.getTimeOut() == null ? "" : timeOut);
+		} catch (Exception e) {
+			LOGGER.error("Exception" + e);
+		}
+		
+		try {
+			BigInteger retryAtttempt = ftp.getRetryAttempt().getValue();
+			setValueInPropertyMap(PropertyNameConstants.RETRY_ATTEMPT.value(),
+					ftp.getRetryAttempt() == null ? "" : retryAtttempt);
+		} catch (Exception e) {
+			LOGGER.error("Exception" + e);
+		}
+		
 		
 		Map<String, FTPAuthOperationDetails> operationDetails = new HashMap<String, FTPAuthOperationDetails>();
 		FTPAuthOperationDetails authOperationDetails  = new FTPAuthOperationDetails(ftp.getInputFilePath(), 
@@ -114,7 +129,11 @@ public class FTPConverterUi extends CommandUiConverter{
 	}
 	
 	private void setValueInPropertyMap(String propertyName,Object value){
-		value = getParameterValue(propertyName,value);
+		if(StringUtils.isNotBlank(getValue(propertyName))){
+			value=getValue(propertyName);
+		}else{
+			value = getParameterValue(propertyName,value);
+		}
 		propertyMap.put(propertyName, value);
 	}
 	

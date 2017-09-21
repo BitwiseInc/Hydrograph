@@ -67,6 +67,7 @@ public class VerifyNumericAndParameterListener implements IELTListener {
 						} else {
 							txtDecorator.show();
 							txtDecorator.setDescriptionText(Messages.PORT_VALIDATION_ERROR);
+							((Text) widgetList[0]).setToolTipText(txtDecorator.getDescriptionText());
 							((Text) widgetList[0]).setBackground(CustomColorRegistry.INSTANCE.getColorFromRegistry( 255, 255, 255));
 						}
 					} else {
@@ -77,6 +78,7 @@ public class VerifyNumericAndParameterListener implements IELTListener {
 					}
 				}else{
 					txtDecorator.hide();
+					((Text) widgetList[0]).setToolTipText("");
 					((Text) widgetList[0]).setBackground(CustomColorRegistry.INSTANCE.getColorFromRegistry( 255, 255, 255));
 				}
 			}

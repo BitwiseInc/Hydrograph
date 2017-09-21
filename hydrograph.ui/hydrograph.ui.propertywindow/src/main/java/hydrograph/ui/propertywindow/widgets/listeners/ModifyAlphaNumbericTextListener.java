@@ -59,14 +59,17 @@ public class ModifyAlphaNumbericTextListener implements IELTListener{
 					Matcher matchs=Pattern.compile(Constants.REGEX).matcher(string);
 				if(matchs.matches() || ParameterUtil.isParameter(string)){
 					txtDecorator.hide();
+					((Text) widgetList[0]).setToolTipText("");
 					((Text) widgetList[0]).setBackground(CustomColorRegistry.INSTANCE.getColorFromRegistry( 255, 255, 255));
 				}else{
 					txtDecorator.setDescriptionText(Messages.FIELDNAME_NOT_ALPHANUMERIC_ERROR);
+					((Text) widgetList[0]).setToolTipText(txtDecorator.getDescriptionText());
 					txtDecorator.show();
 				}
 			}else{
 				((Text) widgetList[0]).setBackground(CustomColorRegistry.INSTANCE.getColorFromRegistry( 255, 255, 204));
 				txtDecorator.setDescriptionText(Messages.FIELDNAME_NOT_ALPHANUMERIC_ERROR);
+				((Text) widgetList[0]).setToolTipText(txtDecorator.getDescriptionText());
 				txtDecorator.show();
 			}
 		}
