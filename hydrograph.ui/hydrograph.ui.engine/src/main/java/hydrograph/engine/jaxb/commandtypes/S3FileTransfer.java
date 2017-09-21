@@ -1,17 +1,4 @@
 
-/*
- *  Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
- *  * Licensed under the Apache License, Version 2.0 (the "License");
- *  * you may not use this file except in compliance with the License.
- *  * You may obtain a copy of the License at
- *  * http://www.apache.org/licenses/LICENSE-2.0
- *  * Unless required by applicable law or agreed to in writing, software
- *  * distributed under the License is distributed on an "AS IS" BASIS,
- *  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  * See the License for the specific language governing permissions and
- *  * limitations under the License.
- */
-
 package hydrograph.engine.jaxb.commandtypes;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -19,6 +6,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import hydrograph.engine.jaxb.commontypes.ElementValueIntegerType;
 import hydrograph.engine.jaxb.commontypes.StandardCharsets;
 import hydrograph.engine.jaxb.commontypes.TypeCommandComponent;
 
@@ -52,9 +40,9 @@ import hydrograph.engine.jaxb.commontypes.TypeCommandComponent;
  *             &lt;/complexContent>
  *           &lt;/complexType>
  *         &lt;/element>
- *         &lt;element name="timeOut" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
- *         &lt;element name="retryAfterDuration" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
- *         &lt;element name="retryAttempt" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="timeOut" type="{hydrograph/engine/jaxb/commontypes}element-value-integer-type" minOccurs="0"/>
+ *         &lt;element name="retryAfterDuration" type="{hydrograph/engine/jaxb/commontypes}element-value-integer-type" minOccurs="0"/>
+ *         &lt;element name="retryAttempt" type="{hydrograph/engine/jaxb/commontypes}element-value-integer-type" minOccurs="0"/>
  *         &lt;element name="failOnError" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *         &lt;element name="overwritemode" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
@@ -102,9 +90,9 @@ public class S3FileTransfer
     @XmlElement(name = "FileOperation", required = true)
     protected FileOperationChoice fileOperation;
     protected S3FileTransfer.Encoding encoding;
-    protected Integer timeOut;
-    protected Integer retryAfterDuration;
-    protected Integer retryAttempt;
+    protected ElementValueIntegerType timeOut;
+    protected ElementValueIntegerType retryAfterDuration;
+    protected ElementValueIntegerType retryAttempt;
     protected Boolean failOnError;
     protected String overwritemode;
 
@@ -353,10 +341,10 @@ public class S3FileTransfer
      * 
      * @return
      *     possible object is
-     *     {@link Integer }
+     *     {@link ElementValueIntegerType }
      *     
      */
-    public Integer getTimeOut() {
+    public ElementValueIntegerType getTimeOut() {
         return timeOut;
     }
 
@@ -365,10 +353,10 @@ public class S3FileTransfer
      * 
      * @param value
      *     allowed object is
-     *     {@link Integer }
+     *     {@link ElementValueIntegerType }
      *     
      */
-    public void setTimeOut(Integer value) {
+    public void setTimeOut(ElementValueIntegerType value) {
         this.timeOut = value;
     }
 
@@ -377,10 +365,10 @@ public class S3FileTransfer
      * 
      * @return
      *     possible object is
-     *     {@link Integer }
+     *     {@link ElementValueIntegerType }
      *     
      */
-    public Integer getRetryAfterDuration() {
+    public ElementValueIntegerType getRetryAfterDuration() {
         return retryAfterDuration;
     }
 
@@ -389,10 +377,10 @@ public class S3FileTransfer
      * 
      * @param value
      *     allowed object is
-     *     {@link Integer }
+     *     {@link ElementValueIntegerType }
      *     
      */
-    public void setRetryAfterDuration(Integer value) {
+    public void setRetryAfterDuration(ElementValueIntegerType value) {
         this.retryAfterDuration = value;
     }
 
@@ -401,10 +389,10 @@ public class S3FileTransfer
      * 
      * @return
      *     possible object is
-     *     {@link Integer }
+     *     {@link ElementValueIntegerType }
      *     
      */
-    public Integer getRetryAttempt() {
+    public ElementValueIntegerType getRetryAttempt() {
         return retryAttempt;
     }
 
@@ -413,10 +401,10 @@ public class S3FileTransfer
      * 
      * @param value
      *     allowed object is
-     *     {@link Integer }
+     *     {@link ElementValueIntegerType }
      *     
      */
-    public void setRetryAttempt(Integer value) {
+    public void setRetryAttempt(ElementValueIntegerType value) {
         this.retryAttempt = value;
     }
 

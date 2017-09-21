@@ -22,6 +22,7 @@ public enum ComponentTypes {
 	OUTPUTS("outputs"),
 	OPERATIONS("operations"),
 	STRAIGHT_PULLS("straightPulls"),
+	COMMANDS("commands"),
 	UNKNOWN("unknown");
 	
 	private final String value;

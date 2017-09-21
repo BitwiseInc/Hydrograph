@@ -17,13 +17,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.math.NumberUtils;
 import org.slf4j.Logger;
 
 import hydrograph.engine.jaxb.commandtypes.FileOperationChoice;
 import hydrograph.engine.jaxb.commandtypes.FileTransferBase.Encoding;
 import hydrograph.engine.jaxb.commandtypes.SFTP;
 import hydrograph.engine.jaxb.commontypes.BooleanValueType;
+import hydrograph.engine.jaxb.commontypes.ElementValueIntegerType;
 import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.datastructure.property.FTPAuthOperationDetails;
@@ -65,22 +65,25 @@ public class SFTPConvertorHelper{
 				sftp.setHostName(protocolDetails.getHost());
 			}
 			if(protocolDetails.getPort() != null){
-				int port = NumberUtils.toInt(protocolDetails.getPort(), 21);
-				sftp.setPortNo(port);
+				BigInteger portValue = FTPUtil.INSTANCE.getPortParam(PropertyNameConstants.FTP_PORT.value(), 
+						componentId, properties);
+				ElementValueIntegerType portParam = new ElementValueIntegerType();
+				portParam.setValue(portValue);
+				sftp.setPortNo(portParam);
 			}
 		}
 		
 		addAuthenticationDetails(sftp);
 		
 		BigInteger connectionTimeOut = FTPUtil.INSTANCE.getPortValue(PropertyNameConstants.TIME_OUT.value(), componentId, properties);
-		if(connectionTimeOut != null){
-			sftp.setTimeOut(connectionTimeOut.intValue());
-		}
+		ElementValueIntegerType timeout = new ElementValueIntegerType();
+		timeout.setValue(connectionTimeOut);
+		sftp.setTimeOut(timeout);
 		
 		BigInteger noOfRetries = FTPUtil.INSTANCE.getPortValue(PropertyNameConstants.RETRY_ATTEMPT.value(), componentId, properties);
-		if(noOfRetries != null){
-			sftp.setRetryAttempt(noOfRetries.intValue());
-		}
+		ElementValueIntegerType retries = new ElementValueIntegerType();
+		retries.setValue(noOfRetries);
+		sftp.setRetryAttempt(retries);
 		
 		addSFtpOperationDetails(sftp);
 		

@@ -12,6 +12,7 @@
  *******************************************************************************/
 package hydrograph.ui.engine.ui.converter.impl;
 
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -79,10 +80,21 @@ public class S3FileTransferUiConverter extends CommandUiConverter{
 		//authentication
 		propertyMap.put(PropertyNameConstants.FTP_AUTH.value(), authDetails);
 		
-		setValueInPropertyMap(PropertyNameConstants.TIME_OUT.value(),
-				S3FileTransfer.getTimeOut() == null ? "" : S3FileTransfer.getTimeOut().intValue());
-		setValueInPropertyMap(PropertyNameConstants.RETRY_ATTEMPT.value(),
-				S3FileTransfer.getRetryAttempt() == null ? "" : S3FileTransfer.getRetryAttempt().intValue());
+		try {
+			BigInteger timeOut = S3FileTransfer.getTimeOut().getValue();
+			setValueInPropertyMap(PropertyNameConstants.TIME_OUT.value(),
+					S3FileTransfer.getTimeOut() == null ? "" : timeOut);
+		} catch (Exception e) {
+			LOGGER.error("Exception" + e);
+		}
+		
+		try {
+			BigInteger retryAtttempt = S3FileTransfer.getRetryAttempt().getValue();
+			setValueInPropertyMap(PropertyNameConstants.RETRY_ATTEMPT.value(),
+					S3FileTransfer.getRetryAttempt() == null ? "" : retryAtttempt);
+		} catch (Exception e) {
+			LOGGER.error("Exception" + e);
+		}
 		
 		setValueInPropertyMap(PropertyNameConstants.FTP_LOCAL_PATH.value(),S3FileTransfer.getLocalPath() == null ? "" : S3FileTransfer.getLocalPath());
 		setValueInPropertyMap(PropertyNameConstants.FTP_BUCKET.value(),S3FileTransfer.getBucketName() == null ? "" : S3FileTransfer.getBucketName());
