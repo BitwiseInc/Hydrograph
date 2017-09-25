@@ -82,7 +82,7 @@ public class SFTPUiConverter extends CommandUiConverter{
 				sftp.getPrivateKeyPath() == null ? "" : sftp.getPrivateKeyPath());
 		
 		FTPAuthOperationDetails authDetailsValue = new FTPAuthOperationDetails(sftp.getUserName(), sftp.getPassword(), 
-				sftp.getPrivateKeyPath(), "", "");
+				sftp.getPrivateKeyPath(), "", "", Constants.SFTP);
 		if(sftp.getPassword() != null){
 			authDetails.put(Constants.STAND_AUTH, authDetailsValue);
 		}else{
@@ -109,7 +109,7 @@ public class SFTPUiConverter extends CommandUiConverter{
 		
 		Map<String, FTPAuthOperationDetails> operationDetails = new HashMap<String, FTPAuthOperationDetails>();
 		FTPAuthOperationDetails authOperationDetails  = new FTPAuthOperationDetails(sftp.getInputFilePath(), 
-				sftp.getOutputFilePath(), "", "",sftp.getOverwritemode());
+				sftp.getOutputFilePath(), "", "",sftp.getOverwritemode(), Constants.SFTP);
 		FileOperationChoice operationChoice = sftp.getFileOperation();
 		if(operationChoice.getDownload() != null){
 			operationDetails.put(operationChoice.getDownload().toString(), authOperationDetails);

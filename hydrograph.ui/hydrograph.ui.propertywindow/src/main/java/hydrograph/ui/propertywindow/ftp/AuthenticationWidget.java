@@ -56,7 +56,7 @@ public class AuthenticationWidget extends AbstractWidget{
 	private Map<String, FTPAuthOperationDetails> initialMap;
 	private ArrayList<AbstractWidget> widgets;
 	private LinkedHashMap<String, Object> tempPropertyMap;
-	private String tmpProtocolValue;
+	private static String tmpProtocolValue;
 
 	public AuthenticationWidget(ComponentConfigrationProperty componentConfigProp,
 			ComponentMiscellaneousProperties componentMiscProps, PropertyDialogButtonBar propDialogButtonBar) {
@@ -107,6 +107,9 @@ public class AuthenticationWidget extends AbstractWidget{
 		String [] optionList = null;
 		initialMap = new LinkedHashMap<>(initialMap);
 		
+		//initialMap.entrySet().stream().filter(val -> val.getValue().getProtocolSelection().equals(protocolText))
+		//.collect(Collectors.toList()).
+		
 		String protocolText = null;
 		for(AbstractWidget widget : widgets){
 			if(widget.getPropertyName().equals("protocolSelection")){
@@ -122,16 +125,14 @@ public class AuthenticationWidget extends AbstractWidget{
 						optionList = new String[]{"AWS S3 Access Key", "AWS S3 Property File"};
 						protocolText = protocolDetails.getProtocol();
 					}
-					if(tmpProtocolValue == null){
-						tmpProtocolValue = protocolDetails.getProtocol();
-					}
 				}
 			}
 		}
 		
-		if(!tmpProtocolValue.equals(protocolText)){
+		String selectedText = protocolText;
+		boolean bol = initialMap.entrySet().stream().anyMatch(val -> val.getValue().getProtocolSelection().equals(selectedText));
+		if(!bol){
 			initialMap = new LinkedHashMap<>();
-			tmpProtocolValue = protocolText;
 		}
 		
 		//optionList = new String[]{"Basic Auth", "User Id & Key"/*, "Basic Auth & Key"*/};

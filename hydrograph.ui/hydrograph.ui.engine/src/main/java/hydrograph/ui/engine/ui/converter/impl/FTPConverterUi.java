@@ -80,7 +80,7 @@ public class FTPConverterUi extends CommandUiConverter{
 		setValueInPropertyMap(PropertyNameConstants.PASSWORD.value(),
 				
 				ftp.getPassword() == null ? "" : ftp.getPassword());
-		FTPAuthOperationDetails authDetailsValue = new FTPAuthOperationDetails(ftp.getUserName(), ftp.getPassword(), "", "", "");
+		FTPAuthOperationDetails authDetailsValue = new FTPAuthOperationDetails(ftp.getUserName(), ftp.getPassword(), "", "", "",Constants.FTP);
 		if(ftp.getPassword() != null){
 			authDetails.put(Constants.STAND_AUTH, authDetailsValue);
 		}else{
@@ -109,7 +109,7 @@ public class FTPConverterUi extends CommandUiConverter{
 		
 		Map<String, FTPAuthOperationDetails> operationDetails = new HashMap<String, FTPAuthOperationDetails>();
 		FTPAuthOperationDetails authOperationDetails  = new FTPAuthOperationDetails(ftp.getInputFilePath(), 
-				ftp.getOutputFilePath(), "", "",ftp.getOverwritemode());
+				ftp.getOutputFilePath(), "", "",ftp.getOverwritemode(), Constants.FTP);
 		FileOperationChoice operationChoice = ftp.getFileOperation();
 		if(operationChoice != null){
 			if(operationChoice.getDownload() != null){

@@ -127,7 +127,7 @@ public class FTPConverterHelper{
 	 * @param ftp
 	 */
 	private void addFtpOperationDetails(FTP ftp){
-		if(properties.get("authentication") !=null){
+		if(properties.get("operation") !=null){
 			if(!properties.get("operation").equals("")){
 				Map<String, FTPAuthOperationDetails> fileOperationDetaildetails =  (Map<String, FTPAuthOperationDetails>) properties
 						.get(PropertyNameConstants.FTP_OPERATION.value());

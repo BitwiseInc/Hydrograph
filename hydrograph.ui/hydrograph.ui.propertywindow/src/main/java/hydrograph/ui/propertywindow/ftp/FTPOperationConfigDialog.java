@@ -378,7 +378,7 @@ public class FTPOperationConfigDialog extends Dialog{
 			text4Value = text4.getText();
 		}
 		FTPAuthOperationDetails authOperationDetails = new FTPAuthOperationDetails(text1.getText(), 
-				text2.getText(), text3Value, text4Value, isOverwrite);
+				text2.getText(), text3Value, text4Value, isOverwrite, protocol);
 		authOperationSelectionMap.put(authenticationModeCombo.getText(), authOperationDetails);
 		super.okPressed();
 	}

@@ -70,11 +70,11 @@ public class S3FileTransferUiConverter extends CommandUiConverter{
 		Map<String, FTPAuthOperationDetails> authDetails = new HashMap<String, FTPAuthOperationDetails>();
 		if(S3FileTransfer.getSecretAccessKey() != null || S3FileTransfer.getAccessKeyID() != null){
 			FTPAuthOperationDetails authDetailsValue = new FTPAuthOperationDetails(S3FileTransfer.getAccessKeyID(), S3FileTransfer.getSecretAccessKey(), 
-					S3FileTransfer.getCrediationalPropertiesFile(), "", "");
+					S3FileTransfer.getCrediationalPropertiesFile(), "", "", Constants.S3FILETRANSFER);
 			authDetails.put(Constants.AWS_S3_KEY, authDetailsValue);
 		}else{
 			FTPAuthOperationDetails authDetailsValue = new FTPAuthOperationDetails("", S3FileTransfer.getCrediationalPropertiesFile(), 
-					"", "", "");
+					"", "", "",Constants.S3FILETRANSFER);
 			authDetails.put(Constants.AWS_S3_PROP_FILE, authDetailsValue);
 		}
 		//authentication
@@ -106,10 +106,10 @@ public class S3FileTransferUiConverter extends CommandUiConverter{
 		FTPAuthOperationDetails authOperationDetails;
 		if(S3FileTransfer.getOverwritemode()!=null){
 			authOperationDetails  = new FTPAuthOperationDetails(S3FileTransfer.getLocalPath(), S3FileTransfer.getBucketName(), 
-					S3FileTransfer.getFolderNameInBucket(), S3FileTransfer.getRegion(), S3FileTransfer.getOverwritemode());
+					S3FileTransfer.getFolderNameInBucket(), S3FileTransfer.getRegion(), S3FileTransfer.getOverwritemode(),Constants.S3FILETRANSFER);
 		}else{
 			authOperationDetails  = new FTPAuthOperationDetails(S3FileTransfer.getLocalPath(), S3FileTransfer.getBucketName(), 
-					S3FileTransfer.getFolderNameInBucket(), S3FileTransfer.getRegion(), S3FileTransfer.getOverwritemode());
+					S3FileTransfer.getFolderNameInBucket(), S3FileTransfer.getRegion(), S3FileTransfer.getOverwritemode(),Constants.S3FILETRANSFER);
 		}
 		
 		FileOperationChoice operationChoice = S3FileTransfer.getFileOperation();
