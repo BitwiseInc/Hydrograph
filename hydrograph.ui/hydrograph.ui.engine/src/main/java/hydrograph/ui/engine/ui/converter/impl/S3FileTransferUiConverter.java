@@ -84,16 +84,12 @@ public class S3FileTransferUiConverter extends CommandUiConverter{
 			BigInteger timeOut = S3FileTransfer.getTimeOut().getValue();
 			setValueInPropertyMap(PropertyNameConstants.TIME_OUT.value(),
 					S3FileTransfer.getTimeOut() == null ? "" : timeOut);
-		} catch (Exception e) {
-			LOGGER.error("Exception" + e);
-		}
-		
-		try {
+			
 			BigInteger retryAtttempt = S3FileTransfer.getRetryAttempt().getValue();
 			setValueInPropertyMap(PropertyNameConstants.RETRY_ATTEMPT.value(),
 					S3FileTransfer.getRetryAttempt() == null ? "" : retryAtttempt);
-		} catch (Exception e) {
-			LOGGER.error("Exception" + e);
+		} catch (Exception exception) {
+			LOGGER.error("Failed to set the widget value" + exception);
 		}
 		
 		setValueInPropertyMap(PropertyNameConstants.FTP_LOCAL_PATH.value(),S3FileTransfer.getLocalPath() == null ? "" : S3FileTransfer.getLocalPath());

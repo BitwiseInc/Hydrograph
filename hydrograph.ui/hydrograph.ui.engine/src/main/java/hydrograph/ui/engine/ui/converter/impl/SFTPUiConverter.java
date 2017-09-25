@@ -95,16 +95,11 @@ public class SFTPUiConverter extends CommandUiConverter{
 			BigInteger timeOut = sftp.getTimeOut().getValue();
 			setValueInPropertyMap(PropertyNameConstants.TIME_OUT.value(),
 					sftp.getTimeOut() == null ? "" : timeOut);
-		} catch (Exception e) {
-			LOGGER.error("Exception" + e);
-		}
-		
-		try {
 			BigInteger retryAtttempt = sftp.getRetryAttempt().getValue();
 			setValueInPropertyMap(PropertyNameConstants.RETRY_ATTEMPT.value(),
 					sftp.getRetryAttempt() == null ? "" : retryAtttempt);
-		} catch (Exception e) {
-			LOGGER.error("Exception" + e);
+		} catch (Exception exception) {
+			LOGGER.error("Failed to set the widget value" + exception);
 		}
 		
 		Map<String, FTPAuthOperationDetails> operationDetails = new HashMap<String, FTPAuthOperationDetails>();

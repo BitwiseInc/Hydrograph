@@ -94,16 +94,11 @@ public class FTPConverterUi extends CommandUiConverter{
 			BigInteger timeOut = ftp.getTimeOut().getValue();
 			setValueInPropertyMap(PropertyNameConstants.TIME_OUT.value(),
 					ftp.getTimeOut() == null ? "" : timeOut);
-		} catch (Exception e) {
-			LOGGER.error("Exception" + e);
-		}
-		
-		try {
 			BigInteger retryAtttempt = ftp.getRetryAttempt().getValue();
 			setValueInPropertyMap(PropertyNameConstants.RETRY_ATTEMPT.value(),
 					ftp.getRetryAttempt() == null ? "" : retryAtttempt);
-		} catch (Exception e) {
-			LOGGER.error("Exception" + e);
+		} catch (Exception exception) {
+			LOGGER.error("Failed to set the widget value" + exception);
 		}
 		
 		
