@@ -148,12 +148,6 @@ public class FTPProtocolWidget extends AbstractWidget{
 		populateWidgets();
 	}
 	
-	@Override
-	public void setProperty(Property property) {
-		// TODO Auto-generated method stub
-		super.setProperty(property);
-	}
-	
 	private void setPropertyHelpText(Label label, String message) {
 		if(ShowHidePropertyHelpHandler.getInstance() != null 
 				&& ShowHidePropertyHelpHandler.getInstance().isShowHidePropertyHelpChecked()){
@@ -183,26 +177,10 @@ public class FTPProtocolWidget extends AbstractWidget{
 				}
 				showHideErrorSymbol(widgets);
 				propertyDialogButtonBar.enableApplyButton(true);
-				/*if(widgets!=null){
-					if(!ftpProtocolDetails.getProtocol().equalsIgnoreCase(combo.getText())){
-						clearFTPWidgetsMap();
-					}
-				}*/
 			}
 		});
 	}
 	
-	/*private void clearFTPWidgetsMap(){
-		for(AbstractWidget widget : widgets){
-			if(widget.getPropertyName().equals("authentication")){
-				Property prop = (Property) widget.getProperties().put("authentication", null);
-				widget.setProperty(prop);
-			}else if(widget.getPropertyName().equals("operation")){
-				Property prop = (Property) widget.getProperties().put("operation", null);
-				widget.setProperty(prop);
-			}
-		}
-	}*/
 	
 	private void validateTextWidget(Text text, boolean isEnable, ControlDecoration controlDecoration, Color color){
 		text.setText("");

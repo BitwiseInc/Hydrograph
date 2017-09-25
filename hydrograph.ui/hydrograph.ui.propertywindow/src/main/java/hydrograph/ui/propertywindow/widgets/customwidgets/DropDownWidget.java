@@ -147,6 +147,7 @@ public class DropDownWidget extends AbstractWidget{
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				showHideErrorSymbol(widgetList);
+				propertyDialogButtonBar.enableApplyButton(true);
 			}
 			
 		});

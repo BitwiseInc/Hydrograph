@@ -132,7 +132,9 @@ public class S3FileTransferConverterHelper{
 			s3FileTransfer.setFileOperation(fileOperationChoice);
 			s3FileTransfer.setLocalPath(authOperationDetails.getField1());
 			s3FileTransfer.setBucketName(authOperationDetails.getField2());
-			s3FileTransfer.setFolderNameInBucket(authOperationDetails.getField3());
+			if(StringUtils.isNotBlank(authOperationDetails.getField3())){
+				s3FileTransfer.setFolderNameInBucket(authOperationDetails.getField3());
+			}
 			s3FileTransfer.setRegion(authOperationDetails.getField4());
 		}
 	}

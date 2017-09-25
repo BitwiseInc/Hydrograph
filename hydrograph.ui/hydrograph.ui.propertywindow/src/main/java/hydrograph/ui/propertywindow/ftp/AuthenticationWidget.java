@@ -107,9 +107,6 @@ public class AuthenticationWidget extends AbstractWidget{
 		String [] optionList = null;
 		initialMap = new LinkedHashMap<>(initialMap);
 		
-		//initialMap.entrySet().stream().filter(val -> val.getValue().getProtocolSelection().equals(protocolText))
-		//.collect(Collectors.toList()).
-		
 		String protocolText = null;
 		for(AbstractWidget widget : widgets){
 			if(widget.getPropertyName().equals("protocolSelection")){
