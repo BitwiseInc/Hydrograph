@@ -13,6 +13,7 @@
 
 package hydrograph.engine.core.component.entity.elements;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +22,10 @@ import java.util.List;
  *
  * @author Bitwise
  */
-public class FieldFormat {
+public class FieldFormat implements Serializable{
     private List<Property> property = new ArrayList<>();
-    private String copyOfFiled;
     private String name;
+    public FieldFormat (){}
 
     public List<Property> getProperty() {
         return property;
@@ -32,14 +33,6 @@ public class FieldFormat {
 
     public void setProperty(List<Property> property) {
         this.property = property;
-    }
-
-    public String getcopyOfFiled() {
-        return copyOfFiled;
-    }
-
-    public void setcopyOfFiled(String copyOf) {
-        this.copyOfFiled = copyOf;
     }
 
     public String getName() {
@@ -50,10 +43,11 @@ public class FieldFormat {
         this.name = name;
     }
 
-    public static class Property {
+    public static class Property implements Serializable {
         private String name;
         private String type;
         private String value;
+
 
         public String getName() {
             return name;

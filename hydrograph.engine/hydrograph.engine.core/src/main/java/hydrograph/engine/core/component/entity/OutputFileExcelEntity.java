@@ -15,6 +15,7 @@ package hydrograph.engine.core.component.entity;
 
 import hydrograph.engine.core.component.entity.base.InputOutputEntityBase;
 import hydrograph.engine.core.component.entity.elements.FieldFormat;
+import hydrograph.engine.core.component.entity.elements.KeyField;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,15 +29,14 @@ import java.util.List;
  */
 public class OutputFileExcelEntity extends InputOutputEntityBase {
 
-
+    private List<KeyField> keyField;
     private String path;
-    private String fileExtension;
     private String worksheetName;
+    private boolean isColumnAsWorksheetName;
     private String charset;
     private String writeMode;
     private boolean stripLeadingQuote;
     private boolean autoColumnSize;
-    private boolean abortOnError;
     private List<FieldFormat> headerFormats = new ArrayList<>();
     private List<FieldFormat> dataFormats = new ArrayList<>();
 
@@ -55,14 +55,6 @@ public class OutputFileExcelEntity extends InputOutputEntityBase {
 
     public void setPath(String path) {
         this.path = path;
-    }
-
-    public String getFileExtension() {
-        return fileExtension;
-    }
-
-    public void setFileExtension(String fileExtension) {
-        this.fileExtension = fileExtension;
     }
 
     public String getWorksheetName() {
@@ -105,12 +97,21 @@ public class OutputFileExcelEntity extends InputOutputEntityBase {
         this.autoColumnSize = autoColumnSize;
     }
 
-    public boolean isAbortOnError() {
-        return abortOnError;
+    public List<KeyField> getKeyField() {
+        return keyField;
     }
 
-    public void setAbortOnError(boolean abortOnError) {
-        this.abortOnError = abortOnError;
+    public void setKeyField(List<KeyField> keyField) {
+        this.keyField = keyField;
+    }
+
+
+    public boolean isColumnAsWorksheetName() {
+        return isColumnAsWorksheetName;
+    }
+
+    public void setColumnAsWorksheetName(boolean columnAsWorksheetName) {
+        isColumnAsWorksheetName = columnAsWorksheetName;
     }
 
     /**
@@ -127,11 +128,9 @@ public class OutputFileExcelEntity extends InputOutputEntityBase {
                 "Output file delimited entity info:\n");
         str.append(super.toString());
         str.append("Path: " + getPath());
-        str.append(" | format: " + getFileExtension());
         str.append(" | Overwrite: " + getWriteMode());
         str.append(" | stripLeadingQuote: " + isStripLeadingQuote());
         str.append(" | autoColumnSize: " + isAutoColumnSize());
-        str.append(" | abortOnError: " + isAbortOnError());
 
         str.append("\nfields: ");
         if (getFieldsList() != null) {

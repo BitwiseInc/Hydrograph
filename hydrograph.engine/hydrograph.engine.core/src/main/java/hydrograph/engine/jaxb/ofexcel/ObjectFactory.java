@@ -43,6 +43,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link SortKeyFields }
+     * 
+     */
+    public SortKeyFields createSortKeyFields() {
+        return new SortKeyFields();
+    }
+
+    /**
      * Create an instance of {@link FieldFormat }
      * 
      */
@@ -80,6 +88,14 @@ public class ObjectFactory {
      */
     public TypeOutputFileExcelBase createTypeOutputFileExcelBase() {
         return new TypeOutputFileExcelBase();
+    }
+
+    /**
+     * Create an instance of {@link SortKeyFields.Field }
+     * 
+     */
+    public SortKeyFields.Field createSortKeyFieldsField() {
+        return new SortKeyFields.Field();
     }
 
     /**

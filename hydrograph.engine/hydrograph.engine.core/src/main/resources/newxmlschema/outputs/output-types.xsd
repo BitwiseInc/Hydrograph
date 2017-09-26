@@ -133,18 +133,14 @@
                             <xs:attribute name="uri" type="xs:string" use="required"/>
                         </xs:complexType>
                     </xs:element>
-                    <xs:element name="fileExtension" minOccurs="0">
-                        <xs:complexType>
-                            <xs:attribute name="value" type="cmn:excel-file-type" use="required"/>
-                        </xs:complexType>
-                    </xs:element>
                     <xs:element name="worksheetName" minOccurs="0" maxOccurs="1">
                     <xs:complexType>
                         <xs:attribute name="name" type="xs:string" use="required"/>
+                        <xs:attribute name="IsColumn" type="xs:boolean" use="required"/>
                     </xs:complexType>
                     </xs:element>
-                    <xs:element name="stripLeadingQuote" type="ofexcel:boolean-attribute" minOccurs="0"  maxOccurs="1"/>
-                    <xs:element name="autoColumnSize" type="ofexcel:boolean-attribute" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="stripLeadingQuote" type="cmn:boolean-value-type" minOccurs="0"  maxOccurs="1"/>
+                    <xs:element name="autoColumnSize" type="cmn:boolean-value-type" minOccurs="0" maxOccurs="1"/>
                     <xs:element name="cellFormat" minOccurs="0" maxOccurs="1">
                         <xs:complexType>
                             <xs:sequence>
@@ -163,7 +159,7 @@
                             <xs:attribute name="value" type="cmn:standard-charsets" use="required"/>
                         </xs:complexType>
                     </xs:element>
-                    <xs:element name="abortOnError" type="ofexcel:boolean-attribute" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="sortKeyFields" minOccurs="0" maxOccurs="1" type="ofexcel:Sort-Key-fields"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>

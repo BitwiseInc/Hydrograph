@@ -22,6 +22,8 @@ import hydrograph.engine.jaxb.outputtypes.ExcelFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+
 /**
  * The Class OutputFileExcelEntityGenerator.
  *
@@ -55,20 +57,20 @@ public class OutputFileExcelEntityGenerator extends OutputComponentGeneratorBase
         outputFileExcelEntity.setBatch(jaxbOutputFileExcel.getBatch());
         outputFileExcelEntity.setComponentName(jaxbOutputFileExcel.getName());
         outputFileExcelEntity.setPath(jaxbOutputFileExcel.getPath().getUri());
-        outputFileExcelEntity.setFileExtension(jaxbOutputFileExcel.getFileExtension() != null ? jaxbOutputFileExcel.getFileExtension().getValue().value() : "XLSX");
         outputFileExcelEntity.setWorksheetName(jaxbOutputFileExcel.getWorksheetName()!=null ? jaxbOutputFileExcel.getWorksheetName().getName(): "HydrographSheet");
+        outputFileExcelEntity.setColumnAsWorksheetName(jaxbOutputFileExcel.getWorksheetName() != null ? jaxbOutputFileExcel.getWorksheetName().isIsColumn() : false);
         outputFileExcelEntity.setStripLeadingQuote(jaxbOutputFileExcel.getStripLeadingQuote() !=null ? jaxbOutputFileExcel.getStripLeadingQuote().isValue():true);
         outputFileExcelEntity.setAutoColumnSize(jaxbOutputFileExcel.getAutoColumnSize() != null ? jaxbOutputFileExcel.getAutoColumnSize().isValue() : true);
-        outputFileExcelEntity.setAbortOnError(jaxbOutputFileExcel.getAbortOnError()!= null ?jaxbOutputFileExcel.getAbortOnError().isValue(): true);
+
 
         outputFileExcelEntity.setWriteMode(jaxbOutputFileExcel.getWriteMode() != null ? jaxbOutputFileExcel.getWriteMode().getValue().value() : "Overwrite");
         outputFileExcelEntity.setCharset(jaxbOutputFileExcel.getCharset() != null ? jaxbOutputFileExcel.getCharset().getValue().value() : "UTF-8");
         outputFileExcelEntity.setFieldsList(OutputEntityUtils.extractOutputFields(jaxbOutputFileExcel.getInSocket().get(0).getSchema().getFieldOrRecordOrIncludeExternalSchema()));
         outputFileExcelEntity.setRuntimeProperties(OutputEntityUtils.extractRuntimeProperties(jaxbOutputFileExcel.getRuntimeProperties()));
 
-        outputFileExcelEntity.setHeaderFormats(FieldFormatUtils.getHeaderFormatList(jaxbOutputFileExcel.getCellFormat().getHeader().getField()));
-        outputFileExcelEntity.setDataFormats(FieldFormatUtils.getHeaderFormatList(jaxbOutputFileExcel.getCellFormat().getData().getField()));
-
+        outputFileExcelEntity.setHeaderFormats(FieldFormatUtils.getFormatList(jaxbOutputFileExcel.getCellFormat()!=null? jaxbOutputFileExcel.getCellFormat().getHeader().getField(): new ArrayList<>()));
+        outputFileExcelEntity.setDataFormats(FieldFormatUtils.getFormatList(jaxbOutputFileExcel.getCellFormat()!=null ? jaxbOutputFileExcel.getCellFormat().getData().getField():new ArrayList<>()));
+        outputFileExcelEntity.setKeyField(FieldFormatUtils.getKeyField(jaxbOutputFileExcel.getSortKeyFields()!=null?jaxbOutputFileExcel.getSortKeyFields().getField():new ArrayList<>()));
     }
 
     @Override

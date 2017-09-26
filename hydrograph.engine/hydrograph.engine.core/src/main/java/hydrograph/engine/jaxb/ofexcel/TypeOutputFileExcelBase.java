@@ -33,7 +33,6 @@ import hydrograph.engine.jaxb.outputtypes.ExcelFile;
  *     &lt;restriction base="{hydrograph/engine/jaxb/commontypes}type-output-component">
  *       &lt;sequence>
  *         &lt;element name="inSocket" type="{hydrograph/engine/jaxb/ofexcel}type-output-excel-in-socket"/>
- *         &lt;element name="overWrite" type="{hydrograph/engine/jaxb/commontypes}type-true-false" minOccurs="0"/>
  *         &lt;element name="runtimeProperties" type="{hydrograph/engine/jaxb/commontypes}type-properties" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>

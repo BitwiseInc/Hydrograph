@@ -12,66 +12,75 @@
    limitations under the License.
   -->
 <xs:schema xmlns="hydrograph/engine/jaxb/ofexcel" xmlns:cmn="hydrograph/engine/jaxb/commontypes"
-		   xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="hydrograph/engine/jaxb/ofexcel"
-		   elementFormDefault="unqualified">
-	<xs:import schemaLocation="../../common/common-types.xsd"
-			   namespace="hydrograph/engine/jaxb/commontypes"/>
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="hydrograph/engine/jaxb/ofexcel"
+           elementFormDefault="unqualified">
+    <xs:import schemaLocation="../../common/common-types.xsd"
+               namespace="hydrograph/engine/jaxb/commontypes"/>
 
-	<xs:complexType name="type-output-excel-in-socket">
-		<xs:complexContent>
-			<xs:restriction base="cmn:type-output-inSocket">
-				<xs:sequence>
-					<xs:element name="schema" type="cmn:type-base-record"/>
-				</xs:sequence>
-				<xs:attribute name="id" type="xs:string" use="required"
-							  fixed="in0"/>
-				<xs:attribute name="type" type="xs:string" use="optional"
-							  fixed="in"/>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
+    <xs:complexType name="type-output-excel-in-socket">
+        <xs:complexContent>
+            <xs:restriction base="cmn:type-output-inSocket">
+                <xs:sequence>
+                    <xs:element name="schema" type="cmn:type-base-record"/>
+                </xs:sequence>
+                <xs:attribute name="id" type="xs:string" use="required"
+                              fixed="in0"/>
+                <xs:attribute name="type" type="xs:string" use="optional"
+                              fixed="in"/>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
 
-	<xs:complexType name="type-output-file-excel-base">
-		<xs:complexContent>
-			<xs:restriction base="cmn:type-output-component">
-				<xs:sequence>
-					<xs:element name="inSocket" type="type-output-excel-in-socket"
-								minOccurs="1" maxOccurs="1"/>
-					<xs:element name="overWrite" type="cmn:type-true-false"
-								minOccurs="0" maxOccurs="1"/>
-					<xs:element name="runtimeProperties" type="cmn:type-properties"
-								minOccurs="0" maxOccurs="1"/>
-				</xs:sequence>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
+    <xs:complexType name="type-output-file-excel-base">
+        <xs:complexContent>
+            <xs:restriction base="cmn:type-output-component">
+                <xs:sequence>
+                    <xs:element name="inSocket" type="type-output-excel-in-socket"
+                                minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="runtimeProperties" type="cmn:type-properties"
+                                minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
 
-	<xs:complexType name="boolean-attribute">
-		<xs:attribute name="value" type="xs:boolean" use="required"/>
-	</xs:complexType>
+    <xs:complexType name="boolean-attribute">
+        <xs:attribute name="value" type="xs:boolean" use="required"/>
+    </xs:complexType>
 
-	<xs:complexType name="field-format" >
-		<xs:sequence>
-			<xs:element name="field" maxOccurs="unbounded">
-				<xs:complexType>
-					<xs:choice>
-						<xs:element name="copyOfFiled" maxOccurs="1">
-							<xs:complexType>
-								<xs:attribute name="fieldName" type="xs:string"/>
-							</xs:complexType>
-						</xs:element>
-						<xs:element name="property" maxOccurs="unbounded">
-							<xs:complexType>
-								<xs:attribute name="type" type="xs:string" use="required"/>
-								<xs:attribute name="name" type="xs:string" use="required"/>
-								<xs:attribute name="value" type="xs:string" use="required"/>
-							</xs:complexType>
-						</xs:element>
-					</xs:choice>
-					<xs:attribute name="name"/>
-				</xs:complexType>
-			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
+    <xs:complexType name="field-format">
+        <xs:sequence>
+            <xs:element name="field" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:choice>
+                        <xs:element name="copyOfFiled" maxOccurs="1">
+                            <xs:complexType>
+                                <xs:attribute name="fieldName" type="xs:string"/>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="property" maxOccurs="unbounded">
+                            <xs:complexType>
+                                <xs:attribute name="type" type="xs:string" use="required"/>
+                                <xs:attribute name="name" type="xs:string" use="required"/>
+                                <xs:attribute name="value" type="xs:string" use="required"/>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:choice>
+                    <xs:attribute name="name"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Sort-Key-fields">
+        <xs:sequence>
+            <xs:element name="field" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:attribute name="name" type="xs:string" use="required"/>
+                    <xs:attribute name="order" type="cmn:type-sort-order" default="asc" use="optional"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
 
 </xs:schema>

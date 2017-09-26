@@ -14,6 +14,8 @@
 package hydrograph.engine.core.component.utils;
 
 import hydrograph.engine.core.component.entity.elements.FieldFormat;
+import hydrograph.engine.core.component.entity.elements.KeyField;
+import hydrograph.engine.jaxb.ofexcel.SortKeyFields;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +26,7 @@ import java.util.List;
  * @author Bitwise
  */
 public class FieldFormatUtils {
-    public static List<FieldFormat> getHeaderFormatList(List<hydrograph.engine.jaxb.ofexcel.FieldFormat.Field> list) {
+    public static List<FieldFormat> getFormatList(List<hydrograph.engine.jaxb.ofexcel.FieldFormat.Field> list) {
         List<FieldFormat> fieldFormats = new ArrayList<>();
         list.forEach(element -> {
             FieldFormat f = new FieldFormat();
@@ -67,5 +69,16 @@ public class FieldFormatUtils {
             propList.add(p);
         });
         return propList;
+    }
+
+    public static List<KeyField> getKeyField(List<SortKeyFields.Field> KeyFields) {
+        List<KeyField> keyFieldList = new ArrayList<>();
+        KeyFields.forEach(e-> {
+            KeyField keyField=new KeyField();
+            keyField.setName(e.getName());
+            keyField.setSortOrder(e.getOrder().value());
+            keyFieldList.add(keyField);
+        });
+        return keyFieldList;
     }
 }
