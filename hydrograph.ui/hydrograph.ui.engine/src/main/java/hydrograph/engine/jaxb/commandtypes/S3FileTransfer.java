@@ -42,7 +42,7 @@ import hydrograph.engine.jaxb.commontypes.TypeCommandComponent;
  *         &lt;element name="localPath" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="bucketName" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="keyName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="folder_name_in_bucket" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="folder_name_in_bucket" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="FileOperation" type="{hydrograph/engine/jaxb/commandtypes}file-operation-choice"/>
  *         &lt;element name="encoding" minOccurs="0">
  *           &lt;complexType>
@@ -98,7 +98,7 @@ public class S3FileTransfer
     @XmlElement(required = true)
     protected String bucketName;
     protected String keyName;
-    @XmlElement(name = "folder_name_in_bucket", required = true)
+    @XmlElement(name = "folder_name_in_bucket")
     protected String folderNameInBucket;
     @XmlElement(name = "FileOperation", required = true)
     protected FileOperationChoice fileOperation;
