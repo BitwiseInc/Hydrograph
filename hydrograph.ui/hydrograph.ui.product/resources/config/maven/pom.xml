@@ -48,6 +48,12 @@
 			<version>0.1.spark</version>
 			<classifier>sources</classifier>
 		</dependency>
+		
+		<dependency>
+			<groupId>hydrograph</groupId>
+			<artifactId>hydrograph.engine.transformation</artifactId>
+			<version>0.1.spark</version>
+		</dependency>
 
 		<dependency>
 			<groupId>hydrograph</groupId>
@@ -55,18 +61,6 @@
 			<version>0.1.spark</version>
 		</dependency>
 
-		<dependency>
-			<groupId>hydrograph</groupId>
-			<artifactId>hydrograph.engine.config</artifactId>
-			<version>0.1.spark</version>
-		</dependency>
-
-		<dependency>
-			<groupId>hydrograph</groupId>
-			<artifactId>hydrograph.engine.common</artifactId>
-			<version>0.1.spark</version>
-		</dependency>
-		
 		<dependency>
 			<groupId>org.apache.hadoop</groupId>
 			<artifactId>hadoop-common</artifactId>
