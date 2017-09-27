@@ -19,19 +19,19 @@
 
 
     <commands id="FileTransfer" batch="0" xsi:type="ct:FTP">
-        <host_Name>ftp.abc.com</host_Name>
-        <user_Name>xvc</user_Name>
-        <input_file_path>/tmp/Spark</input_file_path>
-        <output_file_path>/TestingFTp/test/</output_file_path>
+        <host_Name>fdgf.com</host_Name>
+        <user_Name>dfg</user_Name>
+        <input_file_path>/TestingFTp/test.txt.txt</input_file_path>
+        <output_file_path>\Spark\</output_file_path>
         <FileOperation>
-          <upload></upload>
+     <download></download>
         </FileOperation>
         <encoding value="UTF-8"/>
-        <port_No>21</port_No>
-        <timeOut>5000</timeOut>
-        <retryAttempt>3</retryAttempt>
+        <port_No value="22"/>
+        <timeOut value="5000"/>
+       <retryAttempt value="3"/>
         <failOnError>true</failOnError>
         <overwritemode>Overwrite If Exists</overwritemode>
-        <password>12345</password>
+        <password>dsfgaf@2017</password>
     </commands>
 </p:graph>
