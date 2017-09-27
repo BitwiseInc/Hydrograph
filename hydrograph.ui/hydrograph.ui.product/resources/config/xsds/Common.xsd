@@ -395,7 +395,6 @@
 					</appinfo>
 				</annotation>
 			</enumeration>
-<<<<<<< HEAD
 			<enumeration value="FTP_AUTHENTICATION_VALIDATOR">
 				<annotation>
 					<appinfo>
@@ -421,12 +420,13 @@
 				<annotation>
 					<appinfo>
 						<jaxb:typesafeEnumMember name="FTPBooleanValidation" />
-=======
+					</appinfo>
+				</annotation>
+			</enumeration>
 			<enumeration value="WORKSHEET_NAME_VALIDATOR">
 				<annotation>
 					<appinfo>
 						<jaxb:typesafeEnumMember name="WorksheetNameValidationRule" />
->>>>>>> Output Excel Component Development
 					</appinfo>
 				</annotation>
 			</enumeration>
