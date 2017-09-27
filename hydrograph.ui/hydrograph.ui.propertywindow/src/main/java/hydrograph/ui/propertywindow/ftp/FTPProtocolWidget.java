@@ -57,8 +57,8 @@ import hydrograph.ui.propertywindow.widgets.utility.WidgetUtility;
  * @author Bitwise
  *
  */
-public class ProtocolWidget extends AbstractWidget{
-	private static final Logger logger = LogFactory.INSTANCE.getLogger(ProtocolWidget.class);
+public class FTPProtocolWidget extends AbstractWidget{
+	private static final Logger logger = LogFactory.INSTANCE.getLogger(FTPProtocolWidget.class);
 	private String propertyName;
 	private Cursor cursor;
 	private FTPProtocolDetails ftpProtocolDetails;
@@ -70,7 +70,7 @@ public class ProtocolWidget extends AbstractWidget{
 	private ControlDecoration hostDecorator;
 	private ControlDecoration portDecorator;
 	
-	public ProtocolWidget(ComponentConfigrationProperty componentConfigProp,
+	public FTPProtocolWidget(ComponentConfigrationProperty componentConfigProp,
 			ComponentMiscellaneousProperties componentMiscProps, PropertyDialogButtonBar propDialogButtonBar) {
 		super(componentConfigProp, componentMiscProps, propDialogButtonBar);
 		this.propertyName = componentConfigProp.getPropertyName();
@@ -180,6 +180,7 @@ public class ProtocolWidget extends AbstractWidget{
 			}
 		});
 	}
+	
 	
 	private void validateTextWidget(Text text, boolean isEnable, ControlDecoration controlDecoration, Color color){
 		text.setText("");

@@ -12,10 +12,12 @@
  *******************************************************************************/
 package hydrograph.ui.engine.ui.converter.impl;
 
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 
 import hydrograph.engine.jaxb.commandtypes.FileOperationChoice;
@@ -52,7 +54,7 @@ public class SFTPUiConverter extends CommandUiConverter{
 		super.prepareUIXML();
 		LOGGER.debug("Fetching COMMAND-Properties for -{}", componentName);
 		super.prepareUIXML();
-		String port;
+		String port="";
 		SFTP sftp = (SFTP) typeBaseComponent;
 		container.getComponentNextNameSuffixes().put(name_suffix, 0);
 		container.getComponentNames().add(sftp.getId());
@@ -60,12 +62,12 @@ public class SFTPUiConverter extends CommandUiConverter{
 		propertyMap.put(Constants.BATCH, sftp.getBatch());
 		
 		setValueInPropertyMap(PropertyNameConstants.FTP_HOST.value(), sftp.getHostName() == null ? "" : sftp.getHostName());
-		setValueInPropertyMap(PropertyNameConstants.FTP_PORT.value(), sftp.getPortNo() == null ? "" : sftp.getPortNo());
-		
 		if(sftp.getPortNo() != null){
-			port = sftp.getPortNo()+"";
-		}else{
-			port = "";
+			if(StringUtils.isNotBlank(getValue(PropertyNameConstants.FTP_PORT.value()))){
+				port=getValue(PropertyNameConstants.FTP_PORT.value());
+			}else if(sftp.getPortNo()!=null && sftp.getPortNo().getValue()!=null ){
+				port=String.valueOf(sftp.getPortNo().getValue());
+			}
 		}
 		
 		FTPProtocolDetails ftpProtocolDetails = new FTPProtocolDetails(Constants.SFTP, sftp.getHostName(), port);
@@ -80,7 +82,7 @@ public class SFTPUiConverter extends CommandUiConverter{
 				sftp.getPrivateKeyPath() == null ? "" : sftp.getPrivateKeyPath());
 		
 		FTPAuthOperationDetails authDetailsValue = new FTPAuthOperationDetails(sftp.getUserName(), sftp.getPassword(), 
-				sftp.getPrivateKeyPath(), "", "");
+				sftp.getPrivateKeyPath(), "", "", Constants.SFTP);
 		if(sftp.getPassword() != null){
 			authDetails.put(Constants.STAND_AUTH, authDetailsValue);
 		}else{
@@ -89,14 +91,20 @@ public class SFTPUiConverter extends CommandUiConverter{
 		//authentication
 		propertyMap.put(PropertyNameConstants.FTP_AUTH.value(), authDetails);
 		
-		setValueInPropertyMap(PropertyNameConstants.TIME_OUT.value(),
-				sftp.getTimeOut() == null ? "" : sftp.getTimeOut().intValue());
-		setValueInPropertyMap(PropertyNameConstants.RETRY_ATTEMPT.value(),
-				sftp.getRetryAttempt() == null ? "" : sftp.getRetryAttempt().intValue());
+		try {
+			BigInteger timeOut = sftp.getTimeOut().getValue();
+			setValueInPropertyMap(PropertyNameConstants.TIME_OUT.value(),
+					sftp.getTimeOut() == null ? "" : timeOut);
+			BigInteger retryAtttempt = sftp.getRetryAttempt().getValue();
+			setValueInPropertyMap(PropertyNameConstants.RETRY_ATTEMPT.value(),
+					sftp.getRetryAttempt() == null ? "" : retryAtttempt);
+		} catch (Exception exception) {
+			LOGGER.error("Failed to set the widget value" + exception);
+		}
 		
 		Map<String, FTPAuthOperationDetails> operationDetails = new HashMap<String, FTPAuthOperationDetails>();
 		FTPAuthOperationDetails authOperationDetails  = new FTPAuthOperationDetails(sftp.getInputFilePath(), 
-				sftp.getOutputFilePath(), "", "",sftp.getOverwritemode());
+				sftp.getOutputFilePath(), "", "",sftp.getOverwritemode(), Constants.SFTP);
 		FileOperationChoice operationChoice = sftp.getFileOperation();
 		if(operationChoice.getDownload() != null){
 			operationDetails.put(operationChoice.getDownload().toString(), authOperationDetails);
@@ -119,7 +127,11 @@ public class SFTPUiConverter extends CommandUiConverter{
 	}
 	
 	private void setValueInPropertyMap(String propertyName,Object value){
-		value = getParameterValue(propertyName,value);
+		if(StringUtils.isNotBlank(getValue(propertyName))){
+			value=getValue(propertyName);
+		}else{
+			value = getParameterValue(propertyName,value);
+		}
 		propertyMap.put(propertyName, value);
 	}
 

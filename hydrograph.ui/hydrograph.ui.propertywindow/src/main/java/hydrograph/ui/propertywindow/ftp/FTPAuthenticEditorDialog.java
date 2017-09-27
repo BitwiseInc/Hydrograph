@@ -389,14 +389,14 @@ public class FTPAuthenticEditorDialog extends Dialog{
 		if(authenticationModeCombo.getSelectionIndex() ==1){
 			if(StringUtils.equalsIgnoreCase(protocolText, "AWS S3 HTTPS")){
 				authOperationDetails = new FTPAuthOperationDetails(null, 
-						text2Value, null, null, null);
+						text2Value, null, null, null, protocolText);
 			}else{
 				authOperationDetails = new FTPAuthOperationDetails(text1Value, 
-						text2Value, null, null, null);
+						text2Value, null, null, null, protocolText);
 			}
 		}else{
 			authOperationDetails = new FTPAuthOperationDetails(text1Value, 
-					text2Value, null, null, null);
+					text2Value, null, null, null, protocolText);
 		}
 		
 		authOperationSelectionMap.put(authenticationModeCombo.getText(), authOperationDetails);

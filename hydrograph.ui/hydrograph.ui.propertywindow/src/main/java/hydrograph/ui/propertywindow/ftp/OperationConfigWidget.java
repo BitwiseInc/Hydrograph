@@ -56,7 +56,6 @@ public class OperationConfigWidget extends AbstractWidget{
 	private Map<String, FTPAuthOperationDetails> initialMap;
 	private ArrayList<AbstractWidget> widgets;
 	private LinkedHashMap<String, Object> tempPropertyMap;
-	private String tmpProtocolValue;
 	
 	public OperationConfigWidget(ComponentConfigrationProperty componentConfigProp,
 			ComponentMiscellaneousProperties componentMiscProps, PropertyDialogButtonBar propDialogButtonBar) {
@@ -116,16 +115,14 @@ public class OperationConfigWidget extends AbstractWidget{
 						protocoltext = protocolDetails.getProtocol();
 						optionList = new String[]{Constants.GET_FILE, Constants.PUT_FILE};
 					}
-					if(tmpProtocolValue == null){
-						tmpProtocolValue = protocolDetails.getProtocol();
-					}
 				}
 			}
 		}
 		
-		if(!tmpProtocolValue.equals(protocoltext)){
+		String selectedText = protocoltext;
+		boolean bol = initialMap.entrySet().stream().anyMatch(val -> val.getValue().getProtocolSelection().equals(selectedText));
+		if(!bol){
 			initialMap = new LinkedHashMap<>();
-			tmpProtocolValue = protocoltext;
 		}
 		
 		FTPOperationConfigDialog authenticationEditorDialog = new FTPOperationConfigDialog(shell, 

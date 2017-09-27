@@ -24,7 +24,8 @@ public class FTPAuthOperationDetails implements IDataStructure{
  	private String field2;
  	private String field3;
  	private String field4;
- 	private String field5 ;
+ 	private String field5;
+ 	private String protocolSelection="FTP";
  	
  	
  	/**
@@ -34,15 +35,32 @@ public class FTPAuthOperationDetails implements IDataStructure{
  	 * @param field4
  	 * @param field5
  	 */
- 	public FTPAuthOperationDetails(String field1, String field2,String field3, String field4, String field5) {
+ 	public FTPAuthOperationDetails(String field1, String field2,String field3, String field4, String field5, String protocolSelection) {
  		this.field1 = field1;
  		this.field2 = field2;
  		this.field3 = field3;
  		this.field4 = field4;
  		this.field5 = field5;
+ 		this.protocolSelection = protocolSelection;
  	}
 
  	
+	/**
+	 * @return selected text
+	 */
+	public String getProtocolSelection() {
+		return protocolSelection;
+	}
+
+
+	/**
+	 * @param protocolSelection
+	 */
+	public void setProtocolSelection(String protocolSelection) {
+		this.protocolSelection = protocolSelection;
+	}
+
+
 	/**
 	 * @return
 	 */
@@ -112,6 +130,13 @@ public class FTPAuthOperationDetails implements IDataStructure{
 	public void setField5(String field5) {
 		this.field5 = field5;
 	}
+	
+	@Override
+	public FTPAuthOperationDetails clone() {
+		FTPAuthOperationDetails details = new FTPAuthOperationDetails(getField1(), 
+				getField2(), getField3(), getField4(), getField5(), getProtocolSelection());
+		return details;
+	}
 
 
 	@Override
@@ -123,14 +148,8 @@ public class FTPAuthOperationDetails implements IDataStructure{
 		result = prime * result + ((field3 == null) ? 0 : field3.hashCode());
 		result = prime * result + ((field4 == null) ? 0 : field4.hashCode());
 		result = prime * result + ((field5 == null) ? 0 : field5.hashCode());
+		result = prime * result + ((protocolSelection == null) ? 0 : protocolSelection.hashCode());
 		return result;
-	}
-	
-	@Override
-	public FTPAuthOperationDetails clone() {
-		FTPAuthOperationDetails details = new FTPAuthOperationDetails(getField1(), 
-				getField2(), getField3(), getField4(), getField5());
-		return details;
 	}
 
 
@@ -168,16 +187,19 @@ public class FTPAuthOperationDetails implements IDataStructure{
 				return false;
 		} else if (!field5.equals(other.field5))
 			return false;
+		if (protocolSelection == null) {
+			if (other.protocolSelection != null)
+				return false;
+		} else if (!protocolSelection.equals(other.protocolSelection))
+			return false;
 		return true;
 	}
 
 
 	@Override
 	public String toString() {
-		return "FTPAuthOperationDetails [field1=" + field1 + ", field2=" + field2 + ", field3=" + field3 + ", "
-				+ "field4="+ field4 + ",field5="+ field5 + "]";
+		return "FTPAuthOperationDetails [field1=" + field1 + ", field2=" + field2 + ", field3=" + field3 + ", field4="
+				+ field4 + ", field5=" + field5 + ", protocolSelection=" + protocolSelection + "]";
 	}
- 	
- 	
  	
 }

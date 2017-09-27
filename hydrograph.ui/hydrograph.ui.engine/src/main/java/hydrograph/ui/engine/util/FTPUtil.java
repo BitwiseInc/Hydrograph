@@ -22,6 +22,8 @@ import hydrograph.engine.jaxb.commontypes.BooleanValueType;
 import hydrograph.engine.jaxb.commontypes.StandardCharsets;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.common.util.ParameterUtil;
+import hydrograph.ui.datastructure.property.FTPProtocolDetails;
+import hydrograph.ui.engine.constants.PropertyNameConstants;
 import hydrograph.ui.engine.xpath.ComponentXpath;
 import hydrograph.ui.engine.xpath.ComponentXpathConstants;
 import hydrograph.ui.engine.xpath.ComponentsAttributeAndValue;
@@ -44,7 +46,7 @@ public class FTPUtil {
 
 	
 	/**
-	 * Converts the String to {@link BigInteger} for port
+	 * Converts the String to {@link BigInteger} for widgets
 	 * 
 	 * @param propertyName
 	 * @return {@link BigInteger}
@@ -60,6 +62,29 @@ public class FTPUtil {
 					.put((ComponentXpathConstants.COMPONENT_XPATH_BOOLEAN.value().replace("$id", componentId))
 							.replace(Constants.PARAM_PROPERTY_NAME, propertyName),
 							new ComponentsAttributeAndValue(null, properties.get(propertyName).toString()));
+			return null;
+		}
+		return bigInteger;
+	}
+	
+	/**
+	 * Converts the String to {@link BigInteger} for port
+	 * @param propertyName
+	 * @param componentId
+	 * @param propertyValue
+	 * @return
+	 */
+	public BigInteger getPortParam(String propertyName, String componentId, Map<String, Object> properties) {
+		LOGGER.debug("Getting boolean Value for {}={}", new Object[] { propertyName, properties });
+		BigInteger bigInteger = null;
+		FTPProtocolDetails protocolDetails = (FTPProtocolDetails) properties.get(PropertyNameConstants.PROTOCOL_SELECTION.value());
+		if (StringUtils.isNotBlank(protocolDetails.getPort()) && StringUtils.isNumeric(protocolDetails.getPort())) {
+			bigInteger = new BigInteger(String.valueOf(protocolDetails.getPort()));
+		} else if (ParameterUtil.isParameter(protocolDetails.getPort())) {
+			ComponentXpath.INSTANCE.getXpathMap()
+					.put((ComponentXpathConstants.COMPONENT_XPATH_BOOLEAN.value().replace("$id", componentId))
+							.replace(Constants.PARAM_PROPERTY_NAME, propertyName),
+							new ComponentsAttributeAndValue(null, protocolDetails.getPort()));
 			return null;
 		}
 		return bigInteger;

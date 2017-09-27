@@ -121,4 +121,17 @@ public class FTPWidgetUtility {
 		text.addListener(SWT.Modify, eltModifyListener.getListener(propertyDialogButtonBar, helper, text));
 	}
 	
+	/**
+	 * 
+	 */
+	public void removeModifyListener(Text text, PropertyDialogButtonBar propertyDialogButtonBar, Cursor cursor, 
+			ControlDecoration controlDecoration){
+		controlDecoration.hide();
+		ELTModifyListener eltModifyListener = new ELTModifyListener();
+		ListenerHelper helper = new ListenerHelper();
+		helper.put(HelperType.CONTROL_DECORATION, controlDecoration);
+		text.setBackground(CustomColorRegistry.INSTANCE.getColorFromRegistry( 255, 255, 255));
+		text.removeListener(SWT.Modify, eltModifyListener.getListener(propertyDialogButtonBar, helper, text));
+	}
+	
 }

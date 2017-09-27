@@ -20,6 +20,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
+import hydrograph.engine.jaxb.commontypes.ElementValueIntegerType;
 import hydrograph.engine.jaxb.commontypes.StandardCharsets;
 import hydrograph.engine.jaxb.commontypes.TypeCommandComponent;
 
@@ -48,10 +49,10 @@ import hydrograph.engine.jaxb.commontypes.TypeCommandComponent;
  *             &lt;/complexContent>
  *           &lt;/complexType>
  *         &lt;/element>
- *         &lt;element name="port_No" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
- *         &lt;element name="timeOut" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
- *         &lt;element name="retryAfterDuration" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
- *         &lt;element name="retryAttempt" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="port_No" type="{hydrograph/engine/jaxb/commontypes}element-value-integer-type" minOccurs="0"/>
+ *         &lt;element name="timeOut" type="{hydrograph/engine/jaxb/commontypes}element-value-integer-type" minOccurs="0"/>
+ *         &lt;element name="retryAfterDuration" type="{hydrograph/engine/jaxb/commontypes}element-value-integer-type" minOccurs="0"/>
+ *         &lt;element name="retryAttempt" type="{hydrograph/engine/jaxb/commontypes}element-value-integer-type" minOccurs="0"/>
  *         &lt;element name="failOnError" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *         &lt;element name="overwritemode" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
@@ -78,7 +79,6 @@ import hydrograph.engine.jaxb.commontypes.TypeCommandComponent;
     "overwritemode"
 })
 @XmlSeeAlso({
-    FTPS.class,
     FTP.class,
     SFTP.class
 })
@@ -98,10 +98,10 @@ public abstract class FileTransferBase
     protected FileOperationChoice fileOperation;
     protected FileTransferBase.Encoding encoding;
     @XmlElement(name = "port_No")
-    protected Integer portNo;
-    protected Integer timeOut;
-    protected Integer retryAfterDuration;
-    protected Integer retryAttempt;
+    protected ElementValueIntegerType portNo;
+    protected ElementValueIntegerType timeOut;
+    protected ElementValueIntegerType retryAfterDuration;
+    protected ElementValueIntegerType retryAttempt;
     protected Boolean failOnError;
     protected String overwritemode;
 
@@ -254,10 +254,10 @@ public abstract class FileTransferBase
      * 
      * @return
      *     possible object is
-     *     {@link Integer }
+     *     {@link ElementValueIntegerType }
      *     
      */
-    public Integer getPortNo() {
+    public ElementValueIntegerType getPortNo() {
         return portNo;
     }
 
@@ -266,10 +266,10 @@ public abstract class FileTransferBase
      * 
      * @param value
      *     allowed object is
-     *     {@link Integer }
+     *     {@link ElementValueIntegerType }
      *     
      */
-    public void setPortNo(Integer value) {
+    public void setPortNo(ElementValueIntegerType value) {
         this.portNo = value;
     }
 
@@ -278,10 +278,10 @@ public abstract class FileTransferBase
      * 
      * @return
      *     possible object is
-     *     {@link Integer }
+     *     {@link ElementValueIntegerType }
      *     
      */
-    public Integer getTimeOut() {
+    public ElementValueIntegerType getTimeOut() {
         return timeOut;
     }
 
@@ -290,10 +290,10 @@ public abstract class FileTransferBase
      * 
      * @param value
      *     allowed object is
-     *     {@link Integer }
+     *     {@link ElementValueIntegerType }
      *     
      */
-    public void setTimeOut(Integer value) {
+    public void setTimeOut(ElementValueIntegerType value) {
         this.timeOut = value;
     }
 
@@ -302,10 +302,10 @@ public abstract class FileTransferBase
      * 
      * @return
      *     possible object is
-     *     {@link Integer }
+     *     {@link ElementValueIntegerType }
      *     
      */
-    public Integer getRetryAfterDuration() {
+    public ElementValueIntegerType getRetryAfterDuration() {
         return retryAfterDuration;
     }
 
@@ -314,10 +314,10 @@ public abstract class FileTransferBase
      * 
      * @param value
      *     allowed object is
-     *     {@link Integer }
+     *     {@link ElementValueIntegerType }
      *     
      */
-    public void setRetryAfterDuration(Integer value) {
+    public void setRetryAfterDuration(ElementValueIntegerType value) {
         this.retryAfterDuration = value;
     }
 
@@ -326,10 +326,10 @@ public abstract class FileTransferBase
      * 
      * @return
      *     possible object is
-     *     {@link Integer }
+     *     {@link ElementValueIntegerType }
      *     
      */
-    public Integer getRetryAttempt() {
+    public ElementValueIntegerType getRetryAttempt() {
         return retryAttempt;
     }
 
@@ -338,10 +338,10 @@ public abstract class FileTransferBase
      * 
      * @param value
      *     allowed object is
-     *     {@link Integer }
+     *     {@link ElementValueIntegerType }
      *     
      */
-    public void setRetryAttempt(Integer value) {
+    public void setRetryAttempt(ElementValueIntegerType value) {
         this.retryAttempt = value;
     }
 

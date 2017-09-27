@@ -17,13 +17,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.math.NumberUtils;
 import org.slf4j.Logger;
 
 import hydrograph.engine.jaxb.commandtypes.FTP;
 import hydrograph.engine.jaxb.commandtypes.FileOperationChoice;
 import hydrograph.engine.jaxb.commandtypes.FileTransferBase.Encoding;
 import hydrograph.engine.jaxb.commontypes.BooleanValueType;
+import hydrograph.engine.jaxb.commontypes.ElementValueIntegerType;
 import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.datastructure.property.FTPAuthOperationDetails;
@@ -59,15 +59,18 @@ public class FTPConverterHelper{
 		componentId=component.getComponentId();
 		
 		
-		if(!properties.get("protocolSelection").equals("")){
+		if(!properties.get(PropertyNameConstants.PROTOCOL_SELECTION.value()).equals("")){
 			FTPProtocolDetails protocolDetails = (FTPProtocolDetails) properties.get(PropertyNameConstants.PROTOCOL_SELECTION.value());
 			if(protocolDetails != null){
 				if(protocolDetails.getHost() != null){
 					ftp.setHostName(protocolDetails.getHost());
 				}
 				if(protocolDetails.getPort() != null){
-					int port = NumberUtils.toInt(protocolDetails.getPort(), 21);
-					ftp.setPortNo(port);
+					BigInteger portValue = FTPUtil.INSTANCE.getPortParam(PropertyNameConstants.FTP_PORT.value(), 
+							componentId, properties);
+					ElementValueIntegerType portParam = new ElementValueIntegerType();
+					portParam.setValue(portValue);
+					ftp.setPortNo(portParam);
 				}
 			}
 		}
@@ -77,14 +80,15 @@ public class FTPConverterHelper{
 		
 		
 		BigInteger connectionTimeOut = FTPUtil.INSTANCE.getPortValue(PropertyNameConstants.TIME_OUT.value(), componentId, properties);
-		if(connectionTimeOut != null){
-			ftp.setTimeOut(connectionTimeOut.intValue());
-		}
+		ElementValueIntegerType timeout = new ElementValueIntegerType();
+		timeout.setValue(connectionTimeOut);
+		ftp.setTimeOut(timeout);
 		
 		BigInteger noOfRetries = FTPUtil.INSTANCE.getPortValue(PropertyNameConstants.RETRY_ATTEMPT.value(), componentId, properties);
-		if(noOfRetries != null){
-			ftp.setRetryAttempt(noOfRetries.intValue());
-		}
+		ElementValueIntegerType retries = new ElementValueIntegerType();
+		retries.setValue(noOfRetries);
+		ftp.setRetryAttempt(retries);
+			
 		//operations
 		addFtpOperationDetails(ftp);
 		
@@ -102,16 +106,18 @@ public class FTPConverterHelper{
 	 * @param ftp
 	 */
 	private void addAuthenticationDetails(FTP ftp){
-		if(!properties.get("authentication").equals("")){
-			Map<String, FTPAuthOperationDetails> authDetails = (Map<String, FTPAuthOperationDetails>) properties
-					.get(PropertyNameConstants.FTP_AUTH.value());
-			FTPAuthOperationDetails authenticationDetails = null;
-			if(authDetails != null && !authDetails.isEmpty()){
-				for(Map.Entry<String, FTPAuthOperationDetails> map : authDetails.entrySet()){
-					authenticationDetails = map.getValue();
+		if(properties.get("authentication") !=null){
+			if(!properties.get("authentication").equals("")){
+				Map<String, FTPAuthOperationDetails> authDetails = (Map<String, FTPAuthOperationDetails>) properties
+						.get(PropertyNameConstants.FTP_AUTH.value());
+				FTPAuthOperationDetails authenticationDetails = null;
+				if(authDetails != null && !authDetails.isEmpty()){
+					for(Map.Entry<String, FTPAuthOperationDetails> map : authDetails.entrySet()){
+						authenticationDetails = map.getValue();
+					}
+					ftp.setUserName(authenticationDetails.getField1());
+					ftp.setPassword(authenticationDetails.getField2());
 				}
-				ftp.setUserName(authenticationDetails.getField1());
-				ftp.setPassword(authenticationDetails.getField2());
 			}
 		}
 	}
@@ -121,26 +127,28 @@ public class FTPConverterHelper{
 	 * @param ftp
 	 */
 	private void addFtpOperationDetails(FTP ftp){
-		if(!properties.get("operation").equals("")){
-			Map<String, FTPAuthOperationDetails> fileOperationDetaildetails =  (Map<String, FTPAuthOperationDetails>) properties
-					.get(PropertyNameConstants.FTP_OPERATION.value());
-			FileOperationChoice fileOperationChoice = new FileOperationChoice();
-			FTPAuthOperationDetails authOperationDetails = null;
-			if(fileOperationDetaildetails!=null && !fileOperationDetaildetails.isEmpty()){
-				for(Map.Entry<String, FTPAuthOperationDetails> map : fileOperationDetaildetails.entrySet()){
-					authOperationDetails = map.getValue();
-					if(StringUtils.equalsIgnoreCase(map.getKey(), Constants.GET_FILE)){
-						fileOperationChoice.setDownload(map.getKey());
-						ftp.setInputFilePath(authOperationDetails.getField2());
-						ftp.setOutputFilePath(authOperationDetails.getField1());
-						ftp.setOverwritemode(authOperationDetails.getField5());
-					}else{
-						fileOperationChoice.setUpload(map.getKey());
-						ftp.setInputFilePath(authOperationDetails.getField1());
-						ftp.setOutputFilePath(authOperationDetails.getField2());
+		if(properties.get("operation") !=null){
+			if(!properties.get("operation").equals("")){
+				Map<String, FTPAuthOperationDetails> fileOperationDetaildetails =  (Map<String, FTPAuthOperationDetails>) properties
+						.get(PropertyNameConstants.FTP_OPERATION.value());
+				FileOperationChoice fileOperationChoice = new FileOperationChoice();
+				FTPAuthOperationDetails authOperationDetails = null;
+				if(fileOperationDetaildetails!=null && !fileOperationDetaildetails.isEmpty()){
+					for(Map.Entry<String, FTPAuthOperationDetails> map : fileOperationDetaildetails.entrySet()){
+						authOperationDetails = map.getValue();
+						if(StringUtils.equalsIgnoreCase(map.getKey(), Constants.GET_FILE)){
+							fileOperationChoice.setDownload(map.getKey());
+							ftp.setInputFilePath(authOperationDetails.getField2());
+							ftp.setOutputFilePath(authOperationDetails.getField1());
+							ftp.setOverwritemode(authOperationDetails.getField5());
+						}else{
+							fileOperationChoice.setUpload(map.getKey());
+							ftp.setInputFilePath(authOperationDetails.getField1());
+							ftp.setOutputFilePath(authOperationDetails.getField2());
+						}
 					}
+					ftp.setFileOperation(fileOperationChoice);
 				}
-				ftp.setFileOperation(fileOperationChoice);
 			}
 		}
 	}

@@ -12,6 +12,7 @@
  *******************************************************************************/
 package hydrograph.ui.engine.ui.converter.impl;
 
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -69,20 +70,27 @@ public class S3FileTransferUiConverter extends CommandUiConverter{
 		Map<String, FTPAuthOperationDetails> authDetails = new HashMap<String, FTPAuthOperationDetails>();
 		if(S3FileTransfer.getSecretAccessKey() != null || S3FileTransfer.getAccessKeyID() != null){
 			FTPAuthOperationDetails authDetailsValue = new FTPAuthOperationDetails(S3FileTransfer.getAccessKeyID(), S3FileTransfer.getSecretAccessKey(), 
-					S3FileTransfer.getCrediationalPropertiesFile(), "", "");
+					S3FileTransfer.getCrediationalPropertiesFile(), "", "", Constants.AWS_S3);
 			authDetails.put(Constants.AWS_S3_KEY, authDetailsValue);
 		}else{
 			FTPAuthOperationDetails authDetailsValue = new FTPAuthOperationDetails("", S3FileTransfer.getCrediationalPropertiesFile(), 
-					"", "", "");
+					"", "", "", Constants.AWS_S3);
 			authDetails.put(Constants.AWS_S3_PROP_FILE, authDetailsValue);
 		}
 		//authentication
 		propertyMap.put(PropertyNameConstants.FTP_AUTH.value(), authDetails);
 		
-		setValueInPropertyMap(PropertyNameConstants.TIME_OUT.value(),
-				S3FileTransfer.getTimeOut() == null ? "" : S3FileTransfer.getTimeOut().intValue());
-		setValueInPropertyMap(PropertyNameConstants.RETRY_ATTEMPT.value(),
-				S3FileTransfer.getRetryAttempt() == null ? "" : S3FileTransfer.getRetryAttempt().intValue());
+		try {
+			BigInteger timeOut = S3FileTransfer.getTimeOut().getValue();
+			setValueInPropertyMap(PropertyNameConstants.TIME_OUT.value(),
+					S3FileTransfer.getTimeOut() == null ? "" : timeOut);
+			
+			BigInteger retryAtttempt = S3FileTransfer.getRetryAttempt().getValue();
+			setValueInPropertyMap(PropertyNameConstants.RETRY_ATTEMPT.value(),
+					S3FileTransfer.getRetryAttempt() == null ? "" : retryAtttempt);
+		} catch (Exception exception) {
+			LOGGER.error("Failed to set the widget value" + exception);
+		}
 		
 		setValueInPropertyMap(PropertyNameConstants.FTP_LOCAL_PATH.value(),S3FileTransfer.getLocalPath() == null ? "" : S3FileTransfer.getLocalPath());
 		setValueInPropertyMap(PropertyNameConstants.FTP_BUCKET.value(),S3FileTransfer.getBucketName() == null ? "" : S3FileTransfer.getBucketName());
@@ -94,10 +102,10 @@ public class S3FileTransferUiConverter extends CommandUiConverter{
 		FTPAuthOperationDetails authOperationDetails;
 		if(S3FileTransfer.getOverwritemode()!=null){
 			authOperationDetails  = new FTPAuthOperationDetails(S3FileTransfer.getLocalPath(), S3FileTransfer.getBucketName(), 
-					S3FileTransfer.getFolderNameInBucket(), S3FileTransfer.getRegion(), S3FileTransfer.getOverwritemode());
+					S3FileTransfer.getFolderNameInBucket(), S3FileTransfer.getRegion(), S3FileTransfer.getOverwritemode(),Constants.AWS_S3);
 		}else{
 			authOperationDetails  = new FTPAuthOperationDetails(S3FileTransfer.getLocalPath(), S3FileTransfer.getBucketName(), 
-					S3FileTransfer.getFolderNameInBucket(), S3FileTransfer.getRegion(), S3FileTransfer.getOverwritemode());
+					S3FileTransfer.getFolderNameInBucket(), S3FileTransfer.getRegion(), S3FileTransfer.getOverwritemode(),Constants.AWS_S3);
 		}
 		
 		FileOperationChoice operationChoice = S3FileTransfer.getFileOperation();
