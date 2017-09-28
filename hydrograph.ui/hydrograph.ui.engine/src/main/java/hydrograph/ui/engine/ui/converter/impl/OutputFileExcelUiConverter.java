@@ -78,7 +78,7 @@ public class OutputFileExcelUiConverter extends OutputUiConverter {
 		// file path
 		if (excelFile.getPath() != null) {
 			String path = excelFile.getPath().getUri();
-			int index = path.lastIndexOf("\\");
+			int index = path.lastIndexOf("/");
 			String fileName = path.substring(index + 1);
 			String pathValue = path.substring(0, index);
 			propertyMap.put(PropertyNameConstants.PATH.value(), pathValue);

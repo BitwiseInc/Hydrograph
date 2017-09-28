@@ -69,14 +69,14 @@ public class ParameterEditingSupport extends EditingSupport {
 	protected void setValue(Object element, Object userInputValue) {
 		
 		if(MultiParameterFileDialogConstants.PARAMETER_NAME.equals(columnName)){
-			if(!StringUtils.equalsIgnoreCase(((Parameter) element).getParameterName(),String.valueOf(userInputValue))){
+			if(!StringUtils.equals(((Parameter) element).getParameterName(),String.valueOf(userInputValue))){
 				((Parameter) element).setParameterName(String.valueOf(userInputValue));
 				multiParameterFileDialog.getApplyButton().setEnabled(true);
 			}
 			
 		}
 		else if(MultiParameterFileDialogConstants.PARAMETER_VALUE.equals(columnName)){
-			if(!StringUtils.equalsIgnoreCase(((Parameter) element).getParameterValue(),String.valueOf(userInputValue))){
+			if(!StringUtils.equals(((Parameter) element).getParameterValue(),String.valueOf(userInputValue))){
 				((Parameter) element).setParameterValue(String.valueOf(userInputValue));
 				multiParameterFileDialog.getApplyButton().setEnabled(true);
 			}
