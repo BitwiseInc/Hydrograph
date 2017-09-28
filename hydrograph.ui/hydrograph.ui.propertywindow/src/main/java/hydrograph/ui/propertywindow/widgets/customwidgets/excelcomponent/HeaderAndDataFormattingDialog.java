@@ -240,7 +240,8 @@ public class HeaderAndDataFormattingDialog extends Dialog {
 				dialog.setText("Select Font");
 				String string = formatMap.get(excelFormats[4]);
 				fontdata = checkDefaultValue(fontEditor, fontdata, string);
-				dialog.setRGB(new RGB(0, 0, 0));
+				RGB checkDefaultColor = checkDefaultColor(fontdata, string);
+				dialog.setRGB(checkDefaultColor);
 				FontData defaultFont = new FontData(fontdata);
 				dialog.setFontData(defaultFont);
 				FontData newFont = dialog.open();
@@ -251,7 +252,31 @@ public class HeaderAndDataFormattingDialog extends Dialog {
 
 				}
 			}
+
 		});
+	}
+	
+	private RGB checkDefaultColor(String fontdata, String string) {
+		 Color color = new Color(null, new RGB(0, 0, 0));
+		if (StringUtils.equals(string, fontEditor.getItem().getText(1))) {
+			int index = string.lastIndexOf("|");
+			if (index != -1) {
+				String colorValue = string.substring(index + 1);
+				 java.awt.Color c = java.awt.Color.decode(colorValue);
+			   color = new Color(Display.getCurrent(), c.getRed(), c.getGreen(), c.getBlue());
+			  return color.getRGB();
+			}
+		} else {
+			String fontEditorValue = fontEditor.getItem().getText(1);
+			int index = fontEditorValue.lastIndexOf("|");
+			if (index != -1) {
+				String colorValue = fontEditorValue.substring(index + 1);
+				 java.awt.Color c = java.awt.Color.decode(colorValue);
+				  color = new Color(Display.getCurrent(), c.getRed(), c.getGreen(), c.getBlue());
+				  return color.getRGB();
+			}
+		}
+		 return color.getRGB();
 	}
 	
 	private String checkDefaultValue(TableEditor fontEditor, String fontdata, String string) {

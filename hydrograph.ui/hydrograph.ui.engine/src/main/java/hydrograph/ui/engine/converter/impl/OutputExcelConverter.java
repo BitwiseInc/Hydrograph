@@ -86,7 +86,7 @@ public class OutputExcelConverter extends OutputConverter {
 		String fileName = ((String) properties.get(PropertyNameConstants.FILE_NAME.value()));
 		String filePath = ((String) properties.get(PropertyNameConstants.PATH.value()));
 		if(StringUtils.isNotBlank(fileName) && StringUtils.isNotBlank(filePath)){
-			path.setUri(filePath + "\\" + fileName);
+			path.setUri(filePath + "/" + fileName);
 			excelFile.setPath(path);
 		}
 		
