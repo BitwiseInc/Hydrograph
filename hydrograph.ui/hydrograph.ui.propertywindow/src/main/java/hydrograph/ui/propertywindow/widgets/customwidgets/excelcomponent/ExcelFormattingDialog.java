@@ -190,7 +190,7 @@ public class ExcelFormattingDialog extends Dialog {
 		TableColumn tblclmnNewColumn_3 = headerFormatViewer.getColumn();
 		tblclmnNewColumn_3.setWidth(117);
 		tblclmnNewColumn_3.setText(Messages.HEADER_FORMAT);
-		tblclmnNewColumn_3.setToolTipText("Customize Available Fileds");
+		tblclmnNewColumn_3.setToolTipText(Messages.HEADER_FORMAT_TOOLTIP);
 		headerFormatViewer
 				.setEditingSupport(new HeaderFormattingEditingSupport(targetTableViewer, propDialogButtonBar));
 		headerFormatViewer.setLabelProvider(new ColumnLabelProvider() {
@@ -208,6 +208,7 @@ public class ExcelFormattingDialog extends Dialog {
 		TableColumn tblclmnNewColumn_1 = dataFormatViewer.getColumn();
 		tblclmnNewColumn_1.setWidth(138);
 		tblclmnNewColumn_1.setText(Messages.DATA_FORMAT);
+		tblclmnNewColumn_1.setToolTipText(Messages.DATA_FORMAT_TOOLTIP);
 		dataFormatViewer.setLabelProvider(new ColumnLabelProvider() {
 			public String getText(Object element) {
 				return ((ExcelConfigurationDataStructure) element).getDataMap().toString();
@@ -321,6 +322,7 @@ public class ExcelFormattingDialog extends Dialog {
 		Label applyAllLabel = new Label(top_composite, SWT.NONE);
 		applyAllLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		applyAllLabel.setText(Messages.REMAINING_FIELDS);
+		applyAllLabel.setToolTipText(Messages.REMAINING_FIELDS_TOOLTIP);
 
 		combo = new CCombo(top_composite, SWT.NONE);
 		GridData gd_combo = new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1);
