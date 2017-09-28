@@ -18,9 +18,9 @@ import java.text.{DateFormat, SimpleDateFormat}
 import java.util
 
 import hydrograph.engine.core.component.entity.OutputFileExcelEntity
-import hydrograph.engine.core.component.entity.elements.FieldFormat
+import hydrograph.engine.core.component.entity.elements.{FieldFormat, KeyField}
 import hydrograph.engine.core.component.entity.elements.FieldFormat.Property
-import hydrograph.engine.spark.components.utils.{KeyInfo, SchemaCreator}
+import hydrograph.engine.spark.components.utils.SchemaCreator
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.fs.{FileSystem, Path}
 import org.apache.poi.hssf.usermodel.{HSSFPalette, HSSFWorkbook}
@@ -40,6 +40,7 @@ import scala.collection.JavaConverters._
   * @author Bitwise
   *
   */
+case class KeyInfo(key:KeyField, index:Int, dataType:String)
 class ExcelOutputUtil(frame: DataFrame, outputFileExcelEntity: OutputFileExcelEntity) extends Serializable {
  private val LOG: Logger = LoggerFactory.getLogger(classOf[ExcelOutputUtil])
   val path: String = outputFileExcelEntity.getPath
@@ -81,8 +82,6 @@ class ExcelOutputUtil(frame: DataFrame, outputFileExcelEntity: OutputFileExcelEn
   private val dataCellFontStyle: Map[String, Font] = getCellFontStyle(dataCellFormat)
   private val headerCellStyleFormat: Map[String, CellStyle] = updateCellBorderAlignmentStyle(getCellStyle(dataSchema),headerCellFormat)
   private val dataCellStyleFormat: Map[String,CellStyle] = updateCellBorderAlignmentStyle(getCellStyle(dataSchema),dataCellFormat)
-
-
 
   val keyList = outputFileExcelEntity.getKeyField.asScala.toArray
   val k: java.util.List[Int]=new util.ArrayList[Int]()
@@ -222,6 +221,7 @@ class ExcelOutputUtil(frame: DataFrame, outputFileExcelEntity: OutputFileExcelEn
       sortedDF.foreach(row => write(sheet.get(row.get(columnIdex)), row))
     else
       sortedDF.foreach(row => write(sheet.get(worksheetName), row))
+    if (outputFileExcelEntity.isAutoColumnSize) sheet.keySet().asScala.toList.foreach(e => setAutoSizeColumn(sheet.get(e)))
     if(outputStream == null){
       fs.close()
       outputStream = fs.create(hdpPath)
@@ -300,8 +300,8 @@ class ExcelOutputUtil(frame: DataFrame, outputFileExcelEntity: OutputFileExcelEn
   }
 
 
-  def close(sheet: Sheet ) = {
-    if (outputFileExcelEntity.isAutoColumnSize) for (i <- 0 to dataSchema.size - 1)
+  def setAutoSizeColumn(sheet: Sheet ) = {
+    for (i <- 0 to dataSchema.size - 1)
       sheet.autoSizeColumn(i)
   }
   
