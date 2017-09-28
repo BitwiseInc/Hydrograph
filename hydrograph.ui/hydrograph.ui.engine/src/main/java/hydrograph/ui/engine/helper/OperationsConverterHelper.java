@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.xml.bind.JAXBElement;
-import javax.xml.namespace.QName;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -33,6 +32,7 @@ import hydrograph.engine.jaxb.commontypes.TypeTransformOperation;
 import hydrograph.ui.common.datastructure.filter.ExpressionData;
 import hydrograph.ui.common.datastructure.filter.FilterLogicDataStructure;
 import hydrograph.ui.common.util.Constants;
+import hydrograph.ui.engine.qnames.OperationsExpressionType;
 import hydrograph.ui.graph.model.Component;
 import hydrograph.ui.graph.model.Link;
 import hydrograph.ui.logging.factory.LogFactory;
@@ -99,7 +99,7 @@ public class OperationsConverterHelper {
 							.getOperationProperties(filterData.getOperationClassData().getClassProperties()));
 				}
 				
-				JAXBElement<TypeTransformOperation> jaxbElement = new JAXBElement(new QName("operation"),
+				JAXBElement<TypeTransformOperation> jaxbElement = new JAXBElement(OperationsExpressionType.OPERATION.getQName(),
 						TypeTransformOperation.class, operation);
 				operationList.add(jaxbElement);
 				
@@ -117,7 +117,7 @@ public class OperationsConverterHelper {
 				typeTransformExpression
 						.setExpr(filterData.getExpressionEditorData().getExpression());
 
-				JAXBElement<TypeTransformExpression> jaxbElement = new JAXBElement(new QName("expression"),
+				JAXBElement<TypeTransformExpression> jaxbElement = new JAXBElement(OperationsExpressionType.EXPRESSION.getQName(),
 						TypeTransformExpression.class, typeTransformExpression);
 				operationList.add(jaxbElement);
 			}

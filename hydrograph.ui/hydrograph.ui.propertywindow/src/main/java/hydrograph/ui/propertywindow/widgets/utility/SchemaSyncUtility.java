@@ -164,7 +164,7 @@ public class SchemaSyncUtility {
 					Constants.SCHEMA_NOT_SYNC_MESSAGE, MessageDialog.CONFIRM,
 					new String[] { Messages.SYNC_NOW, Messages.MANUAL_SYNC }, 0);
 			if (dialog.open() == 0) {
-				getSchemaGridWidget(widgets).updateSchemaWithPropogatedSchema();
+				getSchemaGridWidget(widgets).updateSchemaWithPropogatedSchema(false);
 			}
 		}
 	}
