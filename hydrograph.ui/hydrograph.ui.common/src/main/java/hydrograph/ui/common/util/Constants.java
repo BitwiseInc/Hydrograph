@@ -405,5 +405,11 @@ public class Constants {
 	
 	
 	public static final String PARAM_FOLDER="param";
+	
+	public static final String APPEND = "Append";
+	public static final String OVERWRITE = "Overwrite";
+	public static final String FAIL_IF_EXISTS = "FailIfFileExists";
+	public static final String IS_FIELD = "Is Field";
+	public static final String OUTPUT_EXCEL = "OFExcel";
 }
 

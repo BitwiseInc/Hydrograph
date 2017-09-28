@@ -74,6 +74,7 @@ import hydrograph.ui.engine.ui.converter.impl.OperationSubJobUiConverter;
 import hydrograph.ui.engine.ui.converter.impl.OutputComponentSubjobUiConverter;
 import hydrograph.ui.engine.ui.converter.impl.OutputDBUpdateUiConverter;
 import hydrograph.ui.engine.ui.converter.impl.OutputFileDelimitedUiConverter;
+import hydrograph.ui.engine.ui.converter.impl.OutputFileExcelUiConverter;
 import hydrograph.ui.engine.ui.converter.impl.OutputFixedWidthUiConverter;
 import hydrograph.ui.engine.ui.converter.impl.OutputHiveParquetUiConverter;
 import hydrograph.ui.engine.ui.converter.impl.OutputHiveTextFileUiConverter;
@@ -290,6 +291,9 @@ public class UiConverterFactory {
 		}
 		if((hydrograph.engine.jaxb.commandtypes.S3FileTransfer.class).isAssignableFrom(typeBaseComponent.getClass())){
 			return new S3FileTransferUiConverter(typeBaseComponent, container);
+		}
+		if((hydrograph.engine.jaxb.outputtypes.ExcelFile.class).isAssignableFrom(typeBaseComponent.getClass())){
+			return new OutputFileExcelUiConverter(typeBaseComponent, container);
 		}
 		return new UnknownUiConverter(typeBaseComponent,container);
 	}

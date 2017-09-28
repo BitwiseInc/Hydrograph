@@ -138,6 +138,16 @@
 			<enumeration value="FTP_ENCODING_WIDGET" />
 			<enumeration value="FAIL_ON_ERROR_WIDGET" />
 			<enumeration value="FTP_PROTOCOL_SELECTION_WIDGET" />
+			<enumeration value="WRITE_MODE_WIDGET" />
+			<enumeration value="STRIP_LEADING_QUOTE_WIDGET" />
+			<enumeration value="AUTO_SIZE_COLUMN_WIDGET" />
+			<enumeration value="ABORT_ON_ERROR_WIDGET" />
+			<enumeration value="WORKSHEET_NAME_WIDGET" />
+			<enumeration value="EXCEL_FORMATTING_WIDGET" />
+			<enumeration value="EXCEL_FILE_PATH_WIDGET" />
+			<enumeration value="EXCEL_FILE_NAME_WIDGET" />
+			<enumeration value="SORT_EXCEL_COLUMNS_KEYS_WIDGET" />
+			
 		</restriction>
 	</simpleType>
 
@@ -410,6 +420,13 @@
 				<annotation>
 					<appinfo>
 						<jaxb:typesafeEnumMember name="FTPBooleanValidation" />
+					</appinfo>
+				</annotation>
+			</enumeration>
+			<enumeration value="WORKSHEET_NAME_VALIDATOR">
+				<annotation>
+					<appinfo>
+						<jaxb:typesafeEnumMember name="WorksheetNameValidationRule" />
 					</appinfo>
 				</annotation>
 			</enumeration>

@@ -26,6 +26,7 @@ import org.slf4j.Logger;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.common.util.OSValidator;
 import hydrograph.ui.datastructure.property.GridRow;
+import hydrograph.ui.datastructure.property.Schema;
 import hydrograph.ui.datastructure.property.mapping.InputField;
 import hydrograph.ui.datastructure.property.mapping.TransformMapping;
 import hydrograph.ui.logging.factory.LogFactory;
@@ -204,6 +205,19 @@ public class SecondaryColumnKeysWidget extends AbstractWidget {
 				}
 			}
 			return propogatedFields;
+		}else if(StringUtils.equalsIgnoreCase(getComponent().getComponentName(),Constants.OUTPUT_EXCEL)){
+			List<String> list = new ArrayList<String>();
+			Schema schema = (Schema) getComponent().getProperties().get(
+					Constants.SCHEMA_PROPERTY_NAME);
+			if (schema != null && schema.getGridRow() != null) {
+				List<GridRow> gridRows = schema.getGridRow();
+				if (gridRows != null) {
+					for (GridRow gridRow : gridRows) {
+						list.add(gridRow.getFieldName());
+					}
+				}
+			}
+			return list;
 		}
 		return SchemaPropagationHelper.INSTANCE.getFieldsForFilterWidget(getComponent()).get(
 				Constants.INPUT_SOCKET_TYPE + 0);

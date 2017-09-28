@@ -22,6 +22,7 @@ package hydrograph.ui.engine.xpath;
 public enum ComponentXpathConstants {
 	GRAPH_XPATH("/graph"),
 	COMPONENT_CHARSET_XPATH("/graph/*[@id='$id']/charset"),
+	COMPONENT_WRITEMODE_XPATH("/graph/*[@id='$id']/writeMode"),
 	COMPONENT_JOIN_TYPE_XPATH("/graph/operations[@id='$id']/keys[@inSocketId='$inSocketId'] [not(@joinType)]"),
 	COMPONENT_XPATH_BOOLEAN("/graph/*[@id='$id']/propertyName"),
 	COMPONENT_XPATH_COUNT("/graph/*[@id='$id']/maxRecords"),
@@ -34,6 +35,8 @@ public enum ComponentXpathConstants {
 	
 	STRAIGHTPULL_PRIMARY_KEYS("/graph/straightPulls[@id='$id']/primaryKeys"),
 	STRAIGHTPULL_SECONDARY_KEYS("/graph/straightPulls[@id='$id']/secondaryKeys"),
+	
+	EXCEL_PRIMARY_KEYS("/graph/excelsortKeys[@id='$id']/primaryKeys"),
 	
 	LOOKUP_KEYS("/graph/operations[@id='$id']/keys[@inSocketId='$inSocketId']"),
 	JOIN_KEYS("/graph/operations[@id='$id']/keys[@inSocketId='$inSocketId']"),

@@ -125,6 +125,15 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="FTP_ENCODING_WIDGET"/>
  *     &lt;enumeration value="FAIL_ON_ERROR_WIDGET"/>
  *     &lt;enumeration value="FTP_PROTOCOL_SELECTION_WIDGET"/>
+ *     &lt;enumeration value="WRITE_MODE_WIDGET"/> 
+ *     &lt;enumeration value="STRIP_LEADING_QUOTE_WIDGET"/> 
+ *     &lt;enumeration value="AUTO_SIZE_COLUMN_WIDGET"/> 
+ *     &lt;enumeration value="ABORT_ON_ERROR_WIDGET"/> 
+ *     &lt;enumeration value="WORKSHEET_NAME_WIDGET"/> 
+ *     &lt;enumeration value="EXCEL_FORMATTING_WIDGET"/>
+ *     &lt;enumeration value="EXCEL_FILE_PATH_WIDGET"/> 
+ *     &lt;enumeration value="EXCEL_FILE_NAME_WIDGET"/> 
+ *     &lt;enumeration value="SORT_EXCEL_COLUMNS_KEYS_WIDGET"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
@@ -225,7 +234,16 @@ public enum PropertyRenderer {
     FTP_OPERATION_CONFIG_WIDGET,
     FTP_ENCODING_WIDGET,
     FAIL_ON_ERROR_WIDGET,
-    FTP_PROTOCOL_SELECTION_WIDGET;
+    FTP_PROTOCOL_SELECTION_WIDGET,
+	 WRITE_MODE_WIDGET,
+    STRIP_LEADING_QUOTE_WIDGET,
+    AUTO_SIZE_COLUMN_WIDGET,
+    ABORT_ON_ERROR_WIDGET,
+    WORKSHEET_NAME_WIDGET,
+    EXCEL_FORMATTING_WIDGET,
+    EXCEL_FILE_PATH_WIDGET,
+    EXCEL_FILE_NAME_WIDGET,
+    SORT_EXCEL_COLUMNS_KEYS_WIDGET;
 
     public String value() {
         return name();

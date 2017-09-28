@@ -458,6 +458,19 @@ public class Messages extends NLS {
 	public static String FAIL_ON_ERROR;
 	
 	
+	public static String LABEL_WRITE_MODE;
+	public static String LABEL_STRIP_LEADING_QUOTE;
+	public static String LABEL_AUTO_SIZE_COLUMN;
+	public static String LABEL_ABORT_ON_ERROR;
+	public static String LABEL_WORKSHEET_NAME;
+	public static String LABEL_EXCEL_FORMATTING;
+	public static String EXCEL_FORMATTING_WINDOW_LABEL;
+	public static String COLUMN_NAME;
+	public static String HEADER_FORMAT;
+	public static String DATA_FORMAT;
+	public static String REMAINING_FIELDS;
+	public static String SORT_COLUMNS;
+	public static String SORT_COLUMNS_WINDOW_LABEL;
 	
 	static {
 		// initialize resource bundle

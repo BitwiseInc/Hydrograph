@@ -19,6 +19,10 @@
       <anchor id="OutputFileDelimited"/>
       <link toc="xml/Components/Output/outputFileDelimited.xml"/>
    </topic>
+   <topic href="html/Components/output/Output_File_Excel.html" label="Output File Excel">
+      <anchor id="OutputFileExcel"/>
+      <link toc="xml/Components/Output/outputFileExcel.xml"/>
+   </topic>
    <topic href="html/Components/output/Output_File_Fixed_Width.html" label="Output File Fixed Width">
       <anchor id="OutputFileFixedWidth"/>
       <link toc="xml/Components/Output/outputFileFixedWidth.xml"/>
