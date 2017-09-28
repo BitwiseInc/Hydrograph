@@ -18,7 +18,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,14 +44,13 @@ import org.slf4j.Logger;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-import hydrograph.ui.common.property.util.Utils;
 import hydrograph.ui.common.schema.Field;
 import hydrograph.ui.common.schema.FieldDataTypes;
 import hydrograph.ui.common.schema.Fields;
-import hydrograph.ui.common.schema.ScaleTypes;
 import hydrograph.ui.common.schema.Schema;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.common.util.ExternalSchemaUtil;
+import hydrograph.ui.common.util.SchemaFieldUtil;
 import hydrograph.ui.datastructure.property.BasicSchemaGridRow;
 import hydrograph.ui.datastructure.property.FixedWidthGridRow;
 import hydrograph.ui.datastructure.property.GenerateRecordSchemaGridRow;
@@ -501,8 +499,8 @@ public class GridRowLoader {
 			gridRow.setScale("");
 
 		if(field.getScaleType()!=null){
-			gridRow.setScaleType(GridWidgetCommonBuilder.getScaleTypeByValue(field.getScaleType().value()));	
-			gridRow.setScaleTypeValue(GridWidgetCommonBuilder.getScaleTypeValue()[GridWidgetCommonBuilder.getScaleTypeByValue(field.getScaleType().value())]);
+			gridRow.setScaleType(SchemaFieldUtil.INSTANCE.getScaleTypeByValue(field.getScaleType().value()));	
+			gridRow.setScaleTypeValue(GridWidgetCommonBuilder.getScaleTypeValue()[SchemaFieldUtil.INSTANCE.getScaleTypeByValue(field.getScaleType().value())]);
 		}else{
 			gridRow.setScaleType(GridWidgetCommonBuilder.getScaleTypeByValue(Messages.SCALE_TYPE_NONE));
 			gridRow.setScaleTypeValue(GridWidgetCommonBuilder.getScaleTypeValue()[Integer.valueOf(Constants.DEFAULT_INDEX_VALUE_FOR_COMBOBOX)]);

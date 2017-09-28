@@ -13,20 +13,31 @@
 
 package hydrograph.ui.engine.ui.converter.impl;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.xml.bind.JAXBElement;
 
+import org.apache.commons.lang.StringUtils;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
+
 import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
+import hydrograph.engine.jaxb.commontypes.TypeExternalSchema;
 import hydrograph.engine.jaxb.commontypes.TypeInputField;
+import hydrograph.engine.jaxb.commontypes.TypeOperationsComponent;
 import hydrograph.engine.jaxb.commontypes.TypeTransformExpression;
 import hydrograph.engine.jaxb.commontypes.TypeTransformOperation;
 import hydrograph.engine.jaxb.operationstypes.Filter;
 import hydrograph.ui.common.datastructure.filter.ExpressionData;
 import hydrograph.ui.common.datastructure.filter.FilterLogicDataStructure;
 import hydrograph.ui.common.datastructure.filter.OperationClassData;
+import hydrograph.ui.common.util.Constants;
+import hydrograph.ui.common.util.FilterLogicExternalOperationExpressionUtil;
 import hydrograph.ui.datastructure.expression.ExpressionEditorData;
 import hydrograph.ui.engine.constants.PropertyNameConstants;
 import hydrograph.ui.engine.ui.constants.UIComponentsConstants;
@@ -54,14 +65,8 @@ public class FilterUiConverter extends TransformUiConverter{
 	public void prepareUIXML() {
 
 		super.prepareUIXML();
-
 		filter = (Filter) typeBaseComponent;
-		
-		propertyMap.put(PropertyNameConstants.OPERATION_CLASS.value(),getOperationClassOrExpression());
-		propertyMap.put(PropertyNameConstants.OPERATION_FILEDS.value(), getOperationFileds());
-		
-		
-		
+		propertyMap.put(PropertyNameConstants.FILTER_LOGIC.value(),getOperationClassOrExpression());
 		container.getComponentNextNameSuffixes().put(name_suffix, 0);
 		container.getComponentNames().add(componentName);
 		uiComponent.setProperties(propertyMap);
@@ -70,56 +75,83 @@ public class FilterUiConverter extends TransformUiConverter{
 	}
 
 	private FilterLogicDataStructure getOperationClassOrExpression() {
-		FilterLogicDataStructure filterLogicDataStructure =new FilterLogicDataStructure(uiComponent.getComponentName());
-		String clazz=null;
-		if(filter.getOperationOrExpressionOrIncludeExternalOperation()!=null && filter.getOperationOrExpressionOrIncludeExternalOperation().size()!=0){
-		
-		    if(filter.getOperationOrExpressionOrIncludeExternalOperation().get(0).getValue() instanceof TypeTransformOperation)
+		FilterLogicDataStructure filterLogicDataStructure =new FilterLogicDataStructure(Constants.FILTER);
+		if(filter.getOperationOrExpressionOrIncludeExternalOperation()!=null && !filter.getOperationOrExpressionOrIncludeExternalOperation().isEmpty())
+		{
+			List<JAXBElement<?>> typeTransformOpertaionList = ((TypeOperationsComponent) filter)
+					.getOperationOrExpressionOrIncludeExternalOperation();
+			
+			if (((JAXBElement<?>) typeTransformOpertaionList.get(0)).getValue() instanceof TypeExternalSchema) {
+				populateUIDataFromExternalData(filterLogicDataStructure, typeTransformOpertaionList);	 
+			    	 
+			}
+				
+			
+			else if (((JAXBElement<?>) typeTransformOpertaionList.get(0)).getValue() instanceof TypeTransformOperation) 
 		    {	
-		    	TypeTransformOperation transformOperation=(TypeTransformOperation) filter.getOperationOrExpressionOrIncludeExternalOperation().get(0).getValue();
-		    	clazz=transformOperation.getClazz();
-			 filterLogicDataStructure.setOperation(true);
-			 OperationClassData operationClassData = new OperationClassData();
-			 operationClassData.setQualifiedOperationClassName(getOperationClassName(clazz));
-			 filterLogicDataStructure.setOperationClassData(operationClassData);
-			 
+		    	TypeTransformOperation transformOperation=(TypeTransformOperation) filter
+		    			.getOperationOrExpressionOrIncludeExternalOperation().get(0).getValue();
+		    	
+		    	OperationClassData operationClassData = new OperationClassData();
+		    	operationClassData.setId(transformOperation.getId());
+		    	operationClassData.setQualifiedOperationClassName(transformOperation.getClazz());
+		    	operationClassData.getInputFields().addAll(getOperationFileds(transformOperation));
+		    	operationClassData.getClassProperties().addAll(getProperties(transformOperation));
+		    	filterLogicDataStructure.setOperation(true);
+		    	filterLogicDataStructure.setOperationClassData(operationClassData);
 		    }
-		    else if(filter.getOperationOrExpressionOrIncludeExternalOperation().get(0).getValue() instanceof TypeTransformExpression)
+			else if (((JAXBElement<?>) typeTransformOpertaionList.get(0)).getValue() instanceof TypeTransformExpression) 
 		    {
 		     TypeTransformExpression typeTransformExpression=(TypeTransformExpression)filter.getOperationOrExpressionOrIncludeExternalOperation().get(0).getValue();
-		     ExpressionEditorData expressionEditorData=getExpressionEditorData(typeTransformExpression);
-		     
 		     ExpressionData expressionData = new ExpressionData(uiComponent.getComponentName());
-			 expressionData.setExpressionEditorData(expressionEditorData);
-			 for(TypeInputField inputField : typeTransformExpression.getInputFields().getField()){
+		     expressionData.setId(typeTransformExpression.getId());
+		     ExpressionEditorData expressionEditorData=getExpressionEditorData(typeTransformExpression);
+		     expressionData.setExpressionEditorData(expressionEditorData);
+		     for(TypeInputField inputField : typeTransformExpression.getInputFields().getField()){
 				 expressionData.getInputFields().add( inputField.getName());
 			 }
 			 filterLogicDataStructure.setExpressionEditorData(expressionData);
+			 filterLogicDataStructure.setOperation(false);
 		    }
 		}
 		return filterLogicDataStructure;
 	}
 
+	public void populateUIDataFromExternalData(FilterLogicDataStructure filterLogicDataStructure,
+			List<JAXBElement<?>> typeTransformOpertaionList) {
+		TypeExternalSchema typeExternalSchema=(TypeExternalSchema) filter
+				.getOperationOrExpressionOrIncludeExternalOperation().get(0).getValue();
+		String filePath = typeExternalSchema.getUri();
+		filePath = StringUtils.replace(filePath, "../","");
+		IWorkspace workspace = ResourcesPlugin.getWorkspace();
+		 IPath relativePath=null;
+			 relativePath=workspace.getRoot().getFile(new Path(filePath)).getLocation();
+		 if(StringUtils.equals("includeExternalExpression", ((JAXBElement<?>) typeTransformOpertaionList.get(0)).getName().getLocalPart()))
+		 {
+			 	ExpressionData expressionData=FilterLogicExternalOperationExpressionUtil.INSTANCE
+				 .importExpression(new File(relativePath.toString()), null, false, uiComponent.getComponentName());
+				expressionData.getExternalExpressionData().setExternal(true);
+				expressionData.getExternalExpressionData().setFilePath(filePath);
+				filterLogicDataStructure.setExpressionEditorData(expressionData);
+		 }
+		 else {
+				OperationClassData operationClassData=FilterLogicExternalOperationExpressionUtil.INSTANCE
+			    		 .importOperation(new File(relativePath.toString()), null, false, uiComponent.getComponentName());
+			    operationClassData.getExternalOperationClassData().setExternal(true);
+			    operationClassData.getExternalOperationClassData().setFilePath(filePath);
+			    filterLogicDataStructure.setOperationClassData(operationClassData);
+				 
+		 }
+	}
 
-	private List<String> getOperationFileds() {
-		List<String> componentOperationFileds=new ArrayList<>();;
-		
-			for(Object object:filter.getOperationOrExpressionOrIncludeExternalOperation())
-			{
-			 if(((JAXBElement)object).getValue() instanceof TypeTransformOperation)
-			 {
-				TypeTransformOperation transformOperation=(TypeTransformOperation) ((JAXBElement)object).getValue();
-				if(transformOperation.getInputFields()!=null)
-				{
-					
-						for(TypeInputField inputFileds:transformOperation.getInputFields().getField())
-						{
-							componentOperationFileds.add(inputFileds.getName());
-				        }
-			     }
-			  }
-			}
-			return componentOperationFileds;
+
+	private List<String> getOperationFileds(TypeTransformOperation typeTransformOperation) {
+		List<String> componentOperationFileds=new ArrayList<>();
+		if(typeTransformOperation.getInputFields()!=null)
+		{
+			typeTransformOperation.getInputFields().getField().forEach(inputField->componentOperationFileds.add(inputField.getName()));
+		}
+		return componentOperationFileds;
 	}
 	
 }

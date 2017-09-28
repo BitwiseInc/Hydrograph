@@ -95,7 +95,8 @@ public enum PropertyNameConstants {
 	    AUTO_SIZE_COLUMN("autoColumnSize"),
 	    ABORT_ON_ERROR("AbortOnError"),
 	    EXCEL_FORMAT("excel_formatting"),
-	    FILE_NAME("fileName");
+	    FILE_NAME("fileName"),
+	    FILTER_LOGIC("filterLogic");
 	
 	
 		private final String value;
