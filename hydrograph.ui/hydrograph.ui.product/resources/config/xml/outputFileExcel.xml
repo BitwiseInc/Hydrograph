@@ -65,7 +65,7 @@
 			usage="OPTIONAL" propertyHelpText="Provides the sorting order of columns">
 		</tns:property>
 			
-		<tns:property dataType="string" name="writeMode" value="Append" renderer="WRITE_MODE_WIDGET"
+		<tns:property dataType="string" name="writeMode" value="FailIfFileExists" renderer="WRITE_MODE_WIDGET"
 			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="FALSE" tooltipDataType="NONE"
 			usage="REQUIRED" propertyHelpText="Denotes the writing mode for an Excel File.">
 			<tns:validator>NON_BLANK_STRING_VALIDATOR</tns:validator>
