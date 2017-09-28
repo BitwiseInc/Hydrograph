@@ -4,12 +4,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.swt.widgets.Display;
 
 import hydrograph.ui.common.datastructure.filter.ExpressionData;
 import hydrograph.ui.common.datastructure.filter.FilterLogicDataStructure;
 import hydrograph.ui.common.datastructure.filter.OperationClassData;
 import hydrograph.ui.common.util.Constants;
+import hydrograph.ui.common.util.FilterLogicExternalOperationExpressionUtil;
 import hydrograph.ui.common.util.ParameterUtil;
+import hydrograph.ui.common.util.PathUtility;
 import hydrograph.ui.datastructure.expression.ExpressionEditorData;
 import hydrograph.ui.datastructure.property.FixedWidthGridRow;
 import hydrograph.ui.expression.editor.util.ExpressionEditorUtil;
@@ -42,6 +45,7 @@ public class FilterDataValidation implements IValidator {
 	@Override
 	public boolean validate(Object object, String propertyName, Map<String, List<FixedWidthGridRow>> inputSchemaMap,
 			boolean isJobFileImported) {
+		setErrorMessage("");
 		this.propertyName=propertyName;
 		FilterLogicDataStructure filterData=(FilterLogicDataStructure) object;
 		if(filterData==null){
@@ -97,6 +101,11 @@ public class FilterDataValidation implements IValidator {
 			if(StringUtils.isBlank(operationClassData.getExternalOperationClassData().getFilePath())){
 				setErrorMessage(Messages.EXTERNAL_FILE_PATH_IS_BLANK);
 				return false;
+			}else{
+				checkIfUIDataAndFileIsOutOfSync(operationClassData);
+				if(StringUtils.isNotBlank(errorMessage)){
+					return false;
+				}
 			}
 		}
 		return true;
@@ -110,9 +119,17 @@ public class FilterDataValidation implements IValidator {
 		}
 		else if(expressionData.getExternalExpressionData()!=null 
 		&& expressionData.getExternalExpressionData().isExternal() 
-		&& StringUtils.isBlank(expressionData.getExternalExpressionData().getFilePath()) ){
-			setErrorMessage(Messages.EXTERNAL_FILE_PATH_IS_BLANK);
-			return false;
+		){
+			if(StringUtils.isBlank(expressionData.getExternalExpressionData().getFilePath())){
+				setErrorMessage(Messages.EXTERNAL_FILE_PATH_IS_BLANK);
+				return false;
+			}else{
+				checkIfUIDataAndFileIsOutOfSync(expressionData);
+				if(StringUtils.isNotBlank(errorMessage)){
+					return false;
+				}
+			}
+			
 		}
 		else{
 			ExpressionEditorData expressionEditorData=expressionData.getExpressionEditorData();
@@ -135,6 +152,40 @@ public class FilterDataValidation implements IValidator {
 		return true;
 		
 	}
+	
+	private void checkIfUIDataAndFileIsOutOfSync(ExpressionData expressionData) {
+		Display.getCurrent().asyncExec(new Runnable() {
+			
+			@Override
+			public void run() {
+				try{
+					FilterLogicExternalOperationExpressionUtil.INSTANCE.validateUIExpressionWithExternalFile(expressionData, 
+							PathUtility.INSTANCE.getPath(expressionData.getExternalExpressionData().getFilePath(),
+									Constants.XML_EXTENSION, false, Constants.XML_EXTENSION));	
+					
+				}catch(RuntimeException exception){
+					setErrorMessage(exception.getMessage());
+				}
+			}
+		});
+	}
+
+	private void checkIfUIDataAndFileIsOutOfSync(OperationClassData operationClassData) {
+		Display.getCurrent().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				try{
+					FilterLogicExternalOperationExpressionUtil.INSTANCE.validateUIOperationWithExternalFile(operationClassData, 
+							PathUtility.INSTANCE.getPath(operationClassData.getExternalOperationClassData().getFilePath(),
+									Constants.XML_EXTENSION, false, Constants.XML_EXTENSION));	
+					
+				}catch(RuntimeException exception){
+					setErrorMessage(exception.getMessage());
+				}
+			}
+		});
+	}
+	
 
 	@Override
 	public String getErrorMessage() {

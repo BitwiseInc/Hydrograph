@@ -1,6 +1,5 @@
 package hydrograph.ui.propertywindow.widgets.utility;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -13,9 +12,9 @@ import hydrograph.ui.common.datastructure.filter.OperationClassData;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.common.util.FilterLogicExternalOperationExpressionUtil;
 import hydrograph.ui.common.util.ParameterUtil;
+import hydrograph.ui.common.util.PathUtility;
 import hydrograph.ui.expression.editor.util.ExpressionEditorUtil;
 import hydrograph.ui.propertywindow.filter.viewer.ErrorLogTableViewer;
-import hydrograph.ui.propertywindow.widgets.customwidgets.schema.ELTSchemaGridWidget;
 import hydrograph.ui.validators.Messages;
 import hydrograph.ui.validators.utils.ValidatorUtility;
 
@@ -131,7 +130,7 @@ public class FilterOperationExpressionValidation {
 			public void run() {
 				try{
 					FilterLogicExternalOperationExpressionUtil.INSTANCE.validateUIOperationWithExternalFile(operationClassData, 
-							ELTSchemaGridWidget.getPath(operationClassData.getExternalOperationClassData().getFilePath(),
+							PathUtility.INSTANCE.getPath(operationClassData.getExternalOperationClassData().getFilePath(),
 									Constants.XML_EXTENSION, false, Constants.XML_EXTENSION));	
 					
 				}catch(RuntimeException exception){
@@ -149,7 +148,7 @@ public class FilterOperationExpressionValidation {
 			public void run() {
 				try{
 					FilterLogicExternalOperationExpressionUtil.INSTANCE.validateUIExpressionWithExternalFile(expressionData, 
-							ELTSchemaGridWidget.getPath(expressionData.getExternalExpressionData().getFilePath(),
+							PathUtility.INSTANCE.getPath(expressionData.getExternalExpressionData().getFilePath(),
 									Constants.XML_EXTENSION, false, Constants.XML_EXTENSION));	
 				}catch(RuntimeException exception){
 					if(StringUtils.isNotBlank(exception.getMessage())){

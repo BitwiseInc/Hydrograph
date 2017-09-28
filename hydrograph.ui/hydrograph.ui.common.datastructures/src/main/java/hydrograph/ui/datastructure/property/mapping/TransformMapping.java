@@ -337,7 +337,6 @@ public class TransformMapping implements IDataStructure{
 		if(mapAndPassthroughField!=null)mapAndPassthroughField.clear();
 		if(outputFieldList!=null)outputFieldList.clear();
 		addPassThroughFields=false;
-		isExpression=false;
 		isAllInputFieldsArePassthrough=false;
 		if(expressionEditorData!=null)expressionEditorData.clear();
 		return false;

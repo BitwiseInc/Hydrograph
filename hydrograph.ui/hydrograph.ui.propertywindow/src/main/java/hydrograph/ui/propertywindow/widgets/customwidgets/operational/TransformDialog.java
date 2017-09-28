@@ -15,7 +15,6 @@ package hydrograph.ui.propertywindow.widgets.customwidgets.operational;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.io.File;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -51,7 +50,6 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
@@ -64,7 +62,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
-import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
@@ -80,7 +77,7 @@ import hydrograph.ui.common.util.CustomColorRegistry;
 import hydrograph.ui.common.util.ExternalOperationExpressionUtil;
 import hydrograph.ui.common.util.ImagePathConstant;
 import hydrograph.ui.common.util.OSValidator;
-import hydrograph.ui.common.util.ParameterUtil;
+import hydrograph.ui.common.util.PathUtility;
 import hydrograph.ui.common.util.TransformMappingFeatureUtility;
 import hydrograph.ui.datastructure.expression.ExpressionEditorData;
 import hydrograph.ui.datastructure.property.FilterProperties;
@@ -102,7 +99,6 @@ import hydrograph.ui.propertywindow.widgets.customwidgets.mapping.tables.inputta
 import hydrograph.ui.propertywindow.widgets.customwidgets.mapping.tables.inputtable.TableContentProvider;
 import hydrograph.ui.propertywindow.widgets.customwidgets.operational.external.ExpresssionOperationImportExportComposite;
 import hydrograph.ui.propertywindow.widgets.customwidgets.operational.external.ImportExportType;
-import hydrograph.ui.propertywindow.widgets.customwidgets.schema.ELTSchemaGridWidget;
 import hydrograph.ui.propertywindow.widgets.filterproperty.ELTCellModifier;
 import hydrograph.ui.propertywindow.widgets.filterproperty.ELTFilterContentProvider;
 import hydrograph.ui.propertywindow.widgets.filterproperty.ELTFilterLabelProvider;
@@ -1734,14 +1730,14 @@ public class TransformDialog extends Dialog implements IOperationClassDialog {
 
 							ExternalOperationExpressionUtil.INSTANCE.validateUIExpressionWithExternalFile(
 									mappingSheetRow,
-									ELTSchemaGridWidget.getPath(mappingSheetRow.getExternalExpresion().getFilePath(),
+									PathUtility.INSTANCE.getPath(mappingSheetRow.getExternalExpresion().getFilePath(),
 											Constants.XML_EXTENSION, false, Constants.XML_EXTENSION));
 
 						} if (mappingSheetRow.isActive() && !mappingSheetRow.isExpression()
 								&& mappingSheetRow.getExternalOperation().isExternal()) {
 							ExternalOperationExpressionUtil.INSTANCE.validateUIOperationWithExternalFile(
 									mappingSheetRow,
-									ELTSchemaGridWidget.getPath(mappingSheetRow.getExternalOperation().getFilePath(),
+									PathUtility.INSTANCE.getPath(mappingSheetRow.getExternalOperation().getFilePath(),
 											Constants.XML_EXTENSION, false, Constants.XML_EXTENSION));
 						}
 
@@ -1749,7 +1745,7 @@ public class TransformDialog extends Dialog implements IOperationClassDialog {
 								.isNotBlank(transformMapping.getExternalOutputFieldsData().getFilePath())) {
 							ExternalOperationExpressionUtil.INSTANCE.validateUIMappingFieldsWithExternalFile(
 									transformMapping,
-									ELTSchemaGridWidget.getPath(
+									PathUtility.INSTANCE.getPath(
 											transformMapping.getExternalOutputFieldsData().getFilePath(),
 											Constants.XML_EXTENSION, false, Constants.XML_EXTENSION));
 						}

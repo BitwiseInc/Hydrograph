@@ -23,8 +23,11 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.swt.widgets.Display;
 
 import hydrograph.ui.common.util.Constants;
+import hydrograph.ui.common.util.ExternalOperationExpressionUtil;
+import hydrograph.ui.common.util.PathUtility;
 import hydrograph.ui.common.util.TransformMappingFeatureUtility;
 import hydrograph.ui.datastructure.expression.ExpressionEditorData;
 import hydrograph.ui.datastructure.property.FilterProperties;
@@ -52,6 +55,7 @@ public class TransformMappingValidationRule implements IValidator{
 	@Override
 	public boolean validate(Object object, String propertyName,Map<String,List<FixedWidthGridRow>> inputSchemaMap
 			,boolean isJobImported){
+		errorMessage="";
 		TransformMapping transformMapping=(TransformMapping) object;
 		
 		if(transformMapping==null)
@@ -109,6 +113,11 @@ public class TransformMappingValidationRule implements IValidator{
 						if(StringUtils.isBlank(mappingSheetRow.getExternalOperation().getFilePath())){
 							errorMessage = "External path is blank for"+" "+mappingSheetRow.getOperationID();
 							return false;
+						}else {
+							checkIfUIDataAndFileIsOutOfSyncForOperation(mappingSheetRow);
+							if(StringUtils.isNotBlank(errorMessage)){
+								return false;
+							}
 						}
 					}
 				}
@@ -132,6 +141,11 @@ public class TransformMappingValidationRule implements IValidator{
 						if(StringUtils.isBlank(mappingSheetRow.getExternalExpresion().getFilePath())){
 							errorMessage = "External path is blank for"+" "+mappingSheetRow.getOperationID();
 							return false;
+						}else {
+							checkIfUIDataAndFileIsOutOfSyncForExpression(mappingSheetRow);
+							if(StringUtils.isNotBlank(errorMessage)){
+								return false;
+							}
 						}
 					}
 					
@@ -201,7 +215,42 @@ public class TransformMappingValidationRule implements IValidator{
 		}
 		return checkIfExternalOutputPathIsBlank(transformMapping);
 	}
+	
+	private void checkIfUIDataAndFileIsOutOfSyncForExpression(MappingSheetRow mappingSheetRow) {
+		Display.getCurrent().asyncExec(new Runnable() {
+			
+			@Override
+			public void run() {
+				try{
+					ExternalOperationExpressionUtil.INSTANCE.validateUIExpressionWithExternalFile(mappingSheetRow, 
+							PathUtility.INSTANCE.getPath(mappingSheetRow.getExternalExpresion().getFilePath(),
+									Constants.XML_EXTENSION, false, Constants.XML_EXTENSION));	
+					
+				}catch(RuntimeException exception){
+					errorMessage=exception.getMessage();
+				}
+			}
+		});
+	}
 
+	private void checkIfUIDataAndFileIsOutOfSyncForOperation(MappingSheetRow mappingSheetRow) {
+		Display.getCurrent().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				try{
+					ExternalOperationExpressionUtil.INSTANCE.validateUIOperationWithExternalFile(mappingSheetRow, 
+							PathUtility.INSTANCE.getPath(mappingSheetRow.getExternalOperation().getFilePath(),
+									Constants.XML_EXTENSION, false, Constants.XML_EXTENSION));	
+					
+				}catch(RuntimeException exception){
+					errorMessage=exception.getMessage();
+				}
+			}
+		});
+	}
+	
+	
+	
 	private boolean checkIfExternalOutputPathIsBlank(TransformMapping transformMapping) {
 		if(transformMapping.getExternalOutputFieldsData()!=null && transformMapping.getExternalOutputFieldsData().isExternal()){
 			if(StringUtils.isBlank(transformMapping.getExternalOutputFieldsData().getFilePath())){

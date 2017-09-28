@@ -23,8 +23,11 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.swt.widgets.Display;
 
 import hydrograph.ui.common.util.Constants;
+import hydrograph.ui.common.util.ExternalOperationExpressionUtil;
+import hydrograph.ui.common.util.PathUtility;
 import hydrograph.ui.common.util.TransformMappingFeatureUtility;
 import hydrograph.ui.datastructure.expression.ExpressionEditorData;
 import hydrograph.ui.datastructure.property.FilterProperties;
@@ -60,6 +63,7 @@ public class NormalizeMappingValidator implements IValidator{
 	@Override
 	public boolean validate(Object object, String propertyName,Map<String,List<FixedWidthGridRow>> inputSchemaMap
 			,boolean isJobImported){
+		errorMessage="";
 		TransformMapping transformMapping=(TransformMapping) object;
 		Set<FilterProperties>set=null;
 		if(transformMapping==null)
@@ -120,20 +124,32 @@ public class NormalizeMappingValidator implements IValidator{
 				}	
 				if(!mappingSheetRow.isExpression())
 				{	
-				if(StringUtils.isBlank(mappingSheetRow.getOperationClassPath()))
-				{
-					 errorMessage = propertyName + "Operation class is blank in"+" "+mappingSheetRow.getOperationID();		
-					 return false;
-				}
-				else if(
-						!mappingSheetRow.isClassParameter()
-						&&!mappingSheetRow.isWholeOperationParameter()
-						&&!(ValidatorUtility.INSTANCE.isClassFilePresentOnBuildPath(mappingSheetRow.getOperationClassPath()))
-						)
-				   {
-					   errorMessage = "Operation class is not present for"+" "+mappingSheetRow.getOperationID();
-					   return false;
-				   }	
+					if(StringUtils.isBlank(mappingSheetRow.getOperationClassPath()))
+					{
+						 errorMessage = propertyName + "Operation class is blank in"+" "+mappingSheetRow.getOperationID();		
+						 return false;
+					}
+					else if(
+							!mappingSheetRow.isClassParameter()
+							&&!mappingSheetRow.isWholeOperationParameter()
+							&&!(ValidatorUtility.INSTANCE.isClassFilePresentOnBuildPath(mappingSheetRow.getOperationClassPath()))
+							)
+					   {
+						   errorMessage = "Operation class is not present for"+" "+mappingSheetRow.getOperationID();
+						   return false;
+					   }
+					else if(mappingSheetRow.getExternalOperation()!=null && mappingSheetRow.getExternalOperation().isExternal())
+					{
+						if(StringUtils.isBlank(mappingSheetRow.getExternalOperation().getFilePath())){
+							errorMessage = "External path is blank for"+" "+mappingSheetRow.getOperationID();
+							return false;
+						}else {
+							checkIfUIDataAndFileIsOutOfSyncForOperation(mappingSheetRow);
+							if(StringUtils.isNotBlank(errorMessage)){
+								return false;
+							}
+						}
+					}
 				}
 				else if(mappingSheetRow.isExpression())
 				{
@@ -148,6 +164,18 @@ public class NormalizeMappingValidator implements IValidator{
 					{
 						errorMessage = expressionEditorData.getErrorMessage();
 						return false;
+					}
+					if(mappingSheetRow.getExternalExpresion()!=null && mappingSheetRow.getExternalExpresion().isExternal())
+					{
+						if(StringUtils.isBlank(mappingSheetRow.getExternalExpresion().getFilePath())){
+							errorMessage = "External path is blank for"+" "+mappingSheetRow.getOperationID();
+							return false;
+						}else {
+							checkIfUIDataAndFileIsOutOfSyncForExpression(mappingSheetRow);
+							if(StringUtils.isNotBlank(errorMessage)){
+								return false;
+							}
+						}
 					}
 				}	
 				if(mappingSheetRow.getOutputList().isEmpty())
@@ -257,5 +285,37 @@ public class NormalizeMappingValidator implements IValidator{
 		return errorMessage;
 	}
 	
-}
+	private void checkIfUIDataAndFileIsOutOfSyncForExpression(MappingSheetRow mappingSheetRow) {
+		Display.getCurrent().asyncExec(new Runnable() {
+			
+			@Override
+			public void run() {
+				try{
+					ExternalOperationExpressionUtil.INSTANCE.validateUIExpressionWithExternalFile(mappingSheetRow, 
+							PathUtility.INSTANCE.getPath(mappingSheetRow.getExternalExpresion().getFilePath(),
+									Constants.XML_EXTENSION, false, Constants.XML_EXTENSION));	
+					
+				}catch(RuntimeException exception){
+					errorMessage=exception.getMessage();
+				}
+			}
+		});
+	}
 
+	private void checkIfUIDataAndFileIsOutOfSyncForOperation(MappingSheetRow mappingSheetRow) {
+		Display.getCurrent().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				try{
+					ExternalOperationExpressionUtil.INSTANCE.validateUIOperationWithExternalFile(mappingSheetRow, 
+							PathUtility.INSTANCE.getPath(mappingSheetRow.getExternalOperation().getFilePath(),
+									Constants.XML_EXTENSION, false, Constants.XML_EXTENSION));	
+					
+				}catch(RuntimeException exception){
+					errorMessage=exception.getMessage();
+				}
+			}
+		});
+	}
+	
+}
