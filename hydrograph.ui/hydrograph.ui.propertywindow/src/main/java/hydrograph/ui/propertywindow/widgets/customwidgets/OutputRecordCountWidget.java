@@ -406,6 +406,28 @@ public class OutputRecordCountWidget extends AbstractWidget{
 	}
 	@Override
 	public LinkedHashMap<String, Object> getProperties() {
+		if(transformMapping.isExpression()){
+			transformMapping.getMappingSheetRows().forEach(mappingSheet->{
+				if(!mappingSheet.isExpression() && mappingSheet.isActive() ){
+					mappingSheet.getInputFields().clear();
+					mappingSheet.getOutputList().clear();
+					mappingSheet.getExternalOperation().clear();
+					mappingSheet.setParameter(false);
+					mappingSheet.setOperationClassFullPath("");
+					mappingSheet.setOperationClassPath("");
+				}
+				}
+			);
+		}else transformMapping.getMappingSheetRows().forEach(mappingSheet->{
+			   if((mappingSheet.isExpression() && mappingSheet.isActive())){
+					mappingSheet.getInputFields().clear();
+					mappingSheet.getOutputList().clear();
+					mappingSheet.getExternalExpresion().clear();
+					mappingSheet.setParameter(false);
+					if(mappingSheet.getExpressionEditorData()!=null)mappingSheet.getExpressionEditorData().clear();
+				   }
+			   }
+				);
 		property.put(propertyName, transformMapping);
 		String expression=transformMapping.getExpressionEditorData().getExpression();
 		ExpressionEditorUtil.validateExpression(expression,  transformMapping.getExpressionEditorData()

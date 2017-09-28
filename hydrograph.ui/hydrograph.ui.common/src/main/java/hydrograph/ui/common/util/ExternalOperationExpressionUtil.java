@@ -365,10 +365,14 @@ public class ExternalOperationExpressionUtil {
 			addStarFieldsToJaxb(externalMapping);
 		}
 		for (MappingSheetRow mappingSheetRow : transformMapping.getMappingSheetRows()) {
-			System.out.println(mappingSheetRow.isActive());
 			if (mappingSheetRow.isActive()) {
 				if (mappingSheetRow.getOutputList().size() > 0
 						&& StringUtils.isNotBlank(mappingSheetRow.getOutputList().get(0).getPropertyname())) {
+					if(!(Constants.NORMALIZE.equalsIgnoreCase(componentName) &&
+							(transformMapping.isExpression() && mappingSheetRow.isExpression())
+							||(!transformMapping.isExpression() && !mappingSheetRow.isExpression()))){
+							continue;
+					}
 					if (mappingSheetRow.isExpression()) {
 						addExpressionFieldTojaxb(externalMapping, mappingSheetRow);
 					} else {
@@ -439,8 +443,14 @@ public class ExternalOperationExpressionUtil {
 			} else if (field instanceof MapField) {
 				addMapField((MapField) field, transformMapping);
 			} else if (field instanceof OperationField) {
+				if(Constants.NORMALIZE.equalsIgnoreCase(componentName) && transformMapping.isExpression()){
+					throw new RuntimeException("Invalid XML");
+				}
 				addOperationField((OperationField) field, transformMapping, componentName);
 			} else if (field instanceof ExpressionField) {
+				if(Constants.NORMALIZE.equalsIgnoreCase(componentName) && !transformMapping.isExpression()){
+					throw new RuntimeException("Invalid XML");
+				}
 				addExpressionField((ExpressionField) field, transformMapping, componentName);
 			}
 		}
