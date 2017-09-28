@@ -85,15 +85,18 @@ public class ParseExternalElements {
 		NodeList externalNodes = externalMappingsDocument
 				.getElementsByTagName(INCLUDE_EXTERNAL_MAPPING);
 
-		if (externalNodes.getLength() > 0) {
-			Node parent = externalNodes.item(0).getParentNode();
+		int externalNodesLen = externalNodes.getLength();
+		if (externalNodesLen > 0) {
+			for (int k = 0; k < externalNodesLen; k++) {
+				Node parent = externalNodes.item(0).getParentNode();
 
-			List<Node> nodes = createMappingNodes(parent);
-			int len = parent.getChildNodes().getLength();
+				List<Node> nodes = createMappingNodes(parent);
+				int len = parent.getChildNodes().getLength();
 
-			removeChildNodes(parent, len);
+				removeChildNodes(parent, len);
 
-			addChildNodes(xmlDocument, parent, nodes);
+				addChildNodes(xmlDocument, parent, nodes);
+			}
 		}
 		return xmlDocument;
 	}
@@ -137,14 +140,17 @@ public class ParseExternalElements {
 		NodeList externalNodes = externalOperationsDocument
 				.getElementsByTagName(INCLUDE_EXTERNAL_EXPRESSION);
 
-		if (externalNodes.getLength() > 0) {
-			Node parent = externalNodes.item(0).getParentNode();
+		int externalNodesLen = externalNodes.getLength();
+		if (externalNodesLen > 0) {
+			for (int k = 0; k < externalNodesLen; k++) {
+				Node parent = externalNodes.item(0).getParentNode();
 
-			List<Node> nodes = createExpressionNodes(parent);
+				List<Node> nodes = createExpressionNodes(parent);
 
-			removeExpressionNodes(parent);
+				removeExpressionNodes(parent);
 
-			insertExpressionNodesBeforeOutSocket(xmlDocument, parent, nodes);
+				insertExpressionNodesBeforeOutSocket(xmlDocument, parent, nodes);
+			}
 		}
 		return xmlDocument;
 	}
@@ -201,14 +207,17 @@ public class ParseExternalElements {
 		NodeList externalNodes = externalSchemaDocument
 				.getElementsByTagName(INCLUDE_EXTERNAL_OPERATION);
 
-		if (externalNodes.getLength() > 0) {
-			Node parent = externalNodes.item(0).getParentNode();
+		int externalNodesLen = externalNodes.getLength();
+		if (externalNodesLen > 0) {
+			for (int k = 0; k < externalNodesLen; k++) {
+				Node parent = externalNodes.item(0).getParentNode();
 
-			List<Node> nodes = createOperationNodes(parent);
+				List<Node> nodes = createOperationNodes(parent);
 
-			removeOperationNodes(parent);
+				removeOperationNodes(parent);
 
-			insertOperationNodesBeforeOutSocket(xmlDocument, parent, nodes);
+				insertOperationNodesBeforeOutSocket(xmlDocument, parent, nodes);
+			}
 		}
 		return xmlDocument;
 	}
@@ -289,16 +298,18 @@ public class ParseExternalElements {
 		}
 		NodeList externalNodes = xmlDocument
 				.getElementsByTagName(INCLUDE_EXTERNAL_SCHEMA);
+		int externalNodesLen = externalNodes.getLength();
+		if (externalNodesLen > 0) {
+			for (int k = 0; k < externalNodesLen; k++) {
+				Node parent = externalNodes.item(0).getParentNode();
 
-		if (externalNodes.getLength() > 0) {
-			Node parent = externalNodes.item(0).getParentNode();
+				List<Node> nodes = createFieldNodes(parent);
+				int len = parent.getChildNodes().getLength();
 
-			List<Node> nodes = createFieldNodes(parent);
-			int len = parent.getChildNodes().getLength();
+				removeChildNodes(parent, len);
 
-			removeChildNodes(parent, len);
-
-			addChildNodes(xmlDocument, parent, nodes);
+				addChildNodes(xmlDocument, parent, nodes);
+			}
 		}
 		return xmlDocument;
 
