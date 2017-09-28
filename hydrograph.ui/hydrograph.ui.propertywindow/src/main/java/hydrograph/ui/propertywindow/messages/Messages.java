@@ -471,6 +471,9 @@ public class Messages extends NLS {
 	public static String REMAINING_FIELDS;
 	public static String SORT_COLUMNS;
 	public static String SORT_COLUMNS_WINDOW_LABEL;
+	public static String REMAINING_FIELDS_TOOLTIP;
+	public static String HEADER_FORMAT_TOOLTIP;
+	public static String DATA_FORMAT_TOOLTIP;
 	
 	static {
 		// initialize resource bundle
