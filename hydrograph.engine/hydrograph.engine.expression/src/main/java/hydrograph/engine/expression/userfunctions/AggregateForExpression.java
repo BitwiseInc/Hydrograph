@@ -16,8 +16,10 @@ import hydrograph.engine.expression.utils.ExpressionWrapper;
 import hydrograph.engine.transformation.userfunctions.base.AggregateTransformBase;
 import hydrograph.engine.transformation.userfunctions.base.ReusableRow;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Properties;
+
 /**
  * The Class AggregateForExpression .
  *
@@ -26,76 +28,99 @@ import java.util.Properties;
 @SuppressWarnings("rawtypes")
 public class AggregateForExpression implements AggregateTransformBase {
 
-	private ExpressionWrapper expressionWrapper;
-	private Object accumulatorValue;
+    private ExpressionWrapper expressionWrapper;
+    private Object accumulatorValue;
+    private String fieldType;
 
-	public void setValidationAPI(ExpressionWrapper expressionWrapper) {
-		this.expressionWrapper=expressionWrapper;
-	}
+    public AggregateForExpression() {
+    }
 
-	public AggregateForExpression() {
-	}
-	
-	public void init(){
-			expressionWrapper.getValidationAPI().init(expressionWrapper.getIntialValueExpression());
-			accumulatorValue = expressionWrapper.getValidationAPI()
-					.exec(new Object[]{});
-	}
+    public void setValidationAPI(ExpressionWrapper expressionWrapper) {
+        this.expressionWrapper = expressionWrapper;
+    }
 
-	public void callPrepare(String[] inputFieldNames,String[] inputFieldTypes){
+    public void init(String fieldType) {
+        this.fieldType = fieldType.split("\\.")[fieldType.split("\\.").length - 1];
+        expressionWrapper.getValidationAPI().init(expressionWrapper.getIntialValueExpression());
+        accumulatorValue = valueOf(this.fieldType, expressionWrapper.getValidationAPI().exec(new Object[]{}));
+    }
 
-			String fieldNames[] = new String[inputFieldNames.length + 1];
-			String fieldTypes[] = new String[inputFieldTypes.length + 1];
-			for(int i=0;i<inputFieldNames.length;i++){
-				fieldNames[i]=inputFieldNames[i];
-				fieldTypes[i]=inputFieldTypes[i];
-			}
-			fieldNames[inputFieldNames.length] = "_accumulator";
-			fieldTypes[inputFieldNames.length] = "Object";
-			expressionWrapper.getValidationAPI().init(fieldNames,fieldTypes);
+    public void callPrepare(String[] inputFieldNames, String[] inputFieldTypes) {
 
-	}
+        String fieldNames[] = new String[inputFieldNames.length + 1];
+        String fieldTypes[] = new String[inputFieldTypes.length + 1];
+        for (int i = 0; i < inputFieldNames.length; i++) {
+            fieldNames[i] = inputFieldNames[i];
+            fieldTypes[i] = inputFieldTypes[i];
+        }
+        fieldNames[inputFieldNames.length] = "_accumulator";
+        fieldTypes[inputFieldNames.length] = fieldType;
+        expressionWrapper.getValidationAPI().init(fieldNames, fieldTypes);
+    }
 
-	@Override
-	public void prepare(Properties props, ArrayList<String> inputFields,
-			ArrayList<String> outputFields, ArrayList<String> keyFields) {
+    @Override
+    public void prepare(Properties props, ArrayList<String> inputFields,
+                        ArrayList<String> outputFields, ArrayList<String> keyFields) {
 
-	}
+    }
 
-	@Override
-	public void aggregate(ReusableRow input) {
-		Object tuples[] = new Object[input.getFieldNames().size() + 1];
-		int i = 0;
-		for (; i < input.getFieldNames().size(); i++) {
-			tuples[i] = input.getField(i);
-		}
-		tuples[i] = accumulatorValue;
-		try {
-			accumulatorValue = expressionWrapper.getValidationAPI().exec(tuples);
-		} catch (Exception e) {
-			throw new RuntimeException("Exception in aggregate expression: "
-					+ expressionWrapper.getValidationAPI().getExpr() + ".\nRow being processed: "
-					+ input.toString(), e);
-		}
-	}
+    @Override
+    public void aggregate(ReusableRow input) {
+        Object tuples[] = new Object[input.getFieldNames().size() + 1];
+        int i = 0;
+        for (; i < input.getFieldNames().size(); i++) {
+            tuples[i] = input.getField(i);
+        }
+        tuples[i] = accumulatorValue;
+        try {
+            if (accumulatorValue instanceof java.lang.Short)
+                accumulatorValue = Short.parseShort(expressionWrapper.getValidationAPI().exec(tuples).toString());
+            else
+                accumulatorValue = expressionWrapper.getValidationAPI().exec(tuples);
+        } catch (Exception e) {
+            throw new RuntimeException("Exception in aggregate expression: "
+                    + expressionWrapper.getValidationAPI().getExpr() + ".\nRow being processed: "
+                    + input.toString(), e);
+        }
+    }
 
-	@Override
-	public void onCompleteGroup(ReusableRow output) {
-		output.setField(0, (Comparable) accumulatorValue);
+    @Override
+    public void onCompleteGroup(ReusableRow output) {
+        output.setField(0, (Comparable) accumulatorValue);
 
-		try {
-			accumulatorValue = expressionWrapper.getValidationAPI()
-					.execute(expressionWrapper.getIntialValueExpression());
-		} catch (Exception e) {
-			throw new RuntimeException(
-					"Exception in aggregate initial value expression: "
-							+ expressionWrapper.getIntialValueExpression() + ".", e);
-		}
-	}
+        try {
+            accumulatorValue = valueOf(fieldType, expressionWrapper.getValidationAPI().execute(expressionWrapper.getIntialValueExpression()));
+        } catch (Exception e) {
+            throw new RuntimeException(
+                    "Exception in aggregate initial value expression: "
+                            + expressionWrapper.getIntialValueExpression() + ".", e);
+        }
+    }
 
-	@Override
-	public void cleanup() {
+    @Override
+    public void cleanup() {
 
-	}
+    }
 
+    private Object valueOf(String className, Object value) {
+        String stringValue = value.toString();
+        switch (className) {
+            case "Short":
+                return Short.valueOf(stringValue);
+            case "Integer":
+                return Integer.valueOf(stringValue);
+            case "Long":
+                return Long.valueOf(stringValue);
+            case "Float":
+                return Float.valueOf(stringValue);
+            case "Double":
+                return Double.valueOf(stringValue);
+            case "BigDecimal":
+                return BigDecimal.valueOf((Double) value);
+            case "Boolean":
+                return Boolean.valueOf(stringValue);
+            default:
+                return stringValue;
+        }
+    }
 }

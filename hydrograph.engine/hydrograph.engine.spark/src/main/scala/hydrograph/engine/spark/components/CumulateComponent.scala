@@ -87,7 +87,7 @@ class CumulateComponent(cumulateEntity: CumulateEntity, componentsParams: BaseCo
           case a: CumulateForExpression =>
             a.setValidationAPI(new ExpressionWrapper(sparkOperation.validatioinAPI, sparkOperation.initalValue))
             try {
-              a.init()
+              a.init(sparkOperation.operationEntity.getOperationFields.head.getDataType)
             } catch {
               case e: Exception =>
                 LOG.error("Exception in init method of : " + a.getClass + " " + e.getMessage, e)

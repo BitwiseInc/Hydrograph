@@ -64,10 +64,6 @@ class AggregateComponent(aggregateEntity: AggregateEntity, componentsParams: Bas
   override def createComponent(): Map[String, DataFrame] = {
 
     LOG.trace("In method createComponent()")
-    //    val op = OperationSchemaCreator[AggregateEntity](aggregateEntity, componentsParams, aggregateEntity.getOutSocketList().get(0))
-    //    val fm = FieldManupulating(op.getOperationInputFields(), op.getOperationOutputFields(), op.getPassThroughFields(), op.getMapFields(), op.getOperationFields(), aggregateEntity.getKeyFields)
-
-
     val primaryKeys = if (aggregateEntity.getKeyFields == null) Array[KeyField]() else aggregateEntity.getKeyFields
     val secondaryKeys = if (aggregateEntity.getSecondaryKeyFields == null) Array[KeyField]() else aggregateEntity.getSecondaryKeyFields
     LOG.debug("Component Id: '" + aggregateEntity.getComponentId
@@ -96,7 +92,7 @@ class AggregateComponent(aggregateEntity: AggregateEntity, componentsParams: Bas
         sparkOperation.baseClassInstance match {
           case a: AggregateForExpression =>
             a.setValidationAPI(new ExpressionWrapper(sparkOperation.validatioinAPI, sparkOperation.initalValue))
-            a.init()
+            a.init(sparkOperation.operationEntity.getOperationFields.head.getDataType)
             a.callPrepare(sparkOperation.fieldName, sparkOperation.fieldType)
           case a: AggregateTransformBase => a.prepare(sparkOperation.operationEntity.getOperationProperties, sparkOperation
             .operationEntity.getOperationInputFields, sparkOperation.operationEntity.getOperationOutputFields, keyFields)
