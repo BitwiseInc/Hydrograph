@@ -36,6 +36,8 @@ import hydrograph.engine.jaxb.operationstypes.PartitionByExpression;
  *         &lt;choice>
  *           &lt;element name="operation" type="{hydrograph/engine/jaxb/partitionByExpression}type-pbe-operation"/>
  *           &lt;element name="expression" type="{hydrograph/engine/jaxb/commontypes}type-transform-expression"/>
+ *           &lt;element name="includeExternalOperation" type="{hydrograph/engine/jaxb/commontypes}type-external-schema"/>
+ *           &lt;element name="includeExternalExpression" type="{hydrograph/engine/jaxb/commontypes}type-external-schema"/>
  *         &lt;/choice>
  *         &lt;element name="outSocket" type="{hydrograph/engine/jaxb/partitionByExpression}type-pbe-out-socket" maxOccurs="unbounded" minOccurs="2"/>
  *         &lt;element name="runtimeProperties" type="{hydrograph/engine/jaxb/commontypes}type-properties" minOccurs="0"/>

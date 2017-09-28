@@ -48,7 +48,7 @@ public class LinkGenerator {
 	public List<Operation> getOperation(String compID){
 		for (TypeBaseComponent baseComponent : componentFactoryMap) {
 			if(baseComponent.getId().equals(compID) && baseComponent instanceof TypeOperationsComponent){
-				return OperationEntityUtils.extractOperations(((TypeOperationsComponent) baseComponent).getOperationOrExpression());
+				return OperationEntityUtils.extractOperations(((TypeOperationsComponent) baseComponent).getOperationOrExpressionOrIncludeExternalOperation());
 			}
 		}
 		return null;

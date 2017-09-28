@@ -16,7 +16,7 @@ import hydrograph.engine.core.core.HydrographInputService;
 import hydrograph.engine.core.core.HydrographJob;
 import hydrograph.engine.core.props.PropertiesLoader;
 import hydrograph.engine.core.utilities.XmlUtilities;
-import hydrograph.engine.core.xmlparser.externalschema.ParseExternalSchema;
+import hydrograph.engine.core.xmlparser.externalschema.ParseExternalElements;
 import hydrograph.engine.core.xmlparser.parametersubstitution.ParameterSubstitutor;
 import hydrograph.engine.core.xmlparser.parametersubstitution.UserParameters;
 import hydrograph.engine.core.xmlparser.subjob.ReadSubjob;
@@ -61,12 +61,12 @@ public class HydrographXMLInputService implements HydrographInputService {
 				getUserParameters(args));
 
 		try {
-			ParseExternalSchema parseExternalSchema = new ParseExternalSchema(
+			ParseExternalElements parseExternalElements = new ParseExternalElements(
 					checkSubjobAndExpandXml(parameterSubstitutor,
 							XmlParsingUtils.getXMLStringFromPath(path)),
 					parameterSubstitutor);
 			hydrographJob = hydrographJobGenerator.createHydrographJob(
-					parseExternalSchema.getXmlDom(),
+					parseExternalElements.getXmlDom(),
 					config.getProperty("xsdLocation"));
 
 		} catch (FileNotFoundException e) {

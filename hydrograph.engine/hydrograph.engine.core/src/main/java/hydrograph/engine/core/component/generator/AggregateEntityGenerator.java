@@ -55,14 +55,14 @@ public class AggregateEntityGenerator extends OperationComponentGeneratorBase {
 		aggregateEntity.setComponentName(jaxbAggregate.getName());
 
 		// check if operation is present
-		if (jaxbAggregate.getOperationOrExpression() != null && jaxbAggregate.getOperationOrExpression().size() > 0) {
+		if (jaxbAggregate.getOperationOrExpressionOrIncludeExternalOperation() != null && jaxbAggregate.getOperationOrExpressionOrIncludeExternalOperation().size() > 0) {
 
 			LOG.trace("Operation(s) present for aggregate component: " + jaxbAggregate.getId() + ", processing");
 			// set the number of operations in the transform component and set
 			// operation present to true
-			aggregateEntity.setNumOperations(jaxbAggregate.getOperationOrExpression().size());
+			aggregateEntity.setNumOperations(jaxbAggregate.getOperationOrExpressionOrIncludeExternalOperation().size());
 			aggregateEntity.setOperationPresent(true);
-			aggregateEntity.setOperationsList(OperationEntityUtils.extractOperations(jaxbAggregate.getOperationOrExpression()));
+			aggregateEntity.setOperationsList(OperationEntityUtils.extractOperations(jaxbAggregate.getOperationOrExpressionOrIncludeExternalOperation()));
 		} else {
 			LOG.trace("Operation not present for aggregate component: " + jaxbAggregate.getId()
 					+ ", skipped operation processing");

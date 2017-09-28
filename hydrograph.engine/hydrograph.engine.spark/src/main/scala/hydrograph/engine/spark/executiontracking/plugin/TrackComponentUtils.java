@@ -23,6 +23,8 @@ import hydrograph.engine.jaxb.commontypes.*;
 import hydrograph.engine.jaxb.operationstypes.Executiontracking;
 import hydrograph.engine.jaxb.operationstypes.Filter;
 
+import javax.xml.bind.JAXBElement;
+import javax.xml.namespace.QName;
 import java.util.*;
 /**
  * The Class TrackComponentUtils.
@@ -140,7 +142,9 @@ class TrackComponentUtils {
 	static Executiontracking generateFilterAfterEveryComponent(TrackContext trackContext, List<TypeBaseComponent> jaxbObjectList,
 															   Map<String, Set<SchemaField>> schemaFieldsMap) {
 		Executiontracking executiontracking = new Executiontracking();
+		final QName _TypeOperationsComponentOperation_QNAME = new QName("", "operation");
 		TypeTransformOperation filterOperation = new TypeTransformOperation();
+		JAXBElement<TypeTransformOperation> jaxbFilterOperation = new JAXBElement<TypeTransformOperation>(_TypeOperationsComponentOperation_QNAME, TypeTransformOperation.class, TypeOperationsComponent.class, filterOperation);
 
 		Set<SchemaField> schemaFields = schemaFieldsMap
 				.get(trackContext.getFromComponentId() + "_" + trackContext.getFromOutSocketId());
@@ -161,7 +165,7 @@ class TrackComponentUtils {
 				trackContext.getFromOutSocketId(), trackContext.getFromOutSocketType()));
 
 		executiontracking.getOutSocket().add(TrackComponentUtils.getStraightPullOutSocket("out0", "in0"));
-		executiontracking.getOperationOrExpression().add(filterOperation);
+		executiontracking.getOperationOrExpressionOrIncludeExternalOperation().add(jaxbFilterOperation);
 		return executiontracking;
 	}
 

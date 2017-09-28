@@ -44,6 +44,7 @@ import hydrograph.engine.jaxb.transform.TypeTransformOutSocket;
  *           &lt;element name="operationField" type="{hydrograph/engine/jaxb/commontypes}type-operation-field"/>
  *           &lt;element name="expressionField" type="{hydrograph/engine/jaxb/commontypes}type-expression-field"/>
  *           &lt;element name="mapField" type="{hydrograph/engine/jaxb/commontypes}type-map-field"/>
+ *           &lt;element name="includeExternalMapping" type="{hydrograph/engine/jaxb/commontypes}type-external-schema"/>
  *         &lt;/choice>
  *       &lt;/choice>
  *       &lt;anyAttribute/>
@@ -82,7 +83,8 @@ public class TypeOperationsOutSocket
         @XmlElement(name = "passThroughField", type = TypeInputField.class),
         @XmlElement(name = "operationField", type = TypeOperationField.class),
         @XmlElement(name = "expressionField", type = TypeExpressionField.class),
-        @XmlElement(name = "mapField", type = TypeMapField.class)
+        @XmlElement(name = "mapField", type = TypeMapField.class),
+        @XmlElement(name = "includeExternalMapping", type = TypeExternalSchema.class)
     })
     protected List<Object> passThroughFieldOrOperationFieldOrExpressionField;
 
@@ -132,6 +134,7 @@ public class TypeOperationsOutSocket
      * {@link TypeOperationField }
      * {@link TypeExpressionField }
      * {@link TypeMapField }
+     * {@link TypeExternalSchema }
      * 
      * 
      */

@@ -17,7 +17,7 @@ import hydrograph.engine.core.component.utils.OperationOutputField;
 import hydrograph.engine.jaxb.commontypes.*;
 import hydrograph.engine.jaxb.commontypes.TypeProperties.Property;
 import hydrograph.engine.jaxb.join.TypeKeyFields;
-
+import javax.xml.bind.JAXBElement;
 import java.io.Serializable;
 import java.util.*;
 
@@ -47,41 +47,41 @@ public class OperationEntityUtils implements Serializable {
      * contains information of operation class, input fields, output
      * fields and properties for one operation
      */
-    public static List<Operation> extractOperations(List<Object> jaxbOperationList) {
+    public static List<Operation> extractOperations(List<JAXBElement<?>> jaxbOperationList) {
 
         List<Operation> operationList = new ArrayList<Operation>();
 
-        for (Object typeTransformOperation : jaxbOperationList) {
+        for (JAXBElement typeTransformOperation : jaxbOperationList) {
             Operation operation = new Operation();
-            if (typeTransformOperation instanceof TypeTransformOperation) {
-                operation.setOperationId(((TypeTransformOperation) typeTransformOperation).getId());
+            if (typeTransformOperation.getValue() instanceof TypeTransformOperation) {
+                operation.setOperationId(((TypeTransformOperation) typeTransformOperation.getValue()).getId());
                 operation.setOperationInputFields(extractOperationInputFields(
-                        ((TypeTransformOperation) typeTransformOperation).getInputFields()));
+                        ((TypeTransformOperation) typeTransformOperation.getValue()).getInputFields()));
                 operation.setOperationOutputFields(extractOperationOutputFields(
-                        ((TypeTransformOperation) typeTransformOperation).getOutputFields()));
+                        ((TypeTransformOperation) typeTransformOperation.getValue()).getOutputFields()));
                 operation.setOperationFields(extractOperationFields(
-                        ((TypeTransformOperation) typeTransformOperation).getOutputFields()));
-                operation.setOperationClass(((TypeTransformOperation) typeTransformOperation).getClazz());
+                        ((TypeTransformOperation) typeTransformOperation.getValue()).getOutputFields()));
+                operation.setOperationClass(((TypeTransformOperation) typeTransformOperation.getValue()).getClazz());
                 operation.setOperationProperties(
-                        extractOperationProperties(((TypeTransformOperation) typeTransformOperation).getProperties()));
+                        extractOperationProperties(((TypeTransformOperation) typeTransformOperation.getValue()).getProperties()));
                 operation.setExpressionPresent(false);
                 operationList.add(operation);
             } else {
-                operation.setOperationId(((TypeTransformExpression) typeTransformOperation).getId());
+                operation.setOperationId(((TypeTransformExpression) typeTransformOperation.getValue()).getId());
                 operation.setOperationInputFields(extractOperationInputFields(
-                        ((TypeTransformExpression) typeTransformOperation).getInputFields()));
+                        ((TypeTransformExpression) typeTransformOperation.getValue()).getInputFields()));
                 operation.setOperationOutputFields(extractExpressionOutputFields(
-                        ((TypeTransformExpression) typeTransformOperation).getOutputFields()));
+                        ((TypeTransformExpression) typeTransformOperation.getValue()).getOutputFields()));
                 operation.setOperationFields(extractOperationFields(
-                        ((TypeTransformExpression) typeTransformOperation).getOutputFields()));
-                operation.setExpression(addSemiColonIfNotPresent(((TypeTransformExpression) typeTransformOperation).getExpr()));
-                if (((TypeTransformExpression) typeTransformOperation).getMergeExpr() != null)
-                    operation.setMergeExpression(addSemiColonIfNotPresent(((TypeTransformExpression) typeTransformOperation).getMergeExpr()));
-                operation.setAccumulatorInitialValue(addQuotes(((TypeTransformExpression) typeTransformOperation).getAccumulatorInitalValue()));
+                        ((TypeTransformExpression) typeTransformOperation.getValue()).getOutputFields()));
+                operation.setExpression(addSemiColonIfNotPresent(((TypeTransformExpression) typeTransformOperation.getValue()).getExpr()));
+                if (((TypeTransformExpression) typeTransformOperation.getValue()).getMergeExpr() != null)
+                    operation.setMergeExpression(addSemiColonIfNotPresent(((TypeTransformExpression) typeTransformOperation.getValue()).getMergeExpr()));
+                operation.setAccumulatorInitialValue(addQuotes(((TypeTransformExpression) typeTransformOperation.getValue()).getAccumulatorInitalValue()));
                 operation.setOperationClass(null);
                 operation.setExpressionPresent(true);
                 operation.setOperationProperties(
-                        extractOperationProperties(((TypeTransformExpression) typeTransformOperation).getProperties()));
+                        extractOperationProperties(((TypeTransformExpression) typeTransformOperation.getValue()).getProperties()));
                 operationList.add(operation);
             }
         }

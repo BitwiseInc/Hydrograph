@@ -70,6 +70,7 @@
           <xs:choice maxOccurs="unbounded" minOccurs="1">
             <xs:element name="passThroughField" type="type-passthrough-input-field" />
             <xs:element name="operationField" type="cmn:type-operation-field" />
+            <xs:element name="includeExternalMapping" type="cmn:type-external-schema" />
            </xs:choice>
         </xs:choice>
         <xs:attribute name="id" type="xs:string" use="required"

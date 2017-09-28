@@ -55,14 +55,14 @@ public class ExecutionTrackingEntityGenerator extends OperationComponentGenerato
 		executionTrackingEntity.setComponentName(jaxbExecutionTracking.getName());
 
 		// check if operation is present
-		if (jaxbExecutionTracking.getOperationOrExpression() != null) {
+		if (jaxbExecutionTracking.getOperationOrExpressionOrIncludeExternalOperation() != null) {
 			
 			LOG.trace("Operation(s) present for ExecutionTracking component: "
 					+ jaxbExecutionTracking.getId() + ", processing");
-			executionTrackingEntity.setNumOperations(jaxbExecutionTracking.getOperationOrExpression().size());
+			executionTrackingEntity.setNumOperations(jaxbExecutionTracking.getOperationOrExpressionOrIncludeExternalOperation().size());
 			executionTrackingEntity.setOperationPresent(true);
 			executionTrackingEntity.setOperation(OperationEntityUtils.extractOperations(
-					jaxbExecutionTracking.getOperationOrExpression()).get(0));
+					jaxbExecutionTracking.getOperationOrExpressionOrIncludeExternalOperation()).get(0));
 		} else {
 			LOG.trace("Operation not present for ExecutionTracking component: "
 					+ jaxbExecutionTracking.getId() + ", skipped operation processing");

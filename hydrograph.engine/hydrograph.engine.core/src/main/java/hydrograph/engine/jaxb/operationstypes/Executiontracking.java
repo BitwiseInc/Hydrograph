@@ -34,6 +34,8 @@ import hydrograph.engine.jaxb.commontypes.TypeOperationsComponent;
  *         &lt;choice>
  *           &lt;element name="operation" type="{hydrograph/engine/jaxb/executiontracking}type-executiontracking-operation"/>
  *           &lt;element name="expression" type="{hydrograph/engine/jaxb/commontypes}type-transform-expression"/>
+ *           &lt;element name="includeExternalOperation" type="{hydrograph/engine/jaxb/commontypes}type-external-schema"/>
+ *           &lt;element name="includeExternalExpression" type="{hydrograph/engine/jaxb/commontypes}type-external-schema"/>
  *         &lt;/choice>
  *         &lt;element name="outSocket" type="{hydrograph/engine/jaxb/executiontracking}type-executiontracking-out-socket" maxOccurs="2"/>
  *         &lt;element name="runtimeProperties" type="{hydrograph/engine/jaxb/commontypes}type-properties" minOccurs="0"/>
