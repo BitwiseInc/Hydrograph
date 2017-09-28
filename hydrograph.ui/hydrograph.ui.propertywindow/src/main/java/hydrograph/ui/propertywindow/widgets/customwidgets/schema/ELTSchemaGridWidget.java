@@ -72,7 +72,6 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -374,7 +373,7 @@ public abstract class ELTSchemaGridWidget extends AbstractWidget {
 						 SchemaSyncUtility.INSTANCE.pushSchemaToMapping(
 								 getComponent(), schemaGridRowList);
 						 else
-						 updateSchemaWithPropogatedSchema();	 
+						 updateSchemaWithPropogatedSchema(true);	 
 					 }
 				 }
 			 }
@@ -980,7 +979,7 @@ public abstract class ELTSchemaGridWidget extends AbstractWidget {
 		 ((Button)btnPull.getSWTWidgetControl()).addSelectionListener(new SelectionAdapter() {
 			 @Override
 			 public void widgetSelected(SelectionEvent e) {				
-				 updateSchemaWithPropogatedSchema();
+				 updateSchemaWithPropogatedSchema(true);
 			 }
 		 });
 		 if(getComponent().getTargetConnections()==null || getComponent().getTargetConnections().isEmpty()){
@@ -988,14 +987,14 @@ public abstract class ELTSchemaGridWidget extends AbstractWidget {
 		 }
 	 }
 
-	 public void updateSchemaWithPropogatedSchema(){
+	 public void updateSchemaWithPropogatedSchema(boolean showPopoupMessage){
 		 if(!getComponent().getCategory().equalsIgnoreCase(Constants.TRANSFORM_DISPLAYNAME)){
 			 schemaGridRowList.clear();
 		 }
 			
 		 boolean isUpdate = getCompareSchemaWithInputLink();
 		if (!isAnyUpdateAvailableformPulledSchema(getSchemaForInternalPropagation())) {
-			if(!isUpdate){
+			if(!isUpdate && showPopoupMessage){
 				showMessage();
 			}
 		} else {

@@ -14,18 +14,10 @@
  
 package hydrograph.ui.engine.converter.impl;
 
-import hydrograph.ui.common.util.Constants;
-import hydrograph.ui.engine.converter.TransformConverter;
-import hydrograph.ui.engine.helper.ConverterHelper;
-import hydrograph.ui.graph.model.Component;
-import hydrograph.ui.graph.model.Link;
-import hydrograph.ui.logging.factory.LogFactory;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.JAXBElement;
-import javax.xml.namespace.QName;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -39,6 +31,12 @@ import hydrograph.engine.jaxb.commontypes.TypeOperationOutputFields;
 import hydrograph.engine.jaxb.commontypes.TypeOperationsOutSocket;
 import hydrograph.engine.jaxb.commontypes.TypeTransformOperation;
 import hydrograph.engine.jaxb.operationstypes.GenerateSequence;
+import hydrograph.ui.common.util.Constants;
+import hydrograph.ui.engine.converter.TransformConverter;
+import hydrograph.ui.engine.qnames.OperationsExpressionType;
+import hydrograph.ui.graph.model.Component;
+import hydrograph.ui.graph.model.Link;
+import hydrograph.ui.logging.factory.LogFactory;
 
 /**
  * This class is used to create target XML for UniqueSequence component.
@@ -86,7 +84,7 @@ public class UniqueSequenceConverter extends TransformConverter {
 			operation.setId(defaultOperationId);
 			operation.setOutputFields(getOutPutFields());
 			JAXBElement<TypeTransformOperation> jaxbElement =  new JAXBElement( 
-		            new QName("operation"), TypeTransformOperation.class,operation);
+					OperationsExpressionType.OPERATION.getQName(), TypeTransformOperation.class,operation);
 			operationList.add(jaxbElement);
 		}
 		return operationList;

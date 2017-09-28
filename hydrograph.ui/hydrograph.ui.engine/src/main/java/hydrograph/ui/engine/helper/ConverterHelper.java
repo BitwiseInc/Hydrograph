@@ -60,6 +60,7 @@ import hydrograph.ui.datastructure.property.Schema;
 import hydrograph.ui.datastructure.property.mapping.ExternalWidgetData;
 import hydrograph.ui.datastructure.property.mapping.MappingSheetRow;
 import hydrograph.ui.datastructure.property.mapping.TransformMapping;
+import hydrograph.ui.engine.qnames.OperationsExpressionType;
 import hydrograph.ui.engine.xpath.ComponentXpath;
 import hydrograph.ui.engine.xpath.ComponentXpathConstants;
 import hydrograph.ui.engine.xpath.ComponentsAttributeAndValue;
@@ -131,7 +132,7 @@ public class ConverterHelper {
 		TypeExternalSchema typeExternalSchema = new TypeExternalSchema();
 		typeExternalSchema.setUri("../"+mappingsheetRow.getExternalOperation().getFilePath());
 		JAXBElement<TypeExternalSchema> externalOperation = new JAXBElement<TypeExternalSchema>(
-				new QName("includeExternalOperation"), TypeExternalSchema.class,
+				OperationsExpressionType.INCLUDE_EXTERNAL_OPERATION.getQName(), TypeExternalSchema.class,
 				typeExternalSchema);
 		operationList.add(externalOperation);
 	}
@@ -140,7 +141,7 @@ public class ConverterHelper {
 		TypeExternalSchema typeExternalSchema = new TypeExternalSchema();
 		typeExternalSchema.setUri("../"+mappingsheetRow.getExternalExpresion().getFilePath());
 		JAXBElement<TypeExternalSchema> externalExpression = new JAXBElement<TypeExternalSchema>(
-				new QName("includeExternalExpression"), TypeExternalSchema.class,
+				OperationsExpressionType.INCLUDE_EXTERNAL_EXPRESSION.getQName(), TypeExternalSchema.class,
 				typeExternalSchema);
 		operationList.add(externalExpression);
 	}
@@ -151,7 +152,7 @@ public class ConverterHelper {
 			TypeExternalSchema typeExternalSchema = new TypeExternalSchema();
 			typeExternalSchema.setUri("../" + externalExpressionData.getFilePath());
 			JAXBElement<TypeExternalSchema> externalExpression = new JAXBElement<TypeExternalSchema>(
-					new QName("includeExternalExpression"), TypeExternalSchema.class, typeExternalSchema);
+					OperationsExpressionType.INCLUDE_EXTERNAL_EXPRESSION.getQName(), TypeExternalSchema.class, typeExternalSchema);
 			operationList.add(externalExpression);
 		}
 	}
@@ -162,7 +163,7 @@ public class ConverterHelper {
 			TypeExternalSchema typeExternalSchema = new TypeExternalSchema();
 			typeExternalSchema.setUri("../" + externalExpressionData.getFilePath());
 			JAXBElement<TypeExternalSchema> externalExpression = new JAXBElement<TypeExternalSchema>(
-					new QName("includeExternalOperation"), TypeExternalSchema.class, typeExternalSchema);
+					OperationsExpressionType.INCLUDE_EXTERNAL_OPERATION.getQName(), TypeExternalSchema.class, typeExternalSchema);
 			operationList.add(externalExpression);
 		}
 	}
@@ -191,7 +192,7 @@ public class ConverterHelper {
 					operation.setClazz(mappingSheetRow.getOperationClassPath());
 				}
 				JAXBElement<TypeTransformOperation> jaxbElement =  new JAXBElement( 
-			            new QName("operation"), TypeTransformOperation.class,operation);
+						OperationsExpressionType.OPERATION.getQName(), TypeTransformOperation.class,operation);
 				return jaxbElement;
 			} else {
 				TypeTransformExpression expression = new TypeTransformExpression();
@@ -214,7 +215,7 @@ public class ConverterHelper {
 					expression.setExpr(mappingSheetRow.getExpressionEditorData().getExpression());
 				}
 				JAXBElement<TypeTransformExpression> jaxbElement =  new JAXBElement( 
-			            new QName("expression"), TypeTransformExpression.class,expression);
+						OperationsExpressionType.EXPRESSION.getQName(), TypeTransformExpression.class,expression);
 				return jaxbElement;
 			}
 		}
