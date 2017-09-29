@@ -140,7 +140,7 @@ public class SchemaHelper {
 	
 	private void createDebugXmls(Component component, String schemaFilePath, String componentId,
 			String previousComponent) {
-		Container container = (Container) component.getProperties().get(Constants.CONTAINER);
+		Container container = (Container) component.getSubJobContainer().get(Constants.CONTAINER);
 		ComponentsOutputSchema componentsOutputSchema = null;
 		for (Component componentObject : container.getUIComponentList()) {
 			if (componentObject instanceof SubjobComponent) {

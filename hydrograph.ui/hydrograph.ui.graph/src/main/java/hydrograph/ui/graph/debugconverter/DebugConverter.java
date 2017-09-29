@@ -138,7 +138,7 @@ public class DebugConverter {
 	}
 	
 	private void traverseSubjob(Component component, Debug debug, String componenetId, String previousComponent) {
-		Container subJobContainer = ((Container) component.getProperties().get(Constants.CONTAINER));
+		Container subJobContainer = ((Container) component.getSubJobContainer().get(Constants.CONTAINER));
 		for (Component componentObject : subJobContainer.getUIComponentList()) {
 			if (componentObject instanceof SubjobComponent) {
 				Link link = componentObject.getInputLinks().get(0);
