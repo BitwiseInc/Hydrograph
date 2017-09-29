@@ -230,7 +230,11 @@ public class TransformDialog extends Dialog implements IOperationClassDialog {
 		createInputFieldTable(mainSashForm);
         createOperationClassGrid(mainSashForm);
 		createOutputFieldTable(mainSashForm);
-		mainSashForm.setWeights(new int[] {67, 242, 107});
+		if(OSValidator.isMac()){
+			mainSashForm.setWeights(new int[] {54, 242, 120});
+		}else{
+			mainSashForm.setWeights(new int[] {67, 242, 107});
+		}
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		final Point newSize = container.getShell().computeSize(screenSize.width/2, screenSize.height/2, true);
 		getShell().setMinimumSize(newSize);
