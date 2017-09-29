@@ -177,6 +177,11 @@ public class ValidateExpressionOperation {
 	
 
 	private boolean checkOperationPropertyList(Properties properties, List<NameValueProperty> uiPropertryList) {
+		
+		if(properties == null && uiPropertryList != null && uiPropertryList.isEmpty()) {
+			return true;
+		}
+		
 		if ((properties == null && uiPropertryList != null) || (properties == null && uiPropertryList != null)
 				|| (uiPropertryList == null && properties != null)
 				|| (uiPropertryList == null && properties.getProperty() != null)
@@ -208,6 +213,11 @@ public class ValidateExpressionOperation {
 
 	private boolean checkOperationOutputListsAreEqual(OperationOutputFields outputFields,
 			List<FilterProperties> uiOutputList, MappingSheetRow mappingSheetRow) {
+		
+		if(outputFields == null && uiOutputList != null && uiOutputList.isEmpty()) {
+			return true;
+		}
+		
 		if ((outputFields == null && uiOutputList != null) || (outputFields == null && uiOutputList != null)
 				|| (uiOutputList == null && outputFields != null)
 				|| (uiOutputList == null && outputFields.getField() != null)
@@ -228,6 +238,11 @@ public class ValidateExpressionOperation {
 
 	private boolean checkExpressionOutputListsAreEqual(ExpressionOutputFields outputFields,
 			List<FilterProperties> uiOutputList) {
+		
+		if(outputFields == null && uiOutputList != null && uiOutputList.isEmpty()) {
+			return true;
+		}
+		
 		if ((outputFields == null && uiOutputList != null) || (outputFields == null && uiOutputList != null)
 				|| (uiOutputList == null && outputFields != null)
 				|| (uiOutputList == null && outputFields.getField() != null)) {
@@ -242,6 +257,11 @@ public class ValidateExpressionOperation {
 	}
 
 	private boolean checkInputListsAreEqual(InputFields inputFields, List<FilterProperties> uiInputFields) {
+		
+		if(inputFields == null && uiInputFields != null && uiInputFields.isEmpty()) {
+			return true;
+		}
+		
 		if ((inputFields == null && uiInputFields != null) || (inputFields.getField() == null && uiInputFields != null)
 				|| (uiInputFields == null && inputFields != null)
 				|| (uiInputFields == null && inputFields.getField() != null)
@@ -261,6 +281,11 @@ public class ValidateExpressionOperation {
 	}
 	
 	private boolean checkFilterInputListsAreEqual(InputFields inputFields, List<String> uiInputFields) {
+		
+		if(inputFields == null && uiInputFields != null && uiInputFields.isEmpty()) {
+			return true;
+		}
+		
 		if ((inputFields == null && uiInputFields != null) || (inputFields.getField() == null && uiInputFields != null)
 				|| (uiInputFields == null && inputFields != null)
 				|| (uiInputFields == null && inputFields.getField() != null)

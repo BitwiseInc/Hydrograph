@@ -2,6 +2,8 @@ package hydrograph.ui.propertywindow.filter.composites;
 
 import java.util.List;
 
+import javax.swing.JToolBar.Separator;
+
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
@@ -17,6 +19,8 @@ import org.eclipse.swt.dnd.DropTarget;
 import org.eclipse.swt.dnd.DropTargetAdapter;
 import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -58,7 +62,7 @@ public class InputFieldsComposite extends Composite {
 
 		deleteToolItem(toolBar);
 
-		inputFieldTableViewer = new TableViewer(this, SWT.BORDER | SWT.FULL_SELECTION);
+		inputFieldTableViewer = new TableViewer(this, SWT.BORDER |SWT.MULTI |SWT.FULL_SELECTION);
 		inputFieldTable = inputFieldTableViewer.getTable();
 		inputFieldTable.setLinesVisible(true);
 		inputFieldTable.setHeaderVisible(true);
@@ -82,6 +86,20 @@ public class InputFieldsComposite extends Composite {
 		inputFieldTableViewer.setInput(inputFields);
 		addDropSuuport(inputFieldTableViewer);
 		inputFieldColumn.pack();
+		
+		inputFieldTable.addControlListener(new ControlListener() {
+			
+			@Override
+			public void controlResized(ControlEvent e) {
+				int tableSize=inputFieldTable.getSize().x;
+				inputFieldColumn.setWidth(tableSize-4);
+			}
+			
+			@Override
+			public void controlMoved(ControlEvent e) {
+				
+			}
+		});
 	}
 
 	private void addDropSuuport(TableViewer tableViewer) {
@@ -110,6 +128,7 @@ public class InputFieldsComposite extends Composite {
 
 	private void deleteToolItem(ToolBar toolBar) {
 		ToolItem tltmDelete = new ToolItem(toolBar, SWT.NONE);
+		tltmDelete.setWidth(5);
 		tltmDelete.setImage(ImagePathConstant.DELETE_BUTTON.getImageFromRegistry());
 		tltmDelete.addSelectionListener(new SelectionAdapter() {
 			@Override
