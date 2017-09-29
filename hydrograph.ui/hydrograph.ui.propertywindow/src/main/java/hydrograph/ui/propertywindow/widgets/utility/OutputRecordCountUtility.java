@@ -14,6 +14,7 @@
 package hydrograph.ui.propertywindow.widgets.utility;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -556,9 +557,45 @@ public class OutputRecordCountUtility {
 			}
 		
 	     }
+		updatePassThroughField(transformMapping,component);
 		SchemaSyncUtility.INSTANCE.unionFilter(transformMapping.getOutputFieldList(),outputList);	
 		propagateOuputFieldsToSchemaTabFromTransformWidget(transformMapping, schema, component, outputList);
 	   
+	}
+	
+	// Removed pass through field according to new input.
+	private void updatePassThroughField(TransformMapping transformMapping, Component component) {
+
+		List<NameValueProperty> mapAndPassthroughFields = transformMapping.getMapAndPassthroughField();
+		Iterator<NameValueProperty> iterator = mapAndPassthroughFields.iterator();
+		while (iterator.hasNext()) {
+			NameValueProperty nameValueProperty = iterator.next();
+			if (isPassThroughField(nameValueProperty) && !isPassThroughFieldPresentInInput(transformMapping, nameValueProperty)) {
+				iterator.remove();
+			}
+		}
+
+	}
+	
+	private boolean isPassThroughFieldPresentInInput(TransformMapping transformMapping,
+			NameValueProperty nameValueProperty) {
+		List<InputField> inputFields = transformMapping.getInputFields();
+		boolean isFound = false;
+		for (InputField inputField : inputFields) {
+			if (inputField.getFieldName().equals(nameValueProperty.getPropertyName())) {
+				isFound = true;
+				break;
+			}
+		}
+		return isFound;
+	}
+	
+	private boolean isPassThroughField(NameValueProperty nameValueProperty) {
+		if (nameValueProperty.getPropertyName().endsWith(nameValueProperty.getPropertyValue())) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	
