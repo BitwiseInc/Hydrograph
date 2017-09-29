@@ -23,13 +23,13 @@ public class ExpressionData implements IDataStructure{
 	private ExpressionData(){}
 	
 	public ExpressionData(ExpressionEditorData expressionEditorData,ExternalWidgetData externalExpressionData){
-		id="";
+		id="Expression:1";
 		this.expressionEditorData=expressionEditorData;
 		this.externalExpressionData=externalExpressionData;
 	}
 	
 	public ExpressionData(String componentName){
-		id="";
+		id="Expression:1";
 		this.externalExpressionData=new ExternalWidgetData(false, null);
 		this.expressionEditorData=new ExpressionEditorData("", componentName);
 	}
