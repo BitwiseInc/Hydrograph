@@ -39,7 +39,7 @@ public class OperationClassData implements IDataStructure{
 	}
 
 	public OperationClassData() {
-		id = "";
+		id = "Operation:1";
 		qualifiedClassName = "";
 		operationClassProperties = new ArrayList<>();
 		externalOperationClassData = new ExternalWidgetData(false, null);
