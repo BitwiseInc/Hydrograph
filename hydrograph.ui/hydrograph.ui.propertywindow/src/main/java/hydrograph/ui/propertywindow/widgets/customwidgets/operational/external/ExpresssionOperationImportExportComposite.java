@@ -35,6 +35,7 @@ import org.slf4j.Logger;
 import hydrograph.ui.common.property.util.Utils;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.common.util.CustomColorRegistry;
+import hydrograph.ui.common.util.OSValidator;
 import hydrograph.ui.datastructure.property.mapping.ExternalWidgetData;
 import hydrograph.ui.logging.factory.LogFactory;
 import hydrograph.ui.propertywindow.widgets.customwidgets.schema.ELTSchemaGridWidget;
@@ -95,8 +96,15 @@ public abstract class ExpresssionOperationImportExportComposite  extends Composi
 		decorator.setMarginWidth(3);
 		btnBrowse = new Button(browseButtonComposite, SWT.NONE);
 	    GridData gd_btnNewButton = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_btnNewButton.heightHint = 23;
-		gd_btnNewButton.widthHint = 30;
+		gd_btnNewButton.heightHint = 25;
+		
+		if(OSValidator.isMac()){
+			gd_btnNewButton.widthHint = 43;
+			gd_btnNewButton.horizontalIndent=-5;
+			
+		}else{
+			gd_btnNewButton.widthHint = 30;
+		}
 		btnBrowse.setLayoutData(gd_btnNewButton);
 		btnBrowse.setText("...");
 		new Label(exprOperImportExportComposite, SWT.NONE);
