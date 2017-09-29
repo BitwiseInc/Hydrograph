@@ -10,6 +10,8 @@ import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -60,6 +62,20 @@ public class ErrorLogTableViewer extends TableViewer {
 		setContentProvider(new ErrorLogsContentProvider());
 		setInput(errors);
 		refreshErrors();
+		
+		errorLogTable.addControlListener(new ControlListener() {
+			
+			@Override
+			public void controlResized(ControlEvent e) {
+				int tableSize=errorLogTable.getSize().x;
+				errorLogColumn.setWidth(tableSize-4);
+			}
+			
+			@Override
+			public void controlMoved(ControlEvent e) {
+				
+			}
+		});
 	}
 
 	public void refreshErrors() {

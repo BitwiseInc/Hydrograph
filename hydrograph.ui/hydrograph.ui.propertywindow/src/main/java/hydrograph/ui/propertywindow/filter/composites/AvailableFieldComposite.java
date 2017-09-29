@@ -17,6 +17,8 @@ import org.eclipse.swt.dnd.DragSource;
 import org.eclipse.swt.dnd.DragSourceAdapter;
 import org.eclipse.swt.dnd.DragSourceEvent;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -71,7 +73,7 @@ public class AvailableFieldComposite extends Composite {
 		super(parent, style);
 		this.setLayout(new GridLayout(1, false));
 		
-		TableViewer availableFieldtableViewer = new TableViewer(this, SWT.BORDER | SWT.FULL_SELECTION);
+		TableViewer availableFieldtableViewer = new TableViewer(this, SWT.BORDER | SWT.MULTI|SWT.FULL_SELECTION);
 		availableFieldsTable = availableFieldtableViewer.getTable();
 		availableFieldsTable.setLinesVisible(true);
 		availableFieldsTable.setHeaderVisible(true);
@@ -93,6 +95,20 @@ public class AvailableFieldComposite extends Composite {
 		availableFieldtableViewer.setInput(dataStructure.getAvailableFields());
 		tblclmnAvailableFields.pack();
 		addDoubleClickListener(availableFieldtableViewer);
+		
+		availableFieldsTable.addControlListener(new ControlListener() {
+			
+			@Override
+			public void controlResized(ControlEvent e) {
+				int tableSize=availableFieldsTable.getSize().x;
+				tblclmnAvailableFields.setWidth(tableSize-4);
+			}
+			
+			@Override
+			public void controlMoved(ControlEvent e) {
+				
+			}
+		});
 	}
 
 	private void addDoubleClickListener(TableViewer availableFieldtableViewer) {
