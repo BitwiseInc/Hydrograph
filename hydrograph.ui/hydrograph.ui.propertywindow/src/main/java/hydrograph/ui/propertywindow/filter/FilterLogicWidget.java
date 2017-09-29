@@ -114,6 +114,13 @@ public class FilterLogicWidget extends AbstractWidget {
 					dataStructure=clonedDataStructure;
 				}
 				showHideErrorSymbol(widgets);
+				
+				if(dialog.isYesButtonPressed()) {
+					propertyDialog.pressOK();
+				}
+				else if(dialog.isNoButtonPressed()) {
+					propertyDialog.pressCancel();
+				}
 			}
 		});
 	}

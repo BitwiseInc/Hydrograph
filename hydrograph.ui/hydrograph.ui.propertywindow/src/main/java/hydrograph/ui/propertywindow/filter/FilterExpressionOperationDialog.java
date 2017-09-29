@@ -28,8 +28,9 @@ import hydrograph.ui.propertywindow.filter.composites.OperationComposite;
 import hydrograph.ui.propertywindow.filter.viewer.ErrorLogTableViewer;
 import hydrograph.ui.propertywindow.propertydialog.PropertyDialogButtonBar;
 import hydrograph.ui.propertywindow.widgets.customwidgets.config.WidgetConfig;
+import hydrograph.ui.propertywindow.widgets.interfaces.IOperationClassDialog;
 
-public class FilterExpressionOperationDialog extends Dialog {
+public class FilterExpressionOperationDialog extends Dialog implements IOperationClassDialog {
 	private OperationComposite operationComposite;
 	private ExpressionComposite expressionComposite;
 	private Composite filterLogicInnerComposite;
@@ -41,6 +42,8 @@ public class FilterExpressionOperationDialog extends Dialog {
 	private WidgetConfig widgetConfig;
 	private List<FixedWidthGridRow> schemaFields;
 	private String title;
+	private boolean isYesButtonPressed;
+	private boolean isNoButtonPressed;
 
 	/**
 	 * Create the dialog.
@@ -55,6 +58,8 @@ public class FilterExpressionOperationDialog extends Dialog {
 		this.propertyDialogButtonBar=propertyDialogButtonBar;
 		this.widgetConfig=widgetConfig;
 		this.schemaFields=schemaFields;
+		isYesButtonPressed = false;
+		isNoButtonPressed = false;
 		updateAvailableFields(dataStructure, schemaFields);
 	}
 
@@ -183,5 +188,42 @@ public class FilterExpressionOperationDialog extends Dialog {
 	
 	public void  setTitle(String dialogTitle){
 		this.title=dialogTitle;
+	}
+
+
+
+	@Override
+	public void pressOK() {
+		isYesButtonPressed = true;
+		okPressed();
+	}
+
+
+
+	@Override
+	public void pressCancel() {
+	    isNoButtonPressed = true;
+		cancelPressed();
+		
+	}
+	
+	/**
+	 * 
+	 * returns true if ok button pressed from code
+	 * 
+	 * @return boolean
+	 */
+	public boolean isYesButtonPressed() {
+		return isYesButtonPressed;
+	}
+	
+	/**
+	 * 
+	 * returns true of cancel button pressed from code
+	 * 
+	 * @return boolean
+	 */
+	public boolean isNoButtonPressed() {
+		return isNoButtonPressed;
 	}
 }

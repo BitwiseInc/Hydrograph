@@ -143,13 +143,11 @@ public class OperationComposite extends Composite {
 						createDSForClassWindow(), dialog.getWidgetConfig(), dialog.getComponent().getComponentName());
 				eltOperationClassDialog.open();
 				updateOperationDS(eltOperationClassDialog);
-				// if(eltOperationClassDialog.isYesPressed()){
-				// dialog.pressOK();
-				// }
-				//
-				// if(eltOperationClassDialog.isNoPressed()){
-				// propertyDialog.pressCancel();
-				// }
+				if (eltOperationClassDialog.isYesPressed()) {
+					dialog.pressOK();
+				} else if (eltOperationClassDialog.isNoPressed()) {
+					dialog.pressCancel();
+				}
 				dialog.refreshErrorLogs();
 			}
 
