@@ -256,11 +256,27 @@ public class TransformMappingValidationRule implements IValidator{
 			if(StringUtils.isBlank(transformMapping.getExternalOutputFieldsData().getFilePath())){
 				errorMessage = "External path is blank for output fields";
 				return false;
+			}else{
+				checkIfUIDataAndFileIsOutOfSyncForOutputFields(transformMapping);
+				if(StringUtils.isBlank(errorMessage)){
+					return false;
+				}
 			}
 		}
 		return true;
 	}
 
+
+	private void checkIfUIDataAndFileIsOutOfSyncForOutputFields(TransformMapping transformMapping) {
+		try{
+			ExternalOperationExpressionUtil.INSTANCE.validateUIMappingFieldsWithExternalFile(transformMapping, 
+					PathUtility.INSTANCE.getPath(transformMapping.getExternalOutputFieldsData().getFilePath(),
+							Constants.XML_EXTENSION, false, Constants.XML_EXTENSION));	
+			
+		}catch(RuntimeException exception){
+			errorMessage=exception.getMessage();
+		}
+	}
 
 	private void validateAllExpressions(List<MappingSheetRow> mappingSheetRows,
 			Map<String, List<FixedWidthGridRow>> inputSchemaMap) {
