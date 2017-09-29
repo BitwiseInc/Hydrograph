@@ -25,6 +25,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
+import org.slf4j.Logger;
 
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.common.util.ExternalOperationExpressionUtil;
@@ -35,9 +36,11 @@ import hydrograph.ui.datastructure.property.GridRow;
 import hydrograph.ui.datastructure.property.Schema;
 import hydrograph.ui.datastructure.property.mapping.MappingSheetRow;
 import hydrograph.ui.datastructure.property.mapping.TransformMapping;
+import hydrograph.ui.expression.editor.util.ExpressionEditorUtil;
 import hydrograph.ui.expression.editor.util.FieldDataTypeMap;
 import hydrograph.ui.graph.model.Component;
 import hydrograph.ui.graph.model.Link;
+import hydrograph.ui.logging.factory.LogFactory;
 import hydrograph.ui.propertywindow.widgets.customwidgets.config.OperationClassConfig;
 import hydrograph.ui.propertywindow.widgets.customwidgets.operational.external.ExpresssionOperationImportExportComposite;
 import hydrograph.ui.propertywindow.widgets.customwidgets.operational.external.ImportExportType;
@@ -76,7 +79,7 @@ public abstract class AbstractExpressionComposite extends Composite {
 	protected Button isParamAccumulator;
 	protected TransformDialog transformDialog;
 	protected TransformMapping transformMapping;
-	
+	private static final Logger LOGGER = LogFactory.INSTANCE.getLogger(AbstractExpressionComposite.class);
 	
 	
 	
@@ -294,8 +297,21 @@ public abstract class AbstractExpressionComposite extends Composite {
 
 					@Override
 					protected void importButtonSelection(Button widget) {
-						ExternalOperationExpressionUtil.INSTANCE.importExpression(getFile(), mappingSheetRow, true,transformMapping,component.getComponentName());
+						ExternalOperationExpressionUtil.INSTANCE.importExpression(getFile(), mappingSheetRow, true,
+								transformMapping, component.getComponentName());
 						outputFieldTextBox.setText(mappingSheetRow.getOutputList().get(0).getPropertyname());
+						try {
+							if (mappingSheetRow.getExpressionEditorData() != null) {
+								ExpressionEditorUtil.validateExpression(
+										mappingSheetRow.getExpressionEditorData().getExpression(),
+										FieldDataTypeMap.INSTANCE.createFieldDataTypeMap(
+												mappingSheetRow.getExpressionEditorData().getfieldsUsedInExpression(),
+												getInputSchema(component)),
+										mappingSheetRow.getExpressionEditorData());
+							}
+						} catch (Exception exception) {
+							LOGGER.warn("Exception occurred while validating on import expression",exception);
+						}
 						refreshExpressionComposite(mappingSheetRow);
 					}
 
