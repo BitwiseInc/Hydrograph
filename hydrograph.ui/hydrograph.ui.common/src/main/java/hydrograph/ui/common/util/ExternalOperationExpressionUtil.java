@@ -368,9 +368,7 @@ public class ExternalOperationExpressionUtil {
 			if (mappingSheetRow.isActive()) {
 				if (mappingSheetRow.getOutputList().size() > 0
 						&& StringUtils.isNotBlank(mappingSheetRow.getOutputList().get(0).getPropertyname())) {
-					if(!(Constants.NORMALIZE.equalsIgnoreCase(componentName) &&
-							(transformMapping.isExpression() && mappingSheetRow.isExpression())
-							||(!transformMapping.isExpression() && !mappingSheetRow.isExpression()))){
+					if(isNormalizeOuterExpression(transformMapping, componentName, mappingSheetRow)){
 							continue;
 					}
 					if (mappingSheetRow.isExpression()) {
@@ -384,6 +382,19 @@ public class ExternalOperationExpressionUtil {
 			}
 		}
 		return externalMappings;
+	}
+
+	private boolean isNormalizeOuterExpression(TransformMapping transformMapping, String componentName,
+			MappingSheetRow mappingSheetRow) {
+		if (Constants.NORMALIZE.equalsIgnoreCase(componentName)) {
+			if ((transformMapping.isExpression() && mappingSheetRow.isExpression())
+					|| (!transformMapping.isExpression() && !mappingSheetRow.isExpression())) {
+				return false;
+			} else {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private void addStarFieldsToJaxb(ExternalMapping externalMapping) {
