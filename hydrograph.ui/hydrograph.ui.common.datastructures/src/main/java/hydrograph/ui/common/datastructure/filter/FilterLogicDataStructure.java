@@ -35,6 +35,12 @@ public class FilterLogicDataStructure implements IDataStructure{
 		this.isOperation = isOperation;
 	}
 
+	public void setComponentName(String componentName) {
+		if (expressionEditorData != null && expressionEditorData.getExpressionEditorData() != null) {
+			expressionEditorData.getExpressionEditorData().setComponentName(componentName);
+		}
+	}
+	
 	/**
 	 * @return the availableFields
 	 */
