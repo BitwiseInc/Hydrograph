@@ -257,7 +257,7 @@ public class NormalizeMappingValidator implements IValidator{
 				return false;
 			}else{
 				checkIfUIDataAndFileIsOutOfSyncForOutputFields(transformMapping);
-				if(StringUtils.isBlank(errorMessage)){
+				if(StringUtils.isNotBlank(errorMessage)){
 					return false;
 				}
 			}

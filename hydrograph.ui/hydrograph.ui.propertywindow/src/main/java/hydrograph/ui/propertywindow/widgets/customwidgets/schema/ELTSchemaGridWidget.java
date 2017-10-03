@@ -1314,8 +1314,7 @@ public abstract class ELTSchemaGridWidget extends AbstractWidget {
 		 ELTDefaultLable defaultLable = new ELTDefaultLable("");
 		 defaultLable.lableWidth(0);
 		 importExportComposite.attachWidget(defaultLable);
-
-		 AbstractELTWidget importButtonWidget = new ELTDefaultButton(Messages.IMPORT_XML);
+		 ELTDefaultButton importButtonWidget= new ELTDefaultButton(Messages.IMPORT_XML);
 		 importExportComposite.attachWidget(importButtonWidget);
 		 importButton = (Button) importButtonWidget.getSWTWidgetControl();
 		 importButton.setEnabled(false);
@@ -1332,7 +1331,11 @@ public abstract class ELTSchemaGridWidget extends AbstractWidget {
 
 		 });
 
-		 AbstractELTWidget exportButtonWidget = new ELTDefaultButton(Messages.EXPORT_XML).grabExcessHorizontalSpace(false);
+		 ELTDefaultButton exportButtonWidget = new ELTDefaultButton(Messages.EXPORT_XML).grabExcessHorizontalSpace(false);
+		 if(OSValidator.isMac()){
+			 exportButtonWidget.buttonWidth(100);
+			 importButtonWidget.buttonWidth(100);
+		 }
 		 importExportComposite.attachWidget(exportButtonWidget);
 		 exportButton = (Button) exportButtonWidget.getSWTWidgetControl();
 		 exportButton.setEnabled(false);

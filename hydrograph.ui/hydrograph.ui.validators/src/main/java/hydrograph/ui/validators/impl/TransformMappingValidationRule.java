@@ -258,7 +258,7 @@ public class TransformMappingValidationRule implements IValidator{
 				return false;
 			}else{
 				checkIfUIDataAndFileIsOutOfSyncForOutputFields(transformMapping);
-				if(StringUtils.isBlank(errorMessage)){
+				if(StringUtils.isNotBlank(errorMessage)){
 					return false;
 				}
 			}
