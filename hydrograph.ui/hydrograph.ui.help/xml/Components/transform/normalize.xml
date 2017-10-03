@@ -21,15 +21,17 @@
 	    <topic href="html/Components/transform/Normalize_Properties.html#schema" label="Schema"/>
 	    <topic href="html/Components/transform/Normalize_Properties.html#validations" label="Validations"/>
 	</topic>
-	 <topic href="html/Components/Normalize_Operation_Editor.html" label="Operation Editor">
+	 <topic href="html/Components/transform/Normalize_Operation_Editor.html" label="Operation Editor">
 	    <topic href="html/Components/transform/Normalize_Operation_Editor.html#input_fields_grid" label="Input Fields Grid"/>
 	    <topic href="html/Components/transform/Normalize_Operation_Editor.html#operation_window" label="Operation Window"/>
 	    <topic href="html/Components/transform/Normalize_Operation_Editor.html#map_fields_grid" label="Map Fields Grid"/>
 	    <topic href="html/Components/transform/Normalize_Operation_Editor.html#output_fields_grid" label="Output Fields Grid"/>
 	 </topic>
-	 <topic href="html/Components/Normalize_Operation_Class_Window.html" label="Operation Class Window">
+	 <topic href="html/Components/transform/Normalize_Operation_Class_Window.html" label="Operation Class Window">
 	    <topic href="html/Components/transform/Normalize_Operation_Class_Window.html#in-built-operation-class" label="In built operation class"/>
 	    <topic href="html/Components/transform/Normalize_Operation_Class_Window.html#custom-operation-class" label="Custom built operation class"/>
 	    <topic href="html/Components/transform/Normalize_Operation_Class_Window.html#Operation_Properties_Grid" label="Operation Properties Grid"/>
 	 </topic>
+  <topic href="html/Components/transform/Externalizing_Transformations_Normalize.html" label="Externalizing Transformations">
+  </topic>
 </toc>

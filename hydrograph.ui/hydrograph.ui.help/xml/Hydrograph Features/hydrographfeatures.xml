@@ -46,4 +46,7 @@
     <topic href="html/Hydrograph Features/Schema_Propagation.html" label="Schema Propagation">
        <link toc="Schema Propagation"/>
     </topic>
+    <topic href="html/Hydrograph Features/Update_Schema.html" label="Update Schema">
+       <link toc="Update Schema"/>
+    </topic>
 </toc>

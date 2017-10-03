@@ -37,4 +37,6 @@
 	    <topic href="html/Operation Base Interface/Cumulate/StringAppend.html" label="StringAppend"/>
 	    <topic href="html/Operation Base Interface/Cumulate/Sum.html" label="Sum"/>
  	 </topic>
+  <topic href="html/Components/transform/Externalizing_Transformations_Cumulate.html" label="Externalizing Transformations">
+  </topic>
 </toc>

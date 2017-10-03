@@ -26,4 +26,6 @@
 	    <topic href="html/Components/transform/Filter_Operation_Window.html#using-existing-java-class" label="Using Existing Java Class"/>
 	 </topic>
 	 <topic href="html/Components/transform/Expression_Editor_window.html" label="Expression Editor"/>
+  <topic href="html/Components/transform/Externalizing_Transformations_Filter.html" label="Externalizing Transformations">
+  </topic>
 </toc>
