@@ -50,6 +50,12 @@ import hydrograph.ui.propertywindow.widgets.listeners.ListenerHelper;
 import hydrograph.ui.propertywindow.widgets.listeners.ListenerHelper.HelperType;
 import hydrograph.ui.propertywindow.widgets.utility.WidgetUtility;
 
+/**
+ * Represents composite for transform's expression composite.
+ * 
+ * @author Bitwise
+ *
+ */
 public class TransformExpressionComposite extends AbstractExpressionComposite {
 
   public TransformExpressionComposite(Composite parent, int style, final MappingSheetRow mappingSheetRow,
@@ -284,6 +290,12 @@ public class TransformExpressionComposite extends AbstractExpressionComposite {
 	protected void checkSubclass() {
 	}
 
+	/**
+	 * initialize list of grid row object of next component.
+	 * 
+	 * @param component- whose connected component's schema needs to return 
+	 * @return schema of next connected component
+	 */
 	public static List<FixedWidthGridRow> getInputSchema(Component component) {
 		List<FixedWidthGridRow> fixedWidthGridRows = new ArrayList<>();
 		for (Link link : component.getTargetConnections()) {
@@ -296,6 +308,11 @@ public class TransformExpressionComposite extends AbstractExpressionComposite {
 		return fixedWidthGridRows;
 	}
 
+	/**
+	 * initialize list of grid row object of current component.
+	 * @param component
+	 * @return grid row object list.
+	 */
 	public static List<GridRow> getInputSchemaOfCurrentComponent(Component component) {
 		List<GridRow>  schemaFields=new ArrayList<>();
 		Schema schema=(Schema) component.getProperties().get(Constants.SCHEMA);

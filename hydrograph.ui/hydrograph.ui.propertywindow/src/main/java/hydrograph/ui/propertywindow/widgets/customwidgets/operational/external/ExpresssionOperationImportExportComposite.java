@@ -30,14 +30,12 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.slf4j.Logger;
 
 import hydrograph.ui.common.property.util.Utils;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.common.util.CustomColorRegistry;
 import hydrograph.ui.common.util.OSValidator;
 import hydrograph.ui.datastructure.property.mapping.ExternalWidgetData;
-import hydrograph.ui.logging.factory.LogFactory;
 import hydrograph.ui.propertywindow.widgets.customwidgets.schema.ELTSchemaGridWidget;
 import hydrograph.ui.propertywindow.widgets.utility.FilterOperationClassUtility;
 import hydrograph.ui.propertywindow.widgets.utility.WidgetUtility;
@@ -58,7 +56,6 @@ public abstract class ExpresssionOperationImportExportComposite  extends Composi
 	private ControlDecoration decorator;
 	private ExternalWidgetData externalWidgetData;
 	private Cursor cursor;
-	private static Logger LOGGER = LogFactory.INSTANCE.getLogger(ExpresssionOperationImportExportComposite.class);
 
 	public ExpresssionOperationImportExportComposite(Composite parent, int style,ImportExportType type, ExternalWidgetData externalWidgetData) {
 		super(parent, style);

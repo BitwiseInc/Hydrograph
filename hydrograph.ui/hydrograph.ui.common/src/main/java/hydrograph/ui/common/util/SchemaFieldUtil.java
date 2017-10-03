@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *******************************************************************************/
+
 package hydrograph.ui.common.util;
 
 import java.math.BigDecimal;
@@ -8,10 +21,22 @@ import hydrograph.ui.common.message.Messages;
 import hydrograph.ui.common.schema.Field;
 import hydrograph.ui.datastructure.property.BasicSchemaGridRow;
 
+/**
+ * This is the helper class for schema field.
+ * 
+ * @author Bitwise
+ *
+ */
 public class SchemaFieldUtil {
 
 	public static final SchemaFieldUtil INSTANCE = new SchemaFieldUtil();
 
+	/**
+	 * gets the data type for integer value 
+	 * 
+	 * @param value
+	 * @return Integer wrapper class object.
+	 */
 	public Integer getDataTypeByValue(String value) {
 		int i;
 		String schemaList = Messages.DATATYPELIST;
@@ -24,6 +49,12 @@ public class SchemaFieldUtil {
 		return 0;
 	}
 
+	/**
+	 * gets the data type for scale type  value 
+	 * 
+	 * @param value
+	 * @return Integer wrapper class object
+	 */
 	public Integer getScaleTypeByValue(String value) {
 		int i;
 		String schemaList = Messages.SCALETYPELIST;
@@ -36,6 +67,12 @@ public class SchemaFieldUtil {
 		return 0;
 	}
 
+	/**
+	 * convert the jaxbField into basicSchemaGridRow object.
+	 * 
+	 * @param jaxbField
+	 * @return basicSchemaGridRow object
+	 */
 	public BasicSchemaGridRow getBasicSchemaGridRow(Field jaxbField) {
 		BasicSchemaGridRow gridRow = null;
 		if (jaxbField != null) {

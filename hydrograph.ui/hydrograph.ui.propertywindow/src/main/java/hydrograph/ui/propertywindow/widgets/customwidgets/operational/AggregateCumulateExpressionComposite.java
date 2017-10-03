@@ -37,7 +37,6 @@ import org.eclipse.swt.widgets.Text;
 
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.common.util.CustomColorRegistry;
-import hydrograph.ui.common.util.ExternalOperationExpressionUtil;
 import hydrograph.ui.common.util.ImagePathConstant;
 import hydrograph.ui.common.util.OSValidator;
 import hydrograph.ui.datastructure.expression.ExpressionEditorData;
@@ -52,8 +51,6 @@ import hydrograph.ui.graph.schema.propagation.SchemaPropagation;
 import hydrograph.ui.propertywindow.messages.Messages;
 import hydrograph.ui.propertywindow.widgets.customwidgets.config.OperationClassConfig;
 import hydrograph.ui.propertywindow.widgets.customwidgets.config.WidgetConfig;
-import hydrograph.ui.propertywindow.widgets.customwidgets.operational.external.ExpresssionOperationImportExportComposite;
-import hydrograph.ui.propertywindow.widgets.customwidgets.operational.external.ImportExportType;
 import hydrograph.ui.propertywindow.widgets.listeners.ELTVerifyTextListener;
 import hydrograph.ui.propertywindow.widgets.listeners.ListenerHelper;
 import hydrograph.ui.propertywindow.widgets.listeners.ListenerHelper.HelperType;
@@ -68,8 +65,6 @@ import hydrograph.ui.propertywindow.widgets.utility.WidgetUtility;
 public class AggregateCumulateExpressionComposite extends AbstractExpressionComposite {
 
 	private Label lblNewLabel_2;
-	private Label lblNewLabel_3;
-	private Label lblNewLabel_4;
 
 	public AggregateCumulateExpressionComposite(Composite parent, int style, final MappingSheetRow mappingSheetRow,
 			final Component component, WidgetConfig widgetConfig) {
@@ -158,7 +153,7 @@ public class AggregateCumulateExpressionComposite extends AbstractExpressionComp
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 
-		lblNewLabel_3 = new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
@@ -177,7 +172,7 @@ public class AggregateCumulateExpressionComposite extends AbstractExpressionComp
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 
-		lblNewLabel_4 = new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);

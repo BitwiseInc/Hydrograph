@@ -135,7 +135,6 @@ public class SchemaPropagation {
 		}
 		setSchemaMapOfComponent(destinationComponent, componentsOutputSchema);
 		if (destinationComponent != null && destinationComponent.getSourceConnections().isEmpty()) {
-//			mainLinkList.clear();
 			return;
 		}
 		if (!StringUtils.equals(Constants.SUBJOB_COMPONENT_CATEGORY, destinationComponent.getCategory())
@@ -173,16 +172,6 @@ public class SchemaPropagation {
 		}
 	}
 	
-	
-	private ComponentsOutputSchema getComponentsOutputSchemaFromMap(Component destinationComponent,
-			Link link, ComponentsOutputSchema componentsOutputSchema) {
-		Map<String , ComponentsOutputSchema> schemaMap=(Map<String, ComponentsOutputSchema>) destinationComponent.getProperties().get(Constants.SCHEMA_TO_PROPAGATE);
-		if(isInputSubJobComponent(destinationComponent) && schemaMap!=null){
-			componentsOutputSchema = schemaMap.get(link.getSourceTerminal());	
-		}
-		return componentsOutputSchema ;
-	}
-
 	private boolean isInputSubJobComponent(Component component) {
 		if (StringUtils.equals(Constants.INPUT_SUBJOB, component.getComponentName()))
 			return true;
@@ -225,12 +214,6 @@ public class SchemaPropagation {
 			propagateSchemaFromOutputSubjobComponent(subJobComponent, outPutTargetTerminal, componentsOutputSchema, isRefreshExternalSchema);
 
 		}
-	}
-
-	private boolean isOutputSubjobComponent(Component subJobComponent) {
-		if (StringUtils.equals(Constants.OUTPUT_SUBJOB, subJobComponent.getComponentName()))
-			return true;
-		return false;
 	}
 
 	private void propagateSchemForUniqueSequenceComponent(Component component,
@@ -378,12 +361,25 @@ public class SchemaPropagation {
 		return false;
 	}
 
+	/**
+	 * map unused socket to its input port.
+	 * 
+	 * @param unusedSocketId
+	 * @return id of in socket for unused port
+	 */ 
 	public String getInSocketForUnusedSocket(String unusedSocketId) {
 		String unusedPortNo = unusedSocketId.substring(6);
 		String inSocket = Constants.INPUT_SOCKET_TYPE + unusedPortNo;
 		return inSocket;
 	}
 
+	/**
+	 * 
+	 * check if source socket is unused.
+	 * 
+	 * @param link
+	 * @return
+	 */
 	public boolean checkUnusedSocketAsSourceTerminal(Link link) {
 		LOGGER.debug("Checking whether link is connected to unused port");
 		if (link.getSource().getPort(link.getSourceTerminal()) != null
@@ -505,6 +501,13 @@ public class SchemaPropagation {
 		return schemaGrid;
 	}
 	
+	/**
+	 * 
+	 * This method converts current fixed width object into mixed scheme grid.
+	 * 
+	 * @param fixedWidthGridRow
+	 * @return mixedSchemeGridRow
+	 */
 	public MixedSchemeGridRow convertFixedWidthSchemaToMixedSchemaGridRow(
 			FixedWidthGridRow fixedWidthGridRow) {
 		MixedSchemeGridRow mixedSchemeGridRow=new MixedSchemeGridRow();
@@ -522,6 +525,14 @@ public class SchemaPropagation {
 	return mixedSchemeGridRow;
 	}
 	
+	/**
+	 *
+	 *convert fixedWidthGridRowsOutputFields to list of grid row object.
+	 * 
+	 * @param gridRow
+	 * @param fixedWidthGridRowsOutputFields
+	 * @return list of grid row object.
+	 */
 	public List<GridRow> getSchemaGridOutputFields(GridRow gridRow,List<FixedWidthGridRow> fixedWidthGridRowsOutputFields) {
 		List<GridRow> schemaGrid = new ArrayList<>();
 		
