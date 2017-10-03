@@ -148,8 +148,8 @@ public class ExternalSchemaUpdaterHandler extends AbstractHandler {
 										.initiateSchemaPropagationAfterImport(subJobContainer, true);
 							}
 							
-						} catch (CoreException e) {
-							LOGGER.error("Error while converting job file to container.");
+						} catch (CoreException exception) {
+							LOGGER.error("Error while converting job file to container.",exception);
 						}
 					}
 

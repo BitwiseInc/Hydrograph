@@ -1277,7 +1277,7 @@ public abstract class ELTSchemaGridWidget extends AbstractWidget {
 				 if(!new File(schemaPath).isAbsolute()){
 					if(showErrorMessage){
 					 Status status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, 
-							 "Existing job is not saved. In order to use relative path save the job", null);
+							 Messages.EXISTING_JOB_IS_NOT_SAVED_STATUS, null);
 					 StatusManager.getManager().handle(status, StatusManager.BLOCK);
 					 }
 					 return schemaFile;

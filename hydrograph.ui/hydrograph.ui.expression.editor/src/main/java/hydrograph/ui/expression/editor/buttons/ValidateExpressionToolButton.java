@@ -105,7 +105,7 @@ public class ValidateExpressionToolButton extends Button {
 	public static DiagnosticCollector<JavaFileObject> compileExpresion(String expressionStyledText,Map<String, Class<?>> fieldMap,String componentName)
 			throws JavaModelException, InvocationTargetException, ClassNotFoundException, MalformedURLException,IllegalAccessException, IllegalArgumentException {
 		LOGGER.debug("Compiling expression using Java-Compiler");
-		String expressiontext=getExpressionText(expressionStyledText);
+		String expressiontext=getExpressionText(expressionStyledText);				
 		DiagnosticCollector<JavaFileObject> diagnostics = null;
 		Object[] returObj=getBuildPathForMethodInvocation() ;
 		List<URL> urlList=(List<URL>) returObj[0];

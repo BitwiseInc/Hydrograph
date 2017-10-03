@@ -479,6 +479,8 @@ public class Messages extends NLS {
 	public static String REMAINING_FIELDS_TOOLTIP;
 	public static String HEADER_FORMAT_TOOLTIP;
 	public static String DATA_FORMAT_TOOLTIP;
+
+	public static String EXISTING_JOB_IS_NOT_SAVED_STATUS;
 	
 	static {
 		// initialize resource bundle

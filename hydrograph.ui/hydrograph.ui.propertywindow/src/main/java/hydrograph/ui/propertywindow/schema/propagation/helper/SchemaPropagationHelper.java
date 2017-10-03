@@ -44,6 +44,12 @@ public class SchemaPropagationHelper {
 		
 	}
 	
+	/**
+	 * Returns field-map from propagated schema
+	 * 
+	 * @param component
+	 * @return
+	 */
 	public Map<String, List<String>> getFieldsForFilterWidget(Component component) {
 		Map<String, List<String>> propagatedFiledMap = new HashMap<String, List<String>>();
 		List<String> genratedProperty = null;
@@ -60,6 +66,12 @@ public class SchemaPropagationHelper {
 		return propagatedFiledMap;
 	}
 
+	/**
+	 * Sort fields on bases of its source output-port
+	 * 
+	 * @param component
+	 * @return
+	 */
 	public List<List<FilterProperties>> sortedFiledNamesBySocketId(Component component) {
 		int inputPortCount = 2;
 		List<List<FilterProperties>> listofFiledNameList = new ArrayList<>();
