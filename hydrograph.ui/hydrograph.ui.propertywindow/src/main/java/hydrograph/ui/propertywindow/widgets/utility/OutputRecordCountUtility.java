@@ -557,14 +557,31 @@ public class OutputRecordCountUtility {
 			}
 		
 	     }
-		updatePassThroughField(transformMapping,component);
-		SchemaSyncUtility.INSTANCE.unionFilter(transformMapping.getOutputFieldList(),outputList);	
+		updatePassThroughFieldAndOutputFields(transformMapping,component, transformMapping.getOutputFieldList());
+		SchemaSyncUtility.INSTANCE.unionFilter(transformMapping.getOutputFieldList(),outputList);
 		propagateOuputFieldsToSchemaTabFromTransformWidget(transformMapping, schema, component, outputList);
+		updateComponentOutputSchemaAndSchema(component, schema);
 	   
 	}
 	
+	private void updateComponentOutputSchemaAndSchema(Component component, Schema schema) {
+		
+		Map<String, ComponentsOutputSchema> schemaMap = (Map<String, ComponentsOutputSchema>) component.getProperties()
+				.get(Constants.SCHEMA_TO_PROPAGATE);
+		if (schemaMap != null && schemaMap.get(Constants.FIXED_OUTSOCKET_ID) != null) {
+			ComponentsOutputSchema componentsOutputSchema = schemaMap.get(Constants.FIXED_OUTSOCKET_ID);
+			componentsOutputSchema.setFixedWidthGridRowsOutputFields(new ArrayList<>());
+			List<GridRow> gridRows = schema.getGridRow();
+			for (GridRow gridRow : gridRows) {
+				componentsOutputSchema.addSchemaFields(gridRow);
+			}
+		}
+		
+		component.getProperties().put(Constants.SCHEMA, schema);
+	}
+	
 	// Removed pass through field according to new input.
-	private void updatePassThroughField(TransformMapping transformMapping, Component component) {
+	private void updatePassThroughFieldAndOutputFields(TransformMapping transformMapping, Component component, List<FilterProperties> outputLists) {
 
 		List<NameValueProperty> mapAndPassthroughFields = transformMapping.getMapAndPassthroughField();
 		Iterator<NameValueProperty> iterator = mapAndPassthroughFields.iterator();
@@ -572,6 +589,7 @@ public class OutputRecordCountUtility {
 			NameValueProperty nameValueProperty = iterator.next();
 			if (isPassThroughField(nameValueProperty) && !isPassThroughFieldPresentInInput(transformMapping, nameValueProperty)) {
 				iterator.remove();
+				outputLists.remove(nameValueProperty.getFilterProperty());
 			}
 		}
 
