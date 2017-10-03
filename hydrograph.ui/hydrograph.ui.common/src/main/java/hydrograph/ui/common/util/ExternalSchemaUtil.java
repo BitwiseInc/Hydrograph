@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *******************************************************************************/
+
 package hydrograph.ui.common.util;
 
 import java.math.BigInteger;
@@ -16,10 +29,23 @@ import hydrograph.ui.datastructure.property.GridRow;
 import hydrograph.ui.datastructure.property.MixedSchemeGridRow;
 import hydrograph.ui.datastructure.property.XPathGridRow;
 
+/**
+ * Utility class for schema fields
+ *	
+ * Bitwise
+ * 
+ */
 public class ExternalSchemaUtil {
 
 	public static final ExternalSchemaUtil INSTANCE=new ExternalSchemaUtil();
 	
+	
+	/**
+	 * Converts UI grid-row object to its equivalent Jaxb Object
+	 * 
+	 * @param gridRow
+	 * @return
+	 */
 	public Field convertGridRowToJaxbSchemaField(GridRow gridRow) {
 		Field field = new Field();
 		if (StringUtils.indexOf(gridRow.getFieldName(), "}") - StringUtils.indexOf(gridRow.getFieldName(), "@{") >= 3) {
@@ -90,6 +116,12 @@ public class ExternalSchemaUtil {
 	}
 
 	
+	/**
+	 * Creates an object of FixedWidthGridRow from field-name
+	 * 
+	 * @param fieldName
+	 * @return
+	 */
 	public FixedWidthGridRow createFixedWidthGridRow(String fieldName) {
 
 		FixedWidthGridRow fixedWidthGridRow = null;
@@ -110,6 +142,12 @@ public class ExternalSchemaUtil {
 	}
 
 
+	/**
+	 * Creates an object of BasicSchemaGridRow from field-name
+	 * 
+	 * @param fieldName
+	 * @return
+	 */
 	public BasicSchemaGridRow createSchemaGridRow(String fieldName) {
 
 		BasicSchemaGridRow	 schemaGrid = null;

@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *******************************************************************************/
+
 package hydrograph.ui.common.util;
 
 import java.io.File;
@@ -59,6 +72,12 @@ import hydrograph.ui.external.operation.ExternalOperations;
 import hydrograph.ui.external.operation.Operation;
 import hydrograph.ui.logging.factory.LogFactory;
 
+/**
+ * Utility class for external operation, expression, mapping-fields
+ * 
+ * @author Bitwise
+ *
+ */
 public class ExternalOperationExpressionUtil {
 
 	private static final String VALUE = "*";
@@ -73,6 +92,14 @@ public class ExternalOperationExpressionUtil {
 	private static Logger LOGGER = LogFactory.INSTANCE.getLogger(ExternalOperationExpressionUtil.class);
 
 	
+	/**
+	 * Validates UI-Expression data with its external file
+	 * 
+	 * @param mappingSheetRow
+	 * @param file
+	 * @return
+	 * @throws RuntimeException
+	 */
 	public boolean validateUIExpressionWithExternalFile(MappingSheetRow mappingSheetRow, File file) throws RuntimeException {
 		if (mappingSheetRow != null && mappingSheetRow.isActive()
 				&& mappingSheetRow.getExternalExpresion().isExternal()) {
@@ -87,6 +114,14 @@ public class ExternalOperationExpressionUtil {
 		return false;
 	}
 	
+	/**
+	 * Validates UI-Operation data with its external file
+	 * 
+	 * @param mappingSheetRow
+	 * @param file
+	 * @return
+	 * @throws RuntimeException
+	 */
 	public boolean validateUIOperationWithExternalFile(MappingSheetRow mappingSheetRow, File file) throws RuntimeException {
 		if (mappingSheetRow != null && mappingSheetRow.isActive() && !mappingSheetRow.isExpression()
 				&& mappingSheetRow.getExternalOperation().isExternal()) {
@@ -101,6 +136,14 @@ public class ExternalOperationExpressionUtil {
 		return false;
 	}
 	
+	/**
+	 * Validates UI-mapping data with its external file
+	 * 
+	 * @param transformMapping
+	 * @param file
+	 * @return
+	 * @throws RuntimeException
+	 */
 	public boolean validateUIMappingFieldsWithExternalFile(TransformMapping transformMapping, File file) throws RuntimeException {
 		ExternalWidgetData externalOutputFieldsData = transformMapping.getExternalOutputFieldsData();
 		if (externalOutputFieldsData != null && externalOutputFieldsData.isExternal()) {
@@ -116,6 +159,17 @@ public class ExternalOperationExpressionUtil {
 	}
 	
 	
+	/**
+	 * Imports UI-operation data from external operation file
+	 * 
+	 * @param file
+	 * @param mappingSheetRow
+	 * @param showErrorMessage
+	 * @param transformMapping
+	 * @param componentName
+	 * @return
+	 * @throws ExternalTransformException
+	 */
 	public MappingSheetRow importOperation(File file, MappingSheetRow mappingSheetRow ,boolean showErrorMessage,
 			TransformMapping transformMapping, String componentName) throws ExternalTransformException {
 		if (file!=null) {
@@ -135,6 +189,16 @@ public class ExternalOperationExpressionUtil {
 		return mappingSheetRow;
 	}
 	
+	/**
+	 * Imports UI-expression data from external file
+	 * 
+	 * @param file
+	 * @param mappingSheetRow
+	 * @param showErrorMessage
+	 * @param transformMapping
+	 * @param componentName
+	 * @return
+	 */
 	public MappingSheetRow importExpression(File file, MappingSheetRow mappingSheetRow, boolean showErrorMessage,
 			TransformMapping transformMapping, String componentName) {
 		if (file!=null) {
@@ -154,6 +218,15 @@ public class ExternalOperationExpressionUtil {
 		return mappingSheetRow;
 	}
 	
+	/**
+	 * Imports UI-mapping data from external file
+	 * 
+	 * @param file
+	 * @param transformMapping
+	 * @param showErrorMessage
+	 * @param componentName
+	 * @throws ExternalTransformException
+	 */
 	public void importOutputFields(File file, TransformMapping transformMapping ,boolean showErrorMessage, String componentName) throws ExternalTransformException {
 		if (file!=null && isconfirmedFromUser()) {
 			try (FileInputStream fileInputStream=new FileInputStream(file)){
@@ -214,6 +287,15 @@ public class ExternalOperationExpressionUtil {
 		}
 	}
 	
+	/**
+	 * Exports UI-operation data to external file
+	 * 
+	 * @param file
+	 * @param mappingSheetRow
+	 * @param showErrorMessage
+	 * @param list
+	 * @throws ExternalTransformException
+	 */
 	public void exportOperation(File file, MappingSheetRow mappingSheetRow ,boolean showErrorMessage,List<GridRow> list) throws ExternalTransformException {
 		if (file!=null) {
 			try{
@@ -231,6 +313,15 @@ public class ExternalOperationExpressionUtil {
 	}
 	
 
+	/**
+	 * Exports UI-mapping data to external file
+	 * 
+	 * @param file
+	 * @param transformMapping
+	 * @param showErrorMessage
+	 * @param componentName
+	 * @throws ExternalTransformException
+	 */
 	public void exportOutputFields(File file, TransformMapping transformMapping ,boolean showErrorMessage,String componentName) throws ExternalTransformException {
 		if (file!=null) {
 			try{
@@ -263,6 +354,12 @@ public class ExternalOperationExpressionUtil {
 		return externalOperations;
 	}
 	
+	/**
+	 * Converts ui-property list data to Jaxb Properties
+	 * 
+	 * @param nameValueProperties
+	 * @return
+	 */
 	public Properties getOperationProperties(List<NameValueProperty> nameValueProperties) {
 		Properties properties=new Properties();
 		nameValueProperties.forEach(uiProperty->{
@@ -482,7 +579,7 @@ public class ExternalOperationExpressionUtil {
 			}
 	
 	
-	public MappingSheetRow getOperationOrExpression(String operationId, TransformMapping transformMapping,
+	private MappingSheetRow getOperationOrExpression(String operationId, TransformMapping transformMapping,
 			boolean isExpression, String componentName) {
 		for (MappingSheetRow operationOrExpression : transformMapping.getMappingSheetRows()) {
 			if (StringUtils.equalsIgnoreCase(operationId, operationOrExpression.getOperationID())) {
@@ -658,6 +755,17 @@ public class ExternalOperationExpressionUtil {
 		}
 	}
 
+	/**
+	 *Converts xml-stream into its equivalent jaxb object
+	 * 
+	 * @param xmlInputStream
+	 * @param type
+	 * @return
+	 * @throws ParserConfigurationException
+	 * @throws SAXException
+	 * @throws IOException
+	 * @throws JAXBException
+	 */
 	public Object unmarshal(InputStream xmlInputStream, Class<?> type)
 			throws ParserConfigurationException, SAXException, IOException, JAXBException {
 			DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
@@ -672,20 +780,4 @@ public class ExternalOperationExpressionUtil {
 	}
 	
 	
-	private boolean validateXML(InputStream xml, InputStream xsd){
-		try
-		{
-			SchemaFactory factory = 
-					SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-			javax.xml.validation.Schema schema = factory.newSchema(new StreamSource(xsd));
-			Validator validator = schema.newValidator();
-			validator.validate(new StreamSource(xml));
-			return true;
-		}
-		catch( SAXException| IOException ex){
-		
-			throw new RuntimeException("Invalid XML File");
-		}
-	}
-
 }
