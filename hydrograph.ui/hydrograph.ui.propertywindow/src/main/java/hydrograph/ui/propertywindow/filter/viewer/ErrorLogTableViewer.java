@@ -1,8 +1,6 @@
 package hydrograph.ui.propertywindow.filter.viewer;
 
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.eclipse.jface.viewers.ColumnLabelProvider;
@@ -91,7 +89,6 @@ public class ErrorLogTableViewer extends TableViewer {
 			}
 		}
 		refresh();
-		errorLogColumn.pack();
 	}
 	
 	class ErrorLogsContentProvider implements IStructuredContentProvider {

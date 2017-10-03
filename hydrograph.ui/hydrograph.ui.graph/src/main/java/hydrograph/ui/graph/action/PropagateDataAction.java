@@ -25,6 +25,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.ui.IWorkbenchPart;
 
 import hydrograph.ui.common.util.Constants;
+import hydrograph.ui.datastructure.expression.ExpressionEditorData;
 import hydrograph.ui.datastructure.property.GridRow;
 import hydrograph.ui.datastructure.property.Schema;
 import hydrograph.ui.datastructure.property.mapping.TransformMapping;
@@ -177,6 +178,12 @@ public class PropagateDataAction extends SelectionAction {
 				TransformMapping transformMapping;
 				if(component.getProperties().get(Constants.OPERATION)==null){
 	        	  transformMapping=new TransformMapping();
+	        	  if(StringUtils.equalsIgnoreCase(component.getComponentName(),Constants.NORMALIZE))
+	        	  {
+	        			transformMapping.setExpression(true);
+	        			ExpressionEditorData expressionEditorData=new ExpressionEditorData("", "");
+	        			transformMapping.setExpressionEditorData(expressionEditorData);
+	        	  }
 	        	  component.getProperties().put(Constants.OPERATION, transformMapping);
 				}else{
 	        	  transformMapping=(TransformMapping)component.getProperties().get(Constants.OPERATION);
