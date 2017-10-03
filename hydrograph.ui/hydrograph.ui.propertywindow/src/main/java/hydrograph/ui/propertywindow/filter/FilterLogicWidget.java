@@ -72,7 +72,7 @@ public class FilterLogicWidget extends AbstractWidget {
 		ELTDefaultSubgroupComposite defaultSubgroupComposite = new ELTDefaultSubgroupComposite(
 				subGroup.getContainerControl());
 		defaultSubgroupComposite.createContainerWidget();
-		
+		dataStructure.setComponentName(getComponent().getComponentName());
 		AbstractELTWidget defaultLable = null;
 		if(StringUtils.equalsIgnoreCase(getComponent().getComponentName(), Constants.PARTITION_BY_EXPRESSION)){
 			defaultLable=new ELTDefaultLable("Partition Logic");

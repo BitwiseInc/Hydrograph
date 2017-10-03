@@ -84,7 +84,7 @@ public class PartitionByExpressionUiConverter extends TransformUiConverter {
 	}
 
 	private FilterLogicDataStructure getOperationClassOrExpression() {
-		FilterLogicDataStructure filterLogicDataStructure =new FilterLogicDataStructure(Constants.FILTER);
+		FilterLogicDataStructure filterLogicDataStructure =new FilterLogicDataStructure(uiComponent.getComponentName());
 		if(partitionByExpression.getOperationOrExpressionOrIncludeExternalOperation()!=null && !partitionByExpression.getOperationOrExpressionOrIncludeExternalOperation().isEmpty())
 		{
 			List<JAXBElement<?>> typeTransformOpertaionList = ((TypeOperationsComponent) partitionByExpression)
