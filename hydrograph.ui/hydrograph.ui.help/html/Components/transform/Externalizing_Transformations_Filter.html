@@ -1,0 +1,113 @@
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+
+<!doctype html>
+<html>
+<head>
+<title>Externalizing Transformations for Filter</title>
+<link rel="stylesheet" type="text/css" href="../../css/style.css">
+</head>
+<body>
+	<p>
+		<span class="header-1">Externalizing Transformations for Filter</span>
+	</p>
+
+	<p>
+		<span><b>Externalizing Transformations for Filter</b>&nbsp; feature enables user to externalize expression, class and output fields of <b>Operation Editor</b>. Its enhancing generalizing capabilities of all <b>Transform</b> components and providing options to user for generic job creation.</span>
+	</p>
+	
+	<p><span><b>Operation Editor</b> of transform component basically divided into four sections</span></p>
+	<p>
+		<ul>
+			<li><span>Input Fields</span></li>
+			<li><span>Operation Control</span></li>
+		</ul>
+	</p>
+	
+	<p class="center"><img alt="Fig 1" src="../../images/Externalize_Filter_Expression_Editor.png" /></p>
+	
+	<p><span class="header-2">Input Fields</span></p>
+	<p>
+		<ul>
+			<li><span>Input Fields container displays all available input fields for further processing.</span></li>
+			<li><span>These are the output fields of immediate left component/data flow.</span></li>
+		</ul>
+	</p>
+	
+	<p><span class="header-2">Operation Control</span></p>
+	<p>
+		<ul>
+			<li><span><b>Operation Control</b> provides two options (i.e. Expression and Class) for data transformation.</span></li>
+			<li><span>Operation Control provides an option to set operation class/expression internally or externally.</span></li>
+		</ul>
+	</p>
+	
+	<p><span><b>Expression:</b></span></p>
+	<p class="center"><img alt="Fig 2" src="../../images/Externalize_Filter_Expression_Editor.png" /></p>
+	<p>
+		<ul>
+			<li><span><b>Internal Expression:</b></span></li>
+				<ul><li>This feature allows user to enter expression details in Operation Control manually.</li></ul>
+			<li><span><b>External Expression:</b></span></li>
+			<ul>
+			<li><span>This feature allows user to use external XML file (i.e. transformation file) for data transformation.</span></li>
+			<li><span>User needs to select External Expression feature to opt for this option.</span></li>
+			<li><span>Once selected it will enables the <b>External Path</b> property of Operation Control.</span></li>
+			<li><span><b>External Path</b>: It allows user to locate the external transformation file from filesystem.</span></li>
+			<li><span>Its recommended to store all external transformations files under <b>externalTransformFiles</b> directory of Hydrograph project.</span></li>
+			<li><span>It provides Import Expression and Export Expression buttons to import or export expression from external file.</span></li>
+			<li><span><b>Import Expression</b>: This option allows user to import the expression from selected external file into Operation Control section. Once imported it will automatically populates all required details i.e. input fields, output fields, expression id and expression details into Operation Control section of Operation Editor from external file.</span></li>
+			<li><span><b>Export Expression</b>: This option enables user to export the expression details from Operation Control panel into selected external file. </span></li>
+			</ul>
+		</ul>
+	</p>
+	<p class="center"><img alt="Fig 3" src="../../images/Externalize_PartitionByExpression_Expression_Example.png" /></p>
+	
+	<p><span><b>Class:</b></span></p>
+	<p class="center"><img alt="Fig 4" src="../../images/Externalize_Filter_Operation_Editor.png" /></p>
+	<p>
+		<ul>
+			<li><span><b>Internal Operation:</b></span></li>
+				<ul><li>This feature allows user to enter operation class details into Operation Control manually.</li></ul>
+			<li><span><b>External Operation:</b></span></li>
+			<ul>
+			<li><span>This feature allows user to use external XML file (i.e. transformation file) for data transformation.</span></li>
+			<li><span>User needs to select <b>External Operation</b> feature to opt for this option.</span></li>
+			<li><span>Once selected it will enables the <b>External Path</b> property of Operation Control.</span></li>
+			<li><span><b>External Path</b>: It allows user to locate the external transformation file from filesystem.</span></li>
+			<li><span>Its recommended to store all external transformations files under <b>externalTransformFiles</b> directory of Hydrograph project.</span></li>
+			<li><span>It provides Import Expression and Export Expression buttons to import or export operation from external file.</span></li>
+			<li><span><b>Import Expression</b>: This option allows user to import the operation from selected external file into Operation Control section. Once imported it will automatically populates all required details i.e. input fields, output fields, operation id and operation details into Operation Control section of Operation Editor from external file.</span></li>
+			<li><span><b>Export Expression</b>: This option enables user to export the operation details from Operation Control panel into selected external file. </span></li>
+			</ul>
+		</ul>
+	</p>
+	
+	<p class="center"><img alt="Fig 5" src="../../images/Externalize_PartitionByExpression_Operation_Example.png" /></p>
+	
+	<p><span><b>Import and Export Schema:</b></span></p>
+	<p>
+		<ul>
+			<li><span><b>Transform Components</b> allows user to <b>Import</b> and <b>Export Schema</b> using external file.</span></li>
+			<li><span><b>Import Schema:</b></span></li>
+				<ul>
+				<li><span>Import Schema feature provides an option to import the schema details from external file.</span></li>
+				<li><span>Once selected it will open window to locate the external schema file from filesystem.</span></li>
+				</ul>
+			<li><span><b>Export Schema:</b></span></li>
+				<ul>
+				<li><span>Export Scheme feature allows user to export the schema details into external file.</span></li>
+				</ul>
+		</ul>
+	</p>
+	
+</body>
+</html>
