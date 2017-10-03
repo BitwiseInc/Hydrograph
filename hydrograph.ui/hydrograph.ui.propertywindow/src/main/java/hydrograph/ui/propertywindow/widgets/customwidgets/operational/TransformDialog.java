@@ -120,7 +120,6 @@ import hydrograph.ui.validators.utils.ValidatorUtility;
 public class TransformDialog extends Dialog implements IOperationClassDialog {
 
 	private static final String EXITING_TRANSFORM_EDITOR = "Exiting Transform Editor";
-	private static final String PLEASE_SELECT_PARAMETER_FIELD_S_ONLY = "Please select Parameter field(s) only";
 	private static final String OUTPUT_DELETE_BUTTON = "outputDeleteButton";
 	private static final String OUTPUT_ADD_BUTTON = "outputAddButton";
 	private static final String OPERATION_OUTPUT_FIELD_TABLE_VIEWER = "operationOutputFieldTableViewer";
@@ -173,13 +172,8 @@ public class TransformDialog extends Dialog implements IOperationClassDialog {
 	private ControlDecoration fieldNameDecorator;
 	private SashForm mainSashForm;
 	private SashForm middleSashForm;
-	private Integer windowButtonWidth = 30;
-	private Integer windowButtonHeight = 25;
-	private Integer macButtonWidth = 40;
-	private Integer macButtonHeight = 30;
 	private List<FilterProperties> finalSortedList;
 	private Set<Integer> outputFieldIndices = new LinkedHashSet<Integer>();
-	private Shell parentShell;
 	private Button deleteLabel;
 	private Button addLabel;
 	private Button viewTransform;
@@ -201,7 +195,6 @@ public class TransformDialog extends Dialog implements IOperationClassDialog {
 		isNoButtonPressed = false;
 		this.component = component;
 		this.widgetConfig = widgetConfig;
-		this.parentShell = parentShell;
 		this.transformDialog = this;
 		temporaryOutputFieldMap=new HashMap<String,List<FilterProperties>>();
 		errorLabelList=new ArrayList<>();
@@ -356,17 +349,6 @@ public class TransformDialog extends Dialog implements IOperationClassDialog {
 		container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 	}
 	
-	private void addNewRowForOutputField() {
-		FilterProperties filterproperties = new FilterProperties();
-		filterproperties.setPropertyname("");
-		transformMapping.getOutputFieldList().add(filterproperties);
-		((List<FilterProperties>)outputFieldViewer.getInput()).add(filterproperties);
-		outputFieldViewer.refresh();
-		int i = ((List<FilterProperties>)outputFieldViewer.getInput()).size() == 0 ? ((List<FilterProperties>)outputFieldViewer.getInput()).size()
-				:((List<FilterProperties>)outputFieldViewer.getInput()).size() - 1;
-		outputFieldViewer.editElement(outputFieldViewer.getElementAt(i), 0);
-	}
-   
 	private void addListenerForRowHighlighting(
 			AbstractExpressionComposite expressionComposite ) 
 	{

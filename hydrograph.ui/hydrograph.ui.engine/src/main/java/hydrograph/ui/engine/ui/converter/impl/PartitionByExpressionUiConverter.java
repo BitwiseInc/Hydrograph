@@ -40,9 +40,7 @@ import hydrograph.ui.common.datastructure.filter.FilterLogicDataStructure;
 import hydrograph.ui.common.datastructure.filter.OperationClassData;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.common.util.FilterLogicExternalOperationExpressionUtil;
-import hydrograph.ui.common.util.ParameterUtil;
 import hydrograph.ui.datastructure.expression.ExpressionEditorData;
-import hydrograph.ui.datastructure.property.OperationClassProperty;
 import hydrograph.ui.engine.constants.PropertyNameConstants;
 import hydrograph.ui.engine.ui.constants.UIComponentsConstants;
 import hydrograph.ui.engine.ui.converter.TransformUiConverter;
@@ -127,6 +125,12 @@ public class PartitionByExpressionUiConverter extends TransformUiConverter {
 		return filterLogicDataStructure;
 	}
 
+	/**
+	 * initialize ui object from external file data.
+	 * 
+	 * @param filterLogicDataStructure
+	 * @param typeTransformOpertaionList
+	 */
 	public void populateUIDataFromExternalData(FilterLogicDataStructure filterLogicDataStructure,
 			List<JAXBElement<?>> typeTransformOpertaionList) {
 		TypeExternalSchema typeExternalSchema=(TypeExternalSchema) partitionByExpression

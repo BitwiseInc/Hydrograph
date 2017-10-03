@@ -199,7 +199,7 @@ public class ExternalSchemaUpdaterHandler extends AbstractHandler {
 		CanvasUtils.INSTANCE.fromObjectToXML(container, outStream);
 		try {
 			file.setContents(new ByteArrayInputStream(outStream.toByteArray()), true, false, null);
-			// TODO: Temp Fix if job already open need to reopen it to get
+			// Temp Fix if job already open need to reopen it to get
 			// updated data (use setInput).
 			if (closeEditorIfAlreadyOpen(file.getFullPath(), file.getName())) {
 				openJob(file);

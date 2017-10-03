@@ -117,6 +117,12 @@ public class FilterUiConverter extends TransformUiConverter{
 		return filterLogicDataStructure;
 	}
 
+	/**
+	 * initialize ui object from external file data.
+	 * 
+	 * @param filterLogicDataStructure
+	 * @param typeTransformOpertaionList
+	 */
 	public void populateUIDataFromExternalData(FilterLogicDataStructure filterLogicDataStructure,
 			List<JAXBElement<?>> typeTransformOpertaionList) {
 		TypeExternalSchema typeExternalSchema=(TypeExternalSchema) filter
