@@ -136,14 +136,15 @@ class ExcelOutputUtil(frame: DataFrame, outputFileExcelEntity: OutputFileExcelEn
 
   private val sheet: util.Map[String, Sheet] = new util.HashMap[String, Sheet]()
 
+val strippedLeadingQuoteDF=sortedDF.map(row=> Row.fromSeq(row.toSeq.toList.map(r=> if(r.isInstanceOf[String])r.toString.replaceAll("^\'","") else r)))
+
   var columnIdex: Int = 0
   if (outputFileExcelEntity.isColumnAsWorksheetName) {
     columnIdex = getColumnIndex(dataSchema.fieldNames, worksheetName)
-    sortedDF.foreach(element => {
-      set.add(element.get(columnIdex).toString)
+    strippedLeadingQuoteDF.foreach(element => {
+      set.add(/*if(outputFileExcelEntity.isStripLeadingQuote) element.get(columnIdex).toString.replaceAll("^\'","") else*/ element.get(columnIdex).toString)
     })
   } else sheet.put(worksheetName, workbook.createSheet(worksheetName))
-  private var columnAutoSizingFlag: Boolean = false
 
   set.asScala.toList.foreach(book => sheet.put(book.toString, workbook.createSheet(book.toString)))
 
@@ -218,9 +219,9 @@ class ExcelOutputUtil(frame: DataFrame, outputFileExcelEntity: OutputFileExcelEn
     val headerRow = Row(frame.schema.fieldNames)
     sheet.keySet().asScala.toList.foreach(e => write(sheet.get(e), headerRow))
     if (outputFileExcelEntity.isColumnAsWorksheetName)
-      sortedDF.foreach(row => write(sheet.get(row.get(columnIdex)), row))
+      strippedLeadingQuoteDF.foreach(row => write(sheet.get(row.get(columnIdex)), row))
     else
-      sortedDF.foreach(row => write(sheet.get(worksheetName), row))
+      strippedLeadingQuoteDF.foreach(row => write(sheet.get(worksheetName), row))
     if (outputFileExcelEntity.isAutoColumnSize) sheet.keySet().asScala.toList.foreach(e => setAutoSizeColumn(sheet.get(e)))
     if(outputStream == null){
       fs.close()
@@ -235,9 +236,8 @@ class ExcelOutputUtil(frame: DataFrame, outputFileExcelEntity: OutputFileExcelEn
 
   def write(sheet: Sheet, rowValue: Row): Unit = {
 
-    if ("XLSX".equalsIgnoreCase(fileExtension) && outputFileExcelEntity.isAutoColumnSize && (!columnAutoSizingFlag)) {
+    if ("XLSX".equalsIgnoreCase(fileExtension) && outputFileExcelEntity.isAutoColumnSize && !(sheet.asInstanceOf[SXSSFSheet].isColumnTrackedForAutoSizing(0))) {
       sheet.asInstanceOf[SXSSFSheet].trackAllColumnsForAutoSizing()
-      columnAutoSizingFlag = true
     }
 
     val currentRowPosition = sheet.getPhysicalNumberOfRows
@@ -256,9 +256,9 @@ class ExcelOutputUtil(frame: DataFrame, outputFileExcelEntity: OutputFileExcelEn
       cell.setCellType(cellTypes(i))
       if (dataCellFontStyle.get(dataSchema.fieldNames(i).toLowerCase()) != None && dataCellFontStyle.get(dataSchema.fieldNames(i).toLowerCase()) != null) if(dataCellStyleFormat.get(dataSchema.fieldNames(i).toLowerCase()) != None && dataCellStyleFormat.get(dataSchema.fieldNames(i).toLowerCase()) != null) dataCellStyleFormat.get(dataSchema.fieldNames(i).toLowerCase).get.setFont(dataCellFontStyle.get(dataSchema.fieldNames(i).toLowerCase()).get)
       if(dataCellStyleFormat.get(dataSchema.fieldNames(i).toLowerCase()) != None && dataCellStyleFormat.get(dataSchema.fieldNames(i).toLowerCase()) != null) cell.setCellStyle(dataCellStyleFormat.get(dataSchema.fieldNames(i).toLowerCase).get)
-      if (!rowValue.isNullAt(i)) if (outputFileExcelEntity.isStripLeadingQuote)
+      if (!rowValue.isNullAt(i)) /*if (outputFileExcelEntity.isStripLeadingQuote)
       setCellDataValue(cell, rowValue, i)
-      else
+      else*/
         setCellDataValue(cell, rowValue, i)
       else cell.setCellType(CellType.BLANK)
       i += 1
@@ -277,8 +277,8 @@ class ExcelOutputUtil(frame: DataFrame, outputFileExcelEntity: OutputFileExcelEn
     case TimestampType => {  val df = new SimpleDateFormat(dateFormats(position));
       cell.setCellValue( df.format(row.getTimestamp(position)))}
     case dt: DecimalType => cell.setCellValue(row.get(position).toString)
-    case dt: StringType => cell.setCellValue(if (outputFileExcelEntity.isStripLeadingQuote) row.getString(position).replaceAll("^\'", "") else row.getString(position))
-    case dt: DataType => cell.setCellValue(if (outputFileExcelEntity.isStripLeadingQuote) row.get(position).toString.replaceAll("^'", "") else row.get(position).toString)
+    case dt: StringType => cell.setCellValue(/*if (outputFileExcelEntity.isStripLeadingQuote) row.getString(position).replaceAll("^\'", "") else*/ row.getString(position))
+    case dt: DataType => cell.setCellValue(/*if (outputFileExcelEntity.isStripLeadingQuote) row.get(position).toString.replaceAll("^'", "") else */row.get(position).toString)
   }
 
   private def writeRowHeader(sheet: Sheet, sheetRowPosition: Int): Unit = {
