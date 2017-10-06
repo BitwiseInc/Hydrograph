@@ -559,7 +559,8 @@ public class OutputRecordCountUtility {
 	     }
 		updatePassThroughFieldAndOutputFields(transformMapping,component, transformMapping.getOutputFieldList());
 		SchemaSyncUtility.INSTANCE.unionFilter(transformMapping.getOutputFieldList(),outputList);
-		propagateOuputFieldsToSchemaTabFromTransformWidget(transformMapping, schema, component, outputList);
+		List<String> passthroughFields=getPassThroughFields(transformMapping.getMapAndPassthroughField());
+		addPassthroughFieldsToSchema(passthroughFields, schema, component);
 		updateComponentOutputSchemaAndSchema(component, schema);
 	   
 	}
