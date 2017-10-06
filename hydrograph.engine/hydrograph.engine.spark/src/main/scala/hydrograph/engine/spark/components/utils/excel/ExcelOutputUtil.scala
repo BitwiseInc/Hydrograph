@@ -136,7 +136,7 @@ class ExcelOutputUtil(frame: DataFrame, outputFileExcelEntity: OutputFileExcelEn
 
   private val sheet: util.Map[String, Sheet] = new util.HashMap[String, Sheet]()
 
-val strippedLeadingQuoteDF=sortedDF.map(row=> Row.fromSeq(row.toSeq.toList.map(r=> if(r.isInstanceOf[String])r.toString.replaceAll("^\'","") else r)))
+val strippedLeadingQuoteDF=sortedDF.map(row=> Row.fromSeq(row.toSeq.toList.map(r=> if(r.isInstanceOf[String] && outputFileExcelEntity.isStripLeadingQuote)r.toString.replaceAll("^\'","") else r)))
 
   var columnIdex: Int = 0
   if (outputFileExcelEntity.isColumnAsWorksheetName) {
