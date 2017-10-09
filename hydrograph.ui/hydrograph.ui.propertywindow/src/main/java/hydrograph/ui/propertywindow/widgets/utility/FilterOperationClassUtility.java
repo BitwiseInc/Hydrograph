@@ -117,7 +117,7 @@ public class FilterOperationClassUtility  {
 		OperationClassConfig operationClassConfig = (OperationClassConfig) widgetConfig;
 		Operations operations = XMLConfigUtil.INSTANCE.getComponent(getComponentName()).getOperations();
 		TypeInfo typeInfo=operations.getInterface();
-		if (operationClassConfig.getComponentName().equalsIgnoreCase(typeInfo.getName()))
+		if (operationClassConfig!=null && operationClassConfig.getComponentName().equalsIgnoreCase(typeInfo.getName()))
 		{
 			interfaceList.add(typeInfo.getClazz());
 		}
