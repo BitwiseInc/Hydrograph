@@ -53,10 +53,16 @@ public class FilterDataValidation implements IValidator {
 			return false;
 		}
 		availableFields=filterData.getAvailableFields();
-		if(((filterData.isOperation()) && !validateOperationClassData(filterData.getOperationClassData()))
-		||!validationExpressionData(filterData.getExpressionEditorData(),inputSchemaMap))
+		if(filterData.isOperation())
 		{
-			return false;
+			if(!validateOperationClassData(filterData.getOperationClassData())){
+				return false;
+			}
+		}else{
+			if(!validationExpressionData(filterData.getExpressionEditorData(),inputSchemaMap))
+			{
+				return false;
+			}
 		}
 		return true;
 	}
