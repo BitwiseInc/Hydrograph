@@ -1,15 +1,15 @@
 /*******************************************************************************
- * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- ******************************************************************************/
+  * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+  * Licensed under the Apache License, Version 2.0 (the "License");
+  * you may not use this file except in compliance with the License.
+  * You may obtain a copy of the License at
+  * http://www.apache.org/licenses/LICENSE-2.0
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  ******************************************************************************/
 
 package hydrograph.engine.spark.components.utils.excel
 
@@ -42,7 +42,7 @@ import scala.collection.JavaConverters._
   */
 case class KeyInfo(key:KeyField, index:Int, dataType:String)
 class ExcelOutputUtil(frame: DataFrame, outputFileExcelEntity: OutputFileExcelEntity) extends Serializable {
- private val LOG: Logger = LoggerFactory.getLogger(classOf[ExcelOutputUtil])
+  private val LOG: Logger = LoggerFactory.getLogger(classOf[ExcelOutputUtil])
   val path: String = outputFileExcelEntity.getPath
   val hdpPath: Path = new Path(path)
   val fs: FileSystem = FileSystem.get(new Configuration)
@@ -65,10 +65,12 @@ class ExcelOutputUtil(frame: DataFrame, outputFileExcelEntity: OutputFileExcelEn
 
   val dataSchema: StructType = frame.schema
   var workbook: Workbook =
-    if (outputFileExcelEntity.getWriteMode.equals("Append"))
-       if ("XLSX".equalsIgnoreCase(fileExtension)) new SXSSFWorkbook(new XSSFWorkbook(fs.open(hdpPath))) else new HSSFWorkbook(fs.open(hdpPath))
-    else
-       if ("XLSX".equalsIgnoreCase(fileExtension)) new SXSSFWorkbook else new HSSFWorkbook
+    if (outputFileExcelEntity.getWriteMode.equals("Append")) {
+      fs.setWriteChecksum(false)
+      if ("XLSX".equalsIgnoreCase(fileExtension)) new SXSSFWorkbook(new XSSFWorkbook(fs.open(hdpPath))) else new HSSFWorkbook(fs.open(hdpPath))
+
+    }else
+    if ("XLSX".equalsIgnoreCase(fileExtension)) new SXSSFWorkbook else new HSSFWorkbook
 
   val set: util.HashSet[String] = new util.HashSet[String]()
   private val valueDataTypes: Array[DataType] = dataSchema.map(_.dataType).toArray
@@ -136,13 +138,13 @@ class ExcelOutputUtil(frame: DataFrame, outputFileExcelEntity: OutputFileExcelEn
 
   private val sheet: util.Map[String, Sheet] = new util.HashMap[String, Sheet]()
 
-val strippedLeadingQuoteDF=sortedDF.map(row=> Row.fromSeq(row.toSeq.toList.map(r=> if(r.isInstanceOf[String] && outputFileExcelEntity.isStripLeadingQuote)r.toString.replaceAll("^\'","") else r)))
+  val strippedLeadingQuoteDF=sortedDF.map(row=> Row.fromSeq(row.toSeq.toList.map(r=> if(r.isInstanceOf[String] && outputFileExcelEntity.isStripLeadingQuote)r.toString.replaceAll("^\'","") else r)))
 
   var columnIdex: Int = 0
   if (outputFileExcelEntity.isColumnAsWorksheetName) {
     columnIdex = getColumnIndex(dataSchema.fieldNames, worksheetName)
     strippedLeadingQuoteDF.foreach(element => {
-      set.add(/*if(outputFileExcelEntity.isStripLeadingQuote) element.get(columnIdex).toString.replaceAll("^\'","") else*/ element.get(columnIdex).toString)
+      set.add(element.get(columnIdex).toString)
     })
   } else sheet.put(worksheetName, workbook.createSheet(worksheetName))
 
@@ -222,7 +224,9 @@ val strippedLeadingQuoteDF=sortedDF.map(row=> Row.fromSeq(row.toSeq.toList.map(r
       strippedLeadingQuoteDF.foreach(row => write(sheet.get(row.get(columnIdex)), row))
     else
       strippedLeadingQuoteDF.foreach(row => write(sheet.get(worksheetName), row))
-    if (outputFileExcelEntity.isAutoColumnSize) sheet.keySet().asScala.toList.foreach(e => setAutoSizeColumn(sheet.get(e)))
+    if (outputFileExcelEntity.isAutoColumnSize) {
+      sheet.keySet().asScala.toList.foreach(e => setAutoSizeColumn(sheet.get(e)))
+    }
     if(outputStream == null){
       fs.close()
       outputStream = fs.create(hdpPath)
@@ -256,9 +260,7 @@ val strippedLeadingQuoteDF=sortedDF.map(row=> Row.fromSeq(row.toSeq.toList.map(r
       cell.setCellType(cellTypes(i))
       if (dataCellFontStyle.get(dataSchema.fieldNames(i).toLowerCase()) != None && dataCellFontStyle.get(dataSchema.fieldNames(i).toLowerCase()) != null) if(dataCellStyleFormat.get(dataSchema.fieldNames(i).toLowerCase()) != None && dataCellStyleFormat.get(dataSchema.fieldNames(i).toLowerCase()) != null) dataCellStyleFormat.get(dataSchema.fieldNames(i).toLowerCase).get.setFont(dataCellFontStyle.get(dataSchema.fieldNames(i).toLowerCase()).get)
       if(dataCellStyleFormat.get(dataSchema.fieldNames(i).toLowerCase()) != None && dataCellStyleFormat.get(dataSchema.fieldNames(i).toLowerCase()) != null) cell.setCellStyle(dataCellStyleFormat.get(dataSchema.fieldNames(i).toLowerCase).get)
-      if (!rowValue.isNullAt(i)) /*if (outputFileExcelEntity.isStripLeadingQuote)
-      setCellDataValue(cell, rowValue, i)
-      else*/
+      if (!rowValue.isNullAt(i))
         setCellDataValue(cell, rowValue, i)
       else cell.setCellType(CellType.BLANK)
       i += 1
@@ -277,8 +279,8 @@ val strippedLeadingQuoteDF=sortedDF.map(row=> Row.fromSeq(row.toSeq.toList.map(r
     case TimestampType => {  val df = new SimpleDateFormat(dateFormats(position));
       cell.setCellValue( df.format(row.getTimestamp(position)))}
     case dt: DecimalType => cell.setCellValue(row.get(position).toString)
-    case dt: StringType => cell.setCellValue(/*if (outputFileExcelEntity.isStripLeadingQuote) row.getString(position).replaceAll("^\'", "") else*/ row.getString(position))
-    case dt: DataType => cell.setCellValue(/*if (outputFileExcelEntity.isStripLeadingQuote) row.get(position).toString.replaceAll("^'", "") else */row.get(position).toString)
+    case dt: StringType => cell.setCellValue( row.getString(position))
+    case dt: DataType => cell.setCellValue(row.get(position).toString)
   }
 
   private def writeRowHeader(sheet: Sheet, sheetRowPosition: Int): Unit = {
@@ -304,10 +306,10 @@ val strippedLeadingQuoteDF=sortedDF.map(row=> Row.fromSeq(row.toSeq.toList.map(r
     for (i <- 0 to dataSchema.size - 1)
       sheet.autoSizeColumn(i)
   }
-  
-    private def getCellStyle(dataSchema: StructType): Map[String, CellStyle] = {
 
-      val cellStyleFormatMap: scala.collection.mutable.Map[String, CellStyle] = scala.collection.mutable.Map[String, CellStyle]()
+  private def getCellStyle(dataSchema: StructType): Map[String, CellStyle] = {
+
+    val cellStyleFormatMap: scala.collection.mutable.Map[String, CellStyle] = scala.collection.mutable.Map[String, CellStyle]()
     for (i <- 0 until dataSchema.fieldNames.size) {
       val cellStyle = workbook.createCellStyle()
       val creationHelper = workbook.getCreationHelper
@@ -357,50 +359,50 @@ val strippedLeadingQuoteDF=sortedDF.map(row=> Row.fromSeq(row.toSeq.toList.map(r
           val formatProperty: Property = format.getProperty.get(j)
           (formatProperty.getType.toUpperCase(), formatProperty.getName.toUpperCase, formatProperty.getValue.toUpperCase()) match {
 
-              case("COLOR","BACKGROUNDCOLOR",dcolor: String) => {
-                cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND)
-                val ucolor: java.awt.Color = java.awt.Color.decode(dcolor)
-                val tempHSSFcolor: HSSFColor = tempHSSFPalette.findSimilarColor(ucolor.getRed,ucolor.getGreen,ucolor.getBlue)
-                cellStyle.setFillForegroundColor(tempHSSFcolor.getIndex)
-              }
-              case("BORDER","BORDERSTYLE","THIN") => borderStyle = BorderStyle.THICK
-              case("BORDER","BORDERSTYLE","MEDIUM") => borderStyle = BorderStyle.MEDIUM
-              case("BORDER","BORDERSTYLE","DASHED") => borderStyle = BorderStyle.DASHED
-              case("BORDER","BORDERSTYLE","DOTTED") => borderStyle = BorderStyle.DOTTED
-              case("BORDER","BORDERSTYLE","THICK") => borderStyle = BorderStyle.THICK
-              case("BORDER","BORDERSTYLE","DOUBLE") => borderStyle = BorderStyle.DOUBLE
-              case("BORDER","BORDERSTYLE","HAIR") => borderStyle = BorderStyle.HAIR
-              case("BORDER","BORDERSTYLE","MEDIUM_DASHED") => borderStyle = BorderStyle.MEDIUM_DASH_DOT
-              case("BORDER","BORDERSTYLE","DASH_DOT") => borderStyle = BorderStyle.DASH_DOT
-              case("BORDER","BORDERSTYLE","MEDIUM_DASH_DOT") => borderStyle = BorderStyle.MEDIUM_DASH_DOT
-              case("BORDER","BORDERSTYLE","MEDIUM_DASH_DOT_DOT") => borderStyle = BorderStyle.MEDIUM_DASH_DOT_DOT
-              case("BORDER","BORDERSTYLE","SLANTED_DASH_DOT") => borderStyle = BorderStyle.SLANTED_DASH_DOT
-              case("BORDER","BORDERCOLOR",bcolor:String) => cellStyle = setCellStyleBorderColor(cellStyle,bcolor,tempHSSFPalette)
-              case("BORDER","BORDERRANGE","TOP") => cellStyle.setBorderTop(borderStyle)
-              case("BORDER","BORDERRANGE","BOTTOM") => cellStyle.setBorderBottom(borderStyle)
-              case("BORDER","BORDERRANGE","LEFT") => cellStyle.setBorderLeft(borderStyle)
-              case("BORDER","BORDERRANGE","RIGHT") => cellStyle.setBorderRight(borderStyle)
-              case("BORDER","BORDERRANGE","ALL") => {
-                cellStyle.setBorderTop(borderStyle)
-                cellStyle.setBorderBottom(borderStyle)
-                cellStyle.setBorderLeft(borderStyle)
-                cellStyle.setBorderRight(borderStyle)
-              }
-              case("ALIGNMENT","HORIZONTALALIGNMENT","GENERAL") => cellStyle.setAlignment(HorizontalAlignment.GENERAL)
-              case("ALIGNMENT","HORIZONTALALIGNMENT","LEFT") => cellStyle.setAlignment(HorizontalAlignment.LEFT)
-              case("ALIGNMENT","HORIZONTALALIGNMENT","CENTER") => cellStyle.setAlignment(HorizontalAlignment.CENTER)
-              case("ALIGNMENT","HORIZONTALALIGNMENT","RIGHT") => cellStyle.setAlignment(HorizontalAlignment.RIGHT)
-              case("ALIGNMENT","HORIZONTALALIGNMENT","FILL") => cellStyle.setAlignment(HorizontalAlignment.FILL)
-              case("ALIGNMENT","HORIZONTALALIGNMENT","JUSTIFY") => cellStyle.setAlignment(HorizontalAlignment.JUSTIFY)
-              case("ALIGNMENT","HORIZONTALALIGNMENT","CENTER_SELECTION") => cellStyle.setAlignment(HorizontalAlignment.CENTER_SELECTION)
-              case("ALIGNMENT","HORIZONTALALIGNMENT","DISTRIBUTED") => cellStyle.setAlignment(HorizontalAlignment.DISTRIBUTED)
-              case("ALIGNMENT","VERTICALALIGNMENT","TOP") => cellStyle.setVerticalAlignment(VerticalAlignment.TOP)
-              case("ALIGNMENT","VERTICALALIGNMENT","CENTER") => cellStyle.setVerticalAlignment(VerticalAlignment.CENTER)
-              case("ALIGNMENT","VERTICALALIGNMENT","BOTTOM") => cellStyle.setVerticalAlignment(VerticalAlignment.BOTTOM)
-              case("ALIGNMENT","VERTICALALIGNMENT","JUSTIFY") => cellStyle.setVerticalAlignment(VerticalAlignment.JUSTIFY)
-              case("ALIGNMENT","VERTICALALIGNMENT","DISTRIBUTED") => cellStyle.setVerticalAlignment(VerticalAlignment.DISTRIBUTED)
-              case("FONT",_,_) =>
-              case(stype:String,sname:String,svalue:String) => LOG.error("Invalid Property type: "+stype+" Name:"+sname+" Value:"+svalue)
+            case("COLOR","BACKGROUNDCOLOR",dcolor: String) => {
+              cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND)
+              val ucolor: java.awt.Color = java.awt.Color.decode(dcolor)
+              val tempHSSFcolor: HSSFColor = tempHSSFPalette.findSimilarColor(ucolor.getRed,ucolor.getGreen,ucolor.getBlue)
+              cellStyle.setFillForegroundColor(tempHSSFcolor.getIndex)
+            }
+            case("BORDER","BORDERSTYLE","THIN") => borderStyle = BorderStyle.THICK
+            case("BORDER","BORDERSTYLE","MEDIUM") => borderStyle = BorderStyle.MEDIUM
+            case("BORDER","BORDERSTYLE","DASHED") => borderStyle = BorderStyle.DASHED
+            case("BORDER","BORDERSTYLE","DOTTED") => borderStyle = BorderStyle.DOTTED
+            case("BORDER","BORDERSTYLE","THICK") => borderStyle = BorderStyle.THICK
+            case("BORDER","BORDERSTYLE","DOUBLE") => borderStyle = BorderStyle.DOUBLE
+            case("BORDER","BORDERSTYLE","HAIR") => borderStyle = BorderStyle.HAIR
+            case("BORDER","BORDERSTYLE","MEDIUM_DASHED") => borderStyle = BorderStyle.MEDIUM_DASH_DOT
+            case("BORDER","BORDERSTYLE","DASH_DOT") => borderStyle = BorderStyle.DASH_DOT
+            case("BORDER","BORDERSTYLE","MEDIUM_DASH_DOT") => borderStyle = BorderStyle.MEDIUM_DASH_DOT
+            case("BORDER","BORDERSTYLE","MEDIUM_DASH_DOT_DOT") => borderStyle = BorderStyle.MEDIUM_DASH_DOT_DOT
+            case("BORDER","BORDERSTYLE","SLANTED_DASH_DOT") => borderStyle = BorderStyle.SLANTED_DASH_DOT
+            case("BORDER","BORDERCOLOR",bcolor:String) => cellStyle = setCellStyleBorderColor(cellStyle,bcolor,tempHSSFPalette)
+            case("BORDER","BORDERRANGE","TOP") => cellStyle.setBorderTop(borderStyle)
+            case("BORDER","BORDERRANGE","BOTTOM") => cellStyle.setBorderBottom(borderStyle)
+            case("BORDER","BORDERRANGE","LEFT") => cellStyle.setBorderLeft(borderStyle)
+            case("BORDER","BORDERRANGE","RIGHT") => cellStyle.setBorderRight(borderStyle)
+            case("BORDER","BORDERRANGE","ALL") => {
+              cellStyle.setBorderTop(borderStyle)
+              cellStyle.setBorderBottom(borderStyle)
+              cellStyle.setBorderLeft(borderStyle)
+              cellStyle.setBorderRight(borderStyle)
+            }
+            case("ALIGNMENT","HORIZONTALALIGNMENT","GENERAL") => cellStyle.setAlignment(HorizontalAlignment.GENERAL)
+            case("ALIGNMENT","HORIZONTALALIGNMENT","LEFT") => cellStyle.setAlignment(HorizontalAlignment.LEFT)
+            case("ALIGNMENT","HORIZONTALALIGNMENT","CENTER") => cellStyle.setAlignment(HorizontalAlignment.CENTER)
+            case("ALIGNMENT","HORIZONTALALIGNMENT","RIGHT") => cellStyle.setAlignment(HorizontalAlignment.RIGHT)
+            case("ALIGNMENT","HORIZONTALALIGNMENT","FILL") => cellStyle.setAlignment(HorizontalAlignment.FILL)
+            case("ALIGNMENT","HORIZONTALALIGNMENT","JUSTIFY") => cellStyle.setAlignment(HorizontalAlignment.JUSTIFY)
+            case("ALIGNMENT","HORIZONTALALIGNMENT","CENTER_SELECTION") => cellStyle.setAlignment(HorizontalAlignment.CENTER_SELECTION)
+            case("ALIGNMENT","HORIZONTALALIGNMENT","DISTRIBUTED") => cellStyle.setAlignment(HorizontalAlignment.DISTRIBUTED)
+            case("ALIGNMENT","VERTICALALIGNMENT","TOP") => cellStyle.setVerticalAlignment(VerticalAlignment.TOP)
+            case("ALIGNMENT","VERTICALALIGNMENT","CENTER") => cellStyle.setVerticalAlignment(VerticalAlignment.CENTER)
+            case("ALIGNMENT","VERTICALALIGNMENT","BOTTOM") => cellStyle.setVerticalAlignment(VerticalAlignment.BOTTOM)
+            case("ALIGNMENT","VERTICALALIGNMENT","JUSTIFY") => cellStyle.setVerticalAlignment(VerticalAlignment.JUSTIFY)
+            case("ALIGNMENT","VERTICALALIGNMENT","DISTRIBUTED") => cellStyle.setVerticalAlignment(VerticalAlignment.DISTRIBUTED)
+            case("FONT",_,_) =>
+            case(stype:String,sname:String,svalue:String) => LOG.error("Invalid Property type: "+stype+" Name:"+sname+" Value:"+svalue)
           }
         }
       }

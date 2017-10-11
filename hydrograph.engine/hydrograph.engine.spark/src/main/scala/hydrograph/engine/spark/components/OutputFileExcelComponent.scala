@@ -12,8 +12,6 @@
   * *****************************************************************************/
 package hydrograph.engine.spark.components
 
-import java.util
-
 import hydrograph.engine.core.component.entity.OutputFileExcelEntity
 import hydrograph.engine.spark.components.base.SparkFlow
 import hydrograph.engine.spark.components.platform.BaseComponentParams
@@ -33,47 +31,20 @@ import scala.collection.JavaConverters._
   */
 class OutputFileExcelComponent(outputFileExcelEntity: OutputFileExcelEntity, cp: BaseComponentParams) extends SparkFlow with Serializable {
   private val LOG: Logger = LoggerFactory.getLogger(classOf[OutputFileExcelComponent])
+
   override def execute() = {
     LOG.trace("In method execute()")
     val schemaCreator = SchemaCreator(outputFileExcelEntity)
 
     try {
-
-      /*outputFileExcelEntity.getHeaderFormats.asScala.toList.foreach(p => {
-        println("*******");
-        p.getProperty.asScala.toList.foreach(e => println(e.getName))
-        println(p.getName())
-      })*/
-
-
-      /*cp.getDataFrame().select(schemaCreator.createSchema(): _*).write
-        .option("charset", outputFileExcelEntity.getCharset)
-        .option("fileExtension", outputFileExcelEntity.getFileExtension)
-        .option("worksheetName", outputFileExcelEntity.getWorksheetName)
-        .option("abortOnError", outputFileExcelEntity.isAbortOnError)
-        .option("stripLeadingQuote", outputFileExcelEntity.isStripLeadingQuote)
-        .option("autoColumnSize", outputFileExcelEntity.isAutoColumnSize)
-        .option("headerCellFormat",headerFormatJSONString)
-        .option("dataCellFormat",dataFormatJSONString)
-        .option("outputFileExcelEntityJSONString", outputFileExcelEntityJSONString)
-        .mode(outputFileExcelEntity.getWriteMode match {
-          case "Overwrite" => SaveMode.Overwrite
-          case "Append" => SaveMode.Append
-          case "FailIfFileExists" => SaveMode.ErrorIfExists
-        })
-        .format("hydrograph.engine.spark.datasource.excel.ExcelFileFormat")
-        .option("dateFormats", schemaCreator.getDateFormats)
-        .save(outputFileExcelEntity.getPath)*/
-
       new ExcelOutputUtil(cp.getDataFrame().select(schemaCreator.createSchema(): _*), outputFileExcelEntity).writeDF()
-      //    val dataframe = cp.getDataFrame().collect();
 
     } catch {
       case e: AnalysisException if (e.getMessage().matches("(.*)cannot resolve(.*)given input columns(.*)")) =>
         LOG.error("Error in Output File Excel Component " + outputFileExcelEntity.getComponentId, e)
         throw new RuntimeException("Error in Output File Excel Component "
           + outputFileExcelEntity.getComponentId, e)
-      case e:NotOfficeXmlFileException =>
+      case e: NotOfficeXmlFileException =>
         LOG.error("Error in Output File Excel Component " + outputFileExcelEntity.getComponentId, e)
         throw new RuntimeException("Error in Output File Excel Component "
           + outputFileExcelEntity.getComponentId, e)
@@ -90,32 +61,4 @@ class OutputFileExcelComponent(outputFileExcelEntity: OutputFileExcelEntity, cp:
       + " ] "
       + " at Path: " + outputFileExcelEntity.getPath + " having autoColumnSize as " + outputFileExcelEntity.isAutoColumnSize)
   }
-
-  /*def getCellFieldFormatAsString(cellFieldFormat: List[FieldFormat]): String = {
-
-    var cellFieldFormatString: StringBuilder = new StringBuilder
-    for (field <- cellFieldFormat) {
-      if (!(cellFieldFormatString.size == 0))
-        cellFieldFormatString.append(";")
-      cellFieldFormatString.append(field.getName)
-      cellFieldFormatString.append(":")
-      cellFieldFormatString.append(field.getProperty)
-    }
-    cellFieldFormatString.toString()
-  }
-
-  def getCellFieldPropertiersAsString(cellFieldProperty: List[Property]): String = {
-    var propertiesString: StringBuilder = new StringBuilder
-    for (property <- cellFieldProperty) {
-      if (!(propertiesString.size == 0))
-        propertiesString.append(",")
-      propertiesString.append(property.getName)
-      propertiesString.append("$")
-      propertiesString.append(property.getType)
-      propertiesString.append("$")
-      propertiesString.append(property.getValue)
-    }
-    propertiesString.toString()
-  }*/
-
 }
