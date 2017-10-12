@@ -148,6 +148,7 @@
 			<enumeration value="EXCEL_FILE_NAME_WIDGET" />
 			<enumeration value="SORT_EXCEL_COLUMNS_KEYS_WIDGET" />
 			<enumeration value="FILTER_LOGIC" />
+			<enumeration value="EXPORT_XSD_WIDGET" />
 		</restriction>
 	</simpleType>
 

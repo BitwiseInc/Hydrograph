@@ -49,6 +49,7 @@ import hydrograph.ui.propertywindow.widgets.customwidgets.ELTOperationClassWidge
 import hydrograph.ui.propertywindow.widgets.customwidgets.ELTRetentionLogicWidget;
 import hydrograph.ui.propertywindow.widgets.customwidgets.ELTXmlPropertiesContainer;
 import hydrograph.ui.propertywindow.widgets.customwidgets.ExcelFileNameWidget;
+import hydrograph.ui.propertywindow.widgets.customwidgets.ExportXSDWidget;
 import hydrograph.ui.propertywindow.widgets.customwidgets.HiveInputSingleColumnWidget;
 import hydrograph.ui.propertywindow.widgets.customwidgets.HiveOutputSingleColumnWidget;
 import hydrograph.ui.propertywindow.widgets.customwidgets.JDBCDriverClassWidget;
@@ -209,8 +210,8 @@ public class WidgetFactory {
 		EXCEL_FILE_PATH_WIDGET(ELTFilePathWidget.class,WidgetHelper.INSTANCE.getExcelFilePathWidgetConfig(Messages.FILE_PATH_LABEL)),
 		EXCEL_FILE_NAME_WIDGET(ExcelFileNameWidget.class,WidgetHelper.INSTANCE.getExcelFileNameWidgetConfig()),
 		SORT_EXCEL_COLUMNS_KEYS_WIDGET(SecondaryColumnKeysWidget.class,WidgetHelper.INSTANCE.getSortExcelColumnWidgetConfig()),
-		FILTER_LOGIC(FilterLogicWidget.class);
-		
+		FILTER_LOGIC(FilterLogicWidget.class),
+		EXPORT_XSD_WIDGET(ExportXSDWidget.class); 
               
 		private Class<?> clazz = null;
 		private WidgetConfig widgetConfig = null;

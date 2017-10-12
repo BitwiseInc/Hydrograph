@@ -834,6 +834,12 @@ public abstract class ELTSchemaGridWidget extends AbstractWidget {
 				 for (FixedWidthGridRow gridRow : fixedWidthGridRows) {
 					 schema.getGridRow().add(SchemaPropagation.INSTANCE.convertFixedWidthSchemaToSchemaGridRow(gridRow));
 				 }
+			 }else if (this.getClass().equals(XPathSchemaGridWidget.class)) {
+				
+				 for (FixedWidthGridRow gridRow : fixedWidthGridRows) {
+					schema.getGridRow().add(SchemaPropagation.INSTANCE.convertFixedWidthSchemaToxPathSchemaGridRow(gridRow));
+				 }
+				 
 			 }
 			 applySchemaFromPropagatedSchemaOnPull(schema,fixedWidthGridRows);
 		 }

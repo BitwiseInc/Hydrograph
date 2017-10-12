@@ -31,6 +31,7 @@ import hydrograph.ui.datastructure.property.FixedWidthGridRow;
 import hydrograph.ui.datastructure.property.GridRow;
 import hydrograph.ui.datastructure.property.MixedSchemeGridRow;
 import hydrograph.ui.datastructure.property.Schema;
+import hydrograph.ui.datastructure.property.XPathGridRow;
 import hydrograph.ui.graph.model.Component;
 import hydrograph.ui.graph.model.Link;
 import hydrograph.ui.logging.factory.LogFactory;
@@ -526,13 +527,27 @@ public class SchemaPropagation {
 	}
 	
 	/**
-	 *
-	 *convert fixedWidthGridRowsOutputFields to list of grid row object.
-	 * 
 	 * @param gridRow
-	 * @param fixedWidthGridRowsOutputFields
-	 * @return list of grid row object.
+	 * @return
 	 */
+	public GridRow convertFixedWidthSchemaToxPathSchemaGridRow(FixedWidthGridRow gridRow) {
+		
+		XPathGridRow xPathGridRow = new XPathGridRow();
+		xPathGridRow.setDataType(gridRow.getDataType());
+		xPathGridRow.setDateFormat(gridRow.getDateFormat());
+		xPathGridRow.setFieldName(gridRow.getFieldName());
+		xPathGridRow.setScale(gridRow.getScale());
+		xPathGridRow.setDataTypeValue(gridRow.getDataTypeValue());
+		xPathGridRow.setScaleType(gridRow.getScaleType());
+		xPathGridRow.setScaleTypeValue(gridRow.getScaleTypeValue());
+		xPathGridRow.setPrecision(gridRow.getPrecision());
+		xPathGridRow.setDescription(gridRow.getDescription());
+		//xPathGridRow.setXPath(gridRow.getx);
+		
+		return xPathGridRow;
+	}
+	
+
 	public List<GridRow> getSchemaGridOutputFields(GridRow gridRow,List<FixedWidthGridRow> fixedWidthGridRowsOutputFields) {
 		List<GridRow> schemaGrid = new ArrayList<>();
 		
@@ -569,6 +584,8 @@ public class SchemaPropagation {
 		}
 		return schemaGridRow;
 	}
+
+
 
 	
 }

@@ -24,7 +24,7 @@ package hydrograph.ui.datastructure.property;
  * 
  * @author Bitwise
  */
-public class XPathGridRow extends GridRow {
+public class XPathGridRow extends FixedWidthGridRow {
 	private String xPath;
 	
 	/**
