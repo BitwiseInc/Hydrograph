@@ -99,7 +99,7 @@ public class ExcelFormattingDialog extends Dialog {
 		super(parentShell);
 		this.schemaFields = schemaFields;
 		this.excelFormattingDataStructure = excelFormattingDataStructure;
-		this.listOfExcelConfiguration = this.excelFormattingDataStructure.getListOfExcelConfiguration();
+		this.listOfExcelConfiguration = new ArrayList<>();
 		this.propDialogButtonBar = propDialogButtonBar;
 		if(StringUtils.isNotBlank(windowLabel))
 			this.windowLabel=windowLabel;
@@ -132,6 +132,7 @@ public class ExcelFormattingDialog extends Dialog {
 	}
 
 	private void populateWidget() {
+		
 		if(excelFormattingDataStructure !=null){
 			List<ExcelConfigurationDataStructure> listOfExcelConfiguration2 = excelFormattingDataStructure.getListOfExcelConfiguration();
 			if(listOfExcelConfiguration2 !=null && listOfExcelConfiguration2.size() >0 ){
@@ -148,11 +149,15 @@ public class ExcelFormattingDialog extends Dialog {
 				combo.setText(excelFormattingDataStructure.getCopyOfField());
 			}
 			if(listOfExcelConfiguration2 !=null){
-				targetTableViewer.setInput(listOfExcelConfiguration2);
+				this.listOfExcelConfiguration.clear();
+				ArrayList tmplist = (ArrayList)this.excelFormattingDataStructure.getListOfExcelConfiguration();
+				this.listOfExcelConfiguration.addAll((ArrayList)tmplist.clone());
+				targetTableViewer.setInput(listOfExcelConfiguration);
 			}
 		}
 		
 		highlightDropFields();
+		enableDeleteButton();
 	}
 
 	private void createTableComposite(Composite main_composite) {

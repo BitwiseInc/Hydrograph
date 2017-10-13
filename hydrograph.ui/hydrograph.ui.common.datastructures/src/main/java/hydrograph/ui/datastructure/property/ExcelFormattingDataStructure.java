@@ -56,8 +56,8 @@ public class ExcelFormattingDataStructure implements IDataStructure{
 	public Object clone() {
 		ExcelFormattingDataStructure excelFormattingDataStructure = new ExcelFormattingDataStructure();
 		excelFormattingDataStructure.setCopyOfField(this.copyOfField);
-		excelFormattingDataStructure.setCopyFieldList(getCopyFieldList());
-		excelFormattingDataStructure.setListOfExcelConfiguration(getListOfExcelConfiguration());
+		excelFormattingDataStructure.setCopyFieldList(new ArrayList<>(getCopyFieldList()));
+		excelFormattingDataStructure.setListOfExcelConfiguration(new ArrayList<>(getListOfExcelConfiguration()));
 		return excelFormattingDataStructure;
 	}
 	
