@@ -49,9 +49,8 @@
 	<li><span><b>File Name</b> - File Name used to specify excel workbook name .Users can create files with .xls or .xlsx extension. This field should be mandatory to user.</span></li>
 	
 	<li><span><b>File Path</b> - File Path is used to specify where the output excel file needs to be created. This field should be mandatory to user.</span></li>
-		<p><span><b>Note : </b>Recommended file size for output excel file is 500 mb .
-			If the job fails with JVM Out of memory error while creating bigger size Excel files  modify “spark.driver.memory” property in runtime properties
-			to increase  default memory size .
+		<p><span><b>Note : </b>Recommended file size for output excel file is 100 mb or less .
+			
 		</span></p>
 	<li><span><b>Worksheet Name</b> - Worksheet Name is used to specify the field name which stores name for worksheets to be created in output excel workbook. This field should be mandatory to user. For creating multiple worksheets specify  name of the field from the schema of the upstream component.</span></li>
 	<li><span><b>Write Mode</b> - Write Mode is used to specify the writing mode options of Excel sheet. It can be Append,Overwrite and Fail_If_Exists. User can select any one of the writing mode. </span></li>
