@@ -61,8 +61,12 @@ public class TransformForExpression implements TransformBase {
 			tuples[i] = inputRow.getField(i);
 		}
 		try {
-			outputRow.setField(0,
-					(Comparable) validationAPI.exec(tuples));
+			Object output = validationAPI.exec(tuples);
+			if(output instanceof java.util.Date) {
+				outputRow.setDate(0, (Comparable) output);
+			}else {
+				outputRow.setField(0, (Comparable) output);
+			}
 		} catch (Exception e) {
 			throw new RuntimeException("Tranform Expression: "
 					+ validationAPI.getValidExpression()

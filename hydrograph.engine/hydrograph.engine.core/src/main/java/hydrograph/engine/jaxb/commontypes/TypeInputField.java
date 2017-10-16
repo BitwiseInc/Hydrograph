@@ -14,13 +14,16 @@
 
 package hydrograph.engine.jaxb.commontypes;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.XmlType;
 import hydrograph.engine.jaxb.executiontracking.TypeExecutiontrackingOperationInputField;
 import hydrograph.engine.jaxb.filter.TypeFilterOperationInputField;
 import hydrograph.engine.jaxb.generatesequence.TypePassthroughInputField;
 import hydrograph.engine.jaxb.partitionbyexpression.TypePbeOperationInputField;
 import hydrograph.engine.jaxb.transform.TypeTransformOperationInputField;
-
-import javax.xml.bind.annotation.*;
 
 
 /**

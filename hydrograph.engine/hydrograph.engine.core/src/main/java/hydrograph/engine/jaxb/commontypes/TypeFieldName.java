@@ -14,9 +14,12 @@
 
 package hydrograph.engine.jaxb.commontypes;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.XmlType;
 import hydrograph.engine.jaxb.sort.TypePrimaryKeyFieldsAttributes;
-
-import javax.xml.bind.annotation.*;
 
 
 /**

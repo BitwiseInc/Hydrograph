@@ -14,11 +14,10 @@
 
 package hydrograph.engine.jaxb.sort;
 
-import hydrograph.engine.jaxb.commontypes.TypeStraightPullOutSocket;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+import hydrograph.engine.jaxb.commontypes.TypeStraightPullOutSocket;
 
 
 /**

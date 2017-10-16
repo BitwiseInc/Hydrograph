@@ -60,14 +60,14 @@ public class NormalizeEntityGenerator extends OperationComponentGeneratorBase {
 		normalizeEntity.setBatch(jaxbNormalize.getBatch());
 		normalizeEntity.setComponentName(jaxbNormalize.getName());
 		// check if operation is present
-		if (jaxbNormalize.getOperationOrExpression() != null && jaxbNormalize.getOperationOrExpression().size() > 0) {
+		if (jaxbNormalize.getOperationOrExpressionOrIncludeExternalOperation() != null && jaxbNormalize.getOperationOrExpressionOrIncludeExternalOperation().size() > 0) {
 
 			LOG.trace("Operation(s) present for normalize component: " + jaxbNormalize.getId() + ", processing");
 			// set the number of operations in the normalize component and set
 			// operation present to true
-			normalizeEntity.setNumOperations(jaxbNormalize.getOperationOrExpression().size());
+			normalizeEntity.setNumOperations(jaxbNormalize.getOperationOrExpressionOrIncludeExternalOperation().size());
 			normalizeEntity.setOperationPresent(true);
-			normalizeEntity.setOperationsList(OperationEntityUtils.extractOperations(jaxbNormalize.getOperationOrExpression()));
+			normalizeEntity.setOperationsList(OperationEntityUtils.extractOperations(jaxbNormalize.getOperationOrExpressionOrIncludeExternalOperation()));
 		} else {
 
 			LOG.trace("Operation not present for normalize component: " + jaxbNormalize.getId()

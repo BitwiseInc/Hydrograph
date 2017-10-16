@@ -14,14 +14,13 @@
 
 package hydrograph.engine.jaxb.straightpulltypes;
 
-import hydrograph.engine.jaxb.sort.TypePrimaryKeyFields;
-import hydrograph.engine.jaxb.sort.TypeSecondaryKeyFields;
-import hydrograph.engine.jaxb.sort.TypeSortBase;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import hydrograph.engine.jaxb.sort.TypePrimaryKeyFields;
+import hydrograph.engine.jaxb.sort.TypeSecondaryKeyFields;
+import hydrograph.engine.jaxb.sort.TypeSortBase;
 
 
 /**

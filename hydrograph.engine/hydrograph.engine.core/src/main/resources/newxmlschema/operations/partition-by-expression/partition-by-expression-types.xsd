@@ -100,6 +100,10 @@
                                     minOccurs="1" maxOccurs="1"/>
                         <xs:element name="expression" type="cmn:type-transform-expression"
                                     minOccurs="1" maxOccurs="1"/>
+                        <xs:element name="includeExternalOperation" type="cmn:type-external-schema"
+                                    minOccurs="1" maxOccurs="1" />
+                        <xs:element name="includeExternalExpression" type="cmn:type-external-schema"
+                                    minOccurs="1" maxOccurs="1" />
                     </xs:choice>
                     <xs:element name="outSocket" type="type-pbe-out-socket"
                                 minOccurs="2" maxOccurs="unbounded"/>

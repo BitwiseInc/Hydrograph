@@ -14,13 +14,12 @@
 
 package hydrograph.engine.jaxb.ifmixedscheme;
 
-import hydrograph.engine.jaxb.commontypes.TypeInputComponent;
-import hydrograph.engine.jaxb.inputtypes.TextFileMixedScheme;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
+import hydrograph.engine.jaxb.commontypes.TypeInputComponent;
+import hydrograph.engine.jaxb.inputtypes.TextFileMixedScheme;
 
 
 /**

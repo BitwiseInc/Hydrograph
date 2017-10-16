@@ -140,4 +140,97 @@
 		</xs:complexContent>
 	</xs:complexType>
 
+	<xs:complexType name="FileTransferBase" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="cmn:type-command-component">
+				<xs:sequence>
+					<xs:element name="host_Name"  type="xs:string"/>
+					<xs:element name="user_Name"  type="xs:string"/>
+					<xs:element name="input_file_path"  type="xs:string"/>
+					<xs:element name="output_file_path"  type="xs:string"/>
+					<xs:element name="FileOperation" type="file-operation-choice" minOccurs="1"  />
+                    <xs:element name="encoding" minOccurs="0">
+                        <xs:complexType>
+                            <xs:attribute name="value" type="cmn:standard-charsets"
+                                          use="required" />
+                        </xs:complexType>
+                    </xs:element>
+					<xs:element name="port_No" type="cmn:element-value-integer-type" minOccurs="0"/>
+					<xs:element name="timeOut" type="cmn:element-value-integer-type" minOccurs="0"/>
+					<xs:element name="retryAfterDuration" type="cmn:element-value-integer-type" minOccurs="0"/>
+					<xs:element name="retryAttempt" type="cmn:element-value-integer-type" minOccurs="0"/>
+                    <xs:element name="failOnError" type="xs:boolean" minOccurs="0"/>
+                    <xs:element name="overwritemode" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+    <xs:group name="BasicAuth">
+        <xs:sequence>
+            <xs:element name="accessKeyID"  type="xs:string"/>
+            <xs:element name="secretAccessKey"  type="xs:string"/>
+        </xs:sequence>
+    </xs:group>
+
+
+<xs:complexType name="S3FileTransfer">
+    <xs:complexContent>
+        <xs:extension base="cmn:type-command-component">
+        <xs:sequence>
+            <xs:choice>
+                <xs:group ref="BasicAuth"/>
+                <xs:element name="crediationalPropertiesFile"  type="xs:string"/>
+            </xs:choice>
+            <xs:element name="region" type="xs:string"/>
+            <xs:element name="localPath"  type="xs:string"/>
+            <xs:element name="bucketName"  type="xs:string"/>
+            <xs:element name="keyName"  type="xs:string" minOccurs="0"/>
+            <xs:element name="folder_name_in_bucket"  type="xs:string" minOccurs="0"/>
+            <xs:element name="FileOperation" type="file-operation-choice" minOccurs="1"  />
+            <xs:element name="encoding" minOccurs="0">
+                <xs:complexType>
+                    <xs:attribute name="value" type="cmn:standard-charsets"
+                                  use="required" />
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="timeOut" type="cmn:element-value-integer-type" minOccurs="0"/>
+            <xs:element name="retryAfterDuration" type="cmn:element-value-integer-type" minOccurs="0"/>
+            <xs:element name="retryAttempt" type="cmn:element-value-integer-type" minOccurs="0"/>
+            <xs:element name="failOnError" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="overwritemode" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+        </xs:extension>
+    </xs:complexContent>
+</xs:complexType>
+
+
+	<xs:complexType name="FTP">
+		<xs:complexContent>
+			<xs:extension base="FileTransferBase">
+				<xs:sequence>
+					<xs:element name="password" type="xs:string"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="SFTP">
+		<xs:complexContent>
+			<xs:extension base="FileTransferBase">
+				<xs:choice>
+					<xs:element name="password"   type="xs:string"/>
+					<xs:element name="privateKeyPath"   type="xs:string"/>
+				</xs:choice>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="file-operation-choice" >
+		<xs:choice>
+			<xs:element name="upload" minOccurs="1" maxOccurs="1" />
+			<xs:element name="download" minOccurs="1" maxOccurs="1" />
+		</xs:choice>
+	</xs:complexType>
+
 </xs:schema>

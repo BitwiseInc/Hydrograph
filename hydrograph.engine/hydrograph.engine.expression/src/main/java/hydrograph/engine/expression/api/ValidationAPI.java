@@ -284,7 +284,9 @@ public class ValidationAPI implements Serializable {
 		if(className.equalsIgnoreCase("string"))
 			return String.class;
 		else if(className.equalsIgnoreCase("Integer"))
-				return Integer.class;
+			return Integer.class;
+		else if(className.equalsIgnoreCase("Short"))
+			return Short.class;
 		else if(className.equalsIgnoreCase("Long"))
 			return Long.class;
 		else if(className.equalsIgnoreCase("Boolean"))
@@ -299,7 +301,7 @@ public class ValidationAPI implements Serializable {
 			return Object.class;
 		else if(className.contains("decimal") || className.contains("BigDecimal") )
 			return BigDecimal.class;
-		return String.class;
+		return Object.class;
 
 	}
 

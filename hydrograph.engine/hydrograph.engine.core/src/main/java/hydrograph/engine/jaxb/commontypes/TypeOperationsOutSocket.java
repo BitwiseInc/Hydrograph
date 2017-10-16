@@ -14,14 +14,18 @@
 
 package hydrograph.engine.jaxb.commontypes;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElements;
+import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.XmlType;
 import hydrograph.engine.jaxb.executiontracking.TypeExecutiontrackingOutSocket;
 import hydrograph.engine.jaxb.filter.TypeFilterOutSocket;
 import hydrograph.engine.jaxb.partitionbyexpression.TypePbeOutSocket;
 import hydrograph.engine.jaxb.transform.TypeTransformOutSocket;
-
-import javax.xml.bind.annotation.*;
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -40,6 +44,7 @@ import java.util.List;
  *           &lt;element name="operationField" type="{hydrograph/engine/jaxb/commontypes}type-operation-field"/>
  *           &lt;element name="expressionField" type="{hydrograph/engine/jaxb/commontypes}type-expression-field"/>
  *           &lt;element name="mapField" type="{hydrograph/engine/jaxb/commontypes}type-map-field"/>
+ *           &lt;element name="includeExternalMapping" type="{hydrograph/engine/jaxb/commontypes}type-external-schema"/>
  *         &lt;/choice>
  *       &lt;/choice>
  *       &lt;anyAttribute/>
@@ -78,7 +83,8 @@ public class TypeOperationsOutSocket
         @XmlElement(name = "passThroughField", type = TypeInputField.class),
         @XmlElement(name = "operationField", type = TypeOperationField.class),
         @XmlElement(name = "expressionField", type = TypeExpressionField.class),
-        @XmlElement(name = "mapField", type = TypeMapField.class)
+        @XmlElement(name = "mapField", type = TypeMapField.class),
+        @XmlElement(name = "includeExternalMapping", type = TypeExternalSchema.class)
     })
     protected List<Object> passThroughFieldOrOperationFieldOrExpressionField;
 
@@ -128,6 +134,7 @@ public class TypeOperationsOutSocket
      * {@link TypeOperationField }
      * {@link TypeExpressionField }
      * {@link TypeMapField }
+     * {@link TypeExternalSchema }
      * 
      * 
      */

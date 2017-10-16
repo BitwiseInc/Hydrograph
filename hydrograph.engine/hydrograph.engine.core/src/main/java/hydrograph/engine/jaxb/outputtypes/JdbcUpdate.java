@@ -14,15 +14,14 @@
 
 package hydrograph.engine.jaxb.outputtypes;
 
-import hydrograph.engine.jaxb.commontypes.ElementValueIntegerType;
-import hydrograph.engine.jaxb.commontypes.ElementValueStringType;
-import hydrograph.engine.jaxb.ojdbcupdate.TypeOutputJdbcupdateBase;
-import hydrograph.engine.jaxb.ojdbcupdate.TypeUpdateKeys;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import hydrograph.engine.jaxb.commontypes.ElementValueIntegerType;
+import hydrograph.engine.jaxb.commontypes.ElementValueStringType;
+import hydrograph.engine.jaxb.ojdbcupdate.TypeOutputJdbcupdateBase;
+import hydrograph.engine.jaxb.ojdbcupdate.TypeUpdateKeys;
 
 
 /**

@@ -14,11 +14,10 @@
 
 package hydrograph.engine.jaxb.operationstypes;
 
-import hydrograph.engine.jaxb.commontypes.TypeOperationsComponent;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+import hydrograph.engine.jaxb.commontypes.TypeOperationsComponent;
 
 
 /**
@@ -35,6 +34,8 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;choice>
  *           &lt;element name="operation" type="{hydrograph/engine/jaxb/filter}type-filter-operation"/>
  *           &lt;element name="expression" type="{hydrograph/engine/jaxb/commontypes}type-transform-expression"/>
+ *           &lt;element name="includeExternalOperation" type="{hydrograph/engine/jaxb/commontypes}type-external-schema"/>
+ *           &lt;element name="includeExternalExpression" type="{hydrograph/engine/jaxb/commontypes}type-external-schema"/>
  *         &lt;/choice>
  *         &lt;element name="outSocket" type="{hydrograph/engine/jaxb/filter}type-filter-out-socket" maxOccurs="2"/>
  *         &lt;element name="runtimeProperties" type="{hydrograph/engine/jaxb/commontypes}type-properties" minOccurs="0"/>

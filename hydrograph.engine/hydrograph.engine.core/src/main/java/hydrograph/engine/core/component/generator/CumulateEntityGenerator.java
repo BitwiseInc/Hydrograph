@@ -55,14 +55,14 @@ public class CumulateEntityGenerator extends OperationComponentGeneratorBase {
 		cumulateEntity.setComponentName(jaxbCumulate.getName());
 
 		// check if operation is present
-		if (jaxbCumulate.getOperationOrExpression() != null && jaxbCumulate.getOperationOrExpression().size() > 0) {
+		if (jaxbCumulate.getOperationOrExpressionOrIncludeExternalOperation() != null && jaxbCumulate.getOperationOrExpressionOrIncludeExternalOperation().size() > 0) {
 
 			LOG.trace("Operation(s) present for cumulate component: " + jaxbCumulate.getId() + ", processing");
 			// set the number of operations in the transform component and set
 			// operation present to true
-			cumulateEntity.setNumOperations(jaxbCumulate.getOperationOrExpression().size());
+			cumulateEntity.setNumOperations(jaxbCumulate.getOperationOrExpressionOrIncludeExternalOperation().size());
 			cumulateEntity.setOperationPresent(true);
-			cumulateEntity.setOperationsList(OperationEntityUtils.extractOperations(jaxbCumulate.getOperationOrExpression()));
+			cumulateEntity.setOperationsList(OperationEntityUtils.extractOperations(jaxbCumulate.getOperationOrExpressionOrIncludeExternalOperation()));
 		} else {
 			LOG.trace("Operation not present for cumulate component: " + jaxbCumulate.getId()
 					+ ", skipped operation processing");

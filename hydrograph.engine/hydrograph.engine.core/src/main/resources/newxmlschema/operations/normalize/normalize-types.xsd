@@ -44,6 +44,7 @@
 						<xs:element name="operationField" type="cmn:type-operation-field" />
 						<xs:element name="expressionField" type="cmn:type-expression-field" />
 						<xs:element name="mapField" type="cmn:type-map-field" />
+						<xs:element name="includeExternalMapping" type="cmn:type-external-schema" />
 					</xs:choice>
 				</xs:choice>
 				<xs:attribute name="id" type="xs:string" use="required"

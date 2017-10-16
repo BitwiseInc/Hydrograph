@@ -57,6 +57,10 @@
 							minOccurs="1" maxOccurs="unbounded" />
 						<xs:element name="expression" type="cmn:type-transform-expression"
 							minOccurs="1" maxOccurs="unbounded" />
+						<xs:element name="includeExternalOperation" type="cmn:type-external-schema"
+									minOccurs="1" maxOccurs="unbounded" />
+						<xs:element name="includeExternalExpression" type="cmn:type-external-schema"
+									minOccurs="1" maxOccurs="unbounded" />
 					</xs:choice>
 					<xs:element name="outSocket" type="transform:type-transform-out-socket"
 						minOccurs="1" maxOccurs="1" />
@@ -127,6 +131,10 @@
 							minOccurs="1" maxOccurs="1" />
 						<xs:element name="expression" type="cmn:type-transform-expression"
 							minOccurs="1" maxOccurs="1" />
+						<xs:element name="includeExternalOperation" type="cmn:type-external-schema"
+									minOccurs="1" maxOccurs="1" />
+						<xs:element name="includeExternalExpression" type="cmn:type-external-schema"
+									minOccurs="1" maxOccurs="1" />
 					</xs:choice>
 					<xs:element name="outSocket" type="executiontracking:type-executiontracking-out-socket"
 						minOccurs="1" maxOccurs="2" />
@@ -148,6 +156,10 @@
 							minOccurs="1" maxOccurs="1" />
 						<xs:element name="expression" type="cmn:type-transform-expression"
 							minOccurs="1" maxOccurs="1" />
+						<xs:element name="includeExternalOperation" type="cmn:type-external-schema"
+									minOccurs="1" maxOccurs="1" />
+						<xs:element name="includeExternalExpression" type="cmn:type-external-schema"
+									minOccurs="1" maxOccurs="1" />
 					</xs:choice>
 					<xs:element name="outSocket" type="filter:type-filter-out-socket"
 						minOccurs="1" maxOccurs="2" />
@@ -165,8 +177,12 @@
 				<xs:sequence>
 					<xs:element name="inSocket" type="cmn:type-base-inSocket-fixed-in0"
 						minOccurs="1" maxOccurs="1" />
-					<xs:element name="operation" type="gen_seq:type-operation"
-						minOccurs="1" maxOccurs="1" />
+					<xs:choice maxOccurs="unbounded" minOccurs="1">
+						<xs:element name="operation" type="gen_seq:type-operation"
+							minOccurs="1" maxOccurs="1" />
+						<xs:element name="includeExternalOperation" type="cmn:type-external-schema"
+							minOccurs="1" maxOccurs="1" />
+					</xs:choice>
 					<xs:element name="outSocket" type="gen_seq:type-out-socket"
 						minOccurs="1" maxOccurs="1" />
 					<xs:element name="runtimeProperties" type="cmn:type-properties"
@@ -218,6 +234,10 @@
 							minOccurs="1" maxOccurs="1" />
 						<xs:element name="expression" type="normalize:type-transform-expression"
 							minOccurs="1" maxOccurs="unbounded" />
+						<xs:element name="includeExternalOperation" type="cmn:type-external-schema"
+									minOccurs="1" maxOccurs="unbounded" />
+						<xs:element name="includeExternalExpression" type="cmn:type-external-schema"
+									minOccurs="1" maxOccurs="unbounded" />
 					</xs:choice>
 					<xs:element name="outputRecordCount" type="cmn:type-output-record-count"
 						minOccurs="0" maxOccurs="1" />

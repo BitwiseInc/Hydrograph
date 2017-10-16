@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
+
 package hydrograph.engine.jaxb.inputtypes;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -21,6 +22,7 @@ import javax.xml.bind.annotation.XmlType;
 import hydrograph.engine.jaxb.commontypes.BooleanValueType;
 import hydrograph.engine.jaxb.commontypes.StandardCharsets;
 import hydrograph.engine.jaxb.itffw.TypeFixedWidthBase;
+
 
 /**
  * <p>Java class for textFileFixedWidth complex type.

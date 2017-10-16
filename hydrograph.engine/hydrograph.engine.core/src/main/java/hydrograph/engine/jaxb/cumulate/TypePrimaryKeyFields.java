@@ -14,13 +14,12 @@
 
 package hydrograph.engine.jaxb.cumulate;
 
-import hydrograph.engine.jaxb.commontypes.TypeFieldName;
-
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
-import java.util.ArrayList;
-import java.util.List;
+import hydrograph.engine.jaxb.commontypes.TypeFieldName;
 
 
 /**

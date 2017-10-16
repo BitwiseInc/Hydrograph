@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
+
 package hydrograph.engine.jaxb.outputtypes;
 
 import javax.xml.bind.annotation.XmlRegistry;
@@ -250,35 +251,35 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ExcelFile.SourcePath }
+     * Create an instance of {@link ExcelFile.Path }
      * 
      */
-    public ExcelFile.SourcePath createExcelFileSourcePath() {
-        return new ExcelFile.SourcePath();
+    public ExcelFile.Path createExcelFilePath() {
+        return new ExcelFile.Path();
     }
 
     /**
-     * Create an instance of {@link ExcelFile.TargetPath }
+     * Create an instance of {@link ExcelFile.WorksheetName }
      * 
      */
-    public ExcelFile.TargetPath createExcelFileTargetPath() {
-        return new ExcelFile.TargetPath();
+    public ExcelFile.WorksheetName createExcelFileWorksheetName() {
+        return new ExcelFile.WorksheetName();
     }
 
     /**
-     * Create an instance of {@link ExcelFile.Delimiter }
+     * Create an instance of {@link ExcelFile.CellFormat }
      * 
      */
-    public ExcelFile.Delimiter createExcelFileDelimiter() {
-        return new ExcelFile.Delimiter();
+    public ExcelFile.CellFormat createExcelFileCellFormat() {
+        return new ExcelFile.CellFormat();
     }
 
     /**
-     * Create an instance of {@link ExcelFile.TemplateExcelPath }
+     * Create an instance of {@link ExcelFile.WriteMode }
      * 
      */
-    public ExcelFile.TemplateExcelPath createExcelFileTemplateExcelPath() {
-        return new ExcelFile.TemplateExcelPath();
+    public ExcelFile.WriteMode createExcelFileWriteMode() {
+        return new ExcelFile.WriteMode();
     }
 
     /**

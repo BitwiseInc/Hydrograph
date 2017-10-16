@@ -14,15 +14,14 @@
 
 package hydrograph.engine.jaxb.operationstypes;
 
-import hydrograph.engine.jaxb.join.JoinBase;
-import hydrograph.engine.jaxb.join.TypeKeyFields;
-
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-import java.util.ArrayList;
-import java.util.List;
+import hydrograph.engine.jaxb.join.JoinBase;
+import hydrograph.engine.jaxb.join.TypeKeyFields;
 
 
 /**

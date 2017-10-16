@@ -14,11 +14,10 @@
 
 package hydrograph.engine.jaxb.generatesequence;
 
-import hydrograph.engine.jaxb.commontypes.TypeTransformOperation;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+import hydrograph.engine.jaxb.commontypes.TypeTransformOperation;
 
 
 /**

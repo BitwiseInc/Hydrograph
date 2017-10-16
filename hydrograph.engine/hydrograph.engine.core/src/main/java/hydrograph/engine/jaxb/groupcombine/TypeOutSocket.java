@@ -14,11 +14,10 @@
 
 package hydrograph.engine.jaxb.groupcombine;
 
-import hydrograph.engine.jaxb.commontypes.TypeOperationsOutSocket;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+import hydrograph.engine.jaxb.commontypes.TypeOperationsOutSocket;
 
 
 /**
@@ -37,6 +36,7 @@ import javax.xml.bind.annotation.XmlType;
  *           &lt;element name="operationField" type="{hydrograph/engine/jaxb/commontypes}type-operation-field"/>
  *           &lt;element name="expressionField" type="{hydrograph/engine/jaxb/commontypes}type-expression-field"/>
  *           &lt;element name="mapField" type="{hydrograph/engine/jaxb/commontypes}type-map-field"/>
+ *           &lt;element name="includeExternalMapping" type="{hydrograph/engine/jaxb/commontypes}type-external-schema"/>
  *         &lt;/choice>
  *       &lt;/choice>
  *       &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}string" fixed="out0" />

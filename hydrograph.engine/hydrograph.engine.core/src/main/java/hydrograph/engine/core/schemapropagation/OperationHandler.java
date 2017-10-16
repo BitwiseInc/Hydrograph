@@ -20,6 +20,7 @@ import hydrograph.engine.core.utilities.SocketUtilities;
 import hydrograph.engine.jaxb.commontypes.*;
 import org.apache.log4j.Logger;
 
+import javax.xml.bind.JAXBElement;
 import java.io.Serializable;
 import java.util.*;
 
@@ -80,23 +81,23 @@ public class OperationHandler implements Serializable {
     }
 
     private Map<String, HashSet<SchemaField>> getOperationOutputFields(TypeBaseComponent baseComponent) {
-        List<Object> operationList = ((TypeOperationsComponent) baseComponent).getOperationOrExpression();
+        List<JAXBElement<?>> operationList = ((TypeOperationsComponent) baseComponent).getOperationOrExpressionOrIncludeExternalOperation();
         Map<String, HashSet<SchemaField>> newSchemaFieldMap = new LinkedHashMap<String, HashSet<SchemaField>>();
         HashSet<SchemaField> newSchemaFieldList = new LinkedHashSet<SchemaField>();
-        for (Object transformOperation : operationList) {
-            if (transformOperation instanceof TypeTransformOperation) {
+        for (JAXBElement transformOperation : operationList) {
+            if (transformOperation.getValue() instanceof TypeTransformOperation) {
                 List<Object> outputFieldList = new ArrayList<Object>(
-                        ((TypeTransformOperation) transformOperation).getOutputFields() != null
-                                ? ((TypeTransformOperation) transformOperation).getOutputFields().getField()
+                        ((TypeTransformOperation) transformOperation.getValue()).getOutputFields() != null
+                                ? ((TypeTransformOperation) transformOperation.getValue()).getOutputFields().getField()
                                 : new ArrayList<Object>());
                 newSchemaFieldList.addAll(InputEntityUtils.extractInputFields(outputFieldList));
-                newSchemaFieldMap.put(((TypeTransformOperation) transformOperation).getId(), newSchemaFieldList);
+                newSchemaFieldMap.put(((TypeTransformOperation) transformOperation.getValue()).getId(), newSchemaFieldList);
             } else {
                 List<Object> outputFieldList = new ArrayList<Object>();
-                if (((TypeTransformExpression) transformOperation).getOutputFields() != null)
-                    outputFieldList.add(((TypeTransformExpression) transformOperation).getOutputFields().getField());
+                if (((TypeTransformExpression) transformOperation.getValue()).getOutputFields() != null)
+                    outputFieldList.add(((TypeTransformExpression) transformOperation.getValue()).getOutputFields().getField());
                 newSchemaFieldList.addAll(InputEntityUtils.extractInputFields(outputFieldList));
-                newSchemaFieldMap.put(((TypeTransformExpression) transformOperation).getId(), newSchemaFieldList);
+                newSchemaFieldMap.put(((TypeTransformExpression) transformOperation.getValue()).getId(), newSchemaFieldList);
             }
         }
         return newSchemaFieldMap;

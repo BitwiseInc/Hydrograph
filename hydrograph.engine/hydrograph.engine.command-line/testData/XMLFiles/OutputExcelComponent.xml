@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><ns2:graph xmlns:ns2="hydrograph/engine/jaxb/main" name="job_1.xml" uniqueJobId="Job_656481753_1506420500229">
+    <inputs xmlns:ns4="hydrograph/engine/jaxb/inputtypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" batch="0" id="GRecords_01" name="GRecords_01" xsi:type="ns4:generateRecord">
+        <outSocket id="out0" type="out">
+            <schema name="Internal">
+                <field description="" name="DefaultField0" type="java.lang.String"/>
+                <field description="" name="DefaultField1" type="java.lang.String"/>
+                <field description="" name="DefaultField2" type="java.util.Date" format="yyyy/MM/dd HH:mm:ss"/>
+                <field description="" name="DefaultField3" type="java.util.Date" format="yy/MM/dd"/>
+            </schema>
+        </outSocket>
+        <recordCount value="12"/>
+    </inputs>
+    <outputs xmlns:ns4="hydrograph/engine/jaxb/outputtypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" batch="0" id="OFExcel_01" name="OFExcel_01" xsi:type="ns4:excelFile">
+        <inSocket xmlns:ns5="hydrograph/engine/jaxb/ofexcel" fromComponentId="GRecords_01" fromSocketId="out0" fromSocketType="out" id="in0" type="in" xsi:type="ns5:type-output-excel-in-socket">
+            <schema name="Internal">
+                <field name="DefaultField0" type="java.lang.String"/>
+                <field name="DefaultField1" type="java.lang.String"/>
+                <field name="DefaultField2" type="java.util.Date" format="yyyy/MM/dd HH:mm:ss"/>
+                <field name="DefaultField3" type="java.util.Date" format="yy/MM/dd"/>
+            </schema>
+        </inSocket>
+        <path uri="testData\Input.xlsx"/>
+        <worksheetName IsColumn="false" name="Test"/>
+        <stripLeadingQuote value="true"/>
+        <autoColumnSize value="false"/>
+        <cellFormat>
+            <header>
+                <field name="DefaultField0">
+                    <copyOfFiled fieldName="DefaultField2"/>
+                </field>
+                <field name="DefaultField1">
+                    <copyOfFiled fieldName="DefaultField2"/>
+                </field>
+                <field name="DefaultField3">
+                    <copyOfFiled fieldName="DefaultField2"/>
+                </field>
+                <field name="DefaultField2">
+                    <property name="BorderStyle" type="border" value="Dashed"/>
+                    <property name="BorderRange" type="border" value="All"/>
+                    <property name="HorizontalAlignment" type="alignment" value="Justify"/>
+                    <property name="VerticalAlignment" type="alignment" value="Justify"/>
+                    <property name="Font" type="font" value="1|Comic Sans MS|27.75|3|WINDOWS|1|-37|0|0|0|700|-1|0|0|0|3|2|1|66|Comic Sans MS|#ff0000"/>
+                    <property name="BackgroundColor" type="color" value="#800000"/>
+                    <property name="BorderColor" type="border" value="#ff8000"/>
+                </field>
+            </header>
+            <data>
+                <field name="DefaultField0">
+                    <copyOfFiled fieldName="DefaultField2"/>
+                </field>
+                <field name="DefaultField1">
+                    <copyOfFiled fieldName="DefaultField2"/>
+                </field>
+                <field name="DefaultField3">
+                    <copyOfFiled fieldName="DefaultField2"/>
+                </field>
+                <field name="DefaultField2">
+                    <property name="BorderStyle" type="border" value="THIN"/>
+                    <property name="BorderRange" type="border" value="All"/>
+                    <property name="HorizontalAlignment" type="alignment" value="Right"/>
+                    <property name="VerticalAlignment" type="alignment" value="Top"/>
+                    <property name="Font" type="font" value="1|Lucida Handwriting|20.25|1|WINDOWS|1|-27|0|0|0|700|0|0|0|0|3|2|1|66|Lucida Handwriting|#800080"/>
+                    <property name="BackgroundColor" type="color" value="#ffffff"/>
+                    <property name="BorderColor" type="border" value="#ff8080"/>
+                </field>
+            </data>
+        </cellFormat>
+        <writeMode value="Overwrite"/>
+        <charset value="UTF-8"/>
+    </outputs>
+</ns2:graph>
