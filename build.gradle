@@ -23,7 +23,7 @@ repositories {
     }
 	 /* Add links of Nexus/Artifactory in order to resolve the dependencies */
      maven {
-        url 'http://artifactory.bitwiseglobal.net:9091/artifactory/hydrograph-spark-github'
+        url ''
     }
 }
    
