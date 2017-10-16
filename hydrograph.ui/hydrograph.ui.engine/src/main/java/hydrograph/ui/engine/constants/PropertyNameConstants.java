@@ -88,7 +88,15 @@ public enum PropertyNameConstants {
 		FTP_LOCAL_PATH("localPath"),
 		FTP_BUCKET("bucketName"),
 		FTP_FOLDER_NAME("folder_name_in_bucket"),
-		FTP_REGION("region");
+		FTP_REGION("region"),
+	    WORK_SHEET_NAME("workSheetName"),
+	    WRITE_MODE("writeMode"),
+	    STRIP_LEADING_QOUTES("stripLeadingQuote"),
+	    AUTO_SIZE_COLUMN("autoColumnSize"),
+	    ABORT_ON_ERROR("AbortOnError"),
+	    EXCEL_FORMAT("excel_formatting"),
+	    FILE_NAME("fileName"),
+	    FILTER_LOGIC("filterLogic");
 	
 	
 		private final String value;

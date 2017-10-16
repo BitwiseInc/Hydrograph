@@ -75,7 +75,7 @@ public abstract class InputConverter extends Converter {
 			TypeExternalSchema typeExternalSchema=new TypeExternalSchema();
 			if(PathUtility.INSTANCE.isAbsolute(schema.getExternalSchemaPath()) 
 					|| ParameterUtil.startsWithParameter(schema.getExternalSchemaPath(), Path.SEPARATOR))
-				typeExternalSchema.setUri(schema.getExternalSchemaPath());
+				typeExternalSchema.setUri("../"+schema.getExternalSchemaPath());
 			else
 				typeExternalSchema.setUri("../"+schema.getExternalSchemaPath());
 			typeBaseRecord.setName("External");

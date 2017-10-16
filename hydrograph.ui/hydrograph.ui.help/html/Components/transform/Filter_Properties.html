@@ -65,9 +65,13 @@
 	</p>
 
 	<ul>
-		<li><span><b>Expression Editor Or Operation Class</b> -
+		<li><span><b>Filter Logic</b> -
 				Edit option of Filter property window allows user to choose only one
 				option,i.e either Expression or Operation.</span>
+				
+				<p>
+				<img alt="" src="../../images/Filer_Logic_Window.png" />
+			</p>
 
 			<p>
 				<span><b>Operation Class</b> : Selecting Operation opens up a
@@ -88,7 +92,13 @@
 			</p>
 			<p>
 				<img src="../../images/expression_editor.png" />
-			</p></li>
+			</p>
+			<p>
+				<span><b>Externalizing Filter Transformations :</b> Externalizing Transformations feature enables user to externalize expression, class and output fields of <b>Operation Editor</b>. Its enhancing generalizing capabilities of all Transform components and providing options to user for generic job creation.</span>
+				<p><span>For more details regarding externalizing expression, class and output fields of Operation Editor, refer <a href="Externalizing_Transformations_Filter.html">Externalizing Transformations</a>.</span></li>
+			</p>
+			
+			</li>
 	</ul>
 
 
@@ -119,6 +129,21 @@
 				number starting from 0 and signifies the phase this component will
 				execute in. By default this is 0.</span></li>
 	</ul>
+	
+	<p><a name="schema"></a><span class="header-2">Schema Tab</span></p>
+
+<p><img alt="" src="../../images/filter_properties_schema.png" /></p>
+
+<p><span>Schema is <b>mandatory</b> for partition by expression component. Schema tab defines the record format on the out port of the partition by expression component. A field in schema has multiple attributes as described below.</span></p>
+<ul>
+	<li><span><b>Field Name</b> - The name for the field. This is a mandatory attribute.</span></li>
+	<li><span><b>Data type</b> - The data type for the field. This is a mandatory attribute. The default data type is "String". Check supported data types page for list of supported data types.</span></li>
+	<li><span><b>Scale</b> - The number of digits to the right of decimal point. Scale is defined for Double, Float or BigDecimal field.</span></li>
+	<li><span><b>Scale Type</b> - Scale Type accepts values as implicit or explicit for BigDecimal field and none for other data types. Explicit considers the length of '.' in precision and implicit ignores length of '.' precision for the BigDecimal field.</span></li>
+	<li><span><b>Date Format</b> - The format for date data type. Refer to <a href="../../references/Date_Formats.html">java date formats</a> page for acceptable date formats.</span></li>
+	<li><span><b>Precision</b> - The number of significant digits (all digits except leading zeros and trailing zeros after decimal point).</span></li>
+	<li><span><b>Field Description</b> - The description for the field.</span></li>
+</ul>
 
 	<p>
 		<a name="validations"></a><span class="header-2">Validations</span>

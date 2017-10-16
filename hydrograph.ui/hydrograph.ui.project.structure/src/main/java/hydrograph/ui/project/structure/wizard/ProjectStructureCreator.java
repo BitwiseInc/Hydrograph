@@ -75,7 +75,7 @@ public class ProjectStructureCreator {
 	private static final Logger logger = LogFactory.INSTANCE.getLogger(ProjectStructureCreator.class);
 
 	public static final String [] paths = {CustomMessages.ProjectSupport_Settings,CustomMessages.ProjectSupport_JOBS,CustomMessages.ProjectSupport_RESOURCES,Constants.ProjectSupport_SRC,  
-		CustomMessages.ProjectSupport_SCRIPTS,CustomMessages.ProjectSupport_PARAM,CustomMessages.ProjectSupport_GLOBAL_PARAM,CustomMessages.ProjectSupport_SCHEMA,CustomMessages.ProjectSupport_LIB};
+		CustomMessages.ProjectSupport_SCRIPTS,CustomMessages.ProjectSupport_PARAM,CustomMessages.ProjectSupport_GLOBAL_PARAM,CustomMessages.ProjectSupport_SCHEMA,CustomMessages.ProjectSupport_EXTERNALTRANSFORMFILES,CustomMessages.ProjectSupport_LIB};
 
 	public static final ProjectStructureCreator INSTANCE = new ProjectStructureCreator();
 

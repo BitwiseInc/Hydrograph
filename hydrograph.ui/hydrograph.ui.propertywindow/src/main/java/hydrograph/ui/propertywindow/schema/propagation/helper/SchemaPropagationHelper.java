@@ -14,7 +14,15 @@
  
 package hydrograph.ui.propertywindow.schema.propagation.helper;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
+
 import hydrograph.ui.common.util.Constants;
+import hydrograph.ui.common.util.ExternalSchemaUtil;
 import hydrograph.ui.datastructure.property.BasicSchemaGridRow;
 import hydrograph.ui.datastructure.property.ComponentsOutputSchema;
 import hydrograph.ui.datastructure.property.FilterProperties;
@@ -24,15 +32,7 @@ import hydrograph.ui.datastructure.property.Schema;
 import hydrograph.ui.graph.model.Component;
 import hydrograph.ui.graph.model.Link;
 import hydrograph.ui.graph.schema.propagation.SchemaPropagation;
-import hydrograph.ui.propertywindow.messages.Messages;
 import hydrograph.ui.propertywindow.widgets.utility.SchemaSyncUtility;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.lang.StringUtils;
 
 
 public class SchemaPropagationHelper {
@@ -44,6 +44,12 @@ public class SchemaPropagationHelper {
 		
 	}
 	
+	/**
+	 * Returns field-map from propagated schema
+	 * 
+	 * @param component
+	 * @return
+	 */
 	public Map<String, List<String>> getFieldsForFilterWidget(Component component) {
 		Map<String, List<String>> propagatedFiledMap = new HashMap<String, List<String>>();
 		List<String> genratedProperty = null;
@@ -60,6 +66,12 @@ public class SchemaPropagationHelper {
 		return propagatedFiledMap;
 	}
 
+	/**
+	 * Sort fields on bases of its source output-port
+	 * 
+	 * @param component
+	 * @return
+	 */
 	public List<List<FilterProperties>> sortedFiledNamesBySocketId(Component component) {
 		int inputPortCount = 2;
 		List<List<FilterProperties>> listofFiledNameList = new ArrayList<>();
@@ -121,39 +133,12 @@ public class SchemaPropagationHelper {
 	
 
 	public FixedWidthGridRow createFixedWidthGridRow(String fieldName) {
-
-		FixedWidthGridRow fixedWidthGridRow = null;
-		if (fieldName != null) {
-			fixedWidthGridRow = new FixedWidthGridRow();
-			fixedWidthGridRow.setFieldName(fieldName);
-			fixedWidthGridRow.setDataType(Integer.valueOf(Constants.DEFAULT_INDEX_VALUE_FOR_COMBOBOX));
-			fixedWidthGridRow.setDataTypeValue(String.class.getCanonicalName());
-			fixedWidthGridRow.setScale("");
-			fixedWidthGridRow.setLength("");
-			fixedWidthGridRow.setPrecision("");
-			fixedWidthGridRow.setDateFormat("");
-			fixedWidthGridRow.setScaleType(Integer.valueOf(Constants.DEFAULT_INDEX_VALUE_FOR_COMBOBOX));
-			fixedWidthGridRow.setScaleTypeValue(Messages.SCALE_TYPE_NONE);
-			
-		}
-		return fixedWidthGridRow;
+		return ExternalSchemaUtil.INSTANCE.createFixedWidthGridRow(fieldName);
 	}
 
 
 	public BasicSchemaGridRow createSchemaGridRow(String fieldName) {
-
-		BasicSchemaGridRow	 schemaGrid = null;
-		if (fieldName != null) {
-			schemaGrid = new BasicSchemaGridRow();
-			schemaGrid.setFieldName(fieldName);
-			schemaGrid.setDataType(Integer.valueOf(Constants.DEFAULT_INDEX_VALUE_FOR_COMBOBOX));
-			schemaGrid.setDataTypeValue(String.class.getCanonicalName());
-			schemaGrid.setScale("");
-			schemaGrid.setPrecision("");
-			schemaGrid.setDateFormat("");
-			
-		}
-		return schemaGrid;
+		return ExternalSchemaUtil.INSTANCE.createSchemaGridRow(fieldName);
 	}
 	
 	/**

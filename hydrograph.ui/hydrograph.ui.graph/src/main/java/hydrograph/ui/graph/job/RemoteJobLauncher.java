@@ -57,7 +57,7 @@ public class RemoteJobLauncher extends AbstractJobLauncher {
 	public  static boolean isRunning=false;
 
 	@Override
-	public void launchJob(String xmlPath, String paramFile,String userFunctionsPropertyFile, Job job, DefaultGEFCanvas gefCanvas,List<String> externalSchemaFiles,List<String> subJobList) {
+	public void launchJob(String xmlPath, String paramFile,String userFunctionsPropertyFile, Job job, DefaultGEFCanvas gefCanvas,List<String> externalFiles,List<String> subJobList) {
 		Session session=null;
 		if(isExecutionTrackingOn()){
 			HydrographServerConnection hydrographServerConnection = new HydrographServerConnection();
@@ -76,7 +76,7 @@ public class RemoteJobLauncher extends AbstractJobLauncher {
 
 		job.setJobStatus(JobStatus.RUNNING);
 
-		gradleCommand = JobScpAndProcessUtility.INSTANCE.getCreateDirectoryCommand(job,paramFile,xmlPath,projectName,new ArrayList<String>(externalSchemaFiles),new ArrayList<>(subJobList));
+		gradleCommand = JobScpAndProcessUtility.INSTANCE.getCreateDirectoryCommand(job,paramFile,xmlPath,projectName,new ArrayList<String>(externalFiles),new ArrayList<>(subJobList));
 
 		JobManager.INSTANCE.enableRunJob(false);
 		
@@ -125,14 +125,14 @@ public class RemoteJobLauncher extends AbstractJobLauncher {
 
 		/*
 		 * Created list having relative and absolute # separated path, 
-		 * the path is split in gradle script, Using absolute path we move external schema file to remote server   
+		 * the path is split in gradle script, Using absolute path we move external file to remote server   
 		 */
-		if(!externalSchemaFiles.isEmpty()){
-			List<String> schemaFilesFullPath = new ArrayList<>();
-			for (String schemaFile : externalSchemaFiles) {
-				schemaFilesFullPath.add(schemaFile+"#"+JobManager.getAbsolutePathFromFile(new Path(schemaFile)));
+		if(!externalFiles.isEmpty()){
+			List<String> externalFilesFullPath = new ArrayList<>();
+			for (String externalFile : externalFiles) {
+				externalFilesFullPath.add(externalFile+"#"+JobManager.getAbsolutePathFromFile(new Path(externalFile)));
 			}
-			gradleCommand = JobScpAndProcessUtility.INSTANCE.getSchemaScpCommand(schemaFilesFullPath,job);
+			gradleCommand = JobScpAndProcessUtility.INSTANCE.getExternalFilesScpCommand(externalFilesFullPath,job);
 
 			executeCommand(job, project, gradleCommand, gefCanvas,joblogger);
 			if (JobStatus.FAILED.equals(job.getJobStatus())) {

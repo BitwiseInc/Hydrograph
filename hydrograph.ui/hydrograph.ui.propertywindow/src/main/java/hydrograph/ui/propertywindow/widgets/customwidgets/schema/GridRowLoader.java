@@ -18,7 +18,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,13 +44,13 @@ import org.slf4j.Logger;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-import hydrograph.ui.common.property.util.Utils;
 import hydrograph.ui.common.schema.Field;
 import hydrograph.ui.common.schema.FieldDataTypes;
 import hydrograph.ui.common.schema.Fields;
-import hydrograph.ui.common.schema.ScaleTypes;
 import hydrograph.ui.common.schema.Schema;
 import hydrograph.ui.common.util.Constants;
+import hydrograph.ui.common.util.ExternalSchemaUtil;
+import hydrograph.ui.common.util.SchemaFieldUtil;
 import hydrograph.ui.datastructure.property.BasicSchemaGridRow;
 import hydrograph.ui.datastructure.property.FixedWidthGridRow;
 import hydrograph.ui.datastructure.property.GenerateRecordSchemaGridRow;
@@ -343,76 +342,13 @@ public class GridRowLoader {
 		jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
 		for (GridRow gridRow : schemaGridRowList) {
-			Field field = new Field();
-			if (StringUtils.indexOf(gridRow.getFieldName(), "}") - StringUtils.indexOf(gridRow.getFieldName(), "@{") >= 3) {
-				Utils.INSTANCE.loadProperties();
-				String paramValue = Utils.INSTANCE.getParamValueForRunSql(gridRow.getFieldName());
-				field.setName(paramValue);
-			} else {
-				field.setName(gridRow.getFieldName());
-			}
-			field.setType(FieldDataTypes.fromValue(gridRow.getDataTypeValue()));
-			
-			if(gridRow instanceof XPathGridRow){
-				if(StringUtils.isNotBlank(((XPathGridRow)gridRow).getXPath())){
-					field.setAbsoluteOrRelativeXpath((((XPathGridRow)gridRow).getXPath()));
-				}
-			}
-			
-			if(StringUtils.isNotBlank(gridRow.getDateFormat())){
-				field.setFormat(gridRow.getDateFormat());
-			}
-			if(StringUtils.isNotBlank(gridRow.getPrecision())){
-				field.setPrecision(Integer.parseInt(gridRow.getPrecision()));
-			}
-			if(StringUtils.isNotBlank(gridRow.getScale())){
-				field.setScale(Integer.parseInt(gridRow.getScale()));
-			}
-			if(gridRow.getScaleTypeValue()!=null){
-				if(!gridRow.getScaleTypeValue().equals("") && !gridRow.getScaleTypeValue().equals(Messages.SCALE_TYPE_NONE)){
-					field.setScaleType(ScaleTypes.fromValue(gridRow.getScaleTypeValue()));
-				}
-			}
-			if(StringUtils.isNotBlank(gridRow.getDescription())){
-				field.setDescription(gridRow.getDescription());
-			}
-
-			if(gridRow instanceof FixedWidthGridRow){
-				if(StringUtils.isNotBlank(((FixedWidthGridRow)gridRow).getLength())){
-					field.setLength(new BigInteger(((FixedWidthGridRow)gridRow).getLength()));
-				}
-			}
-			
-			if(gridRow instanceof MixedSchemeGridRow){
-				if(StringUtils.isNotBlank(((MixedSchemeGridRow)gridRow).getLength())){
-					field.setLength(new BigInteger(((MixedSchemeGridRow)gridRow).getLength()));
-				}
-				
-				if(StringUtils.isNotBlank(((MixedSchemeGridRow)gridRow).getDelimiter())){
-					field.setDelimiter((((MixedSchemeGridRow)gridRow).getDelimiter()));
-				}
-
-			}
-
-			if(gridRow instanceof GenerateRecordSchemaGridRow){
-				if(StringUtils.isNotBlank(((GenerateRecordSchemaGridRow)gridRow).getLength())){
-					field.setLength(new BigInteger(((GenerateRecordSchemaGridRow)gridRow).getLength()));
-				}
-				if(StringUtils.isNotBlank(((GenerateRecordSchemaGridRow) gridRow).getRangeFrom())){
-					field.setRangeFrom((((GenerateRecordSchemaGridRow) gridRow).getRangeFrom()));
-				}
-				if(StringUtils.isNotBlank(((GenerateRecordSchemaGridRow) gridRow).getRangeTo())){
-					field.setRangeTo(((GenerateRecordSchemaGridRow) gridRow).getRangeTo());
-				}
-				if(StringUtils.isNotBlank(((GenerateRecordSchemaGridRow) gridRow).getDefaultValue())){
-					field.setDefault(((GenerateRecordSchemaGridRow) gridRow).getDefaultValue());
-				}
-			}
+			Field field = ExternalSchemaUtil.INSTANCE.convertGridRowToJaxbSchemaField(gridRow);
 			fields.getField().add(field);
 		}
 		schema.setFields(fields);
 		jaxbMarshaller.marshal(schema, schemaFile);
 	}
+
 	
 
 	private GridRow getBasicSchemaGridRow(Field field) {
@@ -563,8 +499,8 @@ public class GridRowLoader {
 			gridRow.setScale("");
 
 		if(field.getScaleType()!=null){
-			gridRow.setScaleType(GridWidgetCommonBuilder.getScaleTypeByValue(field.getScaleType().value()));	
-			gridRow.setScaleTypeValue(GridWidgetCommonBuilder.getScaleTypeValue()[GridWidgetCommonBuilder.getScaleTypeByValue(field.getScaleType().value())]);
+			gridRow.setScaleType(SchemaFieldUtil.INSTANCE.getScaleTypeByValue(field.getScaleType().value()));	
+			gridRow.setScaleTypeValue(GridWidgetCommonBuilder.getScaleTypeValue()[SchemaFieldUtil.INSTANCE.getScaleTypeByValue(field.getScaleType().value())]);
 		}else{
 			gridRow.setScaleType(GridWidgetCommonBuilder.getScaleTypeByValue(Messages.SCALE_TYPE_NONE));
 			gridRow.setScaleTypeValue(GridWidgetCommonBuilder.getScaleTypeValue()[Integer.valueOf(Constants.DEFAULT_INDEX_VALUE_FOR_COMBOBOX)]);

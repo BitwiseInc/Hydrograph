@@ -25,6 +25,7 @@ import hydrograph.ui.propertywindow.propertydialog.PropertyDialogButtonBar;
 import hydrograph.ui.propertywindow.widgets.customwidgets.databasecomponents.InputAdditionalParametersWidget;
 import hydrograph.ui.propertywindow.widgets.customwidgets.databasecomponents.LoadTypeConfigurationWidget;
 import hydrograph.ui.propertywindow.widgets.customwidgets.databasecomponents.OutputAdditionalParametersWidget;
+import hydrograph.ui.propertywindow.widgets.customwidgets.excelcomponent.ExcelFormattingWidget;
 import hydrograph.ui.propertywindow.widgets.customwidgets.runtimeproperty.ELTRuntimePropertiesWidget;
 import hydrograph.ui.propertywindow.widgets.customwidgets.secondarykeys.SecondaryColumnKeysWidget;
 
@@ -64,6 +65,8 @@ public class ELTRuntimeButtonClickListener implements IELTListener {
 						((AuthenticationWidget)helpers.object).newWindowLauncher();
 					else if(helpers.object instanceof OperationConfigWidget)
 						((OperationConfigWidget)helpers.object).newWindowLauncher();
+					else if(helpers.object instanceof ExcelFormattingWidget) 
+						((ExcelFormattingWidget)helpers.object).newWindowLauncher();
 				}
 
 			}

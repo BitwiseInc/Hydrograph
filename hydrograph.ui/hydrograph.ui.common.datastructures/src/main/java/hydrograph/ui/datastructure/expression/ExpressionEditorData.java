@@ -193,4 +193,14 @@ public class ExpressionEditorData implements IDataStructure {
 		this.componentName = componentName;
 	}
 
+	public void clear() {
+		isValid = false;
+		errorMessage = Messages.INVALID_EXPRESSION;
+		expression = "";
+		fieldsUsedInExpression.clear();
+		selectedInputFieldsForExpression.clear();
+		extraFieldDatatypeMap.clear();
+		componentName = "";
+	}
+
 }

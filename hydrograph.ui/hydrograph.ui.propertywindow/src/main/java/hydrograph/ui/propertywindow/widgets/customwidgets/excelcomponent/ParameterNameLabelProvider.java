@@ -10,29 +10,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
+package hydrograph.ui.propertywindow.widgets.customwidgets.excelcomponent;
 
- 
-package hydrograph.ui.common;
+import java.util.Map.Entry;
 
-import org.eclipse.osgi.util.NLS;
+import org.eclipse.jface.viewers.ColumnLabelProvider;
 
 /**
- * The Class Messages. This is a message bundle class.
+ * ParameterNameLabelProvider defines the label provider 
  * @author Bitwise
+ *
  */
-public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "hydrograph.ui.common.messages"; //$NON-NLS-1$
-	public static String XMLConfigUtil_CONFIG_FOLDER;
-	public static String XMLConfigUtil_XML_CONFIG_FOLDER;
-	public static String XMLConfigUtil_FILE_EXTENTION;
-	public static String XMLConfigUtil_COMPONENTCONFIG_XSD_PATH;
-	public static String XMLConfigUtil_POLICYCONFIG_XSD_PATH;
-	public static String XMLConfigUtil_POLICY;
-	static {
-		// initialize resource bundle
-		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
-	}
-
-	private Messages() {
+public class ParameterNameLabelProvider extends ColumnLabelProvider{
+	
+	@Override
+	public String getText(Object element) {
+		Entry<String, String> entry =(Entry)element;
+		return entry.getKey();
 	}
 }

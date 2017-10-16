@@ -70,13 +70,13 @@ public class DebugLocalJobLauncher extends AbstractJobLauncher{
 	 * @param paramFile
 	 * @param job
 	 * @param gefCanvas
-	 * @param externalSchemaFiles Empty list required only in remote run.
+	 * @param externalFiles Empty list required only in remote run.
 	 * @param subJobList Empty list required only in remote run.
 	 * 
 	 * 
 	 */
 	@Override
-public void launchJobInDebug(String xmlPath, String debugXmlPath,String paramFile,String userFunctionsPropertyFile, Job job,	DefaultGEFCanvas gefCanvas,List<String> externalSchemaFiles,List<String> subJobList) {
+public void launchJobInDebug(String xmlPath, String debugXmlPath,String paramFile,String userFunctionsPropertyFile, Job job,	DefaultGEFCanvas gefCanvas,List<String> externalFiles,List<String> subJobList) {
 		Session session=null;
 
 		if(isExecutionTrackingOn()){

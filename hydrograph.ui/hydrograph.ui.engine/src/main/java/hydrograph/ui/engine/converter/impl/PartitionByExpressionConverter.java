@@ -15,6 +15,8 @@ package hydrograph.ui.engine.converter.impl;
 
 import java.util.List;
 
+import javax.xml.bind.JAXBElement;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 
@@ -66,7 +68,7 @@ public class PartitionByExpressionConverter extends TransformConverter {
 			noOfPartitions.setValue(partitionValueInt);
 			partByExp.setNoOfPartitions(noOfPartitions);
 		}
-		partByExp.getOperationOrExpression().addAll(getOperations());
+		partByExp.getOperationOrExpressionOrIncludeExternalOperation().addAll(getOperations());
 	}
 
 	@Override
@@ -75,8 +77,8 @@ public class PartitionByExpressionConverter extends TransformConverter {
 	}
 
 	@Override
-	protected List<Object> getOperations() {
-		return operationConverterHelper.getOperations(Converter.ID);
+	protected List<JAXBElement<?>> getOperations() {
+		return operationConverterHelper.getFilterOperations(Converter.ID);
 	}
 
 	@Override

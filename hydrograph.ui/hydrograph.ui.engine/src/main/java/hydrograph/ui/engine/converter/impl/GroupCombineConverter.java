@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.xml.bind.JAXBElement;
+
 import org.slf4j.Logger;
 
 
@@ -82,13 +84,13 @@ public class GroupCombineConverter extends TransformConverter {
 		super.prepareForXML();
 
 		Groupcombine groupCombine = (Groupcombine) baseComponent;
-		groupCombine.getOperationOrExpression().addAll(getOperations());
+		groupCombine.getOperationOrExpressionOrIncludeExternalOperation().addAll(getOperations());
 		setPrimaryKeys(groupCombine);
 		
 	}
 
 	@Override
-	protected List<Object> getOperations() {
+	protected List<JAXBElement<?>> getOperations() {
 		return converterHelper.getOperationsOrExpression(transformMapping, schemaGridRows);
 	}
 

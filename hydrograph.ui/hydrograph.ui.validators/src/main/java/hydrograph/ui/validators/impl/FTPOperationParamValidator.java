@@ -60,9 +60,11 @@ public class FTPOperationParamValidator implements IValidator{
 								errorMessage = propertyName + " can not be blank";
 								return false;
 							}
-							if(details.getField3() == null || details.getField3().isEmpty()){
-								errorMessage = propertyName + " can not be blank";
-								return false;
+							if(!StringUtils.equalsIgnoreCase(map.getKey(), Constants.PUT_FILE_S3)){
+								if(details.getField3() == null || details.getField3().isEmpty()){
+									errorMessage = propertyName + " can not be blank";
+									return false;
+								}
 							}
 							if(details.getField4() == null || details.getField4().isEmpty()){
 								errorMessage = propertyName + " can not be blank";

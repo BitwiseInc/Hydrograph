@@ -55,7 +55,8 @@ public enum UIComponentsConstants {
 	BATCH("batch"),
 	PARTITION_BY_EXPRESSION("PartitionByExpression"),
 	XML("XML"),
-	DB_UPDATE("DB Update");
+	DB_UPDATE("DB Update"),
+	EXCEL("Excel");
 	
 	private final String value;
 

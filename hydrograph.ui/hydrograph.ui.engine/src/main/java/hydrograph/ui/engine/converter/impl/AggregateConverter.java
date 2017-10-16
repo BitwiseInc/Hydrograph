@@ -19,6 +19,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.xml.bind.JAXBElement;
+
 import org.slf4j.Logger;
 
 import hydrograph.engine.jaxb.aggregate.TypePrimaryKeyFields;
@@ -82,13 +84,13 @@ public class AggregateConverter extends TransformConverter {
 		super.prepareForXML();
 
 		Aggregate aggregate = (Aggregate) baseComponent;
-		aggregate.getOperationOrExpression().addAll(getOperations());
+		aggregate.getOperationOrExpressionOrIncludeExternalOperation().addAll(getOperations());
 		setPrimaryKeys(aggregate);
 		setSecondaryKeys(aggregate);
 	}
 
 	@Override
-	protected List<Object> getOperations() {
+	protected List<JAXBElement<?>> getOperations() {
 		return converterHelper.getOperationsOrExpression(transformMapping, schemaGridRows);
 	}
 

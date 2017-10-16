@@ -105,7 +105,7 @@ public class ValidateExpressionToolButton extends Button {
 	public static DiagnosticCollector<JavaFileObject> compileExpresion(String expressionStyledText,Map<String, Class<?>> fieldMap,String componentName)
 			throws JavaModelException, InvocationTargetException, ClassNotFoundException, MalformedURLException,IllegalAccessException, IllegalArgumentException {
 		LOGGER.debug("Compiling expression using Java-Compiler");
-		String expressiontext=getExpressionText(expressionStyledText);
+		String expressiontext=getExpressionText(expressionStyledText);				
 		DiagnosticCollector<JavaFileObject> diagnostics = null;
 		Object[] returObj=getBuildPathForMethodInvocation() ;
 		List<URL> urlList=(List<URL>) returObj[0];
@@ -185,7 +185,7 @@ public class ValidateExpressionToolButton extends Button {
 		} catch (InvocationTargetException exception) {
 			if(exception.getCause()!=null && StringUtils.isNotBlank(exception.getCause().getMessage()))
 				new CustomMessageBox(SWT.ERROR, exception.getCause().getMessage(), Messages.INVALID_EXPRESSION_TITLE).open();
-			LOGGER.warn("Exception occurred while invoking compile method for compiling expression");
+			LOGGER.warn("Exception occurred while invoking compile method for compiling expression",exception);
 		} catch (ClassNotFoundException classNotFoundException) {
 			new CustomMessageBox(SWT.ERROR, "Cannot find validation jar in build path", Messages.INVALID_EXPRESSION_TITLE).open();
 		}

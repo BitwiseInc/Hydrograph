@@ -14,6 +14,7 @@
 package hydrograph.ui.propertywindow.widgets.utility;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -486,13 +487,12 @@ public class OutputRecordCountUtility {
 	 * propagate output fields of mapping window to schema widget
 	 */
 	public void propagateOuputFieldsToSchemaTabFromTransformWidget(TransformMapping transformMapping,Schema schema,Component component,
-			List<FilterProperties> outputList,List<String> operationFieldListOfString) 
+			List<FilterProperties> outputList) 
 	{
     	if (transformMapping == null || transformMapping.getMappingSheetRows() == null){
 			return;
     	}
     	schema.getGridRow().clear();
-    	operationFieldListOfString.clear();
         List<String> finalPassThroughFields=new LinkedList<String>();
 		Map<String, String> finalMapFields=new LinkedHashMap<String, String>();
         List<FilterProperties> operationFieldList=new LinkedList<FilterProperties>();
@@ -508,9 +508,6 @@ public class OutputRecordCountUtility {
         addPassthroughFieldsToSchema(passThroughFields,schema,component);
 		addMapFieldsToSchema(mapFields,schema,component);
         addPassthroughFieldsAndMappingFieldsToComponentOuputSchema(finalMapFields, finalPassThroughFields,component);
-		for(FilterProperties f:operationFieldList){	
-			operationFieldListOfString.add(f.getPropertyname());
-		}
 		if(!outputList.isEmpty())
 		{
 		 List<GridRow> sortedList=new ArrayList<>();
@@ -542,8 +539,9 @@ public class OutputRecordCountUtility {
 	 * 
 	 * add pass through fields to mapping output field
 	 */
-	public void addPassThroughFields(TransformMapping transformMapping)
+	public void addPassThroughFieldsToSchema(TransformMapping transformMapping,Component component,Schema schema)
 	{
+		List<FilterProperties> outputList=new ArrayList<>();
 		List<InputField> inputFieldList=transformMapping.getInputFields();	
 		for(InputField inputField:inputFieldList)
 		{
@@ -559,8 +557,64 @@ public class OutputRecordCountUtility {
 			}
 		
 	     }
-	   transformMapping.setAddPassThroughFields(false);
+		updatePassThroughFieldAndOutputFields(transformMapping,component, transformMapping.getOutputFieldList());
+		SchemaSyncUtility.INSTANCE.unionFilter(transformMapping.getOutputFieldList(),outputList);
+		List<String> passthroughFields=getPassThroughFields(transformMapping.getMapAndPassthroughField());
+		addPassthroughFieldsToSchema(passthroughFields, schema, component);
+		updateComponentOutputSchemaAndSchema(component, schema);
 	   
+	}
+	
+	private void updateComponentOutputSchemaAndSchema(Component component, Schema schema) {
+		
+		Map<String, ComponentsOutputSchema> schemaMap = (Map<String, ComponentsOutputSchema>) component.getProperties()
+				.get(Constants.SCHEMA_TO_PROPAGATE);
+		if (schemaMap != null && schemaMap.get(Constants.FIXED_OUTSOCKET_ID) != null) {
+			ComponentsOutputSchema componentsOutputSchema = schemaMap.get(Constants.FIXED_OUTSOCKET_ID);
+			componentsOutputSchema.setFixedWidthGridRowsOutputFields(new ArrayList<>());
+			List<GridRow> gridRows = schema.getGridRow();
+			for (GridRow gridRow : gridRows) {
+				componentsOutputSchema.addSchemaFields(gridRow);
+			}
+		}
+		
+		component.getProperties().put(Constants.SCHEMA, schema);
+	}
+	
+	// Removed pass through field according to new input.
+	private void updatePassThroughFieldAndOutputFields(TransformMapping transformMapping, Component component, List<FilterProperties> outputLists) {
+
+		List<NameValueProperty> mapAndPassthroughFields = transformMapping.getMapAndPassthroughField();
+		Iterator<NameValueProperty> iterator = mapAndPassthroughFields.iterator();
+		while (iterator.hasNext()) {
+			NameValueProperty nameValueProperty = iterator.next();
+			if (isPassThroughField(nameValueProperty) && !isPassThroughFieldPresentInInput(transformMapping, nameValueProperty)) {
+				iterator.remove();
+				outputLists.remove(nameValueProperty.getFilterProperty());
+			}
+		}
+
+	}
+	
+	private boolean isPassThroughFieldPresentInInput(TransformMapping transformMapping,
+			NameValueProperty nameValueProperty) {
+		List<InputField> inputFields = transformMapping.getInputFields();
+		boolean isFound = false;
+		for (InputField inputField : inputFields) {
+			if (inputField.getFieldName().equals(nameValueProperty.getPropertyName())) {
+				isFound = true;
+				break;
+			}
+		}
+		return isFound;
+	}
+	
+	private boolean isPassThroughField(NameValueProperty nameValueProperty) {
+		if (nameValueProperty.getPropertyName().endsWith(nameValueProperty.getPropertyValue())) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	

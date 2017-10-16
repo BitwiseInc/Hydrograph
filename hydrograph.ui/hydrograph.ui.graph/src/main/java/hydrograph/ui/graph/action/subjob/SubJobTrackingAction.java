@@ -101,7 +101,8 @@ public class SubJobTrackingAction extends SelectionAction{
 					if (((ComponentEditPart) obj).getCastedModel().getCategory().equalsIgnoreCase(Constants.SUBJOB_COMPONENT_CATEGORY)) {
 						Component subjobComponent = ((ComponentEditPart) obj).getCastedModel();
 						ELTGraphicalEditor eltGraphicalEditor=(ELTGraphicalEditor) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-						Container container=(Container)subjobComponent.getProperties().get(Constants.SUBJOB_CONTAINER);
+
+						Container container=(Container)subjobComponent.getSubJobContainer().get(Constants.SUBJOB_CONTAINER);
 						String uniqueJobId = selectedExecutionHistoryJobId(eltGraphicalEditor.getJobId());
 						if(subjobComponent.getParent().isCurrentGraphSubjob()){
 							container.setUniqueJobId(subjobComponent.getParent().getUniqueJobId());

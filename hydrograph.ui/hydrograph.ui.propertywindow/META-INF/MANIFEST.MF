@@ -30,7 +30,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.apache.commons.httpclient,
  org.junit,
  org.eclipse.gef;bundle-version="3.11.0",
- org.eclipse.equinox.security;bundle-version="1.2.200"
+ org.eclipse.equinox.security;bundle-version="1.2.200",
+ org.eclipse.wst.common.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: hydrograph.ui.common.util,

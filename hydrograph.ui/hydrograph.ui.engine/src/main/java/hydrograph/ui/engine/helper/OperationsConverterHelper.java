@@ -17,6 +17,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.bind.JAXBElement;
+
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 
 import hydrograph.engine.jaxb.commontypes.TypeBaseInSocket;
@@ -26,12 +29,10 @@ import hydrograph.engine.jaxb.commontypes.TypeOperationsOutSocket;
 import hydrograph.engine.jaxb.commontypes.TypeOutSocketAsInSocket;
 import hydrograph.engine.jaxb.commontypes.TypeTransformExpression;
 import hydrograph.engine.jaxb.commontypes.TypeTransformOperation;
+import hydrograph.ui.common.datastructure.filter.ExpressionData;
+import hydrograph.ui.common.datastructure.filter.FilterLogicDataStructure;
 import hydrograph.ui.common.util.Constants;
-import hydrograph.ui.common.util.ParameterUtil;
-import hydrograph.ui.datastructure.expression.ExpressionEditorData;
-import hydrograph.ui.datastructure.property.OperationClassProperty;
-import hydrograph.ui.engine.constants.PropertyNameConstants;
-import hydrograph.ui.engine.xpath.ComponentXpathConstants;
+import hydrograph.ui.engine.qnames.OperationsExpressionType;
 import hydrograph.ui.graph.model.Component;
 import hydrograph.ui.graph.model.Link;
 import hydrograph.ui.logging.factory.LogFactory;
@@ -74,114 +75,101 @@ public class OperationsConverterHelper {
 
 	}
 	
-	public List<Object> getOperations(String id) {
+	/**
+	 * @param id
+	 * @return
+	 */
+	public List<JAXBElement<?>> getFilterOperations(String id) {
 		logger.debug("Generating TypeTransformOperation data :{}", properties.get(Constants.PARAM_NAME));
-        List<Object> operationList = new ArrayList<>();
-     	OperationClassProperty operationClassProperty=(OperationClassProperty) properties.get(PropertyNameConstants.OPERATION_CLASS.value());
-		
-		if(operationClassProperty!=null && operationClassProperty.isExpression())
-		{
-			TypeTransformExpression typeTransformExpression=new TypeTransformExpression();
-			TypeOperationInputFields operationInputFields = new TypeOperationInputFields();
-			operationInputFields.getField().addAll(getExpressionInputField(operationClassProperty.getExpressionEditorData(), id));
-			typeTransformExpression.setInputFields(operationInputFields);
-			typeTransformExpression.setId(OPERATION_ID);
-			
-			typeTransformExpression.setExpr(operationClassProperty.getExpressionEditorData().getExpression());
-			//Added the below line for passing the properties for Filter operation
-			typeTransformExpression.setProperties(converterHelper.getOperationProperties(operationClassProperty.getNameValuePropertyList()));
-			
-			operationList.add(typeTransformExpression);
-		   
-			
-		}	
-		else if(operationClassProperty!=null)
-		{
-		TypeTransformOperation operation = new TypeTransformOperation();
-		TypeOperationInputFields operationInputFields = new TypeOperationInputFields();
-		operationInputFields.getField().addAll(getOperationField(id));
-		operation.setInputFields(operationInputFields);
-		operation.setId(OPERATION_ID);
-		
-			operation.setClazz(((OperationClassProperty) properties.get(PropertyNameConstants.OPERATION_CLASS.value()))
-					.getOperationClassPath());
-			//Added the below line for passing the properties for Filter operation
-			operation.setProperties(converterHelper.getOperationProperties(operationClassProperty.getNameValuePropertyList()));
-		operationList.add(operation);
+		List<JAXBElement<?>> operationList = new ArrayList<>();
+		FilterLogicDataStructure filterData = (FilterLogicDataStructure) properties.get("filterLogic");
+		if (filterData != null && filterData.isOperation() ) {
+			if (filterData.getOperationClassData().getExternalOperationClassData().isExternal()) {
+				converterHelper.addExternalJaxbOperation(operationList,
+						filterData.getOperationClassData().getExternalOperationClassData());
+			} else {
+				TypeTransformOperation operation = new TypeTransformOperation();
+				addFilterOperationInputFields(filterData, operation);
+				operation.setId(filterData.getOperationClassData().getId());
+				operation.setClazz(filterData.getOperationClassData().getQualifiedOperationClassName());
+				// Added the below line for passing the properties for Filter
+				// operation
+				if (!filterData.getOperationClassData().getClassProperties().isEmpty()) {
+					operation.setProperties(converterHelper
+							.getOperationProperties(filterData.getOperationClassData().getClassProperties()));
+				}
+				
+				JAXBElement<TypeTransformOperation> jaxbElement = new JAXBElement(OperationsExpressionType.OPERATION.getQName(),
+						TypeTransformOperation.class, operation);
+				operationList.add(jaxbElement);
+				
+			}
+		} else if (filterData != null) {
+			if (filterData.getExpressionEditorData().getExternalExpressionData().isExternal()) {
+				converterHelper.addExternalJaxbExpression(operationList,
+						filterData.getExpressionEditorData().getExternalExpressionData());
+
+			} else {
+				TypeTransformExpression typeTransformExpression = new TypeTransformExpression();
+				addFilterExpressionInputField(filterData.getExpressionEditorData(), typeTransformExpression);
+				typeTransformExpression.setId(filterData.getExpressionEditorData().getId());
+
+				typeTransformExpression
+						.setExpr(filterData.getExpressionEditorData().getExpression());
+
+				JAXBElement<TypeTransformExpression> jaxbElement = new JAXBElement(OperationsExpressionType.EXPRESSION.getQName(),
+						TypeTransformExpression.class, typeTransformExpression);
+				operationList.add(jaxbElement);
+			}
 		}
+
 		return operationList;
 	}
+
+
+	private void addFilterOperationInputFields(FilterLogicDataStructure filterData, TypeTransformOperation operation) {
+		if (filterData.getOperationClassData() != null
+				&& filterData.getOperationClassData().getInputFields() != null
+				&& !filterData.getOperationClassData().getInputFields().isEmpty()) {
+
+			
+			TypeOperationInputFields operationInputFields = new TypeOperationInputFields();
+			operationInputFields.getField().addAll(getOperationField(filterData.getOperationClassData().getInputFields()));
+			operation.setInputFields(operationInputFields);
+		}
+	}
+
 	
-	
-	private List<TypeInputField> getOperationField(String id) {
+	private List<TypeInputField> getOperationField(List<String> inputFields) {
 		logger.debug("Generating TypeInputField data :{}", properties.get(Constants.PARAM_NAME));
 		List<TypeInputField> operationFiledList = new ArrayList<>();
-		List<String> componentOperationFields = (List<String>) component.getProperties().get(
-				PropertyNameConstants.OPERATION_FILEDS.value());
-		if (componentOperationFields != null && !componentOperationFields.isEmpty()) {
-			if (!converterHelper.hasAllStringsInListAsParams(componentOperationFields)) {
-				for (String fieldName : componentOperationFields) {
-					if (!ParameterUtil.isParameter(fieldName)) {
-						TypeInputField operationField = new TypeInputField();
-						operationField.setName(fieldName);
-						operationField.setInSocketId(Constants.FIXED_INSOCKET_ID);
-						operationFiledList.add(operationField);
-					} else {
-						converterHelper.addParamTag(id, fieldName,	
-								ComponentXpathConstants.OPERATION_INPUT_FIELDS.value(),false);
-					}
-				}
-			} else {
-				StringBuffer parameterFieldNames=new StringBuffer();
-				TypeInputField operationField = new TypeInputField();
-				operationField.setName("");
-				operationFiledList.add(operationField);
-				for (String fieldName : componentOperationFields){ 
-					parameterFieldNames.append(fieldName+ " ");
-				}
-				converterHelper.addParamTag(id, parameterFieldNames.toString(), 
-						ComponentXpathConstants.OPERATION_INPUT_FIELDS.value(),true);
-			}
+		if(inputFields!=null){
+		for (String fieldName : inputFields) {
+			TypeInputField operationField = new TypeInputField();
+			operationField.setName(fieldName);
+			operationField.setInSocketId(Constants.FIXED_INSOCKET_ID);
+			operationFiledList.add(operationField);
+		}
 		}
 		return operationFiledList;
 	}
 
 	
-	   public List<TypeInputField> getExpressionInputField(ExpressionEditorData expressionEditorData , String id)
-	    {
-	    	logger.debug("Generating TypeInputField data :{}", properties.get(Constants.PARAM_NAME));
-	    	List<String> listOfFieldsUsedInExpression=expressionEditorData.getfieldsUsedInExpression();
-	    	List<TypeInputField> expressionFiledList = new ArrayList<>();
-			List<String> componentOperationFields = listOfFieldsUsedInExpression;
-			if (componentOperationFields != null && !componentOperationFields.isEmpty()) {
-				if (!converterHelper.hasAllStringsInListAsParams(componentOperationFields)) {
-					for (String fieldName : componentOperationFields) {
-						if (!ParameterUtil.isParameter(fieldName)) {
-							
-							TypeInputField operationField = new TypeInputField();
-							operationField.setName(fieldName);
-							operationField.setInSocketId(Constants.FIXED_INSOCKET_ID);
-							expressionFiledList.add(operationField);
-						} else {
-							converterHelper.addParamTag(id, fieldName,	
-									ComponentXpathConstants.OPERATION_INPUT_FIELDS.value(),false);
-						}
-					}
-				} else {
-					StringBuffer parameterFieldNames=new StringBuffer();
-					TypeInputField operationField = new TypeInputField();
-					operationField.setName("");
-					expressionFiledList.add(operationField);
-					for (String fieldName : componentOperationFields){ 
-						parameterFieldNames.append(fieldName+ " ");
-					}
-					converterHelper.addParamTag(id, parameterFieldNames.toString(), 
-							ComponentXpathConstants.OPERATION_INPUT_FIELDS.value(),true);
+	public void addFilterExpressionInputField(ExpressionData expressionData,
+			TypeTransformExpression transformExpression) {
+		if (expressionData != null && !expressionData.getInputFields().isEmpty()) {
+			TypeOperationInputFields operationInputFields = new TypeOperationInputFields();
+			for (String fieldName : expressionData.getInputFields()) {
+				if (StringUtils.isNotBlank(fieldName)) {
+					TypeInputField field = new TypeInputField();
+					field.setName(fieldName);
+					field.setInSocketId(Constants.FIXED_INSOCKET_ID);
+					operationInputFields.getField().add(field);
 				}
 			}
-			return expressionFiledList;
-	    	
-	    }
+			transformExpression.setInputFields(operationInputFields);
+		}
+	}
 	   
 	   public List<TypeBaseInSocket> getInSocket() {
 			logger.debug("Generating TypeBaseInSocket data for :{}", component.getProperties().get(Constants.PARAM_NAME));

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+ -->
+ 
+ 
+<tns:Config xmlns:tns="hydrograph/ui/ComponentConfig" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="hydrograph/ui/ComponentConfig xsds/ComponentConfig.xsd">
+	<tns:component paletteIconPath="/icons/fileexcel_palette.png" canvasIconPath="/icons/fileexcel_canvas.png"
+		name="OFExcel" nameInPalette="File Excel" defaultNamePrefix="OFExcel" 
+		description="Used to write data in Microsoft Excel Files."
+		helpFilePath=""
+		acronym="Excel">
+		<tns:category>OUTPUT</tns:category>
+		<tns:port>
+			<tns:portSpecification numberOfPorts="1" portAlignment="left" changePortCountDynamically="false" allowMultipleLinks="false" linkMandatory="true">
+				<tns:port sequenceOfPort="0" typeOfPort="in" labelOfPort="in0" portTerminal="in0" />
+			</tns:portSpecification>
+		</tns:port>
+		
+		<tns:property dataType="string" name="name" renderer="COMPONENT_NAME_WIDGET" type="USER"
+			group="GENERAL" subGroup="DETAILS" showAsTooltip="TRUE" tooltipDataType="TEXT"
+			usage="REQUIRED" propertyHelpText="Displays Name provided by the user"/>
+			
+			<tns:property dataType="string" name="schema" renderer="SCHEMA_WIDGET" type="USER"
+			group="SCHEMA" subGroup="RECORD_STRUCTURE_DETAILS" showAsTooltip="TRUE" tooltipDataType="LIST"
+			usage="REQUIRED">
+			<tns:validator>SCHEMA_GRID_VALIDATOR</tns:validator>
+		</tns:property>
+		
+		<tns:property dataType="string" name="fileName" value="" renderer="EXCEL_FILE_NAME_WIDGET"
+			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"
+			usage="REQUIRED" propertyHelpText="Displays the File Name provided by the user">
+			<tns:validator>NON_BLANK_STRING_VALIDATOR</tns:validator>
+		</tns:property>
+		
+		<tns:property dataType="string" name="Path" renderer="EXCEL_FILE_PATH_WIDGET" type="USER"
+			group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="LINK"
+			usage="REQUIRED" propertyHelpText="Displays the location of the file either Remote/Local. \nAllows only underscore ‘_’ and alphanumeric characters.">
+			<tns:validator>NON_BLANK_STRING_VALIDATOR</tns:validator>
+		</tns:property>
+		
+		<tns:property dataType="string" name="workSheetName" renderer="WORKSHEET_NAME_WIDGET"
+			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"
+			usage="REQUIRED" propertyHelpText="Displays the WorkSheet Name provided by the user">
+			<tns:validator>WORKSHEET_NAME_VALIDATOR</tns:validator>
+		</tns:property>
+		
+		<tns:property dataType="string" name="excel_formatting" renderer="EXCEL_FORMATTING_WIDGET"
+			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"
+			usage="OPTIONAL" propertyHelpText="Provides user to define format of header and data for the excel sheets.">
+		</tns:property>
+		
+		<tns:property dataType="string" name="Key_fields_sort" renderer="SORT_EXCEL_COLUMNS_KEYS_WIDGET" type="USER"
+			group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="LIST"
+			usage="OPTIONAL" propertyHelpText="Provides the sorting order of columns">
+		</tns:property>
+			
+		<tns:property dataType="string" name="writeMode" value="FailIfFileExists" renderer="WRITE_MODE_WIDGET"
+			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="FALSE" tooltipDataType="NONE"
+			usage="REQUIRED" propertyHelpText="Denotes the writing mode for an Excel File.">
+			<tns:validator>NON_BLANK_STRING_VALIDATOR</tns:validator>
+		</tns:property>
+		
+		<tns:property dataType="string" group="GENERAL" subGroup="CONFIGURATION" name="stripLeadingQuote" value="True"
+		renderer="STRIP_LEADING_QUOTE_WIDGET" type="USER" showAsTooltip="FALSE" tooltipDataType="NONE"
+		usage="OPTIONAL" propertyHelpText="True specifies stripping leading single quotes and if selected False data is written to output as is to the excel.">
+			<tns:validator>BOOLEAN_OR_PARAMETER_VALIDATOR</tns:validator>
+		</tns:property>
+		
+		<tns:property dataType="string" name="charset" value="UTF-8" renderer="CHARACTER_SET_WIDGET"
+			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="FALSE" tooltipDataType="NONE"
+			usage="REQUIRED" propertyHelpText="Denotes the encoding system followed by the input file.">
+			<tns:validator>NON_BLANK_STRING_VALIDATOR</tns:validator>
+		</tns:property>
+		
+		<tns:property dataType="string" group="GENERAL" subGroup="CONFIGURATION" name="autoColumnSize" value="False"
+		renderer="AUTO_SIZE_COLUMN_WIDGET" type="USER" showAsTooltip="FALSE" tooltipDataType="NONE"
+		usage="OPTIONAL" propertyHelpText="Setting this value to true will adjust the column width to fit the contents.">
+			<tns:validator>BOOLEAN_OR_PARAMETER_VALIDATOR</tns:validator>
+		</tns:property>
+		
+		<tns:property dataType="string" group="GENERAL" subGroup="CONFIGURATION" name="runtime_properties"
+			renderer="RUNTIME_PROPERTIES_WIDGET" type="USER" showAsTooltip="FALSE" tooltipDataType="NONE"
+			usage="OPTIONAL" propertyHelpText="Used to override runtime Hadoop configurations \nspecific to this component at run time." >
+		<tns:validator>RUNTIME_PROPERTY_VALIDATOR</tns:validator>
+		</tns:property>
+		
+		<tns:property dataType="string" name="batch" value="0" renderer="BATCH_WIDGET" type="USER"
+			group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"
+			usage="REQUIRED" propertyHelpText="Specifies the execution sequence of \nthis component in the job flow.">
+			<tns:validator>INTEGER_VALIDATOR</tns:validator>
+		</tns:property>
+	</tns:component>
+</tns:Config>

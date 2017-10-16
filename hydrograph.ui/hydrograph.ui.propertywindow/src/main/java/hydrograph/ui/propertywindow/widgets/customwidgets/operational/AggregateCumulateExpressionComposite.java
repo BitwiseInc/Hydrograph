@@ -65,21 +65,25 @@ import hydrograph.ui.propertywindow.widgets.utility.WidgetUtility;
 public class AggregateCumulateExpressionComposite extends AbstractExpressionComposite {
 
 	private Label lblNewLabel_2;
-	private Label lblNewLabel_3;
-	private Label lblNewLabel_4;
 
 	public AggregateCumulateExpressionComposite(Composite parent, int style, final MappingSheetRow mappingSheetRow,
 			final Component component, WidgetConfig widgetConfig) {
 		super(parent, style);
-		setLayout(new GridLayout(3, false));
+		setLayout(new GridLayout(1, true));
 		configurationForTransformWidget = (OperationClassConfig) widgetConfig;
 
 		this.mappingSheetRow = mappingSheetRow;
 		this.component = component;
-		Composite selectColumnComposite = new Composite(this, SWT.NONE);
+		Composite mainComposite=new Composite(this, SWT.NONE);
+		mainComposite.setLayout(new GridLayout(3, false));
+		mainComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		
+		
+		
+		Composite selectColumnComposite = new Composite(mainComposite, SWT.NONE);
 		selectColumnComposite.setLayout(new GridLayout(1, false));
 		GridData gd_selectColumnComposite = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_selectColumnComposite.heightHint = 285;
+		gd_selectColumnComposite.heightHint = 275;
 		gd_selectColumnComposite.widthHint = 159;
 		selectColumnComposite.setLayoutData(gd_selectColumnComposite);
 
@@ -102,10 +106,11 @@ public class AggregateCumulateExpressionComposite extends AbstractExpressionComp
 		table.setHeaderVisible(true);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		table.setVisible(true);
-		Composite composite = new Composite(this, SWT.NONE);
+		
+		Composite composite = new Composite(mainComposite, SWT.NONE);
 		composite.setLayout(new GridLayout(4, false));
 		GridData gd_composite = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		gd_composite.heightHint = 285;
+		gd_composite.heightHint = 275;
 		gd_composite.widthHint = 184;
 		composite.setLayoutData(gd_composite);
 		new Label(composite, SWT.NONE);
@@ -148,7 +153,7 @@ public class AggregateCumulateExpressionComposite extends AbstractExpressionComp
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 
-		lblNewLabel_3 = new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
@@ -167,7 +172,7 @@ public class AggregateCumulateExpressionComposite extends AbstractExpressionComp
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 
-		lblNewLabel_4 = new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
@@ -342,7 +347,7 @@ public class AggregateCumulateExpressionComposite extends AbstractExpressionComp
 
 		if (mappingSheetRow.getWholeOperationParameterValue() != null)
 			parameterTextBox.setText(mappingSheetRow.getWholeOperationParameterValue());
-		Composite composite_4 = new Composite(this, SWT.NONE);
+		Composite composite_4 = new Composite(mainComposite, SWT.NONE);
 		composite_4.setLayout(new GridLayout(1, false));
 		GridData gd_composite_4 = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
 		gd_composite_4.widthHint = 159;
@@ -381,7 +386,11 @@ public class AggregateCumulateExpressionComposite extends AbstractExpressionComp
 		setAllWidgetsOnIsParamButtonForAggregateCumulate(btnIsParam);
 		disabledWidgetsifWholeExpressionIsParameterForAggregateCumulate(btnIsParam,
 				mappingSheetRow.isWholeOperationParameter());
+		
+		createExternalExpressionComposite();
 	}
+
+	
 
 	/**
 	 * Add DataTypes to the combo
@@ -426,7 +435,18 @@ public class AggregateCumulateExpressionComposite extends AbstractExpressionComp
 		isParam.setData(Messages.ISPARAM_ACCUMULATOR, isParamAccumulator);
 		super.setAllWidgetsOnIsParamButton(isParam);
 	}
-
+    
+	protected void refreshExpressionComposite(MappingSheetRow mappingSheetRow) {
+		comboDataTypes.setText(mappingSheetRow.getComboDataType());
+		if(mappingSheetRow.getAccumulator()==null){
+			mappingSheetRow.setAccumulator("");
+		}
+		textAccumulator.setText(mappingSheetRow.getAccumulator());
+		isParamAccumulator.setEnabled(mappingSheetRow.isAccumulatorParameter());
+		super.refreshExpressionComposite(mappingSheetRow);
+	}
+	
+	
 	@Override
 	protected void checkSubclass() {
 	}

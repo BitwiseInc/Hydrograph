@@ -24,6 +24,7 @@ Export-Package: hydrograph.engine.jaxb.debug,
  hydrograph.ui.engine.exceptions,
  hydrograph.ui.engine.ui.constants,
  hydrograph.ui.engine.ui.exceptions,
+ hydrograph.ui.engine.ui.helper,
  hydrograph.ui.engine.ui.repository,
  hydrograph.ui.engine.ui.util,
  hydrograph.ui.engine.util

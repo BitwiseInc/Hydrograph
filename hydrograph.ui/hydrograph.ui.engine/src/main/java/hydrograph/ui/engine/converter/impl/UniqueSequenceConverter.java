@@ -14,15 +14,10 @@
  
 package hydrograph.ui.engine.converter.impl;
 
-import hydrograph.ui.common.util.Constants;
-import hydrograph.ui.engine.converter.TransformConverter;
-import hydrograph.ui.engine.helper.ConverterHelper;
-import hydrograph.ui.graph.model.Component;
-import hydrograph.ui.graph.model.Link;
-import hydrograph.ui.logging.factory.LogFactory;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.bind.JAXBElement;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -36,6 +31,12 @@ import hydrograph.engine.jaxb.commontypes.TypeOperationOutputFields;
 import hydrograph.engine.jaxb.commontypes.TypeOperationsOutSocket;
 import hydrograph.engine.jaxb.commontypes.TypeTransformOperation;
 import hydrograph.engine.jaxb.operationstypes.GenerateSequence;
+import hydrograph.ui.common.util.Constants;
+import hydrograph.ui.engine.converter.TransformConverter;
+import hydrograph.ui.engine.qnames.OperationsExpressionType;
+import hydrograph.ui.graph.model.Component;
+import hydrograph.ui.graph.model.Link;
+import hydrograph.ui.logging.factory.LogFactory;
 
 /**
  * This class is used to create target XML for UniqueSequence component.
@@ -63,26 +64,28 @@ public class UniqueSequenceConverter extends TransformConverter {
 	public void prepareForXML() {
 		logger.debug("Generating XML for :{}", properties.get(Constants.PARAM_NAME));
 		super.prepareForXML();
-		List<Object> operationsList = null;
+		List<JAXBElement<?>> operationsList = null;
 		GenerateSequence generateSequence = (GenerateSequence) baseComponent;
 		operationsList = getOperations();
 		if (operationsList != null)
-			generateSequence.getOperationOrExpression().addAll(operationsList);
+			generateSequence.getOperationOrExpressionOrIncludeExternalOperation().addAll(operationsList);
 	}
 
 	/* *
 	 * This method creates operation field in target XML under UniqueSequence component.
 	 */
 	@Override
-	protected List<Object> getOperations() {
+	protected List<JAXBElement<?>> getOperations() {
 		logger.debug("Generating TypeTransformOperation data :{}", properties.get(Constants.PARAM_NAME));
-		List<Object> operationList = null;
+		List<JAXBElement<?>> operationList = null;
 		if (StringUtils.isNotBlank(newFieldName)) {
 			operationList = new ArrayList<>();
 			TypeTransformOperation operation = new TypeTransformOperation();
 			operation.setId(defaultOperationId);
 			operation.setOutputFields(getOutPutFields());
-			operationList.add(operation);
+			JAXBElement<TypeTransformOperation> jaxbElement =  new JAXBElement( 
+					OperationsExpressionType.OPERATION.getQName(), TypeTransformOperation.class,operation);
+			operationList.add(jaxbElement);
 		}
 		return operationList;
 	}

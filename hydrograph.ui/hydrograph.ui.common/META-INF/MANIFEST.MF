@@ -18,18 +18,23 @@ Require-Bundle: org.eclipse.core.runtime,
  hydrograph.ui.logging,
  org.eclipse.core.resources,
  org.eclipse.e4.ui.workbench.renderers.swt;bundle-version="0.14.0",
- org.eclipse.ui.ide
+ org.eclipse.ui.ide,
+ hydrograph.ui.common.datastructures
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: hydrograph.ui.common.component.config,
  hydrograph.ui.common.component.policyconfig,
  hydrograph.ui.common.debug.service,
+ hydrograph.ui.common.exceptions,
+ hydrograph.ui.common.message,
  hydrograph.ui.common.property.util,
  hydrograph.ui.common.schema,
  hydrograph.ui.common.swt.customwidget,
  hydrograph.ui.common.util,
- hydrograph.ui.common.validator
-Import-Package: hydrograph.ui.datastructure.property,
- hydrograph.ui.datastructure.property.mapping,
- org.apache.commons.lang,
+ hydrograph.ui.common.validator,
+ hydrograph.ui.external.common,
+ hydrograph.ui.external.expression,
+ hydrograph.ui.external.mapping,
+ hydrograph.ui.external.operation
+Import-Package: org.apache.commons.lang,
  org.junit

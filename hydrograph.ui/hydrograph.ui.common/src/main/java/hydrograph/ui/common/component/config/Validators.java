@@ -63,6 +63,8 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="FTP_OPERATION_VALIDATOR"/>
  *     &lt;enumeration value="FTP_PROTOCOL_SELECTION_VALIDATOR"/>
  *     &lt;enumeration value="FTP_BOOLEAN_VALIDATOR"/>
+ *     &lt;enumeration value="WORKSHEET_NAME_VALIDATOR"/>
+ *     &lt;enumeration value="FILTER_DATA_VALIDATION"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
@@ -131,7 +133,13 @@ public enum Validators {
     @XmlEnumValue("FTP_PROTOCOL_SELECTION_VALIDATOR")
     FTPProtocolSelectionValidator("FTP_PROTOCOL_SELECTION_VALIDATOR"),
     @XmlEnumValue("FTP_BOOLEAN_VALIDATOR")
-    FTPBooleanValidation("FTP_BOOLEAN_VALIDATOR");
+    FTPBooleanValidation("FTP_BOOLEAN_VALIDATOR"),
+    @XmlEnumValue("WORKSHEET_NAME_VALIDATOR")
+    WorksheetNameValidationRule("WORKSHEET_NAME_VALIDATOR"),
+    @XmlEnumValue("FILTER_DATA_VALIDATION")
+    FilterDataValidation("FILTER_DATA_VALIDATION");
+
+
     private final String value;
 
     Validators(String v) {

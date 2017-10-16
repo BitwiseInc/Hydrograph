@@ -14,6 +14,7 @@
  
 package hydrograph.ui.graph.model.components;
 
+import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.graph.model.categories.InputCategory;
 
 /**
@@ -31,5 +32,10 @@ public class IFixedWidth extends InputCategory{
 	public String getConverter() {
 		return "hydrograph.ui.engine.converter.impl.InputFileFixedWidthConverter";
 
+	}
+	
+	@Override
+	public String getGridRowType() {
+		return Constants.FIXEDWIDTH_GRID_ROW;
 	}
 }

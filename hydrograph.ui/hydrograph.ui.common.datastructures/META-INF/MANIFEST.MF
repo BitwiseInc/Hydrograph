@@ -9,7 +9,9 @@ Require-Bundle: org.eclipse.core.runtime
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: hydrograph.ui.common.cloneableinterface,
+ hydrograph.ui.common.datastructure.filter,
  hydrograph.ui.common.datastructures.dataviewer,
+ hydrograph.ui.common.datastructures.messages,
  hydrograph.ui.common.datastructures.property.database,
  hydrograph.ui.common.datastructures.tooltip,
  hydrograph.ui.datastructure.expression,

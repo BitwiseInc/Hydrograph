@@ -26,4 +26,6 @@
     	<topic href="html/Components/transform/Partition_By_Expression_Operation_Window.html#Operation_Properties_Grid" label="Operations Properties Grid"/>
  	</topic>
  	<topic href="html/Components/transform/Expression_Editor_window.html" label="Expression Editor"/>
+  <topic href="html/Components/transform/Externalizing_Transformations_Partition_By_Expression.html" label="Externalizing Transformations">
+  </topic>
 </toc>

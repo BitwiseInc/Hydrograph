@@ -164,7 +164,7 @@ public class SchemaSyncUtility {
 					Constants.SCHEMA_NOT_SYNC_MESSAGE, MessageDialog.CONFIRM,
 					new String[] { Messages.SYNC_NOW, Messages.MANUAL_SYNC }, 0);
 			if (dialog.open() == 0) {
-				getSchemaGridWidget(widgets).updateSchemaWithPropogatedSchema();
+				getSchemaGridWidget(widgets).updateSchemaWithPropogatedSchema(false);
 			}
 		}
 	}
@@ -538,7 +538,7 @@ public class SchemaSyncUtility {
 		List<NameValueProperty> outputFileds = new ArrayList<>();
 			for (GridRow gridRow : schemaGridRowList) {
 				NameValueProperty nameValueProperty = new NameValueProperty();
-				nameValueProperty.setPropertyName("");
+				nameValueProperty.setPropertyName(gridRow.getFieldName());
 				nameValueProperty.setPropertyValue(gridRow.getFieldName());
 				nameValueProperty.getFilterProperty().setPropertyname(gridRow.getFieldName());
 				outputFileds.add(nameValueProperty);

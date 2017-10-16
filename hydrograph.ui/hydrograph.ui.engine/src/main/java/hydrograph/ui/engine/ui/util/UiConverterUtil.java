@@ -254,7 +254,7 @@ public class UiConverterUtil {
 			}
 			createLinks();
 		}
-		ImportedSchemaPropagation.INSTANCE.initiateSchemaPropagationAfterImport(container);
+		ImportedSchemaPropagation.INSTANCE.initiateSchemaPropagationAfterImport(container, false);
 		return container;
 	}
 

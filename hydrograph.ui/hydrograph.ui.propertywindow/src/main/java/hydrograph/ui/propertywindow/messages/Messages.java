@@ -277,8 +277,13 @@ public class Messages extends NLS {
 	public static String DELETE_KEY_SHORTCUT_TOOLTIP;
 	public static String MOVE_UP_KEY_SHORTCUT_TOOLTIP;
 	public static String MOVE_DOWN_KEY_SHORTCUT_TOOLTIP;
+	public static String IMPORT_SCHEMA_KEY_SHORTCUT_TOOLTIP;
+	public static String EXPORT_SCHEMA_KEY_SHORTCUT_TOOLTIP;
 	public static String EXTRACT_FROM_METASTORE;
 	public static String EXTRACT;
+	
+	public static String IMPORT_SCHEMA_DIALOG_TITLE;
+	public static String EXPORT_SCHEMA_DIALOG_TITLE;
 
 	public static String CONNECTION_NOT_ESTABLISHED;
 	public static String HOST_NAME_BLANK_ERROR;
@@ -458,6 +463,24 @@ public class Messages extends NLS {
 	public static String FAIL_ON_ERROR;
 	
 	
+	public static String LABEL_WRITE_MODE;
+	public static String LABEL_STRIP_LEADING_QUOTE;
+	public static String LABEL_AUTO_SIZE_COLUMN;
+	public static String LABEL_ABORT_ON_ERROR;
+	public static String LABEL_WORKSHEET_NAME;
+	public static String LABEL_EXCEL_FORMATTING;
+	public static String EXCEL_FORMATTING_WINDOW_LABEL;
+	public static String COLUMN_NAME;
+	public static String HEADER_FORMAT;
+	public static String DATA_FORMAT;
+	public static String REMAINING_FIELDS;
+	public static String SORT_COLUMNS;
+	public static String SORT_COLUMNS_WINDOW_LABEL;
+	public static String REMAINING_FIELDS_TOOLTIP;
+	public static String HEADER_FORMAT_TOOLTIP;
+	public static String DATA_FORMAT_TOOLTIP;
+
+	public static String EXISTING_JOB_IS_NOT_SAVED_STATUS;
 	
 	static {
 		// initialize resource bundle

@@ -11,10 +11,12 @@ Require-Bundle: org.eclipse.core.runtime,
  hydrograph.ui.common;bundle-version="0.0.1",
  org.slf4j.api,
  hydrograph.ui.logging;bundle-version="0.0.1",
- org.junit
+ org.junit,
+ org.eclipse.swt
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
-Export-Package: hydrograph.ui.validators.impl,
+Export-Package: hydrograph.ui.validators,
+ hydrograph.ui.validators.impl,
  hydrograph.ui.validators.utils
 Import-Package: hydrograph.ui.expression.editor.util,
  org.eclipse.core.resources,

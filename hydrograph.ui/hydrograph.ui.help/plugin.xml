@@ -137,6 +137,9 @@
       <toc
             file="xml/Components/Output/outputFileDelimited.xml">
       </toc>
+       <toc
+         	file="xml/Components/Output/outputFileExcel.xml">
+	  </toc>
       <toc
             file="xml/Components/Output/outputFileFixedWidth.xml">
       </toc>
@@ -167,6 +170,7 @@
       <toc
          	file="xml/Components/Output/outputDBUpdate.xml">
 	  </toc>
+	    
 	  <toc
             file="xml/Components/Output/discard.xml">
       </toc>

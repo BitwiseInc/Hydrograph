@@ -14,19 +14,19 @@
  
 package hydrograph.ui.validators.impl;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.apache.commons.lang.StringUtils;
+
 import hydrograph.ui.common.util.ParameterUtil;
 import hydrograph.ui.datastructure.property.FilterProperties;
 import hydrograph.ui.datastructure.property.FixedWidthGridRow;
 import hydrograph.ui.datastructure.property.JoinMappingGrid;
 import hydrograph.ui.datastructure.property.LookupMapProperty;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import org.apache.commons.lang.StringUtils;
 
 
 public class JoinMappingValidationRule implements IValidator{
@@ -52,27 +52,30 @@ public class JoinMappingValidationRule implements IValidator{
 			errorMessage = propertyName + " is mandatory";
 			return false;
 		}
+		
+		
+		if(isJobImported) {
+			List<List<FilterProperties>> listofFiledNameList = new ArrayList<>();
+			Set<String> keySet = inputSchemaMap.keySet();
+			for (String inSocketId : keySet) {
+				List<FilterProperties> filedNameList = new ArrayList<>();
+				List<FixedWidthGridRow> fixedWidthGridRows = inputSchemaMap.get(inSocketId);
+				for (FixedWidthGridRow fixedWidthGridRow : fixedWidthGridRows) {
+					FilterProperties filedName = new FilterProperties();
+					filedName.setPropertyname(fixedWidthGridRow.getFieldName());
+					filedNameList.add(filedName);
+				}
+				listofFiledNameList.add(getIndex(inSocketId), filedNameList);
+			}
+			joinMappingGrid.setLookupInputProperties(listofFiledNameList);
+			isJobImported = false;
+		}
+		
 		if(joinMappingGrid.isSelected() && joinMappingGrid.getButtonText()!=null){
 			return true;
 		}
+		
 		List<List<FilterProperties>> lookupInputProperties = joinMappingGrid.getLookupInputProperties();
-		
-		if(isJobImported)
-		{
-			for(Entry< String,List<FixedWidthGridRow>> inputRow :inputSchemaMap.entrySet()){
-				List<FilterProperties> filterPropertiesList = new ArrayList<FilterProperties>(); 
-				
-				for(FixedWidthGridRow row : inputRow.getValue()){
-					FilterProperties filterProperties = new FilterProperties();
-					filterProperties.setPropertyname(row.getFieldName());
-					filterPropertiesList.add(filterProperties);
-				} 
-				lookupInputProperties.add(filterPropertiesList);
-			}
-			joinMappingGrid.setLookupInputProperties(lookupInputProperties);
-			isJobImported=false;
-		}	
-		
 		List<LookupMapProperty> lookupMapProperties = joinMappingGrid.getLookupMapProperties();
 		if(lookupInputProperties == null || 
 				lookupInputProperties.isEmpty() || lookupInputProperties.size() < 2){
@@ -116,6 +119,15 @@ public class JoinMappingValidationRule implements IValidator{
 		
 		return true;
 	}
+
+	private int getIndex(String inSocketId) {
+		int index = 0;
+		if (inSocketId.startsWith("in")) {
+			index = Integer.parseInt(inSocketId.substring(2, inSocketId.length()));
+		}
+		return index;
+	}
+
 
 	@Override
 	public String getErrorMessage() {

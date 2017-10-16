@@ -46,6 +46,7 @@ import org.slf4j.Logger;
 
 import hydrograph.ui.common.property.util.Utils;
 import hydrograph.ui.common.util.Constants;
+import hydrograph.ui.common.util.CustomColorRegistry;
 import hydrograph.ui.datastructure.property.FTPAuthOperationDetails;
 import hydrograph.ui.logging.factory.LogFactory;
 import hydrograph.ui.propertywindow.handlers.ShowHidePropertyHelpHandler;
@@ -177,10 +178,14 @@ public class FTPOperationConfigDialog extends Dialog{
 			text1.setText(authOperationDetails.getField1());
 			text2.setText(authOperationDetails.getField2());
 			if(StringUtils.equalsIgnoreCase(protocol, Constants.AWS_S3)){
-				if(authOperationDetails.getField3() != null && authOperationDetails.getField4() != null){
+				if(authOperationDetails.getField3() != null){
 					text3.setText(authOperationDetails.getField3());
+				}
+				if(authOperationDetails.getField4() != null){
 					text4.setText(authOperationDetails.getField4());
 				}
+				FTPWidgetUtility ftpWidgetUtility = new FTPWidgetUtility();
+				ftpWidgetUtility.removeModifyListener(text3, propertyDialogButtonBar, cursor, text3ControlDecoration);
 			}
 			
 			if(map.getKey().contains(Constants.PUT_FILE)){
@@ -215,6 +220,8 @@ public class FTPOperationConfigDialog extends Dialog{
 					}else{
 						updateWidgetsValue(text1, text2);
 					}
+					FTPWidgetUtility ftpWidgetUtility = new FTPWidgetUtility();
+					ftpWidgetUtility.removeModifyListener(text3, propertyDialogButtonBar, cursor, text3ControlDecoration);
 				}else{
 					overWriteLabel.setEnabled(true);
 					overwriteCombo.setEnabled(true);
@@ -310,14 +317,29 @@ public class FTPOperationConfigDialog extends Dialog{
 		
 		text1ControlDecoration = WidgetUtility.addDecorator(text1, Messages.EMPTYFIELDMESSAGE);
 		text2ControlDecoration = WidgetUtility.addDecorator(text2, Messages.EMPTYFIELDMESSAGE);
-		text3ControlDecoration = WidgetUtility.addDecorator(text3, Messages.EMPTYFIELDMESSAGE);
 		text4ControlDecoration = WidgetUtility.addDecorator(text4, Messages.EMPTYFIELDMESSAGE);
 		
 		FTPWidgetUtility widgetUtility = new FTPWidgetUtility();
 		widgetUtility.validateEmptyWidgetText(text1, propertyDialogButtonBar, cursor, text1ControlDecoration);
 		widgetUtility.validateEmptyWidgetText(text2, propertyDialogButtonBar, cursor, text2ControlDecoration);
-		widgetUtility.validateEmptyWidgetText(text3, propertyDialogButtonBar, cursor, text3ControlDecoration);
 		widgetUtility.validateEmptyWidgetText(text4, propertyDialogButtonBar, cursor, text4ControlDecoration);
+		
+		if(authenticationModeCombo.getSelectionIndex() != 1 || StringUtils
+				.equalsIgnoreCase(authenticationModeCombo.getText(), Constants.PUT_FILE_S3)){
+			text3ControlDecoration = WidgetUtility.addDecorator(text3, Messages.EMPTYFIELDMESSAGE);
+			widgetUtility.validateEmptyWidgetText(text3, propertyDialogButtonBar, cursor, text3ControlDecoration);
+		}
+		
+		text3.addModifyListener(new ModifyListener() {
+			@Override
+			public void modifyText(ModifyEvent event) {
+				if(authenticationModeCombo.getSelectionIndex() == 1){
+					text3ControlDecoration.hide();
+					text3.setBackground(CustomColorRegistry.INSTANCE.getColorFromRegistry( 255, 255, 255));
+				}
+			}
+		});
+		
 		
 		return composite;
 	}
@@ -378,7 +400,7 @@ public class FTPOperationConfigDialog extends Dialog{
 			text4Value = text4.getText();
 		}
 		FTPAuthOperationDetails authOperationDetails = new FTPAuthOperationDetails(text1.getText(), 
-				text2.getText(), text3Value, text4Value, isOverwrite);
+				text2.getText(), text3Value, text4Value, isOverwrite, protocol);
 		authOperationSelectionMap.put(authenticationModeCombo.getText(), authOperationDetails);
 		super.okPressed();
 	}

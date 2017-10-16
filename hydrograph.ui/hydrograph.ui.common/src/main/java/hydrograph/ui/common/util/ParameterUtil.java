@@ -117,7 +117,7 @@ public class ParameterUtil {
 		if(isParameter && !(isParameter(fieldToBeParameterize.getPropertyname()))
 			&& StringUtils.isNotBlank(fieldToBeParameterize.getPropertyname()))
 		{
-			fieldToBeParameterize.setPropertyname(Constants.PARAMETER_PREFIX+fieldToBeParameterize.getPropertyname()+Constants.PARAMETER_SUFFIX);
+			fieldToBeParameterize.setPropertyname(fieldToBeParameterize.getPropertyname());
 		}	
 	}
 	

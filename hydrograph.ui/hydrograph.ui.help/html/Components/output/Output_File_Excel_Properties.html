@@ -1,0 +1,127 @@
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+ 
+ 
+<!doctype html>
+<html>
+<head>
+
+<title>Output File Excel Properties</title>
+
+<link rel="stylesheet" type="text/css" href="../../css/style.css">
+
+</head>
+<body>
+
+	<p><span class="header-1">Output File Excel Properties</span></p>
+
+	<p><span><span><b>Properties</b>&nbsp;for the Output File Excel component can be viewed by Double click the component on canvas. The properties contain a &#39;General&#39; tab and a &#39;Schema&#39; tab. Common and mandatory properties are present in the General tab. Schema displays option to accept the field schema i.e. field name, Data type, scale etc. </span></span></p>
+
+	<p>
+		<a name="general_properties"></a><span class="header-2">General Properties</span>
+	</p>
+
+	<p><img alt="To be updated" src="../../images/output_file_excel_property_window.png" /></p> 
+
+	<p>
+		<a name="details"></a><span class="header-2">Details</span>
+	</p>
+	
+	<ul>
+		<li><span><b>Name</b> - The Name field will specify the name of the component as desired by the user.</span></li>
+		<li><span><b>ID</b> - ID field will specify unique id for every component. </span></li>
+		<li><span><b>Type </b> - Type further categorizes the component to detailed operation that it intends to perform. Here it is of type File Excel.</span></li>
+	</ul>
+
+	<p>
+		<a name="configuration"></a><span class="header-2">Configuration</span> 
+	</p>
+	
+	<ul>
+	<li><span><b>File Name</b> - File Name used to specify excel workbook name .Users can create files with .xls or .xlsx extension. This field should be mandatory to user.</span></li>
+	
+	<li><span><b>File Path</b> - File Path is used to specify where the output excel file needs to be created. This field should be mandatory to user.</span></li>
+		<p><span><b>Note : </b>Recommended file size for output excel file is 100 mb or less .
+			
+		</span></p>
+	<li><span><b>Worksheet Name</b> - Worksheet Name is used to specify the field name which stores name for worksheets to be created in output excel workbook. This field should be mandatory to user. For creating multiple worksheets specify  name of the field from the schema of the upstream component.</span></li>
+	<li><span><b>Write Mode</b> - Write Mode is used to specify the writing mode options of Excel sheet. It can be Append,Overwrite and Fail_If_Exists. User can select any one of the writing mode. </span></li>
+	<li><span><b>Strip Leading Quote</b> - Strip Leading Quote provides True and False values. True specifies stripping leading single quotes and if selected False data is written to output as is to the excel. By default it should be set to True.</span></li>
+	<li><span><b>Character-set</b> - Contains a drop-down of character encoding values. Used simply to denote the encoding system that will be used while creating the Output excel file to denote characters of data. Drop down lists values like : UTF8, US-ASCII, ISO-8859-1 etc.</span></li>
+	<li><span><b>Auto Size Columns</b> - Provide a drop-down list with values True and False. Setting this value to true will adjust the column width to fit the contents. By Default it should be ‘False’ as it can slower the performance when for high volume of data in output excel sheet.</span></li>
+</ul>
+
+<ul> 
+	<li><span><b>Formatting Header/Data</b> - Edit button should be provided to user to open new Window to opt Formatting Header/Data. In this window, provide options to user to format the header and data for the Excel sheet.Below is the sample snapshot of Header/Data Formaating Window:</span></li>
+											
+		<p><img alt="To be updated" src="../../images/Header_DataFormattingWindow.png" /></p>
+		 
+	<p><span>User can select the specific fields for customizing the header and data format, by clicking on the cell editor of the Header and Data Column. On clicking the button, Header and Data format window will get opened. User can provide details such as font,font size, bold, italic, border etc.
+	Below is the snippet :</span></p>
+	
+	<p><img alt="To be updated" src="../../images/Header_Data_Formaating_Window.png" /></p> 
+		
+	<li><span><b>Runtime Properties</b> -&nbsp;Runtime properties are used to override the Hadoop configurations specific to Output File Excel component at run time. User is required to enter the Property Name and Value in the runtime properties grid.</span></li>
+	
+	<p><span>Check <a href="../../How To Steps/How_To_Pass_Hadoop_Properties_To_Component.html"> How to pass Hadoop properties to component</a></span></p></li>
+	
+	<p><img alt="" src="../../images/Runtime_Properties_Grid.png" /></p>
+	
+	<li><span><b>Batch</b> - Batch simply accepts a numeric number starting from 0 to maximum 99 and signifies the batch this component will execute in. By default this is 0.</span></li>
+</ul>
+
+
+	<p>
+		<a name="schema_tab"></a><span class="header-2">Schema tab</span> 
+	</p>
+	
+	<p><span>Schema is <b>mandatory</b> for Output File Excel component. Schema tab defines the record format on the out port of the Output File Excel component. A field in schema has multiple attributes as described below.</span></p>
+	<p><img alt="" src="../../images/output_file_excel_schema.png" /></p>
+	
+	<ul>
+	<li><span><b>Internal</b> - User is provided a Grid to enter the internal schema of the Output File Excel.</span></li>
+	<ul><li><span><b>Field Name</b> - User needs to enter all the Field names in this column.</span></li>
+	<li><span><b>Data type</b> - By default "string" Data type has been selected for any field added to the Grid. User can select from different Data type values like "integer", "double", "float" etc.</span></li>
+	<li><span><b>Date Format</b> - User can specify desired date format like "YY-DD-MM", "YYYYMMDD" etc for a date field in this column. Refer to <a href="../../references/Date_Formats.html">java date formats</a> page for acceptable date formats.</span></li>
+	<li><span><b>Precision</b> - Precision for a bigdecimal field can be specified here.</span></li>
+	<li><span><b>Scale</b> - Scale for a bigdecimal field can be specified here.</span></li>
+	<li><span><b>Scale Type</b> - Scale Type accepts values as implicit or explicit for bigdecimal field and none for other data types. Explicit considers the length of ' <b>.</b> ' and implicit ignores length of ' <b>.</b> ' for the bigdecimal field.</span></li>
+	<li><span><b>Field Description</b> - User can specify field description.</span></li></ul>
+	<li><span><b>External</b> - User can provide an external Hydrograph Schema file of XML format. A text box is provided to either manually type or use the Browse button to select the schema file from File system. The External schema file path is resolved during run time and replaced with the contents of the file in the Job XML.</span></li>
+</ul>
+
+
+<p>
+		<a name="validations"></a><span class="header-2">Validations</span>
+	</p>
+	<p>
+		<span>The Output File Excel components applies validations to the mandatory fields. Upon placing the 
+			Output File Excel component on job canvas for the first time (from component palette), the component shows up a warning icon as
+			mandatory properties are not provided.</span>
+	</p>
+	<img alt="To be updated" src="../../images/output_file_excel_warn_icon.png"  />
+
+	<p>
+		<span>The properties window also displays error icon on mandatory fields if it has an incorrect value. The error icon
+			is displayed on the tab as well, if any of the field within the tab has some error.</span>
+	</p>
+	<img alt="To be updated" src="../../images/output_file_excel_property_validation.png" />
+
+	<p>
+		<span>If the properties window has some error even after user visit's it once, then the warning icon on the Output File Excel 
+			component on the job canvas changes to error icon. This error icon is removed only when all the mandatory fields are supplied
+			with correct values.</span>
+	</p>
+	<img alt="To be updated" src="../../images/output_file_excel_error_icon.png" />
+<p>&nbsp;</p>
+
+</body>
+</html>

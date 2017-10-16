@@ -34,6 +34,12 @@ public class FilterProperties implements IDataStructure {
 		return propertyname;
 	}
 
+	public FilterProperties() {}
+	
+	public FilterProperties(String propertyName) {
+		this.propertyname=propertyName;
+	}
+	
 	/**
 	 * Sets the propertyname.
 	 * 

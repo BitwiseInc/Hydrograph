@@ -19,7 +19,19 @@ import org.eclipse.osgi.util.NLS;
  */
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "resources.messages"; //$NON-NLS-1$
+	public static String FONT ;
 	public static String INVALID_EXPRESSION;
+	public static String EXCEL_FORMATS;
+	public static String EXCEL_FORMAT_WINDOW_LABEL;
+	public static String PARAMETER_FILES;
+	public static String PARAMETER_NAME;
+	public static String PARAMETER_VALUE;
+	public static String COLOR;
+	public static String EXCEL_CONV_MAP;
+	public static String BORDER_STYLE;
+	public static String BORDER_RANGE;
+	public static String HORIZONTAL_ALIGN;
+	public static String VERTICAL_ALIGN;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

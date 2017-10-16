@@ -21,11 +21,12 @@ import org.slf4j.Logger;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.logging.factory.LogFactory;
 import hydrograph.ui.propertywindow.filemixedschema.ELTMixedSchemeWidget;
+import hydrograph.ui.propertywindow.filter.FilterLogicWidget;
 import hydrograph.ui.propertywindow.fixedwidthschema.ELTFixedWidget;
 import hydrograph.ui.propertywindow.fixedwidthschema.TransformSchemaWidget;
 import hydrograph.ui.propertywindow.ftp.AuthenticationWidget;
+import hydrograph.ui.propertywindow.ftp.FTPProtocolWidget;
 import hydrograph.ui.propertywindow.ftp.OperationConfigWidget;
-import hydrograph.ui.propertywindow.ftp.ProtocolWidget;
 import hydrograph.ui.propertywindow.generaterecords.schema.GenerateRecordsGridWidget;
 import hydrograph.ui.propertywindow.messages.Messages;
 import hydrograph.ui.propertywindow.property.ComponentConfigrationProperty;
@@ -47,6 +48,7 @@ import hydrograph.ui.propertywindow.widgets.customwidgets.ELTLookupMapWidget;
 import hydrograph.ui.propertywindow.widgets.customwidgets.ELTOperationClassWidget;
 import hydrograph.ui.propertywindow.widgets.customwidgets.ELTRetentionLogicWidget;
 import hydrograph.ui.propertywindow.widgets.customwidgets.ELTXmlPropertiesContainer;
+import hydrograph.ui.propertywindow.widgets.customwidgets.ExcelFileNameWidget;
 import hydrograph.ui.propertywindow.widgets.customwidgets.HiveInputSingleColumnWidget;
 import hydrograph.ui.propertywindow.widgets.customwidgets.HiveOutputSingleColumnWidget;
 import hydrograph.ui.propertywindow.widgets.customwidgets.JDBCDriverClassWidget;
@@ -62,12 +64,14 @@ import hydrograph.ui.propertywindow.widgets.customwidgets.TextBoxWithLabelWidget
 import hydrograph.ui.propertywindow.widgets.customwidgets.TextBoxWithLabelWidgetWithoutAnyValidation;
 import hydrograph.ui.propertywindow.widgets.customwidgets.UpdateByKeysWidget;
 import hydrograph.ui.propertywindow.widgets.customwidgets.WidgetHelper;
+import hydrograph.ui.propertywindow.widgets.customwidgets.WorksheetWidget;
 import hydrograph.ui.propertywindow.widgets.customwidgets.config.WidgetConfig;
 import hydrograph.ui.propertywindow.widgets.customwidgets.databasecomponents.DatabaseTestConnectionWidget;
 import hydrograph.ui.propertywindow.widgets.customwidgets.databasecomponents.InputAdditionalParametersWidget;
 import hydrograph.ui.propertywindow.widgets.customwidgets.databasecomponents.LoadTypeConfigurationWidget;
 import hydrograph.ui.propertywindow.widgets.customwidgets.databasecomponents.OutputAdditionalParametersWidget;
 import hydrograph.ui.propertywindow.widgets.customwidgets.databasecomponents.SelectionDatabaseWidget;
+import hydrograph.ui.propertywindow.widgets.customwidgets.excelcomponent.ExcelFormattingWidget;
 import hydrograph.ui.propertywindow.widgets.customwidgets.joinproperty.ELTJoinPortCount;
 import hydrograph.ui.propertywindow.widgets.customwidgets.metastore.ELTExtractMetaStoreDataWidget;
 import hydrograph.ui.propertywindow.widgets.customwidgets.operational.TransformWidget;
@@ -112,6 +116,10 @@ public class WidgetFactory {
 		CHARACTER_SET_WIDGET(DropDownWidget.class, WidgetHelper.INSTANCE.getCharacterSetWidgetConfig()),
 		HAS_HEADER_WIDGET(DropDownWidget.class, WidgetHelper.INSTANCE.getHasHeaderWidgetConfig()),
 		OVERWRITE_WIDGET(DropDownWidget.class, WidgetHelper.INSTANCE.getOverWriteWidgetConfig()),
+		WRITE_MODE_WIDGET(DropDownWidget.class, WidgetHelper.INSTANCE.getWriteModeWidgetConfig()),
+		STRIP_LEADING_QUOTE_WIDGET(DropDownWidget.class, WidgetHelper.INSTANCE.getStripLeadingQuoteWidgetConfig()),
+		AUTO_SIZE_COLUMN_WIDGET(DropDownWidget.class, WidgetHelper.INSTANCE.getAutoSizeColumnWidgetQuote()),
+		ABORT_ON_ERROR_WIDGET(DropDownWidget.class, WidgetHelper.INSTANCE.getAbortOnErrorWidgetQuote()),
 		//DATABASE_WIDGET(DropDownWidget.class, WidgetHelper.INSTANCE.getDatabaseWidgetConfig()),
 		
 		JDBC_DRIVER_WIDGET(TextBoxWithLabelWidget.class, WidgetHelper.INSTANCE.getJdbcDriverWidgetConfig()),
@@ -132,7 +140,7 @@ public class WidgetFactory {
 	    DB_URL_WIDGET(TextBoxWithLabelWidget.class, WidgetHelper.INSTANCE.getDBUrlWidgetConfig()),
 	    DB_UPDATE_USER_NAME_WIDGET(TextBoxWithLabelWidgetWithoutAnyValidation.class, WidgetHelper.INSTANCE.getTextBoxWithoutAnyValidationWidgetConfig(Messages.LABEL_USER_NAME)),
 	    DB_UPDATE_PASSWORD_WIDGET(TextBoxWithIsParameterCheckBoxWidgetForDatabaseComponents.class, WidgetHelper.INSTANCE.getPasswordWidgetConfig(false)),
-
+	    WORKSHEET_NAME_WIDGET(WorksheetWidget.class),
 		TEXTBOX_WITH_IS_PARAMETER_CHECKBOX_WIDGET(TextBoxWithIsParameterCheckBoxWidget.class,WidgetHelper.INSTANCE.getSequenceFieldWidgetConfig()),
 		DELIMETER_WIDGET(DelimiterWidget.class, WidgetHelper.INSTANCE.getDelimiterWidgetConfig()),
 		QUOTE_WIDGET(TextBoxWithLabelWidgetWithoutAnyValidation.class, WidgetHelper.INSTANCE.getQuoteWidgetConfig()),
@@ -196,7 +204,12 @@ public class WidgetFactory {
 				.getRunTimeWidgetConfig("Operation\nConfiguration", "Operation Config")),
 		FTP_ENCODING_WIDGET(DropDownWidget.class, WidgetHelper.INSTANCE.getEncodingWidgetConfig()),
 		FAIL_ON_ERROR_WIDGET(DropDownWidget.class, WidgetHelper.INSTANCE.getFailOnErrorWidgetConfig()),
-		FTP_PROTOCOL_SELECTION_WIDGET(ProtocolWidget.class);
+		FTP_PROTOCOL_SELECTION_WIDGET(FTPProtocolWidget.class),
+		EXCEL_FORMATTING_WIDGET(ExcelFormattingWidget.class,WidgetHelper.INSTANCE.getRunTimeWidgetConfig(Messages.LABEL_EXCEL_FORMATTING,Messages.EXCEL_FORMATTING_WINDOW_LABEL)),
+		EXCEL_FILE_PATH_WIDGET(ELTFilePathWidget.class,WidgetHelper.INSTANCE.getExcelFilePathWidgetConfig(Messages.FILE_PATH_LABEL)),
+		EXCEL_FILE_NAME_WIDGET(ExcelFileNameWidget.class,WidgetHelper.INSTANCE.getExcelFileNameWidgetConfig()),
+		SORT_EXCEL_COLUMNS_KEYS_WIDGET(SecondaryColumnKeysWidget.class,WidgetHelper.INSTANCE.getSortExcelColumnWidgetConfig()),
+		FILTER_LOGIC(FilterLogicWidget.class);
 		
               
 		private Class<?> clazz = null;

@@ -32,7 +32,7 @@ public class GradleCommandConstants {
 	public static final String GCMD_EXECUTE_DEBUG_REMOTE_JOB="gradle executeDebugRemoteJob ";
 	public static final String GCMD_KILL_REMOTE_JOB="gradle killRemoteJob ";
 	public static final String GCMD_CREATE_DIRECTORIES="gradle createDirectories ";
-	public static final String GCMD_SCP_SCHEMA_FILES="gradle scpSchemaFiles ";
+	public static final String GCMD_SCP_EXTERNAL_FILES="gradle scpExternalFiles ";
 	public static final String GCMD_SCP_SUBJOB_FILES="gradle scpSubJobFiles ";
 	
 	public static final String GPARAM_USERNAME=" -Pusername=";
@@ -49,10 +49,10 @@ public class GradleCommandConstants {
 	public static final String GPARAM_UNIQUE_JOB_ID=" -PjobId=";
 	public static final String GPARAM_MOVE_PARAM_FILE=" -PmoveParameterFile=";
 	public static final String GPARAM_RESOUCES_FILES=" -PmoveResourceFile=";
-	public static final String GPARAM_MOVE_SCHEMA_FILES=" -PmoveExternalSchemaFiles=";
+	public static final String GPARAM_MOVE_EXTERNAL_FILES=" -PmoveExternalFiles=";
 	public static final String GPARAM_MOVE_SUBJOB_FILES=" -PmoveSubJobFiles=";
 	public static final String GPARAM_MOVE_JAR=" -PmoveJar=";
-	public static final String GPARAM_MOVE_SCHEMA=" -PexternalSchemaFiles=";
+	public static final String GPARAM_MOVE_FILES=" -PexternalFiles=";
 	public static final String GPARAM_MOVE_SUBJOB=" -PsubJobFiles=";
 	
 	public static final String GPARAM_IS_EXECUTION_TRACKING_ON=" -PisExecutionTracking=";

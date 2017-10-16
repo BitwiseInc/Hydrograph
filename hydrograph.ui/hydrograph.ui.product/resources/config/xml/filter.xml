@@ -45,19 +45,11 @@
 			<tns:validator>SCHEMA_GRID_VALIDATOR</tns:validator>
 		</tns:property>
 		
-		<tns:property dataType="string" name="OPERATION_CLASS" renderer="OPERATIONAL_CLASS_WIDGET"
-			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="LINK"
-			usage="REQUIRED" propertyHelpText="Specify java class for performing the Filter operation.#Specify expression for performing Filter operation.">
-			<tns:validator>CLASS_NAME_VALIDATOR</tns:validator>
-		</tns:property>
-		
-		
-		
-		<tns:property dataType="string" name="operation_fields" renderer="FILTER_PROPERTY_WIDGET" type="USER"
+		<tns:property dataType="string" name="filterLogic" renderer="FILTER_LOGIC" type="USER"
 			group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="LIST"
-			usage="OPTIONAL" propertyHelpText="Fields used within the java \nclass for the Filter operation.">
-			</tns:property>
-
+			usage="OPTIONAL" propertyHelpText="Specify java class for performing the Filter operation.#Specify expression for performing Filter operation.">
+			<tns:validator>FILTER_DATA_VALIDATION</tns:validator>
+		</tns:property>
 			
 		<tns:property dataType="string" name="runtime_properties" renderer="RUNTIME_PROPERTIES_WIDGET"
 			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="FALSE" tooltipDataType="NONE"

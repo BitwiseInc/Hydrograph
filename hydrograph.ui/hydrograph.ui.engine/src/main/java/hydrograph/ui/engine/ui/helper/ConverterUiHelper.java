@@ -15,6 +15,7 @@
 package hydrograph.ui.engine.ui.helper;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,10 +34,16 @@ import org.eclipse.swt.widgets.MessageBox;
 import hydrograph.engine.jaxb.commontypes.TypeBaseField;
 import hydrograph.engine.jaxb.commontypes.TypeExternalSchema;
 import hydrograph.ui.common.util.Constants;
+import hydrograph.ui.common.util.SchemaFieldUtil;
+import hydrograph.ui.datastructure.expression.ExpressionEditorData;
 import hydrograph.ui.datastructure.property.BasicSchemaGridRow;
+import hydrograph.ui.datastructure.property.FilterProperties;
 import hydrograph.ui.datastructure.property.FixedWidthGridRow;
 import hydrograph.ui.datastructure.property.GridRow;
 import hydrograph.ui.datastructure.property.MixedSchemeGridRow;
+import hydrograph.ui.datastructure.property.NameValueProperty;
+import hydrograph.ui.datastructure.property.mapping.MappingSheetRow;
+import hydrograph.ui.datastructure.property.mapping.TransformMapping;
 import hydrograph.ui.engine.ui.converter.LinkingData;
 import hydrograph.ui.engine.ui.repository.UIComponentRepo;
 import hydrograph.ui.graph.model.Component;
@@ -159,11 +166,7 @@ public class ConverterUiHelper {
 	 * @return
 	 */
 	public String getStringValue(String value) {
-		String emptyString = "";
-		if (value == null || value.equals("null"))
-			return emptyString;
-		else
-			return value;
+		return SchemaFieldUtil.INSTANCE.getStringValue(value);
 	}
 
 	/**
@@ -217,6 +220,22 @@ public class ConverterUiHelper {
 			return inSocketId.replace("in", "out");
 		}
 		return inSocketId;
+	}
+
+	public static MappingSheetRow getOperationOrExpression(String operationId, TransformMapping transformMapping,
+			boolean isExpression, String componentName) {
+		for (MappingSheetRow operationOrExpression : transformMapping.getMappingSheetRows()) {
+			if (StringUtils.equalsIgnoreCase(operationId, operationOrExpression.getOperationID())) {
+				return operationOrExpression;
+			}
+		}
+		MappingSheetRow mappingSheetRow = new MappingSheetRow(new ArrayList<FilterProperties>(),
+				new ArrayList<FilterProperties>(), "", "", false, operationId, new ArrayList<NameValueProperty>(),
+				isExpression, new ExpressionEditorData("",componentName),
+				new ExpressionEditorData("", componentName), true);
+
+		transformMapping.getMappingSheetRows().add(mappingSheetRow);
+		return mappingSheetRow;
 	}
 
 }

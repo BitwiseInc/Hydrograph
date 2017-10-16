@@ -17,6 +17,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.bind.JAXBElement;
+
 import org.slf4j.Logger;
 
 import hydrograph.engine.jaxb.commontypes.TypeBaseInSocket;
@@ -73,7 +75,7 @@ public class NormalizeConverter extends TransformConverter {
 		logger.debug("Generating XML for :{}", properties.get(Constants.PARAM_NAME));
 		super.prepareForXML();
         Normalize normalize = (Normalize) baseComponent;
-		normalize.getOperationOrExpression().addAll(getOperations());
+		normalize.getOperationOrExpressionOrIncludeExternalOperation().addAll(getOperations());
 		if(transformMapping!=null && transformMapping.isExpression())
 		normalize.setOutputRecordCount(getOutputRecordCountValue());
 	}
@@ -86,7 +88,7 @@ public class NormalizeConverter extends TransformConverter {
 
 
 	@Override
-	protected List<Object> getOperations() {
+	protected List<JAXBElement<?>> getOperations() {
 		return converterHelper.getOperationsOrExpression(transformMapping,schemaGridRows);
 	}
 

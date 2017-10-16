@@ -12,6 +12,7 @@
  *******************************************************************************/
 package hydrograph.ui.graph.model.components;
 
+import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.graph.model.Component;
 
 /**
@@ -28,6 +29,11 @@ public class IXml extends Component {
 	@Override
 	public String getConverter() {
 		return "hydrograph.ui.engine.converter.impl.InputXmlConverter";
+	}
+	
+	@Override
+	public String getGridRowType() {
+		return Constants.XPATH_GRID_ROW;
 	}
 
 }

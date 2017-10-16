@@ -25,6 +25,7 @@ import hydrograph.ui.common.validator.Validator;
 import hydrograph.ui.datastructure.property.ComponentsOutputSchema;
 import hydrograph.ui.datastructure.property.GridRow;
 import hydrograph.ui.datastructure.property.Schema;
+import hydrograph.ui.datastructure.property.mapping.TransformMapping;
 import hydrograph.ui.graph.model.Component;
 import hydrograph.ui.graph.model.Container;
 import hydrograph.ui.graph.model.Link;
@@ -45,6 +46,7 @@ public static final SubjobUtility INSTANCE= new SubjobUtility();
 		
 		for(Link link:component.getSourceConnections())
 		{
+			Schema previousComponentSchema=SubjobUtility.INSTANCE.getSchemaFromPreviousComponentSchema(component, link);
 			Component nextComponent=link.getTarget();
 			if (nextComponent != null) {
 			Schema schema=(Schema)nextComponent.getProperties().get(Constants.SCHEMA_PROPERTY_NAME);
@@ -80,8 +82,10 @@ public static final SubjobUtility INSTANCE= new SubjobUtility();
 					schema.setGridRow(gridRows);
 				}	
 				schema.getGridRow().clear();
-				if(outputSchema!=null)
-				schema.getGridRow().addAll(outputSchema.getBasicGridRowsOutputFields());
+				if(previousComponentSchema!=null &&!previousComponentSchema.getGridRow().isEmpty())
+				{	
+				schema.getGridRow().addAll(SchemaSyncUtility.INSTANCE.convertGridRowsSchemaToBasicSchemaGridRows(previousComponentSchema.getGridRow()));
+				}
 				if(!StringUtils.equalsIgnoreCase(Constants.SUBJOB_COMPONENT_CATEGORY, nextComponent.getCategory()))
 				{	
 				nextComponent.getProperties().put(Constants.SCHEMA_PROPERTY_NAME,schema);
@@ -95,7 +99,7 @@ public static final SubjobUtility INSTANCE= new SubjobUtility();
 				
 				if(nextComponent instanceof SubjobComponent)
 				{	
-					Container container=(Container)nextComponent.getProperties().get(Constants.SUBJOB_CONTAINER);
+					Container container=(Container)nextComponent.getSubJobContainer().get(Constants.SUBJOB_CONTAINER);
 					for(Component subjobComponent:container.getUIComponentList())
 					{
 						if(subjobComponent instanceof InputSubjobComponent)
@@ -112,7 +116,7 @@ public static final SubjobUtility INSTANCE= new SubjobUtility();
 				}
 				else if(nextComponent instanceof OutputSubjobComponent)
 				{
-					Component subJobComponent=(Component)nextComponent.getProperties().get(Constants.SUBJOB_COMPONENT);
+					Component subJobComponent = (Component) nextComponent.getSubJobContainer().get(Constants.SUBJOB_COMPONENT);
 					if(subJobComponent!=null)
 					SubjobUtility.INSTANCE.initializeSchemaMapForInputSubJobComponent(subJobComponent, nextComponent);
 					setFlagForContinuousSchemaPropogation(subJobComponent);
@@ -148,13 +152,47 @@ public static final SubjobUtility INSTANCE= new SubjobUtility();
 				break;	
 			}
 		}
-			if(StringUtils.equalsIgnoreCase(nextComponent.getCategory(),Constants.TRANSFORM))
-			{
+			if(StringUtils.equalsIgnoreCase(nextComponent.getComponentName(),Constants.JOIN)||
+					StringUtils.equalsIgnoreCase(nextComponent.getComponentName(),Constants.LOOKUP)){
 				nextComponent.setContinuousSchemaPropogationAllow(true);
 				((AbstractGraphicalEditPart)nextComponent.getComponentEditPart()).getFigure().repaint();
 			}
+			else if(StringUtils.equalsIgnoreCase(nextComponent.getComponentName(),Constants.AGGREGATE)
+		    		||StringUtils.equalsIgnoreCase(nextComponent.getComponentName(),Constants.CUMULATE)
+		    		||StringUtils.equalsIgnoreCase(nextComponent.getComponentName(),Constants.GROUP_COMBINE)
+		    		||StringUtils.equalsIgnoreCase(nextComponent.getComponentName(),Constants.NORMALIZE)
+		    		||StringUtils.equalsIgnoreCase(nextComponent.getComponentName(),Constants.TRANSFORM))
+			{
+				TransformMapping transformMapping;
+				if(nextComponent.getProperties().get(Constants.OPERATION)==null){
+	        	  transformMapping=new TransformMapping();
+	        	  nextComponent.getProperties().put(Constants.OPERATION, transformMapping);
+				}else{
+	        	  transformMapping=(TransformMapping)nextComponent.getProperties().get(Constants.OPERATION);
+				}
+	        	OutputRecordCountUtility.INSTANCE.getPropagatedSchema(transformMapping, nextComponent);
+				if(transformMapping.isAllInputFieldsArePassthrough()){
+					Schema schema= (Schema)nextComponent.getProperties().get(Constants.SCHEMA_PROPERTY_NAME);
+					if(schema==null){
+		        	 schema=initSchemaObject();
+					}
+					OutputRecordCountUtility.INSTANCE.addPassThroughFieldsToSchema(transformMapping,nextComponent,schema);
+					setFlagForContinuousSchemaPropogation(nextComponent);
+					nextComponent.getProperties().put(Constants.SCHEMA_PROPERTY_NAME,schema);
+					nextComponent.validateComponentProperties(false);
+					Validator validator=(Validator)((AbstractGraphicalEditPart)nextComponent.getComponentEditPart()).getFigure();
+					validator.setPropertyStatus((String)nextComponent.getProperties().get(Constants.VALIDITY_STATUS));
+					((AbstractGraphicalEditPart)nextComponent.getComponentEditPart()).getFigure().repaint();
+					
+				}else{
+					nextComponent.setContinuousSchemaPropogationAllow(true);
+					((AbstractGraphicalEditPart)nextComponent.getComponentEditPart()).getFigure().repaint();
+				}
+				
+			}
 			nextComponent.getProperties().put(Constants.PREVIOUS_COMPONENT_OLD_SCHEMA,
 					component.getProperties().get(Constants.PREVIOUS_COMPONENT_OLD_SCHEMA));
+
 		}
 	}
 	
@@ -201,7 +239,8 @@ public static final SubjobUtility INSTANCE= new SubjobUtility();
 	 */
 	public boolean checkIfSubJobHasTransformOrUnionAllComponent(Component component) {
 		boolean containsTransformOrUnionAllComponent=false;
-		Container container=(Container)component.getProperties().get(Constants.SUBJOB_CONTAINER);
+		Container container=(Container)component.getSubJobContainer().get(Constants.SUBJOB_CONTAINER);
+		
 		if(container!=null)
 		{
 		for(Object object:container.getChildren())
@@ -273,7 +312,7 @@ public static final SubjobUtility INSTANCE= new SubjobUtility();
 		} else {
 			for (int i = 0; i < subJobContainer.getUIComponentList().size(); i++) {
 				if(subJobContainer.getUIComponentList().get(i) instanceof Component){
-					Component component = (Component)subJobContainer.getUIComponentList().get(i);
+					Component component = subJobContainer.getUIComponentList().get(i);
 				if (!(component instanceof InputSubjobComponent || component instanceof OutputSubjobComponent)) {
 					if (StringUtils.equalsIgnoreCase(Constants.ERROR, 
 							component.getProperties().get(Constants.VALIDITY_STATUS).toString())
@@ -331,6 +370,14 @@ public static final SubjobUtility INSTANCE= new SubjobUtility();
 		
 	}
 	
-	
+	private Schema initSchemaObject() {
+		Schema setSchemaForInternalPapogation = new Schema();
+		setSchemaForInternalPapogation.setIsExternal(false);
+		List<GridRow> gridRows = new ArrayList<>();
+		setSchemaForInternalPapogation.setGridRow(gridRows);
+		setSchemaForInternalPapogation.setExternalSchemaPath("");
+		return setSchemaForInternalPapogation;
+		
+	}
 	
 }

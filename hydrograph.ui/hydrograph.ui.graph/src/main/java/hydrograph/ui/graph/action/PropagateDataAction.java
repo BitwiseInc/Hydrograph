@@ -14,6 +14,7 @@
 package hydrograph.ui.graph.action;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -24,8 +25,10 @@ import org.eclipse.swt.SWT;
 import org.eclipse.ui.IWorkbenchPart;
 
 import hydrograph.ui.common.util.Constants;
+import hydrograph.ui.datastructure.expression.ExpressionEditorData;
 import hydrograph.ui.datastructure.property.GridRow;
 import hydrograph.ui.datastructure.property.Schema;
+import hydrograph.ui.datastructure.property.mapping.TransformMapping;
 import hydrograph.ui.graph.controller.ComponentEditPart;
 import hydrograph.ui.graph.figure.ComponentFigure;
 import hydrograph.ui.graph.model.Component;
@@ -34,6 +37,7 @@ import hydrograph.ui.graph.model.Link;
 import hydrograph.ui.graph.model.components.InputSubjobComponent;
 import hydrograph.ui.graph.model.components.SubjobComponent;
 import hydrograph.ui.propertywindow.messages.Messages;
+import hydrograph.ui.propertywindow.widgets.utility.OutputRecordCountUtility;
 import hydrograph.ui.propertywindow.widgets.utility.SchemaSyncUtility;
 import hydrograph.ui.propertywindow.widgets.utility.SubjobUtility;
 import hydrograph.ui.propertywindow.widgets.utility.WidgetUtility;
@@ -137,12 +141,13 @@ public class PropagateDataAction extends SelectionAction {
 				component.validateComponentProperties(false);
 				componentFigure.setPropertyStatus((String)(component.getProperties().get(Constants.VALIDITY_STATUS)));
 				componentFigure.repaint();
+				component.setContinuousSchemaPropogationAllow(true);
 				if(StringUtils.equalsIgnoreCase(Constants.UNION_ALL,component.getComponentName()))
 				break;	
 			}
 			else if(component instanceof SubjobComponent)
 			{
-			Container container=(Container)component.getProperties().get(Constants.SUBJOB_CONTAINER);
+			Container container=(Container)component.getSubJobContainer().get(Constants.SUBJOB_CONTAINER);
 			for(Component componentIterator:container.getUIComponentList())
 			{
 				if(componentIterator instanceof InputSubjobComponent)
@@ -155,20 +160,69 @@ public class PropagateDataAction extends SelectionAction {
 			}
 			shouldsetContinuousSchemaPropagationFlagForNextConnectedComponents=!SubjobUtility.INSTANCE.checkIfSubJobHasTransformOrUnionAllComponent(component);
 			((ComponentEditPart)component.getComponentEditPart()).getFigure().repaint();
+			component.setContinuousSchemaPropogationAllow(true);
 			break;
 			}
-			else if(StringUtils.equalsIgnoreCase(Constants.TRANSFORM,component.getCategory()))
-			{
-			 shouldsetContinuousSchemaPropagationFlagForNextConnectedComponents=false;	
-			((ComponentEditPart)component.getComponentEditPart()).getFigure().repaint();
+			else if(StringUtils.equalsIgnoreCase(component.getComponentName(),Constants.JOIN)||
+					StringUtils.equalsIgnoreCase(component.getComponentName(),Constants.LOOKUP)){
+				component.setContinuousSchemaPropogationAllow(true);
+				shouldsetContinuousSchemaPropagationFlagForNextConnectedComponents=false;
+			}
+			else if(
+		    		StringUtils.equalsIgnoreCase(component.getComponentName(),Constants.AGGREGATE)
+		    		||StringUtils.equalsIgnoreCase(component.getComponentName(),Constants.CUMULATE)
+		    		||StringUtils.equalsIgnoreCase(component.getComponentName(),Constants.GROUP_COMBINE)
+		    		||StringUtils.equalsIgnoreCase(component.getComponentName(),Constants.NORMALIZE)
+		    		||StringUtils.equalsIgnoreCase(component.getComponentName(),Constants.TRANSFORM))
+				{
+				TransformMapping transformMapping;
+				if(component.getProperties().get(Constants.OPERATION)==null){
+	        	  transformMapping=new TransformMapping();
+	        	  if(StringUtils.equalsIgnoreCase(component.getComponentName(),Constants.NORMALIZE))
+	        	  {
+	        			transformMapping.setExpression(true);
+	        			ExpressionEditorData expressionEditorData=new ExpressionEditorData("", "");
+	        			transformMapping.setExpressionEditorData(expressionEditorData);
+	        	  }
+	        	  component.getProperties().put(Constants.OPERATION, transformMapping);
+				}else{
+	        	  transformMapping=(TransformMapping)component.getProperties().get(Constants.OPERATION);
+				}
+	        	OutputRecordCountUtility.INSTANCE.getPropagatedSchema(transformMapping, component);
+	        	ComponentFigure componentFigure=(ComponentFigure)((ComponentEditPart)component.getComponentEditPart()).getFigure();
+				if(transformMapping.isAllInputFieldsArePassthrough()){
+					Schema schema= (Schema)component.getProperties().get(Constants.SCHEMA_PROPERTY_NAME);
+					if(schema==null){
+		        	 schema=initSchemaObject();
+					}
+					OutputRecordCountUtility.INSTANCE.addPassThroughFieldsToSchema(transformMapping,component,schema);
+					component.getProperties().put(Constants.SCHEMA_PROPERTY_NAME,schema);
+					component.validateComponentProperties(false);
+					componentFigure.setPropertyStatus((String)(component.getProperties().get(Constants.VALIDITY_STATUS)));
+				}else{
+					component.setContinuousSchemaPropogationAllow(true);
+					shouldsetContinuousSchemaPropagationFlagForNextConnectedComponents=false;	
+				}
+				componentFigure.repaint();
 			}
 			oldSchemaMap.put(link.getTargetTerminal(), previousComponentSchema);	
 		}
-		//component.getProperties().put(Constants.PREVIOUS_COMPONENT_OLD_SCHEMA, oldSchemaMap);
-		//component.setContinuousSchemaPropogationAllow(true);
+		if(!StringUtils.equalsIgnoreCase(Constants.UNION_ALL,component.getComponentName())){
+			component.getProperties().put(Constants.PREVIOUS_COMPONENT_OLD_SCHEMA, oldSchemaMap);
+			
+		}
 		if(shouldsetContinuousSchemaPropagationFlagForNextConnectedComponents)
 		{
 			SubjobUtility.INSTANCE.setFlagForContinuousSchemaPropogation(component);
 		}
+	}
+	private Schema initSchemaObject() {
+		Schema setSchemaForInternalPapogation = new Schema();
+		setSchemaForInternalPapogation.setIsExternal(false);
+		List<GridRow> gridRows = new ArrayList<>();
+		setSchemaForInternalPapogation.setGridRow(gridRows);
+		setSchemaForInternalPapogation.setExternalSchemaPath("");
+		return setSchemaForInternalPapogation;
+		
 	}
 }

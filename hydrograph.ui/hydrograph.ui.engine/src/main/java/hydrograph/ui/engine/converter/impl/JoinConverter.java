@@ -43,6 +43,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import javax.xml.bind.JAXBElement;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 
@@ -173,34 +175,8 @@ public class JoinConverter extends TransformConverter {
 	}
 
 	@Override
-	protected List<Object> getOperations() {
-		List<Object> operationList = new ArrayList<>();
-		TypeTransformOperation operation = new TypeTransformOperation();
-		TypeOperationInputFields operationInputFields = new TypeOperationInputFields();
-		operationInputFields.getField().addAll(getOperationField());
-		operation.setInputFields(operationInputFields);
-		operation.setId(JOIN_OPERATION_ID);
-		if (properties.get(PropertyNameConstants.OPERATION_CLASS.value()) != null)
-			operation.setClazz(((OperationClassProperty) properties.get(PropertyNameConstants.OPERATION_CLASS.value()))
-					.getOperationClassPath());
-		operationList.add(operation);
-		return operationList;
-	}
-
-	private List<TypeInputField> getOperationField() {
-		logger.debug("Genrating TypeInputField data :{}", properties.get(Constants.PARAM_NAME));
-		List<TypeInputField> operationFiledList = new ArrayList<>();
-		Set<String> componentOperationFileds = (HashSet<String>) component.getProperties().get(
-				PropertyNameConstants.OPERATION_FILEDS.value());
-		if (componentOperationFileds != null) {
-			for (String object : componentOperationFileds) {
-				TypeInputField operationFiled = new TypeInputField();
-				operationFiled.setName(object);
-				operationFiled.setInSocketId(Constants.FIXED_INSOCKET_ID);
-				operationFiledList.add(operationFiled);
-			}
-		}
-		return operationFiledList;
+	protected List<JAXBElement<?>> getOperations() {
+		return null;
 	}
 
 	@Override

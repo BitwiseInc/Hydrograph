@@ -199,10 +199,30 @@ public class Utils {
 					getJobsPropertyFile(localParamFilePath,file));
 			if (files != null) {
 				paramNameList = Arrays.asList(files);
-				getParamMap(paramNameList);
+				getParamMap(paramNameList, null);
 			}
 		}
 	}
+	
+	
+	/**
+	 * 
+	 * loading the properties files without open jon file
+	 * @param jobFile job file path
+	 */
+	public void loadProperties(IFile jobFile) {
+		List<File> paramNameList = null;
+		IProject activeProject = jobFile.getProject();
+		final File globalparamFilesPath = new File(activeProject.getLocation().toString() + "/" + "globalparam");
+		final File localParamFilePath = new File(activeProject.getLocation().toString() + "/" + Constants.PARAM_FOLDER);
+		File[] files = (File[]) ArrayUtils.addAll(listFilesForFolder(globalparamFilesPath),
+				getJobsPropertyFile(localParamFilePath, jobFile));
+		if (files != null) {
+			paramNameList = Arrays.asList(files);
+			getParamMap(paramNameList, jobFile);
+		}
+	}
+	
 		
 	 	/**
 		 * 
@@ -302,6 +322,23 @@ public class Utils {
 			return paramValue+remainingString;
 		}		
 		
+	 
+	 	/**
+			 * 
+			 * get the file Path according to the Parameter value
+			 * @param extSchemaPath
+			 * @param paramValue
+			 * @param extSchemaPathText
+			 * @return the file Path according to the Parameter value
+			 */
+		 public String getParamFilePath(String extSchemaPath, String paramValue){
+				String remainingString = "";
+			     if( !checkParameterValue(extSchemaPath) && StringUtils.contains(paramValue, PARAMETER_NOT_FOUND)){
+			    	remainingString = extSchemaPath.substring(extSchemaPath.indexOf("}")+1, extSchemaPath.length());
+			   		}
+				return paramValue+remainingString;
+			}		
+			
 	 /**
 		 * 
 		 * get the file Path according to the Parameter value
@@ -357,14 +394,20 @@ public class Utils {
 		}
 	}
 	
-	 private void getParamMap(List<File> FileNameList){
-			IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-			IFileEditorInput input = (IFileEditorInput) page.getActiveEditor().getEditorInput();
-			IFile file = input.getFile();
-			IProject activeProject = file.getProject();
-			String activeProjectName = activeProject.getName();
-			InputStream reader=null;
+	 private void getParamMap(List<File> FileNameList, IFile jobFile){
+		 
+		 	String activeProjectName = null;
+			InputStream reader = null;
 			String propFilePath = null;
+			if (jobFile == null) {
+				IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+				IFileEditorInput input = (IFileEditorInput) page.getActiveEditor().getEditorInput();
+				IFile file = input.getFile();
+				activeProjectName = file.getProject().getName();
+			} else {
+				activeProjectName = jobFile.getProject().getName();
+			}
+
 			for(File propFileName : FileNameList){
 			if (!propFileName.isDirectory()) {
 				String fileName = propFileName.getName();

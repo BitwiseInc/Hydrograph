@@ -33,6 +33,8 @@ public enum ImagePathConstant {
 	MAC_DELETE_BUTTON ("/icons/icondelete.png"),
 	MOVEUP_BUTTON("/icons/up.png"),
 	MOVEDOWN_BUTTON("/icons/down.png"),
+	EXPORT_SCHEMA_BUTTON("/icons/export_schema.png"),
+	IMPORT_SCHEMA_BUTTON("/icons/import_schema.png"),
 	SAVE_BUTTON("/icons/save_o.png"),
 	PULL_BUTTON("/icons/pull_schema.png"),
 	EDIT_BUTTON("/icons/editImage.png"),

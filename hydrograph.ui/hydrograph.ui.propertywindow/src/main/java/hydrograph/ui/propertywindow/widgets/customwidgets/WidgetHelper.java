@@ -645,4 +645,87 @@ public class WidgetHelper {
 		textBoxWithLableConfig.setGrabExcessSpace(true);
 		return textBoxWithLableConfig;
 	}
+	
+	/*
+	 * Configuration to customize dropdown as write mode property 
+	 */
+	public WidgetConfig getWriteModeWidgetConfig(){
+		DropDownConfig dropDownConfig = new DropDownConfig();
+		dropDownConfig.setName(Messages.LABEL_WRITE_MODE);
+		dropDownConfig.getItems().add(Constants.APPEND);
+		dropDownConfig.getItems().add(Constants.OVERWRITE);
+		dropDownConfig.getItems().add(Constants.FAIL_IF_EXISTS);
+		dropDownConfig.getItems().add(Constants.PARAMETER);
+		addComboBoxListeners(dropDownConfig);
+		return dropDownConfig;
+	}
+	
+	/**
+	 * Configuration to customize dropdown as Strip Leading Quote property 
+	 */
+	public WidgetConfig getStripLeadingQuoteWidgetConfig(){
+		DropDownConfig dropDownConfig =  populateTrueFalseConfig(Messages.LABEL_STRIP_LEADING_QUOTE);
+		addComboBoxListeners(dropDownConfig);
+		return dropDownConfig;
+	}
+	
+	/*
+	 * Configuration to customize dropdown as Auto Size Column property 
+	 */
+	public WidgetConfig getAutoSizeColumnWidgetQuote(){
+		DropDownConfig dropDownConfig =  populateTrueFalseConfig(Messages.LABEL_AUTO_SIZE_COLUMN);
+		addComboBoxListeners(dropDownConfig);
+		return dropDownConfig;
+	}
+	
+	/**
+	 * Configuration to customize dropdown as Abort On Error property 
+	 */
+	public WidgetConfig getAbortOnErrorWidgetQuote(){
+		DropDownConfig dropDownConfig =  populateTrueFalseConfig(Messages.LABEL_ABORT_ON_ERROR);
+		addComboBoxListeners(dropDownConfig);
+		return dropDownConfig;
+	}
+	
+	/**
+	 * Configuration to customize text box as Worksheet Name property 
+	 */
+	public WidgetConfig getWorksheetNameWidgetConfig(boolean isMandatory){
+		TextBoxWithLableConfig textBoxConfig = new TextBoxWithLableConfig();
+		textBoxConfig.setName(Messages.LABEL_WORKSHEET_NAME);
+		textBoxConfig.setGrabExcessSpace(true);
+		textBoxConfig.setMandatory(isMandatory);
+		if(isMandatory){
+			addTextBoxListeners(textBoxConfig);
+		}else{
+			textBoxConfig.getListeners().add(Listners.EVENT_CHANGE);
+		}
+		return textBoxConfig;
+	}
+
+	public FilePathConfig getExcelFilePathWidgetConfig(String fILE_PATH_LABEL) {
+		FilePathConfig filePathConfig= new FilePathConfig();
+		filePathConfig.setLabel(Messages.FILE_PATH_LABEL);
+		filePathConfig.setMandatory(true);
+		return filePathConfig;
+	}
+
+	public WidgetConfig getExcelFileNameWidgetConfig() {
+		TextBoxWithLableConfig textBoxConfig = new TextBoxWithLableConfig();
+		textBoxConfig.setName(Messages.FILE_NAME);
+		textBoxConfig.getListeners().add(Listners.VERIFY_FILE_NAME);
+		textBoxConfig.getListeners().add(Listners.EVENT_CHANGE);
+		textBoxConfig.getListeners().add(Listners.EXCEL_FILE_NAME_FOCUS_IN);
+		textBoxConfig.getListeners().add(Listners.EXCEL_FILE_NAME_FOCUS_OUT);
+		textBoxConfig.setGrabExcessSpace(true);
+		return textBoxConfig;
+	}
+
+	public WidgetConfig getSortExcelColumnWidgetConfig() {
+		EditButtonWithLabelConfig buttonWithLabelConfig = new EditButtonWithLabelConfig();
+		buttonWithLabelConfig.setName(Messages.SORT_COLUMNS);
+		buttonWithLabelConfig.setWindowName(Messages.SORT_COLUMNS_WINDOW_LABEL);
+		return buttonWithLabelConfig;
+	}
+	
 }

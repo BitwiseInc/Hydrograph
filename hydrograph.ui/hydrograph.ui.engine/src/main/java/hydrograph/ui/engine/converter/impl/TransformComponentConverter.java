@@ -14,9 +14,16 @@
  
 package hydrograph.ui.engine.converter.impl;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.bind.JAXBElement;
+
+import org.slf4j.Logger;
+
 import hydrograph.engine.jaxb.commontypes.TypeBaseInSocket;
 import hydrograph.engine.jaxb.commontypes.TypeOperationsOutSocket;
-import hydrograph.engine.jaxb.commontypes.TypeTransformOperation;
 import hydrograph.engine.jaxb.operationstypes.Transform;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.datastructure.property.BasicSchemaGridRow;
@@ -26,12 +33,6 @@ import hydrograph.ui.datastructure.property.mapping.TransformMapping;
 import hydrograph.ui.engine.converter.TransformConverter;
 import hydrograph.ui.graph.model.Component;
 import hydrograph.ui.logging.factory.LogFactory;
-
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
-import org.slf4j.Logger;
 
 /**
  * TransformComponentConverter
@@ -73,11 +74,11 @@ public class TransformComponentConverter extends TransformConverter {
 		logger.debug("Generating XML for :{}", properties.get(Constants.PARAM_NAME));
 		super.prepareForXML();
 		Transform transform = (Transform) baseComponent;
-		transform.getOperationOrExpression().addAll(getOperations());
+		transform.getOperationOrExpressionOrIncludeExternalOperation().addAll(getOperations());
 	}
 
 	@Override
-	protected List<Object> getOperations() {
+	protected List<JAXBElement<?>> getOperations() {
 		return converterHelper.getOperationsOrExpression(transformMapping,schemaGridRows);
 	}
 

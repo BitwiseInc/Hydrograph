@@ -64,9 +64,29 @@ public class SchemaPropagation {
 
 		if (component != null && schemaMap != null)
 			if (StringUtils.equals(Constants.SUBJOB_COMPONENT_CATEGORY, component.getCategory()))
-				appplySchemaToTargetComponentsFromSchemaMap(component, schemaMap, Constants.FIXED_OUTSOCKET_ID);
+				appplySchemaToTargetComponentsFromSchemaMap(component, schemaMap, Constants.FIXED_OUTSOCKET_ID, false);
 			else
-				appplySchemaToTargetComponentsFromSchemaMap(component, schemaMap, null);
+				appplySchemaToTargetComponentsFromSchemaMap(component, schemaMap, null, false);
+
+		flushLinkLists();
+	}
+	
+	/**
+	 * This method propagates component's schema-map to its successor components.
+	 * Made for External Schema updater
+	 * 
+	 * @param component
+	 * @param schemaMap
+	 * @param isExtrenalSchemaUpdator
+	 */
+	public void continuousSchemaPropagation(Component component, Map<String, ComponentsOutputSchema> schemaMap, boolean isExternalSchemaUpdator) {
+		LOGGER.debug("Initiating recursive schema propagation");
+
+		if (component != null && schemaMap != null)
+			if (StringUtils.equals(Constants.SUBJOB_COMPONENT_CATEGORY, component.getCategory()))
+				appplySchemaToTargetComponentsFromSchemaMap(component, schemaMap, Constants.FIXED_OUTSOCKET_ID, isExternalSchemaUpdator);
+			else
+				appplySchemaToTargetComponentsFromSchemaMap(component, schemaMap, null, isExternalSchemaUpdator);
 
 		flushLinkLists();
 	}
@@ -95,74 +115,63 @@ public class SchemaPropagation {
 	}
 
 	private void appplySchemaToTargetComponentsFromSchemaMap(Component destinationComponent,
-			Map<String, ComponentsOutputSchema> schemaMap, String targetTerminal) {
+			Map<String, ComponentsOutputSchema> schemaMap, String targetTerminal, boolean isRefreshExternalSchema) {
 
 		if (StringUtils.isNotEmpty(targetTerminal)) {
-			applySchemaToTargetComponents(destinationComponent, targetTerminal, schemaMap.get(targetTerminal));
+			applySchemaToTargetComponents(destinationComponent, targetTerminal, schemaMap.get(targetTerminal), isRefreshExternalSchema);
 
 		} else {
-			applySchemaToTargetComponents(destinationComponent, null, schemaMap.get(Constants.FIXED_OUTSOCKET_ID));
+			applySchemaToTargetComponents(destinationComponent, null, schemaMap.get(Constants.FIXED_OUTSOCKET_ID), isRefreshExternalSchema);
 		}
 	}
 
 	private void applySchemaToTargetComponents(Component destinationComponent, String targetTerminal,
-			ComponentsOutputSchema componentsOutputSchema) {
+			ComponentsOutputSchema componentsOutputSchema, boolean isRefreshExternalSchema) {
 		LOGGER.debug("Applying Schema to :" + destinationComponent.getComponentLabel());
 		if (!isInputSubJobComponent(destinationComponent)
 				&& StringUtils.equals(Constants.SUBJOB_COMPONENT_CATEGORY, destinationComponent.getCategory())
 				&& targetTerminal != null) {
-			propagateSchemaFromSubJob(destinationComponent, targetTerminal, componentsOutputSchema);
+			propagateSchemaFromSubJob(destinationComponent, targetTerminal, componentsOutputSchema, isRefreshExternalSchema);
 		}
 		setSchemaMapOfComponent(destinationComponent, componentsOutputSchema);
 		if (destinationComponent != null && destinationComponent.getSourceConnections().isEmpty()) {
-//			mainLinkList.clear();
 			return;
 		}
 		if (!StringUtils.equals(Constants.SUBJOB_COMPONENT_CATEGORY, destinationComponent.getCategory())
-				|| isInputSubJobComponent(destinationComponent)) {
+				|| isInputSubJobComponent(destinationComponent) || isRefreshExternalSchema) {
 			for (Link link : destinationComponent.getSourceConnections()) {
-				applySchemaToLinkedComponents(link,componentsOutputSchema);
+				applySchemaToLinkedComponents(link,componentsOutputSchema, isRefreshExternalSchema);
 			}
 		}
 	}
 
 	
-	private void applySchemaToLinkedComponents(Link link, ComponentsOutputSchema componentsOutputSchema) {
+	private void applySchemaToLinkedComponents(Link link, ComponentsOutputSchema componentsOutputSchema, boolean isRefreshExternalSchema) {
 		if ((!(Constants.TRANSFORM.equals(link.getTarget().getCategory()) & !Constants.FILTER.equalsIgnoreCase(link
 				.getTarget().getComponentName()) & !Constants.PARTITION_BY_EXPRESSION.equalsIgnoreCase(link
 						.getTarget().getComponentName())) && !link.getTarget().getProperties()
 				.containsValue(componentsOutputSchema))) {
 			if (!checkUnusedSocketAsSourceTerminal(link))
-				applySchemaToTargetComponents(link.getTarget(), link.getTargetTerminal(), componentsOutputSchema);
+				applySchemaToTargetComponents(link.getTarget(), link.getTargetTerminal(), componentsOutputSchema,isRefreshExternalSchema);
 			else {
 				getComponentsOutputSchema(link);
-				applySchemaToTargetComponents(link.getTarget(), link.getTargetTerminal(), this.componentsOutputSchema);
+				applySchemaToTargetComponents(link.getTarget(), link.getTargetTerminal(), this.componentsOutputSchema, isRefreshExternalSchema);
 			}
 		} else if (Constants.UNIQUE_SEQUENCE.equals(link.getTarget().getComponentName())) {
-			propagateSchemForUniqueSequenceComponent(link.getTarget(), componentsOutputSchema);
+			propagateSchemForUniqueSequenceComponent(link.getTarget(), componentsOutputSchema, isRefreshExternalSchema);
 		} else {
 			for (Link link2 : link.getTarget().getSourceConnections()) {
 				if (!isMainLinkChecked(link2)) {
 					if (checkUnusedSocketAsSourceTerminal(link2) && getComponentsOutputSchema(link2) != null) {
-						applySchemaToLinkedComponents(link2,this.componentsOutputSchema);
+						applySchemaToLinkedComponents(link2,this.componentsOutputSchema, isRefreshExternalSchema);
 					} else
-						propagatePassThroughAndMapFields(link);
+						propagatePassThroughAndMapFields(link, isRefreshExternalSchema);
 				} else
 					break;
 			}
 		}
 	}
 	
-	
-	private ComponentsOutputSchema getComponentsOutputSchemaFromMap(Component destinationComponent,
-			Link link, ComponentsOutputSchema componentsOutputSchema) {
-		Map<String , ComponentsOutputSchema> schemaMap=(Map<String, ComponentsOutputSchema>) destinationComponent.getProperties().get(Constants.SCHEMA_TO_PROPAGATE);
-		if(isInputSubJobComponent(destinationComponent) && schemaMap!=null){
-			componentsOutputSchema = schemaMap.get(link.getSourceTerminal());	
-		}
-		return componentsOutputSchema ;
-	}
-
 	private boolean isInputSubJobComponent(Component component) {
 		if (StringUtils.equals(Constants.INPUT_SUBJOB, component.getComponentName()))
 			return true;
@@ -183,38 +192,32 @@ public class SchemaPropagation {
 	}
 
 	private void propagateSchemaFromSubJob(Component subJobComponent, String targetTerminal,
-			ComponentsOutputSchema componentsOutputSchema) {
+			ComponentsOutputSchema componentsOutputSchema, boolean isRefreshExternalSchema) {
 		if (componentsOutputSchema == null)
 			return;
 		
 		String outPutTargetTerminal = getTagetTerminalForSubjob(targetTerminal);
-		if (subJobComponent.getProperties().get(Constants.INPUT_SUBJOB) != null) {
-			Component inputSubjobComponent = (Component) subJobComponent.getProperties().get(
+		if (subJobComponent.getSubJobContainer().get(Constants.INPUT_SUBJOB) != null) {
+			Component inputSubjobComponent = (Component) subJobComponent.getSubJobContainer().get(
 					Constants.INPUT_SUBJOB);
 			Map<String, ComponentsOutputSchema> schemaMap = (Map<String, ComponentsOutputSchema>) inputSubjobComponent
 					.getProperties().get(Constants.SCHEMA_TO_PROPAGATE);
 			schemaMap.put(outPutTargetTerminal, componentsOutputSchema);
 			for (Link link : inputSubjobComponent.getSourceConnections()) {
 				if (StringUtils.equals(link.getSourceTerminal(), outPutTargetTerminal))
-					 applySchemaToLinkedComponents(link,componentsOutputSchema);
+					 applySchemaToLinkedComponents(link,componentsOutputSchema, isRefreshExternalSchema);
 			}
 		}
 
 		else if (StringUtils.equals(Constants.OUTPUT_SUBJOB, subJobComponent.getComponentName())) {
 
-			propagateSchemaFromOutputSubjobComponent(subJobComponent, outPutTargetTerminal, componentsOutputSchema);
+			propagateSchemaFromOutputSubjobComponent(subJobComponent, outPutTargetTerminal, componentsOutputSchema, isRefreshExternalSchema);
 
 		}
 	}
 
-	private boolean isOutputSubjobComponent(Component subJobComponent) {
-		if (StringUtils.equals(Constants.OUTPUT_SUBJOB, subJobComponent.getComponentName()))
-			return true;
-		return false;
-	}
-
 	private void propagateSchemForUniqueSequenceComponent(Component component,
-			ComponentsOutputSchema previousComponentOutputSchema) {
+			ComponentsOutputSchema previousComponentOutputSchema, boolean isRefreshExternalSchema) {
 		FixedWidthGridRow fixedWidthGridRow = null;
 		Map<String, ComponentsOutputSchema> tempSchemaMap = (Map<String, ComponentsOutputSchema>) component
 				.getProperties().get(Constants.SCHEMA_TO_PROPAGATE);
@@ -228,14 +231,14 @@ public class SchemaPropagation {
 			uniqeSequenceOutputSchema.copySchemaFromOther(previousComponentOutputSchema);
 			if (!uniqeSequenceOutputSchema.getFixedWidthGridRowsOutputFields().contains(fixedWidthGridRow))
 				uniqeSequenceOutputSchema.getFixedWidthGridRowsOutputFields().add(fixedWidthGridRow);
-			applySchemaToTargetComponents(component, null, uniqeSequenceOutputSchema);
+			applySchemaToTargetComponents(component, null, uniqeSequenceOutputSchema, isRefreshExternalSchema);
 		} else
 			for (Link linkFromCurrentComponent : component.getTargetConnections()) {
-				applySchemaToTargetComponents(linkFromCurrentComponent.getTarget(), null, previousComponentOutputSchema);
+				applySchemaToTargetComponents(linkFromCurrentComponent.getTarget(), null, previousComponentOutputSchema, isRefreshExternalSchema);
 			}
 	}
 
-	private void propagatePassThroughAndMapFields(Link link) {
+	private void propagatePassThroughAndMapFields(Link link, boolean isRefreshExternalSchema) {
 		boolean toPropagate = false;
 		ComponentsOutputSchema targetOutputSchema = getTargetComponentsOutputSchemaFromMap(link);
 		if (targetOutputSchema != null && !targetOutputSchema.getPassthroughFields().isEmpty()) {
@@ -247,7 +250,7 @@ public class SchemaPropagation {
 			toPropagate = true;
 		}
 		if (toPropagate)
-			applySchemaToTargetComponents(link.getTarget(), null, targetOutputSchema);
+			applySchemaToTargetComponents(link.getTarget(), null, targetOutputSchema,isRefreshExternalSchema);
 	}
 
 	/**
@@ -358,12 +361,25 @@ public class SchemaPropagation {
 		return false;
 	}
 
+	/**
+	 * map unused socket to its input port.
+	 * 
+	 * @param unusedSocketId
+	 * @return id of in socket for unused port
+	 */ 
 	public String getInSocketForUnusedSocket(String unusedSocketId) {
 		String unusedPortNo = unusedSocketId.substring(6);
 		String inSocket = Constants.INPUT_SOCKET_TYPE + unusedPortNo;
 		return inSocket;
 	}
 
+	/**
+	 * 
+	 * check if source socket is unused.
+	 * 
+	 * @param link
+	 * @return
+	 */
 	public boolean checkUnusedSocketAsSourceTerminal(Link link) {
 		LOGGER.debug("Checking whether link is connected to unused port");
 		if (link.getSource().getPort(link.getSourceTerminal()) != null
@@ -412,9 +428,9 @@ public class SchemaPropagation {
 	}
 
 	private void propagateSchemaFromOutputSubjobComponent(Component outputSubjobComponent, String targetTerminal,
-			ComponentsOutputSchema componentsOutputSchema) {
+			ComponentsOutputSchema componentsOutputSchema, boolean isRefreshExternalSchema) {
 
-		Component parentSubjob = (Component) outputSubjobComponent.getProperties().get(Constants.SUBJOB_COMPONENT);
+		Component parentSubjob = (Component) outputSubjobComponent.getSubJobContainer().get(Constants.SUBJOB_COMPONENT);
 		Map<String, ComponentsOutputSchema> schemaMap = (Map<String, ComponentsOutputSchema>) outputSubjobComponent
 				.getProperties().get(Constants.SCHEMA_TO_PROPAGATE);
 		if (schemaMap != null)
@@ -423,7 +439,7 @@ public class SchemaPropagation {
 			parentSubjob.getProperties().put(Constants.SCHEMA_TO_PROPAGATE, schemaMap);
 			for (Link link : parentSubjob.getSourceConnections()) {
 				if (StringUtils.equals(link.getSourceTerminal(), targetTerminal))
-					 applySchemaToLinkedComponents(link,componentsOutputSchema);
+					 applySchemaToLinkedComponents(link,componentsOutputSchema, isRefreshExternalSchema);
 			}
 		}
 	}
@@ -485,6 +501,13 @@ public class SchemaPropagation {
 		return schemaGrid;
 	}
 	
+	/**
+	 * 
+	 * This method converts current fixed width object into mixed scheme grid.
+	 * 
+	 * @param fixedWidthGridRow
+	 * @return mixedSchemeGridRow
+	 */
 	public MixedSchemeGridRow convertFixedWidthSchemaToMixedSchemaGridRow(
 			FixedWidthGridRow fixedWidthGridRow) {
 		MixedSchemeGridRow mixedSchemeGridRow=new MixedSchemeGridRow();
@@ -502,6 +525,14 @@ public class SchemaPropagation {
 	return mixedSchemeGridRow;
 	}
 	
+	/**
+	 *
+	 *convert fixedWidthGridRowsOutputFields to list of grid row object.
+	 * 
+	 * @param gridRow
+	 * @param fixedWidthGridRowsOutputFields
+	 * @return list of grid row object.
+	 */
 	public List<GridRow> getSchemaGridOutputFields(GridRow gridRow,List<FixedWidthGridRow> fixedWidthGridRowsOutputFields) {
 		List<GridRow> schemaGrid = new ArrayList<>();
 		

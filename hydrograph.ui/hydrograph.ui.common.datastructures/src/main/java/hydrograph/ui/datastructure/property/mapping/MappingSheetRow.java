@@ -1,4 +1,3 @@
-
 /*******************************************************************************
  * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,6 +23,7 @@ import org.apache.commons.lang.StringUtils;
 import hydrograph.ui.common.cloneableinterface.IDataStructure;
 import hydrograph.ui.datastructure.expression.ExpressionEditorData;
 import hydrograph.ui.datastructure.property.FilterProperties;
+import hydrograph.ui.datastructure.property.GridRow;
 import hydrograph.ui.datastructure.property.NameValueProperty;
 import hydrograph.ui.datastructure.property.OperationClassProperty;
 
@@ -54,7 +54,30 @@ public class MappingSheetRow implements IDataStructure {
     private String accumulator;
     private boolean isAccumulatorParameter;
     private ExpressionEditorData mergeExpressionDataForGroupCombine;
+    private ExternalWidgetData externalOperation;
+    private ExternalWidgetData externalExpresion;
+    private List<GridRow> gridRows=new ArrayList<>();
     
+    public List<GridRow> getGridRows() {
+		return gridRows;
+	}
+    
+	public ExternalWidgetData getExternalOperation() {
+		return externalOperation;
+	}
+
+	public void setExternalOperation(ExternalWidgetData externalOperation) {
+		this.externalOperation = externalOperation;
+	}
+
+	public ExternalWidgetData getExternalExpresion() {
+		return externalExpresion;
+	}
+
+	public void setExternalExpresion(ExternalWidgetData externalExpresion) {
+		this.externalExpresion = externalExpresion;
+	}
+
 	/**
 	 * @return If accumulator is a parameter
 	 */
@@ -124,7 +147,8 @@ public class MappingSheetRow implements IDataStructure {
 			OperationClassProperty   operationClass,
 			List<FilterProperties> outputList) {
 		this.inputFieldList = input;
-		
+		this.externalExpresion=new ExternalWidgetData(false, null);
+		this.externalOperation=new ExternalWidgetData(false, null);
 		this.outputList = outputList;
 
 	}
@@ -182,6 +206,8 @@ public class MappingSheetRow implements IDataStructure {
 		this.expressionEditorData=expressionEditorData;
 		this.mergeExpressionDataForGroupCombine = mergeExpressionEditorDataForGroupCombine;
 		this.isActive=isActive;
+		this.externalExpresion=new ExternalWidgetData(false, null);
+		this.externalOperation=new ExternalWidgetData(false, null);
     }
 	
 	/**
@@ -216,6 +242,8 @@ public class MappingSheetRow implements IDataStructure {
 		this.expressionEditorData=expressionEditorData;
 		this.mergeExpressionDataForGroupCombine=mergeExpressionEditorDataForGroupCombine;
 		this.isActive=isActive;
+		this.externalExpresion=new ExternalWidgetData(false, null);
+		this.externalOperation=new ExternalWidgetData(false, null);
 	}
 	
 	
@@ -498,7 +526,23 @@ public class MappingSheetRow implements IDataStructure {
 		mappingSheetRow= new MappingSheetRow(inputFieldList, outputList,operationId,comboBoxvalue,operationClasspath,
 				nameValuePropertyList,isClassParamter,wholeOperationParameterValue,isWholeOperationParameter,operationClassFullPath,
 				isOperationClass,null,null,isActive);	
+		
+		cloneExternalExpressionOperation(mappingSheetRow);
 		return mappingSheetRow;
+	}
+
+	private void cloneExternalExpressionOperation(MappingSheetRow mappingSheetRow) {
+		if (externalExpresion == null) {
+			mappingSheetRow.externalExpresion = new ExternalWidgetData(false, null);
+		} else {
+			mappingSheetRow.externalExpresion = (ExternalWidgetData) externalExpresion.clone();
+		}
+
+		if (externalOperation == null) {
+			mappingSheetRow.externalOperation = new ExternalWidgetData(false, null);
+		} else {
+			mappingSheetRow.externalOperation = (ExternalWidgetData) externalOperation.clone();
+		}
 	}
     
 	private void cloneInputOutputList(List<FilterProperties> cloneInputFieldList,List<FilterProperties> oldInputFieldList) {
@@ -597,7 +641,45 @@ public class MappingSheetRow implements IDataStructure {
 		}else if(!mergeExpressionDataForGroupCombine.equals(other.mergeExpressionDataForGroupCombine))
 			return false;
 		if(isActive!=other.isActive)
-		return false;	
+			return false;
+		
+		if (this.externalExpresion == null) {
+			if (other.externalExpresion != null)
+				return false;
+		} else if (!this.externalExpresion.equals(other.externalExpresion)) {
+			return false;
+		}
+		
+		if (this.externalOperation == null) {
+			if (other.externalOperation != null)
+				return false;
+		} else if (!this.externalOperation.equals(other.externalOperation)) {
+			return false;
+		}
+
 		return true;
 	}
+	
+	public void clear() {
+		if(inputFieldList!=null)inputFieldList.clear();
+		comboBoxValue = "";
+		operationClassPath = "";
+		isWholeOperationParameter = false;
+		outputList.clear();
+		isClassParameter = false;
+		operationId = "";
+		if(nameValuePropertyList!=null)nameValuePropertyList.clear();
+		wholeOperationParameterValue = "";
+		operationClassFullPath = "";
+		isExpression = false;
+		if(expressionEditorData!=null)expressionEditorData.clear();
+		isActive = false;
+		comboDataType = "Integer";
+		accumulator = "";
+		isAccumulatorParameter = false;
+		if(mergeExpressionDataForGroupCombine!=null)mergeExpressionDataForGroupCombine.clear();
+		if(externalOperation!=null)externalOperation.clear();
+		if(externalExpresion!=null)externalExpresion.clear();
+	}
+	
 }

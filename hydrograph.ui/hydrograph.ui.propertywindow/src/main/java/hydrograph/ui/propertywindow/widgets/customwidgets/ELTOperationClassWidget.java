@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
@@ -29,14 +28,15 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 
+import hydrograph.ui.common.datastructure.filter.FilterLogicDataStructure;
 import hydrograph.ui.common.util.OSValidator;
 import hydrograph.ui.datastructure.property.FixedWidthGridRow;
 import hydrograph.ui.datastructure.property.GridRow;
 import hydrograph.ui.datastructure.property.NameValueProperty;
 import hydrograph.ui.datastructure.property.OperationClassProperty;
-import hydrograph.ui.expression.editor.launcher.LaunchExpressionEditor;
-import hydrograph.ui.expression.editor.util.FieldDataTypeMap;
+import hydrograph.ui.propertywindow.filter.FilterExpressionOperationDialog;
 import hydrograph.ui.propertywindow.messages.Messages;
 import hydrograph.ui.propertywindow.property.ComponentConfigrationProperty;
 import hydrograph.ui.propertywindow.property.ComponentMiscellaneousProperties;
@@ -144,46 +144,53 @@ public class ELTOperationClassWidget extends AbstractWidget {
 			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if(expressionRadioButton.getSelection()){
-					List<FixedWidthGridRow> inputFieldSchema=getInputSchema();
-					operationClassProperty.setExpression(true);
-					operationClassProperty.getExpressionEditorData().getSelectedInputFieldsForExpression().clear();
-					operationClassProperty.getExpressionEditorData().getSelectedInputFieldsForExpression()
-							.putAll(FieldDataTypeMap.INSTANCE.createFieldDataTypeMap(null,inputFieldSchema));
-					LaunchExpressionEditor launchExpressionEditor=new LaunchExpressionEditor();
-					String oldExpression=operationClassProperty.getExpressionEditorData().getExpression();
-					launchExpressionEditor.launchExpressionEditor(operationClassProperty.getExpressionEditorData(),inputFieldSchema,getComponent().getComponentLabel().getLabelContents());
-					if(!StringUtils.equals(operationClassProperty.getExpressionEditorData().getExpression(), oldExpression)){
-						propertyDialogButtonBar.enableApplyButton(true);
-					}
-						
-				}else{
-				OperationClassProperty oldOperationClassProperty=operationClassProperty.clone();
-				eltOperationClassDialog = new ELTOperationClassDialog(
-						runtimeComposite.getContainerControl().getShell(), propertyDialogButtonBar,
-						operationClassProperty, widgetConfig, getComponent().getComponentName());
-				eltOperationClassDialog.open();
-				operationClassProperty.setComboBoxValue(eltOperationClassDialog.getOperationClassProperty().getComboBoxValue());
-				operationClassProperty.setOperationClassPath(eltOperationClassDialog.getOperationClassProperty().getOperationClassPath());
-				operationClassProperty.setOperationClassFullPath(eltOperationClassDialog.getOperationClassProperty().getOperationClassFullPath());
-				operationClassProperty.setParameter(eltOperationClassDialog.getOperationClassProperty().isParameter());
-				if (eltOperationClassDialog.isCancelPressed() && (!(eltOperationClassDialog.isApplyPressed()))) {
-					operationClassProperty.setNameValuePropertyList(oldOperationClassProperty.getNameValuePropertyList());
-				}
-				setToolTipMessage(eltOperationClassDialog.getTootlTipErrorMessage());
+//				if(expressionRadioButton.getSelection()){
+//					List<FixedWidthGridRow> inputFieldSchema=getInputSchema();
+//					operationClassProperty.setExpression(true);
+//					operationClassProperty.getExpressionEditorData().getSelectedInputFieldsForExpression().clear();
+//					operationClassProperty.getExpressionEditorData().getSelectedInputFieldsForExpression()
+//							.putAll(FieldDataTypeMap.INSTANCE.createFieldDataTypeMap(null,inputFieldSchema));
+//					LaunchExpressionEditor launchExpressionEditor=new LaunchExpressionEditor();
+//					String oldExpression=operationClassProperty.getExpressionEditorData().getExpression();
+//					launchExpressionEditor.launchExpressionEditor(operationClassProperty.getExpressionEditorData(),inputFieldSchema,getComponent().getComponentLabel().getLabelContents());
+//					if(!StringUtils.equals(operationClassProperty.getExpressionEditorData().getExpression(), oldExpression)){
+//						propertyDialogButtonBar.enableApplyButton(true);
+//					}
+//						
+//				}else{
+//				OperationClassProperty oldOperationClassProperty=operationClassProperty.clone();
+//				eltOperationClassDialog = new ELTOperationClassDialog(
+//						runtimeComposite.getContainerControl().getShell(), propertyDialogButtonBar,
+//						operationClassProperty, widgetConfig, getComponent().getComponentName());
+//				eltOperationClassDialog.open();
+//				operationClassProperty.setComboBoxValue(eltOperationClassDialog.getOperationClassProperty().getComboBoxValue());
+//				operationClassProperty.setOperationClassPath(eltOperationClassDialog.getOperationClassProperty().getOperationClassPath());
+//				operationClassProperty.setOperationClassFullPath(eltOperationClassDialog.getOperationClassProperty().getOperationClassFullPath());
+//				operationClassProperty.setParameter(eltOperationClassDialog.getOperationClassProperty().isParameter());
+//				if (eltOperationClassDialog.isCancelPressed() && (!(eltOperationClassDialog.isApplyPressed()))) {
+//					operationClassProperty.setNameValuePropertyList(oldOperationClassProperty.getNameValuePropertyList());
+//				}
+//				setToolTipMessage(eltOperationClassDialog.getTootlTipErrorMessage());
+//				
+//				if(eltOperationClassDialog.isYesPressed()){
+//					propertyDialog.pressOK();
+//				}
+//				
+//				if(eltOperationClassDialog.isNoPressed()){
+//					propertyDialog.pressCancel();
+//				}
+//				
+//				
+//			}
+//				showHideErrorSymbol(widgets);
 				
-				if(eltOperationClassDialog.isYesPressed()){
-					propertyDialog.pressOK();
-				}
+				FilterExpressionOperationDialog dialog = new FilterExpressionOperationDialog(
+						Display.getCurrent().getActiveShell(),
+						new FilterLogicDataStructure(getComponent().getComponentName()), getComponent(),
+						propertyDialogButtonBar, widgetConfig, getInputSchema());
 				
-				if(eltOperationClassDialog.isNoPressed()){
-					propertyDialog.pressCancel();
-				}
-				
-				
-			}
+				dialog.open();
 				showHideErrorSymbol(widgets);
-				super.widgetSelected(e);
 			}
 
 			private List<FixedWidthGridRow> getInputSchema() 

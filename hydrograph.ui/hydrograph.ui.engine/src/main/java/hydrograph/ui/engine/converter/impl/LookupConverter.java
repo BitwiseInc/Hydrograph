@@ -37,6 +37,8 @@ import hydrograph.ui.logging.factory.LogFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.JAXBElement;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 
@@ -222,7 +224,7 @@ public class LookupConverter extends TransformConverter {
 	}*/
 
 	@Override
-	protected List<Object> getOperations() {
+	protected List<JAXBElement<?>> getOperations() {
 		return null;
 	}
 

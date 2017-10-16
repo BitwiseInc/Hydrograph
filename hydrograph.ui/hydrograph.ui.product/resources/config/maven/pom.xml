@@ -48,6 +48,12 @@
 			<version>0.1.spark</version>
 			<classifier>sources</classifier>
 		</dependency>
+		
+		<dependency>
+			<groupId>hydrograph</groupId>
+			<artifactId>hydrograph.engine.transformation</artifactId>
+			<version>0.1.spark</version>
+		</dependency>
 
 		<dependency>
 			<groupId>hydrograph</groupId>
@@ -55,18 +61,6 @@
 			<version>0.1.spark</version>
 		</dependency>
 
-		<dependency>
-			<groupId>hydrograph</groupId>
-			<artifactId>hydrograph.engine.config</artifactId>
-			<version>0.1.spark</version>
-		</dependency>
-
-		<dependency>
-			<groupId>hydrograph</groupId>
-			<artifactId>hydrograph.engine.common</artifactId>
-			<version>0.1.spark</version>
-		</dependency>
-		
 		<dependency>
 			<groupId>org.apache.hadoop</groupId>
 			<artifactId>hadoop-common</artifactId>
@@ -760,6 +754,35 @@
 			<version>1.11.188</version>
 		</dependency>
 		
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.15</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml-schemas</artifactId>
+			<version>3.15</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.xmlbeans</groupId>
+			<artifactId>xmlbeans</artifactId>
+			<version>2.6.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.15</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
+			<version>4.1</version>
+		</dependency>
 	
 	</dependencies>
 

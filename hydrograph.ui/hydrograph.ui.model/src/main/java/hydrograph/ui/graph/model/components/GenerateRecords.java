@@ -14,6 +14,7 @@
  
 package hydrograph.ui.graph.model.components;
 
+import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.graph.model.categories.InputCategory;
 
 /**
@@ -36,5 +37,10 @@ public class GenerateRecords extends InputCategory {
 	{
 		return "hydrograph.ui.engine.converter.impl.GenerateRecordsConverter";
 		
+	}
+	
+	@Override
+	public String getGridRowType() {
+		return Constants.GENERATE_RECORD_GRID_ROW;
 	}
 }

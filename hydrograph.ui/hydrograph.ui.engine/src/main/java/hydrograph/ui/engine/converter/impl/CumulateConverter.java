@@ -38,6 +38,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.xml.bind.JAXBElement;
+
 import org.slf4j.Logger;
 
 /**
@@ -83,13 +85,13 @@ public class CumulateConverter extends TransformConverter {
 		super.prepareForXML();
 
 		Cumulate cumulate = (Cumulate) baseComponent;
-		cumulate.getOperationOrExpression().addAll(getOperations());
+		cumulate.getOperationOrExpressionOrIncludeExternalOperation().addAll(getOperations());
 		setPrimaryKeys(cumulate);
 		setSecondaryKeys(cumulate);
 	}
 
 	@Override
-	protected List<Object> getOperations() {
+	protected List<JAXBElement<?>> getOperations() {
 		return converterHelper.getOperationsOrExpression(transformMapping,schemaGridRows);
 	}
 

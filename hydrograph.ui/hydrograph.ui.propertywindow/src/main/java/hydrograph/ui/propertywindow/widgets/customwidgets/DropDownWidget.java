@@ -21,15 +21,18 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.fieldassist.ControlDecoration;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 import org.slf4j.Logger;
 
+import hydrograph.ui.common.property.util.Utils;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.logging.factory.LogFactory;
 import hydrograph.ui.propertywindow.datastructures.ComboBoxParameter;
@@ -70,6 +73,8 @@ public class DropDownWidget extends AbstractWidget{
 	private ControlDecoration txtDecorator;
 	private DropDownConfig dropDownConfig;
 	private List<AbstractWidget> widgetList;
+
+	private Cursor cursor;
 	
 	/**
 	 * Instantiates a new ELT safe widget.
@@ -101,6 +106,8 @@ public class DropDownWidget extends AbstractWidget{
 		ELTDefaultSubgroupComposite eltSuDefaultSubgroupComposite = new ELTDefaultSubgroupComposite(container.getContainerControl());
 		eltSuDefaultSubgroupComposite.createContainerWidget();
 		
+		Utils.INSTANCE.loadProperties();
+		this.cursor = container.getContainerControl().getDisplay().getSystemCursor(SWT.CURSOR_HAND);
 		AbstractELTWidget defaultLabel = new ELTDefaultLable(dropDownConfig.getName());
 		eltSuDefaultSubgroupComposite.attachWidget(defaultLabel);
 		setPropertyHelpWidget((Control) defaultLabel.getSWTWidgetControl());
@@ -110,32 +117,31 @@ public class DropDownWidget extends AbstractWidget{
 		combo=(Combo)defaultCombo.getSWTWidgetControl();
 		combo.select(0);
 		
-		ELTDefaultTextBox eltDefaultTextBox = new ELTDefaultTextBox().grabExcessHorizontalSpace(true);
-		eltSuDefaultSubgroupComposite.attachWidget(eltDefaultTextBox);
-		eltDefaultTextBox.visibility(false);
-		text=(Text)eltDefaultTextBox.getSWTWidgetControl();
-		
-		txtDecorator = WidgetUtility.addDecorator(text, Messages.bind(Messages.EMPTY_FIELD, dropDownConfig.getName()));
-		
-		
-		ListenerHelper helper = new ListenerHelper();
-		helper.put(HelperType.CONTROL_DECORATION, txtDecorator);
-		
-		
-		try {
-			for (Listners listenerNameConstant : dropDownConfig.getDropDownListeners()) {
-				IELTListener listener = listenerNameConstant.getListener();
-				defaultCombo.attachListener(listener,propertyDialogButtonBar, helper,defaultCombo.getSWTWidgetControl(),
-						eltDefaultTextBox.getSWTWidgetControl());
-			}
-			for (Listners listenerNameConstant : dropDownConfig.getTextBoxListeners()) {
-				IELTListener listener = listenerNameConstant.getListener();
-				eltDefaultTextBox.attachListener(listener, propertyDialogButtonBar, helper,eltDefaultTextBox.getSWTWidgetControl());
-			}
-		} catch (Exception exception) {
-			logger.error("Failed in attaching listeners to {}, {}", dropDownConfig.getName(), exception);
+		if(!StringUtils.equalsIgnoreCase(propertyName, "failOnError")){
+			ELTDefaultTextBox eltDefaultTextBox = new ELTDefaultTextBox().grabExcessHorizontalSpace(true);
+			eltSuDefaultSubgroupComposite.attachWidget(eltDefaultTextBox);
+			eltDefaultTextBox.visibility(false);
+			text=(Text)eltDefaultTextBox.getSWTWidgetControl();
+			
+			txtDecorator = WidgetUtility.addDecorator(text, Messages.bind(Messages.EMPTY_FIELD, dropDownConfig.getName()));
+			
+			ListenerHelper helper = new ListenerHelper();
+			helper.put(HelperType.CONTROL_DECORATION, txtDecorator);
+			
+				try {
+					for (Listners listenerNameConstant : dropDownConfig.getDropDownListeners()) {
+						IELTListener listener = listenerNameConstant.getListener();
+						defaultCombo.attachListener(listener,propertyDialogButtonBar, helper,defaultCombo.getSWTWidgetControl(),
+								eltDefaultTextBox.getSWTWidgetControl());
+					}
+					for (Listners listenerNameConstant : dropDownConfig.getTextBoxListeners()) {
+						IELTListener listener = listenerNameConstant.getListener();
+						eltDefaultTextBox.attachListener(listener, propertyDialogButtonBar, helper,eltDefaultTextBox.getSWTWidgetControl());
+					}
+				} catch (Exception exception) {
+					logger.error("Failed in attaching listeners to {}, {}", dropDownConfig.getName(), exception);
+				}
 		}
-		
 		addComboSelectionListner();
 		 populateWidget();
 	}
@@ -146,24 +152,14 @@ public class DropDownWidget extends AbstractWidget{
 			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				clearFTPWidgetsMap();
 				showHideErrorSymbol(widgetList);
+				propertyDialogButtonBar.enableApplyButton(true);
 			}
 			
 		});
 		return true;
 	}
 	
-	private void clearFTPWidgetsMap(){
-		for(AbstractWidget widget : widgetList){
-			if(widget.getPropertyName().equals("authentication")){
-				property.put("authentication", null);
-			}else if(widget.getPropertyName().equals("operation")){
-				property.put("operation", null);
-			}
-		}
-	}
-
 	private void populateWidget(){	
 		if(StringUtils.isNotBlank(properties)){
 			if(dropDownConfig.getItems().contains(properties)){
@@ -172,14 +168,17 @@ public class DropDownWidget extends AbstractWidget{
 			}
 			else{
 				combo.select(dropDownConfig.getItems().size() - 1);
-				text.setVisible(true);
-				if (StringUtils.isNotEmpty(properties)){
-					text.setText(properties);
-					txtDecorator.hide();
-				}
-				else{
-					text.setText("");
-					txtDecorator.show();
+				if(text != null){
+					text.setVisible(true);
+					if (StringUtils.isNotEmpty(properties)){
+						text.setText(properties);
+						Utils.INSTANCE.addMouseMoveListener(text, cursor);
+						txtDecorator.hide();
+					}
+					else{
+						text.setText("");
+						txtDecorator.show();
+					}
 				}
 			}
 		}
@@ -187,8 +186,10 @@ public class DropDownWidget extends AbstractWidget{
 
 	private void setToolTipErrorMessage(){
 		String toolTipErrorMessage = null;
-		if(txtDecorator.isVisible())
-			toolTipErrorMessage = txtDecorator.getDescriptionText();
+		if(txtDecorator !=null){
+			if(txtDecorator.isVisible())
+				toolTipErrorMessage = txtDecorator.getDescriptionText();
+		}
 						
 		setToolTipMessage(toolTipErrorMessage);
 	}
@@ -233,13 +234,15 @@ public class DropDownWidget extends AbstractWidget{
    @Override
 	public void addModifyListener(Property property, final ArrayList<AbstractWidget> widgetList) {
 	   this.widgetList = widgetList;
-	   text.addModifyListener(new ModifyListener() {
-			
-			@Override
-			public void modifyText(ModifyEvent e) {
-			 showHideErrorSymbol(widgetList);
-			}
-		});
+	   if(text !=null){
+		   text.addModifyListener(new ModifyListener() {
+			   @Override
+			   public void modifyText(ModifyEvent e) {
+				   showHideErrorSymbol(widgetList);
+				   Utils.INSTANCE.addMouseMoveListener(text, cursor);
+			   }
+		   });
+	   }
 		
 	}
 
