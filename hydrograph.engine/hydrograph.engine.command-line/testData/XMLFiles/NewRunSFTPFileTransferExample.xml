@@ -18,19 +18,21 @@
          xsi:schemaLocation="hydrograph/engine/jaxb/main ../../../hydrograph.engine.core/src/main/resources/newxmlschema/main/main.xsd  ">
 
     <commands id="FileTransfer" batch="0" xsi:type="ct:SFTP">
-        <host_Name>asdf</host_Name>
-        <user_Name>qwertr</user_Name>
-        <input_file_path>/home/Input_Test_Data.txt</input_file_path>
-        <output_file_path>/test</output_file_path>
+        <host_Name>fg</host_Name>
+        <user_Name>fdg</user_Name>
+        <input_file_path>Spark\test.txt.txt</input_file_path>
+        <output_file_path>/home/jhf/</output_file_path>
         <FileOperation>
-        <download></download>
+       <upload></upload>
         </FileOperation>
         <encoding value="UTF-8"/>
-        <timeOut>5000</timeOut>
-        <retryAfterDuration>5000</retryAfterDuration>
-        <retryAttempt>3</retryAttempt>
+        <port_No value="21"/>
+        <timeOut value="5000"/>
+        <retryAfterDuration value="5000"/>
+        <retryAttempt value="3"/>
         <failOnError>true</failOnError>
+
         <overwritemode>Overwrite If Exists</overwritemode>
-        <privateKeyPath>/tmp/id_rsa</privateKeyPath>
+        <password>Sehdgp@2017</password>
     </commands>
 </p:graph>

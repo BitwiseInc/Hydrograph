@@ -55,12 +55,12 @@ public class PartitionByExpressionEntityGenerator extends OperationComponentGene
 		partitionByExpressionEntity.setComponentName(jaxbPartitionByExpression.getName());
 
 		// check if operation is present
-		if (jaxbPartitionByExpression.getOperationOrExpression() != null) {
+		if (jaxbPartitionByExpression.getOperationOrExpressionOrIncludeExternalOperation() != null) {
 
 			LOG.trace("Operation present for PartitionByExpression component: " + jaxbPartitionByExpression.getId()
 					+ ", processing");
 			partitionByExpressionEntity.setOperation(
-					OperationEntityUtils.extractOperations(jaxbPartitionByExpression.getOperationOrExpression()).get(0));
+					OperationEntityUtils.extractOperations(jaxbPartitionByExpression.getOperationOrExpressionOrIncludeExternalOperation()).get(0));
 		} else {
 			LOG.trace("Operation not present for aggregate component: " + jaxbPartitionByExpression.getId()
 					+ ", skipped operation processing");

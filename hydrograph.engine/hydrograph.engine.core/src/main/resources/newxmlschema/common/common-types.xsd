@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc. Licensed 
+<!--
+    Copyright 2017 Capital One Services, LLC and Bitwise, Inc. Licensed
 	under the Apache License, Version 2.0 (the "License"); you may not use this 
 	file except in compliance with the License. You may obtain a copy of the 
 	License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by 
 	applicable law or agreed to in writing, software distributed under the License 
 	is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY 
 	KIND, either express or implied. See the License for the specific language 
-	governing permissions and limitations under the License. -->
+	governing permissions and limitations under the License.
+	-->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	targetNamespace="hydrograph/engine/jaxb/commontypes" xmlns="hydrograph/engine/jaxb/commontypes"
 	elementFormDefault="unqualified">
@@ -172,6 +174,10 @@
 							minOccurs="0" maxOccurs="unbounded" />
 						<xs:element name="expression" type="type-transform-expression"
 							minOccurs="0" maxOccurs="unbounded" />
+						<xs:element name="includeExternalOperation" type="type-external-schema"
+									minOccurs="0" maxOccurs="unbounded" />
+						<xs:element name="includeExternalExpression" type="type-external-schema"
+									minOccurs="0" maxOccurs="unbounded" />
 					</xs:choice>
 					<xs:element name="outputRecordCount" type="type-output-record-count"
 						minOccurs="0" maxOccurs="1" />
@@ -183,6 +189,13 @@
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
+
+	<xs:simpleType name="excel-file-type">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="XLS" />
+			<xs:enumeration value="XLSX" />
+		</xs:restriction>
+	</xs:simpleType>
 
 	<xs:complexType name="type-command-component" abstract="true">
 		<xs:complexContent>
@@ -300,6 +313,7 @@
 						<xs:element name="operationField" type="type-operation-field" />
 						<xs:element name="expressionField" type="type-expression-field" />
 						<xs:element name="mapField" type="type-map-field" />
+						<xs:element name="includeExternalMapping" type="type-external-schema" />
 					</xs:choice>
 				</xs:choice>
 				<xs:anyAttribute />
@@ -319,6 +333,14 @@
 			<xs:enumeration value="UTF-8" />
 			<xs:enumeration value="US-ASCII" />
 			<xs:enumeration value="ISO-8859-1" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="standard-write-mode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Overwrite" />
+			<xs:enumeration value="Append" />
+			<xs:enumeration value="FailIfFileExists" />
 		</xs:restriction>
 	</xs:simpleType>
 

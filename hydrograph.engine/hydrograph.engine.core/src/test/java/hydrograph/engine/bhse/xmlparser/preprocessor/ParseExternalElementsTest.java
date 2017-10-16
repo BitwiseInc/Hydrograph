@@ -13,7 +13,7 @@
 package hydrograph.engine.bhse.xmlparser.preprocessor;
 
 import hydrograph.engine.core.xmlparser.XmlParsingUtils;
-import hydrograph.engine.core.xmlparser.externalschema.ParseExternalSchema;
+import hydrograph.engine.core.xmlparser.externalschema.ParseExternalElements;
 import hydrograph.engine.core.xmlparser.parametersubstitution.ParameterSubstitutor;
 import hydrograph.engine.core.xmlparser.parametersubstitution.UserParameters;
 import org.apache.commons.cli.ParseException;
@@ -26,15 +26,15 @@ import org.w3c.dom.NodeList;
 
 import java.io.IOException;
 /**
- * The Class ParseExternalSchemaTest .
+ * The Class ParseExternalElementsTest .
  *
  * @author Bitwise
  */
-public class ParseExternalSchemaTest {
+public class ParseExternalElementsTest {
 
 	private static Logger LOG = LoggerFactory
-			.getLogger(ParseExternalSchemaTest.class);
-	
+			.getLogger(ParseExternalElementsTest.class);
+
 	@Test
 	public void itShouldGetTheExternalFields() throws ParseException {
 
@@ -48,10 +48,10 @@ public class ParseExternalSchemaTest {
 
 			String xmlContents = XmlParsingUtils.getXMLStringFromPath(args[1]);
 
-			ParseExternalSchema parseExternalSchema = new ParseExternalSchema(
+			ParseExternalElements parseExternalElements = new ParseExternalElements(
 					parameterSubstitutor.substitute(xmlContents), parameterSubstitutor);
 
-			Document xmlDom = parseExternalSchema.getXmlDom();
+			Document xmlDom = parseExternalElements.getXmlDom();
 
 			NodeList nodes = xmlDom.getElementsByTagName("schema");
 

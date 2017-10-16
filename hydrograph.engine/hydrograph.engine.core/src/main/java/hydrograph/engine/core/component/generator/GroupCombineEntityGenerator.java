@@ -19,6 +19,7 @@ import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.engine.jaxb.operationstypes.Groupcombine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 /**
  * The Class GroupCombineEntityGenerator.
  *
@@ -52,16 +53,15 @@ public class GroupCombineEntityGenerator extends OperationComponentGeneratorBase
 		groupCombineEntity.setComponentId(jaxbGroupCombine.getId());
 		groupCombineEntity.setBatch(jaxbGroupCombine.getBatch());
 		groupCombineEntity.setComponentName(jaxbGroupCombine.getName());
-
 		// check if operation is present
-		if (jaxbGroupCombine.getOperationOrExpression() != null && jaxbGroupCombine.getOperationOrExpression().size() > 0) {
+		if (jaxbGroupCombine.getOperationOrExpressionOrIncludeExternalOperation() != null && jaxbGroupCombine.getOperationOrExpressionOrIncludeExternalOperation().size() > 0) {
 
 			LOG.trace("Operation(s) present for aggregate component: " + jaxbGroupCombine.getId() + ", processing");
 			// set the number of operations in the transform component and set
 			// operation present to true
-			groupCombineEntity.setNumOperations(jaxbGroupCombine.getOperationOrExpression().size());
+			groupCombineEntity.setNumOperations(jaxbGroupCombine.getOperationOrExpressionOrIncludeExternalOperation().size());
 			groupCombineEntity.setOperationPresent(true);
-			groupCombineEntity.setOperationsList(OperationEntityUtils.extractOperations(jaxbGroupCombine.getOperationOrExpression()));
+			groupCombineEntity.setOperationsList(OperationEntityUtils.extractOperations(jaxbGroupCombine.getOperationOrExpressionOrIncludeExternalOperation()));
 		} else {
 			LOG.trace("Operation not present for aggregate component: " + jaxbGroupCombine.getId()
 					+ ", skipped operation processing");

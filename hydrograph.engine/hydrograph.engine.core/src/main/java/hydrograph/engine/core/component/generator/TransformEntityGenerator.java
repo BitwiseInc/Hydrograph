@@ -59,14 +59,14 @@ public class TransformEntityGenerator extends OperationComponentGeneratorBase {
 		transformEntity.setComponentName(jaxbTransform.getName());
 
 		// check if operation is present
-		if (jaxbTransform.getOperationOrExpression() != null && jaxbTransform.getOperationOrExpression().size() > 0) {
+		if (jaxbTransform.getOperationOrExpressionOrIncludeExternalOperation() != null && jaxbTransform.getOperationOrExpressionOrIncludeExternalOperation().size() > 0) {
 
 			LOG.trace("Operation(s) present for transform component: " + jaxbTransform.getId() + ", processing");
 			// set the number of operations in the transform component and set
 			// operation present to true
-			transformEntity.setNumOperations(jaxbTransform.getOperationOrExpression().size());
+			transformEntity.setNumOperations(jaxbTransform.getOperationOrExpressionOrIncludeExternalOperation().size());
 			transformEntity.setOperationPresent(true);
-			transformEntity.setOperationsList(OperationEntityUtils.extractOperations(jaxbTransform.getOperationOrExpression()));
+			transformEntity.setOperationsList(OperationEntityUtils.extractOperations(jaxbTransform.getOperationOrExpressionOrIncludeExternalOperation()));
 		} else {
 
 			LOG.trace("Operation not present for transform component: " + jaxbTransform.getId()

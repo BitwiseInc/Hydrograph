@@ -3,7 +3,7 @@ package hydrograph.engine.core.component.entity;
 import hydrograph.engine.core.component.entity.base.OperationEntityBase;
 
 /**
- * Created by damodharraop on 8/1/2017.
+ * Created for RunFileTransferEntity on 8/1/2017.
  */
 public class RunFileTransferEntity extends OperationEntityBase {
 
@@ -14,11 +14,11 @@ public class RunFileTransferEntity extends OperationEntityBase {
     private String inputFilePath;
     private String outFilePath;
     private String fileOperation;
-    private int portNo;
+    private Integer portNo;
     private String fileTransfer;
-    private int timeOut;
-    private int retryAfterDuration;
-    private int retryAttempt;
+    private Integer timeOut;
+    private Integer retryAfterDuration;
+    private Integer retryAttempt;
     private String accessKeyID;
     private String secretAccessKey;
     private String crediationalPropertiesFile;
@@ -31,44 +31,100 @@ public class RunFileTransferEntity extends OperationEntityBase {
     private String encoding;
     private String overwrite;
 
-    public String getOverwrite() {
-        return overwrite;
+    public String getHostName() {
+        return hostName;
     }
 
-    public void setOverwrite(String overwrite) {
-        this.overwrite = overwrite;
+    public void setHostName(String hostName) {
+        this.hostName = hostName;
     }
 
-    public Boolean getFailOnError() {
-        return failOnError;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setFailOnError(Boolean failOnError) {
-        this.failOnError = failOnError;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getEncoding() {
-        return encoding;
+    public String getPassword() {
+        return password;
     }
 
-    public void setEncoding(String encoding) {
-        this.encoding = encoding;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getKeyName() {
-        return keyName;
+    public String getPrivateKeyPath() {
+        return privateKeyPath;
     }
 
-    public void setKeyName(String keyName) {
-        this.keyName = keyName;
+    public void setPrivateKeyPath(String privateKeyPath) {
+        this.privateKeyPath = privateKeyPath;
     }
 
-    public String getRegion() {
-        return region;
+    public String getInputFilePath() {
+        return inputFilePath;
     }
 
-    public void setRegion(String region) {
-        this.region = region;
+    public void setInputFilePath(String inputFilePath) {
+        this.inputFilePath = inputFilePath;
+    }
+
+    public String getOutFilePath() {
+        return outFilePath;
+    }
+
+    public void setOutFilePath(String outFilePath) {
+        this.outFilePath = outFilePath;
+    }
+
+    public String getFileOperation() {
+        return fileOperation;
+    }
+
+    public void setFileOperation(String fileOperation) {
+        this.fileOperation = fileOperation;
+    }
+
+    public Integer getPortNo() {
+        return portNo;
+    }
+
+    public void setPortNo(Integer portNo) {
+        this.portNo = portNo;
+    }
+
+    public String getFileTransfer() {
+        return fileTransfer;
+    }
+
+    public void setFileTransfer(String fileTransfer) {
+        this.fileTransfer = fileTransfer;
+    }
+
+    public Integer getTimeOut() {
+        return timeOut;
+    }
+
+    public void setTimeOut(Integer timeOut) {
+        this.timeOut = timeOut;
+    }
+
+    public Integer getRetryAfterDuration() {
+        return retryAfterDuration;
+    }
+
+    public void setRetryAfterDuration(Integer retryAfterDuration) {
+        this.retryAfterDuration = retryAfterDuration;
+    }
+
+    public Integer getRetryAttempt() {
+        return retryAttempt;
+    }
+
+    public void setRetryAttempt(Integer retryAttempt) {
+        this.retryAttempt = retryAttempt;
     }
 
     public String getAccessKeyID() {
@@ -119,109 +175,43 @@ public class RunFileTransferEntity extends OperationEntityBase {
         this.folder_name_in_bucket = folder_name_in_bucket;
     }
 
-    public String getEncryptionMethod() {
-        return encryptionMethod;
+    public String getRegion() {
+        return region;
     }
 
-    public void setEncryptionMethod(String encryptionMethod) {
-        this.encryptionMethod = encryptionMethod;
+    public void setRegion(String region) {
+        this.region = region;
     }
 
-    private String encryptionMethod;
-
-    public int getRetryAfterDuration() {
-        return retryAfterDuration;
+    public String getKeyName() {
+        return keyName;
     }
 
-    public void setRetryAfterDuration(int retryAfterDuration) {
-        this.retryAfterDuration = retryAfterDuration;
+    public void setKeyName(String keyName) {
+        this.keyName = keyName;
     }
 
-    public int getRetryAttempt() {
-        return retryAttempt;
+    public Boolean getFailOnError() {
+        return failOnError;
     }
 
-    public void setRetryAttempt(int retryAttempt) {
-        this.retryAttempt = retryAttempt;
+    public void setFailOnError(Boolean failOnError) {
+        this.failOnError = failOnError;
     }
 
-    public int getTimeOut() {
-        return timeOut;
+    public String getEncoding() {
+        return encoding;
     }
 
-    public void setTimeOut(int timeOut) {
-        this.timeOut = timeOut;
+    public void setEncoding(String encoding) {
+        this.encoding = encoding;
     }
 
-    public String getFileTransfer() {
-        return fileTransfer;
+    public String getOverwrite() {
+        return overwrite;
     }
 
-    public void setFileTransfer(String fileTransfer) {
-        this.fileTransfer = fileTransfer;
-    }
-
-    public int getPortNo() {
-        return portNo;
-    }
-
-    public void setPortNo(int portNo) {
-        this.portNo = portNo;
-    }
-
-    public String getFileOperation() {
-        return fileOperation;
-    }
-
-    public void setFileOperation(String fileOperation) {
-        this.fileOperation = fileOperation;
-    }
-
-    public String getHostName() {
-        return hostName;
-    }
-
-    public void setHostName(String hostName) {
-        this.hostName = hostName;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPrivateKeyPath() {
-        return privateKeyPath;
-    }
-
-    public void setPrivateKeyPath(String privateKeyPath) {
-        this.privateKeyPath = privateKeyPath;
-    }
-
-    public String getInputFilePath() {
-        return inputFilePath;
-    }
-
-    public void setInputFilePath(String inputFilePath) {
-        this.inputFilePath = inputFilePath;
-    }
-
-    public String getOutFilePath() {
-        return outFilePath;
-    }
-
-    public void setOutFilePath(String outFilePath) {
-        this.outFilePath = outFilePath;
+    public void setOverwrite(String overwrite) {
+        this.overwrite = overwrite;
     }
 }

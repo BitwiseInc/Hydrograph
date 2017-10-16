@@ -16,6 +16,7 @@ import hydrograph.engine.expression.utils.ExpressionWrapper;
 import hydrograph.engine.transformation.userfunctions.base.CumulateTransformBase;
 import hydrograph.engine.transformation.userfunctions.base.ReusableRow;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Properties;
 /**
@@ -28,6 +29,7 @@ public class CumulateForExpression implements CumulateTransformBase {
 
 	private ExpressionWrapper expressionWrapper;
 	private Object accumulatorValue;
+	private  String fieldType;
 
 	public void setValidationAPI(ExpressionWrapper expressionWrapper) {
 		this.expressionWrapper = expressionWrapper;
@@ -37,10 +39,10 @@ public class CumulateForExpression implements CumulateTransformBase {
 	public CumulateForExpression() {
 	}
 
-	public void init(){
-			expressionWrapper.getValidationAPI().init(expressionWrapper.getIntialValueExpression());
-			accumulatorValue = expressionWrapper.getValidationAPI()
-					.exec(new Object[]{});
+	public void init(String fieldType){
+		this.fieldType = fieldType.split("\\.")[fieldType.split("\\.").length - 1];
+		expressionWrapper.getValidationAPI().init(expressionWrapper.getIntialValueExpression());
+		accumulatorValue = valueOf(this.fieldType, expressionWrapper.getValidationAPI().exec(new Object[]{}));
 	}
 
 	public void callPrepare(String[] inputFieldNames,String[] inputFieldTypes){
@@ -52,7 +54,7 @@ public class CumulateForExpression implements CumulateTransformBase {
 				fieldTypes[i]=inputFieldTypes[i];
 			}
 			fieldNames[inputFieldNames.length] = "_accumulator";
-			fieldTypes[inputFieldNames.length] = "Object";
+			fieldTypes[inputFieldNames.length] = fieldType;
 			expressionWrapper.getValidationAPI().init(fieldNames,fieldTypes);
 		} catch (Exception e) {
 			throw new RuntimeException(
@@ -75,8 +77,10 @@ public class CumulateForExpression implements CumulateTransformBase {
 		}
 		tuples[i] = accumulatorValue;
 		try {
-			accumulatorValue = expressionWrapper.getValidationAPI().exec(
-					tuples);
+			if(accumulatorValue instanceof java.lang.Short)
+				accumulatorValue = Short.parseShort(expressionWrapper.getValidationAPI().exec(tuples).toString());
+			else
+				accumulatorValue = expressionWrapper.getValidationAPI().exec(tuples);
 		} catch (Exception e) {
 			throw new RuntimeException("Exception in cumulate expression: "
 					+ expressionWrapper.getValidationAPI().getExpr() + ".\nRow being processed: "
@@ -88,8 +92,7 @@ public class CumulateForExpression implements CumulateTransformBase {
 	@Override
 	public void onCompleteGroup() {
 		try {
-			accumulatorValue = expressionWrapper.getValidationAPI()
-					.execute(expressionWrapper.getIntialValueExpression());
+			accumulatorValue = valueOf(fieldType, expressionWrapper.getValidationAPI().execute(expressionWrapper.getIntialValueExpression()));
 		} catch (Exception e) {
 			throw new RuntimeException(
 					"Exception in cumulate initial value expression: "
@@ -103,4 +106,25 @@ public class CumulateForExpression implements CumulateTransformBase {
 
 	}
 
+	private Object valueOf(String className, Object value) {
+		String stringValue = value.toString();
+		switch (className) {
+			case "Short":
+				return Short.valueOf(stringValue);
+			case "Integer":
+				return Integer.valueOf(stringValue);
+			case "Long":
+				return Long.valueOf(stringValue);
+			case "Float":
+				return Float.valueOf(stringValue);
+			case "Double":
+				return Double.valueOf(stringValue);
+			case "BigDecimal":
+				return BigDecimal.valueOf((Double) value);
+			case "Boolean":
+				return Boolean.valueOf(stringValue);
+			default:
+				return stringValue;
+		}
+	}
 }

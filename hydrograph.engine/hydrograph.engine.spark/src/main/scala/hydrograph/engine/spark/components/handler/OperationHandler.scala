@@ -142,7 +142,7 @@ trait AggregateOperation{
             val expressionWrapper=new ExpressionWrapper(y.asInstanceOf[ValidationAPI],z);
             val aggregate = new AggregateForExpression
               aggregate.setValidationAPI(expressionWrapper)
-              aggregate.init()
+            aggregate.init(keyFields(0).getName)
             aggregate
           }
           case _ => {

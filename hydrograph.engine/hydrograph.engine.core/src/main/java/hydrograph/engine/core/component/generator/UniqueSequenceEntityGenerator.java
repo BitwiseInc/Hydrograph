@@ -56,16 +56,16 @@ public class UniqueSequenceEntityGenerator extends
 		uniqueSequenceEntity.setBatch(jaxbGenerateSequence.getBatch());
 		uniqueSequenceEntity.setComponentName(jaxbGenerateSequence.getName());
 		// check if operation is present
-		if (jaxbGenerateSequence.getOperationOrExpression() != null) {
+		if (jaxbGenerateSequence.getOperationOrExpressionOrIncludeExternalOperation() != null) {
 			LOG.trace("Operation(s) present for unique sequence component: "
 					+ jaxbGenerateSequence.getId() + ", processing");
 			// set the number of operations in the transform component and set
 			// operation present to true
 			uniqueSequenceEntity.setNumOperations(jaxbGenerateSequence
-					.getOperationOrExpression().size());
+					.getOperationOrExpressionOrIncludeExternalOperation().size());
 			uniqueSequenceEntity.setOperationPresent(true);
 			uniqueSequenceEntity.setOperationsList(OperationEntityUtils
-					.extractOperations(jaxbGenerateSequence.getOperationOrExpression()));
+					.extractOperations(jaxbGenerateSequence.getOperationOrExpressionOrIncludeExternalOperation()));
 		} else {
 			LOG.trace("Operation not present for unique sequence component: "
 					+ jaxbGenerateSequence.getId()

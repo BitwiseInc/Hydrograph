@@ -1,25 +1,27 @@
 
-/*
- *  Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
- *  * Licensed under the Apache License, Version 2.0 (the "License");
- *  * you may not use this file except in compliance with the License.
- *  * You may obtain a copy of the License at
- *  * http://www.apache.org/licenses/LICENSE-2.0
- *  * Unless required by applicable law or agreed to in writing, software
- *  * distributed under the License is distributed on an "AS IS" BASIS,
- *  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  * See the License for the specific language governing permissions and
- *  * limitations under the License.
- */
+/*******************************************************************************
+ * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
 
 package hydrograph.engine.jaxb.commontypes;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElements;
+import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlElementRefs;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 import hydrograph.engine.jaxb.aggregate.AggregateBase;
@@ -50,6 +52,8 @@ import hydrograph.engine.jaxb.subjob.SubjobBase;
  *         &lt;choice maxOccurs="unbounded" minOccurs="0">
  *           &lt;element name="operation" type="{hydrograph/engine/jaxb/commontypes}type-transform-operation" maxOccurs="unbounded" minOccurs="0"/>
  *           &lt;element name="expression" type="{hydrograph/engine/jaxb/commontypes}type-transform-expression" maxOccurs="unbounded" minOccurs="0"/>
+ *           &lt;element name="includeExternalOperation" type="{hydrograph/engine/jaxb/commontypes}type-external-schema" maxOccurs="unbounded" minOccurs="0"/>
+ *           &lt;element name="includeExternalExpression" type="{hydrograph/engine/jaxb/commontypes}type-external-schema" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;/choice>
  *         &lt;element name="outputRecordCount" type="{hydrograph/engine/jaxb/commontypes}type-output-record-count" minOccurs="0"/>
  *         &lt;element name="outSocket" type="{hydrograph/engine/jaxb/commontypes}type-operations-out-socket" maxOccurs="unbounded"/>
@@ -65,7 +69,7 @@ import hydrograph.engine.jaxb.subjob.SubjobBase;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "type-operations-component", namespace = "hydrograph/engine/jaxb/commontypes", propOrder = {
     "inSocket",
-    "operationOrExpression",
+    "operationOrExpressionOrIncludeExternalOperation",
     "outputRecordCount",
     "outSocket",
     "runtimeProperties"
@@ -90,11 +94,13 @@ public abstract class TypeOperationsComponent
 
     @XmlElement(required = true)
     protected List<TypeBaseInSocket> inSocket;
-    @XmlElements({
-        @XmlElement(name = "operation", type = TypeTransformOperation.class),
-        @XmlElement(name = "expression", type = TypeTransformExpression.class)
+    @XmlElementRefs({
+        @XmlElementRef(name = "includeExternalExpression", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "includeExternalOperation", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "operation", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "expression", type = JAXBElement.class, required = false)
     })
-    protected List<Object> operationOrExpression;
+    protected List<JAXBElement<?>> operationOrExpressionOrIncludeExternalOperation;
     protected TypeOutputRecordCount outputRecordCount;
     @XmlElement(required = true)
     protected List<TypeOperationsOutSocket> outSocket;
@@ -130,33 +136,35 @@ public abstract class TypeOperationsComponent
     }
 
     /**
-     * Gets the value of the operationOrExpression property.
+     * Gets the value of the operationOrExpressionOrIncludeExternalOperation property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the operationOrExpression property.
+     * This is why there is not a <CODE>set</CODE> method for the operationOrExpressionOrIncludeExternalOperation property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getOperationOrExpression().add(newItem);
+     *    getOperationOrExpressionOrIncludeExternalOperation().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link TypeTransformOperation }
-     * {@link TypeTransformExpression }
+     * {@link JAXBElement }{@code <}{@link TypeTransformOperation }{@code >}
+     * {@link JAXBElement }{@code <}{@link TypeExternalSchema }{@code >}
+     * {@link JAXBElement }{@code <}{@link TypeExternalSchema }{@code >}
+     * {@link JAXBElement }{@code <}{@link TypeTransformExpression }{@code >}
      * 
      * 
      */
-    public List<Object> getOperationOrExpression() {
-        if (operationOrExpression == null) {
-            operationOrExpression = new ArrayList<Object>();
+    public List<JAXBElement<?>> getOperationOrExpressionOrIncludeExternalOperation() {
+        if (operationOrExpressionOrIncludeExternalOperation == null) {
+            operationOrExpressionOrIncludeExternalOperation = new ArrayList<JAXBElement<?>>();
         }
-        return this.operationOrExpression;
+        return this.operationOrExpressionOrIncludeExternalOperation;
     }
 
     /**

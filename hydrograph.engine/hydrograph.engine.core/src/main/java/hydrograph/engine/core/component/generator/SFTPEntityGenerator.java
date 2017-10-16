@@ -1,3 +1,18 @@
+/*******************************************************************************
+ * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ *
+ ******************************************************************************/
+
 package hydrograph.engine.core.component.generator;
 
 
@@ -10,7 +25,7 @@ import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import static hydrograph.engine.core.constants.Constants.DEFAULT_SFTP_PORT;
 
 /**
- * Created by damodharraop on 8/3/2017.
+ * Created for SFTPEntityGenerator on 8/3/2017.
  */
 public class SFTPEntityGenerator extends CommandComponentGeneratorBase{
 
@@ -47,17 +62,17 @@ public class SFTPEntityGenerator extends CommandComponentGeneratorBase{
         else
             runFileTransferEntity.setPrivateKeyPath(sftp.getPrivateKeyPath());
            if(sftp.getPortNo()!=null)
-            runFileTransferEntity.setPortNo(sftp.getPortNo());
+            runFileTransferEntity.setPortNo(sftp.getPortNo().getValue().intValue());
         else
             runFileTransferEntity.setPortNo(DEFAULT_SFTP_PORT);
 
         if(sftp.getTimeOut()!=null)
-            runFileTransferEntity.setTimeOut(sftp.getTimeOut());
+            runFileTransferEntity.setTimeOut(sftp.getTimeOut().getValue().intValue());
 
         if (sftp.getRetryAfterDuration()!=null)
-            runFileTransferEntity.setRetryAfterDuration(sftp.getRetryAfterDuration());
+            runFileTransferEntity.setRetryAfterDuration(sftp.getRetryAfterDuration().getValue().intValue());
         if (sftp.getRetryAttempt()!=null)
-            runFileTransferEntity.setRetryAttempt(sftp.getRetryAttempt());
+            runFileTransferEntity.setRetryAttempt(sftp.getRetryAttempt().getValue().intValue());
         runFileTransferEntity.setEncoding( sftp.getEncoding() != null ? sftp.getEncoding().getValue().value() : "UTF-8");
         if(sftp.isFailOnError()!=null){
             runFileTransferEntity.setFailOnError(sftp.isFailOnError());

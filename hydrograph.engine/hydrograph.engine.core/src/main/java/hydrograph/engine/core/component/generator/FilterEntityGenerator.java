@@ -55,14 +55,14 @@ public class FilterEntityGenerator extends OperationComponentGeneratorBase {
 		filterEntity.setComponentName(jaxbFilter.getName());
 
 		// check if operation is present
-		if (jaxbFilter.getOperationOrExpression() != null) {
+		if (jaxbFilter.getOperationOrExpressionOrIncludeExternalOperation() != null) {
 			
 			LOG.trace("Operation(s) present for filter component: "
 					+ jaxbFilter.getId() + ", processing");
-			filterEntity.setNumOperations(jaxbFilter.getOperationOrExpression().size());
+			filterEntity.setNumOperations(jaxbFilter.getOperationOrExpressionOrIncludeExternalOperation().size());
 			filterEntity.setOperationPresent(true);
 			filterEntity.setOperation(OperationEntityUtils.extractOperations(
-					jaxbFilter.getOperationOrExpression()).get(0));
+					jaxbFilter.getOperationOrExpressionOrIncludeExternalOperation()).get(0));
 		} else {
 			LOG.trace("Operation not present for filter component: "
 					+ jaxbFilter.getId() + ", skipped operation processing");

@@ -77,6 +77,7 @@
 						<xs:element name="operationField" type="cmn:type-operation-field" />
 						<xs:element name="expressionField" type="cmn:type-expression-field" />
 						<xs:element name="mapField" type="cmn:type-map-field" />
+						<xs:element name="includeExternalMapping" type="cmn:type-external-schema" />
 					</xs:choice>
 				</xs:choice>
 				<xs:attribute name="id" type="xs:string" use="required"
@@ -125,6 +126,10 @@
 						<xs:element name="operation" type="type-operation"
 							minOccurs="1" maxOccurs="unbounded" />
 						<xs:element name="expression" type="type-transform-expression"
+							minOccurs="1" maxOccurs="unbounded" />
+						<xs:element name="includeExternalOperation" type="cmn:type-external-schema"
+							minOccurs="1" maxOccurs="unbounded" />
+						<xs:element name="includeExternalExpression" type="cmn:type-external-schema"
 							minOccurs="1" maxOccurs="unbounded" />
 					</xs:choice>
 					<xs:element name="outSocket" type="type-out-socket"

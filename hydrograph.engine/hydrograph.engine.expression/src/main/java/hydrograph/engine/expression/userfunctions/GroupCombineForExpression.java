@@ -18,6 +18,9 @@ import hydrograph.engine.transformation.schema.Field;
 import hydrograph.engine.transformation.schema.Schema;
 import hydrograph.engine.transformation.userfunctions.base.GroupCombineTransformBase;
 import hydrograph.engine.transformation.userfunctions.base.ReusableRow;
+
+import java.math.BigDecimal;
+
 /**
  * The Class GroupCombineForExpression.
  *
@@ -52,7 +55,7 @@ public class GroupCombineForExpression implements GroupCombineTransformBase {
         this.bufferFieldPrecision = bufferFieldPrecision;
         try {
             expressionWrapperForUpdate.getValidationAPI().init(expressionWrapperForUpdate.getIntialValueExpression());
-            accumulatorInitialValue = (Comparable) (valueOf(bufferFieldType,expressionWrapperForUpdate.getValidationAPI().exec(new Object[]{})));
+            accumulatorInitialValue = (Comparable) (valueOf(this.bufferFieldType,expressionWrapperForUpdate.getValidationAPI().exec(new Object[]{})));
         } catch (Exception e) {
             throw new RuntimeException(
                     "Exception in aggregate initial value expression: "
@@ -60,15 +63,27 @@ public class GroupCombineForExpression implements GroupCombineTransformBase {
         }
     }
 
-    private Object valueOf(String className,Object value){
-        try {
-            Class clazz = Class.forName(className);
-            return clazz.cast(value);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+    private Object valueOf(String className, Object value) {
+        String stringValue = value.toString();
+        switch (className) {
+            case "Short":
+                return Short.valueOf(stringValue);
+            case "Integer":
+                return Integer.valueOf(stringValue);
+            case "Long":
+                return Long.valueOf(stringValue);
+            case "Float":
+                return Float.valueOf(stringValue);
+            case "Double":
+                return Double.valueOf(stringValue);
+            case "BigDecimal":
+                return BigDecimal.valueOf((Double) value);
+            case "Boolean":
+                return Boolean.valueOf(stringValue);
+            default:
+                return stringValue;
         }
     }
-
 
     public void callPrepare(String[] inputFieldNames, String[] inputFieldTypes) {
         String fieldNames[] = new String[inputFieldNames.length + 1];
@@ -109,7 +124,11 @@ public class GroupCombineForExpression implements GroupCombineTransformBase {
         }
         tuples[i] = bufferRow.getField(0);
         try {
-            bufferRow.setField(0, (Comparable) expressionWrapperForUpdate.getValidationAPI().exec(tuples));
+            if (bufferFieldType.equals("Short")) {
+                bufferRow.setField(0, Short.parseShort(expressionWrapperForUpdate.getValidationAPI().exec(tuples).toString()));
+            } else {
+                bufferRow.setField(0, (Comparable) expressionWrapperForUpdate.getValidationAPI().exec(tuples));
+            }
         } catch (Exception e) {
             throw new RuntimeException("Exception in aggregate expression: "
                     + expressionWrapperForUpdate.getValidationAPI().getExpr() + ".\nRow being processed: "
@@ -123,7 +142,11 @@ public class GroupCombineForExpression implements GroupCombineTransformBase {
         tuples[0] = bufferRow1.getField(0);
         tuples[1] = bufferRow2.getField(0);
         try {
-            bufferRow1.setField(0, (Comparable) expressionWrapperForMerge.getValidationAPI().exec(tuples));
+            if (bufferFieldType.equals("Short")) {
+                bufferRow1.setField(0, Short.parseShort(expressionWrapperForMerge.getValidationAPI().exec(tuples).toString()));
+            } else {
+                bufferRow1.setField(0, (Comparable) expressionWrapperForMerge.getValidationAPI().exec(tuples));
+            }
         } catch (Exception e) {
             throw new RuntimeException("Exception in merge expression: "
                     + expressionWrapperForMerge.getValidationAPI().getExpr() + ".\nRow being processed: "
