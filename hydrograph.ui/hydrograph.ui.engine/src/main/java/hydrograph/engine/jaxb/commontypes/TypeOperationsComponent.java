@@ -11,7 +11,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package hydrograph.engine.jaxb.commontypes;
 
 import java.util.ArrayList;
@@ -95,10 +94,10 @@ public abstract class TypeOperationsComponent
     @XmlElement(required = true)
     protected List<TypeBaseInSocket> inSocket;
     @XmlElementRefs({
-        @XmlElementRef(name = "operation", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "expression", type = JAXBElement.class, required = false),
         @XmlElementRef(name = "includeExternalOperation", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "includeExternalExpression", type = JAXBElement.class, required = false)
+        @XmlElementRef(name = "expression", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "includeExternalExpression", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "operation", type = JAXBElement.class, required = false)
     })
     protected List<JAXBElement<?>> operationOrExpressionOrIncludeExternalOperation;
     protected TypeOutputRecordCount outputRecordCount;
@@ -153,10 +152,10 @@ public abstract class TypeOperationsComponent
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link JAXBElement }{@code <}{@link TypeTransformOperation }{@code >}
+     * {@link JAXBElement }{@code <}{@link TypeExternalSchema }{@code >}
      * {@link JAXBElement }{@code <}{@link TypeTransformExpression }{@code >}
      * {@link JAXBElement }{@code <}{@link TypeExternalSchema }{@code >}
-     * {@link JAXBElement }{@code <}{@link TypeExternalSchema }{@code >}
+     * {@link JAXBElement }{@code <}{@link TypeTransformOperation }{@code >}
      * 
      * 
      */

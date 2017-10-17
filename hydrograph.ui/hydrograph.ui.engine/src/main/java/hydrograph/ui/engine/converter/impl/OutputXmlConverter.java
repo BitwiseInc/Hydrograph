@@ -69,7 +69,7 @@ public class OutputXmlConverter extends OutputConverter {
 		rowTag.setValue((String) properties.get(PropertyNameConstants.ROW_TAG.value()));
 		xmlFile.setRowTag(rowTag);
 
-		xmlFile.setSafe(getBoolean(PropertyNameConstants.IS_SAFE.value()));
+	   //	xmlFile.setSafe(getBoolean(PropertyNameConstants.IS_SAFE.value()));
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class OutputXmlConverter extends OutputConverter {
 			outSocket.setId(link.getSourceTerminal());
 			outSocket.setType(link.getSource().getPort(link.getSourceTerminal()).getPortType());
 			outSocket.setSchema(getSchema());
-			outSocket.getOtherAttributes();
+			outSocket.getOtherAttributes(); 
 			outputinSockets.add(outSocket);
 		}
 		return outputinSockets;

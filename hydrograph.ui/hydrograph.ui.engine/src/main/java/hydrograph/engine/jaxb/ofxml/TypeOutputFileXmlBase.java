@@ -11,7 +11,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package hydrograph.engine.jaxb.ofxml;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -33,6 +32,7 @@ import hydrograph.engine.jaxb.outputtypes.XmlFile;
  *     &lt;restriction base="{hydrograph/engine/jaxb/commontypes}type-output-component">
  *       &lt;sequence>
  *         &lt;element name="inSocket" type="{hydrograph/engine/jaxb/ofxml}type-output-xml-in-socket"/>
+ *         &lt;element name="overWrite" type="{hydrograph/engine/jaxb/commontypes}type-true-false" minOccurs="0"/>
  *         &lt;element name="runtimeProperties" type="{hydrograph/engine/jaxb/commontypes}type-properties" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
