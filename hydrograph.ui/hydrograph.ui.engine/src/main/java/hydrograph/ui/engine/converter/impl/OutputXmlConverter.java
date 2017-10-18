@@ -58,8 +58,6 @@ public class OutputXmlConverter extends OutputConverter {
 
 		//TODO: setRuntimeProperties
 		//xmlFile.setRuntimeProperties(getRuntimeProperties());
-		xmlFile.setStrict(getBoolean(PropertyNameConstants.STRICT.value()));
-		xmlFile.setSafe(getBoolean(PropertyNameConstants.IS_SAFE.value()));
 
 		XmlFile.RootTag rootTag = new RootTag();
 		rootTag.setValue((String) properties.get(PropertyNameConstants.ROOT_TAG.value()));
@@ -69,7 +67,6 @@ public class OutputXmlConverter extends OutputConverter {
 		rowTag.setValue((String) properties.get(PropertyNameConstants.ROW_TAG.value()));
 		xmlFile.setRowTag(rowTag);
 
-	   //	xmlFile.setSafe(getBoolean(PropertyNameConstants.IS_SAFE.value()));
 	}
 
 	@Override

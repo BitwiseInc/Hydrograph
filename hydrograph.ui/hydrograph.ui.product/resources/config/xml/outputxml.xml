@@ -52,24 +52,13 @@
 			usage="OPTIONAL" propertyHelpText="Button to export the xsd">
 		</tns:property>
 		
-		<tns:property dataType="boolean" name="safe" value="False" renderer="SAFE_PROPERTY_WIDGET" type="USER"
-			group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="FALSE" tooltipDataType="NONE"
-			usage="OPTIONAL" propertyHelpText="When True, allows the input fields to pass \nevaluation despite of Data type mismatch.">
-			<tns:validator>BOOLEAN_OR_PARAMETER_VALIDATOR</tns:validator>
-		</tns:property>
-		
+				
 		<tns:property dataType="string" name="charset" value="UTF-8" renderer="CHARACTER_SET_WIDGET" type="USER" 
 			group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="FALSE" tooltipDataType="NONE"
 			usage="REQUIRED" propertyHelpText="Denotes the encoding system followed by the input file.">
 			<tns:validator>NON_BLANK_STRING_VALIDATOR</tns:validator>
 		</tns:property>
-		
-		<tns:property dataType="string" name="strict" value="True" renderer="STRICT_CLASS_WIDGET" type="USER" 
-			group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="FALSE" tooltipDataType="NONE"
-			usage="OPTIONAL" propertyHelpText="When True, validates the Record Structure \nlike no. of fields, 
-			length of record, scale \nas specified by the user.">
-			<tns:validator>BOOLEAN_OR_PARAMETER_VALIDATOR</tns:validator>
-		</tns:property>
+			
 		
 		<tns:property dataType="string" name="batch" value="0" renderer="BATCH_WIDGET" type="USER"
 			group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"
