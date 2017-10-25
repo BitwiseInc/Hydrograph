@@ -40,6 +40,18 @@
 			\nAllows only underscore ‘_’ and alphanumeric characters.">
 			<tns:validator>NON_BLANK_STRING_VALIDATOR</tns:validator>
 		</tns:property>
+		
+		<tns:property dataType="string" name="absoluteXPath" value="" renderer="XPATH_QUERY_WIDGET"
+			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"
+			usage="REQUIRED" propertyHelpText="Xpath for the xml">
+			<tns:validator>NON_EMPTY_STRING_VALIDATOR</tns:validator>
+		</tns:property>
+		
+		<tns:property dataType="string" name="rootTag" value="" renderer="ROOT_TAG_WIDGET"
+			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"
+			usage="REQUIRED" propertyHelpText="Root tag for the xml">
+			<tns:validator>NON_EMPTY_STRING_VALIDATOR</tns:validator>
+		</tns:property>
 				
 		<tns:property dataType="string" name="rowTag" value="" renderer="ROW_TAG_WIDGET" type="USER" 
 			group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"

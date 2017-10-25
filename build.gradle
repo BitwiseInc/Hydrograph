@@ -28,11 +28,13 @@ repositories {
 }
    
 configurations {
+    
 	hgGraph
     hgPropertywindow	
 	hgDataviewer
 	hgModel
 	hgService
+	hgCommon
 }
 dependencies {
 	hgGraph group: 'org.glassfish.tyrus.bundles', name: 'tyrus-standalone-client', version: '1.13'
@@ -70,7 +72,11 @@ dependencies {
     hgService group: 'com.amazon.redshift', name: 'redshift-jdbc42', version: '1.2.1.1001'
 
     hgService 'junit:junit:4.11'
+	
+	hgCommon group: 'com.predic8', name: 'soa-model-core', version: '1.6.0'
+
 }
+
 task pullServiceDependencies(type: Copy) {
     dependsOn configurations.hgService
 
@@ -111,6 +117,16 @@ task pullDataViewerDependencies(type: Copy) {
     }
     into "hydrograph.ui/hydrograph.ui.dataviewer/lib/"
 }
+
+task pullCommonDependencies(type: Copy) {
+    dependsOn configurations.hgCommon
+
+    from { // use of closure defers evaluation until execution time
+        configurations.hgCommon.collect {it}
+    }
+    into "hydrograph.ui/hydrograph.ui.common/lib/"
+}
+
 task copyLibs(type: Copy) {
-	dependsOn pullServiceDependencies, pullModelDependencies, pullGraphDependencies, pullPropertyWindowDependencies, pullDataViewerDependencies
+	dependsOn pullServiceDependencies, pullModelDependencies, pullGraphDependencies, pullPropertyWindowDependencies, pullDataViewerDependencies, pullCommonDependencies
 }

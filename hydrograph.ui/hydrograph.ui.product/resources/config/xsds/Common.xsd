@@ -149,6 +149,7 @@
 			<enumeration value="SORT_EXCEL_COLUMNS_KEYS_WIDGET" />
 			<enumeration value="FILTER_LOGIC" />
 			<enumeration value="EXPORT_XSD_WIDGET" />
+			<enumeration value="XML_GENERATE_SCHEMA_WIDGET" />
 		</restriction>
 	</simpleType>
 

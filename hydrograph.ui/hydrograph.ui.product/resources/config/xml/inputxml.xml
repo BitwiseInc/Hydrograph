@@ -60,6 +60,13 @@
 			<tns:validator>NON_EMPTY_STRING_VALIDATOR</tns:validator>
 		</tns:property>
 		
+		<tns:property dataType="string" name="GenerateSchema"
+			renderer="XML_GENERATE_SCHEMA_WIDGET" type="USER" group="GENERAL"
+			subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"
+			usage="REQUIRED" propertyHelpText="Will be added soon.">
+		</tns:property>
+		
+		
 		<tns:property dataType="boolean" name="safe" value="False" renderer="SAFE_PROPERTY_WIDGET" type="USER"
 			group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="FALSE" tooltipDataType="NONE"
 			usage="OPTIONAL" propertyHelpText="When True, allows the input fields to pass \nevaluation despite of Data type mismatch.">

@@ -878,23 +878,29 @@ public abstract class ELTSchemaGridWidget extends AbstractWidget {
 				 if (!schemaGridRowList.contains(gridRow)){
 					 GridRow newGridRow;
 					 FixedWidthGridRow fixedWidthGridRow;
+					 XPathGridRow xpathGridRow;
 					 try {
 						 if (Messages.FIXEDWIDTH_GRID_ROW.equals(gridRowType)){												
-						 fixedWidthGridRow = new FixedWidthGridRow();
-						 fixedWidthGridRow.updateBasicGridRow(gridRow);
-						 schemaGridRowList.add(fixedWidthGridRow);
-					 }else {
-						 newGridRow = (GridRow) Class.forName(gridRow.getClass().getCanonicalName()).getDeclaredConstructor().newInstance();
-						 newGridRow.updateBasicGridRow(gridRow);
-						 schemaGridRowList.add(newGridRow);
-						}
+							 fixedWidthGridRow = new FixedWidthGridRow();
+							 fixedWidthGridRow.updateBasicGridRow(gridRow);
+							 schemaGridRowList.add(fixedWidthGridRow);
+						 }
+						 else if(Messages.XPATH_GRID_ROW.equals(gridRowType)){
+							 xpathGridRow=new XPathGridRow();
+							 xpathGridRow.updateBasicGridRow(gridRow);
+							 xpathGridRow.setXPath(gridRow.getFieldName());
+							 schemaGridRowList.add(xpathGridRow);
+					 	 }
+						 else {
+							 newGridRow = (GridRow) Class.forName(gridRow.getClass().getCanonicalName()).getDeclaredConstructor().newInstance();
+							 newGridRow.updateBasicGridRow(gridRow);
+							 schemaGridRowList.add(newGridRow);
+						 }
 					 }catch (InstantiationException | IllegalAccessException | IllegalArgumentException
 							 | InvocationTargetException | NoSuchMethodException | SecurityException
 							 | ClassNotFoundException e) {
 						 logger.error("Exception occurred while creating new row for schema",e);
 					 }
-
-
 				 }
 			 }
 			 propertyDialogButtonBar.enableApplyButton(true);

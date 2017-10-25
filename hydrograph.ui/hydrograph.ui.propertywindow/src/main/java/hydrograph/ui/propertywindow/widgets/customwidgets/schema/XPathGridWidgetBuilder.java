@@ -68,7 +68,7 @@ public class XPathGridWidgetBuilder extends GridWidgetCommonBuilder {
 		XPathGridRow schemaGrid = new XPathGridRow();
 		schemaGrid.setFieldName("DefaultField" + rowSequence);
 		schemaGrid.setDateFormat("");
-		schemaGrid.setXPath("");
+		schemaGrid.setXPath(schemaGrid.getFieldName());
 		schemaGrid.setPrecision("");
 		schemaGrid.setScale("");
 		schemaGrid.setScaleType(Integer.valueOf(Constants.DEFAULT_INDEX_VALUE_FOR_COMBOBOX));
@@ -79,7 +79,7 @@ public class XPathGridWidgetBuilder extends GridWidgetCommonBuilder {
 		
 		int numberOfRows=grids.size();
 		do{
-			if(!grids.contains(schemaGrid)){
+			if(!grids.contains(schemaGrid) && !isXPathDupliucate(schemaGrid,grids)){
 				grids.add(schemaGrid);  
 				tableViewer.setInput(grids);
 				tableViewer.refresh();
@@ -87,9 +87,14 @@ public class XPathGridWidgetBuilder extends GridWidgetCommonBuilder {
 				break;
 			}
 			schemaGrid.setFieldName("DefaultField" + rowSequence++);
+			schemaGrid.setXPath(schemaGrid.getFieldName());
 			numberOfRows--;
 		}while(numberOfRows>=-1);
  		
+	}
+
+	private boolean isXPathDupliucate(XPathGridRow schemaGrid,List<XPathGridRow> grids) {
+		return grids.stream().anyMatch(xPathGridRow->xPathGridRow.getXPath().equals(schemaGrid.getXPath()));
 	}
 
 	

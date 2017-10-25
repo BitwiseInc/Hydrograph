@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<toc label="Output XML" link_to="xml\Components\output\Output.xml#">
+   <topic href="html/Components/output/Output_Xml_Properties.html" label="Properties">
+      <topic href="html/Components/output/Output_Xml_Properties.html#general_properties" label="General Properties">
+      </topic>
+      <topic href="html/Components/output/Output_Xml_Properties.html#details" label="Details">
+      </topic>
+      <topic href="html/Components/output/Output_Xml_Properties.html#configuration" label="Configuration">
+      </topic>
+      <topic href="html/Components/output/Output_Xml_Properties.html#schema_tab" label="Schema tab">
+      </topic>
+      <topic href="html/Components/output/Output_Xml_Properties.html#validations" label="Validations">
+      </topic>
+   </topic>
+</toc>

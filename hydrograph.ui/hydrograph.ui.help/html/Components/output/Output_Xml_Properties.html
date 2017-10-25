@@ -1,0 +1,95 @@
+<!-- Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. -->
+ 
+ 
+<!doctype html>
+<html>
+<head>
+	<title>Output XML Properties</title>
+	<link rel="stylesheet" type="text/css" href="../../css/style.css">
+</head>
+<body>
+
+	<p><span class="header-1">Output XML Properties</span></p>
+	
+	<p><span><span><b>Properties</b>&nbsp;for the Output XML component can be viewed by Double click-&gt;component on canvas. The properties contain a &#39;General&#39; tab and a &#39;Schema&#39; tab. Common and mandatory properties are present in the General tab. Schema displays option to accept the field schema i.e. field name, Data type, scale etc. </span></span></p>
+	<p>
+		<a name="general_properties"></a><p><span><b>General Properties</b></span>
+	</p>
+	
+	<p><img alt="" src="../../images/Output_Xml_Properties_General.png" /></p>
+	
+		<a name="details"></a><p><span><b>Details</b></span></p>
+	
+	<ul>
+		<li><span><b>Name</b> - The Name field will specify the name of the component as desired by the user.</span></li>
+		<li><span><b>ID</b> - Identifies the component based on the IDE generated name. Content of this field are non editable</span></li>
+		<li><span><b>Type </b> - Type further categorizes the component to detailed operation that it intends to perform. Here it is of type File Delimited.</span></li>
+	</ul>
+	
+		<a name="configuration"></a><p><span><span><b>Configuration</b></span></span></p>
+	
+	<ul>
+		<li><span><b>File Path</b> - File path is used to specify the path of the output XML file present either in the File system or on the cluster. User can either manually type the path in the text box provided or use the Browse button to search for the file and select it. Alternatively, the user can parameterize the File path where the parameter value will be resolved at run-time.</span></li>
+		<li><span><b>Loop XPath Query</b> - This property accepts the xpath of the Row Tag from RootTag</span></li>
+		<li><span><b>Root Tag</b> - This property accepts the name of the Root tag of the xml</span></li>
+		<li><span><b>Row Tag</b> - Row tag represents from where the data fields must be parsed to form a record</span></li>
+		<li><span><b>Export XSD</b> - Generate and export XSD (Schema definition) file for Output XML file. User can specify the location of XSD file to be generated, on clicking export button.</span></li>
+		<li><span><b>Character Set</b> - Contains a drop-down of character encoding values. Used simply to denote the encoding system followed by the output file to denote characters of data. Drop down lists contains values like : UTF8, US-ASCII, ISO-8859-1 etc.</span></li>
+		<li><span><b>Batch</b> - Batch simply accepts a numeric number starting from 0 to maximum 99 and signifies the batch this component will execute in. By default this is 0.</span></li>
+	
+	</ul>	
+	<p><a name="schema_tab"></a><b>Schema tab: </b></font></p>
+	
+	<p><img alt="" src="../../images/Output_Xml_Properties_Schema.png" /></p>
+	<a name="schema_tab"></a><p><span><b>Schema Types</b></span></p>
+	<ul>
+		<li><span><b>Internal</b> - User is provided a Grid to enter the internal schema of the Output XML file.</span></li>
+		<ul><li><span><b>Field Name</b> - User needs to enter all the Field names in this column.</span></li>
+		<li><span><b>Data type</b> - By default "string" Data type has been selected for any field added to the Grid. User can select from different Data type values like "integer", "double", "float" etc.</span></li>
+		<li><span><b>Absolute/Relative XPath</b> - Represents the XPath of an element from either the Root Tag or Row Tag.</span></li>
+		<li><span><b>Date Format</b> - User can specify desired date format like "YY-DD-MM", "YYYYMMDD" etc for a date field in this column. Refer to <a href="../../references/Date_Formats.html">java date formats</a> page for acceptable date formats.</span></li>
+		<li><span><b>Precision</b> - Precision for a bigdecimal field can be specified here.</span></li>
+		<li><span><b>Scale</b> - Scale for a bigdecimal field can be specified here.</span></li>
+		<li><span><b>Scale Type</b> - Scale Type accepts values as implicit or explicit for bigdecimal field and none for other data types. Explicit considers the length of ' <b>.</b> ' and implicit ignores length of ' <b>.</b> ' for the bigdecimal field.</span></li>
+		<li><span><b>Field Description</b> - User can specify field description.</span></li></ul>
+		<li><span><b>External</b> - User can provide an external Hydrograph Schema file of XML format. A text box is provided to either manually type or use the Browse button to select the schema file from File system. The External schema file path is resolved during run time and replaced with the contents of the file in the Job XML.</span></li>
+	</ul>	
+	
+	
+<p>
+		<a name="validations"></a><span><b>Validations</b></span>
+	</p>
+	<p>
+		<span>The Output XML components applies validations to the mandatory fields. Upon placing the 
+			Output XML component on job canvas for the first time (from component palette), the component shows up a warning icon as
+			mandatory properties are not provided.</span>
+	</p>
+	<img alt="To be updated" src="../../images/output_xml_warning_icon.PNG"  />
+
+	<p>
+		<span>The properties window also displays error icon on mandatory fields if it has an incorrect value. The error icon
+			is displayed on the tab as well, if any of the field within the tab has some error.</span>
+	</p>
+	<img alt="To be updated" src="../../images/output_xml_property_validation.png" />
+
+	<p>
+		<span>If the properties window has some error even after user visit's it once, then the warning icon on the Output XML 
+			component on the job canvas changes to error icon. This error icon is removed only when all the mandatory fields are supplied
+			with correct values.</span>
+	</p>
+	<img alt="To be updated" src="../../images/output_xml_error_icon.PNG" />
+	<p>&nbsp;</p>
+	
+	<ul>
+	</ul>
+</body>
+</html>

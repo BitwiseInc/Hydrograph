@@ -247,7 +247,8 @@ public enum PropertyRenderer {
     EXCEL_FILE_NAME_WIDGET,
     SORT_EXCEL_COLUMNS_KEYS_WIDGET,
     FILTER_LOGIC,
-    EXPORT_XSD_WIDGET;
+    EXPORT_XSD_WIDGET,
+    XML_GENERATE_SCHEMA_WIDGET;
 
     public String value() {
         return name();

@@ -542,8 +542,7 @@ public class SchemaPropagation {
 		xPathGridRow.setScaleTypeValue(gridRow.getScaleTypeValue());
 		xPathGridRow.setPrecision(gridRow.getPrecision());
 		xPathGridRow.setDescription(gridRow.getDescription());
-		//xPathGridRow.setXPath(gridRow.getx);
-		
+		xPathGridRow.setXPath(gridRow.getFieldName());
 		return xPathGridRow;
 	}
 	
@@ -555,7 +554,13 @@ public class SchemaPropagation {
 			for (FixedWidthGridRow fixedWidthGridRow : fixedWidthGridRowsOutputFields) {
 				schemaGrid.add(convertFixedWidthSchemaToMixedSchemaGridRow(fixedWidthGridRow));
 			}
-		} else if(gridRow instanceof FixedWidthGridRow){
+		}
+		else if (gridRow instanceof XPathGridRow) {
+			for (FixedWidthGridRow fixedWidthGridRow : fixedWidthGridRowsOutputFields) {
+				schemaGrid.add(convertFixedWidthSchemaToxPathSchemaGridRow(fixedWidthGridRow));
+			}
+		} 
+		else if(gridRow instanceof FixedWidthGridRow){
 			for (FixedWidthGridRow fixedWidthGridRow : fixedWidthGridRowsOutputFields) {
 				schemaGrid.add(fixedWidthGridRow);
 			}

@@ -74,16 +74,20 @@ public class OutputXmlConverter extends OutputConverter {
 		
 		logger.debug("Generating TypeOutputInSocket data for {}", properties.get(Constants.PARAM_NAME));
 		List<TypeOutputInSocket> outputinSockets = new ArrayList<>();
-		for (Link link : component.getSourceConnections()) {
+		for (Link link : component.getTargetConnections()) {
 			TypeOutputXmlInSocket outSocket = new TypeOutputXmlInSocket();
-			outSocket.setId(link.getSourceTerminal());
-			outSocket.setType(link.getSource().getPort(link.getSourceTerminal()).getPortType());
+			outSocket.setId(link.getTargetTerminal());
+			outSocket.setType(link.getTarget().getPort(link.getTargetTerminal()).getPortType());
+			outSocket.setFromSocketId(converterHelper.getFromSocketId(link));
+			outSocket.setFromSocketType(link.getSource().getPorts().get(link.getSourceTerminal()).getPortType());
 			outSocket.setSchema(getSchema());
-			outSocket.getOtherAttributes(); 
+			outSocket.getOtherAttributes();
+			outSocket.setFromComponentId(link.getSource().getComponentId());
 			outputinSockets.add(outSocket);
 		}
 		return outputinSockets;
 	}
+
 
 	@Override
 	protected List<TypeBaseField> getFieldOrRecord(List<GridRow> gridList) {

@@ -29,6 +29,7 @@ import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.datastructure.property.GridRow;
 import hydrograph.ui.datastructure.property.Schema;
 import hydrograph.ui.datastructure.property.XPathGridRow;
+import hydrograph.ui.propertywindow.messages.Messages;
 import hydrograph.ui.propertywindow.property.ComponentConfigrationProperty;
 import hydrograph.ui.propertywindow.property.ComponentMiscellaneousProperties;
 import hydrograph.ui.propertywindow.property.Property;
@@ -45,6 +46,10 @@ public class ExportXSDWidget extends AbstractWidget {
 	private Button exportButton;
 	private static final String W3C_NameSpaceURI = "http://www.w3.org/2001/XMLSchema";
 	private static final String ETL_NameSpaceURI = "http://www.hydrograph.org/ui/graph/schema";
+	private static final String ROOT_TAG = "rootTag";
+	private static final String ROW_TAG = "rowTag";
+	private static final String ERROR = "Error";
+	private static final String INFORMATION = "Information";
 
 	/**
 	 * Instantiates a new ELT file path widget.
@@ -122,10 +127,15 @@ public class ExportXSDWidget extends AbstractWidget {
 		List<GridRow> gridRows = schema.getGridRow();
 		
 		//TODO: Add in constant below message
-		String rowTag = (String) getComponent().getProperties().get("rowTag");
-		String rootElementName = getRootElementName(rowTag);
+		String rowTag = getPropertyValue(ROW_TAG);
+		String rootElementName = getPropertyValue(ROOT_TAG);
+		
 		if (StringUtils.isBlank(rootElementName)) {
-			MessageDialog.openError(exportButton.getShell(), "Error", "Root element not found. Please provide valid row tag.");
+			MessageDialog.openError(exportButton.getShell(), ERROR, Messages.ROOT_ELEMENT_NOT_FOUND_ERROR);
+			return;
+		}
+		if (StringUtils.isBlank(rowTag)) {
+			MessageDialog.openError(exportButton.getShell(), ERROR, Messages.ROW_TAG_NOT_FOUND_ERROR);
 			return;
 		}
 
@@ -148,51 +158,48 @@ public class ExportXSDWidget extends AbstractWidget {
 			rootElement.appendChild(rootComplexElement);
 			schemaElement.appendChild(rootElement);
 			
-			String[] elements = rowTag.split("/");
 			Element relativePathParent = rootComplexElement;
 			
-			for (String elementTagName : elements) {
 				
-				if (!StringUtils.isBlank(elementTagName)) {
-					
-					String complexTypeFirstLetter = elementTagName.substring(0, 1).toUpperCase();
-					String complexTypeName = complexTypeFirstLetter
-							+ elementTagName.substring(1, elementTagName.length()).toLowerCase();
+			String rowTagTypeFirstLetter = rowTag.substring(0, 1).toUpperCase();
+			String complexTypeFirstLetter = rowTagTypeFirstLetter.substring(0, 1).toUpperCase();
+			String complexTypeNameForRow = complexTypeFirstLetter
+					+ rowTag.substring(1, rowTag.length()).toLowerCase();
 
-					Element newParent = null;
-					if (rootElementName.equals(elementTagName)) {
+			Element newParentForRow = null;
+			if (rootElementName.equals(rowTag)) {
 
-						NodeList nodes = (NodeList) document.getElementsByTagName("xs:element");
-						newParent = checkElementPresent(nodes, elementTagName);
+				NodeList nodes = (NodeList) document.getElementsByTagName("xs:element");
+				newParentForRow = checkElementPresent(nodes, rowTag);
 
-					} else {
+			} else {
 
-						NodeList nodes = (NodeList) document.getElementsByTagName("xs:complexType");
-						newParent = checkElementPresent(nodes, complexTypeName);
+				NodeList nodes = (NodeList) document.getElementsByTagName("xs:complexType");
+				newParentForRow = checkElementPresent(nodes, complexTypeNameForRow);
 
-					}
-
-					if (newParent == null) {
-
-						Element ele = getElement(document, elementTagName, complexTypeName);
-						relativePathParent.appendChild(ele);
-
-						Element complexTypeElement = getComplexTypeElement(document, complexTypeName);
-						schemaElement.appendChild(complexTypeElement);
-
-						relativePathParent = (Element) complexTypeElement.getFirstChild();
-
-					} else {
-
-						if(elementTagName.equals(rootElementName)) {
-							newParent = (Element) newParent.getFirstChild().getFirstChild();
-						}else {
-							newParent = (Element) newParent.getFirstChild();
-						}
-						relativePathParent = newParent;
-					}
-				}
 			}
+
+			if (newParentForRow == null) {
+
+				Element ele = getElement(document, rowTag, complexTypeNameForRow);
+				relativePathParent.getFirstChild().appendChild(ele);
+
+				Element complexTypeElement = getComplexTypeElement(document, complexTypeNameForRow);
+				schemaElement.appendChild(complexTypeElement);
+
+				relativePathParent = (Element) complexTypeElement.getFirstChild();
+
+			} else {
+
+				if(rowTag.equals(rootElementName)) {
+					newParentForRow = (Element) newParentForRow.getFirstChild().getFirstChild();
+				}else {
+					newParentForRow = (Element) newParentForRow.getFirstChild();
+				}
+				relativePathParent = newParentForRow;
+			}
+				
+			
 
 			// Create element and insert into XSD DOM according to XPath given.
 			for (GridRow gridRow : gridRows) {
@@ -204,10 +211,9 @@ public class ExportXSDWidget extends AbstractWidget {
 					if(!rowTag.equals(xPathGridRow.getXPath())) {
 						isRelative = true;
 					}
-					elements = xPathGridRow.getXPath().split("/");
-					Element elementToAdd = getElement(document, xPathGridRow.getFieldName(),
+					String[] elements = xPathGridRow.getXPath().split("/");
+					Element elementToAdd = getElement(document, elements[elements.length-1],
 							getXSDType(xPathGridRow.getDataTypeValue()));
-					appendAttributes(elementToAdd, xPathGridRow.getDataTypeValue(), xPathGridRow);
 					
 					Element parent = null;
 					if(isRelative) {
@@ -277,12 +283,22 @@ public class ExportXSDWidget extends AbstractWidget {
 			StreamResult file = new StreamResult(new File(filePath));
 
 			transformer.transform(source, file);
+			MessageDialog.openInformation(exportButton.getShell(), INFORMATION, Messages.XSD_EXPORTED);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
+	
+	private String getPropertyValue(String propertyName){
+		
+		String value = (String) getComponent().getProperties().get(propertyName);
+		if(value.startsWith("/")){
+			value = value.substring(1);
+		}
+		return value;
+	}
+	
 	private Element checkElementPresent(NodeList nodes, String elementName) {
 
 		Element foundElement = null;
@@ -302,21 +318,6 @@ public class ExportXSDWidget extends AbstractWidget {
 		return foundElement;
 	}
 
-	private void appendAttributes(Element elementToAdd, String dataType, XPathGridRow xPathGridRow) {
-
-		switch (dataType) {
-
-		case "java.util.Date":
-			elementToAdd.setAttribute("format", xPathGridRow.getDateFormat());
-			break;
-
-		case "java.math.BigDecimal":
-			elementToAdd.setAttribute("scale", xPathGridRow.getScale());
-			break;
-		}
-
-	}
-	
 	private String getXSDType(String dataType) {
 
 		switch (dataType) {
@@ -388,7 +389,7 @@ public class ExportXSDWidget extends AbstractWidget {
 		return element;
 
 	}
-
+	
 	@Override
 	public LinkedHashMap<String, Object> getProperties() {
 		return null;
