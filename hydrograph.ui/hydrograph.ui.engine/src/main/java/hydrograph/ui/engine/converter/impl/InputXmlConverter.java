@@ -68,8 +68,6 @@ public class InputXmlConverter extends InputConverter {
 		xmlFile.setCharset(charset);
 		
 		xmlFile.setRuntimeProperties(getRuntimeProperties());
-		xmlFile.setStrict(getBoolean(PropertyNameConstants.STRICT.value()));
-		xmlFile.setSafe(getBoolean(PropertyNameConstants.IS_SAFE.value()));
 	
 		XmlFile.RootTag rootTag = new RootTag();
 		rootTag.setValue((String) properties.get(PropertyNameConstants.ROOT_TAG.value()));

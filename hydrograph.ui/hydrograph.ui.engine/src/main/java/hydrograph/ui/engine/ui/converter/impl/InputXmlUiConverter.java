@@ -108,8 +108,12 @@ public class InputXmlUiConverter extends InputUiConverter{
 	
 		propertyMap.put(PropertyNameConstants.CHAR_SET.value(), getCharSet());
 		
+		propertyMap.put(PropertyNameConstants.IS_SAFE.value(),
+				convertBooleanValue(xmlFile.getSafe(), PropertyNameConstants.IS_SAFE.value()));
+		
 		uiComponent.setType(UIComponentsConstants.XML.value());
 		uiComponent.setCategory(UIComponentsConstants.INPUT_CATEGORY.value());
+		
 		
 		container.getComponentNextNameSuffixes().put(name_suffix, 0);
 		container.getComponentNames().add(xmlFile.getId());

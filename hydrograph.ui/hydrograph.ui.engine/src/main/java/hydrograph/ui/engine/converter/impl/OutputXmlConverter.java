@@ -66,6 +66,7 @@ public class OutputXmlConverter extends OutputConverter {
 		XmlFile.RowTag rowTag = new RowTag();
 		rowTag.setValue((String) properties.get(PropertyNameConstants.ROW_TAG.value()));
 		xmlFile.setRowTag(rowTag);
+		xmlFile.setOverWrite(getTrueFalse(PropertyNameConstants.OVER_WRITE.value()));
 
 	}
 

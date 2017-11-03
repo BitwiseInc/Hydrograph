@@ -105,7 +105,8 @@ public class OutputXMLUiConverter extends OutputUiConverter{
 		propertyMap.put(PropertyNameConstants.ROOT_TAG.value(), StringUtils.isNotBlank(rootTag)? rootTag : "");
 		
 		propertyMap.put(PropertyNameConstants.CHAR_SET.value(), getCharSet());
-		
+		propertyMap.put(PropertyNameConstants.OVER_WRITE.value(),
+				convertToTrueFalseValue(outputXML.getOverWrite(), PropertyNameConstants.OVER_WRITE.value()));
 		uiComponent.setType(UIComponentsConstants.XML.value());
 		uiComponent.setCategory(UIComponentsConstants.OUTPUT_CATEGORY.value());
 		

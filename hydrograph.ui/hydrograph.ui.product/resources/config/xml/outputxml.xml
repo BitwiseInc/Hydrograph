@@ -33,13 +33,19 @@
 		<tns:property dataType="string" name="name" renderer="COMPONENT_NAME_WIDGET" type="USER"
 			group="GENERAL" subGroup="DETAILS" showAsTooltip="TRUE" tooltipDataType="TEXT"
 			usage="REQUIRED" propertyHelpText="Displays Name provided by the user"/>
-			
+		
 		<tns:property dataType="string" name="Path" renderer="XML_FILE_PATH_WIDGET" type="USER"
 			group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="LINK"
 			usage="REQUIRED" propertyHelpText="Displays the location of the file either Remote/Local. 
 			\nAllows only underscore ‘_’ and alphanumeric characters.">
 			<tns:validator>NON_BLANK_STRING_VALIDATOR</tns:validator>
 		</tns:property>
+		
+		<tns:property dataType="string" group="GENERAL" subGroup="CONFIGURATION" name="overWrite" value="False"
+			renderer="OVERWRITE_WIDGET" type="USER" showAsTooltip="FALSE" tooltipDataType="NONE"
+			usage="OPTIONAL" propertyHelpText="If ‘Overwrite’ property is true, the output location will be overwritten. Existing file / folder contents will be deleted.">
+			<tns:validator>BOOLEAN_OR_PARAMETER_VALIDATOR</tns:validator>
+		</tns:property>	
 		
 		<tns:property dataType="string" name="absoluteXPath" value="" renderer="XPATH_QUERY_WIDGET"
 			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"

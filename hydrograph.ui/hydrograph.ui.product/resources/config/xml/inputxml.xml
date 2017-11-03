@@ -79,13 +79,6 @@
 			<tns:validator>NON_BLANK_STRING_VALIDATOR</tns:validator>
 		</tns:property>
 		
-		<tns:property dataType="string" group="GENERAL" subGroup="CONFIGURATION" name="strict" value="True"
-			renderer="STRICT_CLASS_WIDGET" type="USER" showAsTooltip="FALSE" tooltipDataType="NONE"
-			usage="OPTIONAL" propertyHelpText="When True, validates the Record Structure \nlike no. of fields, 
-			length of record, scale \nas specified by the user.">
-			<tns:validator>BOOLEAN_OR_PARAMETER_VALIDATOR</tns:validator>
-		</tns:property>
-		
 		<tns:property dataType="string" name="runtime_properties" renderer="RUNTIME_PROPERTIES_WIDGET"
 			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="FALSE" tooltipDataType="NONE"
 			usage="OPTIONAL" propertyHelpText="Used to override runtime \nHadoop configurations specific to \nthis component at run time.">
