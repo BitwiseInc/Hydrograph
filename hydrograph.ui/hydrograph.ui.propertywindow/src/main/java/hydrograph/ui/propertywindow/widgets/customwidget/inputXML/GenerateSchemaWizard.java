@@ -30,12 +30,16 @@ public class GenerateSchemaWizard extends Wizard implements INewWizard{
 	private String xmlPath ;
 	private PropertyDialogButtonBar propertyDialogButtonBar;
 	private ELTSchemaGridWidget eltSchemaGridWidget;
-	public GenerateSchemaWizard(Component component,ELTSchemaGridWidget eltSchemaGridWidget,PropertyDialogButtonBar propertyDialogButtonBar){
+	private String loopXpathQuery;
+	
+	public GenerateSchemaWizard(Component component,ELTSchemaGridWidget eltSchemaGridWidget,
+			PropertyDialogButtonBar propertyDialogButtonBar,String loopXpathQuery,String xmlPath ){
 		this.component = component;
-		setXMLPath();
+		this.xmlPath=xmlPath;
 		setWindowTitle(GENERATE_SCHEMA);
 		this.eltSchemaGridWidget=eltSchemaGridWidget;
 		this.propertyDialogButtonBar=propertyDialogButtonBar;
+		this.loopXpathQuery=loopXpathQuery;
 		}
 	
 	@Override
@@ -53,7 +57,7 @@ public class GenerateSchemaWizard extends Wizard implements INewWizard{
 	}
 
 	public void addPages() {
-		sourceSelectionPage = new SourceSelectionPage(SOURCE_SELECTION_PAGE, xmlPath);
+		sourceSelectionPage = new SourceSelectionPage(SOURCE_SELECTION_PAGE, xmlPath,loopXpathQuery);
 		schemaPreviewPage = new SchemaPreviewPage(SCHEMA_PREVIEW_PAGE);
 		addPage(sourceSelectionPage);	
 		addPage(schemaPreviewPage);
@@ -71,9 +75,7 @@ public class GenerateSchemaWizard extends Wizard implements INewWizard{
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
 	}
 	
-	public void setXMLPath(){
-		xmlPath = (String)component.getProperties().get("Path");
-	}
+	
 	
 	public String getXMLPath(){
 		return xmlPath;

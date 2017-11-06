@@ -41,10 +41,13 @@ import hydrograph.ui.propertywindow.widgets.utility.WidgetUtility;
 public class SourceSelectionPage extends WizardPage{
 	
 	private String xmlPath;
+	private String looXPathQuery;
+	
 	private static final Logger lOGGEER = LogFactory.INSTANCE.getLogger(SourceSelectionPage.class);
-	protected SourceSelectionPage(String pageName,String xmlPath) {
+	protected SourceSelectionPage(String pageName,String xmlPath,String looXPathQuery) {
 		super(pageName);
 		this.xmlPath =xmlPath;
+		this.looXPathQuery=looXPathQuery;
 		setTitle(Messages.SELECT_XML_SOURCE_FOR_SCHEMA_IMPORT);
 	}
 
@@ -101,7 +104,7 @@ public class SourceSelectionPage extends WizardPage{
 	private List<GridRow> generateSchemaRecordFromXML(File xmlFile) {
 		try {
 			XMLUtil xmlUtil=new XMLUtil();
-			return xmlUtil.getSchemaFromXML(xmlFile);
+			return xmlUtil.getSchemaFromXML(xmlFile,looXPathQuery);
 			
 		} catch (ParserConfigurationException | SAXException | IOException | JAXBException e) {
 			lOGGEER.error("unable to parse the XML file",e.getMessage());
@@ -114,7 +117,7 @@ public class SourceSelectionPage extends WizardPage{
 	private List<GridRow> generateSchemaRecordFromXSD(String  XSDFile) {
 		try {
 			XMLUtil xmlUtil=new XMLUtil();
-			return xmlUtil.getSchemaFromXSD(XSDFile);
+			return xmlUtil.getSchemaFromXSD(XSDFile,looXPathQuery);
 			
 		} catch (ParserConfigurationException | SAXException | IOException | JAXBException e) {
 			lOGGEER.error("unable to parse the XML file",e.getMessage());

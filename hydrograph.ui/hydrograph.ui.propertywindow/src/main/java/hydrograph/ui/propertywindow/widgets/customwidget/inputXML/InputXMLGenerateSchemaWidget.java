@@ -17,6 +17,9 @@ import hydrograph.ui.propertywindow.property.ComponentMiscellaneousProperties;
 import hydrograph.ui.propertywindow.property.Property;
 import hydrograph.ui.propertywindow.propertydialog.PropertyDialogButtonBar;
 import hydrograph.ui.propertywindow.widgets.customwidgets.AbstractWidget;
+import hydrograph.ui.propertywindow.widgets.customwidgets.ELTFilePathWidget;
+import hydrograph.ui.propertywindow.widgets.customwidgets.TextBoxWithLabelWidget;
+import hydrograph.ui.propertywindow.widgets.customwidgets.config.TextBoxWithLableConfig;
 import hydrograph.ui.propertywindow.widgets.customwidgets.schema.ELTSchemaGridWidget;
 import hydrograph.ui.propertywindow.widgets.gridwidgets.basic.AbstractELTWidget;
 import hydrograph.ui.propertywindow.widgets.gridwidgets.basic.ELTDefaultButton;
@@ -58,17 +61,48 @@ public class InputXMLGenerateSchemaWidget extends AbstractWidget{
 			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				GenerateSchemaWizard generateSchemaWizard = new GenerateSchemaWizard(getComponent(),getSchemaWidget(),propertyDialogButtonBar);
+				String loopXPathData=getTextBoxData();
+				String filePathData=getFilePath();
+				GenerateSchemaWizard generateSchemaWizard = new GenerateSchemaWizard(getComponent(),getSchemaWidget(),propertyDialogButtonBar,
+						loopXPathData,filePathData);
 				WizardDialog dialog = new WizardDialog(generateSchemaButton.getShell(), generateSchemaWizard);
 				dialog.setMinimumPageSize(500,400); 
 				dialog.open();
 			}
-			
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				
 			}
 		});
+	}
+    private String getFilePath(){
+    	String textBoxData=null;
+		for(AbstractWidget widget:widgets){
+			if(ELTFilePathWidget.class.isAssignableFrom(widget.getClass())){
+				ELTFilePathWidget filePathWidget=(ELTFilePathWidget)widget;
+				textBoxData= filePathWidget.getTextBox().getText();
+				break;
+				
+			}
+			
+		}
+		return textBoxData;
+    }
+	private String getTextBoxData() {
+		String textBoxData=null;
+		for(AbstractWidget widget:widgets){
+			if(TextBoxWithLabelWidget.class.isAssignableFrom(widget.getClass())){
+				TextBoxWithLabelWidget textBoxWithLabelWidget=(TextBoxWithLabelWidget)widget;
+				TextBoxWithLableConfig textBoxWithLableConfig=textBoxWithLabelWidget.getWidgetConfig();
+				if(Messages.LOOP_XPATH_QUERY.equals(textBoxWithLableConfig.getName())){
+					textBoxData= textBoxWithLabelWidget.getTextBox().getText();
+					break;
+				}
+			}
+			
+		}
+		return textBoxData;
 	}
 
 	private ELTSchemaGridWidget getSchemaWidget() {

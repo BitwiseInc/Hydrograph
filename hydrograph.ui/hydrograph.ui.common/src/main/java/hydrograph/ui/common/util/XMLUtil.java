@@ -174,27 +174,27 @@ public class XMLUtil {
 		    }
 			return "";
 	 }
-	public List<GridRow> getSchemaFromXML(File schemaFile)
+	public List<GridRow> getSchemaFromXML(File schemaFile,String loopXPathQuery)
 				throws ParserConfigurationException, SAXException, IOException, JAXBException {
 			Document document = getDOMObject(schemaFile);
-			return intializeGridRowObject(document);
+			return intializeGridRowObject(document,loopXPathQuery);
 			
 	}
 	 
-	 private List<GridRow> intializeGridRowObject(Document document) {
+	 private List<GridRow> intializeGridRowObject(Document document,String loopXPathQuery) {
 			
 			org.w3c.dom.NodeList nodeList=document.getDocumentElement().getChildNodes();
 			for(int i=0;i<nodeList.getLength();i++){
 				Node currentNode = nodeList.item(i);
 				
 		        if (currentNode.getNodeType() == Node.ELEMENT_NODE){
-		        	return iterateChildNode(currentNode);
+		        	return iterateChildNode(currentNode,loopXPathQuery);
 		        } 
 			}
 			return null;
 	 }
 	 
-	 private List<GridRow> iterateChildNode(Node currentNode) {
+	 private List<GridRow> iterateChildNode(Node currentNode,String loopXPathQuery) {
 			List<GridRow> schemaRecords = new ArrayList<GridRow>();
 			org.w3c.dom.NodeList nodeList=currentNode.getChildNodes();
 			for(int i=0;i<nodeList.getLength();i++){
@@ -213,18 +213,24 @@ public class XMLUtil {
 		        	xPathGridRow.setScale("");
 		        	xPathGridRow.setScaleType(Integer.valueOf(Constants.DEFAULT_INDEX_VALUE_FOR_COMBOBOX));
 		        	xPathGridRow.setDescription("");
-		        	computeXPath(node,xPathGridRow,computedXpath,schemaRecords);
+		        	computeXPath(node,xPathGridRow,computedXpath,schemaRecords,loopXPathQuery);
 		        	
 		        }
 			}
 			return schemaRecords;
 		}
 	 
-	 private void computeXPath(Node node,XPathGridRow xPathGridRow,String computedXpath,List<GridRow> schemaRecords) {
+	 private void computeXPath(Node node,XPathGridRow xPathGridRow,String computedXpath,List<GridRow> schemaRecords,String loopXPathQuery) {
 			org.w3c.dom.NodeList nodeList=node.getChildNodes();
 			
 			if(!hasChild(node)){
 				xPathGridRow.setXPath(computedXpath+node.getNodeName());
+			
+				if(StringUtils.isNotBlank(loopXPathQuery)){
+					xPathGridRow.setAbsolutexPath(loopXPathQuery+Path.SEPARATOR+xPathGridRow.getXPath());
+				}else{
+					xPathGridRow.setAbsolutexPath(xPathGridRow.getXPath());
+				}
 				schemaRecords.add(xPathGridRow);
 			}else{
 				
@@ -234,14 +240,18 @@ public class XMLUtil {
 					
 					if(nod.getNodeType()==Node.ELEMENT_NODE){
 						XPathGridRow xPathGridRowChild=new XPathGridRow();
-						xPathGridRowChild.setFieldName(nod.getNodeName());
+						String fieldName=nod.getNodeName();
+						if(fieldName.contains(":")){
+							fieldName=fieldName.split(":")[1];
+						}
+						xPathGridRowChild.setFieldName(fieldName);
 			        	addDataTypeToGridRow(nod,xPathGridRowChild);
 			        	xPathGridRowChild.setDateFormat("");
 			        	xPathGridRowChild.setPrecision("");
 			        	xPathGridRowChild.setScale("");
 			        	xPathGridRowChild.setScaleType(Integer.valueOf(Constants.DEFAULT_INDEX_VALUE_FOR_COMBOBOX));
 			        	xPathGridRowChild.setDescription("");
-						computeXPath(nod,xPathGridRowChild,computedXpath,schemaRecords);
+						computeXPath(nod,xPathGridRowChild,computedXpath,schemaRecords,loopXPathQuery);
 					}
 					
 				}
@@ -268,7 +278,7 @@ public class XMLUtil {
 			return document;
 	 }
 	 
-		public List<GridRow> getSchemaFromXSD(String XSDFile) throws ParserConfigurationException, SAXException, IOException, JAXBException{
+		public List<GridRow> getSchemaFromXSD(String XSDFile,String loopXPathQuery) throws ParserConfigurationException, SAXException, IOException, JAXBException{
 			SchemaParser parser = new SchemaParser();
 			try{
 				Schema schema=parser.parse(XSDFile);
@@ -276,7 +286,7 @@ public class XMLUtil {
 				if(element==null){
 					return null;
 				}
-				return parseElementsOfRowTag(element);
+				return parseElementsOfRowTag(element,loopXPathQuery);
 			}
 			catch(Exception e){
 				createMessageBox(INVALID_XSD_FILE+e.getMessage(), Constants.ERROR, SWT.ERROR,Display.getCurrent().getActiveShell());
@@ -320,7 +330,7 @@ public class XMLUtil {
 			return complexType;
 		}
 		
-		private List<GridRow> parseElementsOfRowTag(com.predic8.schema.Element element) {
+		private List<GridRow> parseElementsOfRowTag(com.predic8.schema.Element element,String looXPathQuery) {
 			List<GridRow> schemaRecordList=new ArrayList<>();
 			ComplexType complexType=getComplexTypeOfElement(element.getSchema(), element);
 			if(complexType==null){
@@ -340,13 +350,14 @@ public class XMLUtil {
 				setDataTypeOfXPathGridRow(element2, xPathGridRowChild);
 				xPathGridRowChild.setPrecision("");
 				xPathGridRowChild.setDescription("");
-				computeXPath(element2,xPathGridRowChild,computedXpath,schemaRecordList);
+				computeXPath(element2,xPathGridRowChild,computedXpath,schemaRecordList,looXPathQuery);
 			}
 			return schemaRecordList;
 		}
 		
 		
-		 private void computeXPath(com.predic8.schema.Element element2,XPathGridRow xPathGridRow,String computedXpath,List<GridRow> schemaRecords) {
+		 private void computeXPath(com.predic8.schema.Element element2,XPathGridRow xPathGridRow,String computedXpath,List<GridRow> schemaRecords,
+				 String loopXPathQuery) {
 				ComplexType complexTypeOfInnerElements=getComplexTypeOfElement(element2.getSchema(),element2);
 				if(complexTypeOfInnerElements==null){
 					if(computedXpath.contains(element2.getName()+Path.SEPARATOR)){
@@ -354,6 +365,11 @@ public class XMLUtil {
 						
 					}
 					xPathGridRow.setXPath(computedXpath+element2.getName());
+					if(StringUtils.isNotBlank(loopXPathQuery)){
+						xPathGridRow.setAbsolutexPath(loopXPathQuery+Path.SEPARATOR+xPathGridRow.getXPath());
+					}else{
+						xPathGridRow.setAbsolutexPath(xPathGridRow.getXPath());
+					}
 					schemaRecords.add(xPathGridRow);
 				}
 				else{
@@ -369,7 +385,7 @@ public class XMLUtil {
 						setDataTypeOfXPathGridRow(element, xPathGridRowChild);
 						xPathGridRowChild.setPrecision("");
 						xPathGridRowChild.setDescription("");
-						computeXPath(element,xPathGridRowChild,computedXpath,schemaRecords);
+						computeXPath(element,xPathGridRowChild,computedXpath,schemaRecords,loopXPathQuery);
 						
 					}
 					

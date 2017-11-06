@@ -129,7 +129,6 @@ public class ExportXSDWidget extends AbstractWidget {
 		//TODO: Add in constant below message
 		String rowTag = getPropertyValue(ROW_TAG);
 		String rootElementName = getPropertyValue(ROOT_TAG);
-		
 		if (StringUtils.isBlank(rootElementName)) {
 			MessageDialog.openError(exportButton.getShell(), ERROR, Messages.ROOT_ELEMENT_NOT_FOUND_ERROR);
 			return;
@@ -138,7 +137,15 @@ public class ExportXSDWidget extends AbstractWidget {
 			MessageDialog.openError(exportButton.getShell(), ERROR, Messages.ROW_TAG_NOT_FOUND_ERROR);
 			return;
 		}
-
+		
+		if(rowTag.contains(":")){
+			rowTag=rowTag.split(":")[1];
+		}
+		if(rootElementName.contains(":")){
+			rootElementName=rootElementName.split(":")[1];
+			
+		}
+        
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		documentBuilderFactory.setNamespaceAware(true);
 		DocumentBuilder documentBuilder;
