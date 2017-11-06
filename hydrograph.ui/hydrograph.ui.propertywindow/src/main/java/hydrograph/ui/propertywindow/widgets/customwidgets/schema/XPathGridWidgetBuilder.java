@@ -17,10 +17,13 @@ package hydrograph.ui.propertywindow.widgets.customwidgets.schema;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.Text;
 
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.datastructure.property.XPathGridRow;
@@ -69,6 +72,13 @@ public class XPathGridWidgetBuilder extends GridWidgetCommonBuilder {
 		schemaGrid.setFieldName("DefaultField" + rowSequence);
 		schemaGrid.setDateFormat("");
 		schemaGrid.setXPath(schemaGrid.getFieldName());
+		Text loopXpathTextBox=(Text)tableViewer.getTable().getData();
+		if(StringUtils.isNotBlank(loopXpathTextBox.getText())){
+			schemaGrid.setAbsolutexPath(loopXpathTextBox.getText().trim()+Path.SEPARATOR+schemaGrid.getXPath());
+			
+		}else{
+			schemaGrid.setAbsolutexPath(schemaGrid.getXPath());
+		}
 		schemaGrid.setPrecision("");
 		schemaGrid.setScale("");
 		schemaGrid.setScaleType(Integer.valueOf(Constants.DEFAULT_INDEX_VALUE_FOR_COMBOBOX));
@@ -88,6 +98,12 @@ public class XPathGridWidgetBuilder extends GridWidgetCommonBuilder {
 			}
 			schemaGrid.setFieldName("DefaultField" + rowSequence++);
 			schemaGrid.setXPath(schemaGrid.getFieldName());
+			if(StringUtils.isNotBlank(loopXpathTextBox.getText())){
+				schemaGrid.setAbsolutexPath(loopXpathTextBox.getText().trim()+Path.SEPARATOR+schemaGrid.getXPath());
+				
+			}else{
+				schemaGrid.setAbsolutexPath(schemaGrid.getXPath());
+			}
 			numberOfRows--;
 		}while(numberOfRows>=-1);
  		

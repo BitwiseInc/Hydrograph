@@ -17,10 +17,14 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.Text;
 import org.slf4j.Logger;
 
 import hydrograph.ui.common.util.Constants;
@@ -31,8 +35,10 @@ import hydrograph.ui.datastructure.property.GridRow;
 import hydrograph.ui.datastructure.property.MixedSchemeGridRow;
 import hydrograph.ui.datastructure.property.XPathGridRow;
 import hydrograph.ui.logging.factory.LogFactory;
+import hydrograph.ui.propertywindow.messages.Messages;
 
 public class SchemaRowValidation{
+
 	private static final Logger logger = LogFactory.INSTANCE.getLogger(SchemaRowValidation.class);
 	private static final String NONE = "none";
 	private static final String REGULAR_EXPRESSION_FOR_NUMBER = "\\d+";
@@ -48,6 +54,7 @@ public class SchemaRowValidation{
 	private boolean invalidDateFormat = false;
 	private boolean invalidLength = false;
 	private boolean isRowInvalid;
+	private Table table;
 	
 	public static final SchemaRowValidation INSTANCE = new SchemaRowValidation();
 	
@@ -66,6 +73,7 @@ public class SchemaRowValidation{
 	 * 
 	 */
 	public void highlightInvalidRowWithRedColor(GridRow gridRow,TableItem item,Table table,String componentType ){ 
+		this.table=table;
 		if(item==null){
 			for(TableItem tableItem:table.getItems()){		
 		     setRedColorOnTableRowBasedOnInvalidData((GridRow)tableItem.getData(), componentType, tableItem);	
@@ -102,12 +110,37 @@ public class SchemaRowValidation{
 	
 	
 	private void validationCheckForXpathGridRow(GridRow gridRow,TableItem tableItem) {
-		if(StringUtils.isBlank(((XPathGridRow)gridRow).getXPath())){
+		XPathGridRow xPathGridRow=(XPathGridRow)gridRow;
+		String xPath=xPathGridRow.getXPath();
+		if(StringUtils.isBlank(xPath)){
 			setRedColor(tableItem);
+		}else{ 
+			checkIfXPathIsDuplicate();
 		}
-		else{
-			setBlackColor(tableItem);
+	}
+
+	private void checkIfXPathIsDuplicate() {
+		Text loopXpathQueryTextBox=(Text)table.getData();
+		String loopXPathQuery=loopXpathQueryTextBox.getText();
+		Set<Path> setToCheckDuplicates= new HashSet<Path>();
+		for(TableItem tableItem:table.getItems()){
+			Path xPathColumn=makeXPathAbsoluteIfNot(tableItem.getText(2), loopXPathQuery);
+			if(!setToCheckDuplicates.add(xPathColumn)){
+				tableItem.setData(Constants.ERROR_MESSAGE,Messages.X_PATH_IS_DUPLICATE);
+				setRedColor(tableItem);
+			}else{
+				tableItem.setData(Constants.ERROR_MESSAGE,"");
+				setBlackColor(tableItem);
+			}
+		}	
+	}
+	
+
+	private Path makeXPathAbsoluteIfNot(String xPath,String loopXPathQuery){
+		if(StringUtils.isNotBlank(loopXPathQuery) && !xPath.startsWith(loopXPathQuery)){
+			xPath=loopXPathQuery+Path.SEPARATOR+xPath;
 		}
+		return new Path(xPath);
 	}
 
 	private void validationCheckForBigDecimalAndDateDatatype(GridRow gridRow, String componentType, TableItem tableItem){

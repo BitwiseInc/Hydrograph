@@ -26,7 +26,25 @@ package hydrograph.ui.datastructure.property;
  */
 public class XPathGridRow extends GridRow {
 	private String xPath;
+	private String absolutexPath;
 	
+	
+	/**
+	 * @return the absolutexPath
+	 */
+	public String getAbsolutexPath() {
+		return absolutexPath;
+	}
+
+
+	/**
+	 * @param absolutexPath the absolutexPath to set
+	 */
+	public void setAbsolutexPath(String absolutexPath) {
+		this.absolutexPath = absolutexPath;
+	}
+
+
 	/**
 	 * @return the xpath
 	 */
@@ -55,6 +73,7 @@ public class XPathGridRow extends GridRow {
 		schemaGrid.setPrecision(getPrecision());
 		schemaGrid.setDescription(getDescription());
 		schemaGrid.setXPath(xPath);
+		schemaGrid.setAbsolutexPath(absolutexPath);
 		return schemaGrid;
 	}
 }

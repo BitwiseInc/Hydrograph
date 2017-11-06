@@ -411,5 +411,6 @@ public class Constants {
 	public static final String FAIL_IF_EXISTS = "FailIfFileExists";
 	public static final String IS_FIELD = "Is Field";
 	public static final String OUTPUT_EXCEL = "OFExcel";
+	public static final String ERROR_MESSAGE = "ErrorMessage";
 }
 

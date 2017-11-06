@@ -484,6 +484,7 @@ public class Messages extends NLS {
 	public static String ROOT_ELEMENT_NOT_FOUND_ERROR;
 	public static String ROW_TAG_NOT_FOUND_ERROR;
 	public static String XSD_EXPORTED;
+	public static String X_PATH_IS_DUPLICATE;
 	
 	public static String GENERATE_SCHEMA_LABEL;
 	public static String GENERATE_SCHEMA_BUTTON_LABEL;

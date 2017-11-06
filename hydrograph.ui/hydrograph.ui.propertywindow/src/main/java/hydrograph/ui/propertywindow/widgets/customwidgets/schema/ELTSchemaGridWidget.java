@@ -837,7 +837,12 @@ public abstract class ELTSchemaGridWidget extends AbstractWidget {
 			 }else if (this.getClass().equals(XPathSchemaGridWidget.class)) {
 				
 				 for (FixedWidthGridRow gridRow : fixedWidthGridRows) {
-					schema.getGridRow().add(SchemaPropagation.INSTANCE.convertFixedWidthSchemaToxPathSchemaGridRow(gridRow));
+					Text loopXpathTextBox=(Text)table.getData();
+					XPathGridRow xPathGridRow=SchemaPropagation.INSTANCE.convertFixedWidthSchemaToxPathSchemaGridRow(gridRow);
+					if(StringUtils.isNotBlank(loopXpathTextBox.getText())){
+						xPathGridRow.setAbsolutexPath(loopXpathTextBox.getText().trim()+Path.SEPARATOR+xPathGridRow.getXPath());
+					}
+					schema.getGridRow().add(xPathGridRow);
 				 }
 				 
 			 }
@@ -889,6 +894,14 @@ public abstract class ELTSchemaGridWidget extends AbstractWidget {
 							 xpathGridRow=new XPathGridRow();
 							 xpathGridRow.updateBasicGridRow(gridRow);
 							 xpathGridRow.setXPath(gridRow.getFieldName());
+							 xpathGridRow.setAbsolutexPath(gridRow.getFieldName());
+							 Text loopXpathTextBox=(Text)table.getData();
+							 if(StringUtils.isNotBlank(loopXpathTextBox.getText())){
+								xpathGridRow.setAbsolutexPath(loopXpathTextBox.getText().trim()+Path.SEPARATOR+xpathGridRow.getXPath());
+							 }
+							 else{
+									xpathGridRow.setAbsolutexPath(xpathGridRow.getXPath());
+							 }
 							 schemaGridRowList.add(xpathGridRow);
 					 	 }
 						 else {

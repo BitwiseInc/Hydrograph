@@ -21,6 +21,7 @@ import java.util.TreeMap;
 import javax.xml.namespace.QName;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.core.runtime.Path;
 import org.slf4j.Logger;
 
 import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
@@ -118,7 +119,11 @@ public class InputXmlUiConverter extends InputUiConverter{
 		container.getComponentNextNameSuffixes().put(name_suffix, 0);
 		container.getComponentNames().add(xmlFile.getId());
 		uiComponent.setProperties(propertyMap);
-		
+		if(StringUtils.isNotBlank(absolutePath)){
+			updateAbsolutePathToEachGridRow(absolutePath
+					,(Schema)propertyMap.get(PropertyNameConstants.SCHEMA.value()));
+			
+		}
 	}
 	
 	private Object getCharSet() {
@@ -159,6 +164,7 @@ public class InputXmlUiConverter extends InputUiConverter{
 					XPathGridRow xPathGridRow = new XPathGridRow();
 					converterUiHelper.getCommonSchema(xPathGridRow, typeBaseField);
 					xPathGridRow.setXPath(typeBaseField.getOtherAttributes().get(new QName(Constants.ABSOLUTE_OR_RELATIVE_XPATH_QNAME)));
+					xPathGridRow.setAbsolutexPath(StringUtils.isNotBlank(xPathGridRow.getXPath())?xPathGridRow.getXPath():"");
 					gridRowList.add(xPathGridRow);
 					schema.setGridRow(gridRowList);
 					schema.setIsExternal(false);
@@ -184,4 +190,14 @@ public class InputXmlUiConverter extends InputUiConverter{
 		}
 		return runtimeMap;
 	}
+	
+	private void updateAbsolutePathToEachGridRow(String loopXPath, Schema schema) {
+		List<GridRow> gridRows=schema.getGridRow();
+		gridRows.stream().forEach(gridRow->{
+			XPathGridRow xPathGridRow= (XPathGridRow)(gridRow);
+			xPathGridRow.setAbsolutexPath(loopXPath.trim()+Path.SEPARATOR+xPathGridRow.getAbsolutexPath());
+		});
+		
+	}
+	
 }

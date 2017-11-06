@@ -212,8 +212,15 @@ public class ExportXSDWidget extends AbstractWidget {
 						isRelative = true;
 					}
 					String[] elements = xPathGridRow.getXPath().split("/");
-					Element elementToAdd = getElement(document, elements[elements.length-1],
+					String elementName=elements[elements.length-1];
+					if( elements[elements.length-1].contains(":")){
+						elementName=elementName.split(":")[1];
+						elementName=elementName.trim();
+					}
+					
+					Element elementToAdd = getElement(document, elementName,
 							getXSDType(xPathGridRow.getDataTypeValue()));
+					
 					
 					Element parent = null;
 					if(isRelative) {
@@ -225,7 +232,10 @@ public class ExportXSDWidget extends AbstractWidget {
 
 
 					for (String elementTagName : elements) {
-
+						if( elementTagName.contains(":")){
+							elementTagName=elementTagName.split(":")[1];
+							elementTagName=elementTagName.trim();
+						}
 						if (!StringUtils.isBlank(elementTagName)) {
 
 							String complexTypeFirtLetter = elementTagName.substring(0, 1).toUpperCase();

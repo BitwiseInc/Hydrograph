@@ -32,6 +32,8 @@ import hydrograph.ui.propertywindow.property.ComponentMiscellaneousProperties;
 import hydrograph.ui.propertywindow.property.Property;
 import hydrograph.ui.propertywindow.propertydialog.PropertyDialogButtonBar;
 import hydrograph.ui.propertywindow.widgets.customwidgets.AbstractWidget;
+import hydrograph.ui.propertywindow.widgets.customwidgets.TextBoxWithLabelWidget;
+import hydrograph.ui.propertywindow.widgets.customwidgets.config.TextBoxWithLableConfig;
 import hydrograph.ui.propertywindow.widgets.gridwidgets.container.AbstractELTContainerWidget;
 import hydrograph.ui.propertywindow.widgets.listeners.grid.schema.ELTCellEditorFieldValidator;
 import hydrograph.ui.propertywindow.widgets.utility.GridWidgetCommonBuilder;
@@ -43,7 +45,6 @@ import hydrograph.ui.propertywindow.widgets.utility.WidgetUtility;
  * @author Bitwise
  */
 public class XPathSchemaGridWidget extends ELTSchemaGridWidget {
-
 	/**
 	 * Instantiates a new ELT XPath schema grid widget.
 	 * 
@@ -71,7 +72,7 @@ public class XPathSchemaGridWidget extends ELTSchemaGridWidget {
 		columns.put(DATEFORMAT, 5);
 		columns.put(PRECISION, 6);
 		columns.put(FIELD_DESCRIPTION, 7);
-		
+	
 		return columns;
 		//sequence: FIELDNAME, DATATYPE, XPATH, SCALE, SCALE_TYPE, DATEFORMAT, PRECISION, FIELD_DESCRIPTION
 	}
@@ -152,7 +153,6 @@ public class XPathSchemaGridWidget extends ELTSchemaGridWidget {
 	}
 	
 	protected XPathSchemaGridCellModifier getCellModifier() {
-        
 		return new XPathSchemaGridCellModifier(this,tableViewer);
 	}
 
@@ -182,13 +182,23 @@ public class XPathSchemaGridWidget extends ELTSchemaGridWidget {
 	}
 
 	public void validateInternalSchemaPropogatedData(Schema propogatedSchema)
-	{
+	{	
 		showHideErrorSymbol(validateAgainstValidationRule(propogatedSchema));
 		
 	}
 		
 	@Override
 	public void addModifyListener(final Property property,  ArrayList<AbstractWidget> widgetList) {
-	      attachListener();
+		for(AbstractWidget widget:widgetList){
+			if(widget instanceof TextBoxWithLabelWidget){
+				TextBoxWithLabelWidget textBoxWithLabelWidget=((TextBoxWithLabelWidget)widget);
+				TextBoxWithLableConfig textBoxWithLableConfig=textBoxWithLabelWidget.getWidgetConfig();
+				if(Messages.LOOP_XPATH_QUERY.equals(textBoxWithLableConfig.getName())){
+					table.setData(textBoxWithLabelWidget.getTextBox());
+					break;
+				}
+			}
+		}
+	    attachListener();
 	}
 }

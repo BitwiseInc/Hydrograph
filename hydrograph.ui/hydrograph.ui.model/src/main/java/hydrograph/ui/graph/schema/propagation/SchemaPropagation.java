@@ -530,7 +530,7 @@ public class SchemaPropagation {
 	 * @param gridRow
 	 * @return
 	 */
-	public GridRow convertFixedWidthSchemaToxPathSchemaGridRow(FixedWidthGridRow gridRow) {
+	public XPathGridRow convertFixedWidthSchemaToxPathSchemaGridRow(FixedWidthGridRow gridRow) {
 		
 		XPathGridRow xPathGridRow = new XPathGridRow();
 		xPathGridRow.setDataType(gridRow.getDataType());
@@ -543,6 +543,7 @@ public class SchemaPropagation {
 		xPathGridRow.setPrecision(gridRow.getPrecision());
 		xPathGridRow.setDescription(gridRow.getDescription());
 		xPathGridRow.setXPath(gridRow.getFieldName());
+		xPathGridRow.setAbsolutexPath(gridRow.getFieldName());
 		return xPathGridRow;
 	}
 	

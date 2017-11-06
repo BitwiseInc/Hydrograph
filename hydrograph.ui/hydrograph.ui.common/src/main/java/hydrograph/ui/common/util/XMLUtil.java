@@ -201,7 +201,11 @@ public class XMLUtil {
 				Node node = nodeList.item(i);
 				if (node.getNodeType() == Node.ELEMENT_NODE){
 					XPathGridRow xPathGridRow=new XPathGridRow();
-					xPathGridRow.setFieldName(node.getNodeName());
+					String fieldName=node.getNodeName();
+					if(fieldName.contains(":")){
+						fieldName=fieldName.split(":")[1];
+					}
+					xPathGridRow.setFieldName(fieldName);
 		        	addDataTypeToGridRow(node,xPathGridRow);
 		        	String computedXpath="";
 		        	xPathGridRow.setDateFormat("");

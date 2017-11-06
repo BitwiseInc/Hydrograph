@@ -13,10 +13,12 @@
 package hydrograph.ui.propertywindow.widgets.customwidgets.schema;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.viewers.ICellModifier;
-import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.Text;
 
 import hydrograph.ui.datastructure.property.XPathGridRow;
 import hydrograph.ui.propertywindow.widgets.utility.DataType;
@@ -30,17 +32,19 @@ import hydrograph.ui.propertywindow.widgets.utility.SchemaRowValidation;
  */
 
 public class XPathSchemaGridCellModifier implements ICellModifier {
-	private Viewer viewer;
+	private TableViewer viewer;
     private XPathSchemaGridWidget xPathSchemGridWidget;
+   
 	/**
 	 * Instantiates a new schema grid cell modifier.
 	 * 
 	 * @param viewer
 	 *            the viewer
 	 */
-	public XPathSchemaGridCellModifier(XPathSchemaGridWidget eltGenericSchemaGridWidget, Viewer viewer) {
+	public XPathSchemaGridCellModifier(XPathSchemaGridWidget eltGenericSchemaGridWidget, TableViewer viewer) {
 		this.viewer = viewer;
 		this.xPathSchemGridWidget=eltGenericSchemaGridWidget;
+		
 	}
 
 
@@ -130,7 +134,18 @@ public class XPathSchemaGridCellModifier implements ICellModifier {
 			xPathGridRow.setDataTypeValue(GeneralGridWidgetBuilder.getDataTypeValue()[(Integer)value]);
 		}
 		else if (XPathSchemaGridWidget.XPATH.equals(property)){
-			xPathGridRow.setXPath(((String) value).trim()); 
+			String xPath=((String) value).trim();
+			xPathGridRow.setXPath(xPath);
+			 Text loopXpathTextBox=(Text)viewer.getTable().getData();
+			if(StringUtils.isNotBlank(loopXpathTextBox.getText())){
+				if(!xPathGridRow.getAbsolutexPath().startsWith(loopXpathTextBox.getText())){
+					xPathGridRow.setAbsolutexPath(loopXpathTextBox.getText().trim()+Path.SEPARATOR+xPath);
+				}else{
+					xPathGridRow.setAbsolutexPath(xPath);
+				}
+			}else{
+				xPathGridRow.setAbsolutexPath(xPath);
+			}
 		}
 		else if (XPathSchemaGridWidget.DATEFORMAT.equals(property)){
 			xPathGridRow.setDateFormat(((String) value).trim()); 
