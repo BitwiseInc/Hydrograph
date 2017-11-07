@@ -15,7 +15,7 @@ package hydrograph.engine.spark.components
 import hydrograph.engine.core.component.entity.InputRDBMSEntity
 import hydrograph.engine.spark.components.base.InputComponentBase
 import hydrograph.engine.spark.components.platform.BaseComponentParams
-import hydrograph.engine.spark.components.utils.{DbTableUtils, SchemaCreator, SchemaMisMatchException}
+import hydrograph.engine.spark.components.utils.{DbTableUtils, SchemaCreator, SchemaMisMatchException, SchemaUtils}
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.types._
 import org.slf4j.{Logger, LoggerFactory}
@@ -108,7 +108,7 @@ class InputOracleComponent(inputRDBMSEntity: InputRDBMSEntity, iComponentsParams
     try {
       val df = createJdbcDataframe(numPartitions)
 
-      compareSchema(getSchema(schemaField), getMappedSchema(df.schema))
+      new SchemaUtils().compareSchema(getSchema(schemaField), getMappedSchema(df.schema))
 
       val key = inputRDBMSEntity.getOutSocketList.get(0).getSocketId
       Map(key -> df)
@@ -139,35 +139,4 @@ class InputOracleComponent(inputRDBMSEntity: InputRDBMSEntity, iComponentsParams
     if (datatype.matches("[(DECIMAL(]+[0-5],0[)]")) IntegerType else if (datatype.matches("[(DECIMAL(]+([6-9]|10),0[)]")) IntegerType else if (datatype.matches("[(DECIMAL(]+(1[1-9]),0[)]")) LongType else null
   }
 
-  /*
- * This will compare two schema and check whether @readSchema is exist in @mdSchema
- * @param readSchema schema from input
- * @param mdSchema MetaData schema from metadata
- * @return Boolean true or false(Exception)
- */
-  def compareSchema(readSchema: List[StructField], mdSchema: List[StructField]): Boolean = {
-
-    var dbDataType: DataType = null
-    var dbFieldName: String = null
-    readSchema.foreach(f = inSchema => {
-      var fieldExist = mdSchema.exists(ds => {
-        dbDataType = ds.dataType
-        dbFieldName = ds.name
-        ds.name.equalsIgnoreCase(inSchema.name)
-      })
-      if (fieldExist) {
-        if (!(inSchema.dataType.typeName.equalsIgnoreCase("Float") || inSchema.dataType.typeName.equalsIgnoreCase("double")))
-          if (!(inSchema.dataType.typeName.equalsIgnoreCase(dbDataType.typeName))) {
-            LOG.error("Field '" + inSchema.name + "', data type does not match expected type:" + dbDataType + ", got type:" + inSchema.dataType)
-            throw SchemaMisMatchException("Field '" + inSchema.name + "' data type does not match expected type:" + dbDataType + ", got type:" + inSchema.dataType)
-          }
-      }
-      else {
-        LOG.error("Field '" + inSchema.name + "' does not exist in metadata")
-        throw SchemaMisMatchException("Input schema does not match with metadata schema, "
-          + "Field '" + inSchema.name + "' does not exist in metadata")
-      }
-    })
-    true
-  }
 }
