@@ -344,11 +344,14 @@ public class ExportXSDWidget extends AbstractWidget {
 
 		case "java.lang.Decimal":
 		case "java.math.BigDecimal":
-		case "java.lang.Float":
-		case "java.lang.Double":
-		case "java.lang.Long":
 			return "xs:decimal";
-
+		case "java.lang.Float":
+			return "xs:float";
+		case "java.lang.Double":
+			return "xs:double";
+		case "java.lang.Long":
+			return "xs:long";
+			
 		case "java.lang.Integer":
 		case "java.lang.Short":
 			return "xs:integer";

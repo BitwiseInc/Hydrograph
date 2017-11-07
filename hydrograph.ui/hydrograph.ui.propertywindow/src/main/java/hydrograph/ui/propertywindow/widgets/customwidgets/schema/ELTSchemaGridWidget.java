@@ -1405,7 +1405,7 @@ public abstract class ELTSchemaGridWidget extends AbstractWidget {
 
 		GridRowLoader gridRowLoader = new GridRowLoader(gridRowType, schemaFile);
 
-		schemaGridRowListToImport = gridRowLoader.importGridRowsFromXML(helper);
+		schemaGridRowListToImport = gridRowLoader.importGridRowsFromXML(helper,tableViewer.getTable());
 
 		if (schemaGridRowListToImport != null) {
 

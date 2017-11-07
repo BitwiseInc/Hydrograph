@@ -35,11 +35,14 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.Text;
 import org.slf4j.Logger;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -97,8 +100,8 @@ public class GridRowLoader {
 	 * The method import schema rows from schema file into schema grid.
 	 * 
 	 */
-	public List<GridRow> importGridRowsFromXML(ListenerHelper helper){
-
+	public List<GridRow> importGridRowsFromXML(ListenerHelper helper,Table table){
+		
 		List<GridRow> schemaGridRowListToImport = null;
 		
 		ELTGridDetails gridDetails = (ELTGridDetails)helper.get(HelperType.SCHEMA_GRID);
@@ -155,9 +158,18 @@ public class GridRowLoader {
 						}	
 					}else if(Messages.XPATH_GRID_ROW.equals(gridRowType)){
 						for (Field field : fieldsList) {
+							Text loopXPathData=null;
+							if(table.getData()!=null && Text.class.isAssignableFrom(table.getData().getClass())){
+								loopXPathData=(Text)table.getData();
+							}
 							XPathGridRow xPathGridRow = new XPathGridRow();
 							populateCommonFields(xPathGridRow, field);
 							xPathGridRow.setXPath(field.getAbsoluteOrRelativeXpath());
+							if(loopXPathData!=null && StringUtils.isNotBlank(loopXPathData.getText())){
+								xPathGridRow.setAbsolutexPath(loopXPathData.getText()+Path.SEPARATOR+xPathGridRow.getXPath());
+							}else{
+								xPathGridRow.setAbsolutexPath(xPathGridRow.getXPath());
+							}
 							addRowToList(gridDetails, grids, xPathGridRow, schemaGridRowListToImport);
 						}	
 					}else if(Messages.MIXEDSCHEME_GRID_ROW.equals(gridRowType)){
