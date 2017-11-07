@@ -63,12 +63,12 @@ class FlowBuilder(runtimeContext: RuntimeContext, hydrographListener: Hydrograph
       val adapterBase: AdapterBase = runtimeContext.adapterFactory.getAdapterMap().get(compID).get
 
 
-      if (adapterBase.isInstanceOf[InputAdatperBase]) {
+      if (adapterBase.isInstanceOf[InputAdapterBase]) {
         baseComponentParams = ComponentParameterBuilder(compID, runtimeContext, outLinkMap, new BaseComponentParams())
           .setSparkSession(runtimeContext.sparkSession).build()
 
         adapterBase.createComponent(baseComponentParams)
-        val inputDataFrame = adapterBase.asInstanceOf[InputAdatperBase].getComponent().createComponent()
+        val inputDataFrame = adapterBase.asInstanceOf[InputAdapterBase].getComponent().createComponent()
         setCacheLevel(extractRuntimeProperties(compID, runtimeContext.hydrographJob.getJAXBObject), inputDataFrame)
         outLinkMap += (compID -> inputDataFrame)
       }
