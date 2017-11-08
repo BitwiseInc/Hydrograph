@@ -91,7 +91,7 @@ BaseComponentParams) extends SparkFlow with Serializable {
       var tempParent: String = ""
       xpathArray.zipWithIndex.foreach(element => {
         nodeList += Node(element._1, tempParent, element._2)
-        tempParent = element._1
+        tempParent += "/" + element._1
       })
     })
 
@@ -115,7 +115,7 @@ BaseComponentParams) extends SparkFlow with Serializable {
       val filteredNodesAtLevelMinusOne = nodeList.filter(n => n.level == (l - 1))
 
       filteredNodesAtLevelMinusOne.foreach(n => {
-        val filteredStructs = structsList.filter(p => p._2 == n.element)
+        val filteredStructs = structsList.filter(p => p._2 == n.parent + "/" + n.element)
 
         if (filteredStructs.nonEmpty) {
 
@@ -149,7 +149,7 @@ BaseComponentParams) extends SparkFlow with Serializable {
           }
 
           for (node <- nodeList) {
-            if (node.element == n.element) {
+            if (node.element == n.element && node.parent == n.parent) {
               node.columnExpr = tempStruct
             }
           }
