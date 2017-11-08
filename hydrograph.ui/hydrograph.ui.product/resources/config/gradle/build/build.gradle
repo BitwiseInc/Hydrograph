@@ -299,11 +299,13 @@ task executeLocalJob(dependsOn: ['build', 'classes'], type: JavaExec) {
     if(project.hasProperty('localjob') && !project.hasProperty('debugJobXML') ){
         def mainClassName = hydrographExecution
         def transformFiles = files { file(project.libsDir.path).listFiles() }
+        def customJars = files { file('lib').listFiles() }
+        def customJarsProperties = files('resources')
         println "determineExecutionType: Executing Local Job"
         main = mainClassName
         standardOutput = System.out
         errorOutput = System.err
-        classpath += transformFiles + configurations.compile
+        classpath += customJarsProperties + customJars + transformFiles + configurations.compile
         args=getArgsForRunJob("ExecuteLocalRun")
     }
 }
@@ -326,11 +328,13 @@ task executeDebugLocal (dependsOn: ['build', 'classes'], type: JavaExec) {
     if (project.hasProperty('localjob') && project.hasProperty('debugJobXML')){
         def mainClassName = hydrographExecution
         def transformFiles = files { file(project.libsDir.path).listFiles() }
+        def customJars = files { file('lib').listFiles() }
+        def customJarsProperties = files('resources')
 		println "determineExecutionType: Executing Local Job with View Data Enabled"
         main = mainClassName
         standardOutput = System.out
         errorOutput = System.err
-        classpath += transformFiles + configurations.compile
+        classpath += customJarsProperties + customJars + transformFiles + configurations.compile
         args=getArgsForRunJob("ExecuteLocalDebugRun")
     }
 }
