@@ -15,6 +15,7 @@ package hydrograph.engine.core.component.generator;
 import hydrograph.engine.core.component.entity.OutputFileXMLEntity;
 import hydrograph.engine.core.component.entity.utils.OutputEntityUtils;
 import hydrograph.engine.core.component.generator.base.OutputComponentGeneratorBase;
+import hydrograph.engine.jaxb.commontypes.TrueFalse;
 import hydrograph.engine.jaxb.commontypes.TypeBaseComponent;
 import hydrograph.engine.jaxb.outputtypes.XmlFile;
 import org.slf4j.Logger;
@@ -55,6 +56,7 @@ public class OutputFileXMLEntityGenerator extends OutputComponentGeneratorBase {
         outputFileXMLEntity.setPath(jaxbOutputFileXML.getPath().getUri());
         outputFileXMLEntity.setRootTag(jaxbOutputFileXML.getRootTag().getValue());
         outputFileXMLEntity.setRowTag(jaxbOutputFileXML.getRowTag().getValue());
+        outputFileXMLEntity.setAbsoluteXPath(jaxbOutputFileXML.getAbsoluteXPath().getValue());
         outputFileXMLEntity.setSafe(
                 jaxbOutputFileXML.getSafe() != null ? jaxbOutputFileXML.getSafe().isValue() : false);
         outputFileXMLEntity.setCharset(jaxbOutputFileXML.getCharset() != null
@@ -65,6 +67,11 @@ public class OutputFileXMLEntityGenerator extends OutputComponentGeneratorBase {
                 OutputEntityUtils.extractRuntimeProperties(jaxbOutputFileXML.getRuntimeProperties()));
         outputFileXMLEntity.setStrict(
                 jaxbOutputFileXML.getStrict() != null ? jaxbOutputFileXML.getStrict().isValue() : true);
+        if (jaxbOutputFileXML.getOverWrite() != null
+                && (TrueFalse.FALSE).equals(jaxbOutputFileXML.getOverWrite().getValue()))
+            outputFileXMLEntity.setOverWrite(false);
+        else
+            outputFileXMLEntity.setOverWrite(true);
     }
 
     @Override

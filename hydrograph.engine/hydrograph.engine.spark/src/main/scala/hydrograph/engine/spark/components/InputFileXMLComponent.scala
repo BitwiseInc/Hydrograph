@@ -34,7 +34,7 @@ class InputFileXMLComponent (iFileXMLEntity: InputFileXMLEntity, iComponentsPara
 
   def flattenSchema(schema: StructType, prefix: String = null) : Array[Column] = {
     schema.fields.flatMap(f => {
-      val colName = if (prefix == null) f.name else (prefix + "." + f.name)
+      val colName = if (prefix == null) f.name else prefix + "." + f.name
 
       f.dataType match {
         case st: StructType => flattenSchema(st, colName)
@@ -58,9 +58,9 @@ class InputFileXMLComponent (iFileXMLEntity: InputFileXMLEntity, iComponentsPara
     LOG.trace("In method createComponent()")
 
     val schemaCreator = SchemaCreator(iFileXMLEntity)
-    val writeMode:String= iFileXMLEntity.asInstanceOf[InputFileXMLEntity].isStrict match {
-      case x if(x) => "FAILFAST"
-      case x if(!x) => "PERMISSIVE"
+    val readMode:String= iFileXMLEntity.asInstanceOf[InputFileXMLEntity].isStrict match {
+      case true => "FAILFAST"
+      case false => "PERMISSIVE"
     }
 
     try {
@@ -69,7 +69,8 @@ class InputFileXMLComponent (iFileXMLEntity: InputFileXMLEntity, iComponentsPara
         .option("rowTag", iFileXMLEntity.getRowTag)
         .option("rootTag", iFileXMLEntity.getRootTag)
         .option("componentId",iFileXMLEntity.getComponentId)
-        .option("mode", writeMode)
+        .option("mode", readMode)
+        .option("safe", iFileXMLEntity.isSafe)
         .option("dateFormats", schemaCreator.getDateFormats)
         .schema(schemaCreator.makeSchema)
         .format("hydrograph.engine.spark.datasource.xml")
@@ -88,12 +89,9 @@ class InputFileXMLComponent (iFileXMLEntity: InputFileXMLEntity, iComponentsPara
         + " rootTag as " + iFileXMLEntity.getRootTag
         + " absoluteXPath as " + iFileXMLEntity.getAbsoluteXPath
         + " at Path: " + iFileXMLEntity.getPath)
-     // Map(key -> df)
-
 
       val xpathAndFieldNamesMap=getNamesOfFields()
       val flattenedSchema = flattenSchema(df.schema)
-//      val renamedCols = flattenedSchema.map(name => new Column(name.toString()).as(name.toString().replace(".","_")))
       val renamedCols = flattenedSchema.map(name => new Column(name.toString()).as(xpathAndFieldNamesMap.get(name.toString()).get))
       val df_new: DataFrame = df.select(renamedCols:_*)
 

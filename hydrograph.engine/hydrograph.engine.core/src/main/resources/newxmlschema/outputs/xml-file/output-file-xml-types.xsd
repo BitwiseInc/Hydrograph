@@ -57,6 +57,8 @@
 				<xs:sequence>
 					<xs:element name="inSocket" type="type-output-xml-in-socket"
 						minOccurs="1" maxOccurs="1" />
+					<xs:element name="overWrite" type="cmn:type-true-false"
+								minOccurs="0" maxOccurs="1" />
 					<xs:element name="runtimeProperties" type="cmn:type-properties"
 						minOccurs="0" maxOccurs="1" />
 				</xs:sequence>

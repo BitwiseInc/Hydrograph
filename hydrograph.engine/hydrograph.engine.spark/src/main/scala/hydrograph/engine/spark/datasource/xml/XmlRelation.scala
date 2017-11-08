@@ -90,6 +90,8 @@ case class XmlRelation protected[spark] (
         fs.delete(filesystemPath, true)
       } catch {
         case e: IOException =>
+          logger.error(s"Unable to clear output directory ${filesystemPath.toString} prior"
+            + s" to INSERT OVERWRITE a XML table:\n${e.toString}",e)
           throw new IOException(
             s"Unable to clear output directory ${filesystemPath.toString} prior"
               + s" to INSERT OVERWRITE a XML table:\n${e.toString}",e)
