@@ -60,6 +60,13 @@
 			<tns:validator>NON_EMPTY_STRING_VALIDATOR</tns:validator>
 		</tns:property>
 		
+		<tns:property dataType="string" name="GenerateSchema"
+			renderer="XML_GENERATE_SCHEMA_WIDGET" type="USER" group="GENERAL"
+			subGroup="CONFIGURATION" showAsTooltip="TRUE" tooltipDataType="TEXT"
+			usage="REQUIRED" propertyHelpText="Will be added soon.">
+		</tns:property>
+		
+		
 		<tns:property dataType="boolean" name="safe" value="False" renderer="SAFE_PROPERTY_WIDGET" type="USER"
 			group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="FALSE" tooltipDataType="NONE"
 			usage="OPTIONAL" propertyHelpText="When True, allows the input fields to pass \nevaluation despite of Data type mismatch.">
@@ -70,13 +77,6 @@
 			type="USER" group="GENERAL" subGroup="CONFIGURATION" showAsTooltip="FALSE" tooltipDataType="NONE"
 			usage="REQUIRED" propertyHelpText="Denotes the encoding system followed by the input file.">
 			<tns:validator>NON_BLANK_STRING_VALIDATOR</tns:validator>
-		</tns:property>
-		
-		<tns:property dataType="string" group="GENERAL" subGroup="CONFIGURATION" name="strict" value="True"
-			renderer="STRICT_CLASS_WIDGET" type="USER" showAsTooltip="FALSE" tooltipDataType="NONE"
-			usage="OPTIONAL" propertyHelpText="When True, validates the Record Structure \nlike no. of fields, 
-			length of record, scale \nas specified by the user.">
-			<tns:validator>BOOLEAN_OR_PARAMETER_VALIDATOR</tns:validator>
 		</tns:property>
 		
 		<tns:property dataType="string" name="runtime_properties" renderer="RUNTIME_PROPERTIES_WIDGET"

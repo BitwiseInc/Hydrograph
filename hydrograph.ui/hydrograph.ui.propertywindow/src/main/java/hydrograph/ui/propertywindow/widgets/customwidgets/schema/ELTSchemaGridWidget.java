@@ -834,6 +834,17 @@ public abstract class ELTSchemaGridWidget extends AbstractWidget {
 				 for (FixedWidthGridRow gridRow : fixedWidthGridRows) {
 					 schema.getGridRow().add(SchemaPropagation.INSTANCE.convertFixedWidthSchemaToSchemaGridRow(gridRow));
 				 }
+			 }else if (this.getClass().equals(XPathSchemaGridWidget.class)) {
+				
+				 for (FixedWidthGridRow gridRow : fixedWidthGridRows) {
+					Text loopXpathTextBox=(Text)table.getData();
+					XPathGridRow xPathGridRow=SchemaPropagation.INSTANCE.convertFixedWidthSchemaToxPathSchemaGridRow(gridRow);
+					if(StringUtils.isNotBlank(loopXpathTextBox.getText())){
+						xPathGridRow.setAbsolutexPath(loopXpathTextBox.getText().trim()+Path.SEPARATOR+xPathGridRow.getXPath());
+					}
+					schema.getGridRow().add(xPathGridRow);
+				 }
+				 
 			 }
 			 applySchemaFromPropagatedSchemaOnPull(schema,fixedWidthGridRows);
 		 }
@@ -872,23 +883,37 @@ public abstract class ELTSchemaGridWidget extends AbstractWidget {
 				 if (!schemaGridRowList.contains(gridRow)){
 					 GridRow newGridRow;
 					 FixedWidthGridRow fixedWidthGridRow;
+					 XPathGridRow xpathGridRow;
 					 try {
 						 if (Messages.FIXEDWIDTH_GRID_ROW.equals(gridRowType)){												
-						 fixedWidthGridRow = new FixedWidthGridRow();
-						 fixedWidthGridRow.updateBasicGridRow(gridRow);
-						 schemaGridRowList.add(fixedWidthGridRow);
-					 }else {
-						 newGridRow = (GridRow) Class.forName(gridRow.getClass().getCanonicalName()).getDeclaredConstructor().newInstance();
-						 newGridRow.updateBasicGridRow(gridRow);
-						 schemaGridRowList.add(newGridRow);
-						}
+							 fixedWidthGridRow = new FixedWidthGridRow();
+							 fixedWidthGridRow.updateBasicGridRow(gridRow);
+							 schemaGridRowList.add(fixedWidthGridRow);
+						 }
+						 else if(Messages.XPATH_GRID_ROW.equals(gridRowType)){
+							 xpathGridRow=new XPathGridRow();
+							 xpathGridRow.updateBasicGridRow(gridRow);
+							 xpathGridRow.setXPath(gridRow.getFieldName());
+							 xpathGridRow.setAbsolutexPath(gridRow.getFieldName());
+							 Text loopXpathTextBox=(Text)table.getData();
+							 if(StringUtils.isNotBlank(loopXpathTextBox.getText())){
+								xpathGridRow.setAbsolutexPath(loopXpathTextBox.getText().trim()+Path.SEPARATOR+xpathGridRow.getXPath());
+							 }
+							 else{
+									xpathGridRow.setAbsolutexPath(xpathGridRow.getXPath());
+							 }
+							 schemaGridRowList.add(xpathGridRow);
+					 	 }
+						 else {
+							 newGridRow = (GridRow) Class.forName(gridRow.getClass().getCanonicalName()).getDeclaredConstructor().newInstance();
+							 newGridRow.updateBasicGridRow(gridRow);
+							 schemaGridRowList.add(newGridRow);
+						 }
 					 }catch (InstantiationException | IllegalAccessException | IllegalArgumentException
 							 | InvocationTargetException | NoSuchMethodException | SecurityException
 							 | ClassNotFoundException e) {
 						 logger.error("Exception occurred while creating new row for schema",e);
 					 }
-
-
 				 }
 			 }
 			 propertyDialogButtonBar.enableApplyButton(true);
@@ -1380,7 +1405,7 @@ public abstract class ELTSchemaGridWidget extends AbstractWidget {
 
 		GridRowLoader gridRowLoader = new GridRowLoader(gridRowType, schemaFile);
 
-		schemaGridRowListToImport = gridRowLoader.importGridRowsFromXML(helper);
+		schemaGridRowListToImport = gridRowLoader.importGridRowsFromXML(helper,tableViewer.getTable());
 
 		if (schemaGridRowListToImport != null) {
 

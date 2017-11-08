@@ -31,6 +31,7 @@ import hydrograph.ui.datastructure.property.FixedWidthGridRow;
 import hydrograph.ui.datastructure.property.GridRow;
 import hydrograph.ui.datastructure.property.MixedSchemeGridRow;
 import hydrograph.ui.datastructure.property.Schema;
+import hydrograph.ui.datastructure.property.XPathGridRow;
 import hydrograph.ui.graph.model.Component;
 import hydrograph.ui.graph.model.Link;
 import hydrograph.ui.logging.factory.LogFactory;
@@ -526,13 +527,27 @@ public class SchemaPropagation {
 	}
 	
 	/**
-	 *
-	 *convert fixedWidthGridRowsOutputFields to list of grid row object.
-	 * 
 	 * @param gridRow
-	 * @param fixedWidthGridRowsOutputFields
-	 * @return list of grid row object.
+	 * @return
 	 */
+	public XPathGridRow convertFixedWidthSchemaToxPathSchemaGridRow(FixedWidthGridRow gridRow) {
+		
+		XPathGridRow xPathGridRow = new XPathGridRow();
+		xPathGridRow.setDataType(gridRow.getDataType());
+		xPathGridRow.setDateFormat(gridRow.getDateFormat());
+		xPathGridRow.setFieldName(gridRow.getFieldName());
+		xPathGridRow.setScale(gridRow.getScale());
+		xPathGridRow.setDataTypeValue(gridRow.getDataTypeValue());
+		xPathGridRow.setScaleType(gridRow.getScaleType());
+		xPathGridRow.setScaleTypeValue(gridRow.getScaleTypeValue());
+		xPathGridRow.setPrecision(gridRow.getPrecision());
+		xPathGridRow.setDescription(gridRow.getDescription());
+		xPathGridRow.setXPath(gridRow.getFieldName());
+		xPathGridRow.setAbsolutexPath(gridRow.getFieldName());
+		return xPathGridRow;
+	}
+	
+
 	public List<GridRow> getSchemaGridOutputFields(GridRow gridRow,List<FixedWidthGridRow> fixedWidthGridRowsOutputFields) {
 		List<GridRow> schemaGrid = new ArrayList<>();
 		
@@ -540,7 +555,13 @@ public class SchemaPropagation {
 			for (FixedWidthGridRow fixedWidthGridRow : fixedWidthGridRowsOutputFields) {
 				schemaGrid.add(convertFixedWidthSchemaToMixedSchemaGridRow(fixedWidthGridRow));
 			}
-		} else if(gridRow instanceof FixedWidthGridRow){
+		}
+		else if (gridRow instanceof XPathGridRow) {
+			for (FixedWidthGridRow fixedWidthGridRow : fixedWidthGridRowsOutputFields) {
+				schemaGrid.add(convertFixedWidthSchemaToxPathSchemaGridRow(fixedWidthGridRow));
+			}
+		} 
+		else if(gridRow instanceof FixedWidthGridRow){
 			for (FixedWidthGridRow fixedWidthGridRow : fixedWidthGridRowsOutputFields) {
 				schemaGrid.add(fixedWidthGridRow);
 			}
@@ -569,6 +590,8 @@ public class SchemaPropagation {
 		}
 		return schemaGridRow;
 	}
+
+
 
 	
 }

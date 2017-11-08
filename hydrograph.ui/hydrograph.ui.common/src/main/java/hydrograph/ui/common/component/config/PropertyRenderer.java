@@ -134,7 +134,9 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="EXCEL_FILE_NAME_WIDGET"/> 
  *     &lt;enumeration value="SORT_EXCEL_COLUMNS_KEYS_WIDGET"/>
  *     &lt;enumeration value="FILTER_LOGIC"/>
- *   &lt;/restriction>
+ *     &lt;enumeration value="EXPORT_XSD_WIDGET"/> *     
+ *     &lt;/restriction>
+
  * &lt;/simpleType>
  * </pre>
  * 
@@ -244,7 +246,9 @@ public enum PropertyRenderer {
     EXCEL_FILE_PATH_WIDGET,
     EXCEL_FILE_NAME_WIDGET,
     SORT_EXCEL_COLUMNS_KEYS_WIDGET,
-    FILTER_LOGIC;
+    FILTER_LOGIC,
+    EXPORT_XSD_WIDGET,
+    XML_GENERATE_SCHEMA_WIDGET;
 
     public String value() {
         return name();

@@ -15,8 +15,10 @@
 package hydrograph.ui.validators.impl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -86,7 +88,7 @@ public class XPathSchemaGridValidationRule implements IValidator {
 			errorMessage = propertyName + " is mandatory";
 			return false;
 		}
-		
+		Set<String> xPathDulicateCheck=new HashSet<String>();
 		for (GridRow gridRow : gridRowList) {
 			if(StringUtils.isBlank(gridRow.getFieldName())){
 				errorMessage = "Field name can not be blank";
@@ -98,7 +100,10 @@ public class XPathSchemaGridValidationRule implements IValidator {
 				errorMessage = "Absolute/Relative Xpath can not be blank";
 				return false;
 			}
-			
+			if(!xPathDulicateCheck.add(xPathGridRow.getAbsolutexPath())){
+				errorMessage = "Absolute/Relative Xpath can not be duplicate";
+				return false;
+			}
 			if(StringUtils.isNotBlank(gridRow.getScale())){
 				try{
 					if(StringUtils.isNotEmpty(gridRow.getPrecision())){

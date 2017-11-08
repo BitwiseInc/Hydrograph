@@ -11,7 +11,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package hydrograph.engine.jaxb.subjob;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -34,7 +33,6 @@ import hydrograph.engine.jaxb.commontypes.TypeOperationsOutSocket;
  *         &lt;choice maxOccurs="unbounded">
  *           &lt;element name="passThroughField" type="{hydrograph/engine/jaxb/commontypes}type-input-field"/>
  *           &lt;element name="mapField" type="{hydrograph/engine/jaxb/commontypes}type-map-field"/>
- *           &lt;element name="includeExternalMapping" type="{hydrograph/engine/jaxb/commontypes}type-external-schema"/>
  *         &lt;/choice>
  *       &lt;/choice>
  *       &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />

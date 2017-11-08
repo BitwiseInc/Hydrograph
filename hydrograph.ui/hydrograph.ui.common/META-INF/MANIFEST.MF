@@ -38,3 +38,13 @@ Export-Package: hydrograph.ui.common.component.config,
  hydrograph.ui.external.operation
 Import-Package: org.apache.commons.lang,
  org.junit
+Bundle-ClassPath: lib/commons-codec-1.9.jar,
+ lib/groovy-2.4.7.jar,
+ lib/groovy-json-2.4.7.jar,
+ lib/groovy-xml-2.4.7.jar,
+ lib/httpclient-4.5.2.jar,
+ lib/httpcore-4.4.4.jar,
+ lib/jcl-over-slf4j-1.7.21.jar,
+ lib/slf4j-api-1.7.21.jar,
+ lib/soa-model-core-1.6.0.jar,
+ .

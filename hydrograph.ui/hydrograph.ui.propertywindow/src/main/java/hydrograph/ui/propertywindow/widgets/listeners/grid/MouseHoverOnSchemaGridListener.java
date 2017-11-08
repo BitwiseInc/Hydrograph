@@ -430,6 +430,9 @@ private static final Logger logger = LogFactory.INSTANCE.getLogger(MouseHoverOnS
 			}else if((StringUtils.equalsIgnoreCase(gridRow.getDataTypeValue(), JAVA_MATH_BIG_DECIMAL))){
 				return setToolTipForBigDecimal(gridRow, componentType);			
 			}
+			else if(item.getData(Constants.ERROR_MESSAGE)!=null && StringUtils.isNotBlank((String)item.getData(Constants.ERROR_MESSAGE))){
+				return (String)item.getData(Constants.ERROR_MESSAGE);
+			}
         }
 		return "";
 	}

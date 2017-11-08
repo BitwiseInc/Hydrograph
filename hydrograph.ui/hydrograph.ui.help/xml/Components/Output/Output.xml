@@ -67,4 +67,8 @@
       <anchor id="Discard"/>
       <link toc="xml/Components/Output/discard.xml"/>
    </topic>
+    <topic href="html/Components/output/Output_Xml.html" label="Output XML">
+      <anchor id="OutputXML"/>
+      <link toc="xml/Components/Output/outputXml.xml"/>
+   </topic>
   </toc>

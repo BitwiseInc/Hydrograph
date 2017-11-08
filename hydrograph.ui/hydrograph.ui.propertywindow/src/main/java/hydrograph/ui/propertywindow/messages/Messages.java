@@ -481,6 +481,24 @@ public class Messages extends NLS {
 	public static String DATA_FORMAT_TOOLTIP;
 
 	public static String EXISTING_JOB_IS_NOT_SAVED_STATUS;
+	public static String ROOT_ELEMENT_NOT_FOUND_ERROR;
+	public static String ROW_TAG_NOT_FOUND_ERROR;
+	public static String XSD_EXPORTED;
+	public static String X_PATH_IS_DUPLICATE;
+	
+	public static String GENERATE_SCHEMA_LABEL;
+	public static String GENERATE_SCHEMA_BUTTON_LABEL;
+	public static String PREVIEW_FOR_THE_GENERATED_SCHEMA_FROM_XSD_OR_XML_FILE;
+
+	public static String SELECT_XML_SOURCE_FOR_SCHEMA_IMPORT;
+
+	public static String INVALID_PATH;
+
+	public static String PLEASE_PROVIDE_XML_PATH_FIRST;
+
+	public static String INVALID_XML_FILE;
+	public static String FIELD_IS_DUPLICATE;
+	
 	
 	static {
 		// initialize resource bundle

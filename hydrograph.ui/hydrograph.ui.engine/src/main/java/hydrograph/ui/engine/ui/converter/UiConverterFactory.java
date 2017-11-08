@@ -86,6 +86,7 @@ import hydrograph.ui.engine.ui.converter.impl.OutputRedshiftUiConverter;
 import hydrograph.ui.engine.ui.converter.impl.OutputSparkRedshiftUiConverter;
 import hydrograph.ui.engine.ui.converter.impl.OutputSubjobUiConverter;
 import hydrograph.ui.engine.ui.converter.impl.OutputTeradataUiConverter;
+import hydrograph.ui.engine.ui.converter.impl.OutputXMLUiConverter;
 import hydrograph.ui.engine.ui.converter.impl.PartitionByExpressionUiConverter;
 import hydrograph.ui.engine.ui.converter.impl.RemoveDupsUiConverter;
 import hydrograph.ui.engine.ui.converter.impl.RunProgramUiConverter;
@@ -294,6 +295,9 @@ public class UiConverterFactory {
 		}
 		if((hydrograph.engine.jaxb.outputtypes.ExcelFile.class).isAssignableFrom(typeBaseComponent.getClass())){
 			return new OutputFileExcelUiConverter(typeBaseComponent, container);
+		}
+		if((hydrograph.engine.jaxb.outputtypes.XmlFile.class).isAssignableFrom(typeBaseComponent.getClass())){
+			return new OutputXMLUiConverter(typeBaseComponent, container);
 		}
 		return new UnknownUiConverter(typeBaseComponent,container);
 	}

@@ -21,8 +21,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Cursor;
@@ -34,6 +38,9 @@ import org.slf4j.Logger;
 import hydrograph.ui.common.property.util.Utils;
 import hydrograph.ui.common.util.Constants;
 import hydrograph.ui.common.util.OSValidator;
+import hydrograph.ui.datastructure.property.GridRow;
+import hydrograph.ui.datastructure.property.Schema;
+import hydrograph.ui.datastructure.property.XPathGridRow;
 import hydrograph.ui.logging.factory.LogFactory;
 import hydrograph.ui.propertywindow.factory.ListenerFactory.Listners;
 import hydrograph.ui.propertywindow.messages.Messages;
@@ -43,6 +50,7 @@ import hydrograph.ui.propertywindow.property.Property;
 import hydrograph.ui.propertywindow.propertydialog.PropertyDialogButtonBar;
 import hydrograph.ui.propertywindow.widgets.customwidgets.config.TextBoxWithLableConfig;
 import hydrograph.ui.propertywindow.widgets.customwidgets.config.WidgetConfig;
+import hydrograph.ui.propertywindow.widgets.customwidgets.schema.ELTSchemaGridWidget;
 import hydrograph.ui.propertywindow.widgets.gridwidgets.basic.AbstractELTWidget;
 import hydrograph.ui.propertywindow.widgets.gridwidgets.basic.ELTDefaultLable;
 import hydrograph.ui.propertywindow.widgets.gridwidgets.basic.ELTDefaultTextBox;
@@ -199,14 +207,86 @@ public class TextBoxWithLabelWidget extends AbstractWidget{
 	@Override
 	public void addModifyListener(final Property property,  final ArrayList<AbstractWidget> widgetList) {
 		widgets=widgetList;
-       textBox.addModifyListener(new ModifyListener() {
+		textBox.addModifyListener(new ModifyListener() {
 			
 			@Override
 			public void modifyText(ModifyEvent e) {
-			 Utils.INSTANCE.addMouseMoveListener(textBox, cursor);
-			 showHideErrorSymbol(widgetList);
+				 
+				 Utils.INSTANCE.addMouseMoveListener(textBox, cursor);
+				 showHideErrorSymbol(widgetList);
 			}
 		});
+		if(Messages.LOOP_XPATH_QUERY.equals(textBoxConfig.getName())){
+			addFocusListenerToTextBox();
+		}
 		
 	}
+
+	private void addFocusListenerToTextBox() {
+			   textBox.addFocusListener(new FocusListener() {
+				String focusGainedValue="";
+				
+				@Override
+				public void focusLost(FocusEvent e) {
+					 updateAbsoluteXPathIfChanged(widgets,focusGainedValue);					
+				}
+				
+				@Override
+				public void focusGained(FocusEvent e) {
+					Text text=(Text)e.widget;
+					focusGainedValue =text.getText();
+					
+				}
+			});
+	}
+	
+	 private void updateAbsoluteXPathIfChanged(List<AbstractWidget> widgetList,String previousValue) {
+		 if(!textBox.getText().equals(previousValue)){
+			 ELTSchemaGridWidget eltSchemaGridWidget = getSchemaWidget(widgetList);
+			 List<GridRow> gridRows=eltSchemaGridWidget.getSchemaGridRowList();
+			 if(StringUtils.isNotBlank(textBox.getText())){
+				 for(GridRow gridRow:gridRows){
+					 if(gridRow instanceof XPathGridRow){
+						 XPathGridRow xPathGridRow=(XPathGridRow)gridRow;
+						 xPathGridRow.setAbsolutexPath(xPathGridRow.getXPath());
+						 if(!xPathGridRow.getAbsolutexPath().startsWith(textBox.getText())){
+							 xPathGridRow.setAbsolutexPath(textBox.getText()+Path.SEPARATOR+xPathGridRow.getAbsolutexPath());
+						 }
+					 }
+				 }
+			 }
+			 eltSchemaGridWidget.showHideErrorSymbol(widgetList);
+			 
+		 }
+		
+	 }
+
+	private ELTSchemaGridWidget getSchemaWidget(List<AbstractWidget> widgetList) 
+	{
+		ELTSchemaGridWidget eltSchemaGridWidget=null;
+		for(AbstractWidget abstractWidget:widgetList){
+			 if(abstractWidget instanceof ELTSchemaGridWidget){
+				 eltSchemaGridWidget=(ELTSchemaGridWidget)abstractWidget;
+				 break;
+			 }
+		 }
+		return eltSchemaGridWidget;
+	}
+	/**
+	 * @return the textBox
+	 */
+	public Text getTextBox() {
+		return textBox;
+	}
+
+	/**
+	 * 
+	 * Get widget configurations 
+	 * 
+	 * @return {@link WidgetConfig}
+	 */
+	public TextBoxWithLableConfig getWidgetConfig() {
+		return textBoxConfig;
+	}
+
 }
