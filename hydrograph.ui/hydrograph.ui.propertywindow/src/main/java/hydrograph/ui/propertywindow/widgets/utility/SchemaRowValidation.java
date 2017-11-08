@@ -39,6 +39,7 @@ import hydrograph.ui.propertywindow.messages.Messages;
 
 public class SchemaRowValidation{
 
+	public static final String FIELD_IS_DUPLICATE = "Field is duplicate";
 	private static final Logger logger = LogFactory.INSTANCE.getLogger(SchemaRowValidation.class);
 	private static final String NONE = "none";
 	private static final String REGULAR_EXPRESSION_FOR_NUMBER = "\\d+";
@@ -119,16 +120,22 @@ public class SchemaRowValidation{
 		}
 	}
 
-	private void checkIfXPathIsDuplicate() {
+	private void checkIfXPathIsDuplicate( ) {
 		Text loopXpathQueryTextBox=(Text)table.getData();
 		String loopXPathQuery=loopXpathQueryTextBox.getText();
 		Set<Path> setToCheckDuplicates= new HashSet<Path>();
+		Set<String> uniqueName=new HashSet<>();
 		for(TableItem tableItem:table.getItems()){
 			Path xPathColumn=makeXPathAbsoluteIfNot(tableItem.getText(2), loopXPathQuery);
-			if(!setToCheckDuplicates.add(xPathColumn)){
+			if(!uniqueName.add(tableItem.getText(0))){
+				tableItem.setData(Constants.ERROR_MESSAGE,FIELD_IS_DUPLICATE);
+				setRedColor(tableItem);
+			}
+			else if(!setToCheckDuplicates.add(xPathColumn)){
 				tableItem.setData(Constants.ERROR_MESSAGE,Messages.X_PATH_IS_DUPLICATE);
 				setRedColor(tableItem);
-			}else{
+			}
+			else{
 				tableItem.setData(Constants.ERROR_MESSAGE,"");
 				setBlackColor(tableItem);
 			}

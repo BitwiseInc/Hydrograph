@@ -497,6 +497,7 @@ public class Messages extends NLS {
 	public static String PLEASE_PROVIDE_XML_PATH_FIRST;
 
 	public static String INVALID_XML_FILE;
+	public static String FIELD_IS_DUPLICATE;
 	
 	
 	static {
