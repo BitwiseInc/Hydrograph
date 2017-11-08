@@ -45,6 +45,13 @@ private[xml] class XmlOptions(
     parameters.getOrElse("attributePrefix", XmlOptions.DEFAULT_ATTRIBUTE_PREFIX)
   val valueTag = parameters.getOrElse("valueTag", XmlOptions.DEFAULT_VALUE_TAG)
   val nullValue = parameters.getOrElse("nullValue", XmlOptions.DEFAULT_NULL_VALUE)
+
+  private def getBool(str: String) = str match {
+    case x if (x.equalsIgnoreCase("true")) => true
+    case _ => false
+  }
+
+  val isSafe = getBool(parameters.getOrElse("safe", XmlOptions.DEFAULT_SAFE_VALUE))
   val columnNameOfCorruptRecord =
     parameters.getOrElse("columnNameOfCorruptRecord", "_corrupt_record")
 
@@ -90,6 +97,8 @@ private[xml] class XmlOptions(
 }
 
 private[xml] object XmlOptions {
+
+  val DEFAULT_SAFE_VALUE = "false"
   val DEFAULT_ATTRIBUTE_PREFIX = "_"
   val DEFAULT_VALUE_TAG = "_VALUE"
   val DEFAULT_ROW_TAG = "ROW"

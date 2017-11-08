@@ -31,9 +31,13 @@ public class OutputFileXMLEntity extends InputOutputEntityBase {
     private String rowTag;
     private boolean safe = false;
     private boolean strict = true;
+    private boolean overWrite;
 
     public boolean isSafe() {
         return safe;
+    }
+    public boolean isOverWrite() {
+        return overWrite;
     }
 
     public void setSafe(boolean safe) {
@@ -67,6 +71,8 @@ public class OutputFileXMLEntity extends InputOutputEntityBase {
     public String getAbsoluteXPath() {
         return absoluteXPath;
     }
+
+    public void setOverWrite(boolean overWrite) { this.overWrite = overWrite; }
 
     public void setAbsoluteXPath(String absoluteXPath) {
         this.absoluteXPath = absoluteXPath;
@@ -119,5 +125,4 @@ public class OutputFileXMLEntity extends InputOutputEntityBase {
         }
         return str.toString();
     }
-
 }

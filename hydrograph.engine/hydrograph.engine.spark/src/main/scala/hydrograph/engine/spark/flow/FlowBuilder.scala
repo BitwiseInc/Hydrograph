@@ -21,6 +21,7 @@ import hydrograph.engine.spark.components.platform.BaseComponentParams
 import hydrograph.engine.spark.executiontracking.plugin.HydrographCommandListener
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.storage.StorageLevel
+import org.slf4j.{Logger, LoggerFactory}
 
 import scala.collection.JavaConverters._
 import scala.collection.mutable
@@ -34,9 +35,8 @@ import scala.collection.mutable
 
 class FlowBuilder(runtimeContext: RuntimeContext, hydrographListener: HydrographCommandListener) {
 
-
+  private val LOG:Logger = LoggerFactory.getLogger(classOf[FlowBuilder])
   def buildAndExecuteFlows(): Unit = {
-    val flow = new mutable.LinkedHashSet[SparkFlow]()
     for (batch <- runtimeContext.traversal.getFlowsNumber.asScala) {
       createAndConnect(batch).foreach( flow => {
         try {
@@ -45,6 +45,7 @@ class FlowBuilder(runtimeContext: RuntimeContext, hydrographListener: Hydrograph
           hydrographListener.end(flow)
         } catch {
           case e: Exception => hydrographListener.failComponentsOfFlow(flow)
+            LOG.error("Error while executing flow in batch" + batch, e)
             throw e
         }
       })
@@ -174,6 +175,7 @@ class FlowBuilder(runtimeContext: RuntimeContext, hydrographListener: Hydrograph
 
         }
         else {
+          LOG.error("Cache Property value should be in proper format eg: outSocketID : One of \"disk,memory,memory_and_disk\", But user provides: " + tp.getValue)
           throw new RuntimeException("Cache Property value should be in proper format eg: outSocketID : One of \"disk,memory,memory_and_disk\", But user provides: " + tp.getValue)
         }
       })

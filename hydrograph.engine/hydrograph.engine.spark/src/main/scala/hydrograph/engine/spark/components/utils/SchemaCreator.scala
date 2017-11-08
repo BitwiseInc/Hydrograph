@@ -12,7 +12,7 @@
   *******************************************************************************/
 package hydrograph.engine.spark.components.utils
 
-import hydrograph.engine.core.component.entity.InputFileXMLEntity
+import hydrograph.engine.core.component.entity.{InputFileXMLEntity, OutputFileXMLEntity}
 import hydrograph.engine.core.component.entity.base.InputOutputEntityBase
 import hydrograph.engine.core.component.entity.elements.SchemaField
 import hydrograph.engine.spark.datasource.xml.util.{FieldContext, TreeNode, XMLTree}
@@ -63,7 +63,11 @@ case class SchemaCreator[T <: InputOutputEntityBase](inputOutputEntityBase: T) {
     rootNode.children.toList.flatMap(x => schema(x, rootNode.fieldContext.name, List[StructField]()))
   }
 
-  def getRelativePath(absPath:String):String = absPath.replace(inputOutputEntityBase.asInstanceOf[InputFileXMLEntity].getAbsoluteXPath,"")
+  def getRelativePath(absPath:String):String = inputOutputEntityBase match {
+    case x if x.isInstanceOf[InputFileXMLEntity] => absPath.replace(inputOutputEntityBase.asInstanceOf[InputFileXMLEntity].getAbsoluteXPath,"")
+    case x if x.isInstanceOf[OutputFileXMLEntity] => absPath.replace(inputOutputEntityBase.asInstanceOf[OutputFileXMLEntity].getAbsoluteXPath,"")
+  }
+
 
 
   /** Returns a list of paired elements each containing a xpath and field name.
@@ -77,7 +81,7 @@ case class SchemaCreator[T <: InputOutputEntityBase](inputOutputEntityBase: T) {
     def extract(schemaFieldList:List[SchemaField],relativeXPath:List[(String,String)]):List[(String,String)] ={
       if(schemaFieldList.isEmpty)relativeXPath
       else
-        extract(schemaFieldList.tail,(getRelativePath(schemaFieldList.head.getAbsoluteOrRelativeXPath),schemaFieldList.head.getFieldName)+:relativeXPath)
+        extract(schemaFieldList.tail, relativeXPath :+ (getRelativePath(schemaFieldList.head.getAbsoluteOrRelativeXPath),schemaFieldList.head.getFieldName) )
 
     }
 
@@ -93,25 +97,27 @@ case class SchemaCreator[T <: InputOutputEntityBase](inputOutputEntityBase: T) {
 
   private def createStructFieldsForXMLInputOutputComponents(): Array[StructField] = {
     LOG.trace("In method createStructFieldsForXMLInputOutputComponents() which returns Array[StructField] for Input and Output components")
-    val safe:Boolean = inputOutputEntityBase.asInstanceOf[InputFileXMLEntity].isSafe
     val relativeXPathWithFieldName = extractXPathWithFieldName()
-    val rowTag: String = inputOutputEntityBase.asInstanceOf[InputFileXMLEntity].getRowTag
+    val rowTag: String = inputOutputEntityBase match {
+      case x if x.isInstanceOf[InputFileXMLEntity] => inputOutputEntityBase.asInstanceOf[InputFileXMLEntity].getRowTag
+      case x if x.isInstanceOf[OutputFileXMLEntity] => inputOutputEntityBase.asInstanceOf[OutputFileXMLEntity].getRowTag
+    }
     var fcMap:mutable.HashMap[String,FieldContext] = mutable.HashMap[String,FieldContext]()
 
 
     for (schemaField <- inputOutputEntityBase.getFieldsList) {
       fcMap += (schemaField.getFieldName -> FieldContext(schemaField.getFieldName, schemaField.getAbsoluteOrRelativeXPath,
-        getDataType(schemaField), safe, schemaField.getFieldFormat))
+        getDataType(schemaField), true, schemaField.getFieldFormat))
     }
 
 
-    fcMap += (rowTag -> FieldContext(rowTag,rowTag, DataTypes.StringType, safe,"yyyy-MM-dd")) // add context of rowTag to be used by schema fields to check XPaths
+    fcMap += (rowTag -> FieldContext(rowTag,rowTag, DataTypes.StringType, true,"yyyy-MM-dd")) // add context of rowTag to be used by schema fields to check XPaths
 
     val xmlTree: XMLTree = XMLTree(fcMap(rowTag))// add rowTag as root of tree to be used as parent of fields
 
     relativeXPathWithFieldName.foreach { xpathAndFieldPair=>{// iterating on list of field and its XPath's pair
       if (!xpathAndFieldPair._1.contains('/'))
-        xmlTree.addChild(rowTag, FieldContext(xpathAndFieldPair._1, rowTag + "/" + xpathAndFieldPair._1, fcMap(xpathAndFieldPair._2).datatype, safe, fcMap(xpathAndFieldPair._2).format))// add field as child of root if its XPath doesnt contains "/"
+        xmlTree.addChild(rowTag, FieldContext(xpathAndFieldPair._1, rowTag + "/" + xpathAndFieldPair._1, fcMap(xpathAndFieldPair._2).datatype, true, fcMap(xpathAndFieldPair._2).format))// add field as child of root if its XPath doesnt contains "/"
       else  {
         var parentTag = rowTag
         var xpath = rowTag + "/"
@@ -119,7 +125,7 @@ case class SchemaCreator[T <: InputOutputEntityBase](inputOutputEntityBase: T) {
           xpath = xpath + currentField
           if (!xmlTree.isPresent(currentField, xpath)) {//check if tree contains field on given XPath
 
-            xmlTree.addChild(parentTag, FieldContext(currentField, xpath, fcMap(xpathAndFieldPair._2).datatype, safe, fcMap(xpathAndFieldPair._2).format))
+            xmlTree.addChild(parentTag, FieldContext(currentField, xpath, fcMap(xpathAndFieldPair._2).datatype, true, fcMap(xpathAndFieldPair._2).format))
           }
           parentTag = currentField // make currentField parent of next field as its a nested schema
           xpath += "/"
@@ -133,8 +139,8 @@ case class SchemaCreator[T <: InputOutputEntityBase](inputOutputEntityBase: T) {
   }
 
   def makeSchema(): StructType = inputOutputEntityBase match {
-    case x if x.isInstanceOf[InputFileXMLEntity] => StructType(createStructFieldsForXMLInputOutputComponents())
-    case x if !x.isInstanceOf[InputFileXMLEntity] => StructType(createStructFields())
+    case x if x.isInstanceOf[InputFileXMLEntity] ||  x.isInstanceOf[OutputFileXMLEntity] => StructType(createStructFieldsForXMLInputOutputComponents())
+    case x if !x.isInstanceOf[InputFileXMLEntity] &&  !x.isInstanceOf[OutputFileXMLEntity]  => StructType(createStructFields())
   }
 
   def getTypeNameFromDataType(dataType: String): String = {

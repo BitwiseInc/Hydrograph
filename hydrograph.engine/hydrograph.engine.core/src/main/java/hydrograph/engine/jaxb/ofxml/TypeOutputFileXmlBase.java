@@ -1,5 +1,5 @@
 
-/*******************************************************************************
+/*
  * Copyright 2017 Capital One Services, LLC and Bitwise, Inc.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -10,8 +10,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- ******************************************************************************/
-
+ */
 package hydrograph.engine.jaxb.ofxml;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -33,6 +32,7 @@ import hydrograph.engine.jaxb.outputtypes.XmlFile;
  *     &lt;restriction base="{hydrograph/engine/jaxb/commontypes}type-output-component">
  *       &lt;sequence>
  *         &lt;element name="inSocket" type="{hydrograph/engine/jaxb/ofxml}type-output-xml-in-socket"/>
+ *         &lt;element name="overWrite" type="{hydrograph/engine/jaxb/commontypes}type-true-false" minOccurs="0"/>
  *         &lt;element name="runtimeProperties" type="{hydrograph/engine/jaxb/commontypes}type-properties" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
