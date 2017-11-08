@@ -172,7 +172,7 @@ public class XMLUtil {
 					}
 				}
 		    }
-			return "";
+			return DataTypes.JAVA_LANG_STRING.value();
 	 }
 	public List<GridRow> getSchemaFromXML(File schemaFile,String loopXPathQuery)
 				throws ParserConfigurationException, SAXException, IOException, JAXBException {
