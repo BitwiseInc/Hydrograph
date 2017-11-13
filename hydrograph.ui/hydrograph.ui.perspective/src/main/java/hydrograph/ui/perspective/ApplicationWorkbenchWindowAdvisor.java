@@ -19,6 +19,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
 import java.util.Map.Entry;
 import java.util.Properties;
 
@@ -126,12 +128,22 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 	private void serviceInitiator(Properties properties) throws IOException{
 		if(OSValidator.isWindows()){		
 			//Updated the java classpath to include the dependent jars
-			String command = "java -cp " + getInstallationConfigPath().trim() + ";"
-							+ Platform.getInstallLocation().getURL().getPath() + properties.getProperty(SERVICE_DEPENDENCIES)+ ";"
-							+ Platform.getInstallLocation().getURL().getPath() + properties.getProperty(SERVICE_JAR) 
-							+ " " + properties.getProperty(DRIVER_CLASS);
-			ProcessBuilder builder = new ProcessBuilder(new String[]{"cmd", "/c", command});
-			builder.start();
+			 String path="";
+	            try {
+	                  path = Paths.get(Platform.getInstallLocation().getURL().toURI()).toString() + "\\";
+	            } catch (URISyntaxException e) {
+	                  // TODO Auto-generated catch block
+	                  logger.error(e.getMessage());
+	            }
+	           
+	            logger.debug(Platform.getInstallLocation().getURL().getPath());
+	            String command = "java -cp \"" + getInstallationConfigPath().trim() + ";"
+	                                       + path + properties.getProperty(SERVICE_DEPENDENCIES)+ ";"
+	                                       + path + properties.getProperty(SERVICE_JAR)
+	                                       + "\" " + properties.getProperty(DRIVER_CLASS);
+	            logger.debug("Starting server with command - " + command);
+	            ProcessBuilder builder = new ProcessBuilder(new String[]{"cmd", "/c", command});
+	            builder.start();
 		}
 		else if(OSValidator.isMac()){
 			logger.debug("On Mac Operating System....");
