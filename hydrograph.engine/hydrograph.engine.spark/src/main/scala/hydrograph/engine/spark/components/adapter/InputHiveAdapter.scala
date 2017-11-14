@@ -18,7 +18,7 @@ import hydrograph.engine.core.component.generator.{InputFileHiveParquetEntityGen
 import hydrograph.engine.jaxb.commontypes.TypeBaseComponent
 import hydrograph.engine.jaxb.inputtypes.HiveTextFile
 import hydrograph.engine.spark.components.InputHiveComponent
-import hydrograph.engine.spark.components.adapter.base.InputAdatperBase
+import hydrograph.engine.spark.components.adapter.base.InputAdapterBase
 import hydrograph.engine.spark.components.base.InputComponentBase
 import hydrograph.engine.spark.components.platform.BaseComponentParams
 
@@ -28,7 +28,7 @@ import hydrograph.engine.spark.components.platform.BaseComponentParams
   * @author Bitwise
   *
   */
-class InputHiveAdapter(typeBaseComponent: TypeBaseComponent) extends InputAdatperBase{
+class InputHiveAdapter(typeBaseComponent: TypeBaseComponent) extends InputAdapterBase{
 
   private var inputHiveComponent:InputHiveComponent=null
   private var generator : InputComponentGeneratorBase=null
