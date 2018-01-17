@@ -15,7 +15,7 @@ package hydrograph.engine.spark.components.adapter
 import hydrograph.engine.core.component.generator.InputFileFixedWidthEntityGenerator
 import hydrograph.engine.jaxb.commontypes.TypeBaseComponent
 import hydrograph.engine.spark.components.InputFileFixedWidthComponent
-import hydrograph.engine.spark.components.adapter.base.InputAdatperBase
+import hydrograph.engine.spark.components.adapter.base.InputAdapterBase
 import hydrograph.engine.spark.components.base.InputComponentBase
 import hydrograph.engine.spark.components.platform.BaseComponentParams
 /**
@@ -24,7 +24,7 @@ import hydrograph.engine.spark.components.platform.BaseComponentParams
   * @author Bitwise
   *
   */
-class InputFileFixedWidthAdapter(typeBaseComponent: TypeBaseComponent) extends InputAdatperBase{
+class InputFileFixedWidthAdapter(typeBaseComponent: TypeBaseComponent) extends InputAdapterBase{
 
   private var inputFileFixedWidth:InputFileFixedWidthEntityGenerator=null
   private var inputFileFixedWidthComponent:InputFileFixedWidthComponent=null

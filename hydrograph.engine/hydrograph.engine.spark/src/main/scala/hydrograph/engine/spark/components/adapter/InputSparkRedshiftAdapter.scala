@@ -15,7 +15,7 @@ package hydrograph.engine.spark.components.adapter
 import hydrograph.engine.core.component.generator.InputSparkRedshiftEntityGenerator
 import hydrograph.engine.jaxb.commontypes.TypeBaseComponent
 import hydrograph.engine.spark.components.InputSparkRedshiftComponent
-import hydrograph.engine.spark.components.adapter.base.InputAdatperBase
+import hydrograph.engine.spark.components.adapter.base.InputAdapterBase
 import hydrograph.engine.spark.components.base.InputComponentBase
 import hydrograph.engine.spark.components.platform.BaseComponentParams
 /**
@@ -25,7 +25,7 @@ import hydrograph.engine.spark.components.platform.BaseComponentParams
   *
   */
 
-class InputSparkRedshiftAdapter(typeBaseComponent: TypeBaseComponent) extends InputAdatperBase {
+class InputSparkRedshiftAdapter(typeBaseComponent: TypeBaseComponent) extends InputAdapterBase {
 
   var inputSparkRedshiftEntityGenerator: InputSparkRedshiftEntityGenerator = null
   var inputSparkRedshiftComponent: InputSparkRedshiftComponent = null;

@@ -75,12 +75,38 @@ public class OutputEntityUtils implements Serializable{
 			setTypeofLengthDelimeter(list,fields,i);
 			
 			setColDef(list,fields,i);
+
+			setAbsoluteOrRelativeXPath(list, fields, i);
 			
 			fieldList.add(fields);
 		}
 
 		return fieldList;
 
+	}
+
+	/**
+	 * Sets the AbsoluteOrRelativeXPath value for the SchemaField object
+	 *
+	 * @param list
+	 *            of {@link TypeBaseField} objects which contain the fields type
+	 *            information
+	 * @param fields
+	 *            of {@link SchemaField} objects which contain the fields type
+	 *            information
+	 * @param i
+	 *            index
+	 */
+	private static void setAbsoluteOrRelativeXPath(List<Object> list, SchemaField fields, int i) {
+		if (((TypeBaseField) list.get(i)).getOtherAttributes() != null) {
+			Map<QName, String> otherAttributes = ((TypeBaseField) list.get(i))
+					.getOtherAttributes();
+			for (QName absoluteOrRelativeXPath : otherAttributes.keySet()) {
+				if (absoluteOrRelativeXPath.getLocalPart().equalsIgnoreCase(
+						"absoluteOrRelativeXPath"))
+					fields.setAbsoluteOrRelativeXPath(otherAttributes.get(absoluteOrRelativeXPath));
+			}
+		}
 	}
 
 	private static void setTypeofLengthDelimeter(List<Object> list,

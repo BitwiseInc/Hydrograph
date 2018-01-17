@@ -51,7 +51,7 @@ object TypeCast {
       nullable: Boolean = true): Any = {
     if (datum == options.nullValue &&
       nullable ||
-      (options.treatEmptyValuesAsNulls && datum == "")){
+      (options.treatEmptyValuesAsNulls && datum == "") || datum == null){
       null
     } else {
       castType match {
@@ -59,12 +59,10 @@ object TypeCast {
         case _: ShortType => datum.toShort
         case _: IntegerType => datum.toInt
         case _: LongType => datum.toLong
-        case _: FloatType => Try(datum.toFloat)
-          .getOrElse(NumberFormat.getInstance(Locale.getDefault).parse(datum).floatValue())
-        case _: DoubleType => Try(datum.toDouble)
-          .getOrElse(NumberFormat.getInstance(Locale.getDefault).parse(datum).doubleValue())
+        case _: FloatType => datum.toFloat
+        case _: DoubleType => datum.toDouble
         case _: BooleanType => datum.toBoolean
-        case _: DecimalType => new BigDecimal(datum.replaceAll(",", ""))
+        case dt: DecimalType => Decimal(new BigDecimal(datum.replaceAll(",", "")), dt.precision, dt.scale)
         case _: TimestampType => Timestamp.valueOf(datum)
         case _: DateType => Date.valueOf(datum)
         case _: StringType => datum
