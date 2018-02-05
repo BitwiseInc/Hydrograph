@@ -17,7 +17,7 @@ import java.util.Properties
 
 import hydrograph.engine.core.component.entity.OutputRDBMSEntity
 import hydrograph.engine.core.component.entity.elements.SchemaField
-import org.apache.spark.sql.execution.datasources.jdbc.JDBCRDD
+import org.apache.spark.sql.execution.datasources.jdbc.{JDBCOptions, JDBCRDD}
 import org.apache.spark.sql.types.StructType
 import org.slf4j.{Logger, LoggerFactory}
 
@@ -92,7 +92,12 @@ case class TeradataTableUtils() {
    * @return structType schema from metadata
    */
   def getTableSchema(connectionURL: String, tableName: String, properties: Properties): StructType = {
-    JDBCRDD.resolveTable(connectionURL, tableName, properties)
+    var jDBCOptionsMap : Map[String, String] = properties.entrySet().toArray.toList.map(key => key.toString.split("=")(0).trim -> key.toString.split("=")(1).trim).toMap
+    jDBCOptionsMap = jDBCOptionsMap ++ Map("url" -> connectionURL)
+    jDBCOptionsMap = jDBCOptionsMap ++ Map("tableName" -> tableName)
+
+    val jDBCOptions = new JDBCOptions(jDBCOptionsMap)
+    JDBCRDD.resolveTable(jDBCOptions)
   }
 
   /*

@@ -21,7 +21,6 @@ import java.util.Date
 import java.util.HashMap
 
 import scala.collection.immutable.Map
-
 import org.apache.avro.Schema
 import org.apache.avro.SchemaBuilder
 import org.apache.avro.generic.GenericData.Record
@@ -32,8 +31,8 @@ import org.apache.hadoop.fs.Path
 import org.apache.hadoop.io.NullWritable
 import org.apache.hadoop.mapreduce.RecordWriter
 import org.apache.hadoop.mapreduce.TaskAttemptContext
-import org.apache.hadoop.mapreduce.TaskAttemptID
 import org.apache.spark.sql.Row
+import org.apache.spark.sql.catalyst.InternalRow
 import org.apache.spark.sql.execution.datasources.OutputWriter
 import org.apache.spark.sql.types._
 
@@ -56,10 +55,7 @@ class AvroOutputGenerator(
     new AvroKeyOutputFormat[GenericRecord]() {
 
       override def getDefaultWorkFile(context: TaskAttemptContext, extension: String): Path = {
-        val uniqueWriteJobId = context.getConfiguration.get("spark.sql.sources.writeJobUUID")
-        val taskAttemptId: TaskAttemptID = context.getTaskAttemptID
-        val split = taskAttemptId.getTaskID.getId
-        new Path(path, f"part-r-$split%05d-$uniqueWriteJobId$extension")
+        new Path(path)
       }
 
       @throws(classOf[IOException])
@@ -70,7 +66,7 @@ class AvroOutputGenerator(
 
     }.getRecordWriter(context)
 
-  override def write(row: Row): Unit = {
+  override def write(row: InternalRow): Unit = {
     val key = new AvroKey(converter(row).asInstanceOf[GenericRecord])
     recordWriter.write(key, NullWritable.get())
   }

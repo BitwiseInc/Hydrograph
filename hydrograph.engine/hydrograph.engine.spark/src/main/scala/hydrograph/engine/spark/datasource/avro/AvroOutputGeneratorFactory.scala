@@ -25,7 +25,6 @@ import org.apache.spark.sql.types.StructType
 
    override def newInstance(
       path: String,
-      bucketId: Option[Int],
       dataSchema: StructType,
       context: TaskAttemptContext): OutputWriter = {
      new AvroOutputGenerator(path,context,schema,recordName,recordNamespace)

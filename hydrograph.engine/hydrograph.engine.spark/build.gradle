@@ -18,6 +18,7 @@ apply plugin: 'eclipse'
 sourceCompatibility = 1.8
 group = 'hydrograph'
 archivesBaseName = 'hydrograph.engine.spark'
+def sparkVersion = '2.2.1'
 
 uploadArchives {
     repositories {
@@ -91,12 +92,16 @@ configurations {
 }
 
 dependencies {
-	compile (group: 'org.apache.spark', name: 'spark-core_2.11', version: '2.0.2')
-    compile group: 'org.apache.spark', name: 'spark-sql_2.11', version: '2.0.2'
-    compile group: 'org.scala-lang', name: 'scala-library', version: '2.11.8'
-    compile group: 'org.apache.spark', name: 'spark-hive_2.11', version: '2.0.2'
+	compile (group: 'org.apache.spark', name: 'spark-core_2.11', version: sparkVersion)
+    compile group: 'org.apache.spark', name: 'spark-sql_2.11', version: sparkVersion
+    compile group: 'org.apache.spark', name: 'spark-hive_2.11', version: sparkVersion
     compile group: 'org.apache.hadoop', name: 'hadoop-aws', version: '2.7.2'
     compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.34'
+   //Scala Jars
+    compile group: 'org.scala-lang', name: 'scala-library', version: '2.11.8'
+    compile group: 'org.scala-lang', name: 'scala-reflect', version:'2.11.8'
+    compile group: 'org.scalatest', name: 'scalatest_2.11', version:'2.2.6'
+    compile group: 'org.scala-lang.modules', name: 'scala-xml_2.11', version:'1.0.2'
 
     compile group: 'org.apache.commons', name: 'commons-csv', version: '1.4'
 

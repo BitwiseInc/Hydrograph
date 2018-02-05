@@ -16,7 +16,8 @@ apply plugin: 'idea'
 
 group = 'hydrograph'
 buildscript {
-  repositories {
+
+ repositories {
     jcenter()
   }
   dependencies {

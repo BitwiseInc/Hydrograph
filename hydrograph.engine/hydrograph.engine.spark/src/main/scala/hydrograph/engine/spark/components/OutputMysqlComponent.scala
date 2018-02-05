@@ -21,7 +21,7 @@ import hydrograph.engine.spark.components.base.SparkFlow
 import hydrograph.engine.spark.components.platform.BaseComponentParams
 import hydrograph.engine.spark.components.utils.{DbTableUtils, SchemaMisMatchException}
 import org.apache.spark.sql.Column
-import org.apache.spark.sql.execution.datasources.jdbc.JdbcUtils
+import org.apache.spark.sql.execution.datasources.jdbc.{JDBCOptions, JdbcUtils}
 import org.apache.spark.sql.functions._
 import org.slf4j.{Logger, LoggerFactory}
 
@@ -97,7 +97,12 @@ BaseComponentParams) extends SparkFlow {
         + "' query with connection url " + connectionURL )
 
     try {
-      val connection = JdbcUtils.createConnectionFactory(connectionURL, properties)()
+      var jDBCOptionsMap : Map[String, String] = properties.entrySet().toArray.toList.map(key => key.toString.split("=")(0).trim -> key.toString.split("=")(1).trim).toMap
+      jDBCOptionsMap = jDBCOptionsMap ++ Map("url" -> connectionURL)
+
+      val jDBCOptions = new JDBCOptions(jDBCOptionsMap)
+
+      val connection = JdbcUtils.createConnectionFactory(jDBCOptions)()
       val statment = connection.prepareStatement(query)
       val resultSet = statment.executeUpdate()
       connection.close()

@@ -24,7 +24,7 @@ import hydrograph.engine.spark.components.platform.BaseComponentParams
 import hydrograph.engine.spark.components.utils.{SchemaMisMatchException, TeradataTableUtils}
 import org.apache.hadoop.mapred.InvalidInputException
 import org.apache.spark.sql.Column
-import org.apache.spark.sql.execution.datasources.jdbc.JdbcUtils
+import org.apache.spark.sql.execution.datasources.jdbc.{JDBCOptions, JdbcUtils}
 import org.apache.spark.sql.functions._
 import org.slf4j.{Logger, LoggerFactory}
 
@@ -153,7 +153,12 @@ class OutputTeradataComponent(outputRDBMSEntity: OutputRDBMSEntity,
 
     def areRecordsPresent(connectionURL: String, properties: Properties, outputRDBMSEntity: OutputRDBMSEntity): Boolean = {
       LOG.warn("FASTLOAD WORKS ONLY IF THERE EXISTS NO RECORDS IN THE TARGET TABLE")
-      val connection = JdbcUtils.createConnectionFactory(connectionURL, properties)()
+      var jDBCOptionsMap : Map[String, String] = properties.entrySet().toArray.toList.map(key => key.toString.split("=")(0).trim -> key.toString.split("=")(1).trim).toMap
+      jDBCOptionsMap = jDBCOptionsMap ++ Map("url" -> connectionURL)
+
+      val jDBCOptions = new JDBCOptions(jDBCOptionsMap)
+
+      val connection = JdbcUtils.createConnectionFactory(jDBCOptions)()
       LOG.info("Performing a check to analyze the presence of data in table")
       val statment = connection.prepareStatement("select TOP 1 * from " + outputRDBMSEntity.getTableName + ";")
       val resultSet = statment.executeQuery()
@@ -166,7 +171,12 @@ class OutputTeradataComponent(outputRDBMSEntity: OutputRDBMSEntity,
         + "' query with connection url " + connectionURL)
 
       try {
-        val connection = JdbcUtils.createConnectionFactory(connectionURL, properties)()
+        var jDBCOptionsMap : Map[String, String] = properties.entrySet().toArray.toList.map(key => key.toString.split("=")(0).trim -> key.toString.split("=")(1).trim).toMap
+        jDBCOptionsMap = jDBCOptionsMap ++ Map("url" -> connectionURL)
+
+        val jDBCOptions = new JDBCOptions(jDBCOptionsMap)
+
+        val connection = JdbcUtils.createConnectionFactory(jDBCOptions)()
         val statment = connection.prepareStatement(query)
         val resultSet = statment.executeUpdate()
         connection.close()

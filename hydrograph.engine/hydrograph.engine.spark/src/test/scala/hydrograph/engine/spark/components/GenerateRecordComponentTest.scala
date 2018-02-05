@@ -18,7 +18,7 @@ import hydrograph.engine.core.component.entity.GenerateRecordEntity
 import hydrograph.engine.core.component.entity.elements.{OutSocket, SchemaField}
 import hydrograph.engine.spark.components.platform.BaseComponentParams
 import org.apache.spark.sql.{DataFrame, SparkSession}
-import org.json.Test
+import org.junit.Test
 import org.scalatest.Matchers._
 /**
   * The Class GenerateRecordComponentTest.
