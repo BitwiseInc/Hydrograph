@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/capitalone/Hydrograph.svg?branch=master)](https://travis-ci.org/capitalone/Hydrograph) [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0) [![Join the chat at https://gitter.im/capitalone/Hydrograph](https://badges.gitter.im/capitalone/Hydrograph.svg)](https://gitter.im/capitalone/Hydrograph?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 # Hydrograph
-![Hydrograph logo](http://www.capitalone.io/Hydrograph/assets/img/C1_OSLogo_Hydrograph_RGB_FullColor_solo.svg "Hydrograph logo")
+![Hydrograph logo](https://capitalone.github.io/Hydrograph/assets/img/C1_OSLogo_Hydrograph_RGB_FullColor_solo.svg "Hydrograph logo")
 
 Hydrograph is a powerful ETL tool that allows developers to create complex graphs using a simple drag-and-drop interface. Users build ETL graphs by using the Hydrograph UI to link together input, transformation, and output components. Users can customize a variety of pre-built components or contribute back to Hydrograph by developing additional inputs, outputs, and transformations. To execute ETL jobs Hydrograph leverages Apache Spark as the backend engine. This allows Hydrograph to handle a variety of workload sizes and provides a flexible deployment model.
 
