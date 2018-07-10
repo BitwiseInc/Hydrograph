@@ -1,5 +1,8 @@
 [![Build Status](https://travis-ci.org/capitalone/Hydrograph.svg?branch=master)](https://travis-ci.org/capitalone/Hydrograph) [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0) [![Join the chat at https://gitter.im/capitalone/Hydrograph](https://badges.gitter.im/capitalone/Hydrograph.svg)](https://gitter.im/capitalone/Hydrograph?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+# Thank you for your interest in Hydrograph. From the beginning, we have had a strong code partner in [Bitwise Global](https://urldefense.proofpoint.com/v2/url?u=https-3A__www.bitwiseglobal.com_&d=DwMGaQ&c=pLULRYW__RtkwsQUPxJVDGboCTdgji3AcHNJU0BpTJE&r=9CBD4lF_uUYI0ObJFIbe5SJMdg-FRudQwSlfCzGY7uc&m=lAZiLTecS4lcwRVg4-LyNTalQw5hUBe4EHDm2XC5Dp0&s=PAIpOd4EJ0fo7Lj31JrKgKgF8Bgq8K02DNZMCgRVXBQ&e=). So,we’re thrilled to announce that they have agreed to become stewards of Hydrograph moving forward. You can find more information about Hydrograph [here](https://www.bitwiseglobal.com/innovations/hydrograph/). As of July 31, Hydrograph will no longer be available on Capital One’s sites.
+
+
 # Hydrograph
 ![Hydrograph logo](https://capitalone.github.io/Hydrograph/assets/img/C1_OSLogo_Hydrograph_RGB_FullColor_solo.svg "Hydrograph logo")
 
