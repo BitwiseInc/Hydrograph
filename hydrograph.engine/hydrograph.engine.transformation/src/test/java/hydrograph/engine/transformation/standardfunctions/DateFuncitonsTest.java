@@ -110,9 +110,10 @@ public class DateFuncitonsTest {
 
     @Test
     public void itShouldReturnLastDateOfMonthFromMonth() throws  ParseException {
-        Date lastDateOfMonthFromMonth= DateFunctions.getLastDateOfMonth(5);
-        String date= new SimpleDateFormat("yyyy-MM-dd").format(lastDateOfMonthFromMonth);
-        Assert.assertEquals(date,"2017-05-31");
+        Date lastDateOfMonthFromMonth = DateFunctions.getLastDateOfMonth(5);
+        String actualDate = new SimpleDateFormat("yyyy-MM-dd").format(lastDateOfMonthFromMonth);
+        String expectedDate = java.time.Year.now() + "-05-31";
+        Assert.assertEquals(actualDate, expectedDate);
     }
 
     @Test
