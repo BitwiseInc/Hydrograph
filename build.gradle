@@ -130,3 +130,11 @@ task pullCommonDependencies(type: Copy) {
 task copyLibs(type: Copy) {
 	dependsOn pullServiceDependencies, pullModelDependencies, pullGraphDependencies, pullPropertyWindowDependencies, pullDataViewerDependencies, pullCommonDependencies
 }
+
+allprojects {
+    tasks.withType(JavaCompile).configureEach {
+        options.fork = true
+        options.incremental = true
+    }
+
+}
